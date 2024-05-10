@@ -171,35 +171,33 @@ export const ExerciseDashPie = () => {
   const chartPartWeek = () => {
     const COLORS_PART_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_PART_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderPartWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_PART_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_PART_WEEK[index % COLORS_PART_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_PART_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderPartWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_PART_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_PART_WEEK[index % COLORS_PART_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -207,35 +205,33 @@ export const ExerciseDashPie = () => {
   const chartTitleWeek = () => {
     const COLORS_TITLE_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_TITLE_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderTitleWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_TITLE_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_TITLE_WEEK[index % COLORS_TITLE_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_TITLE_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderTitleWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_TITLE_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_TITLE_WEEK[index % COLORS_TITLE_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -243,35 +239,33 @@ export const ExerciseDashPie = () => {
   const chartPartMonth = () => {
     const COLORS_PART_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_PART_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderPartMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_PART_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_PART_MONTH[index % COLORS_PART_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_PART_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderPartMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_PART_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_PART_MONTH[index % COLORS_PART_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -279,40 +273,38 @@ export const ExerciseDashPie = () => {
   const chartTitleMonth = () => {
     const COLORS_TITLE_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_TITLE_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderTitleMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_TITLE_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_TITLE_MONTH[index % COLORS_TITLE_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_TITLE_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderTitleMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_TITLE_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_TITLE_MONTH[index % COLORS_TITLE_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -332,35 +324,28 @@ export const ExerciseDashPie = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["part", "title"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["part", "title"]?.map((key, index) => (
+          <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+              if (LINE === key) {
+                setLINE("");
+              }
+              else {
+                setLINE(key);
+              }
+            }}/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
+        ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -376,13 +361,13 @@ export const ExerciseDashPie = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>부위/운동 비율</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

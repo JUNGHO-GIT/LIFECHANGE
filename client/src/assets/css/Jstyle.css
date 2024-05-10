@@ -5617,19 +5617,19 @@
 }
 
 .d-center {
-  display: flex;
+  display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-left {
-  display: flex;
+  display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
   text-align: left !important;
 }
 .d-right {
-  display: flex;
+  display: flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: right !important;
@@ -5654,7 +5654,17 @@
   display: flex !important;
   flex-direction: column !important;
 }
+.d-row {
+  display: flex !important;
+  flex-direction: row !important;
+}
 
+.over-hidden {
+  overflow: hidden !important;
+}
+.over-auto {
+  overflow: auto !important;
+}
 .over-x-hidden {
   overflow-x: hidden !important;
 }

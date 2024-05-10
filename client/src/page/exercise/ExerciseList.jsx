@@ -1,11 +1,11 @@
 // ExerciseList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
+import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
@@ -122,104 +122,84 @@ export const ExerciseList = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          운동 List
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        운동 List
+      </Typography>
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <TableContainer>
-          <Table className={"border"}>
-            <TableHead>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>날짜</TableCell>
-                <TableCell>부위</TableCell>
-                <TableCell>종목</TableCell>
-                <TableCell>세트</TableCell>
-                <TableCell>횟수</TableCell>
-                <TableCell>중량</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {OBJECT?.map((item, index) => (
-                <React.Fragment key={item._id}>
-                  {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                    <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                      {sectionIndex === 0 && (
-                        <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.exercise_startDt;
-                          SEND.endDt = item.exercise_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.exercise_startDt?.substring(5, 10)}
-                          {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
-                        </TableCell>
-                      )}
-                      <TableCell>
-                        {section.exercise_part_val.substring(0, 6)}
-                      </TableCell>
-                      <TableCell>
-                        {section.exercise_title_val.substring(0, 6)}
-                      </TableCell>
-                      {section.exercise_part_val !== "유산소" ? (
-                        <React.Fragment>
-                          <TableCell>
-                            {`${numeral(section.exercise_set).format('0,0')}`}
-                          </TableCell>
-                          <TableCell>
-                            {`${numeral(section.exercise_rep).format('0,0')}`}
-                          </TableCell>
-                          <TableCell>
-                            {`${numeral(section.exercise_kg).format('0,0')}`}
-                          </TableCell>
-                        </React.Fragment>
-                      ) : (
-                        <React.Fragment>
-                          <TableCell colSpan={3}>
-                            {section.exercise_cardio}
-                          </TableCell>
-                        </React.Fragment>
-                      )}
-                    </TableRow>
-                  ))}
-                </React.Fragment>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </React.Fragment>
+      <TableContainer key={i}>
+        <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>부위</TableCell>
+              <TableCell>종목</TableCell>
+              <TableCell>세트</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>중량</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {OBJECT?.map((item, index) => (
+              item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
+                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
+                  {sectionIndex === 0 && (
+                    <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
+                    className={"pointer"} onClick={() => {
+                      SEND.id = item._id;
+                      SEND.startDt = item.exercise_startDt;
+                      SEND.endDt = item.exercise_endDt;
+                      navParam(SEND.toDetail, {
+                        state: SEND
+                      });
+                    }}>
+                      {item.exercise_startDt?.substring(5, 10)}
+                      {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    {section.exercise_part_val.substring(0, 6)}
+                  </TableCell>
+                  <TableCell>
+                    {section.exercise_title_val.substring(0, 6)}
+                  </TableCell>
+                  {section.exercise_part_val !== "유산소" ? ([
+                    <TableCell>
+                      {`${numeral(section.exercise_set).format('0,0')}`}
+                    </TableCell>,
+                    <TableCell>
+                      {`${numeral(section.exercise_rep).format('0,0')}`}
+                    </TableCell>,
+                    <TableCell>
+                      {`${numeral(section.exercise_kg).format('0,0')}`}
+                    </TableCell>
+                  ]) : ([
+                    <TableCell colSpan={3}>
+                      {section.exercise_cardio}
+                    </TableCell>
+                  ])}
+                </TableRow>
+              ))
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
     // 7-7. table
     // list 는 높이 지정
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-column"}>
-            {tableFragment()}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-column"}>
+          {tableFragment(0)}
         </Box>
-      </React.Fragment>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

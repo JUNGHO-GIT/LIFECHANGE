@@ -76,51 +76,49 @@ export const ExerciseDashLine = () => {
   const chartVolumeWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-            strokeWidth={2}/>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+          strokeWidth={2}/>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -128,51 +126,49 @@ export const ExerciseDashLine = () => {
   const chartCardioWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-            strokeWidth={2}/>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+          strokeWidth={2}/>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -180,51 +176,49 @@ export const ExerciseDashLine = () => {
   const chartVolumeMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-            strokeWidth={2}/>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+          strokeWidth={2}/>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -232,56 +226,54 @@ export const ExerciseDashLine = () => {
   const chartCardioMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-            strokeWidth={2}/>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+          strokeWidth={2}/>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -301,35 +293,28 @@ export const ExerciseDashLine = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["volume", "cardio"].map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["volume", "cardio"].map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -345,13 +330,13 @@ export const ExerciseDashLine = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>볼륨 / 유산소 추이</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

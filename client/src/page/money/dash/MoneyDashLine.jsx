@@ -76,51 +76,49 @@ export const MoneyDashLine = () => {
   const chartInWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_WEEK, array, "money");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_IN_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-            activeDot={{r:8}}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_IN_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
+          activeDot={{r:8}}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -128,51 +126,49 @@ export const MoneyDashLine = () => {
   const chartOutWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_WEEK, array, "money");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_OUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
-            activeDot={{r:8}}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_OUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
+          activeDot={{r:8}}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -180,51 +176,49 @@ export const MoneyDashLine = () => {
   const chartInMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array);
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_IN_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-            activeDot={{r:8}}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_IN_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
+          activeDot={{r:8}}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -232,56 +226,54 @@ export const MoneyDashLine = () => {
   const chartOutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array);
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_OUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
-            activeDot={{r:8}}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <LineChart data={OBJECT_OUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
+          activeDot={{r:8}}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -301,35 +293,28 @@ export const MoneyDashLine = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["in", "out"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["in", "out"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -342,16 +327,16 @@ export const MoneyDashLine = () => {
   return (
     <React.Fragment>
       <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
+        <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>수입/지출 추이</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
@@ -369,8 +354,8 @@ export const MoneyDashLine = () => {
                 LOADING ? loadingNode() : chartOutMonth()
               )}
             </Grid2>
-            </Grid2>
-          </Container>
+          </Grid2>
+        </Container>
       </Paper>
     </React.Fragment>
   );

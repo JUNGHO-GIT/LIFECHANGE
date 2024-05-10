@@ -1,7 +1,7 @@
 // UserSignup.jsx
 
 import {React, useState, useNavigate} from "../../import/ImportReacts";
-import {axios, InputMask} from "../../import/ImportLibs";
+import {axios} from "../../import/ImportLibs";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
@@ -57,15 +57,13 @@ export const UserSignup = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          회원가입
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        회원가입
+      </Typography>
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment>
+      <Card variant={"outlined"} className={"p-20"} key={i}>
         <Box className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -94,43 +92,33 @@ export const UserSignup = () => {
             )}
           />
         </Box>
-      </React.Fragment>
+      </Card>
     );
     // 7-7. table
-    const tableSection = (i) => (
-      <React.Fragment key={i}>
-        <Box className={"block-wrapper h-74vh"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%"
-          }}
-        >
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-column"}>
-            {tableFragment(0)}
-          </Box>
+    const tableSection = () => (
+      <Box className={"block-wrapper h-74vh"}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%"
+        }}
+      >
+        <Box className={"d-center p-10"}>
+          {titleSection()}
         </Box>
-      </React.Fragment>
+        <Divider variant={"middle"} className={"mb-20"} />
+        <Box className={"d-column"}>
+          {tableFragment(0)}
+        </Box>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

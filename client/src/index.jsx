@@ -67,105 +67,89 @@ import {TweakList} from "./page/tweak/TweakList";
 
 // ------------------------------------------------------------------------------------------------>
 const Calendar = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/list" element={<CalendarList />} />
-      <Route path="/detail" element={<CalendarDetail />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/list" element={<CalendarList />} />
+    <Route path="/detail" element={<CalendarDetail />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const Exercise = () =>  (
-  <React.Fragment>
-    <Routes>
-      <Route path="/plan/list" element={<ExercisePlanList />} />
-      <Route path="/plan/detail" element={<ExercisePlanDetail />} />
-      <Route path="/plan/save" element={<ExercisePlanSave />} />
-      <Route path="/dash" element={<ExerciseDash />} />
-      <Route path="/list" element={<ExerciseList />} />
-      <Route path="/detail" element={<ExerciseDetail />} />
-      <Route path="/save" element={<ExerciseSave />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/plan/list" element={<ExercisePlanList />} />
+    <Route path="/plan/detail" element={<ExercisePlanDetail />} />
+    <Route path="/plan/save" element={<ExercisePlanSave />} />
+    <Route path="/dash" element={<ExerciseDash />} />
+    <Route path="/list" element={<ExerciseList />} />
+    <Route path="/detail" element={<ExerciseDetail />} />
+    <Route path="/save" element={<ExerciseSave />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const Food = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/plan/list" element={<FoodPlanList />} />
-      <Route path="/plan/detail" element={<FoodPlanDetail />} />
-      <Route path="/plan/save" element={<FoodPlanSave />} />
-      <Route path="/dash" element={<FoodDash />} />
-      <Route path="/search" element={<FoodSearch />} />
-      <Route path="/list" element={<FoodList />} />
-      <Route path="/detail" element={<FoodDetail />} />
-      <Route path="/save" element={<FoodSave />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/plan/list" element={<FoodPlanList />} />
+    <Route path="/plan/detail" element={<FoodPlanDetail />} />
+    <Route path="/plan/save" element={<FoodPlanSave />} />
+    <Route path="/dash" element={<FoodDash />} />
+    <Route path="/search" element={<FoodSearch />} />
+    <Route path="/list" element={<FoodList />} />
+    <Route path="/detail" element={<FoodDetail />} />
+    <Route path="/save" element={<FoodSave />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const Money = () =>  (
-  <React.Fragment>
-    <Routes>
-      <Route path="/plan/list" element={<MoneyPlanList />} />
-      <Route path="/plan/detail" element={<MoneyPlanDetail />} />
-      <Route path="/plan/save" element={<MoneyPlanSave />} />
-      <Route path="/dash" element={<MoneyDash />} />
-      <Route path="/list" element={<MoneyList />} />
-      <Route path="/detail" element={<MoneyDetail />} />
-      <Route path="/save" element={<MoneySave />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/plan/list" element={<MoneyPlanList />} />
+    <Route path="/plan/detail" element={<MoneyPlanDetail />} />
+    <Route path="/plan/save" element={<MoneyPlanSave />} />
+    <Route path="/dash" element={<MoneyDash />} />
+    <Route path="/list" element={<MoneyList />} />
+    <Route path="/detail" element={<MoneyDetail />} />
+    <Route path="/save" element={<MoneySave />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const Sleep = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/plan/list" element={<SleepPlanList />} />
-      <Route path="/plan/detail" element={<SleepPlanDetail />} />
-      <Route path="/plan/save" element={<SleepPlanSave />} />
-      <Route path="/dash" element={<SleepDash />} />
-      <Route path="/list" element={<SleepList />} />
-      <Route path="/detail" element={<SleepDetail />} />
-      <Route path="/save" element={<SleepSave />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/plan/list" element={<SleepPlanList />} />
+    <Route path="/plan/detail" element={<SleepPlanDetail />} />
+    <Route path="/plan/save" element={<SleepPlanSave />} />
+    <Route path="/dash" element={<SleepDash />} />
+    <Route path="/list" element={<SleepList />} />
+    <Route path="/detail" element={<SleepDetail />} />
+    <Route path="/save" element={<SleepSave />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const User = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/signup" element={<UserSignup />} />
-      <Route path="/login" element={<UserLogin />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/signup" element={<UserSignup />} />
+    <Route path="/login" element={<UserLogin />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const Tweak = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/dataset" element={<TweakDataset />} />
-      <Route path="/demo" element={<TweakList />} />
-    </Routes>
-  </React.Fragment>
+  <Routes>
+    <Route path="/dataset" element={<TweakDataset />} />
+    <Route path="/demo" element={<TweakList />} />
+  </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   return (
-    <React.Fragment>
-      <div className={"App"}>
-        <Routes>
-          <Route path="/" element={<CalendarList />} />
-          <Route path="/calendar/*" element={<Calendar />} />
-          <Route path="/exercise/*" element={<Exercise />} />
-          <Route path="/food/*" element={<Food />} />
-          <Route path="/money/*" element={<Money />} />
-          <Route path="/sleep/*" element={<Sleep />} />
-          <Route path="/tweak/*" element={<Tweak />} />
-          <Route path="/user/*" element={<User />} />
-        </Routes>
-      </div>
-    </React.Fragment>
+    <div className={"App"}>
+      <Routes>
+        <Route path="/" element={<CalendarList />} />
+        <Route path="/calendar/*" element={<Calendar />} />
+        <Route path="/exercise/*" element={<Exercise />} />
+        <Route path="/food/*" element={<Food />} />
+        <Route path="/money/*" element={<Money />} />
+        <Route path="/sleep/*" element={<Sleep />} />
+        <Route path="/tweak/*" element={<Tweak />} />
+        <Route path="/user/*" element={<User />} />
+      </Routes>
+    </div>
   );
 };
 // ------------------------------------------------------------------------------------------------>

@@ -1,13 +1,30 @@
 /** 0. Non Media **********************************************************************************/
 
 /** 0. Media **************************************************************************************/
+/* .table-thead {
+  width: 100%;
+}
+.table-tbody {
+  width: 100%;
+}
+.table-tfoot {
+  width: 100%;
+} */
+
 .table-thead-tr th, .table-thead-tr td {
+  font-weight: bold !important;
   text-align: center !important;
   background-color: #164a60 !important;
   color: #ffffff !important;
   padding: 5px !important;
 }
 .table-tbody-tr th, .table-tbody-tr td {
+  font-weight: normal !important;
+  text-align: center !important;
+  padding: 10px !important;
+}
+.table-tfoot-tr th, .table-tfoot-tr td {
+  font-weight: bold !important;
   text-align: center !important;
   padding: 10px !important;
 }
@@ -24,6 +41,9 @@
   .table-tbody-tr th, .table-tbody-tr td {
     font-size: 0.700rem !important;
   }
+  .table-tfoot-tr th, .table-tfoot-tr td {
+    font-size: 0.800rem !important;
+  }
 }
 
 /** 2. Mobile (480px ~ 767px) *********************************************************************/
@@ -37,6 +57,9 @@
   }
   .table-tbody-tr th, .table-tbody-tr td {
     font-size: 0.725rem !important;
+  }
+  .table-tfoot-tr th, .table-tfoot-tr td {
+    font-size: 0.825rem !important;
   }
 }
 
@@ -52,6 +75,9 @@
   .table-tbody-tr th, .table-tbody-tr td {
     font-size: 0.750rem !important;
   }
+  .table-tfoot-tr th, .table-tfoot-tr td {
+    font-size: 0.850rem !important;
+  }
 }
 
 /** 4. Tablet (992px ~ 1199px) ********************************************************************/
@@ -66,6 +92,9 @@
   .table-tbody-tr th, .table-tbody-tr td {
     font-size: 0.775rem !important;
   }
+  .table-tfoot-tr th, .table-tfoot-tr td {
+    font-size: 0.875rem !important;
+  }
 }
 
 /** 5. Desktop (1200px ~ 10000px) *****************************************************************/
@@ -79,5 +108,8 @@
   }
   .table-tbody-tr th, .table-tbody-tr td {
     font-size: 0.900rem !important;
+  }
+  .table-tfoot-tr th, .table-tfoot-tr td {
+    font-size: 1.000rem !important;
   }
 }

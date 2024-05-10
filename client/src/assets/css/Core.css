@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -33,10 +33,10 @@
   margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 1vh 2vw 1vh 2vw;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background-color: #fff;
   animation: fadeIn 1.0s !important;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: hidden;
   z-index: 999;
 }
@@ -50,7 +50,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;

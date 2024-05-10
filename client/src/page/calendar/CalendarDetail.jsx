@@ -1,18 +1,14 @@
 // CalendarDetail.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DaySave, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -148,59 +144,55 @@ export const CalendarDetail = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          달력 Detail
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        달력 Detail
+      </Typography>
     );
     // 7-2. date
     const dateSection = () => (
-      <React.Fragment>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DesktopDatePicker
-            label={"날짜"}
-            value={moment(DATE.startDt, "YYYY-MM-DD")}
-            format={"YYYY-MM-DD"}
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            slotProps={{
-              textField: {
-                sx: {
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+        <DesktopDatePicker
+          label={"날짜"}
+          value={moment(DATE.startDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          views={["day"]}
+          slotProps={{
+            textField: {
+              sx: {
+                width: "220px",
+              },
+            },
+            layout: {
+              sx: {
+                "& .MuiPickersLayout-contentWrapper": {
                   width: "220px",
+                  height: "280px",
+                },
+                "& .MuiDateCalendar-root": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiDayCalendar-slideTransition": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiPickersDay-root": {
+                  width: "30px",
+                  height: "28px",
                 },
               },
-              layout: {
-                sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "280px",
-                  },
-                  "& .MuiDateCalendar-root": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiPickersDay-root": {
-                    width: "30px",
-                    height: "28px",
-                  },
-                },
-              },
-            }}
-            onChange={(day) => {
-              setDATE((prev) => ({
-                ...prev,
-                startDt: moment(day).format("YYYY-MM-DD"),
-                endDt: moment(day).format("YYYY-MM-DD")
-              }));
-            }}
-          />
-        </LocalizationProvider>
-      </React.Fragment>
+            },
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(day).format("YYYY-MM-DD"),
+              endDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
+        />
+      </LocalizationProvider>
     );
     // 7-3. count
     const countSection = () => {
@@ -234,221 +226,207 @@ export const CalendarDetail = () => {
         }
       };
       return (
-        <React.Fragment>
-          <PopUp elementId={"sectionCnt"} contents={
-            <Typography variant={"body2"} className={"p-10"}>
-              0이상 10이하의 숫자만 입력하세요.
-            </Typography>
-          }>
-            {popProps => (
-              <TextField
-                type={"text"}
-                id={"sectionCnt"}
-                label={"항목수"}
-                variant={"outlined"}
-                size={"small"}
-                className={"w-220"}
-                value={COUNT?.sectionCnt}
-                InputProps={{
-                  readOnly: false,
-                  startAdornment: (
-                    <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
-                  )
-                }}
-                onChange={(e) => {
-                  const newValInt = Number(e.target.value);
-                  const newValStr = String(e.target.value);
-                  if (newValInt < 0) {
-                    popProps.openPopup(e.currentTarget);
-                  }
-                  else if (newValInt > 10) {
-                    popProps.openPopup(e.currentTarget);
-                  }
-                  else if (newValStr === "") {
-                    handlerCount("");
-                  }
-                  else if (isNaN(newValInt) || newValStr === "NaN") {
-                    handlerCount("0");
-                  }
-                  else if (newValStr.startsWith("0")) {
-                    handlerCount(newValStr.replace(/^0+/, ""));
-                  }
-                  else {
-                    handlerCount(newValStr);
-                  }
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              />
-            )}
-          </PopUp>
-        </React.Fragment>
+        <PopUp elementId={"sectionCnt"} contents={
+          <Typography variant={"body2"} className={"p-10"}>
+            0이상 10이하의 숫자만 입력하세요.
+          </Typography>
+        }>
+          {popProps => (
+            <TextField
+              type={"text"}
+              id={"sectionCnt"}
+              label={"항목수"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-220"}
+              value={COUNT?.sectionCnt}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+              onChange={(e) => {
+                const newValInt = Number(e.target.value);
+                const newValStr = String(e.target.value);
+                if (newValInt < 0) {
+                  popProps.openPopup(e.currentTarget);
+                }
+                else if (newValInt > 10) {
+                  popProps.openPopup(e.currentTarget);
+                }
+                else if (newValStr === "") {
+                  handlerCount("");
+                }
+                else if (isNaN(newValInt) || newValStr === "NaN") {
+                  handlerCount("0");
+                }
+                else if (newValStr.startsWith("0")) {
+                  handlerCount(newValStr.replace(/^0+/, ""));
+                }
+                else {
+                  handlerCount(newValStr);
+                }
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            />
+          )}
+        </PopUp>
       );
     };
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"} key={i}>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={true}
-              type={"text"}
-              size={"small"}
-              label={"파트"}
-              id={`calendar_part_val-${i}`}
-              name={`calendar_part_val-${i}`}
-              variant={"outlined"}
-              className={"w-100 me-10"}
-              value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newIndex = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_part_idx: newIndex,
-                      calendar_part_val: calendarArray[newIndex]?.calendar_part
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {calendarArray.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  {item.calendar_part}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              select={true}
-              type={"text"}
-              size={"small"}
-              label={"색상"}
-              id={`calendar_color-${i}`}
-              name={`calendar_color-${i}`}
-              variant={"outlined"}
-              className={"w-100 ms-10"}
-              value={OBJECT?.calendar_section[i]?.calendar_color}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newColor = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_color: newColor
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {colors.map((item, idx) => (
-                <MenuItem key={idx} value={item}>
-                  {item}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              label={"제목"}
-              id={`calendar_title-${i}`}
-              name={`calendar_title-${i}`}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.calendar_section[i]?.calendar_title}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newTitle = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_title: newTitle
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              label={"상세"}
-              id={`calendar_detail-${i}`}
-              name={`calendar_detail-${i}`}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.calendar_section[i]?.calendar_detail}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newDetail = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_detail: newDetail
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-        </Card>
-      </React.Fragment>
+      <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"파트"}
+            id={`calendar_part_val-${i}`}
+            name={`calendar_part_val-${i}`}
+            variant={"outlined"}
+            className={"w-100 me-10"}
+            value={OBJECT?.calendar_section[i]?.calendar_part_idx}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newIndex = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                calendar_section: prev.calendar_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    calendar_part_idx: newIndex,
+                    calendar_part_val: calendarArray[newIndex]?.calendar_part
+                  } : item
+                ))
+              }));
+            }}
+          >
+            {calendarArray.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.calendar_part}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"색상"}
+            id={`calendar_color-${i}`}
+            name={`calendar_color-${i}`}
+            variant={"outlined"}
+            className={"w-100 ms-10"}
+            value={OBJECT?.calendar_section[i]?.calendar_color}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newColor = e.target.value;
+              setOBJECT((prev) => ({
+                ...prev,
+                calendar_section: prev.calendar_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    calendar_color: newColor
+                  } : item
+                ))
+              }));
+            }}
+          >
+            {colors.map((item, idx) => (
+              <MenuItem key={idx} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"제목"}
+            id={`calendar_title-${i}`}
+            name={`calendar_title-${i}`}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.calendar_section[i]?.calendar_title}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newTitle = e.target.value;
+              setOBJECT((prev) => ({
+                ...prev,
+                calendar_section: prev.calendar_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    calendar_title: newTitle
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"상세"}
+            id={`calendar_detail-${i}`}
+            name={`calendar_detail-${i}`}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.calendar_section[i]?.calendar_detail}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newDetail = e.target.value;
+              setOBJECT((prev) => ({
+                ...prev,
+                calendar_section: prev.calendar_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    calendar_detail: newDetail
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+      </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-center mb-20"}>
-            {dateSection()}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            {countSection()}
-          </Box>
-          <Box className={"d-column"}>
-            {OBJECT?.calendar_section.map((item, i) => tableFragment(i))}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-center p-10"}>
+          {titleSection()}
         </Box>
-      </React.Fragment>
+        <Divider variant={"middle"} className={"mb-20"} />
+        <Box className={"d-center mb-20"}>
+          {dateSection()}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          {countSection()}
+        </Box>
+        <Box className={"d-column"}>
+          {OBJECT?.calendar_section.map((item, i) => tableFragment(i))}
+        </Box>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

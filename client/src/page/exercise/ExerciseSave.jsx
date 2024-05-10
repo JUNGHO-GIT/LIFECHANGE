@@ -1,11 +1,11 @@
 // ExerciseSave.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DaySave, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
@@ -168,59 +168,55 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          운동 Save
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        운동 Save
+      </Typography>
     );
     // 7-2. date
     const dateSection = () => (
-      <React.Fragment>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DesktopDatePicker
-            label={"날짜"}
-            value={moment(DATE.startDt, "YYYY-MM-DD")}
-            format={"YYYY-MM-DD"}
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            slotProps={{
-              textField: {
-                sx: {
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+        <DesktopDatePicker
+          label={"날짜"}
+          value={moment(DATE.startDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          views={["day"]}
+          slotProps={{
+            textField: {
+              sx: {
+                width: "220px",
+              },
+            },
+            layout: {
+              sx: {
+                "& .MuiPickersLayout-contentWrapper": {
                   width: "220px",
+                  height: "280px",
+                },
+                "& .MuiDateCalendar-root": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiDayCalendar-slideTransition": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiPickersDay-root": {
+                  width: "30px",
+                  height: "28px",
                 },
               },
-              layout: {
-                sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "280px",
-                  },
-                  "& .MuiDateCalendar-root": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiPickersDay-root": {
-                    width: "30px",
-                    height: "28px",
-                  },
-                },
-              },
-            }}
-            onChange={(day) => {
-              setDATE((prev) => ({
-                ...prev,
-                startDt: moment(day).format("YYYY-MM-DD"),
-                endDt: moment(day).format("YYYY-MM-DD")
-              }));
-            }}
-          />
-        </LocalizationProvider>
-      </React.Fragment>
+            },
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(day).format("YYYY-MM-DD"),
+              endDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
+        />
+      </LocalizationProvider>
     );
     // 7-3. count
     const countSection = () => {
@@ -259,61 +255,59 @@ export const ExerciseSave = () => {
         }
       };
       return (
-        <React.Fragment>
-          <PopUp elementId={"sectionCnt"} contents={
-            <Typography variant={"body2"} className={"p-10"}>
-              0이상 10이하의 숫자만 입력하세요.
-            </Typography>
-          }>
-            {popProps => (
-              <TextField
-                type={"text"}
-                id={"sectionCnt"}
-                label={"항목수"}
-                variant={"outlined"}
-                size={"small"}
-                className={"w-220"}
-                value={COUNT?.sectionCnt}
-                InputProps={{
-                  readOnly: false,
-                  startAdornment: (
-                    <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
-                  )
-                }}
-                onChange={(e) => {
-                  const newValInt = Number(e.target.value);
-                  const newValStr = String(e.target.value);
-                  if (newValInt < 0) {
-                    popProps.openPopup(e.currentTarget);
-                  }
-                  else if (newValInt > 10) {
-                    popProps.openPopup(e.currentTarget);
-                  }
-                  else if (newValStr === "") {
-                    handlerCount("");
-                  }
-                  else if (isNaN(newValInt) || newValStr === "NaN") {
-                    handlerCount("0");
-                  }
-                  else if (newValStr.startsWith("0")) {
-                    handlerCount(newValStr.replace(/^0+/, ""));
-                  }
-                  else {
-                    handlerCount(newValStr);
-                  }
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              />
-            )}
-          </PopUp>
-        </React.Fragment>
+        <PopUp elementId={"sectionCnt"} contents={
+          <Typography variant={"body2"} className={"p-10"}>
+            0이상 10이하의 숫자만 입력하세요.
+          </Typography>
+        }>
+          {popProps => (
+            <TextField
+              type={"text"}
+              id={"sectionCnt"}
+              label={"항목수"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-220"}
+              value={COUNT?.sectionCnt}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+              onChange={(e) => {
+                const newValInt = Number(e.target.value);
+                const newValStr = String(e.target.value);
+                if (newValInt < 0) {
+                  popProps.openPopup(e.currentTarget);
+                }
+                else if (newValInt > 10) {
+                  popProps.openPopup(e.currentTarget);
+                }
+                else if (newValStr === "") {
+                  handlerCount("");
+                }
+                else if (isNaN(newValInt) || newValStr === "NaN") {
+                  handlerCount("0");
+                }
+                else if (newValStr.startsWith("0")) {
+                  handlerCount(newValStr.replace(/^0+/, ""));
+                }
+                else {
+                  handlerCount(newValStr);
+                }
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            />
+          )}
+        </PopUp>
       );
     };
     // 7-4. total
     const totalSection = () => (
-      <React.Fragment>
+      <Card variant={"outlined"} className={"p-20"}>
         <Box className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -362,11 +356,11 @@ export const ExerciseSave = () => {
             }}
           />
         </Box>
-      </React.Fragment>
+      </Card>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <React.Fragment>
+      <Box className={"d-flex"}>
         <IconButton size={"small"} color={"primary"}>
           <Badge
             badgeContent={index + 1}
@@ -374,295 +368,276 @@ export const ExerciseSave = () => {
             showZero={true}
           />
         </IconButton>
-        <PopDown
-          elementId={`pop-${index}`}
-          contents={
-            <React.Fragment>
-              <Box className={"d-center p-10"}>
-                <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                <Typography variant={"inherit"}>기타</Typography>
-              </Box>
-            </React.Fragment>
-          }
-        >
-        {popProps => (
-          <React.Fragment>
+        <PopDown elementId={`pop-${index}`} contents={
+          <Box className={"d-center p-10"}>
+            <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <Typography variant={"inherit"}>기타</Typography>
+          </Box>
+        }>
+          {popProps => (
             <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
               popProps.openPopup(e.currentTarget)
             }}>
               <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
             </IconButton>
-          </React.Fragment>
-        )}
+          )}
         </PopDown>
-      </React.Fragment>
+      </Box>
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"} key={i}>
-          <Box className={"d-between mt-n15 mb-20"}>
-            {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={true}
-              type={"text"}
-              size={"small"}
-              label={"파트"}
-              id={`exercise_part_val-${i}`}
-              name={`exercise_part_val-${i}`}
-              variant={"outlined"}
-              className={"w-100 me-10"}
-              value={OBJECT?.exercise_section[i]?.exercise_part_idx}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newIndex = Number(e.target.value);
+      <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Box className={"d-between mt-n15 mb-20"}>
+          {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"파트"}
+            id={`exercise_part_val-${i}`}
+            name={`exercise_part_val-${i}`}
+            variant={"outlined"}
+            className={"w-100 me-10"}
+            value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newIndex = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_section: prev.exercise_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    exercise_part_idx: newIndex,
+                    exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                    exercise_title_idx: 0,
+                    exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                  } : item
+                ))
+              }));
+            }}
+          >
+            {exerciseArray.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.exercise_part}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"타이틀"}
+            id={`exercise_title_val-${i}`}
+            name={`exercise_title_val-${i}`}
+            variant={"outlined"}
+            className={"w-100 ms-10"}
+            value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newTitleIdx = Number(e.target.value);
+              const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
+              if (newTitleIdx >= 0 && newTitleVal) {
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_section: prev.exercise_section.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      exercise_part_idx: newIndex,
-                      exercise_part_val: exerciseArray[newIndex]?.exercise_part,
-                      exercise_title_idx: 0,
-                      exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                      exercise_title_idx: newTitleIdx,
+                      exercise_title_val: newTitleVal,
                     } : item
                   ))
                 }));
-              }}
-            >
-              {exerciseArray.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  {item.exercise_part}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              select={true}
-              type={"text"}
-              size={"small"}
-              label={"타이틀"}
-              id={`exercise_title_val-${i}`}
-              name={`exercise_title_val-${i}`}
-              variant={"outlined"}
-              className={"w-100 ms-10"}
-              value={OBJECT?.exercise_section[i]?.exercise_title_idx}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newTitleIdx = Number(e.target.value);
-                const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
-                if (newTitleIdx >= 0 && newTitleVal) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_section: prev.exercise_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        exercise_title_idx: newTitleIdx,
-                        exercise_title_val: newTitleVal,
-                      } : item
-                    ))
-                  }));
-                }
-              }}
-            >
-              {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  {title}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"세트"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.exercise_section[i]?.exercise_set}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newSet = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_set: newSet
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"횟수"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.exercise_section[i]?.exercise_rep}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newRep = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_rep: newRep
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"무게"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.exercise_section[i]?.exercise_kg}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newKg = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_kg: newKg
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"휴식"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.exercise_section[i]?.exercise_rest}
-              InputProps={{
-                readOnly: false
-              }}
-              onChange={(e) => {
-                const newRest = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_rest: newRest
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DesktopTimePicker
-                label={"유산소 시간"}
-                minutesStep={1}
-                value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
-                format={"HH:mm"}
-                timezone={"Asia/Seoul"}
-                views={['hours', 'minutes']}
-                slotProps={{
-                  textField: {
-                    sx: {
+              }
+            }}
+          >
+            {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {title}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"세트"}
+            size={"small"}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.exercise_section[i]?.exercise_set}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newSet = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_section: prev.exercise_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    exercise_set: newSet
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"횟수"}
+            size={"small"}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.exercise_section[i]?.exercise_rep}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newRep = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_section: prev.exercise_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    exercise_rep: newRep
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"무게"}
+            size={"small"}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.exercise_section[i]?.exercise_kg}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newKg = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_section: prev.exercise_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    exercise_kg: newKg
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"휴식"}
+            size={"small"}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.exercise_section[i]?.exercise_rest}
+            InputProps={{
+              readOnly: false
+            }}
+            onChange={(e) => {
+              const newRest = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_section: prev.exercise_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    exercise_rest: newRest
+                  } : item
+                ))
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DesktopTimePicker
+              label={"유산소 시간"}
+              minutesStep={1}
+              value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+              format={"HH:mm"}
+              timezone={"Asia/Seoul"}
+              views={['hours', 'minutes']}
+              slotProps={{
+                textField: {
+                  sx: {
+                    width: "220px",
+                  },
+                },
+                layout: {
+                  sx: {
+                    "& .MuiPickersLayout-contentWrapper": {
                       width: "220px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-root": {
+                      width: "77px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item": {
+                      fontSize: "0.8rem",
+                      width: "65px",
+                      minHeight: "20px",
+                      borderRadius: "8px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                      color: "#fff",
+                      backgroundColor: "#164a60",
                     },
                   },
-                  layout: {
-                    sx: {
-                      "& .MuiPickersLayout-contentWrapper": {
-                        width: "220px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-root": {
-                        width: "77px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item": {
-                        fontSize: "0.8rem",
-                        width: "65px",
-                        minHeight: "20px",
-                        borderRadius: "8px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                        color: "#fff",
-                        backgroundColor: "#164a60",
-                      },
-                    },
-                  },
-                }}
-                onChange={(time) => {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    sleep_plan_morning: moment(time).format("HH:mm")
-                  }));
-                }}
-              />
-            </LocalizationProvider>
-          </Box>
-        </Card>
-      </React.Fragment>
+                },
+              }}
+              onChange={(time) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  sleep_plan_morning: moment(time).format("HH:mm")
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        </Box>
+      </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-center mb-20"}>
-            {dateSection()}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            {countSection()}
-          </Box>
-          <Box className={"d-column mb-20"}>
-            {totalSection()}
-          </Box>
-          <Box className={"d-column"}>
-            {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-center p-10"}>
+          {titleSection()}
         </Box>
-      </React.Fragment>
+        <Divider variant={"middle"} className={"mb-20"} />
+        <Box className={"d-center mb-20"}>
+          {dateSection()}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          {countSection()}
+        </Box>
+        <Box className={"d-column mb-20"}>
+          {totalSection()}
+        </Box>
+        <Box className={"d-column"}>
+          {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+        </Box>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

@@ -57,55 +57,53 @@ export const MoneyDashBar = () => {
   const chartInToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_TODAY, array, "money");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_IN_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
-          barGap={20} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-              activeDot={{r: 6}}
-            />
-            <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-              barSize={20}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_IN_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+        barGap={20} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+            barSize={20}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -113,60 +111,58 @@ export const MoneyDashBar = () => {
   const chartOutToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_TODAY, array, "money");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_OUT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
-          barGap={20} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-              activeDot={{r: 6}}
-            />
-            <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-              barSize={20}/>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_OUT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+        barGap={20} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+            barSize={20}/>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -185,35 +181,28 @@ export const MoneyDashBar = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["in", "out"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["in", "out"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -229,13 +218,13 @@ export const MoneyDashBar = () => {
           <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>수입/지출 목표</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

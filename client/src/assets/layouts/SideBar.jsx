@@ -52,8 +52,8 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     }
   }, [location.pathname]);
 
-  // 4. sidebarNode ------------------------------------------------------------------------------->
-  const sidBarNode = () => (
+  // 7. table ------------------------------------------------------------------------------------->
+  const tableNode = () => (
     <SwipeableDrawer
       open={isSidebarOpen}
       onOpen={() => (setIsSidebarOpen(true))}
@@ -117,7 +117,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {sidBarNode()}
+      {tableNode()}
     </React.Fragment>
   );
 };

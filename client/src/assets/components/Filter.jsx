@@ -1,7 +1,7 @@
 // Filter.jsx
 
 import {React} from "../../import/ImportReacts";
-import {Grid2, Container, Paper, MenuItem, TextField} from "../../import/ImportMuis";
+import {Paper, MenuItem, TextField, Box} from "../../import/ImportMuis";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({
@@ -17,7 +17,7 @@ export const Filter = ({
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <React.Fragment>
+    <Box className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -64,12 +64,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </React.Fragment>
+    </Box>
   );
 
   // 2. exercise ---------------------------------------------------------------------------------->
   const exerciseNode = () => (
-    <React.Fragment>
+    <Box className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -124,12 +124,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </React.Fragment>
+    </Box>
   );
 
   // 3. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
-    <React.Fragment>
+    <Box className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -156,12 +156,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </React.Fragment>
+    </Box>
   );
 
   // 4. money ------------------------------------------------------------------------------------->
   const moneyNode = () => (
-    <React.Fragment>
+    <Box className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -216,77 +216,55 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </React.Fragment>
+    </Box>
   );
 
   // 6. tweak ------------------------------------------------------------------------------------->
   const tweakNode = () => (
-    <React.Fragment>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        id={"part"}
-        name={"part"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={PART}
-        onChange={(e) => {
-          const newPartVal = e.target.value;
-          setPART(newPartVal);
-        }}>
-        <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
-        <MenuItem value={"exercise"}>운동</MenuItem>
-        <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
-        <MenuItem value={"food"}>식사</MenuItem>
-        <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
-        <MenuItem value={"money"}>지출</MenuItem>
-        <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
-        <MenuItem value={"sleep"}>수면</MenuItem>
-      </TextField>
-    </React.Fragment>
+    <TextField
+      select={true}
+      type={"text"}
+      size={"small"}
+      id={"part"}
+      name={"part"}
+      className={"ms-2 me-2"}
+      variant={"outlined"}
+      value={PART}
+      onChange={(e) => {
+        const newPartVal = e.target.value;
+        setPART(newPartVal);
+      }}>
+      <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
+      <MenuItem value={"exercise"}>운동</MenuItem>
+      <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
+      <MenuItem value={"food"}>식사</MenuItem>
+      <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
+      <MenuItem value={"money"}>지출</MenuItem>
+      <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
+      <MenuItem value={"sleep"}>수면</MenuItem>
+    </TextField>
   );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <React.Fragment>
-      <Paper className={"flex-wrapper h-8vh p-sticky bottom-48"} variant={"outlined"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {part === "exercise" && plan === "" ? (
-                <React.Fragment>
-                  {defaultNode()}
-                  {exerciseNode()}
-                </React.Fragment>
-              ) : part === "food" && plan === "" ? (
-                <React.Fragment>
-                  {defaultNode()}
-                  {foodNode()}
-                </React.Fragment>
-              ) : part === "money" && plan === "" ? (
-                <React.Fragment>
-                  {defaultNode()}
-                  {moneyNode()}
-                </React.Fragment>
-              ) : part === "sleep" && plan === "" ? (
-                <React.Fragment>
-                  {defaultNode()}
-                </React.Fragment>
-              ) : part === "tweak" ? (
-                <React.Fragment>
-                  {tweakNode()}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {defaultNode()}
-                </React.Fragment>
-              )}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Paper>
-    </React.Fragment>
+    <Paper className={"flex-wrapper h-8vh p-sticky bottom-48 d-row"} variant={"outlined"}>
+      {part === "exercise" && plan === "" ? ([
+        defaultNode(),
+        exerciseNode()
+      ]) : part === "food" && plan === "" ? ([
+        defaultNode(),
+        foodNode()
+      ]) : part === "money" && plan === "" ? ([
+        defaultNode(),
+        moneyNode()
+      ]) : part === "sleep" && plan === "" ? ([
+        defaultNode()
+      ]) : part === "tweak" ? ([
+        tweakNode()
+      ]) : ([
+        defaultNode()
+      ])}
+    </Paper>
   );
 
   // 15. return ----------------------------------------------------------------------------------->

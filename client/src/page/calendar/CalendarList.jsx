@@ -8,13 +8,6 @@ import {Loading} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
@@ -86,105 +79,89 @@ export const CalendarList = () => {
       return currDate >= startDt && currDate <= endDt;
     };
     const activeLine = (calendarForDates) => (
-      <React.Fragment>
-        {calendarForDates?.map((calendar) => (
-          calendar.calendar_section.map((section) => (
-            <Box key={calendar._id} className={"calendar-filled"}
-              style={{
-                backgroundColor: section.calendar_color
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                SEND.id = calendar._id;
-                SEND.section_id = section._id;
-                SEND.startDt = calendar.calendar_startDt;
-                SEND.endDt = calendar.calendar_endDt;
-                navParam(SEND.toDetail, {
-                  state: SEND
-                });
-              }}
-            >
-              <span className={"calendar-category"}>{section.calendar_title}</span>
-            </Box>
-          ))
-        ))}
-      </React.Fragment>
+      calendarForDates?.map((calendar) => (
+        calendar.calendar_section.map((section) => (
+          <Box key={calendar._id} className={"calendar-filled"}
+            style={{
+              backgroundColor: section.calendar_color
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              SEND.id = calendar._id;
+              SEND.section_id = section._id;
+              SEND.startDt = calendar.calendar_startDt;
+              SEND.endDt = calendar.calendar_endDt;
+              navParam(SEND.toDetail, {
+                state: SEND
+              });
+            }}
+          >
+            <span className={"calendar-category"}>{section.calendar_title}</span>
+          </Box>
+        ))
+      ))
     );
     const unActiveLine = (calendarForDates) => (
-      <React.Fragment>
-        {calendarForDates?.map((calendar) => (
-          calendar.calendar_section.map((section) => (
-            <Box key={calendar._id} className={"calendar-unfilled"}>
-              <span className={"calendar-category"}>{section.calendar_title}</span>
-            </Box>
-          ))
-        ))}
-      </React.Fragment>
+      calendarForDates?.map((calendar) => (
+        calendar.calendar_section.map((section) => (
+          <Box key={calendar._id} className={"calendar-unfilled"}>
+            <span className={"calendar-category"}>{section.calendar_title}</span>
+          </Box>
+        ))
+      ))
     );
     // 7-7. table
     const tableSection = () => (
-      <React.Fragment>
-        <Calendar
-          view={"month"}
-          value={new Date()}
-          showNavigation={true}
-          showNeighboringMonth={true}
-          showDoubleView={false}
-          prevLabel={<CustomIcons name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
-          nextLabel={<CustomIcons name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(locale, date) => (moment(date).format("D"))}
-          formatWeekday={(locale, date) => (moment(date).format("D"))}
-          formatMonth={(locale, date) => (moment(date).format("MM"))}
-          formatYear={(locale, date) => (moment(date).format("YYYY"))}
-          formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
-          formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
-          // 월화수목금토일 한글로 표시
-          formatShortWeekday={(locale, date) => {
-            const day = moment(date).format("d");
-            const week = ["일", "월", "화", "수", "목", "금", "토"];
-            return week[day];
-          }}
-          onClickDay={(date) => {
-            SEND.id = "";
-            SEND.startDt = formatDate(date);
-            SEND.endDt = formatDate(date);
-            SEND.category = "";
-            SEND.toDetail = "/calendar/detail";
-            navParam(SEND.toDetail, {
-              state: SEND
-            });
-          }}
-          tileClassName={({date, view}) => {
-            return "calendar-tile-text";
-          }}
-          tileContent={({date, view}) => {
-            const calendarForDates = OBJECT?.filter((calendar) => (
-              dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
-            ));
-            return (
-              <React.Fragment>
-                {calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)}
-              </React.Fragment>
-            );
-          }}
-        />
-      </React.Fragment>
+      <Calendar
+        view={"month"}
+        value={new Date()}
+        showNavigation={true}
+        showNeighboringMonth={true}
+        showDoubleView={false}
+        prevLabel={<CustomIcons name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
+        nextLabel={<CustomIcons name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
+        prev2Label={null}
+        next2Label={null}
+        formatDay={(locale, date) => (moment(date).format("D"))}
+        formatWeekday={(locale, date) => (moment(date).format("D"))}
+        formatMonth={(locale, date) => (moment(date).format("MM"))}
+        formatYear={(locale, date) => (moment(date).format("YYYY"))}
+        formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
+        formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
+        // 월화수목금토일 한글로 표시
+        formatShortWeekday={(locale, date) => {
+          const day = moment(date).format("d");
+          const week = ["일", "월", "화", "수", "목", "금", "토"];
+          return week[day];
+        }}
+        onClickDay={(date) => {
+          SEND.id = "";
+          SEND.startDt = formatDate(date);
+          SEND.endDt = formatDate(date);
+          SEND.category = "";
+          SEND.toDetail = "/calendar/detail";
+          navParam(SEND.toDetail, {
+            state: SEND
+          });
+        }}
+        tileClassName={({date, view}) => {
+          return "calendar-tile-text";
+        }}
+        tileContent={({date, view}) => {
+          const calendarForDates = OBJECT?.filter((calendar) => (
+            dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
+          ));
+          return (
+            calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)
+          );
+        }}
+      />
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

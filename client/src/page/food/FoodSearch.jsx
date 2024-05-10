@@ -1,11 +1,11 @@
 // FoodSearch.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading, DaySave, Paging} from "../../import/ImportComponents";
+import {Btn, Loading, Paging} from "../../import/ImportComponents";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
@@ -114,11 +114,9 @@ export const FoodSearch = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          음식 List
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        음식 List
+      </Typography>
     );
     // 7-5. handleStorage
     const handleStorage = (param) => {
@@ -131,73 +129,61 @@ export const FoodSearch = () => {
     };
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <TableContainer>
-          <Table className={"border w-min150vw"}>
-            <TableHead>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell width={"40%"}>식품명</TableCell>
-                <TableCell width={"20%"}>1회 제공량</TableCell>
-                <TableCell width={"10%"}>Kcal</TableCell>
-                <TableCell width={"10%"}>Fat</TableCell>
-                <TableCell width={"10%"}>Carb</TableCell>
-                <TableCell width={"10%"}>Protein</TableCell>
+      <TableContainer key={i}>
+        <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell width={"40%"}>식품명</TableCell>
+              <TableCell width={"20%"}>1회 제공량</TableCell>
+              <TableCell width={"10%"}>Kcal</TableCell>
+              <TableCell width={"10%"}>Fat</TableCell>
+              <TableCell width={"10%"}>Carb</TableCell>
+              <TableCell width={"10%"}>Protein</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {OBJECT?.food_section?.map((item, sectionIndex) => (
+              <TableRow key={sectionIndex} className={"table-tbody-tr"}>
+                <TableCell width={"40%"} className={"pointer"} onClick={() => {
+                  handleStorage(item);
+                }}>
+                  {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
+                </TableCell>
+                <TableCell width={"20%"}>
+                  {`${item.food_count}${item.food_serv} (${item.food_gram}g)`}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_kcal}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_fat}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_carb}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_protein}
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {OBJECT?.food_section?.map((item, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  <TableCell className={"pointer"} onClick={() => {
-                    handleStorage(item);
-                  }}>
-                    {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
-                  </TableCell>
-                  <TableCell>
-                    {`${item.food_count}${item.food_serv} (${item.food_gram}g)`}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_kcal}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_fat}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_carb}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_protein}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </React.Fragment>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
     // 7-7. table
     // list 는 높이 지정
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-column"}>
-            {tableFragment()}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-column"}>
+          {tableFragment(0)}
         </Box>
-      </React.Fragment>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

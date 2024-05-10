@@ -281,7 +281,7 @@ export const FoodDashLine = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -301,35 +301,28 @@ export const FoodDashLine = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["kcal", "nut"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["kcal", "nut"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -345,13 +338,13 @@ export const FoodDashLine = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>칼로리/영양소 추이</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

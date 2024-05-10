@@ -62,62 +62,60 @@ export const SleepDashAvg = () => {
   const chartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-          barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            {PART.includes("취침") && (
-              <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("기상") && (
-              <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("수면") && (
-              <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={8} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          {PART.includes("취침") && (
+            <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          {PART.includes("기상") && (
+            <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          {PART.includes("수면") && (
+            <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -125,67 +123,65 @@ export const SleepDashAvg = () => {
   const chartYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-          barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-            <XAxis
-              type={"category"}
-              dataKey={"name"}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-              tickLine={false}
-              axisLine={{stroke:"#e0e0e0"}}
-              tick={{fill:"#666", fontSize:14}}
-            />
-            {PART.includes("취침") && (
-              <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("기상") && (
-              <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("수면") && (
-              <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
-              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-              contentStyle={{
-                borderRadius:"10px",
-                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-                padding:"10px",
-                border:"none",
-                background:"#fff",
-                color:"#666"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
-              }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={8} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          <YAxis
+            type={"number"}
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+            tickLine={false}
+            axisLine={{stroke:"#e0e0e0"}}
+            tick={{fill:"#666", fontSize:14}}
+          />
+          {PART.includes("취침") && (
+            <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          {PART.includes("기상") && (
+            <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          {PART.includes("수면") && (
+            <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+          )}
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -205,36 +201,28 @@ export const SleepDashAvg = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["취침", "기상", "수면"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-                  if (PART.includes(key)) {
-                    setPART(PART?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setPART([...PART, key]);
-                  }
-                }
-                }/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["취침", "기상", "수면"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+            if (PART.includes(key)) {
+              setPART(PART?.filter((item) => (item !== key)));
+            }
+            else {
+              setPART([...PART, key]);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -250,7 +238,7 @@ export const SleepDashAvg = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>
@@ -258,7 +246,7 @@ export const SleepDashAvg = () => {
               </Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

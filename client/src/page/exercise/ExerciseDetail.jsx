@@ -1,7 +1,7 @@
 // ExerciseDetail.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
@@ -130,83 +130,77 @@ export const ExerciseDetail = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          운동 Detail
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        운동 Detail
+      </Typography>
     );
     // 7-2. date
     const dateSection = () => (
-      <React.Fragment>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DesktopDatePicker
-            label={"날짜"}
-            value={moment(DATE.startDt, "YYYY-MM-DD")}
-            format={"YYYY-MM-DD"}
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            slotProps={{
-              textField: {
-                sx: {
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+        <DesktopDatePicker
+          label={"날짜"}
+          value={moment(DATE.startDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          views={["day"]}
+          slotProps={{
+            textField: {
+              sx: {
+                width: "220px",
+              },
+            },
+            layout: {
+              sx: {
+                "& .MuiPickersLayout-contentWrapper": {
                   width: "220px",
+                  height: "280px",
+                },
+                "& .MuiDateCalendar-root": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiDayCalendar-slideTransition": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiPickersDay-root": {
+                  width: "30px",
+                  height: "28px",
                 },
               },
-              layout: {
-                sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "280px",
-                  },
-                  "& .MuiDateCalendar-root": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    width: "210px",
-                    height: "270px",
-                  },
-                  "& .MuiPickersDay-root": {
-                    width: "30px",
-                    height: "28px",
-                  },
-                },
-              },
-            }}
-            onChange={(day) => {
-              setDATE((prev) => ({
-                ...prev,
-                startDt: moment(day).format("YYYY-MM-DD"),
-                endDt: moment(day).format("YYYY-MM-DD")
-              }));
-            }}
-          />
-        </LocalizationProvider>
-      </React.Fragment>
+            },
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(day).format("YYYY-MM-DD"),
+              endDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
+        />
+      </LocalizationProvider>
     );
     // 7-3. count
     const countSection = () => (
-      <React.Fragment>
-        <TextField
-          type={"text"}
-          id={"sectionCnt"}
-          label={"항목수"}
-          variant={"outlined"}
-          size={"small"}
-          className={"w-220"}
-          value={COUNT?.sectionCnt}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
-            )
-          }}
-        />
-      </React.Fragment>
+      <TextField
+        type={"text"}
+        id={"sectionCnt"}
+        label={"항목수"}
+        variant={"outlined"}
+        size={"small"}
+        className={"w-220"}
+        value={COUNT?.sectionCnt}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+          )
+        }}
+      />
     );
     // 7-4. total
     const totalSection = () => (
-      <React.Fragment>
+      <Card variant={"outlined"} className={"p-20"}>
         <Box className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -255,11 +249,11 @@ export const ExerciseDetail = () => {
             }}
           />
         </Box>
-      </React.Fragment>
+      </Card>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <React.Fragment>
+      <Box className={"d-flex"}>
         <IconButton size={"small"} color={"primary"}>
           <Badge
             badgeContent={index + 1}
@@ -267,197 +261,178 @@ export const ExerciseDetail = () => {
             showZero={true}
           />
         </IconButton>
-        <PopDown
-          elementId={`pop-${index}`}
-          contents={
-            <React.Fragment>
-              <Box className={"d-block p-10"}>
-                <Box className={"d-left mt-10 mb-10"} onClick={() => {
-                  flowDelete(id, sectionId);
-                }}>
-                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>삭제</Typography>
-                </Box>
-                <Box className={"d-left mt-10 mb-10"} onClick={() => {
-                  SEND.startDt = DATE.startDt;
-                  SEND.endDt = DATE.endDt;
-                  navParam(SEND.toUpdate, {
-                    state: SEND,
-                  });
-                }}>
-                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>수정</Typography>
-                </Box>
-                <Box className={"d-left mt-10 mb-10"}>
-                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>더보기</Typography>
-                </Box>
-              </Box>
-            </React.Fragment>
-          }
-        >
-        {popProps => (
-          <React.Fragment>
+        <PopDown elementId={`pop-${index}`} contents={
+          <Box className={"d-block p-10"}>
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              flowDelete(id, sectionId);
+            }}>
+              <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>삭제</Typography>
+            </Box>
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              SEND.startDt = DATE.startDt;
+              SEND.endDt = DATE.endDt;
+              navParam(SEND.toUpdate, {
+                state: SEND,
+              });
+            }}>
+              <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>수정</Typography>
+            </Box>
+            <Box className={"d-left mt-10 mb-10"}>
+              <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>더보기</Typography>
+            </Box>
+          </Box>
+        }>
+          {popProps => (
             <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
               popProps.openPopup(e.currentTarget)
             }}>
               <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
             </IconButton>
-          </React.Fragment>
-        )}
+          )}
         </PopDown>
-      </React.Fragment>
+      </Box>
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"}>
-          <Box className={"d-between mt-n15 mb-20"}>
-            {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"부위"}
-              size={"small"}
-              value={OBJECT?.exercise_section[i]?.exercise_part_val}
-              variant={"outlined"}
-              className={"w-100 me-10"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-            <TextField
-              select={false}
-              label={"종목"}
-              size={"small"}
-              value={OBJECT?.exercise_section[i]?.exercise_title_val}
-              variant={"outlined"}
-              className={"w-100 ms-10"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"세트"}
-              size={"small"}
-              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
-              variant={"outlined"}
-              className={""}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-            <TextField
-              select={false}
-              label={"횟수"}
-              size={"small"}
-              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
-              variant={"outlined"}
-              className={""}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-            <TextField
-              select={false}
-              label={"무게"}
-              size={"small"}
-              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
-              variant={"outlined"}
-              className={""}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-            <TextField
-              select={false}
-              label={"휴식"}
-              size={"small"}
-              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rest).format('0,0')} sec`}
-              variant={"outlined"}
-              className={""}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              label={"유산소"}
-              size={"small"}
-              value={OBJECT?.exercise_section[i]?.exercise_cardio}
-              variant={"outlined"}
-              className={"w-220"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-            />
-          </Box>
-        </Card>
-      </React.Fragment>
+      <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Box className={"d-between mt-n15 mb-20"}>
+          {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"부위"}
+            size={"small"}
+            value={OBJECT?.exercise_section[i]?.exercise_part_val}
+            variant={"outlined"}
+            className={"w-100 me-10"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"종목"}
+            size={"small"}
+            value={OBJECT?.exercise_section[i]?.exercise_title_val}
+            variant={"outlined"}
+            className={"w-100 ms-10"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"세트"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
+            variant={"outlined"}
+            className={""}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"횟수"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
+            variant={"outlined"}
+            className={""}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"무게"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
+            variant={"outlined"}
+            className={""}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"휴식"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rest).format('0,0')} sec`}
+            variant={"outlined"}
+            className={""}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"유산소"}
+            size={"small"}
+            value={OBJECT?.exercise_section[i]?.exercise_cardio}
+            variant={"outlined"}
+            className={"w-220"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Box>
+      </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-center mb-20"}>
-            {dateSection()}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            {countSection()}
-          </Box>
-          <Box className={"d-column mb-20"}>
-            {totalSection()}
-          </Box>
-          <Box className={"d-column"}>
-            {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-center p-10"}>
+          {titleSection()}
         </Box>
-      </React.Fragment>
+        <Divider variant={"middle"} className={"mb-20"} />
+        <Box className={"d-center mb-20"}>
+          {dateSection()}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          {countSection()}
+        </Box>
+        <Box className={"d-column mb-20"}>
+          {totalSection()}
+        </Box>
+        <Box className={"d-column"}>
+          {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+        </Box>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

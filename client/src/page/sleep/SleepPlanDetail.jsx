@@ -117,29 +117,25 @@ export const SleepPlanDetail = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          수면 계획 Detail
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        수면 계획 Detail
+      </Typography>
     );
     // 7-2. date
     const dateSection = () => (
-      <React.Fragment>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DesktopDatePicker
-            label={"날짜"}
-            value={moment(DATE.startDt, "YYYY-MM-DD")}
-            format={"YYYY-MM-DD"}
-            timezone={"Asia/Seoul"}
-            readOnly={true}
-          />
-        </LocalizationProvider>
-      </React.Fragment>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+        <DesktopDatePicker
+          label={"날짜"}
+          value={moment(DATE.startDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          readOnly={true}
+        />
+      </LocalizationProvider>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <React.Fragment>
+      <Box className={"d-flex"}>
         <IconButton size={"small"} color={"primary"}>
           <Badge
             badgeContent={index + 1}
@@ -147,9 +143,7 @@ export const SleepPlanDetail = () => {
             showZero={true}
           />
         </IconButton>
-        <PopDown
-          elementId={`pop-${index}`}
-          contents={
+        <PopDown elementId={`pop-${index}`} contents={
             <React.Fragment>
               <Box className={"d-block p-10"}>
                 <Box className={"d-left mt-10 mb-10"} onClick={() => {
@@ -177,159 +171,145 @@ export const SleepPlanDetail = () => {
           }
         >
         {popProps => (
-          <React.Fragment>
-            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
-            }}>
-              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-            </IconButton>
-          </React.Fragment>
+          <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+            popProps.openPopup(e.currentTarget)
+          }}>
+            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+          </IconButton>
         )}
         </PopDown>
-      </React.Fragment>
+      </Box>
     );
     // 7-6. table
-    const tableFragment = () => (
-      <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
-          <Box className={"d-between mt-n15 mb-20"}>
-            {dropdownSection(OBJECT?._id, "", 0)}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DesktopTimePicker
-                label={"취침 목표"}
-                minutesStep={1}
-                value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-                format={"HH:mm"}
-                timezone={"Asia/Seoul"}
-                views={['hours', 'minutes']}
-                slotProps={{
-                  textField: {
-                    sx: {
+    const tableFragment = (i) => (
+      <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Box className={"d-between mt-n15 mb-20"}>
+          {dropdownSection(OBJECT?._id, "", 0)}
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DesktopTimePicker
+              label={"취침 목표"}
+              minutesStep={1}
+              value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+              format={"HH:mm"}
+              timezone={"Asia/Seoul"}
+              views={['hours', 'minutes']}
+              slotProps={{
+                textField: {
+                  sx: {
+                    width: "220px",
+                  },
+                },
+                layout: {
+                  sx: {
+                    "& .MuiPickersLayout-contentWrapper": {
                       width: "220px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-root": {
+                      width: "77px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item": {
+                      fontSize: "0.8rem",
+                      width: "65px",
+                      minHeight: "20px",
+                      borderRadius: "8px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                      color: "#fff",
+                      backgroundColor: "#164a60",
                     },
                   },
-                  layout: {
-                    sx: {
-                      "& .MuiPickersLayout-contentWrapper": {
-                        width: "220px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-root": {
-                        width: "77px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item": {
-                        fontSize: "0.8rem",
-                        width: "65px",
-                        minHeight: "20px",
-                        borderRadius: "8px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                        color: "#fff",
-                        backgroundColor: "#164a60",
-                      },
-                    },
-                  },
-                }}
-                readOnly={true}
-              />
-            </LocalizationProvider>
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DesktopTimePicker
-                label={"기상 목표"}
-                minutesStep={1}
-                value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
-                format={"HH:mm"}
-                timezone={"Asia/Seoul"}
-                views={['hours', 'minutes']}
-                slotProps={{
-                  textField: {
-                    sx: {
-                      width: "220px",
-                    },
-                  },
-                  layout: {
-                    sx: {
-                      "& .MuiPickersLayout-contentWrapper": {
-                        width: "220px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-root": {
-                        width: "77px",
-                        height: "180px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item": {
-                        fontSize: "0.8rem",
-                        width: "65px",
-                        minHeight: "20px",
-                        borderRadius: "8px",
-                      },
-                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                        color: "#fff",
-                        backgroundColor: "#164a60",
-                      },
-                    },
-                  },
-                }}
-                readOnly={true}
-              />
-            </LocalizationProvider>
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              label={"수면 목표"}
-              type={"text"}
-              size={"small"}
-              id={"sleep_time"}
-              name={"sleep_time"}
-              variant={"outlined"}
-              className={"w-220"}
-              value={OBJECT?.sleep_plan_time}
-              InputProps={{
-                readOnly: true,
-                endAdornment: (
-                  <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
-                )
+                },
               }}
+              readOnly={true}
             />
-          </Box>
-        </Card>
-      </React.Fragment>
+          </LocalizationProvider>
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DesktopTimePicker
+              label={"기상 목표"}
+              minutesStep={1}
+              value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+              format={"HH:mm"}
+              timezone={"Asia/Seoul"}
+              views={['hours', 'minutes']}
+              slotProps={{
+                textField: {
+                  sx: {
+                    width: "220px",
+                  },
+                },
+                layout: {
+                  sx: {
+                    "& .MuiPickersLayout-contentWrapper": {
+                      width: "220px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-root": {
+                      width: "77px",
+                      height: "180px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item": {
+                      fontSize: "0.8rem",
+                      width: "65px",
+                      minHeight: "20px",
+                      borderRadius: "8px",
+                    },
+                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                      color: "#fff",
+                      backgroundColor: "#164a60",
+                    },
+                  },
+                },
+              }}
+              readOnly={true}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            label={"수면 목표"}
+            type={"text"}
+            size={"small"}
+            id={"sleep_time"}
+            name={"sleep_time"}
+            variant={"outlined"}
+            className={"w-220"}
+            value={OBJECT?.sleep_plan_time}
+            InputProps={{
+              readOnly: true,
+              endAdornment: (
+                <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+              )
+            }}
+          />
+        </Box>
+      </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-center mb-20"}>
-            {dateSection()}
-          </Box>
-          <Box className={"d-column"}>
-            {tableFragment()}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-center p-10"}>
+          {titleSection()}
         </Box>
-      </React.Fragment>
+        <Divider variant={"middle"} className={"mb-20"} />
+        <Box className={"d-center mb-20"}>
+          {dateSection()}
+        </Box>
+        <Box className={"d-column"}>
+          {tableFragment(0)}
+        </Box>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 

@@ -224,43 +224,41 @@ export const MoneyDashPie = () => {
   const chartInToday = () => {
     const COLORS_IN_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_IN_TODAY}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderInToday}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_IN_TODAY?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_IN_TODAY[index % COLORS_IN_TODAY.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_IN_TODAY}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderInToday}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_IN_TODAY?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_IN_TODAY[index % COLORS_IN_TODAY.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -268,43 +266,41 @@ export const MoneyDashPie = () => {
   const chartOutToday = () => {
     const COLORS_OUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_OUT_TODAY}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderOutToday}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#82ca9d"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_OUT_TODAY?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_OUT_TODAY[index % COLORS_OUT_TODAY.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_OUT_TODAY}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderOutToday}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#82ca9d"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_OUT_TODAY?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_OUT_TODAY[index % COLORS_OUT_TODAY.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -312,43 +308,41 @@ export const MoneyDashPie = () => {
   const chartInWeek = () => {
     const COLORS_IN_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_IN_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderInWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_IN_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_IN_WEEK[index % COLORS_IN_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_IN_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderInWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_IN_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_IN_WEEK[index % COLORS_IN_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -356,43 +350,41 @@ export const MoneyDashPie = () => {
   const chartOutWeek = () => {
     const COLORS_OUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_OUT_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderOutWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#82ca9d"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_OUT_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_OUT_WEEK[index % COLORS_OUT_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_OUT_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderOutWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#82ca9d"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_OUT_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_OUT_WEEK[index % COLORS_OUT_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -400,92 +392,88 @@ export const MoneyDashPie = () => {
   const chartInMonth = () => {
     const COLORS_IN_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_IN_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderInMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_IN_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_IN_MONTH[index % COLORS_IN_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_IN_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderInMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_IN_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_IN_MONTH[index % COLORS_IN_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+  );
   };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
   const chartOutMonth = () => {
     const COLORS_OUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_OUT_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderOutMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#82ca9d"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_OUT_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_OUT_MONTH[index % COLORS_OUT_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-            <Legend
-              iconType={"circle"}
-              verticalAlign={"bottom"}
-              align={"center"}
-              wrapperStyle={{
-                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_OUT_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderOutMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#82ca9d"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_OUT_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_OUT_MONTH[index % COLORS_OUT_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -506,35 +494,28 @@ export const MoneyDashPie = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["in", "out"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["in", "out"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -550,13 +531,13 @@ export const MoneyDashPie = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>수입/지출 비율</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>

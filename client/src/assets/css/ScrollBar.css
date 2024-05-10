@@ -2,6 +2,7 @@
 ::-webkit-scrollbar {
   width: 5px !important;
   height: 5px !important;
+  z-index: 100000;
 }
 
 /* 스크롤바 썸(움직이는 부분)의 기본 스타일 */

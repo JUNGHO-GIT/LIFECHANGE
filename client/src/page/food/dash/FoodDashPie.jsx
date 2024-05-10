@@ -224,35 +224,33 @@ export const FoodDashPie = () => {
   const chartKcalToday = () => {
     const COLORS_KCAL_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_KCAL_TODAY}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderKcalToday}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_KCAL_TODAY?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_KCAL_TODAY[index % COLORS_KCAL_TODAY.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_KCAL_TODAY}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderKcalToday}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_KCAL_TODAY?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_KCAL_TODAY[index % COLORS_KCAL_TODAY.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -260,35 +258,33 @@ export const FoodDashPie = () => {
   const chartNutToday = () => {
     const COLORS_NUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_NUT_TODAY}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderNutToday}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_NUT_TODAY?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_NUT_TODAY[index % COLORS_NUT_TODAY.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_NUT_TODAY}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderNutToday}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_NUT_TODAY?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_NUT_TODAY[index % COLORS_NUT_TODAY.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -296,35 +292,33 @@ export const FoodDashPie = () => {
   const chartKcalWeek = () => {
     const COLORS_KCAL_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_KCAL_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderKcalWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_KCAL_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_KCAL_WEEK[index % COLORS_KCAL_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_KCAL_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderKcalWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_KCAL_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_KCAL_WEEK[index % COLORS_KCAL_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -332,35 +326,33 @@ export const FoodDashPie = () => {
   const chartNutWeek = () => {
     const COLORS_NUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_NUT_WEEK}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderNutWeek}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_NUT_WEEK?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_NUT_WEEK[index % COLORS_NUT_WEEK.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_NUT_WEEK}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderNutWeek}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_NUT_WEEK?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_NUT_WEEK[index % COLORS_NUT_WEEK.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -368,35 +360,33 @@ export const FoodDashPie = () => {
   const chartKcalMonth = () => {
     const COLORS_KCAL_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_KCAL_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderKcalMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_KCAL_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_KCAL_MONTH[index % COLORS_KCAL_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_KCAL_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderKcalMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_KCAL_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_KCAL_MONTH[index % COLORS_KCAL_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
@@ -404,40 +394,38 @@ export const FoodDashPie = () => {
   const chartNutMonth = () => {
     const COLORS_NUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={350}>
-          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-            <Pie
-              data={OBJECT_NUT_MONTH}
-              cx={"50%"}
-              cy={"50%"}
-              label={renderNutMonth}
-              labelLine={false}
-              outerRadius={radius}
-              fill={"#8884d8"}
-              dataKey={"value"}
-              minAngle={15}
-            >
-              {OBJECT_NUT_MONTH?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_NUT_MONTH[index % COLORS_NUT_MONTH.length]} />
-              ))}
-            </Pie>
-            <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-              contentStyle={{
-                backgroundColor:"rgba(255, 255, 255, 0.8)",
-                border:"none",
-                borderRadius:"10px"
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </React.Fragment>
+      <ResponsiveContainer width={"100%"} height={350}>
+        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+          <Pie
+            data={OBJECT_NUT_MONTH}
+            cx={"50%"}
+            cy={"50%"}
+            label={renderNutMonth}
+            labelLine={false}
+            outerRadius={radius}
+            fill={"#8884d8"}
+            dataKey={"value"}
+            minAngle={15}
+          >
+            {OBJECT_NUT_MONTH?.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS_NUT_MONTH[index % COLORS_NUT_MONTH.length]} />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            contentStyle={{
+              backgroundColor:"rgba(255, 255, 255, 0.8)",
+              border:"none",
+              borderRadius:"10px"
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection1 = () => (
+  const dropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -458,35 +446,28 @@ export const FoodDashPie = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const DropdownSection3 = () => (
-    <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["kcal", "nut"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
-        {popProps => (
-          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
-      </PopDown>
-    </React.Fragment>
+  const dropdownSection3 = () => (
+    <PopDown elementId={"popChild"} contents={
+      ["kcal", "nut"]?.map((key, index) => (
+        <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+            if (LINE === key) {
+              setLINE("");
+            }
+            else {
+              setLINE(key);
+            }
+          }}/>} label={key} labelPlacement={"start"}>
+          </FormControlLabel>
+        </FormGroup>
+      ))
+    }>
+      {popProps => (
+        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+        </IconButton>
+      )}
+    </PopDown>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
@@ -499,16 +480,16 @@ export const FoodDashPie = () => {
   return (
     <React.Fragment>
       <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
+        <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <DropdownSection1/>
+              {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <Typography variant={"h6"} className={"dash-title"}>칼로리/영양소 비율</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              <DropdownSection3/>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
@@ -532,8 +513,8 @@ export const FoodDashPie = () => {
                 LOADING ? loadingNode() : chartNutMonth()
               )}
             </Grid2>
-            </Grid2>
-          </Container>
+          </Grid2>
+        </Container>
       </Paper>
     </React.Fragment>
   );

@@ -1,11 +1,11 @@
 // MoneyList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
+import {moment, axios, numeral} from "../../import/ImportLibs";
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
+import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
@@ -116,86 +116,72 @@ export const MoneyList = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <React.Fragment>
-        <Typography variant={"h5"} fontWeight={500}>
-          재무 List
-        </Typography>
-      </React.Fragment>
+      <Typography variant={"h5"} fontWeight={500}>
+        재무 List
+      </Typography>
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <TableContainer>
-          <Table className={"border"}>
-            <TableHead>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>날짜</TableCell>
-                <TableCell>분류</TableCell>
-                <TableCell>항목</TableCell>
-                <TableCell>금액</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {OBJECT?.map((item, index) => (
-                item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                      {sectionIndex === 0 && (
-                        <TableCell rowSpan={Math.min(item.money_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.money_startDt;
-                          SEND.endDt = item.money_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.money_startDt?.substring(5, 10)}
-                          {item.money_section.length > 3 && (<Box>더보기</Box>)}
-                        </TableCell>
-                      )}
-                      <TableCell>
-                        {section.money_part_val}
+      <TableContainer key={i}>
+        <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>분류</TableCell>
+              <TableCell>항목</TableCell>
+              <TableCell>금액</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {OBJECT?.map((item, index) => (
+              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
+                <React.Fragment key={sectionIndex}>
+                  <TableRow key={sectionIndex} className={"table-tbody-tr"}>
+                    {sectionIndex === 0 && (
+                      <TableCell rowSpan={Math.min(item.money_section.length, 3)}
+                      className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.money_startDt;
+                        SEND.endDt = item.money_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.money_startDt?.substring(5, 10)}
+                        {item.money_section.length > 3 && (<Box>더보기</Box>)}
                       </TableCell>
-                      <TableCell>
-                        {section.money_title_val}
-                      </TableCell>
-                      <TableCell>
-                        {`₩ ${numeral(section.money_amount).format('0,0')}`}
-                      </TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                ))
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </React.Fragment>
+                    )}
+                    <TableCell>
+                      {section.money_part_val}
+                    </TableCell>
+                    <TableCell>
+                      {section.money_title_val}
+                    </TableCell>
+                    <TableCell>
+                      {`₩ ${numeral(section.money_amount).format('0,0')}`}
+                    </TableCell>
+                  </TableRow>
+                </React.Fragment>
+              ))
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
     // 7-7. table
     // list 는 높이 지정
     const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-column"}>
-            {tableFragment()}
-          </Box>
+      <Box className={"block-wrapper h-min75vh"}>
+        <Box className={"d-column"}>
+          {tableFragment(0)}
         </Box>
-      </React.Fragment>
+      </Box>
     );
     // 7-8. return
     return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        {tableSection()}
+      </Paper>
     );
   };
 
