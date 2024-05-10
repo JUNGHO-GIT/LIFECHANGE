@@ -41,8 +41,6 @@
   border: none;
   border-radius: 0.5rem;
   background-color: #fff;
-  overflow-x: hidden;
-  overflow-y: hidden;
   animation: fadeIn 1.0s !important;
   z-index: 999;
 }
@@ -60,7 +58,6 @@
   border: none;
   border-radius: 0.5rem;
   background-color: #fff;
-  overflow-x: hidden;
   animation: fadeIn 1.0s !important;
   z-index: 999;
 }

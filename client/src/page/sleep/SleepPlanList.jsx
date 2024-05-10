@@ -207,10 +207,6 @@ export const SleepPlanList = () => {
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-column"}>
             {tableFragment()}
           </Box>

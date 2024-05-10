@@ -25,7 +25,6 @@ import "./assets/css/Jstyle.css";
 
 import {CalendarList} from "./page/calendar/CalendarList";
 import {CalendarDetail} from "./page/calendar/CalendarDetail";
-import {CalendarTest} from "./page/calendar/CalendarTest";
 
 import {ExercisePlanList} from "./page/exercise/ExercisePlanList";
 import {ExercisePlanDetail} from "./page/exercise/ExercisePlanDetail";
@@ -72,7 +71,6 @@ const Calendar = () => (
     <Routes>
       <Route path="/list" element={<CalendarList />} />
       <Route path="/detail" element={<CalendarDetail />} />
-      <Route path="/test" element={<CalendarTest />} />
     </Routes>
   </React.Fragment>
 );

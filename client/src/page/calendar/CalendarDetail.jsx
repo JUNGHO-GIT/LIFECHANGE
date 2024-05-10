@@ -1,7 +1,7 @@
 // CalendarDetail.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {axios, NumericFormat, InputMask} from "../../import/ImportLibs";
+import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {DaySave, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
@@ -33,6 +33,17 @@ export const CalendarDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const colors = [
+    "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
+  ];
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -51,14 +62,6 @@ export const CalendarDetail = () => {
     dayEndOpen: false,
     dayOpen: false
   });
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -143,198 +146,303 @@ export const CalendarDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const colors = [
-      "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
-    ];
-    const handlerCount = (e) => {
-    const newCount = Number(e);
-      const defaultSection = {
-        calendar_part_idx: 1,
-        calendar_part_val: "일정",
-        calendar_title : "",
-        calendar_color: "#000000",
-        calendar_detail: ""
-      };
-      setCOUNT((prev) => ({
-        ...prev,
-        sectionCnt: newCount
-      }));
-      if (newCount > 0) {
-        let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-          idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : {...defaultSection}
-        ));
-        setOBJECT((prev) => ({
-          ...prev,
-          calendar_section: updatedSection
-        }));
-      }
-      else {
-        setOBJECT((prev) => ({
-          ...prev,
-          calendar_section: []
-        }));
-      }
-    };
-    const countNode = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"input-group"}>
-          <span className={"input-group-text"}>섹션 갯수</span>
-          <NumericFormat
-            min={0}
-            max={10}
-            minLength={1}
-            maxLength={2}
-            datatype={"number"}
-            displayType={"input"}
-            id={"sectionCnt"}
-            name={"sectionCnt"}
-            className={"form-control"}
-            disabled={false}
-            thousandSeparator={false}
-            fixedDecimalScale={true}
-            value={Math.min(10, COUNT?.sectionCnt)}
-            onValueChange={(values) => {
-              const limitedValue = Math.min(10, parseInt(values?.value));
-              handlerCount(limitedValue.toString());
-            }}
-          />
-        </Box>
+        <Typography variant={"h5"} fontWeight={500}>
+          달력 Detail
+        </Typography>
       </React.Fragment>
     );
+    // 7-2. date
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            views={["day"]}
+            slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    // 7-3. count
+    const countSection = () => {
+      const handlerCount = (e) => {
+        const newCount = Number(e);
+        const defaultSection = {
+          calendar_part_idx: 0,
+          calendar_part_val: "전체",
+          calendar_title: "",
+          calendar_color: "#000000",
+          calendar_detail: ""
+        };
+        setCOUNT((prev) => ({
+          ...prev,
+          sectionCnt: newCount
+        }));
+        if (newCount > 0) {
+          let updatedSection = Array(newCount).fill(null).map((_, idx) => (
+            idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
+          ));
+          setOBJECT((prev) => ({
+            ...prev,
+            calendar_section: updatedSection
+          }));
+        }
+        else {
+          setOBJECT((prev) => ({
+            ...prev,
+            calendar_section: []
+          }));
+        }
+      };
+      return (
+        <React.Fragment>
+          <PopUp elementId={"sectionCnt"} contents={
+            <Typography variant={"body2"} className={"p-10"}>
+              0이상 10이하의 숫자만 입력하세요.
+            </Typography>
+          }>
+            {popProps => (
+              <TextField
+                type={"text"}
+                id={"sectionCnt"}
+                label={"항목수"}
+                variant={"outlined"}
+                size={"small"}
+                className={"w-220"}
+                value={COUNT?.sectionCnt}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: (
+                    <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  )
+                }}
+                onChange={(e) => {
+                  const newValInt = Number(e.target.value);
+                  const newValStr = String(e.target.value);
+                  if (newValInt < 0) {
+                    popProps.openPopup(e.currentTarget);
+                  }
+                  else if (newValInt > 10) {
+                    popProps.openPopup(e.currentTarget);
+                  }
+                  else if (newValStr === "") {
+                    handlerCount("");
+                  }
+                  else if (isNaN(newValInt) || newValStr === "NaN") {
+                    handlerCount("0");
+                  }
+                  else if (newValStr.startsWith("0")) {
+                    handlerCount(newValStr.replace(/^0+/, ""));
+                  }
+                  else {
+                    handlerCount(newValStr);
+                  }
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              />
+            )}
+          </PopUp>
+        </React.Fragment>
+      );
+    };
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>파트</span>
-              <select
-                id={`calendar_part_idx-${i}`}
-                name={`calendar_part_idx-${i}`}
-                className={"form-select"}
-                value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-                onChange={(e) => {
-                  const newIndex = Number(e.target.value);
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_part_idx: newIndex,
-                        calendar_part_val: calendarArray[newIndex]?.calendar_part
-                      } : item
-                    ))
-                  }));
-                }}
-              >
-                {calendarArray?.map((item, idx) => (
-                  <option key={idx} value={idx}>
-                    {item.calendar_part}
-                  </option>
-                ))}
-              </select>
-            </Box>
-          </Grid2>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>색상</span>
-              <select
-                id={`calendar_color-${i}`}
-                name={`calendar_color-${i}`}
-                className={"form-select"}
-                value={OBJECT?.calendar_section[i]?.calendar_color}
-                style={{color: OBJECT?.calendar_section[i]?.calendar_color}}
-                onChange={(e) => {
-                  const newColor = e.target.value;
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_color: newColor
-                      } : item
-                    ))
-                  }));
-                }}
-              >
-                {colors.map((color, index) => (
-                  <option key={index} value={color} style={{color: color}}>
-                    ● {color}
-                  </option>
-                ))}
-              </select>
-            </Box>
-          </Grid2>
-        </Grid2>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>제목</span>
-              <InputMask
-                mask={""}
-                placeholder={"제목"}
-                id={`calendar_title-${i}`}
-                name={`calendar_title-${i}`}
-                className={"form-control"}
-                maskChar={null}
-                value={OBJECT?.calendar_section[i]?.calendar_title}
-                onChange={(e) => {
-                  const newTitle = e.target.value;
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_title: newTitle
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>내용</span>
-              <InputMask
-                mask={""}
-                placeholder={"내용"}
-                id={`calendar_detail-${i}`}
-                name={`calendar_detail-${i}`}
-                className={"form-control"}
-                maskChar={null}
-                value={OBJECT?.calendar_section[i]?.calendar_detail}
-                onChange={(e) => {
-                  const newDetail = e.target.value;
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_detail: newDetail
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-        </Grid2>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={"파트"}
+              id={`calendar_part_val-${i}`}
+              name={`calendar_part_val-${i}`}
+              variant={"outlined"}
+              className={"w-100 me-10"}
+              value={OBJECT?.calendar_section[i]?.calendar_part_idx}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_part_idx: newIndex,
+                      calendar_part_val: calendarArray[newIndex]?.calendar_part
+                    } : item
+                  ))
+                }));
+              }}
+            >
+              {calendarArray.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  {item.calendar_part}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={"색상"}
+              id={`calendar_color-${i}`}
+              name={`calendar_color-${i}`}
+              variant={"outlined"}
+              className={"w-100 ms-10"}
+              value={OBJECT?.calendar_section[i]?.calendar_color}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const newColor = e.target.value;
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_color: newColor
+                    } : item
+                  ))
+                }));
+              }}
+            >
+              {colors.map((item, idx) => (
+                <MenuItem key={idx} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"제목"}
+              id={`calendar_title-${i}`}
+              name={`calendar_title-${i}`}
+              variant={"outlined"}
+              className={"w-220"}
+              value={OBJECT?.calendar_section[i]?.calendar_title}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const newTitle = e.target.value;
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_title: newTitle
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"상세"}
+              id={`calendar_detail-${i}`}
+              name={`calendar_detail-${i}`}
+              variant={"outlined"}
+              className={"w-220"}
+              value={OBJECT?.calendar_section[i]?.calendar_detail}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const newDetail = e.target.value;
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_detail: newDetail
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          </Box>
+        </Card>
       </React.Fragment>
     );
     // 7-7. table
     const tableSection = () => (
       <React.Fragment>
-        {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {countSection()}
+          </Box>
+          <Box className={"d-column"}>
+            {OBJECT?.calendar_section.map((item, i) => tableFragment(i))}
+          </Box>
+        </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Card className={"content-wrapper"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {countNode()}
                 {tableSection()}
               </Grid2>
             </Grid2>

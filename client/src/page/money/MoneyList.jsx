@@ -139,7 +139,7 @@ export const MoneyList = () => {
               {OBJECT?.map((item, index) => (
                 item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
                   <React.Fragment key={sectionIndex}>
-                    <TableRow className={"table-tbody-tr"}>
+                    <TableRow key={sectionIndex} className={"table-tbody-tr"}>
                       {sectionIndex === 0 && (
                         <TableCell rowSpan={Math.min(item.money_section.length, 3)}
                         className={"pointer"} onClick={() => {
@@ -176,10 +176,6 @@ export const MoneyList = () => {
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-column"}>
             {tableFragment()}
           </Box>

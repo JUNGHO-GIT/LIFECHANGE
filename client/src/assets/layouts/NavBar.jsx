@@ -2,7 +2,7 @@
 
 import {React, useState, useLocation, useEffect} from "../../import/ImportReacts";
 import {dataArray} from "../../import/ImportLogics";
-import {Grid2, Container, Card, Paper, Box, Menu, MenuItem} from "../../import/ImportMuis";
+import {Grid2, Container, Card, Paper, Box, Typography} from "../../import/ImportMuis";
 import {smile1, smile2, smile3, smile4} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>
@@ -52,19 +52,19 @@ export const NavBar = () => {
       <Paper className={"flex-wrapper h-6vh p-sticky top-35"} variant={"outlined"}>
         <Container className={"p-5"}>
           <Grid2 container spacing={3}>
-            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-left"}>
-              <span className={"nav-icon-text"}>Total</span>
-              <span className={"w-1vw"}></span>
-              <span className={"nav-image-smile"}>{makeIcon("total")}</span>
-            </Grid2>
-            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-center"}>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center ps-0 pe-0"}>
               {!preFix ? (
                 <span className={"nav-text"}>Home</span>
               ) : (
                 <span className={"nav-text"}>{preFix} / {subFix}</span>
               )}
             </Grid2>
-            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-right"}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-left ps-0 pe-0"}>
+              <span className={"nav-icon-text"}>Total</span>
+              <span className={"w-1vw"}></span>
+              <span className={"nav-image-smile"}>{makeIcon("total")}</span>
+            </Grid2>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-left ps-0 pe-0"}>
               <span className={"nav-icon-text"}>{`${preFix}`}</span>
               <span className={"w-1vw"}></span>
               <span className={"nav-image-smile"}>{makeIcon("sub")}</span>
