@@ -113,7 +113,7 @@ export const MoneyList = () => {
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -224,7 +224,7 @@ export const MoneyList = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam}
@@ -233,7 +233,7 @@ export const MoneyList = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -241,13 +241,13 @@ export const MoneyList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
+      {Header()}
+      {NavBar()}
       {dayListNode()}
-      {LOADING ? <LoadingNode /> : <TableNode />}
+      {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}
-      <BtnNode />
+      {btnNode()}
     </React.Fragment>
   );
 };

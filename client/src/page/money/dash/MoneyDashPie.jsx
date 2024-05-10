@@ -221,7 +221,7 @@ export const MoneyDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartInToday = () => {
+  const chartInToday = () => {
     const COLORS_IN_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -265,7 +265,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartOutToday = () => {
+  const chartOutToday = () => {
     const COLORS_OUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -309,7 +309,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartInWeek = () => {
+  const chartInWeek = () => {
     const COLORS_IN_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -353,7 +353,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartOutWeek = () => {
+  const chartOutWeek = () => {
     const COLORS_OUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -397,7 +397,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const ChartInMonth = () => {
+  const chartInMonth = () => {
     const COLORS_IN_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -441,7 +441,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const ChartOutMonth = () => {
+  const chartOutMonth = () => {
     const COLORS_OUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -538,7 +538,7 @@ export const MoneyDashPie = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -547,7 +547,7 @@ export const MoneyDashPie = () => {
   return (
     <React.Fragment>
       <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
+        <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <DropdownSection1/>
@@ -562,26 +562,26 @@ export const MoneyDashPie = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInToday />
+                LOADING ? loadingNode() : chartInToday()
               )}
               {SECTION === "today" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutToday />
+                LOADING ? loadingNode() : chartOutToday()
               )}
               {SECTION === "week" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInWeek />
+                LOADING ? loadingNode() : chartInWeek()
               )}
               {SECTION === "week" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutWeek />
+                LOADING ? loadingNode() : chartOutWeek()
               )}
               {SECTION === "month" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInMonth />
+                LOADING ? loadingNode() : chartInMonth()
               )}
               {SECTION === "month" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutMonth />
+                LOADING ? loadingNode() : chartOutMonth()
               )}
             </Grid2>
-            </Grid2>
-          </Container>
+          </Grid2>
+        </Container>
       </Paper>
     </React.Fragment>
   );

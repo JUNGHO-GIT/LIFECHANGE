@@ -73,7 +73,7 @@ export const FoodDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartKcalMonth = () => {
+  const chartKcalMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <React.Fragment>
@@ -126,7 +126,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartNutMonth = () => {
+  const chartNutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <React.Fragment>
@@ -183,7 +183,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartKcalYear = () => {
+  const chartKcalYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
       <React.Fragment>
@@ -236,7 +236,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartNutYear = () => {
+  const chartNutYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
       <React.Fragment>
@@ -345,7 +345,7 @@ export const FoodDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -369,16 +369,16 @@ export const FoodDashAvg = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "month" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalMonth />
+                LOADING ? loadingNode() : chartKcalMonth()
               )}
               {SECTION === "month" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutMonth />
+                LOADING ? loadingNode() : chartNutMonth()
               )}
               {SECTION === "year" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalYear />
+                LOADING ? loadingNode() : chartKcalYear()
               )}
               {SECTION === "year" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutYear />
+                LOADING ? loadingNode() : chartNutYear()
               )}
             </Grid2>
           </Grid2>

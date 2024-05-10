@@ -224,7 +224,7 @@ export const TweakDataset = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -478,7 +478,7 @@ export const TweakDataset = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => {
+  const btnNode = () => {
     const confirmDefault = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
@@ -525,7 +525,7 @@ export const TweakDataset = () => {
   };
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -533,10 +533,10 @@ export const TweakDataset = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
-      <BtnNode />
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

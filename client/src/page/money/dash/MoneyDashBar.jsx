@@ -54,7 +54,7 @@ export const MoneyDashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartInToday = () => {
+  const chartInToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_TODAY, array, "money");
     return (
       <React.Fragment>
@@ -110,7 +110,7 @@ export const MoneyDashBar = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartOutToday = () => {
+  const chartOutToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_TODAY, array, "money");
     return (
       <React.Fragment>
@@ -217,7 +217,7 @@ export const MoneyDashBar = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -241,10 +241,10 @@ export const MoneyDashBar = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "in" &&  (
-                LOADING ? <LoadingNode /> : <ChartInToday />
+                LOADING ? loadingNode() : chartInToday()
               )}
               {SECTION === "today" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutToday />
+                LOADING ? loadingNode() : chartOutToday()
               )}
             </Grid2>
             </Grid2>

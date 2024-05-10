@@ -102,7 +102,7 @@ export const FoodSearch = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -211,7 +211,7 @@ export const FoodSearch = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <Box className={"flex-wrapper p-sticky bottom-0 h-6vh"}>
       <InputMask
         mask={""}
@@ -240,7 +240,7 @@ export const FoodSearch = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -248,11 +248,11 @@ export const FoodSearch = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
-      <BtnNode />
+      {btnNode()}
     </React.Fragment>
   );
 };

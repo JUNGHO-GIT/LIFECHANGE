@@ -116,7 +116,7 @@ export const ExercisePlanDetail = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -323,7 +323,7 @@ export const ExercisePlanDetail = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
@@ -332,7 +332,7 @@ export const ExercisePlanDetail = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -340,10 +340,10 @@ export const ExercisePlanDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
-      <BtnNode />
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

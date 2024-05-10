@@ -9,7 +9,6 @@ import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
 import "./index.css";
 
-import "./assets/css/Mui.css";
 import "./assets/css/Calendar.css";
 import "./assets/css/Header.css";
 import "./assets/css/NavBar.css";

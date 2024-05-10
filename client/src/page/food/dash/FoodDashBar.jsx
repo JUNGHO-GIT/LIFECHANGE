@@ -54,7 +54,7 @@ export const FoodDashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartKcalToday = () => {
+  const chartKcalToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array, "food");
     return (
       <React.Fragment>
@@ -110,7 +110,7 @@ export const FoodDashBar = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartNutToday = () => {
+  const chartNutToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_TODAY, array);
     return (
       <React.Fragment>
@@ -217,7 +217,7 @@ export const FoodDashBar = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -241,10 +241,10 @@ export const FoodDashBar = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalToday />
+                LOADING ? loadingNode() : chartKcalToday()
               )}
               {SECTION === "today" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutToday />
+                LOADING ? loadingNode() : chartNutToday()
               )}
             </Grid2>
             </Grid2>

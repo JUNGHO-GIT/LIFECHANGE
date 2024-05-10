@@ -168,7 +168,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartPartWeek = () => {
+  const chartPartWeek = () => {
     const COLORS_PART_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -204,7 +204,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartTitleWeek = () => {
+  const chartTitleWeek = () => {
     const COLORS_TITLE_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -240,7 +240,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartPartMonth = () => {
+  const chartPartMonth = () => {
     const COLORS_PART_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -276,7 +276,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartTitleMonth = () => {
+  const chartTitleMonth = () => {
     const COLORS_TITLE_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -364,7 +364,7 @@ export const ExerciseDashPie = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -388,16 +388,16 @@ export const ExerciseDashPie = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "week" && LINE === "part" && (
-                LOADING ? <LoadingNode /> : <ChartPartWeek />
+                LOADING ? loadingNode() : chartPartWeek()
               )}
               {SECTION === "week" && LINE === "title" && (
-                LOADING ? <LoadingNode /> : <ChartTitleWeek />
+                LOADING ? loadingNode() : chartTitleWeek()
               )}
               {SECTION === "month" && LINE === "part" && (
-                LOADING ? <LoadingNode /> : <ChartPartMonth />
+                LOADING ? loadingNode() : chartPartMonth()
               )}
               {SECTION === "month" && LINE === "title" && (
-                LOADING ? <LoadingNode /> : <ChartTitleMonth />
+                LOADING ? loadingNode() : chartTitleMonth()
               )}
             </Grid2>
           </Grid2>

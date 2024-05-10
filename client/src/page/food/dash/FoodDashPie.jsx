@@ -221,7 +221,7 @@ export const FoodDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartKcalToday = () => {
+  const chartKcalToday = () => {
     const COLORS_KCAL_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -257,7 +257,7 @@ export const FoodDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartNutToday = () => {
+  const chartNutToday = () => {
     const COLORS_NUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -293,7 +293,7 @@ export const FoodDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartKcalWeek = () => {
+  const chartKcalWeek = () => {
     const COLORS_KCAL_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -329,7 +329,7 @@ export const FoodDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartNutWeek = () => {
+  const chartNutWeek = () => {
     const COLORS_NUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -365,7 +365,7 @@ export const FoodDashPie = () => {
   };
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const ChartKcalMonth = () => {
+  const chartKcalMonth = () => {
     const COLORS_KCAL_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -401,7 +401,7 @@ export const FoodDashPie = () => {
   };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const ChartNutMonth = () => {
+  const chartNutMonth = () => {
     const COLORS_NUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -490,7 +490,7 @@ export const FoodDashPie = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -514,22 +514,22 @@ export const FoodDashPie = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalToday />
+                LOADING ? loadingNode() : chartKcalToday()
               )}
               {SECTION === "today" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutToday />
+                LOADING ? loadingNode() : chartNutToday()
               )}
               {SECTION === "week" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalWeek />
+                LOADING ? loadingNode() : chartKcalWeek()
               )}
               {SECTION === "week" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutWeek />
+                LOADING ? loadingNode() : chartNutWeek()
               )}
               {SECTION === "month" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalMonth />
+                LOADING ? loadingNode() : chartKcalMonth()
               )}
               {SECTION === "month" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutMonth />
+                LOADING ? loadingNode() : chartNutMonth()
               )}
             </Grid2>
             </Grid2>

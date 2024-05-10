@@ -54,7 +54,7 @@ export const UserSignup = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -129,7 +129,7 @@ export const UserSignup = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
@@ -138,7 +138,7 @@ export const UserSignup = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -146,10 +146,10 @@ export const UserSignup = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
-      <BtnNode />
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

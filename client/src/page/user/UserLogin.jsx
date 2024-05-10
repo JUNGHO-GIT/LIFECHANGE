@@ -43,7 +43,7 @@ export const UserLogin = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -62,9 +62,12 @@ export const UserLogin = () => {
             size={"small"}
             id={"user_id"}
             name={"user_id"}
+            key={"user_id"}
             label={"ID"}
             value={user_id}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e) => {
+              setUserId(e.target.value);
+            }}
           />
         </Box>
         <Box className={"d-center mb-20"}>
@@ -76,6 +79,9 @@ export const UserLogin = () => {
             name={"user_pw"}
             label={"Password"}
             value={user_pw}
+            onChange={(e) => {
+              setUserPw(e.target.value);
+            }}
           />
         </Box>
       </React.Fragment>
@@ -83,7 +89,7 @@ export const UserLogin = () => {
     // 7-7. table
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Box className={"block-wrapper h-55vh"}>
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
@@ -110,7 +116,7 @@ export const UserLogin = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
@@ -118,7 +124,7 @@ export const UserLogin = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -126,10 +132,10 @@ export const UserLogin = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
-      <BtnNode />
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

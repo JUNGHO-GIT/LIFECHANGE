@@ -46,7 +46,7 @@ export const SleepDashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartToday = () => {
+  const chartToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "sleep");
     return (
       <React.Fragment>
@@ -121,7 +121,7 @@ export const SleepDashBar = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -146,7 +146,7 @@ export const SleepDashBar = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && (
-                LOADING ? <LoadingNode /> : <ChartToday />
+                LOADING ? loadingNode() : chartToday()
               )}
             </Grid2>
           </Grid2>

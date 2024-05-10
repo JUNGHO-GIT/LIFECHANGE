@@ -228,7 +228,7 @@ export const TweakList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -559,7 +559,7 @@ export const TweakList = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const BtnNode = () => (
+  const btnNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
         <Container className={"p-0"}>
@@ -602,7 +602,7 @@ export const TweakList = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -610,12 +610,12 @@ export const TweakList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}
-      <BtnNode />
+      {btnNode()}
     </React.Fragment>
   );
 };

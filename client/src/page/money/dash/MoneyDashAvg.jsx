@@ -73,7 +73,7 @@ export const MoneyDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartInMonth = () => {
+  const chartInMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array, "money");
     return (
       <React.Fragment>
@@ -126,7 +126,7 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartOutMonth = () => {
+  const chartOutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array, "money");
     return (
       <React.Fragment>
@@ -179,7 +179,7 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartInYear = () => {
+  const chartInYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_YEAR, array, "money");
     return (
       <React.Fragment>
@@ -232,7 +232,7 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartOutYear = () => {
+  const chartOutYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_YEAR, array, "money");
     return (
       <React.Fragment>
@@ -337,7 +337,7 @@ export const MoneyDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -361,16 +361,16 @@ export const MoneyDashAvg = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "month" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInMonth />
+                LOADING ? loadingNode() : chartInMonth()
               )}
               {SECTION === "month" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutMonth />
+                LOADING ? loadingNode() : chartOutMonth()
               )}
               {SECTION === "year" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartOutMonth />
+                LOADING ? loadingNode() : chartOutMonth()
               )}
               {SECTION === "year" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutMonth />
+                LOADING ? loadingNode() : chartOutMonth()
               )}
             </Grid2>
             </Grid2>

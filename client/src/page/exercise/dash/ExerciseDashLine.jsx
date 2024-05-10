@@ -73,7 +73,7 @@ export const ExerciseDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartVolumeWeek = () => {
+  const chartVolumeWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
       <React.Fragment>
@@ -125,7 +125,7 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartCardioWeek = () => {
+  const chartCardioWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
       <React.Fragment>
@@ -177,7 +177,7 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartVolumeMonth = () => {
+  const chartVolumeMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <React.Fragment>
@@ -229,7 +229,7 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartCardioMonth = () => {
+  const chartCardioMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <React.Fragment>
@@ -333,7 +333,7 @@ export const ExerciseDashLine = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -357,16 +357,16 @@ export const ExerciseDashLine = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "week" && LINE === "volume" && (
-                LOADING ? <LoadingNode /> : <ChartVolumeWeek />
+                LOADING ? loadingNode() : chartVolumeWeek()
               )}
               {SECTION === "week" && LINE === "cardio" && (
-                LOADING ? <LoadingNode /> : <ChartCardioWeek />
+                LOADING ? loadingNode() : chartCardioWeek()
               )}
               {SECTION === "month" && LINE === "volume" && (
-                LOADING ? <LoadingNode /> : <ChartVolumeMonth />
+                LOADING ? loadingNode() : chartVolumeMonth()
               )}
               {SECTION === "month" && LINE === "cardio" && (
-                LOADING ? <LoadingNode /> : <ChartCardioMonth />
+                LOADING ? loadingNode() : chartCardioMonth()
               )}
             </Grid2>
           </Grid2>

@@ -59,7 +59,7 @@ export const SleepDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartWeek = () => {
+  const chartWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "sleep");
     return (
       <React.Fragment>
@@ -121,7 +121,7 @@ export const SleepDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartMonth = () => {
+  const chartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <React.Fragment>
@@ -233,7 +233,7 @@ export const SleepDashLine = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -259,10 +259,10 @@ export const SleepDashLine = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "week" && (
-                LOADING ? <LoadingNode /> : <ChartWeek />
+                LOADING ? loadingNode() : chartWeek()
               )}
               {SECTION === "month" && (
-                LOADING ? <LoadingNode /> : <ChartMonth />
+                LOADING ? loadingNode() : chartMonth()
               )}
             </Grid2>
           </Grid2>

@@ -68,7 +68,7 @@ export const ExerciseDashScatter = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartToday = () => {
+  const chartToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <React.Fragment>
@@ -124,7 +124,7 @@ export const ExerciseDashScatter = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartWeek = () => {
+  const chartWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
     return (
       <React.Fragment>
@@ -186,7 +186,7 @@ export const ExerciseDashScatter = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartMonth = () => {
+  const chartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <React.Fragment>
@@ -269,7 +269,7 @@ export const ExerciseDashScatter = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -292,13 +292,13 @@ export const ExerciseDashScatter = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && (
-                LOADING ? <LoadingNode/> : <ChartToday/>
+                LOADING ? loadingNode() : chartToday()
               )}
               {SECTION === "week" && (
-                LOADING ? <LoadingNode/> : <ChartWeek/>
+                LOADING ? loadingNode() : chartWeek()
               )}
               {SECTION === "month" && (
-                LOADING ? <LoadingNode/> : <ChartMonth/>
+                LOADING ? loadingNode() : chartMonth()
               )}
             </Grid2>
           </Grid2>

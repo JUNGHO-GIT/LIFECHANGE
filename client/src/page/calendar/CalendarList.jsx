@@ -77,7 +77,7 @@ export const CalendarList = () => {
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
     );
@@ -189,7 +189,7 @@ export const CalendarList = () => {
   };
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -197,9 +197,9 @@ export const CalendarList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
     </React.Fragment>
   );
 };

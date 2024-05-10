@@ -59,7 +59,7 @@ export const SleepDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartMonth = () => {
+  const chartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <React.Fragment>
@@ -122,7 +122,7 @@ export const SleepDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartYear = () => {
+  const chartYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <React.Fragment>
@@ -238,7 +238,7 @@ export const SleepDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -264,10 +264,10 @@ export const SleepDashAvg = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-right"}>
               {SECTION === "month" && (
-                LOADING ? <LoadingNode/> : <ChartMonth/>
+                LOADING ? loadingNode() : chartMonth()
               )}
               {SECTION === "year" && (
-                LOADING ? <LoadingNode/> : <ChartYear/>
+                LOADING ? loadingNode() : chartYear()
               )}
             </Grid2>
           </Grid2>

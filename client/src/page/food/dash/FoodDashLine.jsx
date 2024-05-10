@@ -73,7 +73,7 @@ export const FoodDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartKcalWeek = () => {
+  const chartKcalWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -123,7 +123,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartNutWeek = () => {
+  const chartNutWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -177,7 +177,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartKcalMonth = () => {
+  const chartKcalMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -227,7 +227,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartNutMonth = () => {
+  const chartNutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -333,7 +333,7 @@ export const FoodDashLine = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -357,16 +357,16 @@ export const FoodDashLine = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "week" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalWeek />
+                LOADING ? loadingNode() : chartKcalWeek()
               )}
               {SECTION === "week" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutWeek />
+                LOADING ? loadingNode() : chartNutWeek()
               )}
               {SECTION === "month" && LINE === "kcal" && (
-                LOADING ? <LoadingNode /> : <ChartKcalMonth />
+                LOADING ? loadingNode() : chartKcalMonth()
               )}
               {SECTION === "month" && LINE === "nut" && (
-                LOADING ? <LoadingNode /> : <ChartNutMonth />
+                LOADING ? loadingNode() : chartNutMonth()
               )}
             </Grid2>
           </Grid2>

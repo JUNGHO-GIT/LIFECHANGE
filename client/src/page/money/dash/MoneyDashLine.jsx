@@ -73,7 +73,7 @@ export const MoneyDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const ChartInWeek = () => {
+  const chartInWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_WEEK, array, "money");
     return (
       <React.Fragment>
@@ -125,7 +125,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const ChartOutWeek = () => {
+  const chartOutWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_WEEK, array, "money");
     return (
       <React.Fragment>
@@ -177,7 +177,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const ChartInMonth = () => {
+  const chartInMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array);
     return (
       <React.Fragment>
@@ -229,7 +229,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const ChartOutMonth = () => {
+  const chartOutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array);
     return (
       <React.Fragment>
@@ -333,7 +333,7 @@ export const MoneyDashLine = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -357,16 +357,16 @@ export const MoneyDashLine = () => {
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "week" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInWeek />
+                LOADING ? loadingNode() : chartInWeek()
               )}
               {SECTION === "week" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutWeek />
+                LOADING ? loadingNode() : chartOutWeek()
               )}
               {SECTION === "month" && LINE === "in" && (
-                LOADING ? <LoadingNode /> : <ChartInMonth />
+                LOADING ? loadingNode() : chartInMonth()
               )}
               {SECTION === "month" && LINE === "out" && (
-                LOADING ? <LoadingNode /> : <ChartOutMonth />
+                LOADING ? loadingNode() : chartOutMonth()
               )}
             </Grid2>
             </Grid2>

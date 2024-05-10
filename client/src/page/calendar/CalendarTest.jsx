@@ -72,7 +72,7 @@ export const CalendarTest = () => {
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 7. table ------------------------------------------------------------------------------------->
-  const TableNode = () => {
+  const tableNode = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
@@ -81,6 +81,24 @@ export const CalendarTest = () => {
             <DateCalendar
               defaultValue={moment(koreanDate)}
               views={["day"]}
+              sx={{
+                "& .MuiPickersLayout-contentWrapper": {
+                  width: "220px",
+                  height: "280px",
+                },
+                "& .MuiDateCalendar-root": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiDayCalendar-slideTransition": {
+                  width: "210px",
+                  height: "270px",
+                },
+                "& .MuiPickersDay-root": {
+                  width: "30px",
+                  height: "28px",
+                },
+              }}
             />
           </LocalizationProvider>
         </Box>
@@ -113,7 +131,7 @@ export const CalendarTest = () => {
   };
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const LoadingNode = () => (
+  const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -121,9 +139,9 @@ export const CalendarTest = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Header />
-      <NavBar />
-      {LOADING ? <LoadingNode /> : <TableNode />}
+      {Header()}
+      {NavBar()}
+      {LOADING ? loadingNode() : tableNode()}
     </React.Fragment>
   );
 };
