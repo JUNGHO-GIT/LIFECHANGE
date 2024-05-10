@@ -22,7 +22,7 @@ export const dataset = async (
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, PAGING_param, TYPE_param
+  user_id_param, PAGING_param, PART_param
 ) => {
 
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
@@ -31,7 +31,7 @@ export const list = async (
   let finalResult = [];
   let totalCnt = 0;
 
-  if (TYPE_param === "exercise") {
+  if (PART_param === "exercise") {
     finalResult = await repository.list.listExercise(
       user_id_param, page, limit
     );
@@ -39,7 +39,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "exercisePlan") {
+  else if (PART_param === "exercisePlan") {
     finalResult = await repository.list.listExercisePlan(
       user_id_param, page, limit
     );
@@ -47,7 +47,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "food") {
+  else if (PART_param === "food") {
     finalResult = await repository.list.listFood(
       user_id_param, page, limit
     );
@@ -55,7 +55,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "foodPlan") {
+  else if (PART_param === "foodPlan") {
     finalResult = await repository.list.listFoodPlan(
       user_id_param, page, limit
     );
@@ -63,7 +63,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "money") {
+  else if (PART_param === "money") {
     finalResult = await repository.list.listMoney(
       user_id_param, page, limit
     );
@@ -71,7 +71,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "moneyPlan") {
+  else if (PART_param === "moneyPlan") {
     finalResult = await repository.list.listMoneyPlan(
       user_id_param, page, limit
     );
@@ -79,7 +79,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "sleep") {
+  else if (PART_param === "sleep") {
     finalResult = await repository.list.listSleep(
       user_id_param, page, limit
     );
@@ -87,7 +87,7 @@ export const list = async (
       user_id_param
     );
   }
-  else if (TYPE_param === "sleepPlan") {
+  else if (PART_param === "sleepPlan") {
     finalResult = await repository.list.listSleepPlan(
       user_id_param, page, limit
     );
@@ -128,12 +128,12 @@ export const save = async (
 
 // 4-1. add --------------------------------------------------------------------------------------->
 export const add = async (
-  user_id_param, TYPE_param, count_param
+  user_id_param, PART_param, count_param
 ) => {
 
   let insertCount = Number(count_param);
   let finalResult = String("");
-  let typeStr = String(TYPE_param);
+  let typeStr = String(PART_param);
 
   // 1. exercisePlan
   if (typeStr === "exercisePlan") {
@@ -390,10 +390,10 @@ export const add = async (
 
 // 4-2. delete ------------------------------------------------------------------------------------>
 export const deletes = async (
-  user_id_param, TYPE_param
+  user_id_param, PART_param
 ) => {
 
-  const typeStr = TYPE_param.toString();
+  const typeStr = PART_param.toString();
   const typeUpper = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
 
   const finalResult = await repository.deletes.deletes(

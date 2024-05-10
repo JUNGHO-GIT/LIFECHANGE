@@ -11,9 +11,6 @@ import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -28,6 +25,24 @@ export const SleepList = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -50,24 +65,6 @@ export const SleepList = () => {
     dayEndOpen: false,
     dayOpen: false,
   });
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      type: "day",
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -108,7 +105,7 @@ export const SleepList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -121,55 +118,53 @@ export const SleepList = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <TableContainer>
-            <Table className={"border"}>
-              <TableHead>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-                  <TableCell>취침</TableCell>
-                  <TableCell>기상</TableCell>
-                  <TableCell>수면</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {OBJECT?.map((item, index) => (
-                  <React.Fragment key={item._id}>
-                    {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                      <React.Fragment key={sectionIndex}>
-                        <TableRow className={"table-tbody-tr"}>
-                          {sectionIndex === 0 && (
-                            <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
-                            className={"pointer"} onClick={() => {
-                              SEND.id = item._id;
-                              SEND.startDt = item.sleep_startDt;
-                              SEND.endDt = item.sleep_endDt;
-                              navParam(SEND.toDetail, {
-                                state: SEND
-                              });
-                            }}>
-                              {item.sleep_startDt?.substring(5, 10)}
-                              {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
-                            </TableCell>
-                          )}
-                          <TableCell>
-                            {section.sleep_night}
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>취침</TableCell>
+                <TableCell>기상</TableCell>
+                <TableCell>수면</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT?.map((item, index) => (
+                <React.Fragment key={item._id}>
+                  {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+                    <React.Fragment key={sectionIndex}>
+                      <TableRow className={"table-tbody-tr"}>
+                        {sectionIndex === 0 && (
+                          <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
+                          className={"pointer"} onClick={() => {
+                            SEND.id = item._id;
+                            SEND.startDt = item.sleep_startDt;
+                            SEND.endDt = item.sleep_endDt;
+                            navParam(SEND.toDetail, {
+                              state: SEND
+                            });
+                          }}>
+                            {item.sleep_startDt?.substring(5, 10)}
+                            {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
                           </TableCell>
-                          <TableCell>
-                            {section.sleep_morning}
-                          </TableCell>
-                          <TableCell>
-                            {section.sleep_time}
-                          </TableCell>
-                        </TableRow>
-                      </React.Fragment>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+                        )}
+                        <TableCell>
+                          {section.sleep_night}
+                        </TableCell>
+                        <TableCell>
+                          {section.sleep_morning}
+                        </TableCell>
+                        <TableCell>
+                          {section.sleep_time}
+                        </TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
     // 7-7. table
@@ -202,34 +197,34 @@ export const SleepList = () => {
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
+  // 10. day -------------------------------------------------------------------------------------->
   const dayListNode = () => (
     <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 12. paging ----------------------------------------------------------------------------------->
+  // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"sleep"} plan={""} type={"list"}
     />
   );
 
-  // 13. filter ----------------------------------------------------------------------------------->
+  // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      part={"sleep"} plan={""} type={"list"}
+      PART={""} setPART={""} part={"sleep"} plan={""} type={"list"}
     />
   );
 

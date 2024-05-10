@@ -1,13 +1,11 @@
 // Filter.jsx
 
 import {React} from "../../import/ImportReacts";
-import {Container, Paper} from "../../import/ImportMuis";
-import {MenuItem, FormControl, Select} from "../../import/ImportMuis";
-import {Grid2} from "../../import/ImportMuis";
+import {Grid2, Container, Paper, MenuItem, TextField} from "../../import/ImportMuis";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({
-  FILTER, setFILTER, PAGING, setPAGING, part, plan, type
+  FILTER, setFILTER, PAGING, setPAGING, PART, setPART, part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -20,8 +18,15 @@ export const Filter = ({
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <React.Fragment>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"type"} id={"type"} value={FILTER?.type} className={"form-select"}
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"type"}
+        name={"type"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.type}
         onChange={(e) => (
           setFILTER((prev) => ({
             ...prev,
@@ -32,36 +37,48 @@ export const Filter = ({
             page: 1
           }))
         )}>
-          {["day", "week", "month", "year", "select"]?.map((item) => (
-            <MenuItem key={item} value={item} selected={FILTER?.type === item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"order"} id={"order"} value={FILTER?.order} className={"form-select"}
+        {["day", "week", "month", "year", "select"]?.map((item) => (
+          <MenuItem key={item} value={item} selected={FILTER?.type === item}>
+            {item}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"order"}
+        name={"order"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.order}
         onChange={(e) => (
           setFILTER((prev) => ({
             ...prev,
             order: e.target.value
           }))
         )}>
-          {["asc", "desc"]?.map((item) => (
-            <MenuItem key={item} value={item} selected={FILTER?.order === item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        {["asc", "desc"]?.map((item) => (
+          <MenuItem key={item} value={item} selected={FILTER?.order === item}>
+            {item}
+          </MenuItem>
+        ))}
+      </TextField>
     </React.Fragment>
   );
 
   // 2. exercise ---------------------------------------------------------------------------------->
   const exerciseNode = () => (
     <React.Fragment>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"part"}
+        name={"part"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = exerciseArray.findIndex((item) => (
@@ -77,15 +94,21 @@ export const Filter = ({
             title: newTitleVal
           }));
         }}>
-          {exerciseArray?.map((item, idx) => (
-            <MenuItem key={idx} value={item.exercise_part}>
-              {item.exercise_part}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"title"} id={"title"} value={FILTER?.title} className={"form-select"}
+        {exerciseArray?.map((item, idx) => (
+          <MenuItem key={idx} value={item.exercise_part}>
+            {item.exercise_part}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"title"}
+        name={"title"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.title}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = exerciseArray[FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
@@ -95,21 +118,27 @@ export const Filter = ({
             title: newTitleVal
           }));
         }}>
-          {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
-            <MenuItem key={idx} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
+          <MenuItem key={idx} value={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </TextField>
     </React.Fragment>
   );
 
   // 3. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
     <React.Fragment>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"part"}
+        name={"part"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = foodArray.findIndex((item) => (
@@ -121,21 +150,27 @@ export const Filter = ({
             part: newPartVal
           }));
         }}>
-          {foodArray?.map((item, idx) => (
-            <MenuItem key={idx} value={item.food_part}>
-              {item.food_part}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        {foodArray?.map((item, idx) => (
+          <MenuItem key={idx} value={item.food_part}>
+            {item.food_part}
+          </MenuItem>
+        ))}
+      </TextField>
     </React.Fragment>
   );
 
   // 4. money ------------------------------------------------------------------------------------->
   const moneyNode = () => (
     <React.Fragment>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"part"}
+        name={"part"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = moneyArray.findIndex((item) => (
@@ -151,15 +186,21 @@ export const Filter = ({
             title: newTitleVal
           }));
         }}>
-          {moneyArray?.map((item, idx) => (
-            <MenuItem key={idx} value={item.money_part}>
-              {item.money_part}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"title"} id={"title"} value={FILTER?.title} className={"form-select"}
+        {moneyArray?.map((item, idx) => (
+          <MenuItem key={idx} value={item.money_part}>
+            {item.money_part}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"title"}
+        name={"title"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={FILTER?.title}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = moneyArray[FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
@@ -169,17 +210,46 @@ export const Filter = ({
             title: newTitleVal
           }));
         }}>
-          {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
-            <MenuItem key={idx} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
+          <MenuItem key={idx} value={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </TextField>
     </React.Fragment>
   );
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 5. sleep ------------------------------------------------------------------------------------->
+
+  // 6. tweak ------------------------------------------------------------------------------------->
+  const tweakNode = () => (
+    <React.Fragment>
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        id={"part"}
+        name={"part"}
+        className={"w-90"}
+        variant={"outlined"}
+        value={PART}
+        onChange={(e) => {
+          const newPartVal = e.target.value;
+          setPART(newPartVal);
+        }}>
+        <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
+        <MenuItem value={"exercise"}>운동</MenuItem>
+        <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
+        <MenuItem value={"food"}>식사</MenuItem>
+        <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
+        <MenuItem value={"money"}>지출</MenuItem>
+        <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
+        <MenuItem value={"sleep"}>수면</MenuItem>
+      </TextField>
+    </React.Fragment>
+  );
+
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-8vh p-sticky bottom-35"} variant={"outlined"}>
@@ -204,6 +274,10 @@ export const Filter = ({
               ) : part === "sleep" && plan === "" ? (
                 <React.Fragment>
                   {defaultNode()}
+                </React.Fragment>
+              ) : part === "tweak" ? (
+                <React.Fragment>
+                  {tweakNode()}
                 </React.Fragment>
               ) : (
                 <React.Fragment>

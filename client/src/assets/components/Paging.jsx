@@ -9,7 +9,7 @@ export const Paging = ({
   PAGING, setPAGING, COUNT, setCOUNT, part, plan, type
 }) => {
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-8vh p-sticky bottom-80"} variant={"outlined"}>

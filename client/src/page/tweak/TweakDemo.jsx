@@ -3,12 +3,12 @@
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts";
 import {axios, numeral, NumericFormat} from "../../import/ImportLibs";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Paging, Loading} from "../../import/ImportComponents";
+import {Paging, Loading, Filter} from "../../import/ImportComponents";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
+import {Box} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
+import {Typography, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDemo = () => {
@@ -22,7 +22,7 @@ export const TweakDemo = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
-  const [TYPE, setTYPE] = useState("exercisePlan");
+  const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
     page: 1,
     limit: 10
@@ -149,31 +149,31 @@ export const TweakDemo = () => {
       params: {
         user_id: user_id,
         PAGING: PAGING,
-        TYPE: TYPE
+        PART: PART
       }
     });
-    if (TYPE === "exercisePlan") {
+    if (PART === "exercisePlan") {
       setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
     }
-    if (TYPE === "exercise") {
+    if (PART === "exercise") {
       setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
     }
-    if (TYPE === "foodPlan") {
+    if (PART === "foodPlan") {
       setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
     }
-    if (TYPE === "food") {
+    if (PART === "food") {
       setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
     }
-    if (TYPE === "moneyPlan") {
+    if (PART === "moneyPlan") {
       setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
     }
-    if (TYPE === "money") {
+    if (PART === "money") {
       setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
     }
-    if (TYPE === "sleepPlan") {
+    if (PART === "sleepPlan") {
       setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
     }
-    if (TYPE === "sleep") {
+    if (PART === "sleep") {
       setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
     }
     setCOUNT((prev) => ({
@@ -182,13 +182,13 @@ export const TweakDemo = () => {
       sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, PAGING, TYPE]);
+  })()}, [user_id, PAGING, PART]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowAdd = async (type_param) => {
     const res = await axios.post(`${URL_OBJECT}/add`, {
       user_id: user_id,
-      TYPE: type_param,
+      PART: type_param,
       count: COUNT?.inputCnt
     });
     if (res.data.status === "success") {
@@ -210,7 +210,7 @@ export const TweakDemo = () => {
     const res = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         user_id: user_id,
-        TYPE: type_param
+        PART: type_param
       }
     });
     if (res.data.status === "success") {
@@ -229,355 +229,349 @@ export const TweakDemo = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
-    const tableExercisePlan = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>운동횟수</TableCell>
-              <TableCell>운동시간</TableCell>
-              <TableCell>운동볼륨</TableCell>
-              <TableCell>체중</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.exercise_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.exercise_plan_count}</TableCell>
-                <TableCell>{item.exercise_plan_cardio}</TableCell>
-                <TableCell>{item.exercise_plan_volume}</TableCell>
-                <TableCell>{item.exercise_plan_weight}</TableCell>
+        <Typography variant={"h5"} fontWeight={500}>
+          데모 데이터
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-6-1. table
+    const tableFragment1 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>운동횟수</TableCell>
+                <TableCell>운동시간</TableCell>
+                <TableCell>운동볼륨</TableCell>
+                <TableCell>체중</TableCell>
               </TableRow>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+            </TableHead>
+            <TableBody>
+              {OBJECT_EXERCISE_PLAN?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.exercise_plan_startDt?.substring(5, 10)}</TableCell>
+                  <TableCell>{item.exercise_plan_count}</TableCell>
+                  <TableCell>{item.exercise_plan_cardio}</TableCell>
+                  <TableCell>{item.exercise_plan_volume}</TableCell>
+                  <TableCell>{item.exercise_plan_weight}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
-    const tableExercise = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>부위</TableCell>
-              <TableCell>종목</TableCell>
-              <TableCell>세트</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>중량</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_EXERCISE?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <TableRow key={sectionIndex}>
-                    {sectionIndex === 0 && (
-                      <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}>
-                        {item.exercise_startDt?.substring(5, 10)}
-                        {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
-                      </TableCell>
-                    )}
-                    <TableCell>{section.exercise_part_val.substring(0, 6)}</TableCell>
-                    <TableCell>{section.exercise_title_val.substring(0, 6)}</TableCell>
-                    {section.exercise_part_val !== "유산소" ? (
-                      <React.Fragment>
-                        <TableCell>{`${numeral(section.exercise_set).format('0,0')}`}</TableCell>
-                        <TableCell>{`${numeral(section.exercise_rep).format('0,0')}`}</TableCell>
-                        <TableCell>{`${numeral(section.exercise_kg).format('0,0')}`}</TableCell>
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <TableCell colSpan={3}>{section.exercise_cardio}</TableCell>
-                      </React.Fragment>
-                    )}
-                  </TableRow>
-                ))}
-              </React.Fragment>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-      </React.Fragment>
-    );
-    const tableFoodPlan = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>칼로리</TableCell>
-              <TableCell>탄수화물</TableCell>
-              <TableCell>단백질</TableCell>
-              <TableCell>지방</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.food_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.food_plan_kcal}</TableCell>
-                <TableCell>{item.food_plan_carb}</TableCell>
-                <TableCell>{item.food_plan_protein}</TableCell>
-                <TableCell>{item.food_plan_fat}</TableCell>
+    // 7-6-2. table
+    const tableFragment2 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>부위</TableCell>
+                <TableCell>종목</TableCell>
+                <TableCell>세트</TableCell>
+                <TableCell>횟수</TableCell>
+                <TableCell>중량</TableCell>
               </TableRow>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-      </React.Fragment>
-    );
-    const tableFood = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>식품명</TableCell>
-              <TableCell>칼로리</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_FOOD?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <TableRow className={"table-tbody-tr"}>
+            </TableHead>
+            <TableBody>
+              {OBJECT_EXERCISE?.map((item, index) => (
+                <React.Fragment key={item._id}>
+                  {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
+                    <TableRow key={sectionIndex}>
                       {sectionIndex === 0 && (
-                        <TableCell rowSpan={Math.min(item.food_section.length, 3)}>
-                          {item.food_startDt?.substring(5, 10)}
-                          {item.food_section.length > 3 && (<Box>더보기</Box>)}
+                        <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}>
+                          {item.exercise_startDt?.substring(5, 10)}
+                          {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
                         </TableCell>
                       )}
-                      <TableCell>{section.food_part_val.substring(0, 6)}</TableCell>
-                      <TableCell>{section.food_title.substring(0, 6)}</TableCell>
-                      <TableCell>{`${numeral(section.food_kcal).format('0,0')} kcal`}</TableCell>
+                      <TableCell>{section.exercise_part_val.substring(0, 6)}</TableCell>
+                      <TableCell>{section.exercise_title_val.substring(0, 6)}</TableCell>
+                      {section.exercise_part_val !== "유산소" ? (
+                        <React.Fragment>
+                          <TableCell>{`${numeral(section.exercise_set).format('0,0')}`}</TableCell>
+                          <TableCell>{`${numeral(section.exercise_rep).format('0,0')}`}</TableCell>
+                          <TableCell>{`${numeral(section.exercise_kg).format('0,0')}`}</TableCell>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <TableCell colSpan={3}>{section.exercise_cardio}</TableCell>
+                        </React.Fragment>
+                      )}
                     </TableRow>
-                  </React.Fragment>
-                ))}
-              </React.Fragment>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-      </React.Fragment>
-    );
-    const tableMoneyPlan = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.money_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.money_plan_in}</TableCell>
-                <TableCell>{item.money_plan_out}</TableCell>
-              </TableRow>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-      </React.Fragment>
-    );
-    const tableMoney = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>항목</TableCell>
-              <TableCell>금액</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_MONEY?.map((item, index) => (
-              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={sectionIndex}>
-                  <TableRow className={"table-tbody-tr"}>
-                    {sectionIndex === 0 && (
-                      <TableCell rowSpan={Math.min(item.money_section.length, 3)}>
-                        {item.money_startDt?.substring(5, 10)}
-                        {item.money_section.length > 3 && (<Box>더보기</Box>)}
-                      </TableCell>
-                    )}
-                    <TableCell>{section.money_part_val}</TableCell>
-                    <TableCell>{section.money_title_val}</TableCell>
-                    <TableCell>{`₩ ${numeral(section.money_amount).format('0,0')}`}</TableCell>
-                  </TableRow>
+                  ))}
                 </React.Fragment>
-              ))
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
-    const tableSleepPlan = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.sleep_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.sleep_plan_night}</TableCell>
-                <TableCell>{item.sleep_plan_morning}</TableCell>
-                <TableCell>{item.sleep_plan_time}</TableCell>
+    // 7-6-3. table
+    const tableFragment3 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>칼로리</TableCell>
+                <TableCell>탄수화물</TableCell>
+                <TableCell>단백질</TableCell>
+                <TableCell>지방</TableCell>
               </TableRow>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+            </TableHead>
+            <TableBody>
+              {OBJECT_FOOD_PLAN?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.food_plan_startDt?.substring(5, 10)}</TableCell>
+                  <TableCell>{item.food_plan_kcal}</TableCell>
+                  <TableCell>{item.food_plan_carb}</TableCell>
+                  <TableCell>{item.food_plan_protein}</TableCell>
+                  <TableCell>{item.food_plan_fat}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
-    const tableSleep = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT_SLEEP?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+    // 7-6-4. table
+    const tableFragment4 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>분류</TableCell>
+                <TableCell>식품명</TableCell>
+                <TableCell>칼로리</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT_FOOD?.map((item, index) => (
+                <React.Fragment key={item._id}>
+                  {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
+                    <React.Fragment key={sectionIndex}>
+                      <TableRow className={"table-tbody-tr"}>
+                        {sectionIndex === 0 && (
+                          <TableCell rowSpan={Math.min(item.food_section.length, 3)}>
+                            {item.food_startDt?.substring(5, 10)}
+                            {item.food_section.length > 3 && (<Box>더보기</Box>)}
+                          </TableCell>
+                        )}
+                        <TableCell>{section.food_part_val.substring(0, 6)}</TableCell>
+                        <TableCell>{section.food_title.substring(0, 6)}</TableCell>
+                        <TableCell>{`${numeral(section.food_kcal).format('0,0')} kcal`}</TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </React.Fragment>
+    );
+    // 7-6-5. table
+    const tableFragment5 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>수입</TableCell>
+                <TableCell>지출</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT_MONEY_PLAN?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.money_plan_startDt?.substring(5, 10)}</TableCell>
+                  <TableCell>{item.money_plan_in}</TableCell>
+                  <TableCell>{item.money_plan_out}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </React.Fragment>
+    );
+    // 7-6-6. table
+    const tableFragment6 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>분류</TableCell>
+                <TableCell>항목</TableCell>
+                <TableCell>금액</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT_MONEY?.map((item, index) => (
+                item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
                   <React.Fragment key={sectionIndex}>
                     <TableRow className={"table-tbody-tr"}>
                       {sectionIndex === 0 && (
-                        <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}>
-                          {item.sleep_startDt?.substring(5, 10)}
-                          {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
+                        <TableCell rowSpan={Math.min(item.money_section.length, 3)}>
+                          {item.money_startDt?.substring(5, 10)}
+                          {item.money_section.length > 3 && (<Box>더보기</Box>)}
                         </TableCell>
                       )}
-                      <TableCell>{section.sleep_night}</TableCell>
-                      <TableCell>{section.sleep_morning}</TableCell>
-                      <TableCell>{section.sleep_time}</TableCell>
+                      <TableCell>{section.money_part_val}</TableCell>
+                      <TableCell>{section.money_title_val}</TableCell>
+                      <TableCell>{`₩ ${numeral(section.money_amount).format('0,0')}`}</TableCell>
                     </TableRow>
                   </React.Fragment>
-                ))}
-              </React.Fragment>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+                ))
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
+    // 7-6-7. table
+    const tableFragment7 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>취침</TableCell>
+                <TableCell>기상</TableCell>
+                <TableCell>수면</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT_SLEEP_PLAN?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.sleep_plan_startDt?.substring(5, 10)}</TableCell>
+                  <TableCell>{item.sleep_plan_night}</TableCell>
+                  <TableCell>{item.sleep_plan_morning}</TableCell>
+                  <TableCell>{item.sleep_plan_time}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </React.Fragment>
+    );
+    // 7-6-8. table
+    const tableFragment8 = (i) => (
+      <React.Fragment key={i}>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>취침</TableCell>
+                <TableCell>기상</TableCell>
+                <TableCell>수면</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT_SLEEP?.map((item, index) => (
+                <React.Fragment key={item._id}>
+                  {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+                    <React.Fragment key={sectionIndex}>
+                      <TableRow className={"table-tbody-tr"}>
+                        {sectionIndex === 0 && (
+                          <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}>
+                            {item.sleep_startDt?.substring(5, 10)}
+                            {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
+                          </TableCell>
+                        )}
+                        <TableCell>{section.sleep_night}</TableCell>
+                        <TableCell>{section.sleep_morning}</TableCell>
+                        <TableCell>{section.sleep_time}</TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {PART === "exercisePlan" && tableFragment1(0)}
+            {PART === "exercise" && tableFragment2(0)}
+            {PART === "foodPlan" && tableFragment3(0)}
+            {PART === "food" && tableFragment4(0)}
+            {PART === "moneyPlan" && tableFragment5(0)}
+            {PART === "money" && tableFragment6(0)}
+            {PART === "sleepPlan" && tableFragment7(0)}
+            {PART === "sleep" && tableFragment8(0)}
+          </Box>
+        </Box>
+      </React.Fragment>
+    );
+    // 7-8. return
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {TYPE === "exercisePlan" && tableExercisePlan()}
-                {TYPE === "exercise" && tableExercise()}
-                {TYPE === "foodPlan" && tableFoodPlan()}
-                {TYPE === "food" && tableFood()}
-                {TYPE === "moneyPlan" && tableMoneyPlan()}
-                {TYPE === "money" && tableMoney()}
-                {TYPE === "sleepPlan" && tableSleepPlan()}
-                {TYPE === "sleep" && tableSleep()}
+                {tableSection()}
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 12. paging ----------------------------------------------------------------------------------->
+  // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"tweak"} plan={""} type={"list"}
     />
   );
 
-  // 13. filter ----------------------------------------------------------------------------------->
+  // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
-    <React.Fragment>
-      <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setTYPE(e.target.value))}
-                value={TYPE}
-              >
-                <option value={"exercisePlan"}>운동(계획)</option>
-                <option value={"exercise"}>운동</option>
-                <option value={"foodPlan"}>식사(계획)</option>
-                <option value={"food"}>식사</option>
-                <option value={"moneyPlan"}>지출(계획)</option>
-                <option value={"money"}>지출</option>
-                <option value={"sleepPlan"}>수면(계획)</option>
-                <option value={"sleep"}>수면</option>
-              </select>
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Card>
-    </React.Fragment>
+    <Filter FILTER={""} setFILTER={""} PAGING={PAGING} setPAGING={setPAGING}
+      PART={PART} setPART={setPART} part={"tweak"} plan={""} type={"list"}
+    />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <React.Fragment>
-      <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
+      <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
@@ -603,17 +597,17 @@ export const TweakDemo = () => {
                 )}
               />
               <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-              onClick={() => (flowAdd(TYPE))}>
+              onClick={() => (flowAdd(PART))}>
                 추가
               </Button>
               <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-              onClick={() => (flowDelete(TYPE))}>
+              onClick={() => (flowDelete(PART))}>
                 삭제
               </Button>
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 

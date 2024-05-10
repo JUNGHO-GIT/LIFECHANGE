@@ -85,11 +85,11 @@
 }
 [class$="MuiInputBase-root-MuiOutlinedInput-root"] {
   max-width: 220px !important;
-  max-height: 40px !important;
+  max-height: 30px !important;
 }
 [class$="MuiOutlinedInput-root-MuiSelect-root"] {
   max-width: 220px !important;
-  max-height: 40px !important;
+  max-height: 30px !important;
 }
 [class$="MuiPaper-root-MuiPopover-paper"] {
   max-width: 220px !important;

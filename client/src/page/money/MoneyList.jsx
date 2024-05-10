@@ -112,7 +112,7 @@ export const MoneyList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -125,53 +125,51 @@ export const MoneyList = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <TableContainer>
-            <Table className={"border"}>
-              <TableHead>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-                  <TableCell>분류</TableCell>
-                  <TableCell>항목</TableCell>
-                  <TableCell>금액</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {OBJECT?.map((item, index) => (
-                  item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                    <React.Fragment key={sectionIndex}>
-                      <TableRow className={"table-tbody-tr"}>
-                        {sectionIndex === 0 && (
-                          <TableCell rowSpan={Math.min(item.money_section.length, 3)}
-                          className={"pointer"} onClick={() => {
-                            SEND.id = item._id;
-                            SEND.startDt = item.money_startDt;
-                            SEND.endDt = item.money_endDt;
-                            navParam(SEND.toDetail, {
-                              state: SEND
-                            });
-                          }}>
-                            {item.money_startDt?.substring(5, 10)}
-                            {item.money_section.length > 3 && (<Box>더보기</Box>)}
-                          </TableCell>
-                        )}
-                        <TableCell>
-                          {section.money_part_val}
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>분류</TableCell>
+                <TableCell>항목</TableCell>
+                <TableCell>금액</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT?.map((item, index) => (
+                item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
+                  <React.Fragment key={sectionIndex}>
+                    <TableRow className={"table-tbody-tr"}>
+                      {sectionIndex === 0 && (
+                        <TableCell rowSpan={Math.min(item.money_section.length, 3)}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.money_startDt;
+                          SEND.endDt = item.money_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                          {item.money_startDt?.substring(5, 10)}
+                          {item.money_section.length > 3 && (<Box>더보기</Box>)}
                         </TableCell>
-                        <TableCell>
-                          {section.money_title_val}
-                        </TableCell>
-                        <TableCell>
-                          {`₩ ${numeral(section.money_amount).format('0,0')}`}
-                        </TableCell>
-                      </TableRow>
-                    </React.Fragment>
-                  ))
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+                      )}
+                      <TableCell>
+                        {section.money_part_val}
+                      </TableCell>
+                      <TableCell>
+                        {section.money_title_val}
+                      </TableCell>
+                      <TableCell>
+                        {`₩ ${numeral(section.money_amount).format('0,0')}`}
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
     // 7-7. table
@@ -204,34 +202,34 @@ export const MoneyList = () => {
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
+  // 10. day -------------------------------------------------------------------------------------->
   const dayListNode = () => (
     <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 12. paging ----------------------------------------------------------------------------------->
+  // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"money"} plan={""} type={"list"}
     />
   );
 
-  // 13. filter ----------------------------------------------------------------------------------->
+  // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      part={"money"} plan={""} type={"list"}
+      PART={""} setPART={""} part={"money"} plan={""} type={"list"}
     />
   );
 

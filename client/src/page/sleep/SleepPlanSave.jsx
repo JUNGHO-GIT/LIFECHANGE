@@ -10,9 +10,6 @@ import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -29,6 +26,14 @@ export const SleepPlanSave = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -47,14 +52,6 @@ export const SleepPlanSave = () => {
     dayEndOpen: false,
     dayOpen: false,
   });
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -112,7 +109,7 @@ export const SleepPlanSave = () => {
     }
   };
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -275,12 +272,12 @@ export const SleepPlanSave = () => {
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );

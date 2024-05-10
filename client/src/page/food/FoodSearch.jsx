@@ -101,7 +101,7 @@ export const FoodSearch = () => {
     setLOADING(false);
   };
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -123,56 +123,54 @@ export const FoodSearch = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <TableContainer>
-            <Table className={"border"}>
-              <TableHead>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell>식품명</TableCell>
-                  <TableCell>브랜드</TableCell>
-                  <TableCell>1회 제공량</TableCell>
-                  <TableCell>1회 중량</TableCell>
-                  <TableCell>칼로리</TableCell>
-                  <TableCell>지방</TableCell>
-                  <TableCell>탄수화물</TableCell>
-                  <TableCell>단백질</TableCell>
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>식품명</TableCell>
+                <TableCell>브랜드</TableCell>
+                <TableCell>1회 제공량</TableCell>
+                <TableCell>1회 중량</TableCell>
+                <TableCell>칼로리</TableCell>
+                <TableCell>지방</TableCell>
+                <TableCell>탄수화물</TableCell>
+                <TableCell>단백질</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT?.food_section?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell className={"pointer"} onClick={() => {
+                    handleStorage(item);
+                  }}>
+                    {item.food_title}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_brand}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_count} {item.food_serv}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_gram}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_kcal}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_fat}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_carb}
+                  </TableCell>
+                  <TableCell>
+                    {item.food_protein}
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {OBJECT?.food_section?.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell className={"pointer"} onClick={() => {
-                      handleStorage(item);
-                    }}>
-                      {item.food_title}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_brand}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_count} {item.food_serv}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_gram}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_kcal}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_fat}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_carb}
-                    </TableCell>
-                    <TableCell>
-                      {item.food_protein}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
     // 7-7. table
@@ -205,17 +203,17 @@ export const FoodSearch = () => {
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 12. paging ----------------------------------------------------------------------------------->
+  // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"search"}

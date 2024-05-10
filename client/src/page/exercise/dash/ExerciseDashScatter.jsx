@@ -250,16 +250,23 @@ export const ExerciseDashScatter = () => {
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
   const dropdownSection1 = () => (
-    <FormControl size={"small"} variant={"outlined"}>
-      <Select id={"section"} value={SECTION} className={"form-select"}
+    <TextField
+      select={true}
+      type={"text"}
+      size={"small"}
+      id={"section"}
+      name={"section"}
+      className={"w-90"}
+      variant={"outlined"}
+      value={SECTION}
       onChange={(e) => (
         setSECTION(e.target.value)
-      )}>
-        <MenuItem value={"today"}>오늘</MenuItem>
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
-      </Select>
-    </FormControl>
+      )}
+    >
+      <MenuItem value={"today"}>오늘</MenuItem>
+      <MenuItem value={"week"}>주간</MenuItem>
+      <MenuItem value={"month"}>월간</MenuItem>
+    </TextField>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->

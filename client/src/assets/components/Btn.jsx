@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 import {Button, Container, Paper, Grid2} from "../../import/ImportMuis";
 
 // 11. button ------------------------------------------------------------------------------------->
-const Btn = ({
+export const Btn = ({
   DAYPICKER, setDAYPICKER, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
   flowSave, navParam, part, plan, type
 }) => {
@@ -136,7 +136,7 @@ const Btn = ({
     </React.Fragment>
   );
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
@@ -193,7 +193,3 @@ const Btn = ({
     </React.Fragment>
   );
 };
-
-export {Btn};
-
-export default Btn;

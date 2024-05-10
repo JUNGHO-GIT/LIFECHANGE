@@ -205,27 +205,24 @@ export const SleepDashLine = () => {
   // 7-3. dropdown -------------------------------------------------------------------------------->
   const dropdownSection3 = () => (
     <React.Fragment>
-      <PopDown
-        elementId={"popChild"}
-        contents={
-          <React.Fragment>
-            {["취침", "기상", "수면"]?.map((key, index) => (
-              <FormGroup key={index} className={"p-5 pe-10"}>
-                <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-                  if (PART.includes(key)) {
-                    setPART(PART?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setPART([...PART, key]);
-                  }
+      <PopDown elementId={"popChild"} contents={
+        <React.Fragment>
+          {["취침", "기상", "수면"]?.map((key, index) => (
+            <FormGroup key={index} className={"p-5 pe-10"}>
+              <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+                if (PART.includes(key)) {
+                  setPART(PART?.filter((item) => (item !== key)));
                 }
-                }/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))}
-          </React.Fragment>
-        }
-      >
+                else {
+                  setPART([...PART, key]);
+                }
+              }
+              }/>} label={key} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))}
+        </React.Fragment>
+      }>
         {popProps => (
           <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
             <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />

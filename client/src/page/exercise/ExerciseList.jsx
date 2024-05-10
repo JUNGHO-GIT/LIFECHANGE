@@ -118,7 +118,7 @@ export const ExerciseList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 8. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -131,71 +131,69 @@ export const ExerciseList = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <TableContainer>
-            <Table className={"border"}>
-              <TableHead>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-                  <TableCell>부위</TableCell>
-                  <TableCell>종목</TableCell>
-                  <TableCell>세트</TableCell>
-                  <TableCell>횟수</TableCell>
-                  <TableCell>중량</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {OBJECT?.map((item, index) => (
-                  <React.Fragment key={item._id}>
-                    {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                      <TableRow key={sectionIndex}>
-                        {sectionIndex === 0 && (
-                          <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
-                          className={"pointer"} onClick={() => {
-                            SEND.id = item._id;
-                            SEND.startDt = item.exercise_startDt;
-                            SEND.endDt = item.exercise_endDt;
-                            navParam(SEND.toDetail, {
-                              state: SEND
-                            });
-                          }}>
-                            {item.exercise_startDt?.substring(5, 10)}
-                            {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
+        <TableContainer>
+          <Table className={"border"}>
+            <TableHead>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>날짜</TableCell>
+                <TableCell>부위</TableCell>
+                <TableCell>종목</TableCell>
+                <TableCell>세트</TableCell>
+                <TableCell>횟수</TableCell>
+                <TableCell>중량</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {OBJECT?.map((item, index) => (
+                <React.Fragment key={item._id}>
+                  {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
+                    <TableRow key={sectionIndex}>
+                      {sectionIndex === 0 && (
+                        <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.exercise_startDt;
+                          SEND.endDt = item.exercise_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                          {item.exercise_startDt?.substring(5, 10)}
+                          {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
+                        </TableCell>
+                      )}
+                      <TableCell>
+                        {section.exercise_part_val.substring(0, 6)}
+                      </TableCell>
+                      <TableCell>
+                        {section.exercise_title_val.substring(0, 6)}
+                      </TableCell>
+                      {section.exercise_part_val !== "유산소" ? (
+                        <React.Fragment>
+                          <TableCell>
+                            {`${numeral(section.exercise_set).format('0,0')}`}
                           </TableCell>
-                        )}
-                        <TableCell>
-                          {section.exercise_part_val.substring(0, 6)}
-                        </TableCell>
-                        <TableCell>
-                          {section.exercise_title_val.substring(0, 6)}
-                        </TableCell>
-                        {section.exercise_part_val !== "유산소" ? (
-                          <React.Fragment>
-                            <TableCell>
-                              {`${numeral(section.exercise_set).format('0,0')}`}
-                            </TableCell>
-                            <TableCell>
-                              {`${numeral(section.exercise_rep).format('0,0')}`}
-                            </TableCell>
-                            <TableCell>
-                              {`${numeral(section.exercise_kg).format('0,0')}`}
-                            </TableCell>
-                          </React.Fragment>
-                        ) : (
-                          <React.Fragment>
-                            <TableCell colSpan={3}>
-                              {section.exercise_cardio}
-                            </TableCell>
-                          </React.Fragment>
-                        )}
-                      </TableRow>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+                          <TableCell>
+                            {`${numeral(section.exercise_rep).format('0,0')}`}
+                          </TableCell>
+                          <TableCell>
+                            {`${numeral(section.exercise_kg).format('0,0')}`}
+                          </TableCell>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <TableCell colSpan={3}>
+                            {section.exercise_cardio}
+                          </TableCell>
+                        </React.Fragment>
+                      )}
+                    </TableRow>
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </React.Fragment>
     );
     // 7-7. table
@@ -228,34 +226,34 @@ export const ExerciseList = () => {
     );
   };
 
-  // 9. header ------------------------------------------------------------------------------------>
+  // 8. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 10. navBar ----------------------------------------------------------------------------------->
+  // 9. navBar ------------------------------------------------------------------------------------>
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
+  // 10. day -------------------------------------------------------------------------------------->
   const dayListNode = () => (
     <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 12. paging ----------------------------------------------------------------------------------->
+  // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"exercise"} plan={""} type={"list"}
     />
   );
 
-  // 13. filter ----------------------------------------------------------------------------------->
+  // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      part={"exercise"} plan={""} type={"list"}
+      PART={""} setPART={""} part={"exercise"} plan={""} type={"list"}
     />
   );
 

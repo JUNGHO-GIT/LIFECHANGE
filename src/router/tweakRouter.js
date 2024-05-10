@@ -39,7 +39,7 @@ router.get("/list", async (req, res) => {
     let result = await service.list (
       req.query.user_id,
       req.query.PAGING,
-      req.query.TYPE
+      req.query.PART,
     );
     if (result && result.result) {
       res.json({
@@ -102,7 +102,7 @@ router.post("/add", async (req, res) => {
   try {
     let result = await service.add (
       req.body.user_id,
-      req.body.TYPE,
+      req.body.PART,
       req.body.count
     );
     if (result !== "fail") {
@@ -134,7 +134,7 @@ router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query.user_id,
-      req.query.TYPE
+      req.query.PART
     );
     if (result) {
       res.json({
