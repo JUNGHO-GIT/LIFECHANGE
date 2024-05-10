@@ -62,9 +62,9 @@ export const Header = () => {
               {btnSideBar()}
             </Grid2>
             <Grid2 xl={8} lg={8} md={8} sm={8} xs={8} className={"d-center"}>
-              <Typography variant={"h6"} className={"head-text"}>
+              <span className={"head-text"}>
                 {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
-              </Typography>
+              </span>
             </Grid2>
             <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-right"}>
               {btnUser()}

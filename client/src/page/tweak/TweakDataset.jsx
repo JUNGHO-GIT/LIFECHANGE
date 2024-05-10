@@ -442,7 +442,7 @@ export const TweakDataset = () => {
     // 7-7. table
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Box className={"block-wrapper"}>
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>

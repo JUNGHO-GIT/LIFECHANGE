@@ -175,10 +175,8 @@ if (rootElement === null) {
 }
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <CssBaseline />
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <CssBaseline />
+    <App />
+  </BrowserRouter>
 );
