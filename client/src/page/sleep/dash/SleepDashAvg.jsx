@@ -6,10 +6,9 @@ import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -60,7 +59,7 @@ export const SleepDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartMonth = () => {
+  const ChartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <React.Fragment>
@@ -123,7 +122,7 @@ export const SleepDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartYear = () => {
+  const ChartYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <React.Fragment>
@@ -186,7 +185,7 @@ export const SleepDashAvg = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
+  const DropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -206,7 +205,7 @@ export const SleepDashAvg = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
+  const DropdownSection3 = () => (
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
@@ -239,7 +238,7 @@ export const SleepDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -251,19 +250,25 @@ export const SleepDashAvg = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
+              <DropdownSection1/>
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"dash-title"}>수면 평균</span>
+              <Typography variant={"h6"} className={"dash-title"}>
+                수면 평균
+              </Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
+              <DropdownSection3/>
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-right"}>
-              {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
-              {SECTION === "year" && (LOADING ? loadingNode() : chartYear())}
+              {SECTION === "month" && (
+                LOADING ? <LoadingNode/> : <ChartMonth/>
+              )}
+              {SECTION === "year" && (
+                LOADING ? <LoadingNode/> : <ChartYear/>
+              )}
             </Grid2>
           </Grid2>
         </Container>

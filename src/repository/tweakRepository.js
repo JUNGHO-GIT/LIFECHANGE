@@ -1,6 +1,5 @@
 // exercisePlanRepository.js
 
-import mongoose from "mongoose";
 import {ExercisePlan} from "../schema/ExercisePlan.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
@@ -10,7 +9,6 @@ import {Food} from "../schema/Food.js";
 import {Money} from "../schema/Money.js";
 import {Sleep} from "../schema/Sleep.js";
 import {User} from "../schema/User.js";
-import {fmtDate} from "../assets/js/date.js";
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = {
@@ -245,69 +243,10 @@ export const detail = {
   }
 };
 
-// 3-1. create ------------------------------------------------------------------------------------>
+// 3. save ---------------------------------------------------------------------------------------->
 export const save = {
 
-  detail: async (
-    user_id_param, _id_param
-  ) => {
-    const finalResult = await User.findOne({
-      _id: !_id_param ? {$exists:true} : _id_param,
-      user_id: user_id_param,
-    })
-    .lean();
-
-    return finalResult;
-  },
-
-  create: async (
-    user_id_param, OBJECT_param
-  ) => {
-
-    const finalResult = await User.create({
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      user_pw: OBJECT_param.user_pw,
-      user_sex: OBJECT_param.user_sex,
-      user_age: OBJECT_param.user_age,
-      user_height: OBJECT_param.user_height,
-      user_weight: OBJECT_param.user_weight,
-      user_email: OBJECT_param.user_email,
-      user_phone: OBJECT_param.user_phone,
-      user_image: OBJECT_param.user_image,
-      user_dataset: OBJECT_param.user_dataset,
-      user_regDt: fmtDate,
-      user_updateDt: "",
-    });
-
-    return finalResult;
-  },
-
-  update: async (
-    user_id_param, _id_param, OBJECT_param
-  ) => {
-    const finalResult = await User.findOneAndUpdate(
-      {user_id: user_id_param,
-        _id: !_id_param ? {$exists:true} : _id_param
-      },
-      {$set: {
-        ...OBJECT_param,
-        user_updateDt: fmtDate,
-      }},
-      {upsert: true,
-        new: true
-      }
-    )
-    .lean();
-
-    return finalResult;
-  }
-};
-
-// 4-1. add --------------------------------------------------------------------------------------->
-export const add = {
-
-  addExercise: async (
+  saveExercise: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -326,7 +265,7 @@ export const add = {
     return insertResult;
   },
 
-  addExercisePlan: async (
+  saveExercisePlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -345,7 +284,7 @@ export const add = {
     return insertResult;
   },
 
-  addFood: async (
+  saveFood: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -364,7 +303,7 @@ export const add = {
     return insertResult;
   },
 
-  addFoodPlan: async (
+  saveFoodPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -383,7 +322,7 @@ export const add = {
     return insertResult;
   },
 
-  addMoney: async (
+  saveMoney: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -402,7 +341,7 @@ export const add = {
     return insertResult;
   },
 
-  addMoneyPlan: async (
+  saveMoneyPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -421,7 +360,7 @@ export const add = {
     return insertResult;
   },
 
-  addSleep: async (
+  saveSleep: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -440,7 +379,7 @@ export const add = {
     return insertResult;
   },
 
-  addSleepPlan: async (
+  saveSleepPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제

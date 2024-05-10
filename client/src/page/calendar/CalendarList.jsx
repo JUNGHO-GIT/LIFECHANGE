@@ -77,7 +77,7 @@ export const CalendarList = () => {
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
     );
@@ -188,18 +188,8 @@ export const CalendarList = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -207,9 +197,9 @@ export const CalendarList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
     </React.Fragment>
   );
 };

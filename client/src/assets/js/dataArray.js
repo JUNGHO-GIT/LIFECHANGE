@@ -7,6 +7,7 @@ export const dataArray = [
     items: [
       {to: "/calendar/list", label: "CalendarList"},
       {to: "/calendar/detail", label: "CalendarDetail"},
+      {to: "/calendar/test", label: "CalendarTest"},
     ]
   },
   // exercise
@@ -64,7 +65,7 @@ export const dataArray = [
     title: "Tweak",
     items: [
       {to: "/tweak/dataset", label: "TweakDataset"},
-      {to: "/tweak/demo", label: "TweakDemo"},
+      {to: "/tweak/demo", label: "TweakList"},
     ]
   },
 ];

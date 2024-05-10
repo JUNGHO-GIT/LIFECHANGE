@@ -45,7 +45,7 @@ export const UserLogin = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -119,16 +119,6 @@ export const UserLogin = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
@@ -138,7 +128,7 @@ export const UserLogin = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -146,9 +136,9 @@ export const UserLogin = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

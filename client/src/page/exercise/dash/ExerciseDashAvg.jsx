@@ -6,10 +6,9 @@ import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -74,7 +73,7 @@ export const ExerciseDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartVolumeMonth = () => {
+  const ChartVolumeMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <React.Fragment>
@@ -127,7 +126,7 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartCardioMonth = () => {
+  const ChartCardioMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <React.Fragment>
@@ -180,7 +179,7 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartVolumeYear = () => {
+  const ChartVolumeYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_YEAR, array, "exercise");
     return (
       <React.Fragment>
@@ -233,7 +232,7 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartCardioYear = () => {
+  const ChartCardioYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_YEAR, array, "exercise");
     return (
       <React.Fragment>
@@ -286,7 +285,7 @@ export const ExerciseDashAvg = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
+  const DropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -306,7 +305,7 @@ export const ExerciseDashAvg = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
+  const DropdownSection3 = () => (
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
@@ -338,7 +337,7 @@ export const ExerciseDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -350,21 +349,29 @@ export const ExerciseDashAvg = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
+              <DropdownSection1/>
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"dash-title"}>볼륨 / 유산소 평균</span>
+              <Typography variant={"h6"} className={"dash-title"}>볼륨 / 유산소 평균</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
+              <DropdownSection3/>
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "month" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeMonth())}
-              {SECTION === "month" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioMonth())}
-              {SECTION === "year" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeYear())}
-              {SECTION === "year" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioYear())}
+              {SECTION === "month" && LINE === "volume" && (
+                LOADING ? <LoadingNode /> : <ChartVolumeMonth />
+              )}
+              {SECTION === "month" && LINE === "cardio" && (
+                LOADING ? <LoadingNode /> : <ChartCardioMonth />
+              )}
+              {SECTION === "year" && LINE === "volume" && (
+                LOADING ? <LoadingNode /> : <ChartVolumeYear />
+              )}
+              {SECTION === "year" && LINE === "cardio" && (
+                LOADING ? <LoadingNode /> : <ChartCardioYear />
+              )}
             </Grid2>
           </Grid2>
         </Container>

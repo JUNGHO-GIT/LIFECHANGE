@@ -72,6 +72,9 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 // datePickers
 import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
 
+// dateCalendar
+import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
+
 // popupState
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 
@@ -125,6 +128,9 @@ export {
 
   // datePickers
   DesktopDatePicker, DesktopTimePicker, LocalizationProvider,
+
+  // dateCalendar
+  DateCalendar,
 
   // popupState
   PopupState, bindTrigger, bindMenu, bindPopover,

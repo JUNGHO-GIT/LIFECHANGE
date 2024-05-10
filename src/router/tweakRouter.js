@@ -71,37 +71,6 @@ router.post("/save", async (req, res) => {
   try {
     let result = await service.save (
       req.body.user_id,
-      req.body.OBJECT
-    );
-    if (result) {
-      res.json({
-        status: "success",
-        msg: "저장 성공",
-        result: result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "저장 실패",
-        result: null
-      });
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
-    });
-  }
-});
-
-// 4-1. add --------------------------------------------------------------------------------------->
-router.post("/add", async (req, res) => {
-  try {
-    let result = await service.add (
-      req.body.user_id,
       req.body.PART,
       req.body.count
     );

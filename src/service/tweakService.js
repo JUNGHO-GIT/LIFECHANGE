@@ -104,30 +104,6 @@ export const list = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param
-) => {
-
-  const findResult = await repository.save.detail(
-    user_id_param, ""
-  );
-
-  let finalResult;
-  if (!findResult) {
-    finalResult = await repository.save.create(
-      user_id_param, OBJECT_param
-    );
-  }
-  else {
-    finalResult = await repository.save.update(
-      user_id_param, findResult._id, OBJECT_param
-    );
-  }
-
-  return finalResult
-};
-
-// 4-1. add --------------------------------------------------------------------------------------->
-export const add = async (
   user_id_param, PART_param, count_param
 ) => {
 
@@ -153,7 +129,7 @@ export const add = async (
         exercise_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addExercisePlan(
+    await repository.save.saveExercisePlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -195,7 +171,7 @@ export const add = async (
         exercise_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addExercise(
+    await repository.save.saveExercise(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -219,7 +195,7 @@ export const add = async (
         food_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addFoodPlan(
+    await repository.save.saveFoodPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -264,7 +240,7 @@ export const add = async (
       };
     }
     );
-    await repository.add.addFood(
+    await repository.save.saveFood(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -286,7 +262,7 @@ export const add = async (
         money_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addMoneyPlan(
+    await repository.save.saveMoneyPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -323,7 +299,7 @@ export const add = async (
         money_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addMoney(
+    await repository.save.saveMoney(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -346,7 +322,7 @@ export const add = async (
         sleep_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addSleepPlan(
+    await repository.save.saveSleepPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -375,7 +351,7 @@ export const add = async (
         sleep_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
       };
     });
-    await repository.add.addSleep(
+    await repository.save.saveSleep(
       user_id_param, OBJECT
     );
     finalResult = "success";

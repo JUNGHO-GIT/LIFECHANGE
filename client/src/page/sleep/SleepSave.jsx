@@ -113,12 +113,12 @@ export const SleepSave = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
-          수면 Detail
+          수면 Save
         </Typography>
       </React.Fragment>
     );
@@ -131,7 +131,29 @@ export const SleepSave = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
-            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            views={["day"]}
+            slotProps={{
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
             onChange={(day) => {
               setDATE((prev) => ({
                 ...prev,
@@ -194,6 +216,30 @@ export const SleepSave = () => {
                 format={"HH:mm"}
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
+                slotProps={{
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
                 onChange={(time) => {
                   setOBJECT((prev) => ({
                     ...prev,
@@ -215,6 +261,30 @@ export const SleepSave = () => {
                 format={"HH:mm"}
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
+                slotProps={{
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
                 onChange={(time) => {
                   setOBJECT((prev) => ({
                     ...prev,
@@ -281,18 +351,8 @@ export const SleepSave = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -309,9 +369,9 @@ export const SleepSave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

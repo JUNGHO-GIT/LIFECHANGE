@@ -2,14 +2,12 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts";
 import {axios, moment} from "../../../import/ImportLibs";
-import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 
 // ------------------------------------------------------------------------------------------------>
@@ -223,7 +221,7 @@ export const MoneyDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartInToday = () => {
+  const ChartInToday = () => {
     const COLORS_IN_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -267,7 +265,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartOutToday = () => {
+  const ChartOutToday = () => {
     const COLORS_OUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -311,7 +309,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartInWeek = () => {
+  const ChartInWeek = () => {
     const COLORS_IN_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -355,7 +353,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartOutWeek = () => {
+  const ChartOutWeek = () => {
     const COLORS_OUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -399,7 +397,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const chartInMonth = () => {
+  const ChartInMonth = () => {
     const COLORS_IN_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -443,7 +441,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const chartOutMonth = () => {
+  const ChartOutMonth = () => {
     const COLORS_OUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -487,7 +485,7 @@ export const MoneyDashPie = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
+  const DropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -508,7 +506,7 @@ export const MoneyDashPie = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
+  const DropdownSection3 = () => (
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
@@ -540,7 +538,7 @@ export const MoneyDashPie = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -552,23 +550,35 @@ export const MoneyDashPie = () => {
           <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
+              <DropdownSection1/>
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"dash-title"}>수입/지출 비율</span>
+              <Typography variant={"h6"} className={"dash-title"}>수입/지출 비율</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
+              <DropdownSection3/>
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && LINE === "in" && (LOADING ? loadingNode() : chartInToday())}
-              {SECTION === "today" && LINE === "out" && (LOADING ? loadingNode() : chartOutToday())}
-              {SECTION === "week" && LINE === "in" && (LOADING ? loadingNode() : chartInWeek())}
-              {SECTION === "week" && LINE === "out" && (LOADING ? loadingNode() : chartOutWeek())}
-              {SECTION === "month" && LINE === "in" && (LOADING ? loadingNode() : chartInMonth())}
-              {SECTION === "month" && LINE === "out" && (LOADING ? loadingNode() : chartOutMonth())}
+              {SECTION === "today" && LINE === "in" && (
+                LOADING ? <LoadingNode /> : <ChartInToday />
+              )}
+              {SECTION === "today" && LINE === "out" && (
+                LOADING ? <LoadingNode /> : <ChartOutToday />
+              )}
+              {SECTION === "week" && LINE === "in" && (
+                LOADING ? <LoadingNode /> : <ChartInWeek />
+              )}
+              {SECTION === "week" && LINE === "out" && (
+                LOADING ? <LoadingNode /> : <ChartOutWeek />
+              )}
+              {SECTION === "month" && LINE === "in" && (
+                LOADING ? <LoadingNode /> : <ChartInMonth />
+              )}
+              {SECTION === "month" && LINE === "out" && (
+                LOADING ? <LoadingNode /> : <ChartOutMonth />
+              )}
             </Grid2>
             </Grid2>
           </Container>

@@ -2,14 +2,12 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts";
 import {axios, moment} from "../../../import/ImportLibs";
-import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
@@ -170,7 +168,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartPartWeek = () => {
+  const ChartPartWeek = () => {
     const COLORS_PART_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -206,7 +204,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartTitleWeek = () => {
+  const ChartTitleWeek = () => {
     const COLORS_TITLE_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -242,7 +240,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartPartMonth = () => {
+  const ChartPartMonth = () => {
     const COLORS_PART_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -278,7 +276,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartTitleMonth = () => {
+  const ChartTitleMonth = () => {
     const COLORS_TITLE_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -314,7 +312,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
+  const DropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -334,7 +332,7 @@ export const ExerciseDashPie = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
+  const DropdownSection3 = () => (
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
@@ -366,7 +364,7 @@ export const ExerciseDashPie = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -378,21 +376,29 @@ export const ExerciseDashPie = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
+              <DropdownSection1/>
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"dash-title"}>부위/운동 비율</span>
+              <Typography variant={"h6"} className={"dash-title"}>부위/운동 비율</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
+              <DropdownSection3/>
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "part" && (LOADING ? loadingNode() : chartPartWeek())}
-              {SECTION === "week" && LINE === "title" && (LOADING ? loadingNode() : chartTitleWeek())}
-              {SECTION === "month" && LINE === "part" && (LOADING ? loadingNode() : chartPartMonth())}
-              {SECTION === "month" && LINE === "title" && (LOADING ? loadingNode() : chartTitleMonth())}
+              {SECTION === "week" && LINE === "part" && (
+                LOADING ? <LoadingNode /> : <ChartPartWeek />
+              )}
+              {SECTION === "week" && LINE === "title" && (
+                LOADING ? <LoadingNode /> : <ChartTitleWeek />
+              )}
+              {SECTION === "month" && LINE === "part" && (
+                LOADING ? <LoadingNode /> : <ChartPartMonth />
+              )}
+              {SECTION === "month" && LINE === "title" && (
+                LOADING ? <LoadingNode /> : <ChartTitleMonth />
+              )}
             </Grid2>
           </Grid2>
         </Container>

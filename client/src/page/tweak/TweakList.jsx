@@ -1,4 +1,4 @@
-// TweakDemo.jsx
+// TweakList.jsx
 
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts";
 import {axios, numeral, NumericFormat} from "../../import/ImportLibs";
@@ -11,7 +11,7 @@ import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis
 import {Typography, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
-export const TweakDemo = () => {
+export const TweakList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -185,8 +185,8 @@ export const TweakDemo = () => {
   })()}, [user_id, PAGING, PART]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowAdd = async (type_param) => {
-    const res = await axios.post(`${URL_OBJECT}/add`, {
+  const flowSave = async (type_param) => {
+    const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
       PART: type_param,
       count: COUNT?.inputCnt
@@ -228,7 +228,7 @@ export const TweakDemo = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -544,16 +544,6 @@ export const TweakDemo = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
@@ -597,7 +587,7 @@ export const TweakDemo = () => {
                 )}
               />
               <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-              onClick={() => (flowAdd(PART))}>
+              onClick={() => (flowSave(PART))}>
                 추가
               </Button>
               <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
@@ -612,7 +602,7 @@ export const TweakDemo = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -620,9 +610,9 @@ export const TweakDemo = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {pagingNode()}
       {filterNode()}
       {btnNode()}

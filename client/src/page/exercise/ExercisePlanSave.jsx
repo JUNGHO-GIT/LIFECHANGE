@@ -115,7 +115,7 @@ export const ExercisePlanSave = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -133,7 +133,29 @@ export const ExercisePlanSave = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
-            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            views={["day"]}
+            slotProps={{
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
             onChange={(day) => {
               setDATE((prev) => ({
                 ...prev,
@@ -209,25 +231,46 @@ export const ExercisePlanSave = () => {
             />
           </Box>
           <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              label={"목표 유산소 시간"}
-              id={"exercise_plan_cardio"}
-              name={"exercise_plan_cardio"}
-              className={"w-m220"}
-              value={OBJECT?.exercise_plan_cardio}
-              onChange={(e) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_plan_cardio: e.target.value
-                }));
-              }}
-              InputProps={{
-                readOnly: false,
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"목표 유산소 시간"}
+                minutesStep={1}
+                value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                slotProps={{
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_morning: moment(time).format("HH:mm")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
@@ -307,16 +350,6 @@ export const ExercisePlanSave = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -327,7 +360,7 @@ export const ExercisePlanSave = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -335,9 +368,9 @@ export const ExercisePlanSave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

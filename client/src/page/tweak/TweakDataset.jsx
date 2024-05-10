@@ -224,7 +224,7 @@ export const TweakDataset = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -477,16 +477,6 @@ export const TweakDataset = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => {
     const confirmDefault = () => {
@@ -535,7 +525,7 @@ export const TweakDataset = () => {
   };
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -543,9 +533,9 @@ export const TweakDataset = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

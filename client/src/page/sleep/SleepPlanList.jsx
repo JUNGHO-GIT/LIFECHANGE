@@ -115,7 +115,7 @@ export const SleepPlanList = () => {
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -233,16 +233,6 @@ export const SleepPlanList = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 10. day -------------------------------------------------------------------------------------->
   const dayListNode = () => (
     <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
@@ -274,7 +264,7 @@ export const SleepPlanList = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -282,10 +272,10 @@ export const SleepPlanList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
+      <Header />
+      <NavBar />
       {dayListNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {pagingNode()}
       {filterNode()}
       {btnNode()}

@@ -6,10 +6,9 @@ import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -74,7 +73,7 @@ export const FoodDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartKcalMonth = () => {
+  const ChartKcalMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <React.Fragment>
@@ -127,7 +126,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNutMonth = () => {
+  const ChartNutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <React.Fragment>
@@ -184,7 +183,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartKcalYear = () => {
+  const ChartKcalYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
       <React.Fragment>
@@ -237,7 +236,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNutYear = () => {
+  const ChartNutYear = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
       <React.Fragment>
@@ -294,7 +293,7 @@ export const FoodDashAvg = () => {
   };
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
+  const DropdownSection1 = () => (
     <TextField
       select={true}
       type={"text"}
@@ -314,7 +313,7 @@ export const FoodDashAvg = () => {
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
+  const DropdownSection3 = () => (
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
@@ -346,7 +345,7 @@ export const FoodDashAvg = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -358,21 +357,29 @@ export const FoodDashAvg = () => {
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
+              <DropdownSection1/>
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"dash-title"}>칼로리/영양소 평균</span>
+              <Typography variant={"h6"} className={"dash-title"}>칼로리/영양소 평균</Typography>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
+              <DropdownSection3/>
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "month" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalMonth())}
-              {SECTION === "month" && LINE === "nut" && (LOADING ? loadingNode() : chartNutMonth())}
-              {SECTION === "year" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalYear())}
-              {SECTION === "year" && LINE === "nut" && (LOADING ? loadingNode() : chartNutYear())}
+              {SECTION === "month" && LINE === "kcal" && (
+                LOADING ? <LoadingNode /> : <ChartKcalMonth />
+              )}
+              {SECTION === "month" && LINE === "nut" && (
+                LOADING ? <LoadingNode /> : <ChartNutMonth />
+              )}
+              {SECTION === "year" && LINE === "kcal" && (
+                LOADING ? <LoadingNode /> : <ChartKcalYear />
+              )}
+              {SECTION === "year" && LINE === "nut" && (
+                LOADING ? <LoadingNode /> : <ChartNutYear />
+              )}
             </Grid2>
           </Grid2>
         </Container>

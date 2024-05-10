@@ -11,77 +11,15 @@
   min-height: min-content !important;
   padding: 0px 20px 0px 0px !important;
 }
-[class$="MuiPaper-root-MuiDrawer-paper"] {
-  border-radius: 0px 10px 10px 0px !important;
-}
 [class$="MuiGrid-root"] {
   width: 100% !important;
   margin: 0px 0px 0px 0px !important;
-}
-[class$="MuiPaper-root-MuiDialog-paper"] {
-  margin: 30px 25px 30px 25px !important;
 }
 [class$="MuiDialog-paper"] {
   width: 85vw!important;
   min-width: auto!important;
   height: 65vh!important;
   min-height: auto!important;
-}
-[class$="MuiDateCalendar-root"] {
-  width: 220px !important;
-  max-height: 240px !important;
-}
-[class$="MuiDatePickerToolbar-root"] {
-  margin: 0px 0px 0px 0px !important;
-  padding: 20px 5px 5px 20px !important;
-}
-[class$="MuiDayCalendar-header"] {
-  width: 210px !important;
-}
-[class$="MuiDayCalendar-slideTransition"] {
-  width: 210px !important;
-}
-[class$="MuiPickersCalendarHeader-root"] {
-  margin: 0px 0px 10px 5px !important;
-  padding: 0px 0px 0px 0px !important;
-}
-[class$="MuiPickersDay-root"] {
-  width: 26px !important;
-  height: 26px !important;
-}
-[class$="MuiPickersLayout-contentWrapper"] {
-  max-width: 220px !important;
-  max-height: 230px !important;
-}
-[class$="MuiDialogActions-root"] {
-  margin: 0px 0px 0px 0px !important;
-  padding: 15px 0px 0px 0px !important;
-}
-[class$="MuiPickersPopper-paper"] {
-  margin: 0px 0px 0px 0px !important;
-  padding: 8px 8px 15px 8px !important;
-}
-[class$="MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item"] {
-  width: 65px !important;
-  min-height: 20px !important;
-  border-radius: 10px !important;
-}
-[class$="MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item Mui-selected"] {
-  background-color: #164a60 !important;
-  color: #ffffff !important;
-}
-[class$="MuiPopper-root-MuiPickersPopper-root"] {
-  max-width: 220px !important;
-}
-[class$="MuiList-root-MuiMultiSectionDigitalClockSection-root"] {
-  width: 77px !important;
-  height: 150px !important;
-}
-[class$="MuiMultiSectionDigitalClockSection-item"] {
-  font-size: 0.8rem !important;
-}
-[class$="MuiButtonBase-root-MuiPickersDay-root"] {
-  line-height: 1.5 !important;
 }
 [class$="MuiInputBase-root-MuiOutlinedInput-root"] {
   max-width: 220px !important;
@@ -90,7 +28,4 @@
 [class$="MuiOutlinedInput-root-MuiSelect-root"] {
   max-width: 220px !important;
   max-height: 30px !important;
-}
-[class$="MuiPaper-root-MuiPopover-paper"] {
-  max-width: 220px !important;
 }

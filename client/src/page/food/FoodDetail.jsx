@@ -133,7 +133,7 @@ export const FoodDetail = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -151,6 +151,29 @@ export const FoodDetail = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
+            views={["day"]}
+            slotProps={{
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
             onChange={(day) => {
               setDATE((prev) => ({
                 ...prev,
@@ -440,16 +463,6 @@ export const FoodDetail = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -460,7 +473,7 @@ export const FoodDetail = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -468,9 +481,9 @@ export const FoodDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

@@ -10,10 +10,6 @@ import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -131,7 +127,7 @@ export const ExerciseDetail = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -149,6 +145,29 @@ export const ExerciseDetail = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
+            views={["day"]}
+            slotProps={{
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
             onChange={(day) => {
               setDATE((prev) => ({
                 ...prev,
@@ -284,7 +303,7 @@ export const ExerciseDetail = () => {
       <React.Fragment key={i}>
         <Card variant={"outlined"} className={"p-20"}>
           <Box className={"d-between mt-n15 mb-20"}>
-            {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
+            {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
@@ -432,16 +451,6 @@ export const ExerciseDetail = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -452,7 +461,7 @@ export const ExerciseDetail = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -460,9 +469,9 @@ export const ExerciseDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

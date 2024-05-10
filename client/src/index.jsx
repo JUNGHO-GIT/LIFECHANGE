@@ -26,6 +26,7 @@ import "./assets/css/Jstyle.css";
 
 import {CalendarList} from "./page/calendar/CalendarList";
 import {CalendarDetail} from "./page/calendar/CalendarDetail";
+import {CalendarTest} from "./page/calendar/CalendarTest";
 
 import {ExercisePlanList} from "./page/exercise/ExercisePlanList";
 import {ExercisePlanDetail} from "./page/exercise/ExercisePlanDetail";
@@ -64,7 +65,7 @@ import {UserSignup} from "./page/user/UserSignup";
 import {UserLogin} from "./page/user/UserLogin";
 
 import {TweakDataset} from "./page/tweak/TweakDataset";
-import {TweakDemo} from "./page/tweak/TweakDemo";
+import {TweakList} from "./page/tweak/TweakList";
 
 // ------------------------------------------------------------------------------------------------>
 const Calendar = () => (
@@ -72,10 +73,10 @@ const Calendar = () => (
     <Routes>
       <Route path="/list" element={<CalendarList />} />
       <Route path="/detail" element={<CalendarDetail />} />
+      <Route path="/test" element={<CalendarTest />} />
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const Exercise = () =>  (
   <React.Fragment>
@@ -90,7 +91,6 @@ const Exercise = () =>  (
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const Food = () => (
   <React.Fragment>
@@ -106,7 +106,6 @@ const Food = () => (
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const Money = () =>  (
   <React.Fragment>
@@ -121,7 +120,6 @@ const Money = () =>  (
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const Sleep = () => (
   <React.Fragment>
@@ -136,7 +134,6 @@ const Sleep = () => (
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const User = () => (
   <React.Fragment>
@@ -146,17 +143,15 @@ const User = () => (
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const Tweak = () => (
   <React.Fragment>
     <Routes>
       <Route path="/dataset" element={<TweakDataset />} />
-      <Route path="/demo" element={<TweakDemo />} />
+      <Route path="/demo" element={<TweakList />} />
     </Routes>
   </React.Fragment>
 );
-
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   return (
@@ -176,7 +171,6 @@ const App = () => {
     </React.Fragment>
   );
 };
-
 // ------------------------------------------------------------------------------------------------>
 const rootElement = document.getElementById('root');
 if (rootElement === null) {

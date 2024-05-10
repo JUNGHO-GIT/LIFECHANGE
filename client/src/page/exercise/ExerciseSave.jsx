@@ -165,7 +165,7 @@ export const ExerciseSave = () => {
   };
 
   // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
@@ -183,6 +183,29 @@ export const ExerciseSave = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
+            views={["day"]}
+            slotProps={{
+              layout: {
+                sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "280px",
+                  },
+                  "& .MuiDateCalendar-root": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    width: "210px",
+                    height: "270px",
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: "30px",
+                    height: "28px",
+                  },
+                },
+              },
+            }}
             onChange={(day) => {
               setDATE((prev) => ({
                 ...prev,
@@ -544,6 +567,48 @@ export const ExerciseSave = () => {
               }}
             />
           </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"유산소 시간"}
+                minutesStep={1}
+                value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                slotProps={{
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_morning: moment(time).format("HH:mm")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
         </Card>
       </React.Fragment>
     );
@@ -586,16 +651,6 @@ export const ExerciseSave = () => {
     );
   };
 
-  // 8. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 9. navBar ------------------------------------------------------------------------------------>
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -606,7 +661,7 @@ export const ExerciseSave = () => {
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
+  const LoadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
@@ -614,9 +669,9 @@ export const ExerciseSave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
-      {LOADING ? loadingNode() : tableNode()}
+      <Header />
+      <NavBar />
+      {LOADING ? <LoadingNode /> : <TableNode />}
       {btnNode()}
     </React.Fragment>
   );

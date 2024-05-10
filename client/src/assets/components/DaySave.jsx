@@ -122,7 +122,7 @@ export const DaySave = ({
   );
 
   // 7-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
+  const TableNode = () => {
     const tableSection1 = () => (
       <React.Fragment>
         <Grid2 container spacing={3}>
