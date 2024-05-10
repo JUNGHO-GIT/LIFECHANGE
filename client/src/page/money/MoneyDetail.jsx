@@ -144,6 +144,11 @@ export const MoneyDetail = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -185,6 +190,7 @@ export const MoneyDetail = () => {
           label={"항목수"}
           variant={"outlined"}
           size={"small"}
+          className={"w-220"}
           value={COUNT?.sectionCnt}
           InputProps={{
             readOnly: true,
@@ -198,14 +204,14 @@ export const MoneyDetail = () => {
     // 7-4. total
     const totalSection = () => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 수입"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -213,13 +219,15 @@ export const MoneyDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 지출"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -227,13 +235,15 @@ export const MoneyDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 자산"}
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -241,7 +251,7 @@ export const MoneyDetail = () => {
               )
             }}
           />
-        </Card>
+        </Box>
       </React.Fragment>
     );
     // 7-5. dropdown
@@ -309,7 +319,7 @@ export const MoneyDetail = () => {
               type={"text"}
               variant={"outlined"}
               size={"small"}
-              className={"w-m90 me-10"}
+              className={"w-100 me-10"}
               value={OBJECT?.money_section[i]?.money_part_val}
               InputProps={{
                 readOnly: true,
@@ -321,7 +331,7 @@ export const MoneyDetail = () => {
               type={"text"}
               variant={"outlined"}
               size={"small"}
-              className={"w-m90 ms-10"}
+              className={"w-100 ms-10"}
               value={OBJECT?.money_section[i]?.money_title_val}
               InputProps={{
                 readOnly: true,
@@ -335,7 +345,7 @@ export const MoneyDetail = () => {
               type={"text"}
               variant={"outlined"}
               size={"small"}
-              className={"w-m220"}
+              className={"w-220"}
               value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
               InputProps={{
                 readOnly: true,
@@ -352,7 +362,7 @@ export const MoneyDetail = () => {
               type={"text"}
               variant={"outlined"}
               size={"small"}
-              className={"w-m220"}
+              className={"w-220"}
               value={OBJECT?.money_section[i]?.money_content}
               InputProps={{
                 readOnly: true,
@@ -379,7 +389,7 @@ export const MoneyDetail = () => {
           <Box className={"d-center mb-20"}>
             {countSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column mb-20"}>
             {totalSection()}
           </Box>
           <Box className={"d-column"}>

@@ -139,7 +139,7 @@ export const Btn = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
-      <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
+      <Paper className={"flex-wrapper h-8vh p-sticky bottom-0"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>

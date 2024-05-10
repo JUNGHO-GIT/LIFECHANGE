@@ -147,6 +147,11 @@ export const ExerciseDetail = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -188,6 +193,7 @@ export const ExerciseDetail = () => {
           label={"항목수"}
           variant={"outlined"}
           size={"small"}
+          className={"w-220"}
           value={COUNT?.sectionCnt}
           InputProps={{
             readOnly: true,
@@ -201,14 +207,14 @@ export const ExerciseDetail = () => {
     // 7-4. total
     const totalSection = () => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 볼륨"}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -216,13 +222,15 @@ export const ExerciseDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 유산소 시간"}
             size={"small"}
             value={`${OBJECT?.exercise_total_cardio}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -230,13 +238,15 @@ export const ExerciseDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"체중"}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -244,7 +254,7 @@ export const ExerciseDetail = () => {
               )
             }}
           />
-        </Card>
+        </Box>
       </React.Fragment>
     );
     // 7-5. dropdown
@@ -312,7 +322,7 @@ export const ExerciseDetail = () => {
               size={"small"}
               value={OBJECT?.exercise_section[i]?.exercise_part_val}
               variant={"outlined"}
-              className={"w-m90 me-10"}
+              className={"w-100 me-10"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -326,7 +336,7 @@ export const ExerciseDetail = () => {
               size={"small"}
               value={OBJECT?.exercise_section[i]?.exercise_title_val}
               variant={"outlined"}
-              className={"w-m90 me-10"}
+              className={"w-100 ms-10"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -400,7 +410,7 @@ export const ExerciseDetail = () => {
               size={"small"}
               value={OBJECT?.exercise_section[i]?.exercise_cardio}
               variant={"outlined"}
-              className={""}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -426,7 +436,7 @@ export const ExerciseDetail = () => {
           <Box className={"d-center mb-20"}>
             {countSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column mb-20"}>
             {totalSection()}
           </Box>
           <Box className={"d-column"}>

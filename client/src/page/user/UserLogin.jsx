@@ -87,9 +87,17 @@ export const UserLogin = () => {
       </React.Fragment>
     );
     // 7-7. table
-    const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-55vh"}>
+    const tableSection = (i) => (
+      <React.Fragment key={i}>
+        <Box className={"block-wrapper h-74vh"}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%"
+          }}
+        >
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
@@ -106,7 +114,7 @@ export const UserLogin = () => {
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
+                {tableSection(0)}
               </Grid2>
             </Grid2>
           </Container>

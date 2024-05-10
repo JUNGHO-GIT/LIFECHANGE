@@ -185,6 +185,11 @@ export const ExerciseSave = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -267,6 +272,7 @@ export const ExerciseSave = () => {
                 label={"항목수"}
                 variant={"outlined"}
                 size={"small"}
+                className={"w-220"}
                 value={COUNT?.sectionCnt}
                 InputProps={{
                   readOnly: false,
@@ -308,14 +314,14 @@ export const ExerciseSave = () => {
     // 7-4. total
     const totalSection = () => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 볼륨"}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -323,13 +329,15 @@ export const ExerciseSave = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 유산소 시간"}
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -337,13 +345,15 @@ export const ExerciseSave = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"체중"}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -351,7 +361,7 @@ export const ExerciseSave = () => {
               )
             }}
           />
-        </Card>
+        </Box>
       </React.Fragment>
     );
     // 7-5. dropdown
@@ -402,8 +412,8 @@ export const ExerciseSave = () => {
               label={"파트"}
               id={`exercise_part_val-${i}`}
               name={`exercise_part_val-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+              className={"w-100 me-10"}
               value={OBJECT?.exercise_section[i]?.exercise_part_idx}
               InputProps={{
                 readOnly: false
@@ -437,8 +447,8 @@ export const ExerciseSave = () => {
               label={"타이틀"}
               id={`exercise_title_val-${i}`}
               name={`exercise_title_val-${i}`}
-              className={"ms-10"}
               variant={"outlined"}
+              className={"w-100 ms-10"}
               value={OBJECT?.exercise_section[i]?.exercise_title_idx}
               InputProps={{
                 readOnly: false
@@ -473,7 +483,7 @@ export const ExerciseSave = () => {
               label={"세트"}
               size={"small"}
               variant={"outlined"}
-              className={"me-10"}
+              className={"w-220"}
               value={OBJECT?.exercise_section[i]?.exercise_set}
               InputProps={{
                 readOnly: false
@@ -498,7 +508,7 @@ export const ExerciseSave = () => {
               label={"횟수"}
               size={"small"}
               variant={"outlined"}
-              className={"me-10"}
+              className={"w-220"}
               value={OBJECT?.exercise_section[i]?.exercise_rep}
               InputProps={{
                 readOnly: false
@@ -523,7 +533,7 @@ export const ExerciseSave = () => {
               label={"무게"}
               size={"small"}
               variant={"outlined"}
-              className={"me-10"}
+              className={"w-220"}
               value={OBJECT?.exercise_section[i]?.exercise_kg}
               InputProps={{
                 readOnly: false
@@ -548,7 +558,7 @@ export const ExerciseSave = () => {
               label={"휴식"}
               size={"small"}
               variant={"outlined"}
-              className={"me-10"}
+              className={"w-220"}
               value={OBJECT?.exercise_section[i]?.exercise_rest}
               InputProps={{
                 readOnly: false
@@ -577,6 +587,11 @@ export const ExerciseSave = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
                   layout: {
                     sx: {
                       "& .MuiPickersLayout-contentWrapper": {
@@ -626,7 +641,7 @@ export const ExerciseSave = () => {
           <Box className={"d-center mb-20"}>
             {countSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column mb-20"}>
             {totalSection()}
           </Box>
           <Box className={"d-column"}>

@@ -133,6 +133,11 @@ export const SleepSave = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -217,6 +222,11 @@ export const SleepSave = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
                   layout: {
                     sx: {
                       "& .MuiPickersLayout-contentWrapper": {
@@ -262,6 +272,11 @@ export const SleepSave = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
                   layout: {
                     sx: {
                       "& .MuiPickersLayout-contentWrapper": {
@@ -298,22 +313,22 @@ export const SleepSave = () => {
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <TextField
-                label={"수면"}
-                type={"text"}
-                size={"medium"}
-                id={"sleep_time"}
-                name={"sleep_time"}
-                value={OBJECT?.sleep_section[0]?.sleep_time}
-                InputProps={{
-                  readOnly: true,
-                  endAdornment: (
-                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
-                  )
-                }}
-              />
-            </LocalizationProvider>
+            <TextField
+              label={"수면"}
+              type={"text"}
+              id={"sleep_time"}
+              name={"sleep_time"}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-220"}
+              value={OBJECT?.sleep_section[0]?.sleep_time}
+              InputProps={{
+                readOnly: true,
+                endAdornment: (
+                  <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                )
+              }}
+            />
           </Box>
         </Card>
       </React.Fragment>

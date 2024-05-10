@@ -1,0 +1,11 @@
+/** 셀렉트 박스 **/
+[class$="MuiFormControl-root-MuiTextField-root"] {
+  max-width: 220px !important;
+}
+[class$="MuiInputBase-root-MuiOutlinedInput-root"] {
+  max-height: 30px !important;
+  font-size: 12px !important;
+}
+[class$="-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
+  text-overflow: clip !important;
+}

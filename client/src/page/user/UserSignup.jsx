@@ -66,42 +66,48 @@ export const UserSignup = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"} key={i}>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              id={"user_id"}
-              name={"user_id"}
-              label={"ID"}
-              value={user_id}
-              onChange={(e) => (
-                setUserId(e.target.value)
-              )}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"password"}
-              size={"small"}
-              id={"user_pw"}
-              name={"user_pw"}
-              label={"Password"}
-              value={user_pw}
-              onChange={(e) => (
-                setUserPw(e.target.value)
-              )}
-            />
-          </Box>
-        </Card>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            id={"user_id"}
+            name={"user_id"}
+            label={"ID"}
+            value={user_id}
+            onChange={(e) => (
+              setUserId(e.target.value)
+            )}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"password"}
+            size={"small"}
+            id={"user_pw"}
+            name={"user_pw"}
+            label={"Password"}
+            value={user_pw}
+            onChange={(e) => (
+              setUserPw(e.target.value)
+            )}
+          />
+        </Box>
       </React.Fragment>
     );
     // 7-7. table
-    const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+    const tableSection = (i) => (
+      <React.Fragment key={i}>
+        <Box className={"block-wrapper h-74vh"}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%"
+          }}
+        >
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>

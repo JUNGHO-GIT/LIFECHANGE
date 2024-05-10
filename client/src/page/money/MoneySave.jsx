@@ -157,6 +157,11 @@ export const MoneySave = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -235,6 +240,7 @@ export const MoneySave = () => {
                 label={"항목수"}
                 variant={"outlined"}
                 size={"small"}
+                className={"w-220"}
                 value={COUNT?.sectionCnt}
                 InputProps={{
                   readOnly: false,
@@ -276,14 +282,14 @@ export const MoneySave = () => {
     // 7-4. total
     const totalSection = () => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 수입"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -291,13 +297,15 @@ export const MoneySave = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 지출"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -305,13 +313,15 @@ export const MoneySave = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 자산"}
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -319,7 +329,7 @@ export const MoneySave = () => {
               )
             }}
           />
-        </Card>
+        </Box>
       </React.Fragment>
     );
     // 7-5. dropdown
@@ -370,8 +380,8 @@ export const MoneySave = () => {
               label={"파트"}
               id={`money_part_val-${i}`}
               name={`money_part_val-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+              className={"w-100 me-10"}
               value={OBJECT?.money_section[i]?.money_part_idx}
               InputProps={{
                 readOnly: false
@@ -405,7 +415,7 @@ export const MoneySave = () => {
               label={"타이틀"}
               id={`money_title_val-${i}`}
               name={`money_title_val-${i}`}
-              className={"ms-10"}
+              className={"w-100 ms-10"}
               variant={"outlined"}
               value={OBJECT?.money_section[i]?.money_title_idx}
               InputProps={{
@@ -441,6 +451,9 @@ export const MoneySave = () => {
               label={"금액"}
               type={"text"}
               variant={"outlined"}
+              id={`money_amount-${i}`}
+              name={`money_amount-${i}`}
+              className={"w-220"}
               size={"small"}
               value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
               InputProps={{
@@ -470,6 +483,9 @@ export const MoneySave = () => {
               label={"메모"}
               type={"text"}
               variant={"outlined"}
+              id={`money_content-${i}`}
+              name={`money_content-${i}`}
+              className={"w-220"}
               size={"small"}
               value={OBJECT?.money_section[i]?.money_content}
               InputProps={{
@@ -509,7 +525,7 @@ export const MoneySave = () => {
           <Box className={"d-center mb-20"}>
             {countSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column mb-20"}>
             {totalSection()}
           </Box>
           <Box className={"d-column"}>

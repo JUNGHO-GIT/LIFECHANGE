@@ -128,6 +128,11 @@ export const MoneyPlanSave = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -210,8 +215,8 @@ export const MoneyPlanSave = () => {
               label={"목표 수입"}
               id={`money_plan_in-${i}`}
               name={`money_plan_in-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.money_plan_in}
               InputProps={{
                 readOnly: false,
@@ -233,8 +238,8 @@ export const MoneyPlanSave = () => {
               label={"목표 지출"}
               id={`money_plan_out-${i}`}
               name={`money_plan_out-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.money_plan_out}
               InputProps={{
                 readOnly: false,
@@ -262,7 +267,7 @@ export const MoneyPlanSave = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column"}>
             {tableFragment()}
           </Box>
         </Box>

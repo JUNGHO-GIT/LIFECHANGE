@@ -153,6 +153,11 @@ export const FoodDetail = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -194,6 +199,7 @@ export const FoodDetail = () => {
           label={"항목수"}
           variant={"outlined"}
           size={"small"}
+          className={"w-220"}
           value={COUNT?.sectionCnt}
           InputProps={{
             readOnly: true,
@@ -207,14 +213,14 @@ export const FoodDetail = () => {
     // 7-4. total
     const totalSection = () => (
       <React.Fragment>
-        <Card variant={"outlined"} className={"p-20"}>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 칼로리"}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -222,13 +228,15 @@ export const FoodDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 탄수화물"}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -236,13 +244,15 @@ export const FoodDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 단백질"}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -250,13 +260,15 @@ export const FoodDetail = () => {
               )
             }}
           />
+        </Box>
+        <Box className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 지방"}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
             variant={"outlined"}
-            className={"mt-6 mb-6"}
+            className={"w-220"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -264,7 +276,7 @@ export const FoodDetail = () => {
               )
             }}
           />
-        </Card>
+        </Box>
       </React.Fragment>
     );
     // 7-5. dropdown
@@ -332,7 +344,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={OBJECT?.food_section[i]?.food_part_val}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -348,7 +360,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -364,7 +376,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -380,7 +392,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -396,7 +408,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -412,7 +424,7 @@ export const FoodDetail = () => {
               size={"small"}
               value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
               variant={"outlined"}
-              className={"w-m220"}
+              className={"w-220"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -438,7 +450,7 @@ export const FoodDetail = () => {
           <Box className={"d-center mb-20"}>
             {countSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column mb-20"}>
             {totalSection()}
           </Box>
           <Box className={"d-column"}>

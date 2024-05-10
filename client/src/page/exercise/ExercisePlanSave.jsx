@@ -135,6 +135,11 @@ export const ExercisePlanSave = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -217,7 +222,7 @@ export const ExercisePlanSave = () => {
               label={"목표 볼륨"}
               id={"exercise_plan_volume"}
               name={"exercise_plan_volume"}
-              className={"w-m220"}
+              className={"w-220"}
               value={OBJECT?.exercise_plan_volume}
               onChange={(e) => {
                 setOBJECT((prev) => ({
@@ -240,6 +245,11 @@ export const ExercisePlanSave = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
                   layout: {
                     sx: {
                       "& .MuiPickersLayout-contentWrapper": {
@@ -280,7 +290,7 @@ export const ExercisePlanSave = () => {
               label={"목표 횟수"}
               id={"exercise_plan_count"}
               name={"exercise_plan_count"}
-              className={"w-m220"}
+              className={"w-220"}
               value={OBJECT?.exercise_plan_count}
               onChange={(e) => {
                 setOBJECT((prev) => ({
@@ -301,7 +311,7 @@ export const ExercisePlanSave = () => {
               label={"목표 체중"}
               id={"exercise_plan_weight"}
               name={"exercise_plan_weight"}
-              className={"w-m220"}
+              className={"w-220"}
               value={OBJECT?.exercise_plan_weight}
               onChange={(e) => {
                 setOBJECT((prev) => ({
@@ -328,7 +338,7 @@ export const ExercisePlanSave = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column"}>
             {tableFragment()}
           </Box>
         </Box>

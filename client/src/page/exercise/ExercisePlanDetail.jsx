@@ -136,6 +136,11 @@ export const ExercisePlanDetail = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -234,7 +239,7 @@ export const ExercisePlanDetail = () => {
               label={"목표 운동 횟수"}
               id={"exercise_plan_count"}
               name={"exercise_plan_count"}
-              className={"w-m220"}
+              className={"w-220"}
               value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
               InputProps={{
                 readOnly: true
@@ -249,7 +254,7 @@ export const ExercisePlanDetail = () => {
               label={"목표 볼륨"}
               id={"exercise_plan_volume"}
               name={"exercise_plan_volume"}
-              className={"w-m220"}
+              className={"w-220"}
               value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
               InputProps={{
                 readOnly: true
@@ -264,7 +269,7 @@ export const ExercisePlanDetail = () => {
               label={"목표 유산소"}
               id={"exercise_plan_cardio"}
               name={"exercise_plan_cardio"}
-              className={"w-m220"}
+              className={"w-220"}
               value={OBJECT?.exercise_plan_cardio}
               InputProps={{
                 readOnly: true
@@ -279,7 +284,7 @@ export const ExercisePlanDetail = () => {
               label={"목표 체중"}
               id={"exercise_plan_weight"}
               name={"exercise_plan_weight"}
-              className={"w-m220"}
+              className={"w-220"}
               value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
               InputProps={{
                 readOnly: true
@@ -300,7 +305,7 @@ export const ExercisePlanDetail = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column"}>
             {tableFragment()}
           </Box>
         </Box>

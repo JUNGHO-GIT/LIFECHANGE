@@ -139,6 +139,11 @@ export const FoodPlanDetail = () => {
             timezone={"Asia/Seoul"}
             views={["day"]}
             slotProps={{
+              textField: {
+                sx: {
+                  width: "220px",
+                },
+              },
               layout: {
                 sx: {
                   "& .MuiPickersLayout-contentWrapper": {
@@ -237,8 +242,8 @@ export const FoodPlanDetail = () => {
               label={"목표 칼로리"}
               id={`food_plan_kcal-${i}`}
               name={`food_plan_kcal-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.food_plan_kcal}
               InputProps={{
                 readOnly: true,
@@ -253,8 +258,8 @@ export const FoodPlanDetail = () => {
               label={"목표 탄수화물"}
               id={`food_plan_carb-${i}`}
               name={`food_plan_carb-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.food_plan_carb}
               InputProps={{
                 readOnly: true,
@@ -269,8 +274,8 @@ export const FoodPlanDetail = () => {
               label={"목표 단백질"}
               id={`food_plan_protein-${i}`}
               name={`food_plan_protein-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.food_plan_protein}
               InputProps={{
                 readOnly: true,
@@ -285,8 +290,8 @@ export const FoodPlanDetail = () => {
               label={"목표 지방"}
               id={`food_plan_fat-${i}`}
               name={`food_plan_fat-${i}`}
-              className={"me-10"}
               variant={"outlined"}
+            className={"w-220"}
               value={OBJECT?.food_plan_fat}
               InputProps={{
                 readOnly: true,
@@ -307,7 +312,7 @@ export const FoodPlanDetail = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Box className={"d-center mb-20"}>
+          <Box className={"d-column"}>
             {tableFragment()}
           </Box>
         </Box>

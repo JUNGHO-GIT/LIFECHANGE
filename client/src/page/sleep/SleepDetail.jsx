@@ -211,6 +211,35 @@ export const SleepDetail = () => {
                 format={"HH:mm"}
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
+                slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
                 readOnly={true}
               />
             </LocalizationProvider>
@@ -224,27 +253,56 @@ export const SleepDetail = () => {
                 format={"HH:mm"}
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
+                slotProps={{
+                  textField: {
+                    sx: {
+                      width: "220px",
+                    },
+                  },
+                  layout: {
+                    sx: {
+                      "& .MuiPickersLayout-contentWrapper": {
+                        width: "220px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-root": {
+                        width: "77px",
+                        height: "180px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item": {
+                        fontSize: "0.8rem",
+                        width: "65px",
+                        minHeight: "20px",
+                        borderRadius: "8px",
+                      },
+                      "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                        color: "#fff",
+                        backgroundColor: "#164a60",
+                      },
+                    },
+                  },
+                }}
                 readOnly={true}
               />
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <TextField
-                type={"text"}
-                size={"medium"}
-                id={"sleep_time"}
-                name={"sleep_time"}
-                label={"수면"}
-                value={OBJECT?.sleep_section[0].sleep_time}
-                InputProps={{
-                  readOnly: true,
-                  endAdornment: (
-                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
-                  )
-                }}
-              />
-            </LocalizationProvider>
+            <TextField
+              type={"text"}
+              size={"small"}
+              id={"sleep_time"}
+              name={"sleep_time"}
+              label={"수면"}
+              variant={"outlined"}
+              className={"w-220"}
+              value={OBJECT?.sleep_section[0].sleep_time}
+              InputProps={{
+                readOnly: true,
+                endAdornment: (
+                  <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                )
+              }}
+            />
           </Box>
         </Card>
       </React.Fragment>

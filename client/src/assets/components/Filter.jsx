@@ -24,7 +24,7 @@ export const Filter = ({
         size={"small"}
         id={"type"}
         name={"type"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.type}
         onChange={(e) => (
@@ -49,7 +49,7 @@ export const Filter = ({
         size={"small"}
         id={"order"}
         name={"order"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.order}
         onChange={(e) => (
@@ -76,7 +76,7 @@ export const Filter = ({
         size={"small"}
         id={"part"}
         name={"part"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.part}
         onChange={(e) => {
@@ -106,7 +106,7 @@ export const Filter = ({
         size={"small"}
         id={"title"}
         name={"title"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.title}
         onChange={(e) => {
@@ -136,7 +136,7 @@ export const Filter = ({
         size={"small"}
         id={"part"}
         name={"part"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.part}
         onChange={(e) => {
@@ -168,7 +168,7 @@ export const Filter = ({
         size={"small"}
         id={"part"}
         name={"part"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.part}
         onChange={(e) => {
@@ -198,7 +198,7 @@ export const Filter = ({
         size={"small"}
         id={"title"}
         name={"title"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={FILTER?.title}
         onChange={(e) => {
@@ -230,7 +230,7 @@ export const Filter = ({
         size={"small"}
         id={"part"}
         name={"part"}
-        className={"w-90"}
+        className={"ms-2 me-2"}
         variant={"outlined"}
         value={PART}
         onChange={(e) => {
@@ -252,7 +252,7 @@ export const Filter = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
-      <Paper className={"flex-wrapper h-8vh p-sticky bottom-35"} variant={"outlined"}>
+      <Paper className={"flex-wrapper h-8vh p-sticky bottom-48"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>

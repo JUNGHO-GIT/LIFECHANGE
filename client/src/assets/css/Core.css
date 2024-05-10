@@ -15,11 +15,12 @@
 .flex-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
+  height: 100%;
   max-height: 100%;
-  margin: 0.5vh 0vw 0.5vh 0vw;
+  margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: none;
@@ -33,9 +34,9 @@
 .content-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
+  height: 100%;
   max-height: 150vh;
-  margin: 0.5vh 0vw 0.5vh 0vw;
+  margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 1vh 2vw 1vh 2vw;
   border: none;
   border-radius: 0.5rem;
@@ -48,11 +49,12 @@
 .block-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
+  height: 100%;
   max-height: 100%;
-  margin: 0.5vh 0vw 0.5vh 0vw;
+  margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   display: inline-block;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: none;

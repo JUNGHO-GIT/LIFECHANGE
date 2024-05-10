@@ -1,0 +1,49 @@
+
+.dataset-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer!important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 0.800rem !important;
+};
+.dataset-add:hover {
+  color: #ffffff !important;
+}
+.dataset-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer!important;
+  color: #0b2730 !important;
+  font-weight: 500 !important;
+  font-size: 0.600rem !important;
+};
+.dataset-title:hover {
+  color: #164a60 !important;
+}
+.dataset-rename {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer!important;
+  color: #164a60 !important;
+  font-weight: 500 !important;
+  font-size: 0.400rem !important;
+};
+.dataset-rename:hover {
+  color: #23486f !important;
+}
+.dataset-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer!important;
+  color: #dc3545 !important;
+  font-weight: 600 !important;
+  font-size: 0.500rem !important;
+};
+.dataset-delete:hover {
+  color: #bd2130 !important;
+}
