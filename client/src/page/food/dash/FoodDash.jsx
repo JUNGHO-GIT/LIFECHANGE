@@ -1,11 +1,11 @@
 // FoodDash.jsx
 
-import {React} from "../../../import/ImportReacts";
-import {Header, NavBar} from "../../../import/ImportLayouts";
-import {FoodDashBar} from "./FoodDashBar";
-import {FoodDashPie} from "./FoodDashPie";
-import {FoodDashLine} from "./FoodDashLine";
-import {FoodDashAvg} from "./FoodDashAvg";
+import {React} from "../../../import/ImportReacts.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {FoodDashBar} from "./FoodDashBar.jsx";
+import {FoodDashPie} from "./FoodDashPie.jsx";
+import {FoodDashLine} from "./FoodDashLine.jsx";
+import {FoodDashAvg} from "./FoodDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDash = () => {

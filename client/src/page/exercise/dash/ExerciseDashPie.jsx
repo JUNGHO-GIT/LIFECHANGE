@@ -1,13 +1,13 @@
 // ExerciseDashPie.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts";
-import {axios, moment} from "../../../import/ImportLibs";
-import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
-import {CustomIcons} from "../../../import/ImportIcons";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../../import/ImportMuis";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
+import {CustomIcons} from "../../../import/ImportIcons.jsx";
+import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis.jsx";
+import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";
+import {IconButton, Button, Divider} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>

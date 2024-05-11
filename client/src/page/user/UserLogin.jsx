@@ -1,13 +1,13 @@
 // UserLogin.jsx
 
-import {React, useState, useNavigate} from "../../import/ImportReacts";
-import {axios} from "../../import/ImportLibs";
+import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar} from "../../import/ImportLayouts";
+import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {

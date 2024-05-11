@@ -1,10 +1,10 @@
 // SleepDash.jsx
 
-import {React} from "../../../import/ImportReacts";
-import {Header, NavBar} from "../../../import/ImportLayouts";
-import {SleepDashBar} from "./SleepDashBar";
-import {SleepDashLine} from "./SleepDashLine";
-import {SleepDashAvg} from "./SleepDashAvg";
+import {React} from "../../../import/ImportReacts.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {SleepDashBar} from "./SleepDashBar.jsx";
+import {SleepDashLine} from "./SleepDashLine.jsx";
+import {SleepDashAvg} from "./SleepDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {

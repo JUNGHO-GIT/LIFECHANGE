@@ -1,7 +1,8 @@
 {
   "name": "client",
-  "module": "esnext",
-  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.jsx",
+  "type": "module",
   "eslintConfig": {
     "extends": [
       "react-app",

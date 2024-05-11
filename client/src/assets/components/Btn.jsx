@@ -1,8 +1,8 @@
 // Button.jsx
 
-import {React} from "../../import/ImportReacts";
-import {moment} from "../../import/ImportLibs";
-import {Button, Container, Paper, Grid2, TextField, Box} from "../../import/ImportMuis";
+import {React} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
+import {Button, Container, Paper, Grid2, TextField, Box} from "../../import/ImportMuis.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({

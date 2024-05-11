@@ -1,10 +1,10 @@
 // Header.jsx
 
 import {SideBar} from "./SideBar";
-import {React, useState, useNavigate} from "../../import/ImportReacts";
-import {moment} from "../../import/ImportLibs";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
-import {Grid2, Container, Paper, PopupState, bindTrigger, bindMenu, Menu, MenuItem, Box} from "../../import/ImportMuis";
+import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
+import {Grid2, Container, Paper, PopupState, bindTrigger, bindMenu, Menu, MenuItem, Box} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {

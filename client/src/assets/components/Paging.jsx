@@ -1,7 +1,7 @@
 // Paging.jsx
 
-import {React} from "../../import/ImportReacts";
-import {Paper, TablePagination, Box} from "../../import/ImportMuis";
+import {React} from "../../import/ImportReacts.jsx";
+import {Paper, TablePagination, Box} from "../../import/ImportMuis.jsx";
 
 // 9. paging -------------------------------------------------------------------------------------->
 export const Paging = ({

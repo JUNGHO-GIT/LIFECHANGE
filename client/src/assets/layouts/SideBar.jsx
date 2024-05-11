@@ -1,10 +1,10 @@
 // SideBar.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment} from "../../import/ImportLibs";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
 import {dataArray} from "../../import/ImportLogics";
-import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
+import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {logo3} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>

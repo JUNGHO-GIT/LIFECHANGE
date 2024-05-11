@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {IconContext} from 'react-icons';
-import {InputAdornment} from "./ImportMuis";
+import {InputAdornment} from "./ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CustomIcons = ({name, className, ...props}) => {

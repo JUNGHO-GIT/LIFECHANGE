@@ -1,16 +1,16 @@
 // FoodSearch.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
-import {moment, axios, numeral} from "../../import/ImportLibs";
-import {useDate, useStorage} from "../../import/ImportHooks";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading, Paging} from "../../import/ImportComponents";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
+import {Header, NavBar} from "../../import/ImportLayouts.jsx";
+import {Btn, Loading, Paging} from "../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {

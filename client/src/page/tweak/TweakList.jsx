@@ -1,14 +1,14 @@
 // TweakList.jsx
 
-import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts";
-import {axios, numeral} from "../../import/ImportLibs";
-import {Header, NavBar} from "../../import/ImportLayouts";
-import {Paging, Loading, Filter} from "../../import/ImportComponents";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
-import {Box} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {Typography, Button, Divider, TextField} from "../../import/ImportMuis";
+import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
+import {axios, numeral} from "../../import/ImportLibs.jsx";
+import {Header, NavBar} from "../../import/ImportLayouts.jsx";
+import {Paging, Loading, Filter} from "../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
+import {Box} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {Typography, Button, Divider, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakList = () => {

@@ -1,14 +1,14 @@
 // UserSignup.jsx
 
-import {React, useState, useNavigate} from "../../import/ImportReacts";
-import {axios} from "../../import/ImportLibs";
-import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
+import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
+import {Header, NavBar} from "../../import/ImportLayouts.jsx";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {

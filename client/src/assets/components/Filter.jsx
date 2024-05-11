@@ -1,7 +1,7 @@
 // Filter.jsx
 
-import {React} from "../../import/ImportReacts";
-import {Paper, MenuItem, TextField, Box} from "../../import/ImportMuis";
+import {React} from "../../import/ImportReacts.jsx";
+import {Paper, MenuItem, TextField, Box} from "../../import/ImportMuis.jsx";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({

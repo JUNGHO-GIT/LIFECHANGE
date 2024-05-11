@@ -1,8 +1,8 @@
 // NavBar.jsx
 
-import {React, useState, useLocation, useEffect} from "../../import/ImportReacts";
+import {React, useState, useLocation, useEffect} from "../../import/ImportReacts.jsx";
 import {dataArray} from "../../import/ImportLogics";
-import {Grid2, Container, Card, Paper, Box, Typography} from "../../import/ImportMuis";
+import {Grid2, Container, Card, Paper, Box, Typography} from "../../import/ImportMuis.jsx";
 import {smile1, smile2, smile3, smile4} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>

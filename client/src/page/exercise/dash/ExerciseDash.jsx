@@ -1,11 +1,11 @@
 // ExerciseDash.jsx
 
-import {React} from "../../../import/ImportReacts";
-import {Header, NavBar} from "../../../import/ImportLayouts";
-import {ExerciseDashScatter} from "./ExerciseDashScatter";
-import {ExerciseDashPie} from "./ExerciseDashPie";
-import {ExerciseDashLine} from "./ExerciseDashLine";
-import {ExerciseDashAvg} from "./ExerciseDashAvg";
+import {React} from "../../../import/ImportReacts.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {ExerciseDashScatter} from "./ExerciseDashScatter.jsx";
+import {ExerciseDashPie} from "./ExerciseDashPie.jsx";
+import {ExerciseDashLine} from "./ExerciseDashLine.jsx";
+import {ExerciseDashAvg} from "./ExerciseDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDash = () => {

@@ -1,12 +1,12 @@
 // ExerciseDashScatter.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts";
-import {axios, moment} from "../../../import/ImportLibs";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
-import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
-import {CustomIcons} from "../../../import/ImportIcons";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis";
+import {Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
+import {CustomIcons} from "../../../import/ImportIcons.jsx";
+import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
