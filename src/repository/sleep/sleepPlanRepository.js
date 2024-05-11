@@ -33,7 +33,7 @@ export const list = {
         },
         sleep_plan_endDt: {
           $gte: startDt_param,
-        }
+        },
       }},
       {$sort: {
         sleep_plan_startDt: sort_param,

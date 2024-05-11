@@ -1,7 +1,7 @@
 // router.js
 
 import express from "express";
-import * as service from "../../service/food/foodService.js";
+import * as service from "../../service/sleep/sleepService.js";
 import * as middleware from "../../middleware/sleep/sleepMiddleware.js";
 export const router = express.Router();
 

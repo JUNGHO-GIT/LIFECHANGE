@@ -7,7 +7,7 @@ export const diff = async (
   user_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split("~");
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;

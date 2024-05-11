@@ -29,8 +29,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "inspect": "node --inspect-brk ./node_modules/react-scripts/bin/react-scripts.js start",
     "cache": "npm cache clean -f"
   },
   "dependencies": {

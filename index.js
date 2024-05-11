@@ -42,7 +42,7 @@ const pw = "M7m7m7m7m7!";
 const host = "34.75.165.209";
 const port = "27017";
 const db = "LIFECHANGE";
-/* mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.75.165.209:27017/LIFECHANGE"); */
+// mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.75.165.209:27017/LIFECHANGE");
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
@@ -58,7 +58,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
-// mongoose.set("debug", customLogger);
+mongoose.set("debug", customLogger);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
