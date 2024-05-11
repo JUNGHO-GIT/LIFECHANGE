@@ -38,7 +38,6 @@ export const diff = async (object) => {
       food_diff_carb: compareCount(item?.food_plan_carb, item?.food_total_carb),
       food_diff_protein: compareCount(item?.food_plan_protein, item?.food_total_protein),
       food_diff_fat: compareCount(item?.food_plan_fat, item?.food_total_fat),
-
       food_diff_kcal_color: makeColor(item?.food_plan_kcal, item?.food_total_kcal, ""),
       food_diff_carb_color: makeColor(item?.food_plan_carb, item?.food_total_carb, ""),
       food_diff_protein_color: makeColor(item?.food_plan_protein, item?.food_total_protein, ""),

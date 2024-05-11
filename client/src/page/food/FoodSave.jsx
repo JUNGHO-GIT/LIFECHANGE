@@ -5,9 +5,8 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Paper, Typography} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Paper, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell, TableFooter} from "../../import/ImportMuis.jsx";
@@ -251,9 +250,9 @@ export const FoodSave = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         음식 Save
-      </Typography>
+      </p>
     );
     // 7-7. table
     const tableFragment = (i) => (
@@ -376,14 +375,14 @@ export const FoodSave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-center"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-center"}>
           {titleSection()}
-        </Box>
-        <Box className={"d-column"}>
+        </Div>
+        <Div className={"d-column"}>
           {tableFragment(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

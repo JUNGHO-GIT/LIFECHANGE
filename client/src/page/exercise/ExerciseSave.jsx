@@ -5,11 +5,11 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Icons, Adornment} from "../../import/ImportIcons.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Button} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
@@ -164,9 +164,9 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         운동 Save
-      </Typography>
+      </p>
     );
     // 7-2. date
     const dateSection = () => (
@@ -250,9 +250,9 @@ export const ExerciseSave = () => {
       };
       return (
         <PopUp elementId={"sectionCnt"} contents={
-          <Typography variant={"body2"} className={"p-10"}>
+          <p className={"fs-15"}>
             0이상 10이하의 숫자만 입력하세요.
-          </Typography>
+          </p>
         }>
           {popProps => (
             <TextField
@@ -266,7 +266,7 @@ export const ExerciseSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
                 )
               }}
               onChange={(e) => {
@@ -302,7 +302,7 @@ export const ExerciseSave = () => {
     // 7-4. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
-        <Box className={"d-center mb-20"}>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 볼륨"}
@@ -313,12 +313,12 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"총 유산소 시간"}
@@ -329,12 +329,12 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"체중"}
@@ -345,46 +345,52 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
-        </Box>
+        </Div>
       </Card>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <>
-        <IconButton size={"small"} color={"primary"}>
-          <Badge
-            badgeContent={index + 1}
-            color={"primary"}
-            showZero={true}
-          />
-        </IconButton>
-        <PopDown elementId={`pop-${index}`} contents={
-          <Box className={"d-center p-10"}>
-            <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-            <Typography variant={"inherit"}>기타</Typography>
-          </Box>
-        }>
-          {popProps => (
-            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+      <Div className={"d-center"}>
+        <Badge
+          badgeContent={index + 1}
+          color={"primary"}
+          showZero={true}
+        />
+      </Div>
+      <PopDown elementId={`pop-${index}`} contents={
+        <>
+          <Div className={"d-row align-center"}>
+            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <p className={"fs-14"}>복사</p>
+          </Div>
+          <Div className={"d-row align-center"}>
+            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <p className={"fs-14"}>복사</p>
+          </Div>
+        </>
+      }>
+        {popProps => (
+          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+            onClick={(e) => {
               popProps.openPopup(e.currentTarget)
-            }}>
-              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-            </IconButton>
-          )}
-        </PopDown>
+            }}
+          />
+        )}
+      </PopDown>
       </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Box className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mt-n15 mb-20"}>
           {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={true}
             type={"text"}
@@ -456,8 +462,8 @@ export const ExerciseSave = () => {
               </MenuItem>
             ))}
           </TextField>
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"세트"}
@@ -482,8 +488,8 @@ export const ExerciseSave = () => {
               }));
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"횟수"}
@@ -508,8 +514,8 @@ export const ExerciseSave = () => {
               }));
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"무게"}
@@ -534,8 +540,8 @@ export const ExerciseSave = () => {
               }));
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DesktopTimePicker
               label={"유산소 시간"}
@@ -577,29 +583,29 @@ export const ExerciseSave = () => {
               }}
             />
           </LocalizationProvider>
-        </Box>
+        </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-center p-10"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-column mb-20"}>
+        </Div>
+        <Hr className={"mb-20"} />
+        <Div className={"d-column mb-20"}>
           {dateSection()}
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           {countSection()}
-        </Box>
-        <Box className={"d-column mb-20"}>
+        </Div>
+        <Div className={"d-column mb-20"}>
           {totalSection()}
-        </Box>
-        <Box className={"d-column"}>
+        </Div>
+        <Div className={"d-column"}>
           {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

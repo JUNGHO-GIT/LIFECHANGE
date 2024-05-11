@@ -1,7 +1,6 @@
 // date.js
 
 import moment from "moment-timezone";
-import "moment/locale/ko.js";
 
 // 1. common -------------------------------------------------------------------------------------->
 export const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
@@ -72,14 +71,14 @@ export const compareTime = (plan, real) => {
 
   let diffVal = 0;
   if (realDate < planDate) {
-    diff = planDate.getTime() - realDate.getTime();
+    diffVal = planDate.getTime() - realDate.getTime();
   }
   else {
-    diff = realDate.getTime() - planDate.getTime();
+    diffVal = realDate.getTime() - planDate.getTime();
   }
 
-  const hours = Math.floor(diff / 3600000);
-  const minutes = Math.floor((diff % 3600000) / 60000);
+  const hours = Math.floor(diffVal / 3600000);
+  const minutes = Math.floor((diffVal % 3600000) / 60000);
   const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
   return diffTime;

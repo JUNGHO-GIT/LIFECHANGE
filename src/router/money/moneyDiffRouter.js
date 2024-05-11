@@ -15,11 +15,12 @@ router.get("/diff", async (req, res) => {
       req.query.duration
     );
     result = await middleware.diff(result);
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
-        result: result
+        totalCnt: result.totalCnt,
+        result: result.result
       });
     }
     else {

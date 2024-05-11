@@ -6,6 +6,21 @@ import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 // 1. diff ---------------------------------------------------------------------------------------->
 export const diff = {
 
+  cnt: async (
+    user_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await SleepPlan.countDocuments({
+      user_id: user_id_param,
+      sleep_plan_startDt: {
+        $lte: endDt_param,
+      },
+      sleep_plan_endDt: {
+        $gte: startDt_param,
+      },
+    });
+    return finalResult;
+  },
+
   list: async (
     user_id_param, startDt_param, endDt_param,
   ) => {

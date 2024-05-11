@@ -4,10 +4,9 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Loading} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {Loading, Div} from "../../import/ImportComponents.jsx";
+import {Icons, Adornment} from "../../import/ImportIcons.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
@@ -81,7 +80,7 @@ export const CalendarList = () => {
     const activeLine = (calendarForDates) => (
       calendarForDates?.map((calendar) => (
         calendar.calendar_section.map((section) => (
-          <Box key={calendar._id} className={"calendar-filled"}
+          <Div key={calendar._id} className={"calendar-filled"}
             style={{
               backgroundColor: section.calendar_color
             }}
@@ -97,16 +96,16 @@ export const CalendarList = () => {
             }}
           >
             <span className={"calendar-category"}>{section.calendar_title}</span>
-          </Box>
+          </Div>
         ))
       ))
     );
     const unActiveLine = (calendarForDates) => (
       calendarForDates?.map((calendar) => (
         calendar.calendar_section.map((section) => (
-          <Box key={calendar._id} className={"calendar-unfilled"}>
+          <Div key={calendar._id} className={"calendar-unfilled"}>
             <span className={"calendar-category"}>{section.calendar_title}</span>
-          </Box>
+          </Div>
         ))
       ))
     );
@@ -118,8 +117,8 @@ export const CalendarList = () => {
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<CustomIcons name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
-        nextLabel={<CustomIcons name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
+        prevLabel={<Icons name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
+        nextLabel={<Icons name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
         prev2Label={null}
         next2Label={null}
         formatDay={(locale, date) => (moment(date).format("D"))}

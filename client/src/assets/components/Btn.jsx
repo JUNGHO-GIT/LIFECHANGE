@@ -2,7 +2,8 @@
 
 import {React} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {Button, Paper, TextField, Box} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Button, Paper, TextField} from "../../import/ImportMuis.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
@@ -119,7 +120,7 @@ export const Btn = ({
     </Button>
   );
   const btnGetSearch = () => (
-    <Box className={"d-center"}>
+    <Div className={"d-center"}>
       <TextField
         select={false}
         label={"검색"}
@@ -143,7 +144,7 @@ export const Btn = ({
       }}>
         Search
       </Button>
-    </Box>
+    </Div>
   );
   const btnResetDefault = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}

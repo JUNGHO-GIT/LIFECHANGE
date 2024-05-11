@@ -1,8 +1,9 @@
 // Loading.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
-import {Paper, Box} from "../../import/ImportMuis.jsx";
-import {CustomIcons} from "../../import/ImportIcons.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
+import {Icons} from "../../import/ImportIcons.jsx";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({
@@ -16,16 +17,15 @@ export const Loading = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"content-wrapper"} variant={"outlined"}>
-      <Box className={"block-wrapper h-75vh"}
-        sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100%"
-      }}>
-        <CustomIcons name={"FaSpinner"} className={"w-24 h-24 dark"} />
-      </Box>
+      <Div className={"block-wrapper h-75vh"}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%"
+        }}>
+        <Icons name={"FaSpinner"} className={"w-24 h-24 dark"} />
+      </Div>
     </Paper>
   );
 

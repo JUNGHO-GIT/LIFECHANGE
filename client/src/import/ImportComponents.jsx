@@ -1,8 +1,8 @@
 // ImportComponents.jsx
 
 import {Btn} from "../assets/components/Btn.jsx";
-import {PopDown} from "../assets/components/PopDown.jsx";
-import {PopUp} from "../assets/components/PopUp.jsx";
+import {Div, Hr, Br} from "../assets/components/Elements.jsx";
+import {PopUp, PopDown} from "../assets/components/Pop.jsx";
 import {Filter} from "../assets/components/Filter.jsx";
 import {Loading} from "../assets/components/Loading.jsx";
 import {Paging} from "../assets/components/Paging.jsx";
@@ -10,6 +10,9 @@ import {Paging} from "../assets/components/Paging.jsx";
 // ------------------------------------------------------------------------------------------------>
 export {
   Btn,
+  Div,
+  Hr,
+  Br,
   PopDown,
   PopUp,
   Filter,

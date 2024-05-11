@@ -4,8 +4,8 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useStorage, useDate} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Box, Paper} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -150,11 +150,11 @@ export const SleepListPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-column"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-column"}>
           {tableFragment(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

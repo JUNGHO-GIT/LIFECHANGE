@@ -3,12 +3,9 @@
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {TextField, Button} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -57,14 +54,12 @@ export const UserSignup = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        회원가입
-      </Typography>
+      <p className={"fs-15"}>회원가입</p>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Box className={"d-center mb-20"}>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -77,8 +72,8 @@ export const UserSignup = () => {
               setUserId(e.target.value)
             )}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"password"}
@@ -91,13 +86,13 @@ export const UserSignup = () => {
               setUserPw(e.target.value)
             )}
           />
-        </Box>
+        </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-74vh"}
-        sx={{
+      <Div className={"block-wrapper h-74vh"}
+        style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -105,14 +100,14 @@ export const UserSignup = () => {
           height: "100%"
         }}
       >
-        <Box className={"d-center p-10"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-column"}>
+        </Div>
+        <Hr className={"mb-20"} />
+        <Div className={"d-column"}>
           {tableFragment(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

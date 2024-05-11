@@ -4,11 +4,11 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Icons, Adornment} from "../../import/ImportIcons.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Button} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
@@ -144,9 +144,9 @@ export const CalendarDetail = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         달력 Detail
-      </Typography>
+      </p>
     );
     // 7-2. date
     const dateSection = () => (
@@ -225,9 +225,7 @@ export const CalendarDetail = () => {
       };
       return (
         <PopUp elementId={"sectionCnt"} contents={
-          <Typography variant={"body2"} className={"p-10"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </Typography>
+          <p className={"fs-15"}>0이상 10이하의 숫자만 입력하세요.</p>
         }>
           {popProps => (
             <TextField
@@ -241,7 +239,7 @@ export const CalendarDetail = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
                 )
               }}
               onChange={(e) => {
@@ -277,7 +275,7 @@ export const CalendarDetail = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Box className={"d-center mb-20"}>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={true}
             type={"text"}
@@ -343,8 +341,8 @@ export const CalendarDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -371,8 +369,8 @@ export const CalendarDetail = () => {
               }));
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -399,26 +397,26 @@ export const CalendarDetail = () => {
               }));
             }}
           />
-        </Box>
+        </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-center p-10"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-column mb-20"}>
+        </Div>
+        <Hr className={"mb-20"} />
+        <Div className={"d-column mb-20"}>
           {dateSection()}
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           {countSection()}
-        </Box>
-        <Box className={"d-column"}>
+        </Div>
+        <Div className={"d-column"}>
           {OBJECT?.calendar_section.map((item, i) => tableFragment(i))}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

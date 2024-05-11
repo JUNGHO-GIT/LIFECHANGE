@@ -3,12 +3,11 @@
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Loading, Filter} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Paging, Loading, Filter} from "../../import/ImportComponents.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {Typography, Button, Divider, TextField} from "../../import/ImportMuis.jsx";
+import {Button, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
@@ -231,9 +230,9 @@ export const UserList = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         유저 List
-      </Typography>
+      </p>
     );
     // 7-6-1. table
     const tableFragment1 = (i) => (
@@ -283,7 +282,7 @@ export const UserList = () => {
                   {sectionIndex === 0 && (
                     <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}>
                       {item.exercise_startDt?.substring(5, 10)}
-                      {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
+                      {item.exercise_section.length > 3 && (<Div>더보기</Div>)}
                     </TableCell>
                   )}
                   <TableCell>{section.exercise_part_val.substring(0, 6)}</TableCell>
@@ -360,7 +359,7 @@ export const UserList = () => {
                   {sectionIndex === 0 && (
                     <TableCell rowSpan={Math.min(item.food_section.length, 3)}>
                       {item.food_startDt?.substring(5, 10)}
-                      {item.food_section.length > 3 && (<Box>더보기</Box>)}
+                      {item.food_section.length > 3 && (<Div>더보기</Div>)}
                     </TableCell>
                   )}
                   <TableCell>{section.food_part_val.substring(0, 6)}</TableCell>
@@ -415,7 +414,7 @@ export const UserList = () => {
                   {sectionIndex === 0 && (
                     <TableCell rowSpan={Math.min(item.money_section.length, 3)}>
                       {item.money_startDt?.substring(5, 10)}
-                      {item.money_section.length > 3 && (<Box>더보기</Box>)}
+                      {item.money_section.length > 3 && (<Div>더보기</Div>)}
                     </TableCell>
                   )}
                   <TableCell>{section.money_part_val}</TableCell>
@@ -472,7 +471,7 @@ export const UserList = () => {
                   {sectionIndex === 0 && (
                     <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}>
                       {item.sleep_startDt?.substring(5, 10)}
-                      {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
+                      {item.sleep_section.length > 3 && (<Div>더보기</Div>)}
                     </TableCell>
                   )}
                   <TableCell>{section.sleep_night}</TableCell>
@@ -487,8 +486,8 @@ export const UserList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-column"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}
           {PART === "foodPlan" && tableFragment3(0)}
@@ -497,8 +496,8 @@ export const UserList = () => {
           {PART === "money" && tableFragment6(0)}
           {PART === "sleepPlan" && tableFragment7(0)}
           {PART === "sleep" && tableFragment8(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (
@@ -525,7 +524,7 @@ export const UserList = () => {
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Paper className={"flex-wrapper h-8vh p-sticky bottom-0"} variant={"outlined"}>
-      <Box className={"d-center"}>
+      <Div className={"d-center"}>
         <TextField
           select={false}
           label={"추가"}
@@ -554,7 +553,7 @@ export const UserList = () => {
         onClick={() => (flowDelete(PART))}>
           삭제
         </Button>
-      </Box>
+      </Div>
     </Paper>
   );
 

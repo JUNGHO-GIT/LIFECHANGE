@@ -3,12 +3,11 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
-import {Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
-import {CustomIcons} from "../../../import/ImportIcons.jsx";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";
-import {IconButton, Button, Divider} from "../../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
+import {Icons} from "../../../import/ImportIcons.jsx";
+import {Grid2, Container, Paper} from "../../../import/ImportMuis.jsx";
+import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -180,7 +179,8 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_YEAR} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        >
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -292,7 +292,7 @@ export const ExerciseDashAvg = () => {
       )}
     >
       <MenuItem value={"month"}>월간</MenuItem>
-        <MenuItem value={"year"}>연간</MenuItem>
+      <MenuItem value={"year"}>연간</MenuItem>
     </TextField>
   );
 
@@ -314,9 +314,11 @@ export const ExerciseDashAvg = () => {
       ))
     }>
       {popProps => (
-        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-        </IconButton>
+        <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark pointer"}
+          id={"popChild"} onClick={(e) => {
+            popProps.openPopup(e.currentTarget)
+          }}
+        />
       )}
     </PopDown>
   );
@@ -336,7 +338,7 @@ export const ExerciseDashAvg = () => {
               {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <Typography variant={"h6"} className={"dash-title"}>볼륨 / 유산소 평균</Typography>
+              <p className={"dash-title"}>볼륨 / 유산소 평균</p>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
               {dropdownSection3()}

@@ -3,10 +3,10 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
-import {Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
-import {CustomIcons} from "../../../import/ImportIcons.jsx";
+import {Div, Hr, Br, Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
+import {Icons} from "../../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis.jsx";
+import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -275,7 +275,7 @@ export const ExerciseDashScatter = () => {
               {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <Typography variant={"h6"} className={"dash-title"}>몸무게 목표/실제</Typography>
+              <p className={"dash-title"}>몸무게 목표/실제</p>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
             </Grid2>

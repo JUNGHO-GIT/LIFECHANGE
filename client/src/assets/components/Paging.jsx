@@ -1,7 +1,8 @@
 // Paging.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
-import {Paper, TablePagination, Box} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper, TablePagination} from "../../import/ImportMuis.jsx";
 
 // 9. paging -------------------------------------------------------------------------------------->
 export const Paging = ({
@@ -12,7 +13,7 @@ export const Paging = ({
   const tableNode = () => (
     type === "search" ? (
       <Paper className={"flex-wrapper h-8vh p-sticky bottom-48"} variant={"outlined"}>
-        <Box className={"d-center"}>
+        <Div className={"d-center"}>
           <TablePagination
             rowsPerPageOptions={[10]}
             component={"div"}
@@ -33,11 +34,11 @@ export const Paging = ({
               }));
             }}
           />
-        </Box>
+        </Div>
       </Paper>
     ) : (
       <Paper className={"flex-wrapper h-8vh p-sticky bottom-96"} variant={"outlined"}>
-        <Box className={"d-center"}>
+        <Div className={"d-center"}>
           <TablePagination
             rowsPerPageOptions={[5, 10]}
             component={"div"}
@@ -58,7 +59,7 @@ export const Paging = ({
               }));
             }}
           />
-        </Box>
+        </Div>
       </Paper>
     )
   );

@@ -5,7 +5,7 @@ import {IconContext} from 'react-icons';
 import {InputAdornment} from "./ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomIcons = ({name, className, ...props}) => {
+export const Icons = ({name, className, ...props}) => {
 
   if (!name) {
     return null;
@@ -38,7 +38,7 @@ export const CustomIcons = ({name, className, ...props}) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomAdornment = ({name, className, position, ...props}) => {
+export const Adornment = ({name, className, position, ...props}) => {
 
   if (!name) {
     return null;

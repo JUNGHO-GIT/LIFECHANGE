@@ -2,9 +2,10 @@
 
 import {SideBar} from "./SideBar";
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {PopDown, Div} from "../../import/ImportComponents.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
-import {Grid2, Container, Paper, PopupState, bindTrigger, bindMenu, Menu, MenuItem, Box} from "../../import/ImportMuis.jsx";
+import {Icons} from "../../import/ImportIcons.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -23,55 +24,61 @@ export const Header = () => {
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
-    <Box className={"d-center"}>
-      <CustomIcons name={"MdOutlineMenu"} className={"w-24 h-24 dark"} onClick={openSidebar} />
-      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-    </Box>
+    <>
+      <Icons name={"TbAlignLeft"} className={"w-24 h-24 dark pointer"} onClick={openSidebar}
+      />
+      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}
+      />
+    </>
   );
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
-    <PopupState variant={"popover"} popupId={"popup-menu"}>
-      {(popupState) => (
-        <>
-          <CustomIcons name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />
-          <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={() => {
-              navParam("/user/login");
-            }}>
-              Login
-            </MenuItem>
-            <MenuItem onClick={() => {
-              navParam("/user/signup");
-            }}>
-              Signup
-            </MenuItem>
-          </Menu>
-        </>
+    <PopDown elementId={`popDown`} contents={
+      <>
+      <Div className={"d-row align-center pointer"} onClick={() => {
+        navParam(`/user/login`);
+      }}>
+        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
+        <p className={"fs-14"}>Login</p>
+      </Div>
+      <Div className={"d-row align-center pointer"} onClick={() => {
+        navParam(`/user/signup`);
+      }}>
+        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
+        <p className={"fs-14"}>Signup</p>
+      </Div>
+      </>
+    }>
+      {popProps => (
+        <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
+          onClick={(e) => {
+            popProps.openPopup(e.currentTarget)
+          }}
+        />
       )}
-    </PopupState>
+    </PopDown>
   );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"flex-wrapper h-6vh p-sticky top-0"} variant={"outlined"}>
-      <Container className={"p-5"}>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>
-            {btnSideBar()}
-          </Grid2>
-          <Grid2 xl={8} lg={8} md={8} sm={8} xs={8} className={"d-center"}>
-            <span className={"head-text"}>
-              {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
-            </span>
-          </Grid2>
-          <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-right"}>
-            {btnUser()}
-          </Grid2>
-        </Grid2>
-      </Container>
+      <Div className={"d-center w-100p m-auto"}>
+        <Div className={"d-center ms-10"}>
+          {btnSideBar()}
+        </Div>
+        <Div className={"d-center ms-auto"}>
+          <span className={"head-text"}>
+            {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
+          </span>
+        </Div>
+        <Div className={"d-center ms-auto me-10"}>
+          {btnUser()}
+        </Div>
+      </Div>
     </Paper>
   );
+
 
   // 15. return ----------------------------------------------------------------------------------->
   return (

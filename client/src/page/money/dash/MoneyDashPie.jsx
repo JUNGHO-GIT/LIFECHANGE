@@ -2,12 +2,11 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
-import {Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
-import {CustomIcons} from "../../../import/ImportIcons.jsx";
+import {Div, Hr, Br, Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
+import {Icons} from "../../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem, TextField, Typography} from "../../../import/ImportMuis.jsx";
+import {Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";
-import {IconButton, Button, Divider} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 
 // ------------------------------------------------------------------------------------------------>
@@ -511,9 +510,11 @@ export const MoneyDashPie = () => {
       ))
     }>
       {popProps => (
-        <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
-          <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-        </IconButton>
+        <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark pointer"}
+          id={"popChild"} onClick={(e) => {
+            popProps.openPopup(e.currentTarget)
+          }}
+        />
       )}
     </PopDown>
   );
@@ -533,7 +534,7 @@ export const MoneyDashPie = () => {
               {dropdownSection1()}
             </Grid2>
             <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <Typography variant={"h6"} className={"dash-title"}>수입/지출 비율</Typography>
+              <p className={"dash-title"}>수입/지출 비율</p>
             </Grid2>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
               {dropdownSection3()}

@@ -5,11 +5,11 @@ import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Icons, Adornment} from "../../import/ImportIcons.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Badge} from "../../import/ImportMuis.jsx";
+import {TextField, Button} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
@@ -117,9 +117,9 @@ export const SleepDetailPlan = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         수면 계획 Detail
-      </Typography>
+      </p>
     );
     // 7-2. date
     const dateSection = () => (
@@ -168,43 +168,39 @@ export const SleepDetailPlan = () => {
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <>
-        <IconButton size={"small"} color={"primary"}>
+        <Div className={"d-center"}>
           <Badge
             badgeContent={index + 1}
             color={"primary"}
             showZero={true}
           />
-        </IconButton>
+        </Div>
         <PopDown elementId={`pop-${index}`} contents={
-          <Box className={"d-block p-10"}>
-            <Box className={"d-left mt-10 mb-10"} onClick={() => {
-              flowDelete(id)
+          <>
+            <Div className={"d-row align-center"} onClick={() => {
+              flowDelete(id);
             }}>
-              <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>삭제</Typography>
-            </Box>
-            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              <Icons name={"MdOutlineDelete"} className={"w-24 h-24 dark pointer"} />
+              <p className={"fs-14"}>삭제</p>
+            </Div>
+            <Div className={"d-row align-center"} onClick={() => {
               SEND.startDt = DATE.startDt;
               SEND.endDt = DATE.endDt;
               navParam(SEND.toUpdate, {
                 state: SEND,
               });
             }}>
-              <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>수정</Typography>
-            </Box>
-            <Box className={"d-left mt-10 mb-10"}>
-              <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>더보기</Typography>
-            </Box>
-          </Box>
+              <Icons name={"MdOutlineEdit"} className={"w-24 h-24 dark pointer"} />
+              <p className={"fs-14"}>수정</p>
+            </Div>
+          </>
         }>
           {popProps => (
-            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
-            }}>
-              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-            </IconButton>
+            <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+              onClick={(e) => {
+                popProps.openPopup(e.currentTarget)
+              }}
+            />
           )}
         </PopDown>
       </>
@@ -212,10 +208,10 @@ export const SleepDetailPlan = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Box className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mt-n15 mb-20"}>
           {dropdownSection(OBJECT?._id, "", 0)}
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DesktopTimePicker
               label={"취침 목표"}
@@ -252,8 +248,8 @@ export const SleepDetailPlan = () => {
               readOnly={true}
             />
           </LocalizationProvider>
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DesktopTimePicker
               label={"기상 목표"}
@@ -290,8 +286,8 @@ export const SleepDetailPlan = () => {
               readOnly={true}
             />
           </LocalizationProvider>
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             label={"수면 목표"}
             type={"text"}
@@ -304,27 +300,27 @@ export const SleepDetailPlan = () => {
             InputProps={{
               readOnly: true,
               endAdornment: (
-                <CustomAdornment name={"BiSolidMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+              <Adornment name={"TbMoon"} className={"w-24 h-24 dark me-n5"} position={"end"} />
               )
             }}
           />
-        </Box>
+        </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-center p-10"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-column mb-20"}>
+        </Div>
+        <Hr className={"mb-20"} />
+        <Div className={"d-column mb-20"}>
           {dateSection()}
-        </Box>
-        <Box className={"d-column"}>
+        </Div>
+        <Div className={"d-column"}>
           {tableFragment(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (
@@ -336,11 +332,9 @@ export const SleepDetailPlan = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam}
-      part={"sleep"} plan={"plan"} type={"detail"}
+      flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"detail"}
     />
   );
 

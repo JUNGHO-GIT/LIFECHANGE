@@ -3,8 +3,10 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {dataArray} from "../../import/ImportLogics";
-import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
+import {Div, Hr, Br} from "../../import/ImportComponents.jsx";
+import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
+import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
+import {Icons} from "../../import/ImportIcons.jsx";
 import {logo3} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>
@@ -60,20 +62,20 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
       onClose={() => (setIsSidebarOpen(false))}
       className={"sidebar"}
     >
-      <Box className={"w-180"}>
-        <Box>
+      <Div className={"w-180"}>
+        <Div>
           <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
-        </Box>
+        </Div>
         <List role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>
           {dataArray.map((item, index) => (
-            <Box key={index}>
+            <Div key={index}>
               <ListItemButton
                 key={index}
                 className={`sidebar-li-text ${isFirstOpen === item.title?"highlight":""}`}
                 onClick={() => (toggleFirstOpen(item.title))}
               >
                 <ListItemIcon>
-                  <CustomIcons name={item.icon} className={"w-24 h-24 dark"} />
+                  <Icons name={item.icon} className={"w-24 h-24 dark"} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.title}
@@ -102,15 +104,15 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                   ))}
                 </List>
               </Collapse>
-            </Box>
+            </Div>
           ))}
         </List>
-        <Divider />
+        <Hr className={"mb-20"} />
         <Button variant={"contained"} color={"error"} size={"small"} className={"m-20"}
         onClick={() => (sessionStorage.clear())}>
           Clear
         </Button>
-      </Box>
+      </Div>
     </SwipeableDrawer>
   );
 

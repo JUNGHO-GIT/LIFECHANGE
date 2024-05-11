@@ -4,10 +4,9 @@ import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -46,14 +45,14 @@ export const UserLogin = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         로그인
-      </Typography>
+      </p>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Box className={"d-center mb-20"}>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -67,8 +66,8 @@ export const UserLogin = () => {
               setUserId(e.target.value);
             }}
           />
-        </Box>
-        <Box className={"d-center mb-20"}>
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -81,27 +80,26 @@ export const UserLogin = () => {
               setUserPw(e.target.value);
             }}
           />
-        </Box>
+        </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-74vh"}
-        sx={{
+      <Div className={"block-wrapper h-74vh"}
+        style={{
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           height: "100%"
         }}
       >
-        <Box className={"d-center p-10"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Box className={"d-column"}>
+        </Div>
+        <Div className={"d-column"}>
           {tableFragment(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

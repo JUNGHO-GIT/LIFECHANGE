@@ -1,7 +1,8 @@
 // Filter.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
-import {Paper, MenuItem, TextField, Box} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({
@@ -17,7 +18,7 @@ export const Filter = ({
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Box className={"d-center"}>
+    <Div className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -64,12 +65,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Div>
   );
 
   // 2. exercise ---------------------------------------------------------------------------------->
   const exerciseNode = () => (
-    <Box className={"d-center"}>
+    <Div className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -124,12 +125,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Div>
   );
 
   // 3. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
-    <Box className={"d-center"}>
+    <Div className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -156,12 +157,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Div>
   );
 
   // 4. money ------------------------------------------------------------------------------------->
   const moneyNode = () => (
-    <Box className={"d-center"}>
+    <Div className={"d-center"}>
       <TextField
         select={true}
         type={"text"}
@@ -216,7 +217,7 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Div>
   );
 
   // 6. tweak ------------------------------------------------------------------------------------->

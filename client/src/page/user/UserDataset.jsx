@@ -3,13 +3,11 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Loading, Btn} from "../../import/ImportComponents.jsx";
-import {CustomIcons} from "../../import/ImportIcons.jsx";
+import {Loading, Btn, Div, Hr} from "../../import/ImportComponents.jsx";
+import {Icons} from "../../import/ImportIcons.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Typography} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {Divider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -259,9 +257,9 @@ export const UserDataset = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
+      <p className={"fs-15"}>
         Dataset
-      </Typography>
+      </p>
     );
     // 7-6-1. table
     const tableFragment1 = (i) => (
@@ -271,11 +269,9 @@ export const UserDataset = () => {
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Box className={"d-center"}>
-                    <Typography variant={"h6"} fontWeight={500}>
-                      Section
-                    </Typography>
-                  </Box>
+                  <Div className={"d-center"}>
+                    <p className={"fs-15"}>Section</p>
+                  </Div>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -301,11 +297,9 @@ export const UserDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Box className={"dataset-title"}>
-                      <Typography variant={"body1"}>
-                        {item}
-                      </Typography>
-                    </Box>
+                    <Div className={"dataset-title"}>
+                      <p className={"fs-15"}>{item}</p>
+                    </Div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -322,14 +316,12 @@ export const UserDataset = () => {
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Box className={"d-center"}>
-                    <Typography variant={"h6"} fontWeight={500} className={"ms-auto"}>
-                      Part
-                    </Typography>
-                    <CustomIcons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
+                  <Div className={"d-center"}>
+                    <p className={"fs-15 ms-auto"}>Part</p>
+                    <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("part");
                     }} />
-                  </Box>
+                  </Div>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -346,22 +338,20 @@ export const UserDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Box className={"dataset-title"} onClick={() => {
+                    <Div className={"dataset-title"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         partIdx: index
                       }));
                     }}>
-                      <Typography variant={"body1"} className={"dataset-title ms-auto"}>
-                        {item[`${dataType}_part`]}
-                      </Typography>
-                      <CustomIcons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
+                      <p className={"fs-15 ms-auto"}>{item[`${dataType}_part`]}</p>
+                      <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("part", index);
                       }} />
-                      <CustomIcons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
+                      <Icons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
                         handlerRemove("part", index);
                       }} />
-                    </Box>
+                    </Div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -378,14 +368,12 @@ export const UserDataset = () => {
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Box className={"d-center"}>
-                    <Typography variant={"h6"} fontWeight={500} className={"ms-auto"}>
-                      Title
-                    </Typography>
-                    <CustomIcons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
+                  <Div className={"d-center"}>
+                    <p className={"fs-15 ms-auto"}>Title</p>
+                    <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("title");
                     }} />
-                  </Box>
+                  </Div>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -403,22 +391,22 @@ export const UserDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Box className={"dataset-title"} onClick={() => {
+                    <Div className={"dataset-title"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       }));
                     }}>
-                      <Typography variant={"body1"} className={"dataset-title ms-auto"}>
+                      <p className={"fs-15 ms-auto"}>
                         {item}
-                      </Typography>
-                      <CustomIcons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
+                      </p>
+                      <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("title", index);
                       }} />
-                      <CustomIcons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
+                      <Icons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
                         handlerRemove("title", index);
                       }} />
-                    </Box>
+                    </Div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -429,19 +417,19 @@ export const UserDataset = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
-        <Box className={"d-center p-10"}>
+      <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"d-center p-10"}>
           {titleSection()}
-        </Box>
-        <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-column"}>
+        </Div>
+        <Hr className={"mb-20"} />
+        <Div className={"d-column"}>
           {tableFragment1(0)}
-        </Box>
-        <Box className={"d-row align-start"}>
+        </Div>
+        <Div className={"d-row align-start"}>
           {tableFragment2(0)}
           {tableFragment3(0)}
-        </Box>
-      </Box>
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

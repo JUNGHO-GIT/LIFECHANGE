@@ -37,6 +37,11 @@ import {router as userRouter} from "./src/router/user/userRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 dotenv.config();
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ------------------------------------------------------------------------------------------------>
 const id = "eric4757";
 const pw = "M7m7m7m7m7!";
 const host = "34.75.165.209";
@@ -58,10 +63,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
-mongoose.set("debug", customLogger);
-const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// mongoose.set("debug", customLogger);
 
 // ------------------------------------------------------------------------------------------------>
 const appPort = Number(process.env.PORT);
