@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -135,7 +135,7 @@ export const save = {
       sleep_plan_night: OBJECT_param.sleep_plan_night,
       sleep_plan_morning: OBJECT_param.sleep_plan_morning,
       sleep_plan_time: OBJECT_param.sleep_plan_time,
-      sleep_plan_regDt: fmtDate,
+      sleep_plan_regDt: newDate,
       sleep_plan_updateDt: "",
     });
     return finalResult;
@@ -154,7 +154,7 @@ export const save = {
         sleep_plan_night: OBJECT_param.sleep_plan_night,
         sleep_plan_morning: OBJECT_param.sleep_plan_morning,
         sleep_plan_time: OBJECT_param.sleep_plan_time,
-        sleep_plan_updateDt: fmtDate,
+        sleep_plan_updateDt: newDate,
       }},
       {upsert: true,
         new: true

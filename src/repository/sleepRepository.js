@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Sleep} from "../schema/Sleep.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -116,7 +116,7 @@ export const save = {
       sleep_startDt: startDt_param,
       sleep_endDt: endDt_param,
       sleep_section: OBJECT_param.sleep_section,
-      sleep_regDt: fmtDate,
+      sleep_regDt: newDate,
       sleep_updateDt: "",
     });
     return finalResult;
@@ -133,7 +133,7 @@ export const save = {
         sleep_startDt: startDt_param,
         sleep_endDt: endDt_param,
         sleep_section: OBJECT_param.sleep_section,
-        sleep_updateDt: fmtDate,
+        sleep_updateDt: newDate,
       }},
       {upsert: true,
         new: true
@@ -186,7 +186,7 @@ export const deletes = {
         },
       },
       $set: {
-        sleep_updateDt: fmtDate,
+        sleep_updateDt: newDate,
       }}
     )
     .lean();

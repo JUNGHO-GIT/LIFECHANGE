@@ -51,13 +51,13 @@ const schema = new mongoose.Schema({
   }],
 
   sleep_regDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   },
   sleep_updateDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   }
 });

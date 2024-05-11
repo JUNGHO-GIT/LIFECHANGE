@@ -163,7 +163,39 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3-1. add --------------------------------------------------------------------------------------->
+router.post("/add", async (req, res) => {
+  try {
+    let result = await service.add (
+      req.body.user_id,
+      req.body.PART,
+      req.body.count
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "추가 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "추가 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 3-2. save -------------------------------------------------------------------------------------->
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save (

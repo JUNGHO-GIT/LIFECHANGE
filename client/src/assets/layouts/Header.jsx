@@ -11,7 +11,7 @@ export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navParam = useNavigate();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

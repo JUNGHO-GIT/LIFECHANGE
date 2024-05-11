@@ -82,13 +82,13 @@ const schema = new mongoose.Schema({
   }],
 
   money_regDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   },
   money_updateDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   }
 });

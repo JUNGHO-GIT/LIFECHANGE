@@ -20,7 +20,7 @@ export const FoodPlanSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -126,7 +126,7 @@ export const FoodPlanSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mb-10"}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -164,7 +164,7 @@ export const FoodPlanSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mt-10"}
+          className={"m-auto mt-20"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -241,13 +241,17 @@ export const FoodPlanSave = () => {
             id={`food_plan_kcal-${i}`}
             name={`food_plan_kcal-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.food_plan_kcal}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(9999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 food_plan_kcal: limitedValue
@@ -264,13 +268,17 @@ export const FoodPlanSave = () => {
             id={`food_plan_carb-${i}`}
             name={`food_plan_carb-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.food_plan_carb}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 food_plan_carb: limitedValue
@@ -287,13 +295,17 @@ export const FoodPlanSave = () => {
             id={`food_plan_protein-${i}`}
             name={`food_plan_protein-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.food_plan_protein}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 food_plan_protein: limitedValue
@@ -310,13 +322,17 @@ export const FoodPlanSave = () => {
             id={`food_plan_fat-${i}`}
             name={`food_plan_fat-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.food_plan_fat}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 food_plan_fat: limitedValue

@@ -20,7 +20,7 @@ export const ExerciseDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -143,6 +143,7 @@ export const ExerciseDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -190,7 +191,7 @@ export const ExerciseDetail = () => {
         InputProps={{
           readOnly: true,
           startAdornment: (
-            <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
           )
         }}
       />
@@ -209,7 +210,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -225,7 +226,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"BiRun"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -241,7 +242,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWeight"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"BiWeight"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -309,7 +310,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -323,7 +324,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -339,7 +340,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -353,7 +354,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -367,7 +368,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -381,7 +382,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -397,7 +398,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />

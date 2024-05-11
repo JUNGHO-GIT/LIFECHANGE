@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -129,7 +129,7 @@ export const save = {
       money_plan_endDt: endDt_param,
       money_plan_in: OBJECT_param.money_plan_in,
       money_plan_out: OBJECT_param.money_plan_out,
-      money_plan_regDt: fmtDate,
+      money_plan_regDt: newDate,
       money_plan_updateDt: "",
     });
     return finalResult;
@@ -147,7 +147,7 @@ export const save = {
         money_plan_endDt: endDt_param,
         money_plan_in: OBJECT_param.money_plan_in,
         money_plan_out: OBJECT_param.money_plan_out,
-        money_plan_updateDt: fmtDate,
+        money_plan_updateDt: newDate,
       }},
       {upsert: true,
         new: true

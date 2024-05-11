@@ -24,7 +24,7 @@ export const ExercisePlanDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -132,7 +132,7 @@ export const ExercisePlanDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mb-10"}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -170,7 +170,7 @@ export const ExercisePlanDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mt-10"}
+          className={"m-auto mt-20"}
           readOnly={false}
           slotProps={{
             textField: {sx: {

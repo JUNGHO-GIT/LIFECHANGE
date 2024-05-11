@@ -124,7 +124,7 @@ export const MoneyPlanSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mb-10"}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -162,7 +162,7 @@ export const MoneyPlanSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mt-10"}
+          className={"m-auto mt-20"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -240,13 +240,17 @@ export const MoneyPlanSave = () => {
             id={`money_plan_in-${i}`}
             name={`money_plan_in-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.money_plan_in}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_in: limitedValue
@@ -263,13 +267,17 @@ export const MoneyPlanSave = () => {
             id={`money_plan_out-${i}`}
             name={`money_plan_out-${i}`}
             variant={"outlined"}
-          className={"w-220"}
-            value={OBJECT?.money_plan_out}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_out: limitedValue

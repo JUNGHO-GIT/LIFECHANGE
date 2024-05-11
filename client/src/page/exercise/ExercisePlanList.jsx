@@ -24,7 +24,7 @@ export const ExercisePlanList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -176,7 +176,7 @@ export const ExercisePlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
-                  총 운동량
+                  총 볼륨
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}

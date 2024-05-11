@@ -17,7 +17,7 @@ export const ExerciseDashScatter = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->

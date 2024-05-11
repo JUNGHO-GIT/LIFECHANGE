@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Food} from "../schema/Food.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -127,7 +127,7 @@ export const save = {
       food_plan_carb: OBJECT_param.food_plan_carb,
       food_plan_protein: OBJECT_param.food_plan_protein,
       food_plan_fat: OBJECT_param.food_plan_fat,
-      food_plan_regDt: fmtDate,
+      food_plan_regDt: newDate,
       food_plan_updateDt: "",
     });
     return finalResult;
@@ -147,7 +147,7 @@ export const save = {
         food_plan_carb: OBJECT_param.food_plan_carb,
         food_plan_protein: OBJECT_param.food_plan_protein,
         food_plan_fat: OBJECT_param.food_plan_fat,
-        food_plan_updateDt: fmtDate,
+        food_plan_updateDt: newDate,
       }},
       {upsert: true,
         new: true

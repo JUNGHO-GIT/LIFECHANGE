@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Exercise} from "../schema/Exercise.js";
 import {ExercisePlan} from "../schema/ExercisePlan.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -126,7 +126,7 @@ export const save = {
       exercise_plan_volume: OBJECT_param.exercise_plan_volume,
       exercise_plan_cardio: OBJECT_param.exercise_plan_cardio,
       exercise_plan_weight: OBJECT_param.exercise_plan_weight,
-      exercise_plan_regDt: fmtDate,
+      exercise_plan_regDt: newDate,
       exercise_plan_updateDt: "",
     });
     return finalResult;
@@ -146,7 +146,7 @@ export const save = {
         exercise_plan_volume: OBJECT_param.exercise_plan_volume,
         exercise_plan_cardio: OBJECT_param.exercise_plan_cardio,
         exercise_plan_weight: OBJECT_param.exercise_plan_weight,
-        exercise_plan_updateDt: fmtDate,
+        exercise_plan_updateDt: newDate,
       }},
       {upsert: true,
         new: true

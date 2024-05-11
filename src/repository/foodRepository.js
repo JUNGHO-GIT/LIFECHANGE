@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Food} from "../schema/Food.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -136,7 +136,7 @@ export const save = {
       food_total_protein: OBJECT_param.food_total_protein,
       food_total_fat: OBJECT_param.food_total_fat,
       food_section: OBJECT_param.food_section,
-      food_regDt: fmtDate,
+      food_regDt: newDate,
       food_updateDt: "",
     });
     return finalResult;
@@ -157,7 +157,7 @@ export const save = {
         food_total_protein: OBJECT_param.food_total_protein,
         food_total_fat: OBJECT_param.food_total_fat,
         food_section: OBJECT_param.food_section,
-        food_updateDt: fmtDate,
+        food_updateDt: newDate,
       }},
       {upsert: true,
         new: true
@@ -210,7 +210,7 @@ export const deletes = {
         },
       },
       $set: {
-        food_updateDt: fmtDate,
+        food_updateDt: newDate,
       }}
     )
     .lean();

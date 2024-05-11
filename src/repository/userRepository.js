@@ -1,7 +1,7 @@
 // userRepository.js
 
 import mongoose from "mongoose";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 import {ExercisePlan} from "../schema/ExercisePlan.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
@@ -33,7 +33,7 @@ export const signup = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       user_pw: user_pw_param,
-      user_regDt: fmtDate,
+      user_regDt: newDate,
       user_updateDt: "",
     });
     return finalResult;
@@ -55,7 +55,7 @@ export const login = {
   }
 };
 
-// 0-3. dataset ----------------------------------------------------------------------------------->
+// 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = {
   list: async (
     user_id_param
@@ -79,7 +79,7 @@ export const dataset = {
   },
 };
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = {
 
   listExercisePlan: async (
@@ -285,7 +285,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3-1. add ------------------------------------------------------------------------------------>
+// 3-1. add --------------------------------------------------------------------------------------->
 export const add = {
 
   addExercise: async (
@@ -441,28 +441,53 @@ export const add = {
   }
 };
 
-// 3-1. save ------------------------------------------------------------------------------------>
-export const save = async (
-  user_id_param, OBJECT_param
-) => {
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = {
+  detail: async (
+    user_id_param, _id_param
+  ) => {
+    const finalResult = await User.findOne({
+      user_id: user_id_param,
+      _id: !_id_param ? {$exists:true} : _id_param
+    })
+    .lean();
+    return finalResult;
+  },
 
-  const finalResult = await User.create({
-    _id: new mongoose.Types.ObjectId(),
-    user_id: user_id_param,
-    user_pw: OBJECT_param.user_pw,
-    user_sex: OBJECT_param.user_sex,
-    user_age: OBJECT_param.user_age,
-    user_height: OBJECT_param.user_height,
-    user_weight: OBJECT_param.user_weight,
-    user_email: OBJECT_param.user_email,
-    user_phone: OBJECT_param.user_phone,
-    user_image: OBJECT_param.user_image,
-    user_dataset: OBJECT_param.user_dataset,
-    user_regDt: fmtDate,
-    user_updateDt: "",
-  });
+  create: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const finalResult = await User.create({
+      user_id: user_id_param,
+      _id: new mongoose.Types.ObjectId(),
+      user_pw: OBJECT_param.user_pw,
+      user_name: OBJECT_param.user_name,
+      user_image: OBJECT_param.user_image,
+      user_dataset: OBJECT_param.user_dataset,
+      user_regDt: newDate,
+      user_updateDt: "",
+    });
+    return finalResult;
+  },
 
-  return finalResult;
+  update: async (
+    user_id_param, _id_param, OBJECT_param
+  ) => {
+    const finalResult = await User.findOneAndUpdate(
+      {user_id: user_id_param,
+        _id: !_id_param ? {$exists:true} : _id_param
+      },
+      {$set: {
+        user_dataset: OBJECT_param.user_dataset,
+        user_updateDt: newDate,
+      }},
+      {upsert: true,
+        new: true
+      }
+    )
+    .lean();
+    return finalResult;
+  }
 };
 
 // 4-1. delete ------------------------------------------------------------------------------------>
@@ -481,7 +506,7 @@ export const deletes = {
         },
       },
       $set: {
-        user_updateDt: fmtDate,
+        user_updateDt: newDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
@@ -490,7 +515,6 @@ export const deletes = {
     .lean();
 
     let finalResult;
-
     if (updateResult.modifiedCount > 0) {
       const doc = await User.findOne({
         user_id: user_id_param

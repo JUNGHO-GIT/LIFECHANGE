@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -148,7 +148,7 @@ export const save = {
       money_total_in: OBJECT_param.money_total_in,
       money_total_out: OBJECT_param.money_total_out,
       money_section: OBJECT_param.money_section,
-      money_regDt: fmtDate,
+      money_regDt: newDate,
       money_updateDt: "",
     });
     return finalResult;
@@ -167,7 +167,7 @@ export const save = {
         money_total_in: OBJECT_param.money_total_in,
         money_total_out: OBJECT_param.money_total_out,
         money_section: OBJECT_param.money_section,
-        money_updateDt: fmtDate,
+        money_updateDt: newDate,
       }},
       {upsert: true,
         new: true
@@ -220,7 +220,7 @@ export const deletes = {
         },
       },
       $set: {
-        money_updateDt: fmtDate,
+        money_updateDt: newDate,
       }}
     )
     .lean();

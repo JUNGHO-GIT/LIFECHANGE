@@ -19,7 +19,7 @@ export const CalendarDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navParam = useNavigate();
@@ -157,6 +157,7 @@ export const CalendarDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -240,7 +241,7 @@ export const CalendarDetail = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
                 )
               }}
               onChange={(e) => {

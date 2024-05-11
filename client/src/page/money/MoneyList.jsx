@@ -20,7 +20,7 @@ export const MoneyList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -130,40 +130,30 @@ export const MoneyList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>항목</TableCell>
-              <TableCell>금액</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.money_section.length, 3)}
-                    className={"pointer"} onClick={() => {
-                      SEND.id = item._id;
-                      SEND.startDt = item.money_startDt;
-                      SEND.endDt = item.money_endDt;
-                      navParam(SEND.toDetail, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.money_startDt?.substring(5, 10)}
-                      {item.money_section.length > 3 && (<Box>더보기</Box>)}
-                    </TableCell>
-                  )}
-                  <TableCell>
-                    {section.money_part_val}
-                  </TableCell>
-                  <TableCell>
-                    {section.money_title_val}
-                  </TableCell>
-                  <TableCell>
-                    {`₩ ${numeral(section.money_amount).format('0,0')}`}
-                  </TableCell>
-                </TableRow>
-              ))
+              <TableRow key={index} className={"table-tbody-tr"}>
+                <TableCell className={"pointer"} onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.money_startDt;
+                  SEND.endDt = item.money_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.money_startDt?.substring(5, 10)}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_in).format('0,0')}`}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_out).format('0,0')}`}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -172,7 +162,7 @@ export const MoneyList = () => {
     // 7-7. table
     // list 는 높이, 너비 지정
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh w-min120vw"}>
+      <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>

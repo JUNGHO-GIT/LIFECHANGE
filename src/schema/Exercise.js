@@ -102,13 +102,13 @@ const schema = new mongoose.Schema({
   }],
 
   exercise_regDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   },
   exercise_updateDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   }
 });

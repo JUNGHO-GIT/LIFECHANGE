@@ -19,7 +19,7 @@ export const FoodSearch = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -133,36 +133,36 @@ export const FoodSearch = () => {
         <Table className={"border"}>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
-              <TableCell width={"40%"}>식품명</TableCell>
-              <TableCell width={"20%"}>1회 제공량</TableCell>
-              <TableCell width={"10%"}>Kcal</TableCell>
-              <TableCell width={"10%"}>Fat</TableCell>
-              <TableCell width={"10%"}>Carb</TableCell>
-              <TableCell width={"10%"}>Protein</TableCell>
+              <TableCell>식품명</TableCell>
+              <TableCell>1회 제공량</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.food_section?.map((item, sectionIndex) => (
               <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                <TableCell width={"40%"} className={"pointer"} onClick={() => {
+                <TableCell className={"pointer"} onClick={() => {
                   handleStorage(item);
                 }}>
                   {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
                 </TableCell>
-                <TableCell width={"20%"}>
+                <TableCell>
                   {`${item.food_count}${item.food_serv} (${item.food_gram}g)`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_kcal}
+                <TableCell>
+                  {`${numeral(item.food_kcal).format("0,0")} Kcal`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_fat}
+                <TableCell>
+                  {`${numeral(item.food_carb).format("0,0")} g`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_carb}
+                <TableCell>
+                  {`${numeral(item.food_protein).format("0,0")} g`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_protein}
+                <TableCell>
+                  {`${numeral(item.food_fat).format("0,0")} g`}
                 </TableCell>
               </TableRow>
             ))}

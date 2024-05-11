@@ -20,7 +20,7 @@ export const MoneySave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
   const navParam = useNavigate();
@@ -153,6 +153,7 @@ export const MoneySave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -237,7 +238,7 @@ export const MoneySave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
                 )
               }}
               onChange={(e) => {
@@ -284,7 +285,7 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -300,7 +301,7 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -316,7 +317,7 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -442,12 +443,12 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
-              const limitedValue = Math.min(Number(rawValue), 1000000000);
+              const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
                 money_section: prev.money_section.map((item, idx) => (
@@ -474,7 +475,7 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <CustomIcons name={"BiChat"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
@@ -500,7 +501,7 @@ export const MoneySave = () => {
           {titleSection()}
         </Box>
         <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-center mb-20"}>
+        <Box className={"d-column mb-20"}>
           {dateSection()}
         </Box>
         <Box className={"d-center mb-20"}>

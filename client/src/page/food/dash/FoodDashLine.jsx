@@ -19,7 +19,7 @@ export const FoodDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-2. useState -------------------------------------------------------------------------------->

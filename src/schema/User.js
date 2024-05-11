@@ -91,13 +91,13 @@ const schema = new mongoose.Schema({
   },
 
   user_regDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   },
   user_updateDt: {
-    type: String,
-    default: "0000-00-00 / 00:00:00",
+    type: Date,
+    default: Date.now,
     required: false
   }
 });

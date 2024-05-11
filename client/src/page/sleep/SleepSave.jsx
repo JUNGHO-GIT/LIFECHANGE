@@ -21,7 +21,7 @@ export const SleepSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -129,6 +129,7 @@ export const SleepSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -207,33 +208,29 @@ export const SleepSave = () => {
               timezone={"Asia/Seoul"}
               views={['hours', 'minutes']}
               slotProps={{
-                textField: {
-                  sx: {
+                textField: {sx: {
+                  width: "220px",
+                }},
+                layout: {sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
                     width: "220px",
+                    height: "180px",
                   },
-                },
-                layout: {
-                  sx: {
-                    "& .MuiPickersLayout-contentWrapper": {
-                      width: "220px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-root": {
-                      width: "77px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item": {
-                      fontSize: "0.8rem",
-                      width: "65px",
-                      minHeight: "20px",
-                      borderRadius: "8px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                      color: "#fff",
-                      backgroundColor: "#164a60",
-                    },
+                  "& .MuiMultiSectionDigitalClockSection-root": {
+                    width: "77px",
+                    height: "180px",
                   },
-                },
+                  "& .MuiMultiSectionDigitalClockSection-item": {
+                    fontSize: "0.8rem",
+                    width: "65px",
+                    minHeight: "20px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "#164a60",
+                  },
+                }},
               }}
               onChange={(time) => {
                 setOBJECT((prev) => ({
@@ -257,33 +254,29 @@ export const SleepSave = () => {
               timezone={"Asia/Seoul"}
               views={['hours', 'minutes']}
               slotProps={{
-                textField: {
-                  sx: {
+                textField: {sx: {
+                  width: "220px",
+                }},
+                layout: {sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
                     width: "220px",
+                    height: "180px",
                   },
-                },
-                layout: {
-                  sx: {
-                    "& .MuiPickersLayout-contentWrapper": {
-                      width: "220px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-root": {
-                      width: "77px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item": {
-                      fontSize: "0.8rem",
-                      width: "65px",
-                      minHeight: "20px",
-                      borderRadius: "8px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                      color: "#fff",
-                      backgroundColor: "#164a60",
-                    },
+                  "& .MuiMultiSectionDigitalClockSection-root": {
+                    width: "77px",
+                    height: "180px",
                   },
-                },
+                  "& .MuiMultiSectionDigitalClockSection-item": {
+                    fontSize: "0.8rem",
+                    width: "65px",
+                    minHeight: "20px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "#164a60",
+                  },
+                }},
               }}
               onChange={(time) => {
                 setOBJECT((prev) => ({
@@ -310,7 +303,7 @@ export const SleepSave = () => {
             InputProps={{
               readOnly: true,
               endAdornment: (
-                <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                <CustomAdornment name={"BiSolidMoon"} className={"w-18 h-18 dark"} position={"end"}/>
               )
             }}
           />

@@ -45,7 +45,10 @@ export const CustomAdornment = ({name, className, position, ...props}) => {
   }
 
   // ex. 'FaHome' => (preStr = fa)
-  const preStr = name.slice(0, 2).toLowerCase();
+  let preStr = name.slice(0, 2).toLowerCase();
+  if (preStr === "li") {
+    preStr = "lia";
+  }
 
   let importCode = null;
   let importIcon = null;

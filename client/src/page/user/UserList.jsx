@@ -17,7 +17,7 @@ export const UserList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -185,8 +185,8 @@ export const UserList = () => {
   })()}, [user_id, PAGING, PART]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSave = async (type_param) => {
-    const res = await axios.post(`${URL_OBJECT}/save`, {
+  const flowAdd = async (type_param) => {
+    const res = await axios.post(`${URL_OBJECT}/add`, {
       user_id: user_id,
       PART: type_param,
       count: COUNT?.inputCnt
@@ -201,7 +201,7 @@ export const UserList = () => {
         ...prev,
         page: 1
       }));
-      navParam("/tweak/demo");
+      navParam("/user/list");
     }
   };
 
@@ -223,7 +223,7 @@ export const UserList = () => {
         ...prev,
         page: 1
       }));
-      navParam("/tweak/demo");
+      navParam("/user/list");
     }
   };
 
@@ -488,7 +488,7 @@ export const UserList = () => {
     // 7-7. table
     // list 는 높이, 너비 지정
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh w-min120vw"}>
+      <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}
@@ -548,7 +548,7 @@ export const UserList = () => {
           )}
         />
         <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-        onClick={() => (flowSave(PART))}>
+        onClick={() => (flowAdd(PART))}>
           추가
         </Button>
         <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}

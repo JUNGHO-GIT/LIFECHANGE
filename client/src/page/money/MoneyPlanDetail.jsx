@@ -23,7 +23,7 @@ export const MoneyPlanDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -133,7 +133,7 @@ export const MoneyPlanDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mb-10"}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -171,7 +171,7 @@ export const MoneyPlanDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
-          className={"mt-10"}
+          className={"m-auto mt-20"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -265,12 +265,16 @@ export const MoneyPlanDetail = () => {
             name={`money_plan_in-${i}`}
             variant={"outlined"}
             className={"w-220"}
-            value={OBJECT?.money_plan_in}
+            value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_in: limitedValue
@@ -288,12 +292,16 @@ export const MoneyPlanDetail = () => {
             name={`money_plan_out-${i}`}
             variant={"outlined"}
             className={"w-220"}
-            value={OBJECT?.money_plan_out}
+            value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
             onChange={(e) => {
-              const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_out: limitedValue

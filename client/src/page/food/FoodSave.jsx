@@ -19,7 +19,7 @@ export const FoodSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
   const foodArray = JSON.parse(session)?.food || [];
   const navParam = useNavigate();
@@ -261,21 +261,21 @@ export const FoodSave = () => {
         <Table className={"border"}>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell width={"10%"}>파트</TableCell>
-              <TableCell width={"20%"}>식품명</TableCell>
-              <TableCell width={"10%"}>수량</TableCell>
-              <TableCell width={"10%"}>g</TableCell>
-              <TableCell width={"10%"}>Kcal</TableCell>
-              <TableCell width={"10%"}>Fat</TableCell>
-              <TableCell width={"10%"}>Carb</TableCell>
-              <TableCell width={"10%"}>Protein</TableCell>
-              <TableCell width={"10%"}>x</TableCell>
+              <TableCell>파트</TableCell>
+              <TableCell>식품명</TableCell>
+              <TableCell>수량</TableCell>
+              <TableCell>g</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Fat</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>x</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.food_section?.map((item, sectionIndex) => (
               <TableRow className={"table-tbody-tr"}>
-                <TableCell width={"10%"}>
+                <TableCell>
                   <TextField
                     select={true}
                     type={"text"}
@@ -310,10 +310,10 @@ export const FoodSave = () => {
                     ))}
                   </TextField>
                 </TableCell>
-                <TableCell width={"20%"}>
+                <TableCell>
                   {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
                 </TableCell>
-                <TableCell width={"10%"}>
+                <TableCell>
                   <TextField
                     select={false}
                     label={""}
@@ -322,32 +322,33 @@ export const FoodSave = () => {
                     id={"food_count"}
                     name={"food_count"}
                     size={"small"}
-                    value={Math.min(99, Number(item.food_count))}
+                    value={`${numeral(item.food_count).format("0,0")}`}
                     InputProps={{
                       readOnly: false
                     }}
                     onChange={(e) => {
-                      const limitedValue = Math.min(99, parseInt(e.target.value));
+                      const rawValue = e.target.value.replace(/,/g, "");
+                      const limitedValue = Math.min(Number(rawValue), 99);
                       handleCountChange(sectionIndex, limitedValue);
                     }}
                   />
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_gram}
+                <TableCell>
+                  {`${numeral(item.food_gram).format("0,0")}`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_kcal}
+                <TableCell>
+                  {`${numeral(item.food_kcal).format("0,0")}`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_fat}
+                <TableCell>
+                  {`${numeral(item.food_fat).format("0,0")}`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_carb}
+                <TableCell>
+                  {`${numeral(item.food_carb).format("0,0")}`}
                 </TableCell>
-                <TableCell width={"10%"}>
-                  {item.food_protein}
+                <TableCell>
+                  {`${numeral(item.food_protein).format("0,0")}`}
                 </TableCell>
-                <TableCell width={"10%"}>
+                <TableCell>
                   <span className={"del-btn"} onClick={() => (
                     handlerFoodDelete(sectionIndex)
                   )}>
@@ -359,15 +360,15 @@ export const FoodSave = () => {
           </TableBody>
           <TableFooter className={"table-tfoot"}>
             <TableRow className={"table-tfoot-tr"}>
-              <TableCell width={"10%"}></TableCell>
-              <TableCell width={"20%"}>합계</TableCell>
-              <TableCell width={"10%"}></TableCell>
-              <TableCell width={"10%"}></TableCell>
-              <TableCell width={"10%"}>{OBJECT?.food_total_kcal}</TableCell>
-              <TableCell width={"10%"}>{OBJECT?.food_total_fat}</TableCell>
-              <TableCell width={"10%"}>{OBJECT?.food_total_carb}</TableCell>
-              <TableCell width={"10%"}>{OBJECT?.food_total_protein}</TableCell>
-              <TableCell width={"10%"}></TableCell>
+              <TableCell></TableCell>
+              <TableCell>합계</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell>{`${numeral(OBJECT?.food_total_kcal).format("0,0")}`}</TableCell>
+              <TableCell>{`${numeral(OBJECT?.food_total_fat).format("0,0")}`}</TableCell>
+              <TableCell>{`${numeral(OBJECT?.food_total_carb).format("0,0")}`}</TableCell>
+              <TableCell>{`${numeral(OBJECT?.food_total_protein).format("0,0")}`}</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableFooter>
         </Table>

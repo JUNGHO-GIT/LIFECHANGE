@@ -5,6 +5,7 @@ import "moment/locale/ko.js";
 
 // 1. common -------------------------------------------------------------------------------------->
 export const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+export const newDate = moment().tz("Asia/Seoul");
 export const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 export const curWeekStart = moment().tz("Asia/Seoul").startOf("isoWeek");
 export const curWeekEnd = moment().tz("Asia/Seoul").endOf("isoWeek");

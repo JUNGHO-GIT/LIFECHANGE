@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Exercise} from "../schema/Exercise.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -136,7 +136,7 @@ export const save = {
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
       exercise_body_weight: OBJECT_param.exercise_body_weight,
       exercise_section: OBJECT_param.exercise_section,
-      exercise_regDt: fmtDate,
+      exercise_regDt: newDate,
       exercise_updateDt: "",
     });
     return finalResult;
@@ -162,7 +162,7 @@ export const save = {
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_body_weight: OBJECT_param.exercise_body_weight,
         exercise_section: OBJECT_param.exercise_section,
-        exercise_updateDt: fmtDate,
+        exercise_updateDt: newDate,
       }}
     )
     .lean();
@@ -212,7 +212,7 @@ export const deletes = {
         },
       },
       $set: {
-        exercise_updateDt: fmtDate,
+        exercise_updateDt: newDate,
       }}
     )
     .lean();

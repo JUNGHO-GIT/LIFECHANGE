@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Calendar} from "../schema/Calendar.js";
-import {fmtDate} from "../assets/js/date.js";
+import {fmtDate, newDate} from "../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
@@ -91,7 +91,7 @@ export const save = {
       calendar_startDt: startDt_param,
       calendar_endDt: endDt_param,
       calendar_section: OBJECT_param.calendar_section,
-      calendar_regDt: fmtDate,
+      calendar_regDt: newDate,
       calendar_updateDt: "",
     });
     return finalResult;
@@ -108,7 +108,7 @@ export const save = {
         calendar_startDt: startDt_param,
         calendar_endDt: endDt_param,
         calendar_section: OBJECT_param.calendar_section,
-        calendar_updateDt: fmtDate,
+        calendar_updateDt: newDate
       }},
       {upsert: true,
         new: true

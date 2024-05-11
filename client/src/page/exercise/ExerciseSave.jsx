@@ -10,10 +10,6 @@ import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
@@ -24,7 +20,7 @@ export const ExerciseSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const navParam = useNavigate();
@@ -181,6 +177,7 @@ export const ExerciseSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -269,7 +266,7 @@ export const ExerciseSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
                 )
               }}
               onChange={(e) => {
@@ -316,7 +313,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -332,7 +329,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiTime"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -348,7 +345,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWeight"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -467,18 +464,19 @@ export const ExerciseSave = () => {
             size={"small"}
             variant={"outlined"}
             className={"w-220"}
-            value={OBJECT?.exercise_section[i]?.exercise_set}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
               readOnly: false
             }}
             onChange={(e) => {
-              const newSet = Number(e.target.value);
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
                 exercise_section: prev.exercise_section.map((item, idx) => (
                   idx === i ? {
                     ...item,
-                    exercise_set: newSet
+                    exercise_set: limitedValue
                   } : item
                 ))
               }));
@@ -497,13 +495,14 @@ export const ExerciseSave = () => {
               readOnly: false
             }}
             onChange={(e) => {
-              const newRep = Number(e.target.value);
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
                 exercise_section: prev.exercise_section.map((item, idx) => (
                   idx === i ? {
                     ...item,
-                    exercise_rep: newRep
+                    exercise_rep: limitedValue
                   } : item
                 ))
               }));
@@ -522,38 +521,14 @@ export const ExerciseSave = () => {
               readOnly: false
             }}
             onChange={(e) => {
-              const newKg = Number(e.target.value);
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
                 exercise_section: prev.exercise_section.map((item, idx) => (
                   idx === i ? {
                     ...item,
-                    exercise_kg: newKg
-                  } : item
-                ))
-              }));
-            }}
-          />
-        </Box>
-        <Box className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"휴식"}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-220"}
-            value={OBJECT?.exercise_section[i]?.exercise_rest}
-            InputProps={{
-              readOnly: false
-            }}
-            onChange={(e) => {
-              const newRest = Number(e.target.value);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_section: prev.exercise_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    exercise_rest: newRest
+                    exercise_kg: limitedValue
                   } : item
                 ))
               }));
@@ -570,33 +545,29 @@ export const ExerciseSave = () => {
               timezone={"Asia/Seoul"}
               views={['hours', 'minutes']}
               slotProps={{
-                textField: {
-                  sx: {
+                textField: {sx: {
+                  width: "220px",
+                }},
+                layout: {sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
                     width: "220px",
+                    height: "180px",
                   },
-                },
-                layout: {
-                  sx: {
-                    "& .MuiPickersLayout-contentWrapper": {
-                      width: "220px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-root": {
-                      width: "77px",
-                      height: "180px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item": {
-                      fontSize: "0.8rem",
-                      width: "65px",
-                      minHeight: "20px",
-                      borderRadius: "8px",
-                    },
-                    "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                      color: "#fff",
-                      backgroundColor: "#164a60",
-                    },
+                  "& .MuiMultiSectionDigitalClockSection-root": {
+                    width: "77px",
+                    height: "180px",
                   },
-                },
+                  "& .MuiMultiSectionDigitalClockSection-item": {
+                    fontSize: "0.8rem",
+                    width: "65px",
+                    minHeight: "20px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "#164a60",
+                  },
+                }},
               }}
               onChange={(time) => {
                 setOBJECT((prev) => ({

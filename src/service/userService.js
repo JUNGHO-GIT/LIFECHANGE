@@ -179,8 +179,8 @@ export const add = async (
         exercise_plan_volume: randomNumber(1000),
         exercise_plan_cardio: randomTime(),
         exercise_plan_weight: randomNumber(1000),
-        exercise_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        exercise_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_plan_regDt: Date.now(),
+        exercise_plan_updateDt: Date.now(),
       };
     });
     await repository.add.addExercisePlan(
@@ -221,8 +221,8 @@ export const add = async (
         exercise_total_cardio: randomTime(),
         exercise_body_weight: randomNumber(100),
         exercise_section: sections,
-        exercise_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        exercise_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_regDt: Date.now(),
+        exercise_updateDt: Date.now(),
       };
     });
     await repository.add.addExercise(
@@ -245,8 +245,8 @@ export const add = async (
         food_plan_carb: randomNumber(1000),
         food_plan_protein: randomNumber(1000),
         food_plan_fat: randomNumber(1000),
-        food_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        food_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_plan_regDt: Date.now(),
+        food_plan_updateDt: Date.now(),
       };
     });
     await repository.add.addFoodPlan(
@@ -262,7 +262,7 @@ export const add = async (
         const partIndex = Math.floor(Math.random() * foodArray.length);
         const part = foodArray[partIndex];
         const titleArray = ["김치찌개", "된장찌개", "부대찌개", "순두부찌개", "갈비탕", "설렁탕", "뼈해장국", "칼국수", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이"]
-        const title = Math.floor(Math.random() * titleArray.length);
+        const title = titleArray[Math.floor(Math.random() * titleArray.length)];
         return {
           _id: new mongodb.ObjectId(),
           food_part_idx: partIndex,
@@ -289,8 +289,8 @@ export const add = async (
         food_total_protein: randomNumber(1000),
         food_total_fat: randomNumber(1000),
         food_section: sections,
-        food_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        food_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_regDt: Date.now(),
+        food_updateDt: Date.now(),
       };
     }
     );
@@ -312,8 +312,8 @@ export const add = async (
         money_plan_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_plan_in: randomNumber(10000),
         money_plan_out: randomNumber(10000),
-        money_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_plan_regDt: Date.now(),
+        money_plan_updateDt: Date.now(),
       };
     });
     await repository.add.addMoneyPlan(
@@ -349,8 +349,8 @@ export const add = async (
         money_total_in: randomNumber(10000),
         money_total_out: randomNumber(10000),
         money_section: sections,
-        money_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_regDt: Date.now(),
+        money_updateDt: Date.now(),
       };
     });
     await repository.add.addMoney(
@@ -372,8 +372,8 @@ export const add = async (
         sleep_plan_night: randomTime(),
         sleep_plan_morning: randomTime(),
         sleep_plan_time: calcDate(randomTime(), randomTime()),
-        sleep_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        sleep_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_plan_regDt: Date.now(),
+        sleep_plan_updateDt: Date.now(),
       };
     });
     await repository.add.addSleepPlan(
@@ -401,8 +401,8 @@ export const add = async (
         sleep_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_section: sections,
-        sleep_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        sleep_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_regDt: Date.now(),
+        sleep_updateDt: Date.now(),
       };
     });
     await repository.add.addSleep(
@@ -418,21 +418,26 @@ export const add = async (
   return finalResult;
 };
 
-// 3-2. save -------------------------------------------------------------------------------------->
+// 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param
+  user_id_param, OBJECT_param, duration_param
 ) => {
 
-  const findResult = await repository.detail(
+  const findResult = await repository.save.detail(
     user_id_param, ""
   );
 
   let finalResult;
-  /* if (!findResult) {
-    finalResult = await repository.save.save(
+  if (!findResult) {
+    finalResult = await repository.save.create(
       user_id_param, OBJECT_param
     );
-  } */
+  }
+  else {
+    finalResult = await repository.save.update(
+      user_id_param, findResult._id, OBJECT_param
+    );
+  }
 
   return finalResult
 };

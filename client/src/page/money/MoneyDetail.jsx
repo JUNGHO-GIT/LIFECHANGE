@@ -20,7 +20,7 @@ export const MoneyDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -140,6 +140,7 @@ export const MoneyDetail = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"m-auto"}
           readOnly={false}
           slotProps={{
             textField: {sx: {
@@ -187,7 +188,7 @@ export const MoneyDetail = () => {
         InputProps={{
           readOnly: true,
           startAdornment: (
-            <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            <CustomAdornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
           )
         }}
       />
@@ -206,7 +207,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -222,7 +223,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -238,7 +239,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -333,7 +334,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -350,7 +351,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />

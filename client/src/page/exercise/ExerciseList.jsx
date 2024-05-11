@@ -22,7 +22,7 @@ export const ExerciseList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -123,12 +123,6 @@ export const ExerciseList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        운동 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -136,58 +130,34 @@ export const ExerciseList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>부위</TableCell>
-              <TableCell>종목</TableCell>
-              <TableCell>세트</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>중량</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
-                    className={"pointer"} onClick={() => {
-                      SEND.id = item._id;
-                      SEND.startDt = item.exercise_startDt;
-                      SEND.endDt = item.exercise_endDt;
-                      navParam(SEND.toDetail, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.exercise_startDt?.substring(5, 10)}
-                      {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
-                    </TableCell>
-                  )}
-                  <TableCell>
-                    {section.exercise_part_val.substring(0, 6)}
-                  </TableCell>
-                  <TableCell>
-                    {section.exercise_title_val.substring(0, 6)}
-                  </TableCell>
-                  {section.exercise_part_val !== "유산소" ? (
-                    <>
-                    <TableCell>
-                      {`${numeral(section.exercise_set).format('0,0')}`}
-                    </TableCell>
-                    <TableCell>
-                      {`${numeral(section.exercise_rep).format('0,0')}`}
-                    </TableCell>
-                    <TableCell>
-                      {`${numeral(section.exercise_kg).format('0,0')}`}
-                    </TableCell>
-                    </>
-                  ) : (
-                    <>
-                    <TableCell colSpan={3}>
-                      {section.exercise_cardio}
-                    </TableCell>
-                    </>
-                  )}
-                </TableRow>
-              ))
+              <TableRow key={index} className={"table-tbody-tr"}>
+                <TableCell className={"pointer"} onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.exercise_startDt;
+                  SEND.endDt = item.exercise_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.exercise_startDt?.substring(5, 10)}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell>
+                  {item.exercise_total_cardio}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -196,7 +166,7 @@ export const ExerciseList = () => {
     // 7-7. table
     // list 는 높이, 너비 지정
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh w-min120vw"}>
+      <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>

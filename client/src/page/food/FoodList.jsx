@@ -3,7 +3,6 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
@@ -12,10 +11,6 @@ import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
@@ -24,7 +19,7 @@ export const FoodList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -126,12 +121,6 @@ export const FoodList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        음식 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -139,40 +128,26 @@ export const FoodList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>식품명</TableCell>
               <TableCell>칼로리</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.food_section.length, 3)}
-                    className={"pointer"} onClick={() => {
-                      SEND.id = item._id;
-                      SEND.startDt = item.food_startDt;
-                      SEND.endDt = item.food_endDt;
-                      navParam(SEND.toDetail, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.food_startDt?.substring(5, 10)}
-                      {item.food_section.length > 3 && (<Box>더보기</Box>)}
-                    </TableCell>
-                  )}
-                  <TableCell>
-                    {section.food_part_val.substring(0, 6)}
-                  </TableCell>
-                  <TableCell>
-                    {section.food_title.substring(0, 6)}
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(section.food_kcal).format('0,0')} kcal`}
-                  </TableCell>
-                </TableRow>
-              ))
+              <TableRow key={index} className={"table-tbody-tr"}>
+                <TableCell className={"pointer"} onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.food_startDt;
+                  SEND.endDt = item.food_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.food_startDt?.substring(5, 10)}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

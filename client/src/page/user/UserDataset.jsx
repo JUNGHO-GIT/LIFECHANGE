@@ -18,7 +18,7 @@ export const UserDataset = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const exerciseArray = JSON.parse(session)?.exercise || [];
@@ -106,7 +106,7 @@ export const UserDataset = () => {
     }
     else {
       alert(res.data.msg);
-      sessionStorage.setItem("user_id", "false");
+      sessionStorage.setItem("dataset", JSON.stringify(OBJECT_DEF.user_dataset));
     }
   };
 
@@ -265,7 +265,7 @@ export const UserDataset = () => {
     );
     // 7-6-1. table
     const tableFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+      <Card variant={"outlined"} className={"p-0 mb-20 w-100p"} key={i}>
         <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
@@ -316,17 +316,17 @@ export const UserDataset = () => {
     );
     // 7-6-2. table
     const tableFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+      <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
         <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Box className={"d-center"}>
-                    <Typography variant={"h6"} fontWeight={500}>
+                    <Typography variant={"h6"} fontWeight={500} className={"ms-auto"}>
                       Part
                     </Typography>
-                    <CustomIcons name={"BiPlus"} className={"w-24 h-24 dark"} onClick={() => {
+                    <CustomIcons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("part");
                     }} />
                   </Box>
@@ -352,13 +352,13 @@ export const UserDataset = () => {
                         partIdx: index
                       }));
                     }}>
-                      <Typography variant={"body1"}>
+                      <Typography variant={"body1"} className={"dataset-title ms-auto"}>
                         {item[`${dataType}_part`]}
                       </Typography>
-                      <CustomIcons name={"BiEdit"} className={"w-24 h-24 dark"} onClick={() => {
+                      <CustomIcons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("part", index);
                       }} />
-                      <CustomIcons name={"BiTrash"} className={"w-24 h-24 dark"} onClick={() => {
+                      <CustomIcons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
                         handlerRemove("part", index);
                       }} />
                     </Box>
@@ -372,17 +372,17 @@ export const UserDataset = () => {
     );
     // 7-6-3. table
     const tableFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+      <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
         <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Box className={"d-center"}>
-                    <Typography variant={"h6"} fontWeight={500}>
+                    <Typography variant={"h6"} fontWeight={500} className={"ms-auto"}>
                       Title
                     </Typography>
-                    <CustomIcons name={"BiPlus"} className={"w-24 h-24 dark"} onClick={() => {
+                    <CustomIcons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("title");
                     }} />
                   </Box>
@@ -409,13 +409,13 @@ export const UserDataset = () => {
                         titleIdx: index
                       }));
                     }}>
-                      <Typography variant={"body1"}>
+                      <Typography variant={"body1"} className={"dataset-title ms-auto"}>
                         {item}
                       </Typography>
-                      <CustomIcons name={"BiEdit"} className={"w-24 h-24 dark"} onClick={() => {
+                      <CustomIcons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("title", index);
                       }} />
-                      <CustomIcons name={"BiTrash"} className={"w-24 h-24 dark"} onClick={() => {
+                      <CustomIcons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
                         handlerRemove("title", index);
                       }} />
                     </Box>
@@ -428,7 +428,6 @@ export const UserDataset = () => {
       </Card>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-center p-10"}>
@@ -437,6 +436,8 @@ export const UserDataset = () => {
         <Divider variant={"middle"} className={"mb-20"} />
         <Box className={"d-column"}>
           {tableFragment1(0)}
+        </Box>
+        <Box className={"d-row align-start"}>
           {tableFragment2(0)}
           {tableFragment3(0)}
         </Box>
