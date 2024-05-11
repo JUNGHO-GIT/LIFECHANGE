@@ -213,7 +213,7 @@ export const FoodDashBar = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       <Paper className={"content-wrapper over-x-hidden"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
@@ -239,6 +239,6 @@ export const FoodDashBar = () => {
           </Grid2>
         </Container>
       </Paper>
-    </React.Fragment>
+    </>
   );
 };

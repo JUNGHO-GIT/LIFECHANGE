@@ -75,8 +75,8 @@ export const Header = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {tableNode()}
-    </React.Fragment>
+    </>
   );
 };

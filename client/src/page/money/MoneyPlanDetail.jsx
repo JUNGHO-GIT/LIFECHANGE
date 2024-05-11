@@ -308,11 +308,11 @@ export const MoneyPlanDetail = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}
-    </React.Fragment>
+    </>
   );
 };

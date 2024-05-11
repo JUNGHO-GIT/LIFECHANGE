@@ -12,13 +12,13 @@ export const MoneyDash = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {MoneyDashBar()}
       {MoneyDashPie()}
       {MoneyDashLine()}
       {MoneyDashAvg()}
-    </React.Fragment>
+    </>
   );
 };

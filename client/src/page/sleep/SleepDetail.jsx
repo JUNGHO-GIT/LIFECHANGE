@@ -334,11 +334,11 @@ export const SleepDetail = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}
-    </React.Fragment>
+    </>
   );
 };

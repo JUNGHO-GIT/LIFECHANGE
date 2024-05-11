@@ -281,8 +281,8 @@ export const Filter = ({
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {tableNode()}
-    </React.Fragment>
+    </>
   );
 };

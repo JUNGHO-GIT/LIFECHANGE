@@ -12,13 +12,13 @@ export const ExerciseDash = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {ExerciseDashScatter()}
       {ExerciseDashPie()}
       {ExerciseDashLine()}
       {ExerciseDashAvg()}
-    </React.Fragment>
+    </>
   );
 };

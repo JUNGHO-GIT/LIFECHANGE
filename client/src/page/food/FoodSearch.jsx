@@ -211,12 +211,12 @@ export const FoodSearch = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {btnNode()}
-    </React.Fragment>
+    </>
   );
 };

@@ -116,8 +116,8 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {tableNode()}
-    </React.Fragment>
+    </>
   );
 };

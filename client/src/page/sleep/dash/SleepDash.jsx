@@ -11,12 +11,12 @@ export const SleepDash = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {SleepDashBar()}
       {SleepDashLine()}
       {SleepDashAvg()}
-    </React.Fragment>
+    </>
   );
 };

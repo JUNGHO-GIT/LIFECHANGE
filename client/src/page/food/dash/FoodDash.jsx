@@ -12,13 +12,13 @@ export const FoodDash = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {FoodDashBar()}
       {FoodDashPie()}
       {FoodDashLine()}
       {FoodDashAvg()}
-    </React.Fragment>
+    </>
   );
 };

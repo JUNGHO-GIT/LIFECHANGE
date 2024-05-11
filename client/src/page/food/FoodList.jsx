@@ -226,13 +226,13 @@ export const FoodList = () => {
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}
       {btnNode()}
-    </React.Fragment>
+    </>
   );
 };

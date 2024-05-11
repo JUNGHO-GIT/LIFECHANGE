@@ -193,8 +193,8 @@ export const Btn = ({
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
-    <React.Fragment>
+    <>
       {tableNode()}
-    </React.Fragment>
+    </>
   );
 };
