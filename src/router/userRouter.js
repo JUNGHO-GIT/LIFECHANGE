@@ -47,14 +47,14 @@ router.post("/login", async (req, res) => {
       req.body.user_id,
       req.body.user_pw
     );
-    if (result && result.result) {
+    if (result && result !== "fail") {
       res.json({
         status: "success",
         msg: "로그인 성공",
-        result: result.result,
+        result: result
       });
     }
-    else {
+    else if (result === "fail") {
       res.json({
         status: "fail",
         msg: "아이디 또는 비밀번호가 일치하지 않습니다."
@@ -70,23 +70,23 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 0-2. checkId ----------------------------------------------------------------------------------->
-router.post("/checkId", async (req, res) => {
+// 1-1. dataset ----------------------------------------------------------------------------------->
+router.get("/dataset", async (req, res) => {
   try {
-    let result = await service.checkId (
-      req.body.user_id
+    let result = await service.dataset (
+      req.query.user_id
     );
     if (result) {
       res.json({
         status: "success",
-        msg: "아이디 중복 확인 성공",
+        msg: "데이터셋 조회 성공",
         result: result
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "아이디 중복 확인 실패"
+        msg: "데이터셋 조회 실패"
       });
     }
   }
@@ -99,20 +99,20 @@ router.post("/checkId", async (req, res) => {
   }
 });
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-2. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
-      req.query.sort,
-      req.query.limit,
-      req.query.page
+      req.query.PAGING,
+      req.query.PART,
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
-        result: result
+        totalCnt: result.totalCnt,
+        result: result.result
       });
     }
     else {

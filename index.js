@@ -14,20 +14,18 @@ import {router as foodDashRouter} from "./src/router/foodDashRouter.js";
 import {router as moneyDashRouter} from "./src/router/moneyDashRouter.js";
 import {router as sleepDashRouter} from "./src/router/sleepDashRouter.js";
 
-import {router as userPlanRouter} from "./src/router/userPlanRouter.js";
 import {router as exercisePlanRouter} from "./src/router/exercisePlanRouter.js";
 import {router as foodPlanRouter} from "./src/router/foodPlanRouter.js";
 import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
 import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
+import {router as userPlanRouter} from "./src/router/userPlanRouter.js";
 
-import {router as userRouter} from "./src/router/userRouter.js";
 import {router as calendarRouter} from "./src/router/calendarRouter.js";
 import {router as exerciseRouter} from "./src/router/exerciseRouter.js";
 import {router as foodRouter} from "./src/router/foodRouter.js";
 import {router as moneyRouter} from "./src/router/moneyRouter.js";
 import {router as sleepRouter} from "./src/router/sleepRouter.js";
-
-import {router as tweakRouter} from "./src/router/tweakRouter.js";
+import {router as userRouter} from "./src/router/userRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 dotenv.config();
@@ -88,20 +86,18 @@ app.use("/food/dash", foodDashRouter);
 app.use("/money/dash", moneyDashRouter);
 app.use("/sleep/dash", sleepDashRouter);
 
-app.use("/user/plan", userPlanRouter);
 app.use("/exercise/plan", exercisePlanRouter);
 app.use("/food/plan", foodPlanRouter);
 app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
+app.use("/user/plan", userPlanRouter);
 
-app.use("/user", userRouter);
 app.use("/calendar", calendarRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/food", foodRouter);
 app.use("/money", moneyRouter);
 app.use("/sleep", sleepRouter);
-
-app.use("/tweak", tweakRouter);
+app.use("/user", userRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {

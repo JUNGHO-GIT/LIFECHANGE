@@ -58,13 +58,13 @@ export const dataArray = [
       {to: "/sleep/plan/save", label: "SleepPlanSave"},
     ]
   },
-  // tweak
+  // user
   {
-    icon: "BiCog",
-    title: "Tweak",
+    icon: "BiUser",
+    title: "User",
     items: [
-      {to: "/tweak/dataset", label: "TweakDataset"},
-      {to: "/tweak/demo", label: "TweakList"},
+      {to: "/user/dataset", label: "UserDataset"},
+      {to: "/user/list", label: "UserList"},
     ]
-  },
+  }
 ];

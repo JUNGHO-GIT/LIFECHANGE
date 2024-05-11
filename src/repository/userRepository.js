@@ -1,66 +1,274 @@
 // userRepository.js
 
 import mongoose from "mongoose";
-import {User} from "../schema/User.js";
 import {fmtDate} from "../assets/js/date.js";
+import {ExercisePlan} from "../schema/ExercisePlan.js";
+import {FoodPlan} from "../schema/FoodPlan.js";
+import {MoneyPlan} from "../schema/MoneyPlan.js";
+import {SleepPlan} from "../schema/SleepPlan.js";
+import {Exercise} from "../schema/Exercise.js";
+import {Food} from "../schema/Food.js";
+import {Money} from "../schema/Money.js";
+import {Sleep} from "../schema/Sleep.js";
+import {User} from "../schema/User.js";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
-export const signup = async (
-  user_id_param, user_pw_param
-) => {
+export const signup = {
 
-  const finalResult = await User.create({
-    _id: new mongoose.Types.ObjectId(),
-    user_id: user_id_param,
-    user_pw: user_pw_param,
-    user_regDt: fmtDate,
-    user_updateDt: "",
-  });
+  checkId: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.find({
+      user_id: user_id_param
+    })
+    .lean();
+    return finalResult;
+  },
 
-  return finalResult;
+  signup: async (
+    user_id_param, user_pw_param
+  ) => {
+
+    const finalResult = await User.create({
+      _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
+      user_pw: user_pw_param,
+      user_regDt: fmtDate,
+      user_updateDt: "",
+    });
+    return finalResult;
+  }
 };
 
 // 0.1. login ------------------------------------------------------------------------------------>
-export const login = async (
-  user_id_param, user_pw_param
-) => {
+export const login = {
 
-  const finalResult = await User.findOne({
-    user_id: user_id_param,
-    user_pw: user_pw_param
-  })
-  .lean();
-
-  return finalResult;
+  login: async (
+    user_id_param, user_pw_param
+  ) => {
+    const finalResult = await User.findOne({
+      user_id: user_id_param,
+      user_pw: user_pw_param
+    })
+    .lean();
+    return finalResult;
+  }
 };
 
-// 0-1. find (checkId) ---------------------------------------------------------------------------->
-export const checkId = async (
-  user_id_param
-) => {
-
-  const finalResult = await User.find({
-    user_id: user_id_param
-  })
-  .lean();
-
-  return finalResult;
+// 0-3. dataset ----------------------------------------------------------------------------------->
+export const dataset = {
+  list: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$project: {
+        _id: 0,
+        user_dataset: {
+          calendar: 1,
+          food: 1,
+          money: 1,
+          exercise: 1,
+          sleep: 1,
+        }
+      }}
+    ]);
+    return finalResult[0];
+  },
 };
 
-// 1-1. find -------------------------------------------------------------------------------------->
-export const find = async (
-  user_id_param, sort_param, limit_param, page_param
-) => {
+// 1-1. list -------------------------------------------------------------------------------------->
+export const list = {
 
-  const finalResult = await User.find({
-    user_id: user_id_param,
-  })
-  .sort({user_regDt: sort_param})
-  .skip((page_param - 1) * limit_param)
-  .limit(limit_param)
-  .lean();
+  listExercisePlan: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await ExercisePlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        exercise_plan_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countExercisePlan: async (
+    user_id_param
+  ) => {
+    const finalResult = await ExercisePlan.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+  listExercise: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Exercise.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        exercise_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countExercise: async (
+    user_id_param
+  ) => {
+    const finalResult = await Exercise.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
 
-  return finalResult;
+  listFoodPlan: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await FoodPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        food_plan_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countFoodPlan: async (
+    user_id_param
+  ) => {
+    const finalResult = await FoodPlan.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+  listFood: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        food_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countFood: async (
+    user_id_param
+  ) => {
+    const finalResult = await Food.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+
+  listMoneyPlan: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await MoneyPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        money_plan_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countMoneyPlan: async (
+    user_id_param
+  ) => {
+    const finalResult = await MoneyPlan.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+  listMoney: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        money_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countMoney: async (
+    user_id_param
+  ) => {
+    const finalResult = await Money.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+
+  listSleepPlan: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await SleepPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        sleep_plan_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countSleepPlan: async (
+    user_id_param
+  ) => {
+    const finalResult = await SleepPlan.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+  listSleep: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        sleep_startDt:  1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+  countSleep: async (
+    user_id_param
+  ) => {
+    const finalResult = await Sleep.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  }
 };
 
 // 2-1. detail ------------------------------------------------------------------------------------>
@@ -77,8 +285,164 @@ export const detail = async (
   return finalResult;
 };
 
-// 3-1. create ------------------------------------------------------------------------------------>
-export const create = async (
+// 3-1. add ------------------------------------------------------------------------------------>
+export const add = {
+
+  addExercise: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await Exercise.deleteMany({
+      user_id: user_id_param,
+      exercise_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await Exercise.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addExercisePlan: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await ExercisePlan.deleteMany({
+      user_id: user_id_param,
+      exercise_plan_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await ExercisePlan.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addFood: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await Food.deleteMany({
+      user_id: user_id_param,
+      food_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await Food.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addFoodPlan: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await FoodPlan.deleteMany({
+      user_id: user_id_param,
+      food_plan_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await FoodPlan.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addMoney: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await Money.deleteMany({
+      user_id: user_id_param,
+      money_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await Money.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addMoneyPlan: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await MoneyPlan.deleteMany({
+      user_id: user_id_param,
+      money_plan_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await MoneyPlan.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addSleep: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await Sleep.deleteMany({
+      user_id: user_id_param,
+      sleep_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await Sleep.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  },
+
+  addSleepPlan: async (
+    user_id_param, OBJECT_param
+  ) => {
+    // 일단 전체 데이터 삭제
+    const deleteResult = await SleepPlan.deleteMany({
+      user_id: user_id_param,
+      sleep_plan_demo: true
+    });
+
+    // 데이터 삽입
+    const insertResult = await SleepPlan.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
+    return insertResult;
+  }
+};
+
+// 3-1. save ------------------------------------------------------------------------------------>
+export const save = async (
   user_id_param, OBJECT_param
 ) => {
 
@@ -101,65 +465,45 @@ export const create = async (
   return finalResult;
 };
 
-// 3-2. update ------------------------------------------------------------------------------------>
-export const update = async (
-  user_id_param, _id_param, OBJECT_param
-) => {
-  const finalResult = await User.findOneAndUpdate(
-    {user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param
-    },
-    {$set: {
-      ...OBJECT_param,
-      user_updateDt: fmtDate,
-    }},
-    {upsert: true,
-      new: true
-    }
-  )
-  .lean();
-
-  return finalResult;
-};
-
 // 4-1. delete ------------------------------------------------------------------------------------>
-export const deletes = async (
-  user_id_param, _id_param
-) => {
+export const deletes = {
 
-  const updateResult = await User.updateOne(
-    {user_id: user_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param
-    },
-    {$pull: {
-      user_section: {
+  deletes: async (
+    user_id_param, _id_param
+  ) => {
+    const updateResult = await User.updateOne(
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
-    },
-    $set: {
-      user_updateDt: fmtDate,
-    }},
-    {arrayFilters: [{
-      "elem._id": _id_param
-    }]}
-  )
-  .lean();
-
-  let finalResult;
-
-  if (updateResult.modifiedCount > 0) {
-    const doc = await User.findOne({
-      user_id: user_id_param
-    })
+      {$pull: {
+        user_section: {
+          _id: !_id_param ? {$exists:true} : _id_param
+        },
+      },
+      $set: {
+        user_updateDt: fmtDate,
+      }},
+      {arrayFilters: [{
+        "elem._id": _id_param
+      }]}
+    )
     .lean();
 
-    if (doc) {
-      finalResult = await User.deleteOne({
-        _id: doc._id
+    let finalResult;
+
+    if (updateResult.modifiedCount > 0) {
+      const doc = await User.findOne({
+        user_id: user_id_param
       })
       .lean();
-    }
-  };
 
-  return finalResult;
+      if (doc) {
+        finalResult = await User.deleteOne({
+          _id: doc._id
+        })
+        .lean();
+      }
+    };
+    return finalResult;
+  }
 };

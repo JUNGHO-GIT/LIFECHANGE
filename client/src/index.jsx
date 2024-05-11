@@ -61,9 +61,8 @@ import {SleepSave} from "./page/sleep/SleepSave";
 
 import {UserSignup} from "./page/user/UserSignup";
 import {UserLogin} from "./page/user/UserLogin";
-
-import {TweakDataset} from "./page/tweak/TweakDataset";
-import {TweakList} from "./page/tweak/TweakList";
+import {UserDataset} from "./page/user/UserDataset";
+import {UserList} from "./page/user/UserList";
 
 // ------------------------------------------------------------------------------------------------>
 const Calendar = () => (
@@ -126,13 +125,8 @@ const User = () => (
   <Routes>
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
-  </Routes>
-);
-// ------------------------------------------------------------------------------------------------>
-const Tweak = () => (
-  <Routes>
-    <Route path="/dataset" element={<TweakDataset />} />
-    <Route path="/demo" element={<TweakList />} />
+    <Route path="/dataset" element={<UserDataset />} />
+    <Route path="/list" element={<UserList />} />
   </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
@@ -146,7 +140,6 @@ const App = () => {
         <Route path="/food/*" element={<Food />} />
         <Route path="/money/*" element={<Money />} />
         <Route path="/sleep/*" element={<Sleep />} />
-        <Route path="/tweak/*" element={<Tweak />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
     </div>

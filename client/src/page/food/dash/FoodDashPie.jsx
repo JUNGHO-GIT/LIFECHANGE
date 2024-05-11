@@ -472,8 +472,7 @@ export const FoodDashPie = () => {
 
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
+    <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
   // 15. return ----------------------------------------------------------------------------------->

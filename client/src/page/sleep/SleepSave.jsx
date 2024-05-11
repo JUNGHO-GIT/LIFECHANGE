@@ -345,8 +345,7 @@ export const SleepSave = () => {
 
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
+    <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->

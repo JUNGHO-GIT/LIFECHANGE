@@ -1,4 +1,4 @@
-// TweakList.jsx
+// UserList.jsx
 
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
@@ -11,11 +11,11 @@ import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis
 import {Typography, Button, Divider, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const TweakList = () => {
+export const UserList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_TWEAK || "";
+  const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
@@ -232,7 +232,7 @@ export const TweakList = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        데모 데이터
+        유저 List
       </Typography>
     );
     // 7-6-1. table
@@ -561,8 +561,7 @@ export const TweakList = () => {
 
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
+    <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
   // 15. return ----------------------------------------------------------------------------------->

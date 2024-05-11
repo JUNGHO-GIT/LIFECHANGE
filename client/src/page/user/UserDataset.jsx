@@ -1,21 +1,22 @@
-// TweakDataset.jsx
+// UserDataset.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Loading, Btn} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {Loading, Btn} from "../../import/ImportComponents.jsx";
+import {CustomIcons} from "../../import/ImportIcons.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Box, Typography} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Button, Divider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const TweakDataset = () => {
+export const UserDataset = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_TWEAK || "";
+  const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
   const session = sessionStorage.getItem("dataset") || "{}";
@@ -233,19 +234,17 @@ export const TweakDataset = () => {
     );
     // 7-6-1. table
     const tableFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
-        <TableContainer>
+      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+        <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Grid2 container spacing={3}>
-                    <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <Box>
-                        DataType
-                      </Box>
-                    </Grid2>
-                  </Grid2>
+                  <Box className={"d-center"}>
+                    <Typography variant={"h6"} fontWeight={500}>
+                      Section
+                    </Typography>
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -271,13 +270,11 @@ export const TweakDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Grid2 container spacing={3}>
-                      <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                        <Box className={"dataset-title"}>
-                          {item}
-                        </Box>
-                      </Grid2>
-                    </Grid2>
+                    <Box className={"dataset-title"}>
+                      <Typography variant={"body1"}>
+                        {item}
+                      </Typography>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
@@ -288,26 +285,20 @@ export const TweakDataset = () => {
     );
     // 7-6-2. table
     const tableFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
-        <TableContainer>
+      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+        <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Grid2 container spacing={3}>
-                    <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <Box>
-                        Part
-                      </Box>
-                    </Grid2>
-                    <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                      <Box className={"dataset-add"} onClick={() => {
-                        handlerAdd("part");
-                      }}>
-                        +
-                      </Box>
-                    </Grid2>
-                  </Grid2>
+                  <Box className={"d-center"}>
+                    <Typography variant={"h6"} fontWeight={500}>
+                      Part
+                    </Typography>
+                    <CustomIcons name={"BiPlus"} className={"w-24 h-24 dark"} onClick={() => {
+                      handlerAdd("part");
+                    }} />
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -324,32 +315,22 @@ export const TweakDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Grid2 container spacing={3}>
-                      <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                        <Box className={"dataset-title"} onClick={() => {
-                          setIdx((prev) => ({
-                            ...prev,
-                            partIdx: index
-                          }));
-                        }}>
-                          {item[`${dataType}_part`]}
-                        </Box>
-                      </Grid2>
-                      <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                        <Box className={"dataset-rename"} onClick={() => {
-                          handlerRename("part", index);
-                        }}>
-                          o
-                        </Box>
-                      </Grid2>
-                      <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                        <Box className={"dataset-delete"} onClick={() => {
-                          handlerRemove("part", index);
-                        }}>
-                          x
-                        </Box>
-                      </Grid2>
-                    </Grid2>
+                    <Box className={"dataset-title"} onClick={() => {
+                      setIdx((prev) => ({
+                        ...prev,
+                        partIdx: index
+                      }));
+                    }}>
+                      <Typography variant={"body1"}>
+                        {item[`${dataType}_part`]}
+                      </Typography>
+                      <CustomIcons name={"BiEdit"} className={"w-24 h-24 dark"} onClick={() => {
+                        handlerRename("part", index);
+                      }} />
+                      <CustomIcons name={"BiTrash"} className={"w-24 h-24 dark"} onClick={() => {
+                        handlerRemove("part", index);
+                      }} />
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
@@ -360,26 +341,20 @@ export const TweakDataset = () => {
     );
     // 7-6-3. table
     const tableFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
-        <TableContainer>
+      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
+        <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Grid2 container spacing={3}>
-                    <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <Box>
-                        Title
-                      </Box>
-                    </Grid2>
-                    <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                      <Box className={"dataset-add"} onClick={() => {
-                        handlerAdd("title");
-                      }}>
-                        +
-                      </Box>
-                    </Grid2>
-                  </Grid2>
+                  <Box className={"d-center"}>
+                    <Typography variant={"h6"} fontWeight={500}>
+                      Title
+                    </Typography>
+                    <CustomIcons name={"BiPlus"} className={"w-24 h-24 dark"} onClick={() => {
+                      handlerAdd("title");
+                    }} />
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -397,32 +372,22 @@ export const TweakDataset = () => {
                   }}
                 >
                   <TableCell>
-                    <Grid2 container spacing={3}>
-                      <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                        <Box className={"dataset-title"} onClick={() => {
-                          setIdx((prev) => ({
-                            ...prev,
-                            titleIdx: index
-                          }));
-                        }}>
-                          {item}
-                        </Box>
-                      </Grid2>
-                      <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                        <Box className={"dataset-rename"} onClick={() => {
-                          handlerRename("title", index);
-                        }}>
-                          o
-                        </Box>
-                      </Grid2>
-                      <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                        <Box className={"dataset-delete"} onClick={() => {
-                          handlerRemove("title", index);
-                        }}>
-                          x
-                        </Box>
-                      </Grid2>
-                    </Grid2>
+                    <Box className={"dataset-title"} onClick={() => {
+                      setIdx((prev) => ({
+                        ...prev,
+                        titleIdx: index
+                      }));
+                    }}>
+                      <Typography variant={"body1"}>
+                        {item}
+                      </Typography>
+                      <CustomIcons name={"BiEdit"} className={"w-24 h-24 dark"} onClick={() => {
+                        handlerRename("title", index);
+                      }} />
+                      <CustomIcons name={"BiTrash"} className={"w-24 h-24 dark"} onClick={() => {
+                        handlerRemove("title", index);
+                      }} />
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
@@ -440,15 +405,9 @@ export const TweakDataset = () => {
         </Box>
         <Divider variant={"middle"} className={"mb-20"} />
         <Box className={"d-column"}>
-          <Box className={"d-center"}>
-            {tableFragment1(0)}
-          </Box>
-          <Box className={"d-center"}>
-            {tableFragment2(0)}
-          </Box>
-          <Box className={"d-center"}>
-            {tableFragment3(0)}
-          </Box>
+          {tableFragment1(0)}
+          {tableFragment2(0)}
+          {tableFragment3(0)}
         </Box>
       </Box>
     );
@@ -509,8 +468,7 @@ export const TweakDataset = () => {
 
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
+    <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
   // 15. return ----------------------------------------------------------------------------------->
