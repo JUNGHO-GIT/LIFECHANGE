@@ -216,7 +216,6 @@ export const ExerciseList = () => {
       {pagingNode()}
       {filterNode()}
       {btnNode()}
-      {Footer()}
     </>
   );
 };
