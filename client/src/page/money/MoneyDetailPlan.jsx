@@ -1,28 +1,32 @@
-// MoneyPlanSave.jsx
+// MoneyDetailPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyPlanSave = () => {
+export const MoneyDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
+  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -41,7 +45,9 @@ export const MoneyPlanSave = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/money/list/plan"
+    toDetail: "/money/detail/plan",
+    toList: "/money/list/plan",
+    toUpdate: "/money/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -73,7 +79,7 @@ export const MoneyPlanSave = () => {
     const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
-        _id: "",
+        _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -84,23 +90,26 @@ export const MoneyPlanSave = () => {
       sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/save/plan`, {
-      user_id: user_id,
-      OBJECT: OBJECT,
-      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+  const flowDelete = async (id) => {
+    const res = await axios.delete(`${URL_OBJECT}/plan/delete`, {
+      params: {
+        user_id: user_id,
+        _id: id,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      },
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
-        state: SEND
-      });
+      if (Object.keys(res.data.result).length > 0) {
+        setOBJECT(res.data.result);
+      }
+      else {
+        navParam(SEND.toList);
+      }
     }
     else {
       alert(res.data.msg);
@@ -112,7 +121,7 @@ export const MoneyPlanSave = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        재무 계획 Save
+        재무 계획 Detail
       </Typography>
     );
     // 7-2. date
@@ -207,21 +216,36 @@ export const MoneyPlanSave = () => {
           />
         </IconButton>
         <PopDown elementId={`pop-${index}`} contents={
-            <Box className={"d-block p-10"}>
-              <Box className={"d-left mt-10 mb-10"}>
-                <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                <Typography variant={"inherit"}>기타</Typography>
-              </Box>
+          <Box className={"d-block p-10"}>
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              flowDelete(id);
+            }}>
+              <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>삭제</Typography>
             </Box>
-          }
-        >
-        {popProps => (
-          <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
-            popProps.openPopup(e.currentTarget)
-          }}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              SEND.startDt = DATE.startDt;
+              SEND.endDt = DATE.endDt;
+              navParam(SEND.toUpdate, {
+                state: SEND,
+              });
+            }}>
+              <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>수정</Typography>
+            </Box>
+            <Box className={"d-left mt-10 mb-10"}>
+              <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>더보기</Typography>
+            </Box>
+          </Box>
+        }>
+          {popProps => (
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          )}
         </PopDown>
       </>
     );
@@ -243,14 +267,14 @@ export const MoneyPlanSave = () => {
             className={"w-220"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
               startAdornment: (
                 <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
-              const limitedValue = Math.min(Number(rawValue), 9999999999);
+              const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_in: limitedValue
@@ -270,14 +294,14 @@ export const MoneyPlanSave = () => {
             className={"w-220"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
               startAdornment: (
                 <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
-              const limitedValue = Math.min(Number(rawValue), 9999999999);
+              const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
                 money_plan_out: limitedValue
@@ -314,9 +338,9 @@ export const MoneyPlanSave = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       DATE={DATE} setDATE={setDATE}
-      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam}
-      part={"money"} plan={"plan"} type={"save"}
+      SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={""} navParam={navParam}
+      part={"money"} plan={"plan"} type={"detail"}
     />
   );
 

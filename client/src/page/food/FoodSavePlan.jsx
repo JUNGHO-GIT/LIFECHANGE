@@ -1,4 +1,4 @@
-// MoneyPlanDetail.jsx
+// FoodSavePlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
@@ -10,23 +10,19 @@ import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyPlanDetail = () => {
+export const FoodSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_MONEY || "";
+  const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -45,9 +41,7 @@ export const MoneyPlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/detail/plan",
-    toList: "/money/list/plan",
-    toUpdate: "/money/save/plan"
+    toList:"/food/list/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -62,12 +56,14 @@ export const MoneyPlanDetail = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    money_plan_number: 0,
-    money_plan_demo: false,
-    money_plan_startDt: "0000-00-00",
-    money_plan_endDt: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0
+    food_plan_number: 0,
+    food_plan_demo: false,
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -79,7 +75,7 @@ export const MoneyPlanDetail = () => {
     const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
-        _id: location_id,
+        _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -90,26 +86,23 @@ export const MoneyPlanDetail = () => {
       sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const res = await axios.delete(`${URL_OBJECT}/plan/delete`, {
-      params: {
-        user_id: user_id,
-        _id: id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      },
+  const flowSave = async () => {
+    const res = await axios.post(`${URL_OBJECT}/save/plan`, {
+      user_id: user_id,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navParam(SEND.toList);
-      }
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(res.data.msg);
@@ -121,7 +114,7 @@ export const MoneyPlanDetail = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        재무 계획 Detail
+        음식 계획 Save
       </Typography>
     );
     // 7-2. date
@@ -217,25 +210,9 @@ export const MoneyPlanDetail = () => {
         </IconButton>
         <PopDown elementId={`pop-${index}`} contents={
           <Box className={"d-block p-10"}>
-            <Box className={"d-left mt-10 mb-10"} onClick={() => {
-              flowDelete(id);
-            }}>
-              <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>삭제</Typography>
-            </Box>
-            <Box className={"d-left mt-10 mb-10"} onClick={() => {
-              SEND.startDt = DATE.startDt;
-              SEND.endDt = DATE.endDt;
-              navParam(SEND.toUpdate, {
-                state: SEND,
-              });
-            }}>
-              <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>수정</Typography>
-            </Box>
             <Box className={"d-left mt-10 mb-10"}>
-              <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-              <Typography variant={"inherit"}>더보기</Typography>
+              <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>기타</Typography>
             </Box>
           </Box>
         }>
@@ -260,24 +237,24 @@ export const MoneyPlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 수입"}
-            id={`money_plan_in-${i}`}
-            name={`money_plan_in-${i}`}
+            label={"목표 칼로리"}
+            id={`food_plan_kcal-${i}`}
+            name={`food_plan_kcal-${i}`}
             variant={"outlined"}
             className={"w-220"}
-            value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
+            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
-                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
-              const limitedValue = Math.min(99999999999, parseInt(rawValue));
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
-                money_plan_in: limitedValue
+                food_plan_kcal: limitedValue
               }));
             }}
           />
@@ -287,24 +264,78 @@ export const MoneyPlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 지출"}
-            id={`money_plan_out-${i}`}
-            name={`money_plan_out-${i}`}
+            label={"목표 탄수화물"}
+            id={`food_plan_carb-${i}`}
+            name={`food_plan_carb-${i}`}
             variant={"outlined"}
             className={"w-220"}
-            value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
+            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
-                <CustomAdornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
-              const limitedValue = Math.min(99999999999, parseInt(rawValue));
+              const limitedValue = Math.min(99999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
-                money_plan_out: limitedValue
+                food_plan_carb: limitedValue
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 단백질"}
+            id={`food_plan_protein-${i}`}
+            name={`food_plan_protein-${i}`}
+            variant={"outlined"}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+            onChange={(e) => {
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
+              setOBJECT((prev) => ({
+                ...prev,
+                food_plan_protein: limitedValue
+              }));
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 지방"}
+            id={`food_plan_fat-${i}`}
+            name={`food_plan_fat-${i}`}
+            variant={"outlined"}
+            className={"w-220"}
+            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <CustomAdornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+            onChange={(e) => {
+              const rawValue = e.target.value.replace(/,/g, "");
+              const limitedValue = Math.min(99999, parseInt(rawValue));
+              setOBJECT((prev) => ({
+                ...prev,
+                food_plan_fat: limitedValue
               }));
             }}
           />
@@ -338,9 +369,9 @@ export const MoneyPlanDetail = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam}
-      part={"money"} plan={"plan"} type={"detail"}
+      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam}
+      part={"food"} plan={"plan"} type={"save"}
     />
   );
 

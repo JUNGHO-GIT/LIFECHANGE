@@ -1,21 +1,24 @@
-// ExerciseDiff.jsx
+// MoneyListPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseDiff = () => {
+export const MoneyListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -48,7 +51,7 @@ export const ExerciseDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail/plan",
+    toDetail: "/money/detail/plan",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -66,26 +69,10 @@ export const ExerciseDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    exercise_startDt: "0000-00-00",
-    exercise_endDt: "0000-00-00",
-    exercise_total_count: 0,
-    exercise_total_volume: 0,
-    exercise_body_weight: 0,
-    exercise_total_cardio: "00:00",
-    exercise_plan_startDt: "0000-00-00",
-    exercise_plan_endDt: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00",
-    exercise_diff_count: 0,
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: 0,
-    exercise_diff_weight: 0,
-    exercise_diff_count_color: "",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight_color: "",
+    money_plan_startDt: "0000-00-00",
+    money_plan_endDt: "0000-00-00",
+    money_plan_in: 0,
+    money_plan_out: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -94,7 +81,7 @@ export const ExerciseDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/diff`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -123,81 +110,35 @@ export const ExerciseDiff = () => {
       <TableContainer key={i}>
         <Table className={"border"}>
           <TableHead>
-            <TableRow className={"table-thead-tr"}>
+            <TableRow className="table-thead-tr">
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.exercise_plan_startDt;
-                  SEND.endDt = item.exercise_plan_endDt;
+                  SEND.startDt = item.money_plan_startDt;
+                  SEND.endDt = item.money_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.money_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.money_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_total_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.exercise_diff_count_color}>
-                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_volume_color}>
-                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_cardio_color}>
-                  {item.exercise_diff_cardio}
-                </TableCell>
-                <TableCell className={item.exercise_diff_weight_color}>
-                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
+                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
                 </TableCell>
               </TableRow>
               </>
@@ -208,7 +149,7 @@ export const ExerciseDiff = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh w-min120vw"}>
+      <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>
@@ -225,22 +166,22 @@ export const ExerciseDiff = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"exercise"} plan={"plan"} type={"list"}
+      part={"money"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"exercise"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"money"} plan={"plan"} type={"list"}
     />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
-      PAGING={PAGING} setPAGING={setPAGING}
+      DATE={DATE} setDATE={setDATE}
+      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />

@@ -18,8 +18,8 @@ export const dataArray = [
       {to: "/exercise/diff", label: "ExerciseDiff"},
       {to: "/exercise/list", label: "ExerciseList"},
       {to: "/exercise/save", label: "ExerciseSave"},
-      {to: "/exercise/list/plan", label: "ExercisePlanList"},
-      {to: "/exercise/save/plan", label: "ExercisePlanSave"},
+      {to: "/exercise/list/plan", label: "ExerciseListPlan"},
+      {to: "/exercise/save/plan", label: "ExerciseSavePlan"},
     ]
   },
   // food
@@ -32,8 +32,8 @@ export const dataArray = [
       {to: "/food/search", label: "FoodSearch"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
-      {to: "/food/list/plan", label: "FoodPlanList"},
-      {to: "/food/save/plan", label: "FoodPlanSave"},
+      {to: "/food/list/plan", label: "FoodListPlan"},
+      {to: "/food/save/plan", label: "FoodSavePlan"},
     ]
   },
   // money
@@ -45,8 +45,8 @@ export const dataArray = [
       {to: "/money/diff", label: "MoneyDiff"},
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/save", label: "MoneySave"},
-      {to: "/money/list/plan", label: "MoneyPlanList"},
-      {to: "/money/save/plan", label: "MoneyPlanSave"},
+      {to: "/money/list/plan", label: "MoneyListPlan"},
+      {to: "/money/save/plan", label: "MoneySavePlan"},
     ]
   },
   // sleep
@@ -58,8 +58,8 @@ export const dataArray = [
       {to: "/sleep/diff", label: "SleepDiff"},
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/save", label: "SleepSave"},
-      {to: "/sleep/list/plan", label: "SleepPlanList"},
-      {to: "/sleep/save/plan", label: "SleepPlanSave"},
+      {to: "/sleep/list/plan", label: "SleepListPlan"},
+      {to: "/sleep/save/plan", label: "SleepSavePlan"},
     ]
   },
   // user

@@ -1,21 +1,21 @@
-// FoodDiff.jsx
+// ExerciseDiff.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../../import/ImportHooks.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDiff = () => {
+export const ExerciseDiff = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -48,7 +48,7 @@ export const FoodDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/food/detail/plan"
+    toDetail: "/exercise/detail/plan",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -66,26 +66,26 @@ export const FoodDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
-    food_diff_kcal: 0,
-    food_diff_carb: 0,
-    food_diff_protein: 0,
-    food_diff_fat: 0,
-    food_diff_kcal_color: "",
-    food_diff_carb_color: "",
-    food_diff_protein_color: "",
-    food_diff_fat_color: "",
+    exercise_startDt: "0000-00-00",
+    exercise_endDt: "0000-00-00",
+    exercise_total_count: 0,
+    exercise_total_volume: 0,
+    exercise_body_weight: 0,
+    exercise_total_cardio: "00:00",
+    exercise_plan_startDt: "0000-00-00",
+    exercise_plan_endDt: "0000-00-00",
+    exercise_plan_count: 0,
+    exercise_plan_volume: 0,
+    exercise_plan_weight: 0,
+    exercise_plan_cardio: "00:00",
+    exercise_diff_count: 0,
+    exercise_diff_cardio: "00:00",
+    exercise_diff_volume: 0,
+    exercise_diff_weight: 0,
+    exercise_diff_count_color: "",
+    exercise_diff_cardio_color: "",
+    exercise_diff_volume_color: "",
+    exercise_diff_weight_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -126,10 +126,10 @@ export const FoodDiff = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -138,15 +138,15 @@ export const FoodDiff = () => {
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.food_plan_startDt;
-                  SEND.endDt = item.food_plan_endDt;
+                  SEND.startDt = item.exercise_plan_startDt;
+                  SEND.endDt = item.exercise_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.food_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.food_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -154,16 +154,16 @@ export const FoodDiff = () => {
                   목표
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                  {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -171,33 +171,33 @@ export const FoodDiff = () => {
                   실제
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_carb).format('0,0')} g`}
+                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format('0,0')} g`}
+                  {item.exercise_total_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_fat).format('0,0')} g`}
+                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
                   비교
                 </TableCell>
-                <TableCell className={item.food_diff_kcal_color}>
-                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                <TableCell className={item.exercise_diff_count_color}>
+                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
                 </TableCell>
-                <TableCell className={item.food_diff_carb_color}>
-                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                <TableCell className={item.exercise_diff_volume_color}>
+                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
                 </TableCell>
-                <TableCell className={item.food_diff_protein_color}>
-                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
+                <TableCell className={item.exercise_diff_cardio_color}>
+                  {item.exercise_diff_cardio}
                 </TableCell>
-                <TableCell className={item.food_diff_fat_color}>
-                  {`${numeral(item.food_diff_fat).format('0,0')} g`}
+                <TableCell className={item.exercise_diff_weight_color}>
+                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
               </>
@@ -225,22 +225,22 @@ export const FoodDiff = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"food"} plan={"plan"} type={"list"}
+      part={"exercise"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"food"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"exercise"} plan={"plan"} type={"list"}
     />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
+      PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />

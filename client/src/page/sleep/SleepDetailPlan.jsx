@@ -1,28 +1,24 @@
-// FoodPlanDetail.jsx
+// SleepDetailPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodPlanDetail = () => {
+export const SleepDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -46,8 +42,8 @@ export const FoodPlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/food/list/plan",
-    toUpdate:"/food/save/plan"
+    toList:"/sleep/list/plan",
+    toUpdate:"/sleep/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -62,14 +58,13 @@ export const FoodPlanDetail = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    food_plan_number: 0,
-    food_plan_demo: false,
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
+    sleep_plan_number: 0,
+    sleep_plan_demo: false,
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -82,14 +77,14 @@ export const FoodPlanDetail = () => {
       params: {
         user_id: user_id,
         _id: location_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
@@ -100,7 +95,7 @@ export const FoodPlanDetail = () => {
       params: {
         user_id: user_id,
         _id: id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (res.data.status === "success") {
@@ -123,14 +118,14 @@ export const FoodPlanDetail = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        음식 계획 Detail
+        수면 계획 Detail
       </Typography>
     );
     // 7-2. date
     const dateSection = () => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DesktopDatePicker
-          label={"시작일"}
+          label={"날짜"}
           value={moment(DATE.startDt, "YYYY-MM-DD")}
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
@@ -163,44 +158,7 @@ export const FoodPlanDetail = () => {
           onChange={(day) => {
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-        <DesktopDatePicker
-          label={"종료일"}
-          value={moment(DATE.endDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto mt-20"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiDayCalendar-slideTransition": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "30px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
+              startDt: moment(day).format("YYYY-MM-DD"),
               endDt: moment(day).format("YYYY-MM-DD")
             }));
           }}
@@ -220,7 +178,7 @@ export const FoodPlanDetail = () => {
         <PopDown elementId={`pop-${index}`} contents={
           <Box className={"d-block p-10"}>
             <Box className={"d-left mt-10 mb-10"} onClick={() => {
-              flowDelete(id);
+              flowDelete(id)
             }}>
               <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
               <Typography variant={"inherit"}>삭제</Typography>
@@ -258,77 +216,95 @@ export const FoodPlanDetail = () => {
           {dropdownSection(OBJECT?._id, "", 0)}
         </Box>
         <Box className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 칼로리"}
-            id={`food_plan_kcal-${i}`}
-            name={`food_plan_kcal-${i}`}
-            variant={"outlined"}
-            className={"w-220"}
-            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DesktopTimePicker
+              label={"취침 목표"}
+              minutesStep={1}
+              value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+              format={"HH:mm"}
+              timezone={"Asia/Seoul"}
+              views={['hours', 'minutes']}
+              slotProps={{
+                textField: {sx: {
+                  width: "220px",
+                }},
+                layout: {sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "180px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-root": {
+                    width: "77px",
+                    height: "180px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item": {
+                    fontSize: "0.8rem",
+                    width: "65px",
+                    minHeight: "20px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "#164a60",
+                  },
+                }},
+              }}
+              readOnly={true}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DesktopTimePicker
+              label={"기상 목표"}
+              minutesStep={1}
+              value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+              format={"HH:mm"}
+              timezone={"Asia/Seoul"}
+              views={['hours', 'minutes']}
+              slotProps={{
+                textField: {sx: {
+                  width: "220px",
+                }},
+                layout: {sx: {
+                  "& .MuiPickersLayout-contentWrapper": {
+                    width: "220px",
+                    height: "180px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-root": {
+                    width: "77px",
+                    height: "180px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item": {
+                    fontSize: "0.8rem",
+                    width: "65px",
+                    minHeight: "20px",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
+                    color: "#fff",
+                    backgroundColor: "#164a60",
+                  },
+                }},
+              }}
+              readOnly={true}
+            />
+          </LocalizationProvider>
         </Box>
         <Box className={"d-center mb-20"}>
           <TextField
-            select={false}
+            label={"수면 목표"}
             type={"text"}
             size={"small"}
-            label={"목표 탄수화물"}
-            id={`food_plan_carb-${i}`}
-            name={`food_plan_carb-${i}`}
+            id={"sleep_time"}
+            name={"sleep_time"}
             variant={"outlined"}
             className={"w-220"}
-            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
+            value={OBJECT?.sleep_plan_time}
             InputProps={{
               readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Box>
-        <Box className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 단백질"}
-            id={`food_plan_protein-${i}`}
-            name={`food_plan_protein-${i}`}
-            variant={"outlined"}
-            className={"w-220"}
-            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Box>
-        <Box className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 지방"}
-            id={`food_plan_fat-${i}`}
-            name={`food_plan_fat-${i}`}
-            variant={"outlined"}
-            className={"w-220"}
-            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"} />
+              endAdornment: (
+                <CustomAdornment name={"BiSolidMoon"} className={"w-18 h-18 dark"} position={"end"}/>
               )
             }}
           />
@@ -364,7 +340,7 @@ export const FoodPlanDetail = () => {
       DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
-      part={"food"} plan={"plan"} type={"detail"}
+      part={"sleep"} plan={"plan"} type={"detail"}
     />
   );
 

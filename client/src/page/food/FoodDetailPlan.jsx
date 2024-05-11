@@ -1,8 +1,8 @@
-// ExercisePlanDetail.jsx
+// FoodDetailPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
@@ -10,19 +10,15 @@ import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExercisePlanDetail = () => {
+export const FoodDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -46,9 +42,8 @@ export const ExercisePlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail/plan",
-    toList: "/exercise/list/plan",
-    toUpdate: "/exercise/save/plan"
+    toList:"/food/list/plan",
+    toUpdate:"/food/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -63,14 +58,14 @@ export const ExercisePlanDetail = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    exercise_plan_number: 0,
-    exercise_plan_demo: false,
-    exercise_plan_startDt: "0000-00-00",
-    exercise_plan_endDt: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_cardio: "00:00",
-    exercise_plan_weight: 0,
+    food_plan_number: 0,
+    food_plan_demo: false,
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -83,14 +78,14 @@ export const ExercisePlanDetail = () => {
       params: {
         user_id: user_id,
         _id: location_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
@@ -101,14 +96,18 @@ export const ExercisePlanDetail = () => {
       params: {
         user_id: user_id,
         _id: id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      setOBJECT(res.data.result);
-      navParam(SEND.toList);
+      if (Object.keys(res.data.result).length > 0) {
+        setOBJECT(res.data.result);
+      }
+      else {
+        navParam(SEND.toList);
+      }
     }
     else {
       alert(res.data.msg);
@@ -120,7 +119,7 @@ export const ExercisePlanDetail = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        운동 계획 Detail
+        음식 계획 Detail
       </Typography>
     );
     // 7-2. date
@@ -259,15 +258,16 @@ export const ExercisePlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 운동 횟수"}
-            id={"exercise_plan_count"}
-            name={"exercise_plan_count"}
+            label={"목표 칼로리"}
+            id={`food_plan_kcal-${i}`}
+            name={`food_plan_kcal-${i}`}
+            variant={"outlined"}
             className={"w-220"}
-            value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
+            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -277,15 +277,16 @@ export const ExercisePlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 볼륨"}
-            id={"exercise_plan_volume"}
-            name={"exercise_plan_volume"}
+            label={"목표 탄수화물"}
+            id={`food_plan_carb-${i}`}
+            name={`food_plan_carb-${i}`}
+            variant={"outlined"}
             className={"w-220"}
-            value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
+            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -295,15 +296,16 @@ export const ExercisePlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 유산소"}
-            id={"exercise_plan_cardio"}
-            name={"exercise_plan_cardio"}
+            label={"목표 단백질"}
+            id={`food_plan_protein-${i}`}
+            name={`food_plan_protein-${i}`}
+            variant={"outlined"}
             className={"w-220"}
-            value={OBJECT?.exercise_plan_cardio}
+            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -313,15 +315,16 @@ export const ExercisePlanDetail = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 체중"}
-            id={"exercise_plan_weight"}
-            name={"exercise_plan_weight"}
+            label={"목표 지방"}
+            id={`food_plan_fat-${i}`}
+            name={`food_plan_fat-${i}`}
+            variant={"outlined"}
             className={"w-220"}
-            value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
+            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+                <CustomAdornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -357,7 +360,7 @@ export const ExercisePlanDetail = () => {
       DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
-      part={"exercise"} plan={"plan"} type={"detail"}
+      part={"food"} plan={"plan"} type={"detail"}
     />
   );
 

@@ -1,21 +1,22 @@
-// MoneyDiff.jsx
+// SleepDiff.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios} from "../../../import/ImportLibs.jsx";
+import {useStorage, useDate} from "../../../import/ImportHooks.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
+import {CustomIcons, CustomAdornment} from "../../../import/ImportIcons.jsx";
+import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDiff = () => {
+export const SleepDiff = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_MONEY || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -48,7 +49,7 @@ export const MoneyDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/detail/plan",
+    toDetail:"/sleep/detail/plan"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -66,18 +67,22 @@ export const MoneyDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    money_startDt: "0000-00-00",
-    money_endDt: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
-    money_plan_startDt: "0000-00-00",
-    money_plan_endDt: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0,
-    money_diff_in: 0,
-    money_diff_out: 0,
-    money_diff_in_color: "",
-    money_diff_out_color: "",
+    sleep_startDt: "0000-00-00",
+    sleep_endDt: "0000-00-00",
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
+    sleep_diff_night: "00:00",
+    sleep_diff_morning: "00:00",
+    sleep_diff_time: "00:00",
+    sleep_diff_night_color: "",
+    sleep_diff_morning_color: "",
+    sleep_diff_time_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -98,7 +103,7 @@ export const MoneyDiff = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [
@@ -115,28 +120,29 @@ export const MoneyDiff = () => {
       <TableContainer key={i}>
         <Table className={"border"}>
           <TableHead>
-            <TableRow className="table-thead-tr">
+            <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.money_plan_startDt;
-                  SEND.endDt = item.money_plan_endDt;
+                  SEND.startDt = item.sleep_plan_startDt;
+                  SEND.endDt = item.sleep_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.money_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.money_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -144,10 +150,13 @@ export const MoneyDiff = () => {
                   목표
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                  {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
+                  {item.sleep_plan_morning}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -155,21 +164,27 @@ export const MoneyDiff = () => {
                   실제
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format("0,0")}`}
+                  {item.sleep_night}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format("0,0")}`}
+                  {item.sleep_morning}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_time}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
                   비교
                 </TableCell>
-                <TableCell className={item.money_diff_in_color}>
-                  {`₩ ${numeral(item.money_diff_in).format("0,0")}`}
+                <TableCell className={item.sleep_diff_night_color}>
+                  {item.sleep_diff_night}
                 </TableCell>
-                <TableCell className={item.money_diff_out_color}>
-                  {`₩ ${numeral(item.money_diff_out).format("0,0")}`}
+                <TableCell className={item.sleep_diff_morning_color}>
+                  {item.sleep_diff_morning}
+                </TableCell>
+                <TableCell className={item.sleep_diff_time_color}>
+                  {item.sleep_diff_time}
                 </TableCell>
               </TableRow>
               </>
@@ -197,23 +212,22 @@ export const MoneyDiff = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"money"} plan={"plan"} type={"list"}
+      part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"money"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
+      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
+      PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />
   );

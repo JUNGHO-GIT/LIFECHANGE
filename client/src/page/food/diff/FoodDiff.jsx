@@ -1,21 +1,21 @@
-// SleepPlanList.jsx
+// FoodDiff.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useStorage, useDate} from "../../import/ImportHooks.jsx";
-import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Box, Badge, Menu, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepPlanList = () => {
+export const FoodDiff = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
+  const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -48,7 +48,7 @@ export const SleepPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/detail/plan"
+    toDetail:"/food/detail/plan"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -66,11 +66,26 @@ export const SleepPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00"
+    food_startDt: "0000-00-00",
+    food_endDt: "0000-00-00",
+    food_total_kcal: 0,
+    food_total_carb: 0,
+    food_total_protein: 0,
+    food_total_fat: 0,
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
+    food_diff_kcal: 0,
+    food_diff_carb: 0,
+    food_diff_protein: 0,
+    food_diff_fat: 0,
+    food_diff_kcal_color: "",
+    food_diff_carb_color: "",
+    food_diff_protein_color: "",
+    food_diff_fat_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -79,7 +94,7 @@ export const SleepPlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
+    const res = await axios.get(`${URL_OBJECT}/diff`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -91,7 +106,7 @@ export const SleepPlanList = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [
@@ -110,37 +125,79 @@ export const SleepPlanList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>분류</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody-tr"}>
+          <TableBody>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.sleep_plan_startDt;
-                  SEND.endDt = item.sleep_plan_endDt;
+                  SEND.startDt = item.food_plan_startDt;
+                  SEND.endDt = item.food_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.food_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.food_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {item.sleep_plan_night}
+                  목표
                 </TableCell>
                 <TableCell>
-                  {item.sleep_plan_morning}
+                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
                 </TableCell>
                 <TableCell>
-                  {item.sleep_plan_time}
+                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  실제
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_protein).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_fat).format('0,0')} g`}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
+                <TableCell>
+                  비교
+                </TableCell>
+                <TableCell className={item.food_diff_kcal_color}>
+                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                </TableCell>
+                <TableCell className={item.food_diff_carb_color}>
+                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell className={item.food_diff_protein_color}>
+                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
+                </TableCell>
+                <TableCell className={item.food_diff_fat_color}>
+                  {`${numeral(item.food_diff_fat).format('0,0')} g`}
                 </TableCell>
               </TableRow>
               </>
@@ -151,7 +208,7 @@ export const SleepPlanList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
+      <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>
@@ -168,22 +225,23 @@ export const SleepPlanList = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"sleep"} plan={"plan"} type={"list"}
+      part={"food"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"sleep"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"food"} plan={"plan"} type={"list"}
     />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
-      PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
+      DATE={DATE} setDATE={setDATE}
+      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />
   );

@@ -1,8 +1,8 @@
-// ExercisePlanList.jsx
+// SleepListPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
+import {useStorage, useDate} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
@@ -11,11 +11,11 @@ import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExercisePlanList = () => {
+export const SleepListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -48,7 +48,7 @@ export const ExercisePlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail/plan",
+    toDetail:"/sleep/detail/plan"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -66,12 +66,11 @@ export const ExercisePlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    exercise_plan_startDt: "0000-00-00",
-    exercise_plan_endDt: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00"
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -92,7 +91,7 @@ export const ExercisePlanList = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [
@@ -111,41 +110,37 @@ export const ExercisePlanList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.exercise_plan_startDt;
-                  SEND.endDt = item.exercise_plan_endDt;
+                  SEND.startDt = item.sleep_plan_startDt;
+                  SEND.endDt = item.sleep_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                  {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                  {item.sleep_plan_morning}
                 </TableCell>
                 <TableCell>
-                  {item.exercise_plan_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                  {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
               </>
@@ -156,7 +151,7 @@ export const ExercisePlanList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh w-min120vw"}>
+      <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>
@@ -173,14 +168,14 @@ export const ExercisePlanList = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"exercise"} plan={"plan"} type={"list"}
+      part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"exercise"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 
@@ -188,8 +183,7 @@ export const ExercisePlanList = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
-      PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
+      PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />
   );

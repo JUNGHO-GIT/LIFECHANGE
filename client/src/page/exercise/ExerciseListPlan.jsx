@@ -1,22 +1,21 @@
-// SleepDiff.jsx
+// ExerciseListPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useStorage, useDate} from "../../import/ImportHooks.jsx";
+import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDiff = () => {
+export const ExerciseListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
+  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -49,7 +48,7 @@ export const SleepDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/detail/plan"
+    toDetail: "/exercise/detail/plan",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -67,22 +66,12 @@ export const SleepDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_startDt: "0000-00-00",
-    sleep_endDt: "0000-00-00",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
-    sleep_diff_night: "00:00",
-    sleep_diff_morning: "00:00",
-    sleep_diff_time: "00:00",
-    sleep_diff_night_color: "",
-    sleep_diff_morning_color: "",
-    sleep_diff_time_color: ""
+    exercise_plan_startDt: "0000-00-00",
+    exercise_plan_endDt: "0000-00-00",
+    exercise_plan_count: 0,
+    exercise_plan_volume: 0,
+    exercise_plan_weight: 0,
+    exercise_plan_cardio: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -91,7 +80,7 @@ export const SleepDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/diff`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -103,7 +92,7 @@ export const SleepDiff = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [
@@ -122,69 +111,41 @@ export const SleepDiff = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody-tr"}>
+          <TableBody>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
-                  SEND.startDt = item.sleep_plan_startDt;
-                  SEND.endDt = item.sleep_plan_endDt;
+                  SEND.startDt = item.exercise_plan_startDt;
+                  SEND.endDt = item.exercise_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
-                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
+                  <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
-                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
+                  <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
                 </TableCell>
                 <TableCell>
-                  {item.sleep_plan_night}
+                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
                 </TableCell>
                 <TableCell>
-                  {item.sleep_plan_morning}
+                  {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {item.sleep_plan_time}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {item.sleep_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_time}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.sleep_diff_night_color}>
-                  {item.sleep_diff_night}
-                </TableCell>
-                <TableCell className={item.sleep_diff_morning_color}>
-                  {item.sleep_diff_morning}
-                </TableCell>
-                <TableCell className={item.sleep_diff_time_color}>
-                  {item.sleep_diff_time}
+                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
               </>
@@ -195,7 +156,7 @@ export const SleepDiff = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
+      <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>
@@ -212,14 +173,14 @@ export const SleepDiff = () => {
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"sleep"} plan={"plan"} type={"list"}
+      part={"exercise"} plan={"plan"} type={"list"}
     />
   );
 
   // 12. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"sleep"} plan={"plan"} type={"list"}
+      PART={""} setPART={""} part={"exercise"} plan={"plan"} type={"list"}
     />
   );
 
@@ -227,7 +188,8 @@ export const SleepDiff = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
-      PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
+      PAGING={PAGING} setPAGING={setPAGING}
+      flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}
     />
   );

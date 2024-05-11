@@ -1,9 +1,9 @@
-// ExercisePlanSave.jsx
+// ExerciseSavePlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
@@ -18,7 +18,7 @@ import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExercisePlanSave = () => {
+export const ExerciseSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";

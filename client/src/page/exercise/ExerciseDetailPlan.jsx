@@ -1,24 +1,28 @@
-// SleepPlanDetail.jsx
+// ExerciseDetailPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
+import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepPlanDetail = () => {
+export const ExerciseDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
+  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
@@ -42,8 +46,9 @@ export const SleepPlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/sleep/list/plan",
-    toUpdate:"/sleep/save/plan"
+    toDetail: "/exercise/detail/plan",
+    toList: "/exercise/list/plan",
+    toUpdate: "/exercise/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -58,13 +63,14 @@ export const SleepPlanDetail = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    sleep_plan_number: 0,
-    sleep_plan_demo: false,
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
+    exercise_plan_number: 0,
+    exercise_plan_demo: false,
+    exercise_plan_startDt: "0000-00-00",
+    exercise_plan_endDt: "0000-00-00",
+    exercise_plan_count: 0,
+    exercise_plan_volume: 0,
+    exercise_plan_cardio: "00:00",
+    exercise_plan_weight: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -101,12 +107,8 @@ export const SleepPlanDetail = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navParam(SEND.toList);
-      }
+      setOBJECT(res.data.result);
+      navParam(SEND.toList);
     }
     else {
       alert(res.data.msg);
@@ -118,14 +120,14 @@ export const SleepPlanDetail = () => {
     // 7-1. title
     const titleSection = () => (
       <Typography variant={"h5"} fontWeight={500}>
-        수면 계획 Detail
+        운동 계획 Detail
       </Typography>
     );
     // 7-2. date
     const dateSection = () => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DesktopDatePicker
-          label={"날짜"}
+          label={"시작일"}
           value={moment(DATE.startDt, "YYYY-MM-DD")}
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
@@ -158,7 +160,44 @@ export const SleepPlanDetail = () => {
           onChange={(day) => {
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(day).format("YYYY-MM-DD"),
+              startDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
+        />
+        <DesktopDatePicker
+          label={"종료일"}
+          value={moment(DATE.endDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          views={["day"]}
+          className={"m-auto mt-20"}
+          readOnly={false}
+          slotProps={{
+            textField: {sx: {
+              width: "220px",
+            }},
+            layout: {sx: {
+              "& .MuiPickersLayout-contentWrapper": {
+                width: "220px",
+                height: "280px",
+              },
+              "& .MuiDateCalendar-root": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiDayCalendar-slideTransition": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiPickersDay-root": {
+                width: "30px",
+                height: "28px",
+              },
+            }},
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
               endDt: moment(day).format("YYYY-MM-DD")
             }));
           }}
@@ -178,7 +217,7 @@ export const SleepPlanDetail = () => {
         <PopDown elementId={`pop-${index}`} contents={
           <Box className={"d-block p-10"}>
             <Box className={"d-left mt-10 mb-10"} onClick={() => {
-              flowDelete(id)
+              flowDelete(id);
             }}>
               <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
               <Typography variant={"inherit"}>삭제</Typography>
@@ -216,95 +255,73 @@ export const SleepPlanDetail = () => {
           {dropdownSection(OBJECT?._id, "", 0)}
         </Box>
         <Box className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"취침 목표"}
-              minutesStep={1}
-              value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-              format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              readOnly={true}
-            />
-          </LocalizationProvider>
-        </Box>
-        <Box className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"기상 목표"}
-              minutesStep={1}
-              value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
-              format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              readOnly={true}
-            />
-          </LocalizationProvider>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 운동 횟수"}
+            id={"exercise_plan_count"}
+            name={"exercise_plan_count"}
+            className={"w-220"}
+            value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
         </Box>
         <Box className={"d-center mb-20"}>
           <TextField
-            label={"수면 목표"}
+            select={false}
             type={"text"}
             size={"small"}
-            id={"sleep_time"}
-            name={"sleep_time"}
-            variant={"outlined"}
+            label={"목표 볼륨"}
+            id={"exercise_plan_volume"}
+            name={"exercise_plan_volume"}
             className={"w-220"}
-            value={OBJECT?.sleep_plan_time}
+            value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
               readOnly: true,
-              endAdornment: (
-                <CustomAdornment name={"BiSolidMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+              startAdornment: (
+                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 유산소"}
+            id={"exercise_plan_cardio"}
+            name={"exercise_plan_cardio"}
+            className={"w-220"}
+            value={OBJECT?.exercise_plan_cardio}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 체중"}
+            id={"exercise_plan_weight"}
+            name={"exercise_plan_weight"}
+            className={"w-220"}
+            value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -340,7 +357,7 @@ export const SleepPlanDetail = () => {
       DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
-      part={"sleep"} plan={"plan"} type={"detail"}
+      part={"exercise"} plan={"plan"} type={"detail"}
     />
   );
 
