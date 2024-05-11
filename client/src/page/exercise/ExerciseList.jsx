@@ -194,9 +194,9 @@ export const ExerciseList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이 지정
+    // list 는 높이, 너비 지정
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
+      <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>
           {tableFragment(0)}
         </Box>
@@ -226,9 +226,9 @@ export const ExerciseList = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
+      PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
       part={"exercise"} plan={"plan"} type={"list"}
     />
   );

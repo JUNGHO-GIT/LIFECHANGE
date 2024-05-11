@@ -432,7 +432,8 @@ export const CalendarDetail = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+      DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"calendar"} plan={""} type={"save"}

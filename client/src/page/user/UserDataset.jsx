@@ -9,7 +9,7 @@ import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Typography} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {Button, Divider} from "../../import/ImportMuis.jsx";
+import {Divider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -224,6 +224,37 @@ export const UserDataset = () => {
     }
   };
 
+  // 4-4. handler --------------------------------------------------------------------------------->
+  const handlerDefault = () => {
+    const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
+    let defaultArray = [];
+    if (dataType === "calendar") {
+      defaultArray = calendarArray;
+    }
+    else if (dataType === "exercise") {
+      defaultArray = exerciseArray;
+    }
+    else if (dataType === "food") {
+      defaultArray = foodArray;
+    }
+    else if (dataType === "money") {
+      defaultArray = moneyArray;
+    }
+    else if (dataType === "sleep") {
+      defaultArray = sleepArray;
+    }
+
+    if (confirm) {
+      setOBJECT((prev) => ({
+        ...prev,
+        user_dataset: {
+          ...prev.user_dataset,
+          [dataType]: defaultArray
+        }
+      }));
+    }
+  };
+
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
@@ -397,7 +428,7 @@ export const UserDataset = () => {
       </Card>
     );
     // 7-7. table
-    // list 는 높이 지정
+    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-center p-10"}>
@@ -420,51 +451,12 @@ export const UserDataset = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => {
-    const confirmDefault = () => {
-      const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
-
-      let defaultArray = [];
-      if (dataType === "calendar") {
-        defaultArray = calendarArray;
-      }
-      else if (dataType === "exercise") {
-        defaultArray = exerciseArray;
-      }
-      else if (dataType === "food") {
-        defaultArray = foodArray;
-      }
-      else if (dataType === "money") {
-        defaultArray = moneyArray;
-      }
-      else if (dataType === "sleep") {
-        defaultArray = sleepArray;
-      }
-
-      if (confirm) {
-        setOBJECT((prev) => ({
-          ...prev,
-          user_dataset: {
-            ...prev.user_dataset,
-            [dataType]: defaultArray
-          }
-        }));
-      }
-    };
-    return (
-      <Paper className={"d-flex"}>
-        <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
-          SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-          flowSave={flowSave} navParam={navParam}
-          part={"user"} plan={""} type={"dataset"}
-        />
-        <Button size={"small"} className={"danger-btn"} color={"error"} variant={"contained"}
-        onClick={confirmDefault}>
-          기본값
-        </Button>
-      </Paper>
-    );
-  };
+  const btnNode = () => (
+    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE} SEND={SEND}  FILTER={""}
+      setFILTER={""} PAGING={""} setPAGING={""} flowSave={flowSave} navParam={navParam}
+      part={"user"} plan={""} type={"dataset"} handler={handlerDefault}
+    />
+  );
 
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (

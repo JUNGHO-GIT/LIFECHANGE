@@ -2,12 +2,13 @@
 
 import {React} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {Button, Container, Paper, Grid2, TextField, Box} from "../../import/ImportMuis.jsx";
+import {Button, Paper, TextField, Box} from "../../import/ImportMuis.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
-  DAYPICKER, setDAYPICKER, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
-  flowSave, navParam, part, plan, type
+  DAYPICKER, setDAYPICKER, DATE, setDATE, SEND,
+  FILTER, setFILTER, PAGING, setPAGING,
+  flowSave, navParam, part, plan, type, handler = () => {}
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -144,6 +145,12 @@ export const Btn = ({
       </Button>
     </Box>
   );
+  const btnResetDefault = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"danger-btn"} onClick={handler}>
+      Default
+    </Button>
+  );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
@@ -176,6 +183,7 @@ export const Btn = ({
       ) : type === "dataset" ? (
         <>
           {btnToSave()}
+          {btnResetDefault()}
         </>
       ) : type === "login" ? (
         <>

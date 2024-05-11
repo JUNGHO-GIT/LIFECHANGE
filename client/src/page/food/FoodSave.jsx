@@ -374,7 +374,7 @@ export const FoodSave = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이 지정
+    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-center"}>
@@ -395,7 +395,8 @@ export const FoodSave = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+      DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"food"} plan={""} type={"save"}

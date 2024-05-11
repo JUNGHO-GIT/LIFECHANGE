@@ -172,7 +172,7 @@ export const MoneyPlanDetail = () => {
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <Box className={"d-flex"}>
+      <>
         <IconButton size={"small"} color={"primary"}>
           <Badge
             badgeContent={index + 1}
@@ -212,7 +212,7 @@ export const MoneyPlanDetail = () => {
             </IconButton>
           )}
         </PopDown>
-      </Box>
+      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
@@ -293,7 +293,8 @@ export const MoneyPlanDetail = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+      DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
       part={"money"} plan={"plan"} type={"detail"}

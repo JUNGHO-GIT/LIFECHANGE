@@ -24,7 +24,7 @@
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;
-  animation: fadeIn 1.0s !important;
+  animation: fadeIn 0.5s !important;
   z-index: 1111;
 }
 .content-wrapper {
@@ -35,7 +35,7 @@
   border: none;
   border-radius: 0.25rem;
   background-color: #fff;
-  animation: fadeIn 1.0s !important;
+  animation: fadeIn 0.5s !important;
   overflow-x: auto;
   overflow-y: hidden;
   z-index: 999;
@@ -54,7 +54,7 @@
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;
-  animation: fadeIn 1.0s !important;
+  animation: fadeIn 0.5s !important;
   z-index: 999;
 }
 

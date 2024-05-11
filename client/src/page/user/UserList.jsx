@@ -486,9 +486,9 @@ export const UserList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이 지정
+    // list 는 높이, 너비 지정
     const tableSection = () => (
-      <Box className={"block-wrapper h-min75vh"}>
+      <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}

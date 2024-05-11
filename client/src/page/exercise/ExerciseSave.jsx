@@ -360,7 +360,7 @@ export const ExerciseSave = () => {
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <Box className={"d-flex"}>
+      <>
         <IconButton size={"small"} color={"primary"}>
           <Badge
             badgeContent={index + 1}
@@ -382,7 +382,7 @@ export const ExerciseSave = () => {
             </IconButton>
           )}
         </PopDown>
-      </Box>
+      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
@@ -643,7 +643,8 @@ export const ExerciseSave = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+      DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"exercise"} plan={""} type={"save"}
