@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/money/moneyDiffService.js";
+import * as middleware from "../../middleware/money/moneyDiffMiddleware.js";
 export const router = express.Router();
 
 // 1 .diff ---------------------------------------------------------------------------------------->
@@ -13,6 +14,7 @@ router.get("/diff", async (req, res) => {
       req.query.PAGING,
       req.query.duration
     );
+    result = await middleware.diff(result);
     if (result) {
       res.json({
         status: "success",

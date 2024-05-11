@@ -111,7 +111,7 @@ router.delete("/delete", async (req, res) => {
       req.query._id,
       req.query.duration
     );
-    result = await middleware.save(result);
+    result = await middleware.deletes(result);
     if (result) {
       res.json({
         status: "success",

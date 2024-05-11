@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/food/foodPlanService.js";
+import * as middleware from "../../middleware/food/foodPlanMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->

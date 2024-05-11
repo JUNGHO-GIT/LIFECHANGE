@@ -70,7 +70,7 @@ export const compareTime = (plan, real) => {
   const planDate = new Date(`1970-01-01T${plan}Z`);
   const realDate = new Date(`1970-01-01T${real}Z`);
 
-  let diff = 0;
+  let diffVal = 0;
   if (realDate < planDate) {
     diff = planDate.getTime() - realDate.getTime();
   }

@@ -1,7 +1,7 @@
 // userRepository.js
 
 import mongoose from "mongoose";
-import {fmtDate, newDate} from "../../assets/js/date.js";
+import {newDate} from "../../assets/js/date.js";
 import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
 import {FoodPlan} from "../../schema/food/FoodPlan.js";
 import {MoneyPlan} from "../../schema/money/MoneyPlan.js";

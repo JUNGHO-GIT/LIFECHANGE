@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/money/moneyPlanService.js";
+import * as middleware from "../../middleware/money/moneyPlanMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->

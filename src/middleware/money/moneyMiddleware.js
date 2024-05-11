@@ -1,118 +1,30 @@
 // moneyMiddleware.js
 
-// 1. list ---------------------------------------------------------------------------------------->
-export const list = async (object) => {
-
-  if (!object) {
-    return [];
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (object) => {
+  if (object === "deleted") {
+    return {};
   }
+  let totalIn = 0;
+  let totalOut = 0;
 
-  const compareCount = (plan, real, extra) => {
-    if (extra === "in") {
-      return Math.abs(plan - real);
+  object?.money_section?.map((item) => {
+    if (item?.money_part_val === "수입") {
+      totalIn += item?.money_amount;
     }
-    if (extra === "out") {
-      return Math.abs(real - plan);
+    else if (item?.money_part_val === "지출") {
+      totalOut += item?.money_amount;
     }
-  }
-
-  const makeColor = (plan, real, extra) => {
-    let percent = (Math.abs(plan - real) / plan) * 100;
-    if (plan === undefined || real === undefined) {
-      return "danger";
-    }
-    else if (extra === "in") {
-      if (plan > real) {
-        if (percent > 0 && percent <= 1) {
-          return "primary";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "success";
-        }
-        // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
-          return "warning";
-        }
-        // 4. 50% ~
-        else {
-          return "danger";
-        }
-      }
-      else {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "danger";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "warning";
-        }
-        // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
-          return "success";
-        }
-        // 4. 50% ~
-        else {
-          return "primary";
-        }
-      }
-    }
-    if (extra === "out") {
-      if (plan > real) {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "danger";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "warning";
-        }
-        // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
-          return "success";
-        }
-        // 4. 50% ~
-        else {
-          return "primary";
-        }
-      }
-      else {
-        // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
-          return "primary";
-        }
-        // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
-          return "success";
-        }
-        // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
-          return "warning";
-        }
-        // 4. 50% ~
-        else {
-          return "danger";
-        }
-      }
-    }
-  }
-
-  object?.result?.map((item) => {
-    Object.assign((item), {
-      money_diff_in: compareCount(item?.money_plan_in, item?.money_total_in, "in"),
-      money_diff_out: compareCount(item?.money_plan_out, item?.money_total_out, "out"),
-
-      money_diff_in_color: makeColor(item?.money_plan_in, item?.money_total_in, "in"),
-      money_diff_out_color: makeColor(item?.money_plan_out, item?.money_total_out, "out"),
-    });
   });
+
+  object.money_total_in = totalIn;
+  object.money_total_out = totalOut;
 
   return object;
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
-export const save = async (object) => {
+// 4. deletes ------------------------------------------------------------------------------------->
+export const deletes = async (object) => {
   if (object === "deleted") {
     return {};
   }

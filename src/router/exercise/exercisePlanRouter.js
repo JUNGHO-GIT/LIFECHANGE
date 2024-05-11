@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/exercise/exercisePlanService.js";
+import * as middleware from "../../middleware/exercise/exercisePlanMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->

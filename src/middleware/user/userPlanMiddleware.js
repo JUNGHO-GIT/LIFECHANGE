@@ -1,4 +1,4 @@
-// exercisePlanMiddleware.js
+// userPlanMiddleware.js
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (object) => {

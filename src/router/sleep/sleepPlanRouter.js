@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/sleep/sleepPlanService.js";
+import * as middleware from "../../middleware/sleep/sleepPlanMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
