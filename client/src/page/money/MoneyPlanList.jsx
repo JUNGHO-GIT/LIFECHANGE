@@ -51,7 +51,7 @@ export const MoneyPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/plan/detail",
+    toDetail: "/money/detail/plan",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -69,18 +69,10 @@ export const MoneyPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    money_startDt: "0000-00-00",
-    money_endDt: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
     money_plan_startDt: "0000-00-00",
     money_plan_endDt: "0000-00-00",
     money_plan_in: 0,
-    money_plan_out: 0,
-    money_diff_in: 0,
-    money_diff_out: 0,
-    money_diff_in_color: "",
-    money_diff_out_color: "",
+    money_plan_out: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -89,7 +81,7 @@ export const MoneyPlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -120,7 +112,6 @@ export const MoneyPlanList = () => {
           <TableHead>
             <TableRow className="table-thead-tr">
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
               <TableCell>수입</TableCell>
               <TableCell>지출</TableCell>
             </TableRow>
@@ -129,7 +120,7 @@ export const MoneyPlanList = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.money_plan_startDt;
                   SEND.endDt = item.money_plan_endDt;
@@ -144,35 +135,10 @@ export const MoneyPlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
-                </TableCell>
-                <TableCell>
                   {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format("0,0")}`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.money_diff_in_color}>
-                  {`₩ ${numeral(item.money_diff_in).format("0,0")}`}
-                </TableCell>
-                <TableCell className={item.money_diff_out_color}>
-                  {`₩ ${numeral(item.money_diff_out).format("0,0")}`}
                 </TableCell>
               </TableRow>
               </>

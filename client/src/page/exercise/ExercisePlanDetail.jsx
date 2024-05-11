@@ -46,9 +46,9 @@ export const ExercisePlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/plan/detail",
-    toList: "/exercise/plan/list",
-    toUpdate: "/exercise/plan/save"
+    toDetail: "/exercise/detail/plan",
+    toList: "/exercise/list/plan",
+    toUpdate: "/exercise/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -79,7 +79,7 @@ export const ExercisePlanDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
         _id: location_id,
@@ -265,7 +265,10 @@ export const ExercisePlanDetail = () => {
             className={"w-220"}
             value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           />
         </Box>
@@ -280,7 +283,10 @@ export const ExercisePlanDetail = () => {
             className={"w-220"}
             value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           />
         </Box>
@@ -295,7 +301,10 @@ export const ExercisePlanDetail = () => {
             className={"w-220"}
             value={OBJECT?.exercise_plan_cardio}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           />
         </Box>
@@ -310,7 +319,10 @@ export const ExercisePlanDetail = () => {
             className={"w-220"}
             value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           />
         </Box>

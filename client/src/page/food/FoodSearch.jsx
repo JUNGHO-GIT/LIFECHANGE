@@ -1,14 +1,11 @@
 // FoodSearch.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Btn, Loading, Paging} from "../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
-import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
+import {Paper, Box} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -112,12 +109,6 @@ export const FoodSearch = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        음식 List
-      </Typography>
-    );
     // 7-5. handleStorage
     const handleStorage = (param) => {
       sessionStorage.setItem("food_section", JSON.stringify(param));
@@ -134,7 +125,7 @@ export const FoodSearch = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>식품명</TableCell>
-              <TableCell>1회 제공량</TableCell>
+              <TableCell>제공량</TableCell>
               <TableCell>Kcal</TableCell>
               <TableCell>Carb</TableCell>
               <TableCell>Protein</TableCell>

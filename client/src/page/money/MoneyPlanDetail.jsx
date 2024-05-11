@@ -45,9 +45,9 @@ export const MoneyPlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/plan/detail",
-    toList: "/money/plan/list",
-    toUpdate: "/money/plan/save"
+    toDetail: "/money/detail/plan",
+    toList: "/money/list/plan",
+    toUpdate: "/money/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -76,7 +76,7 @@ export const MoneyPlanDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
         _id: location_id,

@@ -3,19 +3,13 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanList = () => {
@@ -55,7 +49,7 @@ export const FoodPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/food/plan/detail"
+    toDetail:"/food/detail/plan"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -73,26 +67,12 @@ export const FoodPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
     food_plan_startDt: "0000-00-00",
     food_plan_endDt: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
-    food_plan_fat: 0,
-    food_diff_kcal: 0,
-    food_diff_carb: 0,
-    food_diff_protein: 0,
-    food_diff_fat: 0,
-    food_diff_kcal_color: "",
-    food_diff_carb_color: "",
-    food_diff_protein_color: "",
-    food_diff_fat_color: "",
+    food_plan_fat: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -101,7 +81,7 @@ export const FoodPlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -132,7 +112,6 @@ export const FoodPlanList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
               <TableCell>Kcal</TableCell>
               <TableCell>Carb</TableCell>
               <TableCell>Protein</TableCell>
@@ -143,7 +122,7 @@ export const FoodPlanList = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.food_plan_startDt;
                   SEND.endDt = item.food_plan_endDt;
@@ -158,9 +137,6 @@ export const FoodPlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
-                </TableCell>
-                <TableCell>
                   {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
                 </TableCell>
                 <TableCell>
@@ -171,40 +147,6 @@ export const FoodPlanList = () => {
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_fat).format('0,0')} g`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_carb).format('0,0')} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_fat).format('0,0')} g`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.food_diff_kcal_color}>
-                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
-                </TableCell>
-                <TableCell className={item.food_diff_carb_color}>
-                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
-                </TableCell>
-                <TableCell className={item.food_diff_protein_color}>
-                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell className={item.food_diff_fat_color}>
-                  {`${numeral(item.food_diff_fat).format('0,0')} g`}
                 </TableCell>
               </TableRow>
               </>

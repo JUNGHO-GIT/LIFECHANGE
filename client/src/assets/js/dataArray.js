@@ -15,10 +15,11 @@ export const dataArray = [
     title: "Exercise",
     items: [
       {to: "/exercise/dash", label: "ExerciseDash"},
+      {to: "/exercise/diff", label: "ExerciseDiff"},
       {to: "/exercise/list", label: "ExerciseList"},
       {to: "/exercise/save", label: "ExerciseSave"},
-      {to: "/exercise/plan/list", label: "ExercisePlanList"},
-      {to: "/exercise/plan/save", label: "ExercisePlanSave"},
+      {to: "/exercise/list/plan", label: "ExercisePlanList"},
+      {to: "/exercise/save/plan", label: "ExercisePlanSave"},
     ]
   },
   // food
@@ -27,11 +28,12 @@ export const dataArray = [
     title: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
+      {to: "/food/diff", label: "FoodDiff"},
       {to: "/food/search", label: "FoodSearch"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
-      {to: "/food/plan/list", label: "FoodPlanList"},
-      {to: "/food/plan/save", label: "FoodPlanSave"},
+      {to: "/food/list/plan", label: "FoodPlanList"},
+      {to: "/food/save/plan", label: "FoodPlanSave"},
     ]
   },
   // money
@@ -40,10 +42,11 @@ export const dataArray = [
     title: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
+      {to: "/money/diff", label: "MoneyDiff"},
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/save", label: "MoneySave"},
-      {to: "/money/plan/list", label: "MoneyPlanList"},
-      {to: "/money/plan/save", label: "MoneyPlanSave"},
+      {to: "/money/list/plan", label: "MoneyPlanList"},
+      {to: "/money/save/plan", label: "MoneyPlanSave"},
     ]
   },
   // sleep
@@ -52,10 +55,11 @@ export const dataArray = [
     title: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
+      {to: "/sleep/diff", label: "SleepDiff"},
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/save", label: "SleepSave"},
-      {to: "/sleep/plan/list", label: "SleepPlanList"},
-      {to: "/sleep/plan/save", label: "SleepPlanSave"},
+      {to: "/sleep/list/plan", label: "SleepPlanList"},
+      {to: "/sleep/save/plan", label: "SleepPlanSave"},
     ]
   },
   // user

@@ -5,10 +5,8 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useStorage, useDate} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -50,7 +48,7 @@ export const SleepPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/plan/detail"
+    toDetail:"/sleep/detail/plan"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -68,22 +66,11 @@ export const SleepPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_startDt: "0000-00-00",
-    sleep_endDt: "0000-00-00",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
     sleep_plan_startDt: "0000-00-00",
     sleep_plan_endDt: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
-    sleep_diff_night: "00:00",
-    sleep_diff_morning: "00:00",
-    sleep_diff_time: "00:00",
-    sleep_diff_night_color: "",
-    sleep_diff_morning_color: "",
-    sleep_diff_time_color: ""
+    sleep_plan_time: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -92,7 +79,7 @@ export const SleepPlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -123,7 +110,6 @@ export const SleepPlanList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
               <TableCell>취침</TableCell>
               <TableCell>기상</TableCell>
               <TableCell>수면</TableCell>
@@ -133,7 +119,7 @@ export const SleepPlanList = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.sleep_plan_startDt;
                   SEND.endDt = item.sleep_plan_endDt;
@@ -148,9 +134,6 @@ export const SleepPlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
-                </TableCell>
-                <TableCell>
                   {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
@@ -158,34 +141,6 @@ export const SleepPlanList = () => {
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_time}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {item.sleep_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_time}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.sleep_diff_night_color}>
-                  {item.sleep_diff_night}
-                </TableCell>
-                <TableCell className={item.sleep_diff_morning_color}>
-                  {item.sleep_diff_morning}
-                </TableCell>
-                <TableCell className={item.sleep_diff_time_color}>
-                  {item.sleep_diff_time}
                 </TableCell>
               </TableRow>
               </>

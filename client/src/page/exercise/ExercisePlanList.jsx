@@ -3,19 +3,12 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis.jsx";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExercisePlanList = () => {
@@ -55,7 +48,7 @@ export const ExercisePlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/plan/detail",
+    toDetail: "/exercise/detail/plan",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -73,26 +66,12 @@ export const ExercisePlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    exercise_startDt: "0000-00-00",
-    exercise_endDt: "0000-00-00",
-    exercise_total_count: 0,
-    exercise_total_volume: 0,
-    exercise_body_weight: 0,
-    exercise_total_cardio: "00:00",
     exercise_plan_startDt: "0000-00-00",
     exercise_plan_endDt: "0000-00-00",
     exercise_plan_count: 0,
     exercise_plan_volume: 0,
     exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00",
-    exercise_diff_count: 0,
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: 0,
-    exercise_diff_weight: 0,
-    exercise_diff_count_color: "",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight_color: "",
+    exercise_plan_cardio: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -101,7 +80,7 @@ export const ExercisePlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -132,7 +111,6 @@ export const ExercisePlanList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
               <TableCell>횟수</TableCell>
               <TableCell>볼륨</TableCell>
               <TableCell>유산소</TableCell>
@@ -143,7 +121,7 @@ export const ExercisePlanList = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.exercise_plan_startDt;
                   SEND.endDt = item.exercise_plan_endDt;
@@ -158,9 +136,6 @@ export const ExercisePlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
-                </TableCell>
-                <TableCell>
                   {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
                 </TableCell>
                 <TableCell>
@@ -171,40 +146,6 @@ export const ExercisePlanList = () => {
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_total_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.exercise_diff_count_color}>
-                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_volume_color}>
-                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_cardio_color}>
-                  {item.exercise_diff_cardio}
-                </TableCell>
-                <TableCell className={item.exercise_diff_weight_color}>
-                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
               </>

@@ -45,7 +45,7 @@ export const ExercisePlanSave = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/exercise/plan/list"
+    toList:"/exercise/list/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -77,7 +77,7 @@ export const ExercisePlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
         _id: "",
@@ -95,7 +95,7 @@ export const ExercisePlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/plan/save`, {
+    const res = await axios.post(`${URL_OBJECT}/save/plan`, {
       user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,

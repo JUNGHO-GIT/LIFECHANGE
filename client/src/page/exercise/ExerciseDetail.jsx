@@ -210,7 +210,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -226,7 +226,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"BiRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -242,7 +242,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <CustomAdornment name={"BiWeight"} className={"w-16 h-16 dark"} position={"start"}/>
+                <CustomAdornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
@@ -308,10 +308,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={"w-100 me-10"}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
           <TextField
@@ -322,10 +319,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={"w-100 ms-10"}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
         </Box>
@@ -338,10 +332,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={""}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
           <TextField
@@ -352,10 +343,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={""}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
           <TextField
@@ -366,10 +354,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={""}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
           <TextField
@@ -380,10 +365,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={""}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
         </Box>
@@ -396,10 +378,7 @@ export const ExerciseDetail = () => {
             variant={"outlined"}
             className={"w-220"}
             InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <CustomAdornment name={"GiMuscleUp"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              readOnly: true
             }}
           />
         </Box>

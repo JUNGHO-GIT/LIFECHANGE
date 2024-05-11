@@ -46,8 +46,8 @@ export const FoodPlanDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/food/plan/list",
-    toUpdate:"/food/plan/save"
+    toList:"/food/list/plan",
+    toUpdate:"/food/save/plan"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -78,7 +78,7 @@ export const FoodPlanDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
       params: {
         user_id: user_id,
         _id: location_id,

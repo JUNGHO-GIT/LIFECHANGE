@@ -9,23 +9,25 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import {fileURLToPath} from "url";
 
-import {router as exerciseDashRouter} from "./src/router/exerciseDashRouter.js";
-import {router as foodDashRouter} from "./src/router/foodDashRouter.js";
-import {router as moneyDashRouter} from "./src/router/moneyDashRouter.js";
-import {router as sleepDashRouter} from "./src/router/sleepDashRouter.js";
-
-import {router as exercisePlanRouter} from "./src/router/exercisePlanRouter.js";
-import {router as foodPlanRouter} from "./src/router/foodPlanRouter.js";
-import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
-import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
-import {router as userPlanRouter} from "./src/router/userPlanRouter.js";
-
-import {router as calendarRouter} from "./src/router/calendarRouter.js";
-import {router as exerciseRouter} from "./src/router/exerciseRouter.js";
-import {router as foodRouter} from "./src/router/foodRouter.js";
-import {router as moneyRouter} from "./src/router/moneyRouter.js";
-import {router as sleepRouter} from "./src/router/sleepRouter.js";
-import {router as userRouter} from "./src/router/userRouter.js";
+import {router as calendarRouter} from "./src/router/calendar/calendarRouter.js";
+import {router as exerciseDashRouter} from "./src/router/exercise/exerciseDashRouter.js";
+import {router as exerciseDiffRouter} from "./src/router/exercise/exerciseDiffRouter.js";
+import {router as exerciseRouter} from "./src/router/exercise/exerciseRouter.js";
+import {router as exercisePlanRouter} from "./src/router/exercise/exercisePlanRouter.js";
+import {router as foodDashRouter} from "./src/router/food/foodDashRouter.js";
+import {router as foodDiffRouter} from "./src/router/food/foodDiffRouter.js";
+import {router as foodRouter} from "./src/router/food/foodRouter.js";
+import {router as foodPlanRouter} from "./src/router/food/foodPlanRouter.js";
+import {router as moneyDashRouter} from "./src/router/money/moneyDashRouter.js";
+import {router as moneyDiffRouter} from "./src/router/money/moneyDiffRouter.js";
+import {router as moneyRouter} from "./src/router/money/moneyRouter.js";
+import {router as moneyPlanRouter} from "./src/router/money/moneyPlanRouter.js";
+import {router as sleepDashRouter} from "./src/router/sleep/sleepDashRouter.js";
+import {router as sleepDiffRouter} from "./src/router/sleep/sleepDiffRouter.js";
+import {router as sleepRouter} from "./src/router/sleep/sleepRouter.js";
+import {router as sleepPlanRouter} from "./src/router/sleep/sleepPlanRouter.js";
+import {router as userPlanRouter} from "./src/router/user/userPlanRouter.js";
+import {router as userRouter} from "./src/router/user/userRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 dotenv.config();
@@ -81,22 +83,25 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.use("/exercise/dash", exerciseDashRouter);
-app.use("/food/dash", foodDashRouter);
-app.use("/money/dash", moneyDashRouter);
-app.use("/sleep/dash", sleepDashRouter);
-
-app.use("/exercise/plan", exercisePlanRouter);
-app.use("/food/plan", foodPlanRouter);
-app.use("/money/plan", moneyPlanRouter);
-app.use("/sleep/plan", sleepPlanRouter);
-app.use("/user/plan", userPlanRouter);
-
+// ------------------------------------------------------------------------------------------------>
 app.use("/calendar", calendarRouter);
+app.use("/exercise", exerciseDashRouter);
+app.use("/exercise", exerciseDiffRouter);
 app.use("/exercise", exerciseRouter);
+app.use("/exercise", exercisePlanRouter);
+app.use("/food", foodDashRouter);
+app.use("/food", foodDiffRouter);
 app.use("/food", foodRouter);
+app.use("/food", foodPlanRouter);
+app.use("/money", moneyDashRouter);
+app.use("/money", moneyDiffRouter);
 app.use("/money", moneyRouter);
+app.use("/money", moneyPlanRouter);
+app.use("/sleep", sleepDashRouter);
+app.use("/sleep", sleepDiffRouter);
 app.use("/sleep", sleepRouter);
+app.use("/sleep", sleepPlanRouter);
+app.use("/user", userPlanRouter);
 app.use("/user", userRouter);
 
 // ------------------------------------------------------------------------------------------------>
