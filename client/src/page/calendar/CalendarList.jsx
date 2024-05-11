@@ -21,6 +21,14 @@ export const CalendarList = () => {
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
 
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: moment().startOf("month").format("YYYY-MM-DD"),
+      endDt: moment().endOf("month").format("YYYY-MM-DD")
+    }
+  );
+
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
@@ -32,14 +40,6 @@ export const CalendarList = () => {
     category: "",
     toDetail: "/calendar/detail"
   });
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: moment().startOf("month").format("YYYY-MM-DD"),
-      endDt: moment().endOf("month").format("YYYY-MM-DD")
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{

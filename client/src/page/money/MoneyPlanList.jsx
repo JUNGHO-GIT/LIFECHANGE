@@ -88,6 +88,9 @@ export const MoneyPlanList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {

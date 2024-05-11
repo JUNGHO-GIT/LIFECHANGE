@@ -90,7 +90,7 @@ export const FoodSave = () => {
   useEffect(() => {
 
     // 스토리지 데이터 가져오기
-    const getItem = localStorage.getItem("food_section");
+    const getItem = sessionStorage.getItem("food_section");
     let storageSection = getItem ? JSON.parse(getItem) : null;
 
     // 상세 데이터 가져오기

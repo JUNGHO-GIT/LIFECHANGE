@@ -107,7 +107,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
         </List>
         <Divider />
         <Button variant={"contained"} color={"error"} size={"small"} className={"m-20"}
-        onClick={() => (localStorage.clear())}>
+        onClick={() => (sessionStorage.clear())}>
           Clear
         </Button>
       </Box>

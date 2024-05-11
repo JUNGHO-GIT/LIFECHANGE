@@ -120,7 +120,7 @@ export const FoodSearch = () => {
     );
     // 7-5. handleStorage
     const handleStorage = (param) => {
-      localStorage.setItem("food_section", JSON.stringify(param));
+      sessionStorage.setItem("food_section", JSON.stringify(param));
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
       navParam(SEND.toSave, {

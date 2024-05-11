@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useStorage} from "../../import/ImportHooks.jsx";
+import {useStorage, useDate} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
 import {Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons.jsx";
@@ -86,6 +86,9 @@ export const SleepPlanList = () => {
     sleep_diff_time_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

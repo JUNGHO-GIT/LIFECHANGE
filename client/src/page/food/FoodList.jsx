@@ -121,6 +121,9 @@ export const FoodList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title

@@ -334,7 +334,7 @@ export const FoodDashLine = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper over-x-hidden"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
@@ -348,7 +348,7 @@ export const FoodDashLine = () => {
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {SECTION === "week" && LINE === "kcal" && (
                 LOADING ? loadingNode() : chartKcalWeek()
               )}

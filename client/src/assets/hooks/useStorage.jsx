@@ -8,8 +8,8 @@ export const useStorage = (key, initialVal) => {
 
   // ---------------------------------------------------------------------------------------------->
   const getInitialValue = () => {
-    if (localStorage) {
-      const item = localStorage.getItem(key);
+    if (sessionStorage) {
+      const item = sessionStorage.getItem(key);
       if (item === null) {
         return initialVal;
       }
@@ -37,10 +37,10 @@ export const useStorage = (key, initialVal) => {
     const saveToLocalStorage = () => {
       try {
         const valueToStore = storedVal instanceof Date && !isNaN(storedVal.getTime()) ? formatISO(storedVal) : JSON.stringify(storedVal);
-        localStorage.setItem(key, valueToStore);
+        sessionStorage.setItem(key, valueToStore);
       }
       catch (error) {
-        console.error("Failed to save to localStorage:", error);
+        console.error("Failed to save to sessionStorage:", error);
       }
     };
 
