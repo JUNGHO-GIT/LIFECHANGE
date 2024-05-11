@@ -131,21 +131,20 @@ export const SleepList = () => {
           <TableBody>
             {OBJECT?.map((item, index) => (
               item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
-                    className={"pointer"} onClick={() => {
-                      SEND.id = item._id;
-                      SEND.startDt = item.sleep_startDt;
-                      SEND.endDt = item.sleep_endDt;
-                      navParam(SEND.toDetail, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.sleep_startDt?.substring(5, 10)}
-                      {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
-                    </TableCell>
-                  )}
+                <>
+                <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                  <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.sleep_startDt;
+                    SEND.endDt = item.sleep_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.sleep_startDt?.substring(5, 10)}
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                   <TableCell>
                     {section.sleep_night}
                   </TableCell>
@@ -156,6 +155,7 @@ export const SleepList = () => {
                     {section.sleep_time}
                   </TableCell>
                 </TableRow>
+                </>
               ))
             ))}
           </TableBody>
@@ -163,7 +163,6 @@ export const SleepList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>

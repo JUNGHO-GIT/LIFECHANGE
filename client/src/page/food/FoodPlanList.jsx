@@ -125,12 +125,6 @@ export const FoodPlanList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        음식 계획 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -139,15 +133,16 @@ export const FoodPlanList = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>목표</TableCell>
-              <TableCell>실제</TableCell>
-              <TableCell>비교</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"}>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.food_plan_startDt;
@@ -156,61 +151,57 @@ export const FoodPlanList = () => {
                     state: SEND
                   });
                 }}>
-                  {item.food_plan_startDt?.substring(5, 10)
-                    + " ~ " +
-                    item.food_plan_endDt?.substring(5, 10)
-                  }
+                  <p>{item.food_plan_startDt?.substring(5, 10)}</p>
+                  <p>~</p>
+                  <p>{item.food_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  칼로리
+                  목표
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
                 </TableCell>
                 <TableCell>
-                {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
-                </TableCell>
-                <TableCell className={item.food_diff_kcal_color}>
-                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  탄수화물
-                </TableCell>
-                <TableCell>
                   {`${numeral(item.food_plan_carb).format('0,0')} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_carb).format('0,0')} g`}
-                </TableCell>
-                <TableCell className={item.food_diff_carb_color}>
-                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  단백질
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_protein).format('0,0')} g`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell className={item.food_diff_protein_color}>
-                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
+                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"}>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  지방
+                  실제
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_protein).format('0,0')} g`}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_total_fat).format('0,0')} g`}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
+                <TableCell>
+                  비교
+                </TableCell>
+                <TableCell className={item.food_diff_kcal_color}>
+                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                </TableCell>
+                <TableCell className={item.food_diff_carb_color}>
+                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell className={item.food_diff_protein_color}>
+                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
                 </TableCell>
                 <TableCell className={item.food_diff_fat_color}>
                   {`${numeral(item.food_diff_fat).format('0,0')} g`}
@@ -223,7 +214,6 @@ export const FoodPlanList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>

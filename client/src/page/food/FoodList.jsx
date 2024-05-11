@@ -128,13 +128,17 @@ export const FoodList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>칼로리</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell className={"pointer"} onClick={() => {
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.food_startDt;
                   SEND.endDt = item.food_endDt;
@@ -144,17 +148,28 @@ export const FoodList = () => {
                 }}>
                   {item.food_startDt?.substring(5, 10)}
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
                   {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
                 </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_carb).format("0,0")} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_protein).format("0,0")} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_fat).format("0,0")} g`}
+                </TableCell>
               </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>

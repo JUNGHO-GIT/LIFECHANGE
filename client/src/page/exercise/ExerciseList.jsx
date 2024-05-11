@@ -137,8 +137,9 @@ export const ExerciseList = () => {
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell className={"pointer"} onClick={() => {
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.exercise_startDt;
                   SEND.endDt = item.exercise_endDt;
@@ -148,6 +149,8 @@ export const ExerciseList = () => {
                 }}>
                   {item.exercise_startDt?.substring(5, 10)}
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
                   {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
                 </TableCell>
@@ -158,13 +161,13 @@ export const ExerciseList = () => {
                   {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>

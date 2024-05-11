@@ -117,12 +117,6 @@ export const MoneyList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        재무 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -136,8 +130,9 @@ export const MoneyList = () => {
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell className={"pointer"} onClick={() => {
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.money_startDt;
                   SEND.endDt = item.money_endDt;
@@ -147,6 +142,8 @@ export const MoneyList = () => {
                 }}>
                   {item.money_startDt?.substring(5, 10)}
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}
                 </TableCell>
@@ -154,13 +151,13 @@ export const MoneyList = () => {
                   {`₩ ${numeral(item.money_total_out).format('0,0')}`}
                 </TableCell>
               </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>

@@ -116,12 +116,6 @@ export const SleepPlanList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        수면 계획 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -130,16 +124,16 @@ export const SleepPlanList = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>목표</TableCell>
-              <TableCell>실제</TableCell>
-              <TableCell>비교</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
-            {OBJECT?.map((item) => (
+            {OBJECT?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={item._id}>
-                <TableCell rowSpan={3} className={"pointer"} onClick={() => {
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.sleep_plan_startDt;
                   SEND.endDt = item.sleep_plan_endDt;
@@ -147,47 +141,48 @@ export const SleepPlanList = () => {
                     state: SEND
                   });
                 }}>
-                  {item.sleep_plan_startDt?.substring(5, 10)
-                    + " ~ " +
-                    item.sleep_plan_endDt?.substring(5, 10)
-                  }
+                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
+                  <p>~</p>
+                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  취침
+                  목표
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
-                  {item.sleep_night}
-                </TableCell>
-                <TableCell className={item.sleep_diff_night_color}>
-                  {item.sleep_diff_night}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  기상
-                </TableCell>
-                <TableCell>
                   {item.sleep_plan_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_morning}
-                </TableCell>
-                <TableCell className={item.sleep_diff_morning_color}>
-                  {item.sleep_diff_morning}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  수면
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_time}
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  실제
+                </TableCell>
+                <TableCell>
+                  {item.sleep_night}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_morning}
+                </TableCell>
                 <TableCell>
                   {item.sleep_time}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
+                <TableCell>
+                  비교
+                </TableCell>
+                <TableCell className={item.sleep_diff_night_color}>
+                  {item.sleep_diff_night}
+                </TableCell>
+                <TableCell className={item.sleep_diff_morning_color}>
+                  {item.sleep_diff_morning}
                 </TableCell>
                 <TableCell className={item.sleep_diff_time_color}>
                   {item.sleep_diff_time}
@@ -200,7 +195,6 @@ export const SleepPlanList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh"}>
         <Box className={"d-column"}>

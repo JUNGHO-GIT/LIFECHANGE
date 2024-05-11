@@ -125,12 +125,6 @@ export const ExercisePlanList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Typography variant={"h5"} fontWeight={500}>
-        운동 계획 List
-      </Typography>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -139,15 +133,16 @@ export const ExercisePlanList = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>목표</TableCell>
-              <TableCell>실제</TableCell>
-              <TableCell>비교</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"}>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.exercise_plan_startDt;
@@ -156,61 +151,57 @@ export const ExercisePlanList = () => {
                     state: SEND
                   });
                 }}>
-                  {item.exercise_plan_startDt?.substring(5, 10)
-                    + " ~ " +
-                    item.exercise_plan_endDt?.substring(5, 10)
-                  }
+                  <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
+                  <p>~</p>
+                  <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
                 </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  총 운동횟수
+                  목표
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_count_color}>
-                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  총 볼륨
-                </TableCell>
-                <TableCell>
                   {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_volume_color}>
-                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  유산소 시간
                 </TableCell>
                 <TableCell>
                   {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {item.exercise_total_cardio}
-                </TableCell>
-                <TableCell className={item.exercise_diff_cardio_color}>
-                  {item.exercise_diff_cardio}
+                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"}>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  체중
+                  실제
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell>
+                  {item.exercise_total_cardio}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
+                <TableCell>
+                  비교
+                </TableCell>
+                <TableCell className={item.exercise_diff_count_color}>
+                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
+                </TableCell>
+                <TableCell className={item.exercise_diff_volume_color}>
+                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell className={item.exercise_diff_cardio_color}>
+                  {item.exercise_diff_cardio}
                 </TableCell>
                 <TableCell className={item.exercise_diff_weight_color}>
                   {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
@@ -223,7 +214,6 @@ export const ExercisePlanList = () => {
       </TableContainer>
     );
     // 7-7. table
-    // list 는 높이, 너비 지정
     const tableSection = () => (
       <Box className={"block-wrapper h-min75vh w-min120vw"}>
         <Box className={"d-column"}>
