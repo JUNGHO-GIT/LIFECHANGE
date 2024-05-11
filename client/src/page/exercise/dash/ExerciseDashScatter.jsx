@@ -247,7 +247,7 @@ export const ExerciseDashScatter = () => {
       size={"small"}
       id={"section"}
       name={"section"}
-      className={"w-90"}
+      className={"w-65 mt-5"}
       variant={"outlined"}
       value={SECTION}
       onChange={(e) => (
