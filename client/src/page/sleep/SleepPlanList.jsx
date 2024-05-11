@@ -136,7 +136,8 @@ export const SleepPlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
-            {OBJECT?.map((item) => ([
+            {OBJECT?.map((item) => (
+              <>
               <TableRow className={"table-tbody-tr"} key={item._id}>
                 <TableCell rowSpan={3} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
@@ -163,7 +164,7 @@ export const SleepPlanList = () => {
                 <TableCell className={item.sleep_diff_night_color}>
                   {item.sleep_diff_night}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   기상
@@ -177,7 +178,7 @@ export const SleepPlanList = () => {
                 <TableCell className={item.sleep_diff_morning_color}>
                   {item.sleep_diff_morning}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   수면
@@ -192,7 +193,8 @@ export const SleepPlanList = () => {
                   {item.sleep_diff_time}
                 </TableCell>
               </TableRow>
-            ]))}
+              </>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

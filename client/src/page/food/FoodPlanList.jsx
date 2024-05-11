@@ -142,7 +142,8 @@ export const FoodPlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.map((item, index) => ([
+            {OBJECT?.map((item, index) => (
+              <>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
@@ -169,7 +170,7 @@ export const FoodPlanList = () => {
                 <TableCell className={item.food_diff_kcal_color}>
                   {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   탄수화물
@@ -183,7 +184,7 @@ export const FoodPlanList = () => {
                 <TableCell className={item.food_diff_carb_color}>
                   {`${numeral(item.food_diff_carb).format('0,0')} g`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   단백질
@@ -197,7 +198,7 @@ export const FoodPlanList = () => {
                 <TableCell className={item.food_diff_protein_color}>
                   {`${numeral(item.food_diff_protein).format('0,0')} g`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   지방
@@ -212,7 +213,8 @@ export const FoodPlanList = () => {
                   {`${numeral(item.food_diff_fat).format('0,0')} g`}
                 </TableCell>
               </TableRow>
-            ]))}
+              </>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

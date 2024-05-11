@@ -142,7 +142,8 @@ export const ExercisePlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.map((item, index) => ([
+            {OBJECT?.map((item, index) => (
+              <>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
@@ -169,7 +170,7 @@ export const ExercisePlanList = () => {
                 <TableCell className={item.exercise_diff_count_color}>
                   {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   총 운동량
@@ -183,7 +184,7 @@ export const ExercisePlanList = () => {
                 <TableCell className={item.exercise_diff_volume_color}>
                   {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   유산소 시간
@@ -197,7 +198,7 @@ export const ExercisePlanList = () => {
                 <TableCell className={item.exercise_diff_cardio_color}>
                   {item.exercise_diff_cardio}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   체중
@@ -212,7 +213,8 @@ export const ExercisePlanList = () => {
                   {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
                 </TableCell>
               </TableRow>
-            ]))}
+              </>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

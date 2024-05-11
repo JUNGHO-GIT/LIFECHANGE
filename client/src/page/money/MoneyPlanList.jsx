@@ -133,7 +133,8 @@ export const MoneyPlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.map((item, index) => ([
+            {OBJECT?.map((item, index) => (
+              <>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   SEND.id = item._id;
@@ -160,7 +161,7 @@ export const MoneyPlanList = () => {
                 <TableCell className={item.money_diff_in_color}>
                   {`₩ ${numeral(item.money_diff_in).format('0,0')}`}
                 </TableCell>
-              </TableRow>,
+              </TableRow>
               <TableRow className={"table-tbody-tr"}>
                 <TableCell>
                   지출</TableCell>
@@ -174,7 +175,8 @@ export const MoneyPlanList = () => {
                   {`₩ ${numeral(item.money_diff_out).format('0,0')}`}
                 </TableCell>
               </TableRow>
-            ]))}
+              </>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -34,7 +34,7 @@ export const Header = () => {
     <PopupState variant={"popover"} popupId={"popup-menu"}>
       {(popupState) => (
         <>
-          <CustomIcons name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />,
+          <CustomIcons name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />
           <Menu {...bindMenu(popupState)}>
             <MenuItem onClick={() => {
               navParam("/user/login");
