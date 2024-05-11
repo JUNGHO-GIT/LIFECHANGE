@@ -248,22 +248,34 @@ export const Filter = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"flex-wrapper h-8vh p-sticky bottom-48 d-row"} variant={"outlined"}>
-      {part === "exercise" && plan === "" ? ([
-        defaultNode(),
-        exerciseNode()
-      ]) : part === "food" && plan === "" ? ([
-        defaultNode(),
-        foodNode()
-      ]) : part === "money" && plan === "" ? ([
-        defaultNode(),
-        moneyNode()
-      ]) : part === "sleep" && plan === "" ? ([
-        defaultNode()
-      ]) : part === "tweak" ? ([
-        tweakNode()
-      ]) : ([
-        defaultNode()
-      ])}
+      {part === "exercise" && plan === "" ? (
+        <>
+          {defaultNode()}
+          {exerciseNode()}
+        </>
+      ) : part === "food" && plan === "" ? (
+        <>
+          {defaultNode()}
+          {foodNode()}
+        </>
+      ) : part === "money" && plan === "" ? (
+        <>
+          {defaultNode()}
+          {moneyNode()}
+        </>
+      ) : part === "sleep" && plan === "" ? (
+        <>
+          {defaultNode()}
+        </>
+      ) : part === "tweak" ? (
+        <>
+          {tweakNode()}
+        </>
+      ) : (
+        <>
+          {defaultNode()}
+        </>
+      )}
     </Paper>
   );
 

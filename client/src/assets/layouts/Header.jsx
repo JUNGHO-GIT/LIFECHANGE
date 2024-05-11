@@ -32,21 +32,23 @@ export const Header = () => {
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
     <PopupState variant={"popover"} popupId={"popup-menu"}>
-      {(popupState) => ([
-        <CustomIcons name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />,
-        <Menu {...bindMenu(popupState)}>
-          <MenuItem onClick={() => {
-            navParam("/user/login");
-          }}>
-            Login
-          </MenuItem>
-          <MenuItem onClick={() => {
-            navParam("/user/signup");
-          }}>
-            Signup
-          </MenuItem>
-        </Menu>
-      ])}
+      {(popupState) => (
+        <>
+          <CustomIcons name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />,
+          <Menu {...bindMenu(popupState)}>
+            <MenuItem onClick={() => {
+              navParam("/user/login");
+            }}>
+              Login
+            </MenuItem>
+            <MenuItem onClick={() => {
+              navParam("/user/signup");
+            }}>
+              Signup
+            </MenuItem>
+          </Menu>
+        </>
+      )}
     </PopupState>
   );
 

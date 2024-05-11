@@ -148,30 +148,46 @@ export const Btn = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"flex-wrapper h-8vh p-sticky bottom-0 d-row"} variant={"outlined"}>
-      {type === "list" ? ([
-        btnOpenCalendar(),
-        btnGetToday()
-      ]) : type === "detail" ? ([
-        btnToUpdate(),
-        btnToList()
-      ]) : type === "save" && part !== "food" ? ([
-        btnToSave(),
-        btnGetToday(),
-        btnToList()
-      ]) : type === "save" && part === "food" ? ([
-        btnToSave(),
-        btnToSearch()
-      ]) : type === "search" ? ([
-        btnGetSearch()
-      ]) : type === "dataset" ? ([
-        btnToSave()
-      ]) : type === "login" ? ([
-        btnLogin(),
-        btnRefresh()
-      ]) : type === "signup" ? ([
-        btnSignup(),
-        btnRefresh()
-      ]) : null}
+      {type === "list" ? (
+        <>
+          {btnOpenCalendar()}
+          {btnGetToday()}
+        </>
+      ) : type === "detail" ? (
+        <>
+          {btnToUpdate()}
+          {btnToList()}
+        </>
+      ) : type === "save" && part !== "food" ? (
+        <>
+          {btnToSave()}
+          {btnGetToday()}
+          {btnToList()}
+        </>
+      ) : type === "save" && part === "food" ? (
+        <>
+          {btnToSave()}
+          {btnToSearch()}
+        </>
+      ) : type === "search" ? (
+        <>
+          {btnGetSearch()}
+        </>
+      ) : type === "dataset" ? (
+        <>
+          {btnToSave()}
+        </>
+      ) : type === "login" ? (
+        <>
+          {btnLogin()}
+          {btnRefresh()}
+        </>
+      ) : type === "signup" ? (
+        <>
+          {btnSignup()}
+          {btnRefresh()}
+        </>
+      ) : null}
     </Paper>
   );
 

@@ -164,21 +164,25 @@ export const ExerciseList = () => {
                   <TableCell>
                     {section.exercise_title_val.substring(0, 6)}
                   </TableCell>
-                  {section.exercise_part_val !== "유산소" ? ([
+                  {section.exercise_part_val !== "유산소" ? (
+                    <>
                     <TableCell>
                       {`${numeral(section.exercise_set).format('0,0')}`}
-                    </TableCell>,
+                    </TableCell>
                     <TableCell>
                       {`${numeral(section.exercise_rep).format('0,0')}`}
-                    </TableCell>,
+                    </TableCell>
                     <TableCell>
                       {`${numeral(section.exercise_kg).format('0,0')}`}
                     </TableCell>
-                  ]) : ([
+                    </>
+                  ) : (
+                    <>
                     <TableCell colSpan={3}>
                       {section.exercise_cardio}
                     </TableCell>
-                  ])}
+                    </>
+                  )}
                 </TableRow>
               ))
             ))}
