@@ -49,7 +49,7 @@ export const NavBar = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-6vh p-sticky top-35"} variant={"outlined"}>
+    <Paper className={"flex-wrapper h-50 p-sticky top-50"} variant={"outlined"}>
       <Div className={"d-flex w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
           {!preFix ? (

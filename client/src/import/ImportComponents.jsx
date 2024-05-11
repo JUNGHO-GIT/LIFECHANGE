@@ -17,5 +17,5 @@ export {
   PopUp,
   Filter,
   Loading,
-  Paging
+  Paging,
 };

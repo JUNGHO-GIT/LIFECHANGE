@@ -248,7 +248,7 @@ export const Filter = ({
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-8vh p-sticky bottom-48 d-row"} variant={"outlined"}>
+    <Paper className={"flex-wrapper h-50 p-sticky bottom-100 d-row"} variant={"outlined"}>
       {part === "exercise" && plan === "" ? (
         <>
           {defaultNode()}

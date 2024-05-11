@@ -2,8 +2,8 @@
 .App {
   width: 100%;
   height: 100%;
-  margin: 1vh 0vw 1vh 0vw;
-  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 10px 10px 10px 10px;
   border: none;
   display: flex;
   flex-direction: column;
@@ -12,9 +12,9 @@
 }
 .flex-wrapper {
   width: 100%;
-  max-width: 95vw;
-  margin: 0.1vh 0vw 0.1vh 0vw;
-  padding: 0vh 0vw 0vh 0vw;
+  height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,22 +29,22 @@
 }
 .content-wrapper {
   width: 100%;
-  max-width: 95vw;
-  margin: 0.1vh 0vw 0.1vh 0vw;
-  padding: 1vh 2vw 1vh 2vw;
+  height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 25px 15px 25px 15px;
   border: none;
   border-radius: 0.25rem;
   background-color: #fff;
-  animation: fadeIn 0.5s !important;
   overflow-x: auto;
   overflow-y: hidden;
+  animation: fadeIn 0.5s !important;
   z-index: 999;
 }
 .block-wrapper {
   width: 100%;
-  max-width: 95vw;
-  margin: 0.1vh 0vw 0.1vh 0vw;
-  padding: 0vh 0vw 0vh 0vw;
+  height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   display: inline-block;
   flex-direction: column;
   align-items: center;

@@ -110,8 +110,9 @@ export const CalendarList = () => {
       ))
     );
     // 7-7. table
-    const tableSection = () => (
+    const tableFragment = (i) => (
       <Calendar
+        key={i}
         view={"month"}
         value={new Date()}
         showNavigation={true}
@@ -155,6 +156,14 @@ export const CalendarList = () => {
           );
         }}
       />
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <Div className={"block-wrapper h-min100vh"}>
+        <Div className={"d-column"}>
+          {tableFragment(0)}
+        </Div>
+      </Div>
     );
     // 7-8. return
     return (

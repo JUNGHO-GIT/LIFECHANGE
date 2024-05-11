@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Hr, Br, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Icons, Adornment} from "../../import/ImportIcons.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -216,6 +216,7 @@ export const ExerciseList = () => {
       {pagingNode()}
       {filterNode()}
       {btnNode()}
+      {Footer()}
     </>
   );
 };
