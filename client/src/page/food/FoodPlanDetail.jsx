@@ -130,42 +130,77 @@ export const FoodPlanDetail = () => {
     const dateSection = () => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DesktopDatePicker
-          label={"날짜"}
+          label={"시작일"}
           value={moment(DATE.startDt, "YYYY-MM-DD")}
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          className={"mb-10"}
+          readOnly={false}
           slotProps={{
-            textField: {
-              sx: {
+            textField: {sx: {
+              width: "220px",
+            }},
+            layout: {sx: {
+              "& .MuiPickersLayout-contentWrapper": {
                 width: "220px",
+                height: "280px",
               },
-            },
-            layout: {
-              sx: {
-                "& .MuiPickersLayout-contentWrapper": {
-                  width: "220px",
-                  height: "280px",
-                },
-                "& .MuiDateCalendar-root": {
-                  width: "210px",
-                  height: "270px",
-                },
-                "& .MuiDayCalendar-slideTransition": {
-                  width: "210px",
-                  height: "270px",
-                },
-                "& .MuiPickersDay-root": {
-                  width: "30px",
-                  height: "28px",
-                },
+              "& .MuiDateCalendar-root": {
+                width: "210px",
+                height: "270px",
               },
-            },
+              "& .MuiDayCalendar-slideTransition": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiPickersDay-root": {
+                width: "30px",
+                height: "28px",
+              },
+            }},
           }}
           onChange={(day) => {
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(day).format("YYYY-MM-DD"),
+              startDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
+        />
+        <DesktopDatePicker
+          label={"종료일"}
+          value={moment(DATE.endDt, "YYYY-MM-DD")}
+          format={"YYYY-MM-DD"}
+          timezone={"Asia/Seoul"}
+          views={["day"]}
+          className={"mt-10"}
+          readOnly={false}
+          slotProps={{
+            textField: {sx: {
+              width: "220px",
+            }},
+            layout: {sx: {
+              "& .MuiPickersLayout-contentWrapper": {
+                width: "220px",
+                height: "280px",
+              },
+              "& .MuiDateCalendar-root": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiDayCalendar-slideTransition": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiPickersDay-root": {
+                width: "30px",
+                height: "28px",
+              },
+            }},
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
               endDt: moment(day).format("YYYY-MM-DD")
             }));
           }}
@@ -295,7 +330,7 @@ export const FoodPlanDetail = () => {
           {titleSection()}
         </Box>
         <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-center mb-20"}>
+        <Box className={"d-column mb-20"}>
           {dateSection()}
         </Box>
         <Box className={"d-column"}>

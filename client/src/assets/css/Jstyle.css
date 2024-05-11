@@ -5634,6 +5634,20 @@
   align-items: center !important;
   text-align: right !important;
 }
+.d-column {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: right !important;
+}
+.d-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: right !important;
+}
 .d-none {
   display: none !important;
 }
@@ -5649,14 +5663,6 @@
 .d-between {
   display: flex !important;
   justify-content: space-between !important;
-}
-.d-column {
-  display: flex !important;
-  flex-direction: column !important;
-}
-.d-row {
-  display: flex !important;
-  flex-direction: row !important;
 }
 
 .over-hidden {

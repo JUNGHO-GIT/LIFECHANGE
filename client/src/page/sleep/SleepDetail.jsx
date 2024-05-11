@@ -136,7 +136,38 @@ export const SleepDetail = () => {
           value={moment(DATE.startDt, "YYYY-MM-DD")}
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
-          readOnly={true}
+          views={["day"]}
+          readOnly={false}
+          slotProps={{
+            textField: {sx: {
+              width: "220px",
+            }},
+            layout: {sx: {
+              "& .MuiPickersLayout-contentWrapper": {
+                width: "220px",
+                height: "280px",
+              },
+              "& .MuiDateCalendar-root": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiDayCalendar-slideTransition": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiPickersDay-root": {
+                width: "30px",
+                height: "28px",
+              },
+            }},
+          }}
+          onChange={(day) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(day).format("YYYY-MM-DD"),
+              endDt: moment(day).format("YYYY-MM-DD")
+            }));
+          }}
         />
       </LocalizationProvider>
     );
@@ -301,7 +332,7 @@ export const SleepDetail = () => {
           {titleSection()}
         </Box>
         <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-center mb-20"}>
+        <Box className={"d-column mb-20"}>
           {dateSection()}
         </Box>
         <Box className={"d-column"}>

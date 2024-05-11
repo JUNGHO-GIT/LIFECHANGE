@@ -126,32 +126,29 @@ export const SleepPlanSave = () => {
           format={"YYYY-MM-DD"}
           timezone={"Asia/Seoul"}
           views={["day"]}
+          readOnly={false}
           slotProps={{
-            textField: {
-              sx: {
+            textField: {sx: {
+              width: "220px",
+            }},
+            layout: {sx: {
+              "& .MuiPickersLayout-contentWrapper": {
                 width: "220px",
+                height: "280px",
               },
-            },
-            layout: {
-              sx: {
-                "& .MuiPickersLayout-contentWrapper": {
-                  width: "220px",
-                  height: "280px",
-                },
-                "& .MuiDateCalendar-root": {
-                  width: "210px",
-                  height: "270px",
-                },
-                "& .MuiDayCalendar-slideTransition": {
-                  width: "210px",
-                  height: "270px",
-                },
-                "& .MuiPickersDay-root": {
-                  width: "30px",
-                  height: "28px",
-                },
+              "& .MuiDateCalendar-root": {
+                width: "210px",
+                height: "270px",
               },
-            },
+              "& .MuiDayCalendar-slideTransition": {
+                width: "210px",
+                height: "270px",
+              },
+              "& .MuiPickersDay-root": {
+                width: "30px",
+                height: "28px",
+              },
+            }},
           }}
           onChange={(day) => {
             setDATE((prev) => ({
@@ -320,7 +317,7 @@ export const SleepPlanSave = () => {
           {titleSection()}
         </Box>
         <Divider variant={"middle"} className={"mb-20"} />
-        <Box className={"d-center mb-20"}>
+        <Box className={"d-column mb-20"}>
           {dateSection()}
         </Box>
         <Box className={"d-column"}>
