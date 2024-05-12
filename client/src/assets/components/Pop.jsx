@@ -97,9 +97,23 @@ export const PopUp = ({ elementId, contents, children }) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-export const PopDown = ({ elementId, contents, children }) => {
+export const PopDown = ({
+  type, elementId, className, position, direction, 
+  contents, children
+}) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
+
+  const popupStyle = type === "alert" 
+    ? ({
+      border: '1px solid red',
+      boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
+      padding: "10px 10px 10px 10px",
+    }) : ({
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "10px 10px 10px 10px",
+    });
 
   return (
     <Div>
@@ -115,24 +129,26 @@ export const PopDown = ({ elementId, contents, children }) => {
         id={"popover"}
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
+        className={className}
         onClose={() => {
           popupState.close();
-          setTimeout(() => document.getElementById(elementId)?.focus(), 0);
         }}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
+          vertical: position === "top" ? "top" : "bottom",
+          horizontal: direction === "center" ? "center" : (
+              direction === "right" ? "left" : "right"
+            )
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
+          vertical: position === "top" ? "bottom" : "top",
+          horizontal: direction === "center" ? "center" : (
+              direction === "right" ? "left" : "right"
+            )
         }}
         slotProps={{
-          paper: {style: {
-            border: '0.2px solid rgba(0, 0, 0, 0.2)',
-            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-            padding: "10px 10px 10px 10px",
-          }}
+          paper: {
+            style: popupStyle
+          }
         }}
       >
         {contents}

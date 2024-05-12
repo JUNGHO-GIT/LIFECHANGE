@@ -12,7 +12,7 @@ export const Paging = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     type === "search" ? (
-      <Paper className={"flex-wrapper h-50 p-sticky bottom-50 shadow-none"}>
+      <Paper className={"flex-wrapper h-50 p-sticky bottom-50 shadow-none radius-top"}>
         <Div className={"d-center"}>
           <TablePagination
             rowsPerPageOptions={[10]}
@@ -37,7 +37,7 @@ export const Paging = ({
         </Div>
       </Paper>
     ) : (
-      <Paper className={"flex-wrapper h-50 p-sticky bottom-100 shadow-none"}>
+      <Paper className={"flex-wrapper h-50 p-sticky bottom-100 shadow-none radius-top"}>
         <Div className={"d-center"}>
           <TablePagination
             rowsPerPageOptions={[5, 10]}

@@ -6498,8 +6498,8 @@
   position: sticky !important;
 }
 
-.shadow-none {
-  box-shadow: none !important;
+.shadow {
+  box-shadow: 0px 0px 20px 0px #00000017 !important;
 }
 .shadow-top {
   box-shadow: 0 -5px 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
@@ -6513,8 +6513,39 @@
 .shadow-left {
   box-shadow: -5px 0 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
 }
-.shadow-all {
-  box-shadow: 0px 0px 20px 0px #00000017 !important;
+.shadow-none {
+  box-shadow: none !important;
+}
+
+.radius {
+  border-radius: 5px !important;
+}
+.radius-top {
+  border-top-left-radius : 5px !important;
+  border-top-right-radius: 5px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.radius-right {
+  border-top-left-radius : 0px !important;
+  border-top-right-radius: 5px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 5px !important;
+}
+.radius-bottom {
+  border-top-left-radius : 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+.radius-left {
+  border-top-left-radius : 5px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 0px !important;
+}
+.radius-none {
+  border-radius: 0px !important;
 }
 
 .border {

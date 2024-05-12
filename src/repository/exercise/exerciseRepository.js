@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Exercise} from "../../schema/exercise/Exercise.js";
-import {fmtDate, newDate} from "../../assets/js/date.js";
+import {newDate} from "../../assets/js/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {

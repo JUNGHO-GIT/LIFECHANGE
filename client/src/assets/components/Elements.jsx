@@ -50,7 +50,9 @@ export const Hr10 = (props) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-export const Icons = ({name, className, ...props}) => {
+export const Icons = ({
+  name, children, ...props
+}) => {
 
   if (!name) {
     return null;
@@ -76,9 +78,10 @@ export const Icons = ({name, className, ...props}) => {
   }
 
   return (
-    <IconContext.Provider value={{ className: className }}>
+    <div className={"d-center"}>
       <IconComponent {...props} />
-    </IconContext.Provider>
+      {children}
+    </div>
   );
 };
 

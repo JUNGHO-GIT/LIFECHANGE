@@ -74,13 +74,15 @@ import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/x
 // dateCalendar
 import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
 
+// digitalClock
+import {DigitalClock} from '@mui/x-date-pickers/DigitalClock';
+
 // popupState
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 
 // grid2
 import Grid2 from '@mui/material/Unstable_Grid2';
 
-// ------------------------------------------------------------------------------------------------>
 export {
 
   // a
@@ -124,13 +126,10 @@ export {
   useAutocomplete, GlobalStyles,
 
   // adopterMoment
-  AdapterMoment,
+  AdapterMoment, DateCalendar, DigitalClock,
 
   // datePickers
   DesktopDatePicker, DesktopTimePicker, LocalizationProvider,
-
-  // dateCalendar
-  DateCalendar,
 
   // popupState
   PopupState, bindTrigger, bindMenu, bindPopover,

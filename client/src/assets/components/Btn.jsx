@@ -6,28 +6,27 @@ import {PopUp, PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Button, Paper, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd}
+from "../../import/ImportLogics.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
-  DATE, setDATE, SEND,
-  FILTER, setFILTER, PAGING, setPAGING,
-  flowSave, navParam, part, plan, type, handler = () => {}
+  DATE, setDATE, SEND, FILTER, setFILTER,
+  PAGING, setPAGING, flowSave, navParam,
+  part, plan, type, handler = () => {}
 }) => {
-
-  // 1. common ------------------------------------------------------------------------------------>
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 11. button ----------------------------------------------------------------------------------->
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
-      FILTER && (
+      (FILTER && FILTER.type !== "") && (
         setFILTER((prev) => ({
           ...prev,
           type: "day",
         }))
       );
-      PAGING && (
+      (PAGING && PAGING.page !== 1) && (
         setPAGING((prev) => ({
           ...prev,
           page: 1,
@@ -147,50 +146,78 @@ export const Btn = ({
     <PopUp elementId={`popup`} contents={
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DateCalendar
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
           timezone={"Asia/Seoul"}
           views={["year", "day"]}
           className={"m-auto"}
           readOnly={false}
+          defaultValue={moment(koreanDate)}
           sx={{
-            "width": "220px",
-            "height": "280px",
+            "width": "250px",
+            "height": "330px",
             "& .MuiPickersLayout-contentWrapper": {
-              width: "220px",
-              height: "280px",
+              width: "250px",
+              height: "330px",
             },
             "& .MuiDateCalendar-root": {
-              width: "220px",
-              height: "280px",
-            },
-            "& .MuiDayCalendar-slideTransition": {
-              width: "220px",
-              height: "280px",
-            },
-            "& .MuiPickersDay-root": {
-              width: "28px",
-              height: "28px",
-            },
+              width: "250px",
+              height: "330px",
+            }
           }}
           onChange={(date) => {
+            (FILTER && FILTER.type !== "day") && (
+              setFILTER((prev) => ({
+                ...prev,
+                type: "day",
+              }))
+            );
+            (PAGING && PAGING.page !== 1) && (
+              setPAGING((prev) => ({
+                ...prev,
+                page: 1,
+              }))
+            );
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(date).format("YYYY-MM-DD"),
-              endDt: moment(date).format("YYYY-MM-DD"),
+              startDt: koreanDate,
+              endDt: koreanDate,
             }));
           }}
           onMonthChange={(date) => {
+            (FILTER && FILTER.type !== "month") && (
+              setFILTER((prev) => ({
+                ...prev,
+                type: "month",
+              }))
+            );
+            (PAGING && PAGING.page !== 1) && (
+              setPAGING((prev) => ({
+                ...prev,
+                page: 1,
+              }))
+            );
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(date).startOf("month").format("YYYY-MM-DD"),
-              endDt: moment(date).endOf("month").format("YYYY-MM-DD"),
+              startDt: curMonthStart,
+              endDt: curMonthEnd
             }));
           }}
           onYearChange={(date) => {
+            (FILTER && FILTER.type !== "year") && (
+              setFILTER((prev) => ({
+                ...prev,
+                type: "year",
+              }))
+            );
+            (PAGING && PAGING.page !== 1) && (
+              setPAGING((prev) => ({
+                ...prev,
+                page: 1,
+              }))
+            );
             setDATE((prev) => ({
               ...prev,
-              startDt: moment(date).startOf("year").format("YYYY-MM-DD"),
-              endDt: moment(date).endOf("year").format("YYYY-MM-DD"),
+              startDt: curYearStart,
+              endDt: curYearEnd
             }));
           }}
         />
@@ -209,7 +236,7 @@ export const Btn = ({
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row shadow-none"}>
+    <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row shadow-none radius-bottom"}>
       {type === "list" ? (
         <>
         {btnOpenCalendar()}

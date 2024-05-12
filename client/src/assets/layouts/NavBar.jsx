@@ -49,19 +49,19 @@ export const NavBar = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky top-50 shadow-none"}>
+    <Paper className={"flex-wrapper h-50 p-sticky top-50 shadow-none radius-bottom"}>
       <Div className={"d-flex w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
+          <span className={"nav-icon-text"}>Total</span>
+          <span className={"w-5"}></span>
+          <span className={"nav-image-smile"}>{makeIcon("total")}</span>
+        </Div>
+        <Div className={"d-center ms-auto"}>
           {!preFix ? (
             <span className={"nav-text"}>Home</span>
           ) : (
             <span className={"nav-text"}>{preFix} / {subFix}</span>
           )}
-        </Div>
-        <Div className={"d-center ms-auto"}>
-          <span className={"nav-icon-text"}>Total</span>
-          <span className={"w-5"}></span>
-          <span className={"nav-image-smile"}>{makeIcon("total")}</span>
         </Div>
         <Div className={"d-center ms-auto me-10"}>
           <span className={"nav-icon-text"}>{`${preFix}`}</span>

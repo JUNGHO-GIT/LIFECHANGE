@@ -3,15 +3,14 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent, koreanDate} from "../../import/ImportLogics";
 import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10, Br5, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {
@@ -159,153 +158,118 @@ export const ExerciseSave = () => {
       alert(res.data.msg);
     }
   };
+  const handlerCount = (e) => {
+    const newCount = Number(e);
+    const defaultSection = {
+      exercise_part_idx: 0,
+      exercise_part_val: "전체",
+      exercise_title_idx: 0,
+      exercise_title_val: "전체",
+      exercise_set: 0,
+      exercise_rep: 0,
+      exercise_kg: 0,
+      exercise_rest: 0,
+      exercise_volume: 0,
+      exercise_cardio: "00:00",
+    };
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: newCount
+    }));
+    if (newCount > 0) {
+      let updatedSection = Array(newCount).fill(null).map((_, idx) =>
+        idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
+      );
+      setOBJECT((prev) => ({
+        ...prev,
+        exercise_section: updatedSection
+      }));
+    }
+    else {
+      setOBJECT((prev) => ({
+        ...prev,
+        exercise_section: []
+      }));
+    }
+  };
+  
+  const handlerValidate = (e, popTrigger) => {
+    const newValInt = Number(e.target.value);
+    const newValStr = String(e.target.value);
+    if (newValInt < 0) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValInt > 10) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValStr === "") {
+      handlerCount("");
+    }
+    else if (isNaN(newValInt) || newValStr === "NaN") {
+      handlerCount("0");
+    }
+    else if (newValStr.startsWith("0")) {
+      handlerCount(newValStr.replace(/^0+/, ""));
+    }
+    else {
+      handlerCount(newValStr);
+    }
+  };
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        운동 Save
-      </p>
-    );
     // 7-2. date
     const dateSection = () => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DesktopDatePicker
-          label={"날짜"}
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
+      <PopDown
+        type={"clendar"}
+        elementId={"popover"}
+        className={""}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+              <LocalizationProvider
+      dateAdapter={AdapterMoment}
+      adapterLocale={"ko"}
+    >
+          <DateCalendar
+            timezone={"Asia/Seoul"}
+            views={["day"]}
+            className={"m-auto"}
+            readOnly={false}
+            value={moment(DATE.startDt)}
+            sx={{
+              "width": "280px",
+              "height": "330px",
               "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
+                "width": "280px",
+                "height": "330px",
               },
               "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              startDt: moment(day).format("YYYY-MM-DD"),
-              endDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-      </LocalizationProvider>
-    );
-    // 7-3. count
-    const countSection = () => {
-      const handlerCount = (e) => {
-        const newCount = Number(e);
-        const defaultSection = {
-          exercise_part_idx: 0,
-          exercise_part_val: "전체",
-          exercise_title_idx: 0,
-          exercise_title_val: "전체",
-          exercise_set: 0,
-          exercise_rep: 0,
-          exercise_kg: 0,
-          exercise_rest: 0,
-          exercise_volume: 0,
-          exercise_cardio: "00:00",
-        };
-        setCOUNT((prev) => ({
-          ...prev,
-          sectionCnt: newCount
-        }));
-        if (newCount > 0) {
-          let updatedSection = Array(newCount).fill(null).map((_, idx) =>
-            idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
-          );
-          setOBJECT((prev) => ({
-            ...prev,
-            exercise_section: updatedSection
-          }));
-        }
-        else {
-          setOBJECT((prev) => ({
-            ...prev,
-            exercise_section: []
-          }));
-        }
-      };
-      return (
-        <PopAlert elementId={"sectionCnt"} contents={
-          <p className={"fs-15"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </p>
-        }>
-          {popProps => (
-            <TextField
-              type={"text"}
-              id={"sectionCnt"}
-              label={"항목수"}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-220"}
-              value={COUNT?.sectionCnt}
-              InputProps={{
-                readOnly: false,
-                startAdornment: (
-                  <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
-                )
-              }}
-              onChange={(e) => {
-                const newValInt = Number(e.target.value);
-                const newValStr = String(e.target.value);
-                if (newValInt < 0) {
-                  popProps.openPopup(e.currentTarget);
-                }
-                else if (newValInt > 10) {
-                  popProps.openPopup(e.currentTarget);
-                }
-                else if (newValStr === "") {
-                  handlerCount("");
-                }
-                else if (isNaN(newValInt) || newValStr === "NaN") {
-                  handlerCount("0");
-                }
-                else if (newValStr.startsWith("0")) {
-                  handlerCount(newValStr.replace(/^0+/, ""));
-                }
-                else {
-                  handlerCount(newValStr);
-                }
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
-          )}
-        </PopAlert>
-      );
-    };
-    // 7-4. total
-    const totalSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
-        <Div className={"d-center mb-20"}>
+                "width": "280px",
+                "height": "330px",
+              }
+            }}
+            onChange={(date) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(date).format("YYYY-MM-DD"),
+                endDt: moment(date).format("YYYY-MM-DD"),
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      }>
+        {popTrigger => (
           <TextField
             select={false}
-            label={"총 볼륨"}
+            label={"날짜"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
+            value={DATE.startDt}
             variant={"outlined"}
-            className={"w-220"}
+            className={"d-block"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -313,77 +277,136 @@ export const ExerciseSave = () => {
               )
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"총 유산소 시간"}
-            size={"small"}
-            value={OBJECT?.exercise_total_cardio}
-            variant={"outlined"}
-            className={"w-220"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"체중"}
-            size={"small"}
-            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-220"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Div>
-      </Card>
+        )}
+      </PopDown>
     );
-    // 7-5. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
-      <PopDown elementId={`pop-${index}`} contents={
-        <>
-          <Div className={"d-row align-center"}>
-            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-            <p className={"fs-14"}>복사</p>
+    // 7-3. count
+    const countSection = () => (
+      <PopDown
+        type={"alert"}
+        elementId={"popover"} 
+        className={"ms-n20"}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <Div className={"d-center"}>
+            0이상 10이하의 숫자만 입력하세요.
           </Div>
-          <Div className={"d-row align-center"}>
-            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-            <p className={"fs-14"}>복사</p>
-          </Div>
-        </>
-      }>
-        {popProps => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+        }>
+        {popTrigger => (
+          <TextField
+            type={"text"}
+            id={"sectionCnt"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"d-block"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+              )
+            }}
+            onChange={(e) => {
+              handlerValidate(e, popTrigger);
+            }}
             onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
+              e.stopPropagation();
             }}
           />
         )}
       </PopDown>
-      </>
+    );
+    // 7-4. total
+    const totalSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        <TextField
+          select={false}
+          label={"총 볼륨"}
+          size={"small"}
+          value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
+          variant={"outlined"}
+          className={"d-block mb-20"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+            )
+          }}
+        />
+        <TextField
+          select={false}
+          label={"총 유산소 시간"}
+          size={"small"}
+          value={OBJECT?.exercise_total_cardio}
+          variant={"outlined"}
+          className={"d-block mb-20"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+            )
+          }}
+        />
+        <TextField
+          select={false}
+          label={"체중"}
+          size={"small"}
+          value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
+          variant={"outlined"}
+          className={"d-block"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+            )
+          }}
+        />
+      </Card>
+    );
+    // 7-5. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <PopDown
+        elementId={`popover-${index}`}
+        type={"dropdown"}
+        elementId={"popover"} 
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <>
+            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+              <span className={"fs-14"}>복사</span>
+            </Icons>
+            <Br5 />
+            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+              <span className={"fs-14"}>복사</span>
+            </Icons>
+          </>
+        }>
+        {(popTrigger) => (
+          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopDown>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -465,7 +488,7 @@ export const ExerciseSave = () => {
             label={"세트"}
             size={"small"}
             variant={"outlined"}
-            className={"w-220"}
+            className={"d-block"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
               readOnly: false
@@ -491,7 +514,7 @@ export const ExerciseSave = () => {
             label={"횟수"}
             size={"small"}
             variant={"outlined"}
-            className={"w-220"}
+            className={"d-block"}
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
               readOnly: false
@@ -517,7 +540,7 @@ export const ExerciseSave = () => {
             label={"무게"}
             size={"small"}
             variant={"outlined"}
-            className={"w-220"}
+            className={"d-block"}
             value={OBJECT?.exercise_section[i]?.exercise_kg}
             InputProps={{
               readOnly: false
@@ -538,61 +561,65 @@ export const ExerciseSave = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"유산소 시간"}
-              minutesStep={1}
-              value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
-              format={"HH:mm"}
+          <PopDown
+            elementId={`popover`}
+            type={"dropdown"}
+            className={""}
+            position={"top"}
+            direction={"center"}
+            contents={
+              <LocalizationProvider
+      dateAdapter={AdapterMoment}
+      adapterLocale={"ko"}
+    >
+              <DigitalClock
+                timeStep={10}
+                ampm={false}
+                format={"HH:mm"}
               timezone={"Asia/Seoul"}
               views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              onChange={(time) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_morning: moment(time).format("HH:mm")
-                }));
-              }}
-            />
-          </LocalizationProvider>
+                            value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_cardio: moment(e).format("HH:mm")
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+              </LocalizationProvider>
+            }>
+            {(popTrigger) => (
+              <TextField
+                select={false}
+                label={"유산소"}
+                size={"small"}
+                variant={"outlined"}
+                className={"d-block"}
+                value={OBJECT?.exercise_section[i]?.exercise_cardio}
+                InputProps={{
+                  readOnly: true
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopDown>
         </Div>
       </Card>
     );
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-center p-10"}>
-          {titleSection()}
-        </Div>
-        <Hr10 className={"mb-20"} />
-        <Div className={"d-column mb-20"}>
+        <Div className={"d-row mb-20"}>
           {dateSection()}
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-row mb-20"}>
           {countSection()}
         </Div>
         <Div className={"d-column mb-20"}>
