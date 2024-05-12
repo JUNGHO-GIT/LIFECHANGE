@@ -3,7 +3,8 @@
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Div, Hr, Br, Paging, Loading, Filter} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Div, Hr, Br, Paging, Filter, Btn, Loading} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";

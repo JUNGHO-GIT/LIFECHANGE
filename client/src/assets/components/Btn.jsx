@@ -158,43 +158,43 @@ export const Btn = ({
     <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row shadow-none border-bottom"}>
       {type === "list" ? (
         <>
-          {btnOpenCalendar()}
-          {btnGetToday()}
+        {btnOpenCalendar()}
+        {btnGetToday()}
         </>
       ) : type === "detail" ? (
         <>
-          {btnToUpdate()}
-          {btnToList()}
+        {btnToUpdate()}
+        {btnToList()}
         </>
       ) : type === "save" && part !== "food" ? (
         <>
-          {btnToSave()}
-          {btnGetToday()}
-          {btnToList()}
+        {btnToSave()}
+        {btnGetToday()}
+        {btnToList()}
         </>
       ) : type === "save" && part === "food" ? (
         <>
-          {btnToSave()}
-          {btnToSearch()}
+        {btnToSave()}
+        {btnToSearch()}
         </>
       ) : type === "search" ? (
         <>
-          {btnGetSearch()}
+        {btnGetSearch()}
         </>
       ) : type === "dataset" ? (
         <>
-          {btnToSave()}
-          {btnResetDefault()}
+        {btnToSave()}
+        {btnResetDefault()}
         </>
       ) : type === "login" ? (
         <>
-          {btnLogin()}
-          {btnRefresh()}
+        {btnLogin()}
+        {btnRefresh()}
         </>
       ) : type === "signup" ? (
         <>
-          {btnSignup()}
-          {btnRefresh()}
+        {btnSignup()}
+        {btnRefresh()}
         </>
       ) : null}
     </Paper>

@@ -1,7 +1,7 @@
 // useTime.jsx
 
-import React, {useEffect} from "react";
-import moment from "moment-timezone";
+import {React, useEffect} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const useTime = (

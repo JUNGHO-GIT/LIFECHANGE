@@ -5,8 +5,8 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn, Loading, PopAlert, PopDown} from "../../import/ImportComponents.jsx";
-import {Icons, Adornment} from "../../import/ImportIcons.jsx";
+import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Div, Hr, Br, Paging, Filter, Btn, Loading} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -187,11 +187,9 @@ export const MoneyList = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
-      part={"sleep"} plan={"plan"} type={"list"}
+      flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 

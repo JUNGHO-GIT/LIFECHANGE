@@ -2,9 +2,8 @@
 
 import {SideBar} from "./SideBar";
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
-import {PopDown, Div} from "../../import/ImportComponents.jsx";
+import {PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {Icons} from "../../import/ImportIcons.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>

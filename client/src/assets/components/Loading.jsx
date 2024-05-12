@@ -1,9 +1,8 @@
 // Loading.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {Icons} from "../../import/ImportIcons.jsx";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({

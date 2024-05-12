@@ -3,8 +3,8 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
-import {Div, Hr, Br, Btn, Loading, PopDown} from "../../../import/ImportComponents.jsx";
-import {Icons} from "../../../import/ImportIcons.jsx";
+import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
+import {Div, Hr, Br, Paging, Filter, Btn, Loading} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";

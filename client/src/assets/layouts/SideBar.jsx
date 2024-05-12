@@ -3,10 +3,9 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {dataArray} from "../../import/ImportLogics";
-import {Div, Hr, Br} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, Div, Hr, Br} from "../../import/ImportComponents.jsx";
 import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
-import {Icons} from "../../import/ImportIcons.jsx";
 import {logo3} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>
@@ -62,7 +61,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
       onClose={() => (setIsSidebarOpen(false))}
       className={"sidebar"}
     >
-      <Div className={"w-200"}>
+      <Div className={"w-200 over-y-hidden"}>
         <Div>
           <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
         </Div>
