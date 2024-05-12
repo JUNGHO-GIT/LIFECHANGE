@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Div, Hr, Br, Paging, Filter, Btn, Loading, PopAlert, PopDown} from "../../import/ImportComponents.jsx";
 import {Icons, Adornment} from "../../import/ImportIcons.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";

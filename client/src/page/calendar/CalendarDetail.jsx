@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar} from "../../import/ImportLayouts.jsx";
-import {Div, Hr, Br, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Div, Hr, Br, Btn, Loading, PopAlert, PopDown} from "../../import/ImportComponents.jsx";
 import {Icons, Adornment} from "../../import/ImportIcons.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
@@ -224,7 +224,7 @@ export const CalendarDetail = () => {
         }
       };
       return (
-        <PopUp elementId={"sectionCnt"} contents={
+        <PopAlert elementId={"sectionCnt"} contents={
           <p className={"fs-15"}>0이상 10이하의 숫자만 입력하세요.</p>
         }>
           {popProps => (
@@ -269,7 +269,7 @@ export const CalendarDetail = () => {
               }}
             />
           )}
-        </PopUp>
+        </PopAlert>
       );
     };
     // 7-6. table

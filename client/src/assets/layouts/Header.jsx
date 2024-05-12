@@ -25,10 +25,8 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <>
-      <Icons name={"TbAlignLeft"} className={"w-24 h-24 dark pointer"} onClick={openSidebar}
-      />
-      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}
-      />
+    <Icons name={"TbAlignLeft"} className={"w-24 h-24 dark pointer"} onClick={openSidebar}/>
+    <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
     </>
   );
 
@@ -62,7 +60,7 @@ export const Header = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky top-0"} variant={"outlined"}>
+    <Paper className={"flex-wrapper h-50 p-sticky top-0 shadow-none border-bottom"}>
       <Div className={"d-center w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
           {btnSideBar()}

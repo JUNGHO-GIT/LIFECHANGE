@@ -62,7 +62,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
       onClose={() => (setIsSidebarOpen(false))}
       className={"sidebar"}
     >
-      <Div className={"w-180"}>
+      <Div className={"w-200"}>
         <Div>
           <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
         </Div>

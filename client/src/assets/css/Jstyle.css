@@ -6353,7 +6353,19 @@
 }
 
 .border {
-  border: 0.3px solid #f0f2f5 !important;
+  border: 0.3px solid #ebebeb !important;
+}
+.border-top {
+  border-top: 0.3px solid #ebebeb !important;
+}
+.border-right {
+  border-right: 0.3px solid #ebebeb !important;
+}
+.border-bottom {
+  border-bottom: 0.3px solid #ebebeb !important;
+}
+.border-left {
+  border-left: 0.3px solid #ebebeb !important;
 }
 .border-none {
   border: none !important;

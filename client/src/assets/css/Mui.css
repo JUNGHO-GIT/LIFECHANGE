@@ -1,3 +1,8 @@
+/** 페이퍼 루트 **/
+[class$="MuiPaper-root"] {
+  border: none !important;
+}
+
 /** 셀렉트 박스 **/
 [class$="MuiFormControl-root-MuiTextField-root"] {
   max-width: 220px !important;

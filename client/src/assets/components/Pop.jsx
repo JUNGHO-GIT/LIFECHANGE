@@ -1,4 +1,4 @@
-// PopUp.jsx
+// PopAlert.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
@@ -6,7 +6,7 @@ import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {usePopupState} from 'material-ui-popup-state/hooks';
 
 // ------------------------------------------------------------------------------------------------>
-export const PopUp = ({ elementId, contents, children }) => {
+export const PopAlert = ({ elementId, contents, children }) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
