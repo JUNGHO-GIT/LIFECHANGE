@@ -2,12 +2,14 @@
 
 import {React} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
-import {Button, Paper, TextField} from "../../import/ImportMuis.jsx";
+import {PopUp, PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
+import {Button, Paper, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
+import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
-  DAYPICKER, setDAYPICKER, DATE, setDATE, SEND,
+  DATE, setDATE, SEND,
   FILTER, setFILTER, PAGING, setPAGING,
   flowSave, navParam, part, plan, type, handler = () => {}
 }) => {
@@ -16,17 +18,6 @@ export const Btn = ({
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 11. button ----------------------------------------------------------------------------------->
-  const btnOpenCalendar = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      setDAYPICKER((prev) => ({
-        ...prev,
-        dayOpen: !prev.dayOpen,
-      }));
-    }}>
-      달력
-    </Button>
-  );
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
@@ -151,6 +142,69 @@ export const Btn = ({
     className={"danger-btn"} onClick={handler}>
       Default
     </Button>
+  );
+  const btnOpenCalendar = () => (
+    <PopUp elementId={`popup`} contents={
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+        <DateCalendar
+          value={moment(DATE.startDt, "YYYY-MM-DD")}
+          timezone={"Asia/Seoul"}
+          views={["year", "day"]}
+          className={"m-auto"}
+          readOnly={false}
+          sx={{
+            "width": "220px",
+            "height": "280px",
+            "& .MuiPickersLayout-contentWrapper": {
+              width: "220px",
+              height: "280px",
+            },
+            "& .MuiDateCalendar-root": {
+              width: "220px",
+              height: "280px",
+            },
+            "& .MuiDayCalendar-slideTransition": {
+              width: "220px",
+              height: "280px",
+            },
+            "& .MuiPickersDay-root": {
+              width: "28px",
+              height: "28px",
+            },
+          }}
+          onChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(date).format("YYYY-MM-DD"),
+              endDt: moment(date).format("YYYY-MM-DD"),
+            }));
+          }}
+          onMonthChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(date).startOf("month").format("YYYY-MM-DD"),
+              endDt: moment(date).endOf("month").format("YYYY-MM-DD"),
+            }));
+          }}
+          onYearChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(date).startOf("year").format("YYYY-MM-DD"),
+              endDt: moment(date).endOf("year").format("YYYY-MM-DD"),
+            }));
+          }}
+        />
+      </LocalizationProvider>
+    }>
+      {popProps => (
+        <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+        className={"primary-btn"} onClick={(e) => {
+          popProps.openPopup(e.currentTarget)
+        }}>
+          달력
+        </Button>
+      )}
+    </PopUp>
   );
 
   // 7. table ------------------------------------------------------------------------------------->

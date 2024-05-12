@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage, useDayPicker} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr, Br, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
@@ -186,11 +186,9 @@ export const SleepList = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
-      PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
-      part={"sleep"} plan={"plan"} type={"list"}
+    <Btn DATE={DATE} setDATE={setDATE}
+      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 

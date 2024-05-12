@@ -186,8 +186,7 @@ export const FoodListPlan = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
+    <Btn  DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"list"}

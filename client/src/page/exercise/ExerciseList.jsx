@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar, Footer} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr, Br, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -195,8 +195,7 @@ export const ExerciseList = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
+    <Btn  DATE={DATE} setDATE={setDATE} SEND={SEND} FILTER={FILTER} setFILTER={setFILTER}
       PAGING={PAGING} setPAGING={setPAGING} flowSave={""} navParam={navParam}
       part={"exercise"} plan={"plan"} type={"list"}
     />

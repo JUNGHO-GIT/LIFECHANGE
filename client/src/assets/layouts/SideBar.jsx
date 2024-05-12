@@ -62,7 +62,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
       className={"sidebar"}
     >
       <Div className={"w-200 over-y-hidden"}>
-        <Div>
+        <Div className={"d-center"}>
           <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
         </Div>
         <List role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>

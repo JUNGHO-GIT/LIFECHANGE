@@ -1,16 +1,17 @@
-// usePicker.jsx
+// useDayPicker.jsx
 
 import {React, useEffect} from "../../import/ImportReacts.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const usePicker = (
+export const useDayPicker = (
   DAYPICKER, setDAYPICKER
 ) => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (DAYPICKER?.dayOpen) {
+    alert (JSON.stringify(DAYPICKER?.dayOpen));
+    if (DAYPICKER?.dayOpen === true) {
       <PopUp elementId={`popup`} contents={
         <>
         <Div className={"d-row align-center"}>
@@ -32,6 +33,5 @@ export const usePicker = (
         )}
       </PopUp>
     }
-  }, [DAYPICKER.dayOpen]);
-
+  }, [DAYPICKER]);
 };

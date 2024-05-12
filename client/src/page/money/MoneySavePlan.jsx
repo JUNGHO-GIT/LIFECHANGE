@@ -139,12 +139,8 @@ export const MoneySavePlan = () => {
                 width: "210px",
                 height: "270px",
               },
-              "& .MuiDayCalendar-slideTransition": {
-                width: "210px",
-                height: "270px",
-              },
               "& .MuiPickersDay-root": {
-                width: "30px",
+                width: "28px",
                 height: "28px",
               },
             }},
@@ -177,12 +173,8 @@ export const MoneySavePlan = () => {
                 width: "210px",
                 height: "270px",
               },
-              "& .MuiDayCalendar-slideTransition": {
-                width: "210px",
-                height: "270px",
-              },
               "& .MuiPickersDay-root": {
-                width: "30px",
+                width: "28px",
                 height: "28px",
               },
             }},
@@ -315,8 +307,7 @@ export const MoneySavePlan = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      DATE={DATE} setDATE={setDATE}
+    <Btn  DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"money"} plan={"plan"} type={"save"}
