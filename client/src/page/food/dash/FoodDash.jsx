@@ -1,7 +1,7 @@
 // FoodDash.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
-import {Header, NavBar} from "../../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading} from "../../../import/ImportLayouts.jsx";
 import {FoodDashBar} from "./FoodDashBar.jsx";
 import {FoodDashPie} from "./FoodDashPie.jsx";
 import {FoodDashLine} from "./FoodDashLine.jsx";
