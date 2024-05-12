@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -421,7 +421,7 @@ export const UserDataset = () => {
         <Div className={"d-center p-10"}>
           {titleSection()}
         </Div>
-        <Hr className={"mb-20"} />
+        <Hr10 className={"mb-20"} />
         <Div className={"d-column"}>
           {tableFragment1(0)}
         </Div>

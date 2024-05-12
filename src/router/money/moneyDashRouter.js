@@ -1,7 +1,7 @@
 // router.js
 
 import express from "express";
-import * as service from "../../service/food/foodDashService.js";
+import * as service from "../../service/money/moneyDashService.js";
 export const router = express.Router();
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>

@@ -6,7 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
@@ -313,7 +313,7 @@ export const SleepDetail = () => {
         <Div className={"d-center p-10"}>
           {titleSection()}
         </Div>
-        <Hr className={"mb-20"} />
+        <Hr10 className={"mb-20"} />
         <Div className={"d-column mb-20"}>
           {dateSection()}
         </Div>

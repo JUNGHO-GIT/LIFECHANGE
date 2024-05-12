@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {dataArray} from "../../import/ImportLogics";
-import {Adornment, Icons, Div, Hr, Br} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
 import {logo3} from "../../import/ImportImages";
@@ -106,7 +106,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
             </Div>
           ))}
         </List>
-        <Hr className={"mb-20"} />
+        <Hr10 className={"mb-20"} />
         <Button variant={"contained"} color={"error"} size={"small"} className={"m-20"}
         onClick={() => (sessionStorage.clear())}>
           Clear

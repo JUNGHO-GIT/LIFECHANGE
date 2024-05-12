@@ -5,7 +5,7 @@ import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn} from "../../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper, TextField} from "../../../import/ImportMuis.jsx";
 import {MenuItem} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";

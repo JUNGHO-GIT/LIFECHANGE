@@ -209,7 +209,7 @@ export const Btn = ({
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row shadow-none border-bottom"}>
+    <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row shadow-none"}>
       {type === "list" ? (
         <>
         {btnOpenCalendar()}

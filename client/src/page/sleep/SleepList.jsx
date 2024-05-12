@@ -5,7 +5,7 @@ import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useDayPicker} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr, Br, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
