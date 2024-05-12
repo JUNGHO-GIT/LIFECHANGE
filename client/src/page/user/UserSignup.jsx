@@ -92,7 +92,7 @@ export const UserSignup = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-74vh"}
+      <Div className={"block-wrapper h-min400"}
         style={{
           display: "flex",
           flexDirection: "column",

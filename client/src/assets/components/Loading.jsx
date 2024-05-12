@@ -16,7 +16,7 @@ export const Loading = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"content-wrapper"} variant={"outlined"}>
-      <Div className={"block-wrapper h-75vh"}
+      <Div className={"block-wrapper h-min400"}
         style={{
           display: "flex",
           justifyContent: "center",

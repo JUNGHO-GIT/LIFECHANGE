@@ -487,7 +487,7 @@ export const UserList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min75vh"}>
+      <Div className={"block-wrapper h-min500"}>
         <Div className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}
@@ -524,7 +524,7 @@ export const UserList = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Paper className={"flex-wrapper h-8vh p-sticky bottom-0"} variant={"outlined"}>
+    <Paper className={"flex-wrapper h-50 p-sticky bottom-0"} variant={"outlined"}>
       <Div className={"d-center"}>
         <TextField
           select={false}

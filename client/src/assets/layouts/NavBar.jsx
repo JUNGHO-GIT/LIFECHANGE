@@ -60,12 +60,12 @@ export const NavBar = () => {
         </Div>
         <Div className={"d-center ms-auto"}>
           <span className={"nav-icon-text"}>Total</span>
-          <span className={"w-1vw"}></span>
+          <span className={"w-5"}></span>
           <span className={"nav-image-smile"}>{makeIcon("total")}</span>
         </Div>
         <Div className={"d-center ms-auto me-10"}>
           <span className={"nav-icon-text"}>{`${preFix}`}</span>
-          <span className={"w-1vw"}></span>
+          <span className={"w-5"}></span>
           <span className={"nav-image-smile"}>{makeIcon("sub")}</span>
         </Div>
       </Div>

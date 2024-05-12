@@ -156,7 +156,7 @@ export const ExerciseListPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min75vh w-min120vw"}>
+      <Div className={"block-wrapper h-min500 w-min300"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

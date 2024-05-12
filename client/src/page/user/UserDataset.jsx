@@ -417,7 +417,7 @@ export const UserDataset = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min75vh"}>
+      <Div className={"block-wrapper h-min500"}>
         <Div className={"d-center p-10"}>
           {titleSection()}
         </Div>
