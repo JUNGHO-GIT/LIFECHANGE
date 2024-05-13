@@ -42,7 +42,7 @@ export const Paging = ({
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
     strings.type === "list" || strings.type === "diff" ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {defaultNode()}
       </Div>
     ) : (

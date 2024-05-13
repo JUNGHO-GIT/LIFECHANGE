@@ -22,16 +22,9 @@ export const PopUp = ({...props}) => {
 
   return (
     <>
-      {props.children({
-        openPopup: (anchorEl) => {
-          popupState.setAnchorEl(anchorEl);
-          popupState.open();
-        },
-        closePopup: () => popupState.close()
-      })}
       <Popover
         {...bindPopover(popupState)}
-        id={props.elementId}
+        id={"popover"}
         className={props.className}
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
@@ -58,6 +51,15 @@ export const PopUp = ({...props}) => {
       >
         {props.contents}
       </Popover>
+      {props.children({
+        openPopup: (anchorEl) => {
+          popupState.setAnchorEl(anchorEl);
+          popupState.open();
+        },
+        closePopup: () => {
+          popupState.close();
+        }
+      })}
     </>
   );
 };

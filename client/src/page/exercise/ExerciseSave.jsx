@@ -261,7 +261,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={""}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -295,7 +295,7 @@ export const ExerciseSave = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-90p"}
+            className={"w-80"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: false,
@@ -350,7 +350,7 @@ export const ExerciseSave = () => {
           size={"small"}
           value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
           variant={"outlined"}
-          className={"w-90p"}
+          className={"w-80"}
           InputProps={{
             readOnly: true,
             startAdornment: (
@@ -482,7 +482,7 @@ export const ExerciseSave = () => {
             label={"세트"}
             size={"small"}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-80"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
               readOnly: false
@@ -508,7 +508,7 @@ export const ExerciseSave = () => {
             label={"횟수"}
             size={"small"}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-80"}
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
               readOnly: false
@@ -534,7 +534,7 @@ export const ExerciseSave = () => {
             label={"무게"}
             size={"small"}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-80"}
             value={OBJECT?.exercise_section[i]?.exercise_kg}
             InputProps={{
               readOnly: false
@@ -588,7 +588,7 @@ export const ExerciseSave = () => {
                 label={"유산소"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-90p"}
+                className={"w-80"}
                 value={OBJECT?.exercise_section[i]?.exercise_cardio}
                 InputProps={{
                   readOnly: true
@@ -605,10 +605,10 @@ export const ExerciseSave = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-row mb-20"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
-        <Div className={"d-row mb-20"}>
+        <Div className={"d-center mb-20"}>
           {countSection()}
         </Div>
         <Div className={"d-column mb-20"}>

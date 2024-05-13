@@ -249,26 +249,26 @@ export const Filter = ({
   // 7. filter ------------------------------------------------------------------------------------>
   const filterNode = () => (
     strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {defaultNode()}
         {exerciseNode()}
       </Div>
     ) : strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {defaultNode()}
         {foodNode()}
       </Div>
     ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {defaultNode()}
         {moneyNode()}
       </Div>
     ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {defaultNode()}
       </Div>
     ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {demoNode()}
       </Div>
     ) : (

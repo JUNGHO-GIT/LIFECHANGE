@@ -9,35 +9,6 @@ export const Footer = ({
   strings, objects, functions, handlers
 }) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
-  const height =
-  strings?.part === "calendar"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-0"
-  ) : strings?.part === "calendar"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : strings?.part === "exercise"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-160"
-  ) : strings?.part === "exercise"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : strings?.part === "food"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-160"
-  ) : strings?.part === "food"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : strings?.part === "money"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-160"
-  ) : strings?.part === "money"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : strings?.part === "sleep"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-160"
-  ) : strings?.part === "sleep"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : strings?.part === "user"&&(strings?.type === "list" || strings?.part === "diff") ? (
-    "h-160"
-  ) : strings?.part === "user"&&(strings?.type === "detail" || strings?.part === "save") ? (
-    "h-80"
-  ) : "h-40";
-
-
   // 6. pagingNode -------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging
@@ -78,9 +49,9 @@ export const Footer = ({
     />
   );
 
-  // 7. resultNode -------------------------------------------------------------------------------->
-  const resultNode = () => (
-    <Paper className={`flex-wrapper ${height} p-sticky bottom-0 border`}>
+  // 7. footer -------------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Paper className={"flex-wrapper p-sticky bottom-0 border"}>
       {pagingNode()}
       {filterNode()}
       {btnNode()}
@@ -91,7 +62,7 @@ export const Footer = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-    {resultNode()}
+    {footerNode()}
     </>
   );
 };

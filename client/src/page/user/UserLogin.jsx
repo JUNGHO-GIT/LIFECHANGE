@@ -134,7 +134,7 @@ export const UserLogin = () => {
 
       }}
       handlers={{
-        navParam
+        navParam, flowSave
       }}
     />
   );

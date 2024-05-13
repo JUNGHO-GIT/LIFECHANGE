@@ -138,7 +138,7 @@ export const UserSignup = () => {
 
       }}
       handlers={{
-        navParam
+        navParam, flowSave
       }}
     />
   );

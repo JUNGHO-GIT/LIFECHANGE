@@ -262,33 +262,41 @@ export const Btn = ({
     strings?.part === "calendar" && (strings?.type === "list" || strings?.type === "diff") ? (
       null
     ) : strings?.part === "calendar" && (strings?.type === "detail" || strings?.type === "save") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {btnToSave()}
         {btnToList()}
       </Div>
     ) : strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {btnOpenCalendar()}
         {btnGetToday()}
       </Div>
-    ) :   strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+    ) : strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
+      <Div className={"block-wrapper d-row h-40"}>
         {btnOpenCalendar()}
         {btnGetToday()}
       </Div>
     ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {btnOpenCalendar()}
         {btnGetToday()}
       </Div>
     ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {btnOpenCalendar()}
         {btnGetToday()}
       </Div>
     ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row"}>
+      <Div className={"block-wrapper d-row h-40"}>
         {btnInsertDemo()}
+      </Div>
+    ) : strings?.part === "user" && (strings?.type === "login") ? (
+      <Div className={"block-wrapper d-row h-40"}>
+        {btnLogin()}
+      </Div>
+    ) : strings?.part === "user" && (strings?.type === "signup") ? (
+      <Div className={"block-wrapper d-row h-40"}>
+        {btnSignup()}
       </Div>
     ) : null
   );

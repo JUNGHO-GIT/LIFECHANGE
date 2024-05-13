@@ -137,6 +137,69 @@ export const MoneySave = () => {
       alert(res.data.msg);
     }
   };
+  
+    // 4-1. handler --------------------------------------------------------------------------------->
+  const handlerCount = (e) => {
+    const newCount = Number(e);
+    const defaultSection = {
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: ""
+    };
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: newCount
+    }));
+    if (newCount > 0) {
+      let updatedSection = Array(newCount).fill(null).map((_, idx) =>
+        idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
+      );
+      setOBJECT((prev) => ({
+        ...prev,
+        money_section: updatedSection
+      }));
+    }
+    else {
+      setOBJECT((prev) => ({
+        ...prev,
+        money_section: []
+      }));
+    }
+  };
+
+  // 4-2. handler --------------------------------------------------------------------------------->
+  const handlerValidate = (e, popTrigger) => {
+    const newValInt = Number(e.target.value);
+    const newValStr = String(e.target.value);
+    if (newValInt < 0) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValInt > 10) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValStr === "") {
+      handlerCount("");
+    }
+    else if (isNaN(newValInt) || newValStr === "NaN") {
+      handlerCount("0");
+    }
+    else if (newValStr.startsWith("0")) {
+      handlerCount(newValStr.replace(/^0+/, ""));
+    }
+    else {
+      handlerCount(newValStr);
+    }
+  };
+  
+  // 4. handler
+  const handlerDelete = (i) =>{
+    if (i > -1) {
+      OBJECT.money_section.splice(i, 1, "");
+    }
+  };
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -177,7 +240,7 @@ export const MoneySave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -192,44 +255,13 @@ export const MoneySave = () => {
       </PopUp>
     );
     // 7-3. count
-    const countSection = () => {
-      const handlerCount = (e) => {
-        const newCount = Number(e);
-        const defaultSection = {
-          money_part_idx: 0,
-          money_part_val: "전체",
-          money_title_idx: 0,
-          money_title_val: "전체",
-          money_amount: 0,
-          money_content: ""
-        };
-        setCOUNT((prev) => ({
-          ...prev,
-          sectionCnt: newCount
-        }));
-        if (newCount > 0) {
-          let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-            idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
-          ));
-          setOBJECT((prev) => ({
-            ...prev,
-            money_section: updatedSection
-          }));
-        }
-        else {
-          setOBJECT((prev) => ({
-            ...prev,
-            money_section: []
-          }));
-        }
-      };
-      return (
+    const countSection = () => (
         <PopUp
           type={"alert"}
           elementId={"popover"}
           className={""}
           position={"bottom"}
-          direction={"center"}
+          direction={"left"}
           contents={
             <Div className={"d-center"}>
               0이상 10이하의 숫자만 입력하세요.
@@ -242,7 +274,7 @@ export const MoneySave = () => {
               label={"항목수"}
               variant={"outlined"}
               size={"small"}
-              className={"w-90p"}
+              className={"w-60vw"}
               value={COUNT?.sectionCnt}
               InputProps={{
                 readOnly: false,
@@ -251,26 +283,7 @@ export const MoneySave = () => {
                 )
               }}
               onChange={(e) => {
-                const newValInt = Number(e.target.value);
-                const newValStr = String(e.target.value);
-                if (newValInt < 0) {
-                  popTrigger.openPopup(e.currentTarget);
-                }
-                else if (newValInt > 10) {
-                  popTrigger.openPopup(e.currentTarget);
-                }
-                else if (newValStr === "") {
-                  handlerCount("");
-                }
-                else if (isNaN(newValInt) || newValStr === "NaN") {
-                  handlerCount("0");
-                }
-                else if (newValStr.startsWith("0")) {
-                  handlerCount(newValStr.replace(/^0+/, ""));
-                }
-                else {
-                  handlerCount(newValStr);
-                }
+                handlerValidate(e, popTrigger);
               }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -279,7 +292,6 @@ export const MoneySave = () => {
           )}
         </PopUp>
       );
-    };
     // 7-4. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
@@ -290,7 +302,7 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -306,7 +318,7 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -322,7 +334,7 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -355,9 +367,12 @@ export const MoneySave = () => {
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
           <p className={"fs-14"}>복사</p>
         </Div>
-        <Div className={"d-row align-center"}>
+        <Div className={"d-row align-center"}
+        onClick={() => {
+          alert(OBJECT.money_section[index]);
+        }}>
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>복사</p>
+          <p className={"fs-14"}>삭제</p>
         </Div>
         </>
       }>
@@ -386,7 +401,7 @@ export const MoneySave = () => {
             id={`money_part_val-${i}`}
             name={`money_part_val-${i}`}
             variant={"outlined"}
-            className={"w-45p me-10"}
+            className={"w-25vw me-10"}
             value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
               readOnly: false
@@ -420,7 +435,7 @@ export const MoneySave = () => {
             label={"타이틀"}
             id={`money_title_val-${i}`}
             name={`money_title_val-${i}`}
-            className={"w-45p ms-10"}
+            className={"w-25vw ms-10"}
             variant={"outlined"}
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
@@ -458,7 +473,7 @@ export const MoneySave = () => {
             variant={"outlined"}
             id={`money_amount-${i}`}
             name={`money_amount-${i}`}
-            className={"w-90p"}
+            className={"w-60vw"}
             size={"small"}
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
@@ -490,7 +505,7 @@ export const MoneySave = () => {
             variant={"outlined"}
             id={`money_content-${i}`}
             name={`money_content-${i}`}
-            className={"w-90p"}
+            className={"w-60vw"}
             size={"small"}
             value={OBJECT?.money_section[i]?.money_content}
             InputProps={{
@@ -517,7 +532,9 @@ export const MoneySave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div
+        className={"block-wrapper h-min110vh"}
+      >
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
