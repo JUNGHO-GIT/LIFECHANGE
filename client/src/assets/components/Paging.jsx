@@ -37,7 +37,7 @@ export const Paging = ({
         </Div>
       </Paper>
     ) : (
-      <Paper className={"flex-wrapper h-50 p-sticky bottom-100 shadow-none radius-top"}>
+      <Paper className={"flex-wrapper h-50 p-sticky bottom-100"}>
         <Div className={"d-center"}>
           <TablePagination
             rowsPerPageOptions={[5, 10]}

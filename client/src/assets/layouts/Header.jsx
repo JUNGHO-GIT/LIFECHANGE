@@ -59,7 +59,7 @@ export const Header = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky top-0 shadow-none radius-top"}>
+    <Paper className={"flex-wrapper h-50 p-sticky top-0"}>
       <Div className={"d-center w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
           {btnSideBar()}

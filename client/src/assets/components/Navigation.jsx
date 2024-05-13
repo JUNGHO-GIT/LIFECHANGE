@@ -2,11 +2,10 @@
 
 import {React, useState}from "../../import/ImportReacts.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
-import {Btn, Filter, Paging, Navigation} from "../../import/ImportComponents.jsx";
 import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Footer = () => {
+export const Navigation = () => {
   
   const [value, setValue] = React.useState(0);
   
@@ -34,9 +33,9 @@ export const Footer = () => {
   
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-100 p-sticky bottom-0 d-row shadow-none radius-bottom"}>
+    <Div className={"d-center w-100p m-auto"}>
       {bottomNode()}
-    </Paper>
+    </Div>
   );
 
   // 15. return ----------------------------------------------------------------------------------->
