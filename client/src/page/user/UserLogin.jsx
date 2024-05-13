@@ -1,9 +1,9 @@
 // UserLogin.jsx
 
-import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -17,6 +17,11 @@ export const UserLogin = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navParam = useNavigate();
+  const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -110,26 +115,41 @@ export const UserLogin = () => {
     );
   };
 
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
-      SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+
+      }}
+      functions={{
+
+      }}
+      handlers={{
+        navParam
+      }}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

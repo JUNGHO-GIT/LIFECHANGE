@@ -5,24 +5,27 @@ import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Navigation = () => {
-  
+export const Navigation = ({
+  strings, objects, functions, handlers
+}) => {
+
   const [value, setValue] = React.useState(0);
-  
-  const bottomNode = () => (
+
+  const navigationNode = () => (
     <BottomNavigation
       showLabels={true}
       value={value}
+      className={"d-center w-100p m-auto"}
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
     >
-      <BottomNavigationAction label="Recents" 
-      icon={                
+      <BottomNavigationAction label="Recents"
+      icon={
         <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
       } />
       <BottomNavigationAction label="Favorites"
-      icon={                
+      icon={
         <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
       } />
       <BottomNavigationAction label="Archive" icon={
@@ -30,18 +33,18 @@ export const Navigation = () => {
       } />
     </BottomNavigation>
   );
-  
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Div className={"d-center w-100p m-auto"}>
-      {bottomNode()}
+
+  // 7. resultNode -------------------------------------------------------------------------------->
+  const resultNode = () => (
+    <Div className={"block-wrapper h-50 d-row"}>
+      {navigationNode()}
     </Div>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {resultNode()}
     </>
   );
 };

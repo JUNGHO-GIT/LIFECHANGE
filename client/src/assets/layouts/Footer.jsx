@@ -1,48 +1,70 @@
 // Footer.jsx
 
 import {React, useState}from "../../import/ImportReacts.jsx";
-import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {Btn, Filter, Paging, Navigation} from "../../import/ImportComponents.jsx";
 import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Footer = () => {
-  
-  const [value, setValue] = React.useState(0);
-  
-  const bottomNode = () => (
-    <BottomNavigation
-      showLabels={true}
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-    >
-      <BottomNavigationAction label="Recents" 
-      icon={                
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
-      } />
-      <BottomNavigationAction label="Favorites"
-      icon={                
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
-      } />
-      <BottomNavigationAction label="Archive" icon={
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
-      } />
-    </BottomNavigation>
+export const Footer = ({
+  strings, objects, functions, handlers
+}) => {
+
+  alert(JSON.stringify(strings));
+
+  // 6. pagingNode -------------------------------------------------------------------------------->
+  const pagingNode = () => (
+    <Paging
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
   );
-  
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Paper className={"flex-wrapper h-100 p-sticky bottom-0 d-row shadow-none radius-bottom"}>
-      {bottomNode()}
+
+  // 6. filterNode -------------------------------------------------------------------------------->
+  const filterNode = () => (
+    <Filter
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 6. btnNode ----------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 6. navigationNode ---------------------------------------------------------------------------->
+  const navigationNode = () => (
+    <Navigation
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 7. resultNode -------------------------------------------------------------------------------->
+  const resultNode = () => (
+    <Paper className={"flex-wrapper h-200 p-sticky bottom-0"}>
+      {pagingNode()}
+      {filterNode()}
+      {btnNode()}
+      {navigationNode()}
     </Paper>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {resultNode()}
     </>
   );
 };

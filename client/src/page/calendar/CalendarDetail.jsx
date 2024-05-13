@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -29,6 +29,9 @@ export const CalendarDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
   const colors = [
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
@@ -223,7 +226,7 @@ export const CalendarDetail = () => {
         <PopAlert elementId={"sectionCnt"} contents={
           <p className={"fs-15"}>0이상 10이하의 숫자만 입력하세요.</p>
         }>
-          {popProps => (
+          {(popTrigger) => (
             <TextField
               type={"text"}
               id={"sectionCnt"}
@@ -242,10 +245,10 @@ export const CalendarDetail = () => {
                 const newValInt = Number(e.target.value);
                 const newValStr = String(e.target.value);
                 if (newValInt < 0) {
-                  popProps.openPopup(e.currentTarget);
+                  popTrigger.openPopup(e.currentTarget);
                 }
                 else if (newValInt > 10) {
-                  popProps.openPopup(e.currentTarget);
+                  popTrigger.openPopup(e.currentTarget);
                 }
                 else if (newValStr === "") {
                   handlerCount("");
@@ -422,26 +425,41 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn  DATE={DATE} setDATE={setDATE} SEND={SEND}  FILTER={""} setFILTER={""}
-      PAGING={""} setPAGING={""} flowSave={flowSave} navParam={navParam}
-      part={"calendar"} plan={""} type={"save"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, SEND, COUNT, DAYPICKER
+      }}
+      functions={{
+        setDATE, setSEND, setCOUNT, setDAYPICKER
+      }}
+      handlers={{
+        navParam
+      }}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

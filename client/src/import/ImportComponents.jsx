@@ -6,11 +6,13 @@ import {PopAlert, PopUp, PopDown} from "../assets/components/Pop.jsx";
 import {Paging} from "../assets/components/Paging.jsx";
 import {Filter} from "../assets/components/Filter.jsx";
 import {Btn} from "../assets/components/Btn.jsx";
+import {Navigation} from "../assets/components/Navigation.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export {
   Br5, Br10, Hr5, Hr10,
   Div, Icons, Adornment,
   PopAlert, PopUp, PopDown,
-  Paging, Filter, Btn,
+  Paging, Filter,
+  Btn, Navigation
 };

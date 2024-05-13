@@ -24,10 +24,10 @@ export const useDayPicker = (
         </Div>
         </>
       }>
-        {popProps => (
+        {(popTrigger) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
+              popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}

@@ -6,68 +6,39 @@ import {Paper, TablePagination} from "../../import/ImportMuis.jsx";
 
 // 9. paging -------------------------------------------------------------------------------------->
 export const Paging = ({
-  PAGING, setPAGING, COUNT, setCOUNT, part, plan, type
+  strings, objects, functions, handlers
 }) => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    type === "search" ? (
-      <Paper className={"flex-wrapper h-50 p-sticky bottom-50 shadow-none radius-top"}>
-        <Div className={"d-center"}>
-          <TablePagination
-            rowsPerPageOptions={[10]}
-            component={"div"}
-            labelRowsPerPage={""}
-            count={COUNT.totalCnt}
-            rowsPerPage={PAGING.limit}
-            page={PAGING.page - 1}
-            onPageChange={(event, newPage) => {
-              setPAGING((prev) => ({
-                ...prev,
-                page: newPage + 1
-              }));
-            }}
-            onRowsPerPageChange={(event) => {
-              setPAGING((prev) => ({
-                ...prev,
-                limit: parseInt(event.target.value, 10)
-              }));
-            }}
-          />
-        </Div>
-      </Paper>
-    ) : (
-      <Paper className={"flex-wrapper h-50 p-sticky bottom-100"}>
-        <Div className={"d-center"}>
-          <TablePagination
-            rowsPerPageOptions={[5, 10]}
-            component={"div"}
-            labelRowsPerPage={""}
-            count={COUNT.totalCnt}
-            rowsPerPage={PAGING.limit}
-            page={PAGING.page - 1}
-            onPageChange={(event, newPage) => {
-              setPAGING((prev) => ({
-                ...prev,
-                page: newPage + 1
-              }));
-            }}
-            onRowsPerPageChange={(event) => {
-              setPAGING((prev) => ({
-                ...prev,
-                limit: parseInt(event.target.value, 10)
-              }));
-            }}
-          />
-        </Div>
-      </Paper>
-    )
+    <Div className={"block-wrapper h-50 d-row"}>
+      <TablePagination
+        rowsPerPageOptions={[10]}
+        component={"div"}
+        labelRowsPerPage={""}
+        count={objects?.COUNT.totalCnt}
+        rowsPerPage={objects?.PAGING.limit}
+        page={objects?.PAGING.page - 1}
+        onPageChange={(event, newPage) => {
+          functions.setPAGING((prev) => ({
+            ...prev,
+            page: newPage + 1
+          }));
+        }}
+        onRowsPerPageChange={(event) => {
+          functions.setPAGING((prev) => ({
+            ...prev,
+            limit: parseInt(event.target.value, 10)
+          }));
+        }}
+      />
+    </Div>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {tableNode()}
     </>
   );
 };

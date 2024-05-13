@@ -47,10 +47,10 @@ export const Header = () => {
       </Div>
       </>
     }>
-      {popProps => (
+      {(popTrigger) => (
         <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
           onClick={(e) => {
-            popProps.openPopup(e.currentTarget)
+            popTrigger.openPopup(e.currentTarget)
           }}
         />
       )}
@@ -77,7 +77,7 @@ export const Header = () => {
   );
 
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {tableNode()}

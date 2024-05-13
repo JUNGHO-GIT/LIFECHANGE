@@ -510,10 +510,10 @@ export const MoneyDashPie = () => {
         </FormGroup>
       ))
     }>
-      {popProps => (
+      {(popTrigger) => (
         <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark pointer"}
           id={"popChild"} onClick={(e) => {
-            popProps.openPopup(e.currentTarget)
+            popTrigger.openPopup(e.currentTarget)
           }}
         />
       )}
@@ -525,7 +525,7 @@ export const MoneyDashPie = () => {
     <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       <Paper className={"content-wrapper over-x-hidden"} variant={"outlined"}>

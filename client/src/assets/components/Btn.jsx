@@ -1,38 +1,35 @@
-// Button.jsx
+// Btn.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {PopUp, PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Button, Paper, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 import {newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd}
 from "../../import/ImportLogics.jsx";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
-  DATE, setDATE, SEND, FILTER, setFILTER,
-  PAGING, setPAGING, flowSave, navParam,
-  part, plan, type, handler = () => {}
+  strings, objects, functions, handlers
 }) => {
 
   // 11. button ----------------------------------------------------------------------------------->
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
-      (FILTER && FILTER.type !== "") && (
-        setFILTER((prev) => ({
+      (objects?.FILTER && objects?.FILTER.type !== "day") && (
+        functions?.setFILTER((prev) => ({
           ...prev,
           type: "day",
         }))
       );
-      (PAGING && PAGING.page !== 1) && (
-        setPAGING((prev) => ({
+      (objects?.PAGING && objects?.PAGING.page !== 1) && (
+        functions?.setPAGING((prev) => ({
           ...prev,
           page: 1,
         }))
       );
-      setDATE((prev) => ({
+      functions?.setDATE((prev) => ({
         ...prev,
         startDt: koreanDate,
         endDt: koreanDate,
@@ -44,7 +41,7 @@ export const Btn = ({
   const btnToSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
-      flowSave();
+      handlers.flowSave();
     }}>
       Save
     </Button>
@@ -52,10 +49,10 @@ export const Btn = ({
   const btnToUpdate = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toUpdate, {
-        state: SEND,
+      objects.SEND.startDt = objects?.DATE.startDt;
+      objects.SEND.endDt = objects?.DATE.endDt;
+      handlers.navParam(objects?.SEND.toUpdate, {
+        state: objects?.SEND,
       });
     }}>
       Update
@@ -64,10 +61,10 @@ export const Btn = ({
   const btnToList = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
-        state: SEND,
+      objects.SEND.startDt = objects?.DATE.startDt;
+      objects.SEND.endDt = objects?.DATE.endDt;
+      handlers.navParam(objects?.SEND.toList, {
+        state: objects?.SEND,
       });
     }}>
       List
@@ -76,10 +73,10 @@ export const Btn = ({
   const btnToSearch = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toSearch, {
-        state: SEND,
+      objects.SEND.startDt = objects?.DATE.startDt;
+      objects.SEND.endDt = objects?.DATE.endDt;
+      handlers.navParam(objects?.SEND.toSearch, {
+        state: objects?.SEND,
       });
     }}>
       Search
@@ -88,7 +85,7 @@ export const Btn = ({
   const btnLogin = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
-      flowSave();
+      handlers.flowSave();
     }}>
       Log In
     </Button>
@@ -96,7 +93,7 @@ export const Btn = ({
   const btnSignup = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
-      flowSave();
+      handlers.flowSave();
     }}>
       Sign Up
     </Button>
@@ -104,7 +101,7 @@ export const Btn = ({
   const btnRefresh = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
-      navParam(0);
+      handlers.navParam(0);
     }}>
       Refresh
     </Button>
@@ -117,12 +114,12 @@ export const Btn = ({
         size={"small"}
         variant={"outlined"}
         className={"w-150"}
-        value={FILTER?.query}
+        value={objects?.FILTER?.query}
         InputProps={{
           readOnly: false
         }}
         onChange={(e) => {
-          setFILTER((prev) => ({
+          functions?.setFILTER((prev) => ({
             ...prev,
             query: e.target.value
           }));
@@ -130,7 +127,7 @@ export const Btn = ({
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"outlined"}
       className={"primary-btn"} onClick={() => {
-        flowSave();
+        handlers.flowSave();
       }}>
         Search
       </Button>
@@ -138,7 +135,7 @@ export const Btn = ({
   );
   const btnResetDefault = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"danger-btn"} onClick={handler}>
+    className={"danger-btn"} onClick={handlers?.handlerReset}>
       Default
     </Button>
   );
@@ -164,57 +161,57 @@ export const Btn = ({
             }
           }}
           onChange={(date) => {
-            (FILTER && FILTER.type !== "day") && (
-              setFILTER((prev) => ({
+            (objects?.FILTER && objects?.FILTER.type !== "day") && (
+              functions?.setFILTER((prev) => ({
                 ...prev,
                 type: "day",
               }))
             );
-            (PAGING && PAGING.page !== 1) && (
-              setPAGING((prev) => ({
+            (objects?.PAGING && objects?.PAGING.page !== 1) && (
+              functions?.setPAGING((prev) => ({
                 ...prev,
                 page: 1,
               }))
             );
-            setDATE((prev) => ({
+            functions?.setDATE((prev) => ({
               ...prev,
               startDt: koreanDate,
               endDt: koreanDate,
             }));
           }}
           onMonthChange={(date) => {
-            (FILTER && FILTER.type !== "month") && (
-              setFILTER((prev) => ({
+            (objects?.FILTER && objects?.FILTER.type !== "month") && (
+              functions?.setFILTER((prev) => ({
                 ...prev,
                 type: "month",
               }))
             );
-            (PAGING && PAGING.page !== 1) && (
-              setPAGING((prev) => ({
+            (objects?.PAGING && objects?.PAGING.page !== 1) && (
+              functions?.setPAGING((prev) => ({
                 ...prev,
                 page: 1,
               }))
             );
-            setDATE((prev) => ({
+            functions?.setDATE((prev) => ({
               ...prev,
               startDt: curMonthStart,
               endDt: curMonthEnd
             }));
           }}
           onYearChange={(date) => {
-            (FILTER && FILTER.type !== "year") && (
-              setFILTER((prev) => ({
+            (objects?.FILTER && objects?.FILTER.type !== "year") && (
+              functions?.setFILTER((prev) => ({
                 ...prev,
                 type: "year",
               }))
             );
-            (PAGING && PAGING.page !== 1) && (
-              setPAGING((prev) => ({
+            (objects?.PAGING && objects?.PAGING.page !== 1) && (
+              functions?.setPAGING((prev) => ({
                 ...prev,
                 page: 1,
               }))
             );
-            setDATE((prev) => ({
+            functions?.setDATE((prev) => ({
               ...prev,
               startDt: curYearStart,
               endDt: curYearEnd
@@ -223,10 +220,10 @@ export const Btn = ({
         />
       </LocalizationProvider>
     }>
-      {popProps => (
+      {(popTrigger) => (
         <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
         className={"primary-btn"} onClick={(e) => {
-          popProps.openPopup(e.currentTarget)
+          popTrigger.openPopup(e.currentTarget)
         }}>
           달력
         </Button>
@@ -236,52 +233,52 @@ export const Btn = ({
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky bottom-0 d-row"}>
-      {type === "list" ? (
+    <Div className={"block-wrapper h-50 d-row"}>
+      {strings.type === "list" ? (
         <>
         {btnOpenCalendar()}
         {btnGetToday()}
         </>
-      ) : type === "detail" ? (
+      ) : strings.type === "detail" ? (
         <>
         {btnToUpdate()}
         {btnToList()}
         </>
-      ) : type === "save" && part !== "food" ? (
+      ) : strings.type === "save" && strings.part !== "food" ? (
         <>
         {btnToSave()}
         {btnGetToday()}
         {btnToList()}
         </>
-      ) : type === "save" && part === "food" ? (
+      ) : strings.type === "save" && strings.part === "food" ? (
         <>
         {btnToSave()}
         {btnToSearch()}
         </>
-      ) : type === "search" ? (
+      ) : strings.type === "search" ? (
         <>
         {btnGetSearch()}
         </>
-      ) : type === "dataset" ? (
+      ) : strings.type === "dataset" ? (
         <>
         {btnToSave()}
         {btnResetDefault()}
         </>
-      ) : type === "login" ? (
+      ) : strings.type === "login" ? (
         <>
         {btnLogin()}
         {btnRefresh()}
         </>
-      ) : type === "signup" ? (
+      ) : strings.type === "signup" ? (
         <>
         {btnSignup()}
         {btnRefresh()}
         </>
       ) : null}
-    </Paper>
+    </Div>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {tableNode()}

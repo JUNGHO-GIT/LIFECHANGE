@@ -51,7 +51,7 @@ export const Hr10 = (props) => {
 
 // ------------------------------------------------------------------------------------------------>
 export const Icons = ({
-  name, children, ...props
+  name = "", children = null, ...props
 }) => {
 
   if (!name) {

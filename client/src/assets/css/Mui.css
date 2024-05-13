@@ -4,9 +4,13 @@
   border-radius: 0px !important;
   box-shadow: none !important;
 }
-[class$="MuiInputBase-root-MuiOutlinedInput-root"] {
+/* [class$="MuiInputBase-root-MuiOutlinedInput-root"] {
   max-height: 50px !important;
+} */
+.MuiInputBase-formControl.MuiInputBase-root.MuiOutlinedInput-root {
+  max-height: 30px !important;
 }
+
 [class$="-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;
 }

@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -23,6 +23,9 @@ export const FoodList = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -183,43 +186,41 @@ export const FoodList = () => {
     );
   };
 
-  // 11. paging ----------------------------------------------------------------------------------->
-  const pagingNode = () => (
-    <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"food"} plan={""} type={"list"}
-    />
-  );
-
-  // 12. filter ----------------------------------------------------------------------------------->
-  const filterNode = () => (
-    <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      PART={""} setPART={""} part={"food"} plan={""} type={"list"}
-    />
-  );
-
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn  DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam}
-      part={"sleep"} plan={"plan"} type={"list"}
-    />
-  );
-
   // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, FILTER, SEND, PAGING, COUNT, DAYPICKER
+      }}
+      functions={{
+        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setDAYPICKER
+      }}
+      handlers={{
+        navParam
+      }}
+    />
+  );
+
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {pagingNode()}
-      {filterNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

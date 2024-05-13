@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -28,6 +28,9 @@ export const MoneySave = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -222,7 +225,7 @@ export const MoneySave = () => {
             0이상 10이하의 숫자만 입력하세요.
           </p>
         }>
-          {popProps => (
+          {(popTrigger) => (
             <TextField
               type={"text"}
               id={"sectionCnt"}
@@ -241,10 +244,10 @@ export const MoneySave = () => {
                 const newValInt = Number(e.target.value);
                 const newValStr = String(e.target.value);
                 if (newValInt < 0) {
-                  popProps.openPopup(e.currentTarget);
+                  popTrigger.openPopup(e.currentTarget);
                 }
                 else if (newValInt > 10) {
-                  popProps.openPopup(e.currentTarget);
+                  popTrigger.openPopup(e.currentTarget);
                 }
                 else if (newValStr === "") {
                   handlerCount("");
@@ -342,10 +345,10 @@ export const MoneySave = () => {
         </Div>
         </>
       }>
-        {popProps => (
+        {(popTrigger) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
+              popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
@@ -525,27 +528,41 @@ export const MoneySave = () => {
     );
   };
 
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn  DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam}
-      part={"money"} plan={""} type={"save"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, SEND, COUNT, DAYPICKER
+      }}
+      functions={{
+        setDATE, setSEND, setCOUNT, setDAYPICKER
+      }}
+      handlers={{
+        navParam
+      }}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

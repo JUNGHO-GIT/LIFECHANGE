@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -27,6 +27,9 @@ export const FoodDetailPlan = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -225,10 +228,10 @@ export const FoodDetailPlan = () => {
           </Div>
         </>
       }>
-        {popProps => (
+        {(popTrigger) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
-              popProps.openPopup(e.currentTarget)
+              popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
@@ -342,27 +345,41 @@ export const FoodDetailPlan = () => {
     );
   };
 
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn  DATE={DATE} setDATE={setDATE}
-      SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam}
-      part={"food"} plan={"plan"} type={"detail"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, SEND, COUNT, DAYPICKER
+      }}
+      functions={{
+        setDATE, setSEND, setCOUNT, setDAYPICKER
+      }}
+      handlers={{
+        navParam
+      }}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

@@ -1,8 +1,8 @@
 // UserList.jsx
 
-import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -19,6 +19,11 @@ export const UserList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
+  const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -508,17 +513,31 @@ export const UserList = () => {
     );
   };
 
-  // 11. paging ----------------------------------------------------------------------------------->
-  const pagingNode = () => (
-    <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"tweak"} plan={""} type={"list"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 12. filter ----------------------------------------------------------------------------------->
-  const filterNode = () => (
-    <Filter FILTER={""} setFILTER={""} PAGING={PAGING} setPAGING={setPAGING}
-      PART={PART} setPART={setPART} part={"tweak"} plan={""} type={"list"}
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        PAGING, COUNT
+      }}
+      functions={{
+        setPAGING, setCOUNT
+      }}
+      handlers={{
+        navParam
+      }}
     />
   );
 
@@ -558,20 +577,13 @@ export const UserList = () => {
     </Paper>
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
-  );
-
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {pagingNode()}
-      {filterNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };

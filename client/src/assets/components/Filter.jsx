@@ -6,7 +6,7 @@ import {Paper, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({
-  FILTER, setFILTER, PAGING, setPAGING, PART, setPART, part, plan, type
+  strings, objects, functions, handlers
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -27,19 +27,19 @@ export const Filter = ({
         name={"type"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.type}
+        value={objects?.FILTER?.type}
         onChange={(e) => (
-          setFILTER((prev) => ({
+          functions?.setFILTER?.((prev) => ({
             ...prev,
             type: e.target.value
           })),
-          setPAGING((prev) => ({
+          functions?.setPAGING?.((prev) => ({
             ...prev,
             page: 1
           }))
         )}>
         {["day", "week", "month", "year", "select"]?.map((item) => (
-          <MenuItem key={item} value={item} selected={FILTER?.type === item}>
+          <MenuItem key={item} value={item} selected={objects?.FILTER?.type === item}>
             {item}
           </MenuItem>
         ))}
@@ -52,15 +52,15 @@ export const Filter = ({
         name={"order"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.order}
+        value={objects?.FILTER?.order}
         onChange={(e) => (
-          setFILTER((prev) => ({
+          functions?.setFILTER?.((prev) => ({
             ...prev,
             order: e.target.value
           }))
         )}>
         {["asc", "desc"]?.map((item) => (
-          <MenuItem key={item} value={item} selected={FILTER?.order === item}>
+          <MenuItem key={item} value={item} selected={objects?.FILTER?.order === item}>
             {item}
           </MenuItem>
         ))}
@@ -79,7 +79,7 @@ export const Filter = ({
         name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.part}
+        value={objects?.FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = exerciseArray.findIndex((item) => (
@@ -87,7 +87,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
-          setFILTER(prev => ({
+          functions?.setFILTER?.(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -109,17 +109,17 @@ export const Filter = ({
         name={"title"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.title}
+        value={objects?.FILTER?.title}
         onChange={(e) => {
           const newTitleVal = e.target.value;
-          const newTitleIndex = exerciseArray[FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
-          setFILTER(prev => ({
+          const newTitleIndex = exerciseArray[objects?.FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
+          functions?.setFILTER?.(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
           }));
         }}>
-        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
+        {exerciseArray[objects?.FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
           <MenuItem key={idx} value={item}>
             {item}
           </MenuItem>
@@ -139,13 +139,13 @@ export const Filter = ({
         name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.part}
+        value={objects?.FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = foodArray.findIndex((item) => (
             item.food_part === newPartVal
           ));
-          setFILTER(prev => ({
+          functions?.setFILTER?.(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal
@@ -171,7 +171,7 @@ export const Filter = ({
         name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.part}
+        value={objects?.FILTER?.part}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = moneyArray.findIndex((item) => (
@@ -179,7 +179,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
-          setFILTER(prev => ({
+          functions?.setFILTER?.(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -201,17 +201,17 @@ export const Filter = ({
         name={"title"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={FILTER?.title}
+        value={objects?.FILTER?.title}
         onChange={(e) => {
           const newTitleVal = e.target.value;
-          const newTitleIndex = moneyArray[FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
-          setFILTER(prev => ({
+          const newTitleIndex = moneyArray[objects?.FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
+          functions?.setFILTER?.(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
           }));
         }}>
-        {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
+        {moneyArray[objects?.FILTER?.partIdx]?.money_title?.map((item, idx) => (
           <MenuItem key={idx} value={item}>
             {item}
           </MenuItem>
@@ -220,8 +220,8 @@ export const Filter = ({
     </Div>
   );
 
-  // 6. tweak ------------------------------------------------------------------------------------->
-  const tweakNode = () => (
+  // 6. demo -------------------------------------------------------------------------------------->
+  const demoNode = () => (
     <TextField
       select={true}
       type={"text"}
@@ -230,10 +230,10 @@ export const Filter = ({
       name={"part"}
       className={"ms-2 me-2"}
       variant={"outlined"}
-      value={PART}
+      value={objects?.PART}
       onChange={(e) => {
         const newPartVal = e.target.value;
-        setPART(newPartVal);
+        functions?.setPART?.(newPartVal);
       }}>
       <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
       <MenuItem value={"exercise"}>운동</MenuItem>
@@ -248,39 +248,40 @@ export const Filter = ({
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky bottom-50 d-row"}>
-      {part === "exercise" && plan === "" ? (
+    <Div className={"block-wrapper h-50 d-row"}>
+      {strings?.part === "exercise" && strings?.plan === "" ? (
         <>
           {defaultNode()}
           {exerciseNode()}
         </>
-      ) : part === "food" && plan === "" ? (
+      ) : strings?.part === "food" && strings?.plan === "" ? (
         <>
           {defaultNode()}
           {foodNode()}
         </>
-      ) : part === "money" && plan === "" ? (
+      ) : strings?.part === "money" && strings?.plan === "" ? (
         <>
           {defaultNode()}
           {moneyNode()}
         </>
-      ) : part === "sleep" && plan === "" ? (
+      ) : strings?.part === "sleep" && strings?.plan === "" ? (
         <>
           {defaultNode()}
         </>
-      ) : part === "tweak" ? (
+      ) : strings?.part === "demo" ? (
         <>
-          {tweakNode()}
+          {defaultNode()}
+          {demoNode()}
         </>
       ) : (
         <>
           {defaultNode()}
         </>
       )}
-    </Paper>
+    </Div>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {tableNode()}

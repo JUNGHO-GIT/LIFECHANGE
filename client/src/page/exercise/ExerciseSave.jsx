@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent, koreanDate} from "../../import/ImportLogics";
-import {Header, NavBar, Loading} from "../../import/ImportLayouts.jsx";
+import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Br5, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
@@ -27,6 +27,9 @@ export const ExerciseSave = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -192,7 +195,7 @@ export const ExerciseSave = () => {
       }));
     }
   };
-  
+
   const handlerValidate = (e, popTrigger) => {
     const newValInt = Number(e.target.value);
     const newValStr = String(e.target.value);
@@ -259,7 +262,7 @@ export const ExerciseSave = () => {
           />
         </LocalizationProvider>
       }>
-        {popTrigger => (
+        {(popTrigger) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -284,7 +287,7 @@ export const ExerciseSave = () => {
     const countSection = () => (
       <PopDown
         type={"alert"}
-        elementId={"popover"} 
+        elementId={"popover"}
         className={"ms-n20"}
         position={"bottom"}
         direction={"center"}
@@ -293,7 +296,7 @@ export const ExerciseSave = () => {
             0이상 10이하의 숫자만 입력하세요.
           </Div>
         }>
-        {popTrigger => (
+        {(popTrigger) => (
           <TextField
             type={"text"}
             id={"sectionCnt"}
@@ -378,7 +381,7 @@ export const ExerciseSave = () => {
       <PopDown
         elementId={`popover-${index}`}
         type={"dropdown"}
-        elementId={"popover"} 
+        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"left"}
@@ -638,27 +641,41 @@ export const ExerciseSave = () => {
     );
   };
 
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn  DATE={DATE} setDATE={setDATE}
-      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam}
-      part={"exercise"} plan={""} type={"save"}
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  // 14. footer ----------------------------------------------------------------------------------->
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, SEND, COUNT, DAYPICKER
+      }}
+      functions={{
+        setDATE, setSEND, setCOUNT, setDAYPICKER
+      }}
+      handlers={{
+        navParam
+      }}
+    />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
-      {btnNode()}
+      {footerNode()}
     </>
   );
 };
