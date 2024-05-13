@@ -1,15 +1,27 @@
 // Footer.jsx
 
-import {React, useState}from "../../import/ImportReacts.jsx";
-import {Btn, Filter, Paging, Navigation} from "../../import/ImportComponents.jsx";
-import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
+import {React}from "../../import/ImportReacts.jsx";
+import {Paging, Filter, Btn, Navigation} from "../../import/ImportComponents.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Footer = ({
   strings, objects, functions, handlers
 }) => {
 
-  alert(JSON.stringify(strings));
+  // 1. common ------------------------------------------------------------------------------------>
+  const height =
+  strings?.type === "list" ? (
+    "h-160"
+  ) : strings?.type === "diff" ? (
+    "h-160"
+  ) : strings?.type === "detail" ? (
+    "h-80"
+  ) : strings?.type === "search" ? (
+    "h-80"
+  ) : strings?.type === "save" ? (
+    "h-80"
+  ) : "";
 
   // 6. pagingNode -------------------------------------------------------------------------------->
   const pagingNode = () => (
@@ -53,7 +65,7 @@ export const Footer = ({
 
   // 7. resultNode -------------------------------------------------------------------------------->
   const resultNode = () => (
-    <Paper className={"flex-wrapper h-200 p-sticky bottom-0"}>
+    <Paper className={`flex-wrapper ${height} p-sticky bottom-0`}>
       {pagingNode()}
       {filterNode()}
       {btnNode()}

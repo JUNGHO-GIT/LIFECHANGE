@@ -4,7 +4,7 @@ import {React} from "../../import/ImportReacts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 
-// 12. filter ------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const Filter = ({
   strings, objects, functions, handlers
 }) => {
@@ -246,45 +246,39 @@ export const Filter = ({
     </TextField>
   );
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Div className={"block-wrapper h-50 d-row"}>
-      {strings?.part === "exercise" && strings?.plan === "" ? (
-        <>
-          {defaultNode()}
-          {exerciseNode()}
-        </>
-      ) : strings?.part === "food" && strings?.plan === "" ? (
-        <>
-          {defaultNode()}
-          {foodNode()}
-        </>
-      ) : strings?.part === "money" && strings?.plan === "" ? (
-        <>
-          {defaultNode()}
-          {moneyNode()}
-        </>
-      ) : strings?.part === "sleep" && strings?.plan === "" ? (
-        <>
-          {defaultNode()}
-        </>
-      ) : strings?.part === "demo" ? (
-        <>
-          {defaultNode()}
-          {demoNode()}
-        </>
-      ) : (
-        <>
-          {defaultNode()}
-        </>
-      )}
-    </Div>
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => (
+    strings?.part === "exercise" && strings?.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+        {exerciseNode()}
+      </Div>
+    ) : strings?.part === "food" && strings?.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+        {foodNode()}
+      </Div>
+    ) : strings?.part === "money" && strings?.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+        {moneyNode()}
+      </Div>
+    ) : strings?.part === "sleep" && strings?.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+      </Div>
+    ) : strings?.part === "demo" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+        {demoNode()}
+      </Div>
+    ) : null
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {filterNode()}
     </>
   );
 };

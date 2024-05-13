@@ -5,7 +5,7 @@ import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -18,6 +18,7 @@ export const CalendarList = () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navParam = useNavigate();
   const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const planStr = PATH?.split("/")[3] ? "plan" : "";
@@ -175,7 +176,7 @@ export const CalendarList = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );

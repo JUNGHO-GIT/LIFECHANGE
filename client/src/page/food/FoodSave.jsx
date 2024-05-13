@@ -6,7 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
@@ -252,12 +252,6 @@ export const FoodSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        음식 Save
-      </p>
-    );
     // 7-7. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
@@ -380,9 +374,6 @@ export const FoodSave = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-center"}>
-          {titleSection()}
-        </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
@@ -396,7 +387,7 @@ export const FoodSave = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -404,7 +395,7 @@ export const FoodSave = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

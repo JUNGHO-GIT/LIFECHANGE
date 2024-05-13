@@ -6,10 +6,10 @@ import {useStorage, useTime, useDate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button} from "../../import/ImportMuis.jsx";
+import {TextField} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
 
@@ -116,13 +116,7 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        수면 Save
-      </p>
-    );
-    // 7-2. date
+    // 7-1. date
     const dateSection = () => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DesktopDatePicker
@@ -315,10 +309,6 @@ export const SleepSave = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-center p-10"}>
-          {titleSection()}
-        </Div>
-        <Hr10 className={"mb-20"} />
         <Div className={"d-column mb-20"}>
           {dateSection()}
         </Div>
@@ -335,7 +325,7 @@ export const SleepSave = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -343,7 +333,7 @@ export const SleepSave = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

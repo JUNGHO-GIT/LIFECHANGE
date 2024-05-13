@@ -221,47 +221,36 @@ export const ExerciseSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-2. date
+    // 7-1. date
     const dateSection = () => (
       <PopDown
-        type={"clendar"}
+        type={"calendar"}
         elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
         contents={
-              <LocalizationProvider
-      dateAdapter={AdapterMoment}
-      adapterLocale={"ko"}
-    >
-          <DateCalendar
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            className={"m-auto"}
-            readOnly={false}
-            value={moment(DATE.startDt)}
-            sx={{
-              "width": "280px",
-              "height": "330px",
-              "& .MuiPickersLayout-contentWrapper": {
-                "width": "280px",
-                "height": "330px",
-              },
-              "& .MuiDateCalendar-root": {
-                "width": "280px",
-                "height": "330px",
-              }
-            }}
-            onChange={(date) => {
-              setDATE((prev) => ({
-                ...prev,
-                startDt: moment(date).format("YYYY-MM-DD"),
-                endDt: moment(date).format("YYYY-MM-DD"),
-              }));
-            }}
-          />
-        </LocalizationProvider>
-      }>
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD"),
+                  endDt: moment(date).format("YYYY-MM-DD"),
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
         {(popTrigger) => (
           <TextField
             select={false}
@@ -288,7 +277,7 @@ export const ExerciseSave = () => {
       <PopDown
         type={"alert"}
         elementId={"popover"}
-        className={"ms-n20"}
+        className={""}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -381,7 +370,6 @@ export const ExerciseSave = () => {
       <PopDown
         elementId={`popover-${index}`}
         type={"dropdown"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"left"}
@@ -571,29 +559,24 @@ export const ExerciseSave = () => {
             position={"top"}
             direction={"center"}
             contents={
-              <LocalizationProvider
-      dateAdapter={AdapterMoment}
-      adapterLocale={"ko"}
-    >
-              <DigitalClock
-                timeStep={10}
-                ampm={false}
-                format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-                            value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
-                onChange={(e) => {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_section: prev.exercise_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        exercise_cardio: moment(e).format("HH:mm")
-                      } : item
-                    ))
-                  }));
-                }}
-              />
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_cardio: moment(e).format("HH:mm")
+                        } : item
+                      ))
+                    }));
+                  }}
+                />
               </LocalizationProvider>
             }>
             {(popTrigger) => (
@@ -641,7 +624,7 @@ export const ExerciseSave = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -649,7 +632,7 @@ export const ExerciseSave = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

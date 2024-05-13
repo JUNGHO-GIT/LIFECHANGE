@@ -55,7 +55,7 @@ export const Icons = ({
 }) => {
 
   if (!name) {
-    return null;
+    return;
   }
 
   // ex. 'FaHome' => (preStr = fa)

@@ -8,12 +8,11 @@ import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd}
 from "../../import/ImportLogics.jsx";
 
-// 11. button ------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const Btn = ({
   strings, objects, functions, handlers
 }) => {
 
-  // 11. button ----------------------------------------------------------------------------------->
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
@@ -231,57 +230,55 @@ export const Btn = ({
     </PopUp>
   );
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Div className={"block-wrapper h-50 d-row"}>
-      {strings.type === "list" ? (
-        <>
+  // 7. btn --------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    strings.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnOpenCalendar()}
         {btnGetToday()}
-        </>
-      ) : strings.type === "detail" ? (
-        <>
+      </Div>
+    ) : strings.type === "detail" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnToUpdate()}
         {btnToList()}
-        </>
-      ) : strings.type === "save" && strings.part !== "food" ? (
-        <>
+      </Div>
+    ) : strings.type === "save" && strings.part !== "food" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnToSave()}
         {btnGetToday()}
         {btnToList()}
-        </>
-      ) : strings.type === "save" && strings.part === "food" ? (
-        <>
+      </Div>
+    ) : strings.type === "save" && strings.part === "food" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnToSave()}
         {btnToSearch()}
-        </>
-      ) : strings.type === "search" ? (
-        <>
+      </Div>
+    ) : strings.type === "search" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnGetSearch()}
-        </>
-      ) : strings.type === "dataset" ? (
-        <>
+      </Div>
+    ) : strings.type === "dataset" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnToSave()}
         {btnResetDefault()}
-        </>
-      ) : strings.type === "login" ? (
-        <>
+      </Div>
+    ) : strings.type === "login" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnLogin()}
         {btnRefresh()}
-        </>
-      ) : strings.type === "signup" ? (
-        <>
+      </Div>
+    ) : strings.type === "signup" ? (
+      <Div className={"block-wrapper d-row"}>
         {btnSignup()}
         {btnRefresh()}
-        </>
-      ) : null}
-    </Div>
+      </Div>
+    ) : null
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {btnNode()}
     </>
   );
 };

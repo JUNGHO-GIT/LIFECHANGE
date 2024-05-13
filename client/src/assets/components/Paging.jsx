@@ -2,15 +2,14 @@
 
 import {React} from "../../import/ImportReacts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
-import {Paper, TablePagination} from "../../import/ImportMuis.jsx";
+import {TablePagination} from "../../import/ImportMuis.jsx";
 
-// 9. paging -------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const Paging = ({
   strings, objects, functions, handlers
 }) => {
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
+  const defaultNode = () => (
     <Div className={"block-wrapper h-50 d-row"}>
       <TablePagination
         rowsPerPageOptions={[10]}
@@ -35,10 +34,21 @@ export const Paging = ({
     </Div>
   );
 
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => (
+    strings.type === "list" ? (
+      <Div className={"block-wrapper d-row"}>
+        {defaultNode()}
+      </Div>
+    ) : (
+      null
+    )
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-    {tableNode()}
+    {pagingNode()}
     </>
   );
 };

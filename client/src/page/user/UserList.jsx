@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -234,12 +234,6 @@ export const UserList = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        유저 List
-      </p>
-    );
     // 7-6-1. table
     const tableFragment1 = (i) => (
       <TableContainer key={i}>
@@ -513,7 +507,7 @@ export const UserList = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -521,7 +515,7 @@ export const UserList = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

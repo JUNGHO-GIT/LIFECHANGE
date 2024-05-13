@@ -5,7 +5,7 @@ import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 
@@ -49,12 +49,6 @@ export const UserLogin = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        로그인
-      </p>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
@@ -100,7 +94,9 @@ export const UserLogin = () => {
         }}
       >
         <Div className={"d-center p-10"}>
-          {titleSection()}
+          <p className={"fs-15"}>
+            로그인
+          </p>
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}
@@ -115,7 +111,7 @@ export const UserLogin = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -123,7 +119,7 @@ export const UserLogin = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

@@ -6,7 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -174,7 +174,7 @@ export const MoneyList = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -182,7 +182,7 @@ export const MoneyList = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

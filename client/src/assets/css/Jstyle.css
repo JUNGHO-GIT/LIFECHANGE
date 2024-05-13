@@ -6549,19 +6549,19 @@
 }
 
 .border {
-  border: 0.8px solid #ebebeb !important;
+  border: 0.5px solid #bababa !important;
 }
 .border-top {
-  border-top: 0.8px solid #ebebeb !important;
+  border-top: 0.5px solid #bababa !important;
 }
 .border-right {
-  border-right: 0.8px solid #ebebeb !important;
+  border-right: 0.5px solid #bababa !important;
 }
 .border-bottom {
-  border-bottom: 0.8px solid #ebebeb !important;
+  border-bottom: 0.5px solid #bababa !important;
 }
 .border-left {
-  border-left: 0.8px solid #ebebeb !important;
+  border-left: 0.5px solid #bababa !important;
 }
 .border-none {
   border: none !important;

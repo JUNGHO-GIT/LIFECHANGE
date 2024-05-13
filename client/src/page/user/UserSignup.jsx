@@ -4,9 +4,9 @@ import {React, useState, useNavigate, useLocation} from "../../import/ImportReac
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {TextField, Button} from "../../import/ImportMuis.jsx";
+import {TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -58,10 +58,6 @@ export const UserSignup = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>회원가입</p>
-    );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
@@ -106,10 +102,6 @@ export const UserSignup = () => {
           height: "100%"
         }}
       >
-        <Div className={"d-center p-10"}>
-          {titleSection()}
-        </Div>
-        <Hr10 className={"mb-20"} />
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
@@ -123,7 +115,7 @@ export const UserSignup = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -131,7 +123,7 @@ export const UserSignup = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

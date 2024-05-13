@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -258,12 +258,6 @@ export const UserDataset = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <p className={"fs-15"}>
-        Dataset
-      </p>
-    );
     // 7-6-1. table
     const tableFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-0 mb-20 w-100p"} key={i}>
@@ -421,10 +415,6 @@ export const UserDataset = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-center p-10"}>
-          {titleSection()}
-        </Div>
-        <Hr10 className={"mb-20"} />
         <Div className={"d-column"}>
           {tableFragment1(0)}
         </Div>
@@ -442,7 +432,7 @@ export const UserDataset = () => {
     );
   };
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -450,7 +440,7 @@ export const UserDataset = () => {
     />
   );
 
-  // 14. footer ----------------------------------------------------------------------------------->
+  // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
       strings={{

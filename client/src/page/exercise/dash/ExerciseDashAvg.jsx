@@ -324,7 +324,7 @@ export const ExerciseDashAvg = () => {
     </PopDown>
   );
 
-  // 14. loading ---------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );

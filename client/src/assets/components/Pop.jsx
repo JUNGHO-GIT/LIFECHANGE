@@ -98,25 +98,24 @@ export const PopUp = ({ elementId, contents, children }) => {
 
 // ------------------------------------------------------------------------------------------------>
 export const PopDown = ({
-  type, elementId, className, position, direction, 
-  contents, children
+  type, elementId, className, position, direction, contents, children
 }) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
-  const popupStyle = type === "alert" 
-    ? ({
-      border: '1px solid red',
-      boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
-      padding: "10px 10px 10px 10px",
-    }) : ({
-      border: '0.2px solid rgba(0, 0, 0, 0.2)',
-      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "10px 10px 10px 10px",
-    });
+  const popupStyle = type === "alert"
+  ? ({
+    border: '1px solid red',
+    boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
+    padding: "10px 10px 10px 10px",
+  }) : ({
+    border: '0.2px solid rgba(0, 0, 0, 0.2)',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+    padding: "10px 10px 10px 10px",
+  });
 
   return (
-    <Div>
+    <Div className={"d-center"}>
       {children({
         openPopup: (anchorEl) => {
           popupState.setAnchorEl(anchorEl);
@@ -126,24 +125,24 @@ export const PopDown = ({
       })}
       <Popover
         {...bindPopover(popupState)}
-        id={"popover"}
+        id={elementId}
+        className={className}
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
-        className={className}
         onClose={() => {
           popupState.close();
         }}
         anchorOrigin={{
           vertical: position === "top" ? "top" : "bottom",
           horizontal: direction === "center" ? "center" : (
-              direction === "right" ? "left" : "right"
-            )
+            direction === "right" ? "left" : "right"
+          )
         }}
         transformOrigin={{
           vertical: position === "top" ? "bottom" : "top",
           horizontal: direction === "center" ? "center" : (
-              direction === "right" ? "left" : "right"
-            )
+            direction === "right" ? "left" : "right"
+          )
         }}
         slotProps={{
           paper: {

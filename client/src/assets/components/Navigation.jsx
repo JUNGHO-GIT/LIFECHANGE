@@ -11,7 +11,7 @@ export const Navigation = ({
 
   const [value, setValue] = React.useState(0);
 
-  const navigationNode = () => (
+  const defaultNode = () => (
     <BottomNavigation
       showLabels={true}
       value={value}
@@ -34,17 +34,17 @@ export const Navigation = ({
     </BottomNavigation>
   );
 
-  // 7. resultNode -------------------------------------------------------------------------------->
-  const resultNode = () => (
-    <Div className={"block-wrapper h-50 d-row"}>
-      {navigationNode()}
+  // 7. navigation -------------------------------------------------------------------------------->
+  const navigationNode = () => (
+    <Div className={"block-wrapper d-row border-top"}>
+      {defaultNode()}
     </Div>
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-    {resultNode()}
+    {navigationNode()}
     </>
   );
 };
