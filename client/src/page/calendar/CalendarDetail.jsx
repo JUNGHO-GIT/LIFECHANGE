@@ -4,13 +4,12 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
@@ -147,43 +146,54 @@ export const CalendarDetail = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DesktopDatePicker
-          label={"날짜"}
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              startDt: moment(day).format("YYYY-MM-DD"),
-              endDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-      </LocalizationProvider>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={""}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD"),
+                  endDt: moment(date).format("YYYY-MM-DD"),
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"날짜"}
+            size={"small"}
+            value={DATE.startDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
     );
     // 7-3. count
     const countSection = () => {
@@ -217,9 +227,17 @@ export const CalendarDetail = () => {
         }
       };
       return (
-        <PopAlert elementId={"sectionCnt"} contents={
-          <p className={"fs-15"}>0이상 10이하의 숫자만 입력하세요.</p>
-        }>
+        <PopUp
+          type={"alert"}
+          elementId={"popover"}
+          className={""}
+          position={"bottom"}
+          direction={"center"}
+          contents={
+            <Div className={"d-center"}>
+              0이상 10이하의 숫자만 입력하세요.
+            </Div>
+          }>
           {(popTrigger) => (
             <TextField
               type={"text"}
@@ -227,7 +245,7 @@ export const CalendarDetail = () => {
               label={"항목수"}
               variant={"outlined"}
               size={"small"}
-              className={"w-220"}
+              className={"w-90p"}
               value={COUNT?.sectionCnt}
               InputProps={{
                 readOnly: false,
@@ -262,7 +280,7 @@ export const CalendarDetail = () => {
               }}
             />
           )}
-        </PopAlert>
+        </PopUp>
       );
     };
     // 7-6. table
@@ -277,7 +295,7 @@ export const CalendarDetail = () => {
             id={`calendar_part_val-${i}`}
             name={`calendar_part_val-${i}`}
             variant={"outlined"}
-            className={"w-100 me-10"}
+            className={"w-45p me-10"}
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
             InputProps={{
               readOnly: false
@@ -310,7 +328,7 @@ export const CalendarDetail = () => {
             id={`calendar_color-${i}`}
             name={`calendar_color-${i}`}
             variant={"outlined"}
-            className={"w-100 ms-10"}
+            className={"w-45p ms-10"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
               readOnly: false
@@ -344,7 +362,7 @@ export const CalendarDetail = () => {
             id={`calendar_title-${i}`}
             name={`calendar_title-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
               readOnly: false
@@ -372,7 +390,7 @@ export const CalendarDetail = () => {
             id={`calendar_detail-${i}`}
             name={`calendar_detail-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={OBJECT?.calendar_section[i]?.calendar_detail}
             InputProps={{
               readOnly: false
@@ -396,7 +414,7 @@ export const CalendarDetail = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-column mb-20"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -438,7 +456,7 @@ export const CalendarDetail = () => {
         setDATE, setSEND, setCOUNT, setDAYPICKER
       }}
       handlers={{
-        navParam
+        navParam, flowSave, flowDelete
       }}
     />
   );

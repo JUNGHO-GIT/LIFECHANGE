@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
@@ -159,7 +159,7 @@ export const ExerciseListPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500 w-min300"}>
+      <Div className={"block-wrapper h-min500 w-min400"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

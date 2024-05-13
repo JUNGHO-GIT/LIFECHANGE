@@ -69,7 +69,7 @@ import {
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 
 // datePickers
-import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {LocalizationProvider} from '@mui/x-date-pickers';
 
 // dateCalendar
 import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
@@ -129,7 +129,7 @@ export {
   AdapterMoment, DateCalendar, DigitalClock,
 
   // datePickers
-  DesktopDatePicker, DesktopTimePicker, LocalizationProvider,
+  LocalizationProvider,
 
   // popupState
   PopupState, bindTrigger, bindMenu, bindPopover,

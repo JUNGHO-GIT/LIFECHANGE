@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -298,7 +298,13 @@ export const MoneyDashAvg = () => {
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
   const dropdownSection3 = () => (
-    <PopDown elementId={"popChild"} contents={
+    <PopUp
+      elementId={`popover`}
+      type={"dropdown"}
+      className={""}
+      position={"bottom"}
+      direction={"left"}
+      contents={
       ["in", "out"]?.map((key, index) => (
         <FormGroup key={index} className={"p-5 pe-10"}>
           <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
@@ -320,7 +326,7 @@ export const MoneyDashAvg = () => {
           }}
         />
       )}
-    </PopDown>
+    </PopUp>
   );
 
   // 8. loading ----------------------------------------------------------------------------------->

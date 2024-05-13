@@ -5,12 +5,11 @@ import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTime, useDate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSavePlan = () => {
@@ -115,43 +114,54 @@ export const SleepSavePlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DesktopDatePicker
-          label={"날짜"}
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              startDt: moment(day).format("YYYY-MM-DD"),
-              endDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-      </LocalizationProvider>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={""}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD"),
+                  endDt: moment(date).format("YYYY-MM-DD"),
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"날짜"}
+            size={"small"}
+            value={DATE.startDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
@@ -163,8 +173,14 @@ export const SleepSavePlan = () => {
           showZero={true}
         />
       </Div>
-      <PopDown elementId={`pop-${index}`} contents={
-        <>
+      <PopUp
+        elementId={`popover-${index}`}
+        type={"dropdown"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <>
         <Div className={"d-row align-center"}>
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
           <p className={"fs-14"}>복사</p>
@@ -182,7 +198,7 @@ export const SleepSavePlan = () => {
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
       </>
     );
     // 7-6. table
@@ -192,90 +208,92 @@ export const SleepSavePlan = () => {
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"취침 계획"}
-              minutesStep={1}
-              value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-              format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              onChange={(time) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_night: moment(time).format("HH:mm")
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <PopUp
+            elementId={`popover-${i}`}
+            type={"timePicker"}
+            className={""}
+            position={"bottom"}
+            direction={"center"}
+            contents={
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      sleep_plan_night: moment(e).format("HH:mm")
+                    }));
+                  }}
+                />
+              </LocalizationProvider>
+            }>
+            {(popTrigger) => (
+              <TextField
+                select={false}
+                label={"취침 목표"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-90p"}
+                value={OBJECT?.sleep_plan_night}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"} />
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"기상"}
-              minutesStep={1}
-              value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
-              format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              onChange={(time) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_morning: moment(time).format("HH:mm")
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <PopUp
+            elementId={`popover-${i}`}
+            type={"timePicker"}
+            className={""}
+            position={"bottom"}
+            direction={"center"}
+            contents={
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      sleep_plan_morning: moment(e).format("HH:mm")
+                    }));
+                  }}
+                />
+              </LocalizationProvider>
+            }>
+            {(popTrigger) => (
+              <TextField
+                select={false}
+                label={"기상 목표"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-90p"}
+                value={OBJECT?.sleep_plan_morning}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"} />
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -286,12 +304,12 @@ export const SleepSavePlan = () => {
               id={"sleep_time"}
               name={"sleep_time"}
               variant={"outlined"}
-              className={"w-220"}
+              className={"w-90p"}
               value={OBJECT?.sleep_plan_time}
               InputProps={{
                 readOnly: true,
-                endAdornment: (
-                  <Adornment name={"TbMoon"} className={"w-24 h-24 dark me-n5"} position={"end"} />
+                startAdornment: (
+                  <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"} />
                 )
               }}
             />
@@ -302,7 +320,7 @@ export const SleepSavePlan = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-column mb-20"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
         <Div className={"d-column"}>

@@ -5,13 +5,12 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSavePlan = () => {
@@ -116,76 +115,102 @@ export const FoodSavePlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DesktopDatePicker
-          label={"시작일"}
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              startDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-        <DesktopDatePicker
-          label={"종료일"}
-          value={moment(DATE.endDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto mt-20"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              endDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-      </LocalizationProvider>
+      <>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={"w-90p"}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD")
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"시작일"}
+            size={"small"}
+            value={DATE.startDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={"w-90p"}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.endDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  endDt: moment(date).format("YYYY-MM-DD")
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"종료일"}
+            size={"small"}
+            value={DATE.endDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
+      </>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
@@ -197,8 +222,14 @@ export const FoodSavePlan = () => {
           showZero={true}
         />
       </Div>
-      <PopDown elementId={`pop-${index}`} contents={
-        <>
+      <PopUp
+        elementId={`popover-${index}`}
+        type={"dropdown"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <>
         <Div className={"d-row align-center"}>
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
           <p className={"fs-14"}>복사</p>
@@ -216,7 +247,7 @@ export const FoodSavePlan = () => {
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
       </>
     );
     // 7-6. table
@@ -234,7 +265,7 @@ export const FoodSavePlan = () => {
             id={`food_plan_kcal-${i}`}
             name={`food_plan_kcal-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
             InputProps={{
               readOnly: false,
@@ -261,7 +292,7 @@ export const FoodSavePlan = () => {
             id={`food_plan_carb-${i}`}
             name={`food_plan_carb-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
             InputProps={{
               readOnly: false,
@@ -288,7 +319,7 @@ export const FoodSavePlan = () => {
             id={`food_plan_protein-${i}`}
             name={`food_plan_protein-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
             InputProps={{
               readOnly: false,
@@ -315,7 +346,7 @@ export const FoodSavePlan = () => {
             id={`food_plan_fat-${i}`}
             name={`food_plan_fat-${i}`}
             variant={"outlined"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
             InputProps={{
               readOnly: false,
@@ -338,7 +369,7 @@ export const FoodSavePlan = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-column mb-20"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
         <Div className={"d-column"}>

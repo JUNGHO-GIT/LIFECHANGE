@@ -1,8 +1,8 @@
 // Btn.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import {React, useEffect} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Button, Paper, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
 import {newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd}
@@ -139,86 +139,84 @@ export const Btn = ({
     </Button>
   );
   const btnOpenCalendar = () => (
-    <PopUp elementId={`popup`} contents={
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DateCalendar
-          timezone={"Asia/Seoul"}
-          views={["year", "day"]}
-          className={"m-auto"}
-          readOnly={false}
-          defaultValue={moment(koreanDate)}
-          sx={{
-            "width": "250px",
-            "height": "330px",
-            "& .MuiPickersLayout-contentWrapper": {
-              width: "250px",
-              height: "330px",
-            },
-            "& .MuiDateCalendar-root": {
-              width: "250px",
-              height: "330px",
-            }
-          }}
-          onChange={(date) => {
-            (objects?.FILTER && objects?.FILTER.type !== "day") && (
-              functions?.setFILTER((prev) => ({
+    <PopUp
+      type={"calendar"}
+      elementId={"popover"}
+      className={""}
+      position={"top"}
+      direction={"center"}
+      contents={
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DateCalendar
+            timezone={"Asia/Seoul"}
+            views={["year", "day"]}
+            className={"m-auto"}
+            readOnly={false}
+            defaultValue={moment(koreanDate)}
+            sx={{
+              "width": "250px",
+              "height": "330px"
+            }}
+            onChange={(date) => {
+              (objects?.FILTER && objects?.FILTER.type !== "day") && (
+                functions?.setFILTER((prev) => ({
+                  ...prev,
+                  type: "day",
+                }))
+              );
+              (objects?.PAGING && objects?.PAGING.page !== 1) && (
+                functions?.setPAGING((prev) => ({
+                  ...prev,
+                  page: 1,
+                }))
+              );
+              functions?.setDATE((prev) => ({
                 ...prev,
-                type: "day",
-              }))
-            );
-            (objects?.PAGING && objects?.PAGING.page !== 1) && (
-              functions?.setPAGING((prev) => ({
+                startDt: koreanDate,
+                endDt: koreanDate,
+              }));
+            }}
+            onMonthChange={(date) => {
+              (objects?.FILTER && objects?.FILTER.type !== "month") && (
+                functions?.setFILTER((prev) => ({
+                  ...prev,
+                  type: "month",
+                }))
+              );
+              (objects?.PAGING && objects?.PAGING.page !== 1) && (
+                functions?.setPAGING((prev) => ({
+                  ...prev,
+                  page: 1,
+                }))
+              );
+              functions?.setDATE((prev) => ({
                 ...prev,
-                page: 1,
-              }))
-            );
-            functions?.setDATE((prev) => ({
-              ...prev,
-              startDt: koreanDate,
-              endDt: koreanDate,
-            }));
-          }}
-          onMonthChange={(date) => {
-            (objects?.FILTER && objects?.FILTER.type !== "month") && (
-              functions?.setFILTER((prev) => ({
+                startDt: curMonthStart,
+                endDt: curMonthEnd
+              }));
+            }}
+            onYearChange={(date) => {
+              (objects?.FILTER && objects?.FILTER.type !== "year") && (
+                functions?.setFILTER((prev) => ({
+                  ...prev,
+                  type: "year",
+                }))
+              );
+              (objects?.PAGING && objects?.PAGING.page !== 1) && (
+                functions?.setPAGING((prev) => ({
+                  ...prev,
+                  page: 1,
+                }))
+              );
+              functions?.setDATE((prev) => ({
                 ...prev,
-                type: "month",
-              }))
-            );
-            (objects?.PAGING && objects?.PAGING.page !== 1) && (
-              functions?.setPAGING((prev) => ({
-                ...prev,
-                page: 1,
-              }))
-            );
-            functions?.setDATE((prev) => ({
-              ...prev,
-              startDt: curMonthStart,
-              endDt: curMonthEnd
-            }));
-          }}
-          onYearChange={(date) => {
-            (objects?.FILTER && objects?.FILTER.type !== "year") && (
-              functions?.setFILTER((prev) => ({
-                ...prev,
-                type: "year",
-              }))
-            );
-            (objects?.PAGING && objects?.PAGING.page !== 1) && (
-              functions?.setPAGING((prev) => ({
-                ...prev,
-                page: 1,
-              }))
-            );
-            functions?.setDATE((prev) => ({
-              ...prev,
-              startDt: curYearStart,
-              endDt: curYearEnd
-            }));
-          }}
-        />
-      </LocalizationProvider>
-    }>
+                startDt: curYearStart,
+                endDt: curYearEnd
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      }>
       {(popTrigger) => (
         <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
         className={"primary-btn"} onClick={(e) => {
@@ -229,48 +227,68 @@ export const Btn = ({
       )}
     </PopUp>
   );
+  const btnInsertDemo = () => (
+    <Div className={"d-center"}>
+      <TextField
+        select={false}
+        label={"추가"}
+        type={"text"}
+        variant={"outlined"}
+        id={"inputCount"}
+        name={"inputCount"}
+        className={""}
+        size={"small"}
+        value={Math.min(objects?.COUNT?.inputCnt, 10)}
+        InputProps={{
+          readOnly: false
+        }}
+        onChange={(e) => {
+          const limitedValue = Math.min(Number(e.target.value), 10);
+          functions.setCOUNT((prev) => ({
+            ...prev,
+            inputCnt: limitedValue
+          }));
+        }}
+      />
+      <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
+      onClick={() => (handlers.flowAdd(objects.PART))}>
+        추가
+      </Button>
+    </Div>
+  );
 
   // 7. btn --------------------------------------------------------------------------------------->
   const btnNode = () => (
-    strings.type === "list" ? (
+    strings?.part === "calendar" && (strings?.type === "list" || strings?.type === "diff") ? (
+      null
+    ) : strings?.part === "calendar" && (strings?.type === "detail" || strings?.type === "save") ? (
+      <Div className={"block-wrapper d-row"}>
+        {btnToSave()}
+        {btnToList()}
+      </Div>
+    ) : strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
         {btnOpenCalendar()}
         {btnGetToday()}
       </Div>
-    ) : strings.type === "detail" ? (
+    ) :   strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
-        {btnToUpdate()}
-        {btnToList()}
-      </Div>
-    ) : strings.type === "save" && strings.part !== "food" ? (
-      <Div className={"block-wrapper d-row"}>
-        {btnToSave()}
+        {btnOpenCalendar()}
         {btnGetToday()}
-        {btnToList()}
       </Div>
-    ) : strings.type === "save" && strings.part === "food" ? (
+    ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
-        {btnToSave()}
-        {btnToSearch()}
+        {btnOpenCalendar()}
+        {btnGetToday()}
       </Div>
-    ) : strings.type === "search" ? (
+    ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
-        {btnGetSearch()}
+        {btnOpenCalendar()}
+        {btnGetToday()}
       </Div>
-    ) : strings.type === "dataset" ? (
+    ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
-        {btnToSave()}
-        {btnResetDefault()}
-      </Div>
-    ) : strings.type === "login" ? (
-      <Div className={"block-wrapper d-row"}>
-        {btnLogin()}
-        {btnRefresh()}
-      </Div>
-    ) : strings.type === "signup" ? (
-      <Div className={"block-wrapper d-row"}>
-        {btnSignup()}
-        {btnRefresh()}
+        {btnInsertDemo()}
       </Div>
     ) : null
   );

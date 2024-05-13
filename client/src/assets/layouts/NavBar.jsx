@@ -49,7 +49,7 @@ export const NavBar = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky top-50 border-bottom"}>
+    <Paper className={"flex-wrapper h-40 p-sticky top-40 border-bottom"}>
       <Div className={"d-flex w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
           <span className={"nav-icon-text"}>Total</span>

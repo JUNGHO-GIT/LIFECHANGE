@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent, koreanDate} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10, Br5, Paging, Filter, Btn} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
@@ -161,6 +161,8 @@ export const ExerciseSave = () => {
       alert(res.data.msg);
     }
   };
+
+  // 4-1. handler --------------------------------------------------------------------------------->
   const handlerCount = (e) => {
     const newCount = Number(e);
     const defaultSection = {
@@ -196,6 +198,7 @@ export const ExerciseSave = () => {
     }
   };
 
+  // 4-2. handler --------------------------------------------------------------------------------->
   const handlerValidate = (e, popTrigger) => {
     const newValInt = Number(e.target.value);
     const newValStr = String(e.target.value);
@@ -223,7 +226,7 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <PopDown
+      <PopUp
         type={"calendar"}
         elementId={"popover"}
         className={""}
@@ -258,23 +261,23 @@ export const ExerciseSave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"d-block"}
+            className={"w-90p"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
     );
     // 7-3. count
     const countSection = () => (
-      <PopDown
+      <PopUp
         type={"alert"}
         elementId={"popover"}
         className={""}
@@ -292,7 +295,7 @@ export const ExerciseSave = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"d-block"}
+            className={"w-90p"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: false,
@@ -308,7 +311,7 @@ export const ExerciseSave = () => {
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
     );
     // 7-4. total
     const totalSection = () => (
@@ -347,7 +350,7 @@ export const ExerciseSave = () => {
           size={"small"}
           value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
           variant={"outlined"}
-          className={"d-block"}
+          className={"w-90p"}
           InputProps={{
             readOnly: true,
             startAdornment: (
@@ -367,7 +370,7 @@ export const ExerciseSave = () => {
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <PopDown
+      <PopUp
         elementId={`popover-${index}`}
         type={"dropdown"}
         className={""}
@@ -376,7 +379,7 @@ export const ExerciseSave = () => {
         contents={
           <>
             <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
-              <span className={"fs-14"}>복사</span>
+              <Div className={"fs-14"}>복사</Div>
             </Icons>
             <Br5 />
             <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
@@ -384,14 +387,14 @@ export const ExerciseSave = () => {
             </Icons>
           </>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
     );
     // 7-6. table
     const tableFragment = (i) => (
@@ -409,7 +412,7 @@ export const ExerciseSave = () => {
             id={`exercise_part_val-${i}`}
             name={`exercise_part_val-${i}`}
             variant={"outlined"}
-            className={"w-100 me-10"}
+            className={"me-10"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
               readOnly: false
@@ -444,7 +447,7 @@ export const ExerciseSave = () => {
             id={`exercise_title_val-${i}`}
             name={`exercise_title_val-${i}`}
             variant={"outlined"}
-            className={"w-100 ms-10"}
+            className={"ms-10"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             InputProps={{
               readOnly: false
@@ -479,7 +482,7 @@ export const ExerciseSave = () => {
             label={"세트"}
             size={"small"}
             variant={"outlined"}
-            className={"d-block"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
               readOnly: false
@@ -505,7 +508,7 @@ export const ExerciseSave = () => {
             label={"횟수"}
             size={"small"}
             variant={"outlined"}
-            className={"d-block"}
+            className={"w-90p"}
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
               readOnly: false
@@ -531,7 +534,7 @@ export const ExerciseSave = () => {
             label={"무게"}
             size={"small"}
             variant={"outlined"}
-            className={"d-block"}
+            className={"w-90p"}
             value={OBJECT?.exercise_section[i]?.exercise_kg}
             InputProps={{
               readOnly: false
@@ -552,9 +555,9 @@ export const ExerciseSave = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <PopDown
+          <PopUp
             elementId={`popover`}
-            type={"dropdown"}
+            type={"timePicker"}
             className={""}
             position={"top"}
             direction={"center"}
@@ -585,7 +588,7 @@ export const ExerciseSave = () => {
                 label={"유산소"}
                 size={"small"}
                 variant={"outlined"}
-                className={"d-block"}
+                className={"w-90p"}
                 value={OBJECT?.exercise_section[i]?.exercise_cardio}
                 InputProps={{
                   readOnly: true
@@ -595,7 +598,7 @@ export const ExerciseSave = () => {
                 }}
               />
             )}
-          </PopDown>
+          </PopUp>
         </Div>
       </Card>
     );
@@ -647,7 +650,7 @@ export const ExerciseSave = () => {
         setDATE, setSEND, setCOUNT, setDAYPICKER
       }}
       handlers={{
-        navParam
+        navParam, flowSave
       }}
     />
   );

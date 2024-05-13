@@ -1,8 +1,8 @@
 // ImportComponents.jsx
 
-import {Br5, Br10, Hr5, Hr10} from "../assets/components/Elements.jsx";
-import {Div, Icons, Adornment} from "../assets/components/Elements.jsx";
-import {PopAlert, PopUp, PopDown} from "../assets/components/Pop.jsx";
+import {Div, Br5, Br10, Hr5, Hr10} from "../assets/components/Element.jsx";
+import {Icons, Adornment} from "../assets/components/Icon.jsx";
+import {PopUp} from "../assets/components/PopUp.jsx";
 import {Paging} from "../assets/components/Paging.jsx";
 import {Filter} from "../assets/components/Filter.jsx";
 import {Btn} from "../assets/components/Btn.jsx";
@@ -10,9 +10,9 @@ import {Navigation} from "../assets/components/Navigation.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export {
-  Br5, Br10, Hr5, Hr10,
-  Div, Icons, Adornment,
-  PopAlert, PopUp, PopDown,
+  Div, Br5, Br10, Hr5, Hr10,
+  Icons, Adornment,
+  PopUp,
   Paging, Filter,
   Btn, Navigation
 };

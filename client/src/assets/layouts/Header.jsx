@@ -2,7 +2,7 @@
 
 import {SideBar} from "./SideBar";
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
-import {PopDown, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
@@ -31,20 +31,26 @@ export const Header = () => {
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
-    <PopDown elementId={`popDown`} contents={
+    <PopUp
+      type={"dropdown"}
+      elementId={"popover"}
+      className={""}
+      position={"bottom"}
+      direction={"right"}
+      contents={
       <>
-      <Div className={"d-row align-center pointer"} onClick={() => {
-        navParam(`/user/login`);
-      }}>
-        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
-        <p className={"fs-14"}>Login</p>
-      </Div>
-      <Div className={"d-row align-center pointer"} onClick={() => {
-        navParam(`/user/signup`);
-      }}>
-        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
-        <p className={"fs-14"}>Signup</p>
-      </Div>
+        <Div className={"d-row align-center pointer"} onClick={() => {
+          navParam(`/user/login`);
+        }}>
+          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
+          <p className={"fs-14"}>Login</p>
+        </Div>
+        <Div className={"d-row align-center pointer"} onClick={() => {
+          navParam(`/user/signup`);
+        }}>
+          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
+          <p className={"fs-14"}>Signup</p>
+        </Div>
       </>
     }>
       {(popTrigger) => (
@@ -54,12 +60,12 @@ export const Header = () => {
           }}
         />
       )}
-    </PopDown>
+    </PopUp>
   );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky top-0"}>
+    <Paper className={"flex-wrapper h-40 p-sticky top-0"}>
       <Div className={"d-center w-100p m-auto"}>
         <Div className={"d-center ms-10"}>
           {btnSideBar()}

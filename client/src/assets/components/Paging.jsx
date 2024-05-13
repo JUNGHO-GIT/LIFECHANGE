@@ -9,34 +9,39 @@ export const Paging = ({
   strings, objects, functions, handlers
 }) => {
 
+  const pageOption =
+  strings.type === "search" ? (
+    [10]
+  ) : (
+    [5, 10, 20, 30]
+  );
+
   const defaultNode = () => (
-    <Div className={"block-wrapper h-50 d-row"}>
-      <TablePagination
-        rowsPerPageOptions={[10]}
-        component={"div"}
-        labelRowsPerPage={""}
-        count={objects?.COUNT.totalCnt}
-        rowsPerPage={objects?.PAGING.limit}
-        page={objects?.PAGING.page - 1}
-        onPageChange={(event, newPage) => {
-          functions.setPAGING((prev) => ({
-            ...prev,
-            page: newPage + 1
-          }));
-        }}
-        onRowsPerPageChange={(event) => {
-          functions.setPAGING((prev) => ({
-            ...prev,
-            limit: parseInt(event.target.value, 10)
-          }));
-        }}
-      />
-    </Div>
+    <TablePagination
+      rowsPerPageOptions={pageOption}
+      component={"div"}
+      labelRowsPerPage={""}
+      count={objects?.COUNT.totalCnt}
+      rowsPerPage={objects?.PAGING.limit}
+      page={objects?.PAGING.page - 1}
+      onPageChange={(event, newPage) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          page: newPage + 1
+        }));
+      }}
+      onRowsPerPageChange={(event) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          limit: parseInt(event.target.value, 10)
+        }));
+      }}
+    />
   );
 
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
-    strings.type === "list" ? (
+    strings.type === "list" || strings.type === "diff" ? (
       <Div className={"block-wrapper d-row"}>
         {defaultNode()}
       </Div>

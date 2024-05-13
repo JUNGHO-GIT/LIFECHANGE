@@ -5,13 +5,12 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSavePlan = () => {
@@ -117,76 +116,102 @@ export const ExerciseSavePlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DesktopDatePicker
-          label={"시작일"}
-          value={moment(DATE.startDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              startDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-        <DesktopDatePicker
-          label={"종료일"}
-          value={moment(DATE.endDt, "YYYY-MM-DD")}
-          format={"YYYY-MM-DD"}
-          timezone={"Asia/Seoul"}
-          views={["day"]}
-          className={"m-auto mt-20"}
-          readOnly={false}
-          slotProps={{
-            textField: {sx: {
-              width: "220px",
-            }},
-            layout: {sx: {
-              "& .MuiPickersLayout-contentWrapper": {
-                width: "220px",
-                height: "280px",
-              },
-              "& .MuiDateCalendar-root": {
-                width: "210px",
-                height: "270px",
-              },
-              "& .MuiPickersDay-root": {
-                width: "28px",
-                height: "28px",
-              },
-            }},
-          }}
-          onChange={(day) => {
-            setDATE((prev) => ({
-              ...prev,
-              endDt: moment(day).format("YYYY-MM-DD")
-            }));
-          }}
-        />
-      </LocalizationProvider>
+      <>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={"w-90p"}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD")
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"시작일"}
+            size={"small"}
+            value={DATE.startDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
+      <PopUp
+        type={"calendar"}
+        elementId={"popover"}
+        className={"w-90p"}
+        position={"bottom"}
+        direction={"center"}
+        contents={
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              className={"ms-n5"}
+              readOnly={false}
+              value={moment(DATE.endDt)}
+              sx={{
+                width: "280px",
+                height: "330px"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  endDt: moment(date).format("YYYY-MM-DD")
+                }));
+              }}
+            />
+          </LocalizationProvider>
+        }>
+        {(popTrigger) => (
+          <TextField
+            select={false}
+            label={"종료일"}
+            size={"small"}
+            value={DATE.endDt}
+            variant={"outlined"}
+            className={"w-90p"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        )}
+      </PopUp>
+      </>
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
@@ -198,8 +223,14 @@ export const ExerciseSavePlan = () => {
           showZero={true}
         />
       </Div>
-      <PopDown elementId={`pop-${index}`} contents={
-        <>
+      <PopUp
+        elementId={`popover-${index}`}
+        type={"dropdown"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <>
           <Div className={"d-row align-center"}>
             <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
             <p className={"fs-14"}>복사</p>
@@ -217,7 +248,7 @@ export const ExerciseSavePlan = () => {
             }}
           />
         )}
-      </PopDown>
+      </PopUp>
       </>
     );
     // 7-6. table
@@ -234,7 +265,7 @@ export const ExerciseSavePlan = () => {
             label={"목표 볼륨"}
             id={"exercise_plan_volume"}
             name={"exercise_plan_volume"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -253,47 +284,50 @@ export const ExerciseSavePlan = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DesktopTimePicker
-              label={"목표 유산소 시간"}
-              minutesStep={1}
-              value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
-              format={"HH:mm"}
-              timezone={"Asia/Seoul"}
-              views={['hours', 'minutes']}
-              slotProps={{
-                textField: {sx: {
-                  width: "220px",
-                }},
-                layout: {sx: {
-                  "& .MuiPickersLayout-contentWrapper": {
-                    width: "220px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-root": {
-                    width: "77px",
-                    height: "180px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item": {
-                    fontSize: "0.8rem",
-                    width: "65px",
-                    minHeight: "20px",
-                    borderRadius: "8px",
-                  },
-                  "& .MuiMultiSectionDigitalClockSection-item .Mui-selected": {
-                    color: "#fff",
-                    backgroundColor: "#164a60",
-                  },
-                }},
-              }}
-              onChange={(time) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_morning: moment(time).format("HH:mm")
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <PopUp
+            elementId={`popover`}
+            type={"timePicker"}
+            className={""}
+            position={"top"}
+            direction={"center"}
+            contents={
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_cardio: moment(e).format("HH:mm")
+                        } : item
+                      ))
+                    }));
+                  }}
+                />
+              </LocalizationProvider>
+            }>
+            {(popTrigger) => (
+              <TextField
+                select={false}
+                label={"목표 유산소 시간"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-90p"}
+                value={OBJECT?.exercise_section[i]?.exercise_cardio}
+                InputProps={{
+                  readOnly: true
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
@@ -303,7 +337,7 @@ export const ExerciseSavePlan = () => {
             label={"목표 횟수"}
             id={"exercise_plan_count"}
             name={"exercise_plan_count"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -329,7 +363,7 @@ export const ExerciseSavePlan = () => {
             label={"목표 체중"}
             id={"exercise_plan_weight"}
             name={"exercise_plan_weight"}
-            className={"w-220"}
+            className={"w-90p"}
             value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -352,7 +386,7 @@ export const ExerciseSavePlan = () => {
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min500"}>
-        <Div className={"d-column mb-20"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
         <Div className={"d-column"}>

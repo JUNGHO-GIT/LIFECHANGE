@@ -11,17 +11,32 @@ export const Footer = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const height =
-  strings?.type === "list" ? (
+  strings?.part === "calendar"&&(strings?.type === "list" || strings?.part === "diff") ? (
+    "h-0"
+  ) : strings?.part === "calendar"&&(strings?.type === "detail" || strings?.part === "save") ? (
+    "h-80"
+  ) : strings?.part === "exercise"&&(strings?.type === "list" || strings?.part === "diff") ? (
     "h-160"
-  ) : strings?.type === "diff" ? (
+  ) : strings?.part === "exercise"&&(strings?.type === "detail" || strings?.part === "save") ? (
+    "h-80"
+  ) : strings?.part === "food"&&(strings?.type === "list" || strings?.part === "diff") ? (
     "h-160"
-  ) : strings?.type === "detail" ? (
+  ) : strings?.part === "food"&&(strings?.type === "detail" || strings?.part === "save") ? (
     "h-80"
-  ) : strings?.type === "search" ? (
+  ) : strings?.part === "money"&&(strings?.type === "list" || strings?.part === "diff") ? (
+    "h-160"
+  ) : strings?.part === "money"&&(strings?.type === "detail" || strings?.part === "save") ? (
     "h-80"
-  ) : strings?.type === "save" ? (
+  ) : strings?.part === "sleep"&&(strings?.type === "list" || strings?.part === "diff") ? (
+    "h-160"
+  ) : strings?.part === "sleep"&&(strings?.type === "detail" || strings?.part === "save") ? (
     "h-80"
-  ) : "";
+  ) : strings?.part === "user"&&(strings?.type === "list" || strings?.part === "diff") ? (
+    "h-160"
+  ) : strings?.part === "user"&&(strings?.type === "detail" || strings?.part === "save") ? (
+    "h-80"
+  ) : "h-40";
+
 
   // 6. pagingNode -------------------------------------------------------------------------------->
   const pagingNode = () => (
@@ -65,7 +80,7 @@ export const Footer = ({
 
   // 7. resultNode -------------------------------------------------------------------------------->
   const resultNode = () => (
-    <Paper className={`flex-wrapper ${height} p-sticky bottom-0`}>
+    <Paper className={`flex-wrapper ${height} p-sticky bottom-0 border`}>
       {pagingNode()}
       {filterNode()}
       {btnNode()}

@@ -29,11 +29,11 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.FILTER?.type}
         onChange={(e) => (
-          functions?.setFILTER?.((prev) => ({
+          functions?.setFILTER((prev) => ({
             ...prev,
             type: e.target.value
           })),
-          functions?.setPAGING?.((prev) => ({
+          functions?.setPAGING((prev) => ({
             ...prev,
             page: 1
           }))
@@ -54,7 +54,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.FILTER?.order}
         onChange={(e) => (
-          functions?.setFILTER?.((prev) => ({
+          functions?.setFILTER((prev) => ({
             ...prev,
             order: e.target.value
           }))
@@ -87,7 +87,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
-          functions?.setFILTER?.(prev => ({
+          functions?.setFILTER(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -113,7 +113,7 @@ export const Filter = ({
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = exerciseArray[objects?.FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
-          functions?.setFILTER?.(prev => ({
+          functions?.setFILTER(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
@@ -145,7 +145,7 @@ export const Filter = ({
           const newPartIndex = foodArray.findIndex((item) => (
             item.food_part === newPartVal
           ));
-          functions?.setFILTER?.(prev => ({
+          functions?.setFILTER(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal
@@ -179,7 +179,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
-          functions?.setFILTER?.(prev => ({
+          functions?.setFILTER(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -205,7 +205,7 @@ export const Filter = ({
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = moneyArray[objects?.FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
-          functions?.setFILTER?.(prev => ({
+          functions?.setFILTER(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
@@ -233,7 +233,7 @@ export const Filter = ({
       value={objects?.PART}
       onChange={(e) => {
         const newPartVal = e.target.value;
-        functions?.setPART?.(newPartVal);
+        functions?.setPART(newPartVal);
       }}>
       <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
       <MenuItem value={"exercise"}>운동</MenuItem>
@@ -248,31 +248,32 @@ export const Filter = ({
 
   // 7. filter ------------------------------------------------------------------------------------>
   const filterNode = () => (
-    strings?.part === "exercise" && strings?.type === "list" ? (
+    strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
         {defaultNode()}
         {exerciseNode()}
       </Div>
-    ) : strings?.part === "food" && strings?.type === "list" ? (
+    ) : strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
         {defaultNode()}
         {foodNode()}
       </Div>
-    ) : strings?.part === "money" && strings?.type === "list" ? (
+    ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
         {defaultNode()}
         {moneyNode()}
       </Div>
-    ) : strings?.part === "sleep" && strings?.type === "list" ? (
+    ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
         {defaultNode()}
       </Div>
-    ) : strings?.part === "demo" ? (
+    ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
       <Div className={"block-wrapper d-row"}>
-        {defaultNode()}
         {demoNode()}
       </Div>
-    ) : null
+    ) : (
+      null
+    )
   );
 
   // 10. return ----------------------------------------------------------------------------------->

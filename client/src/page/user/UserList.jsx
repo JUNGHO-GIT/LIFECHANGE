@@ -3,12 +3,11 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopAlert, PopUp, PopDown} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {Button, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
@@ -328,7 +327,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.food_plan_startDt?.substring(5, 10)}</TableCell>
                 <TableCell>{item.food_plan_kcal}</TableCell>
                 <TableCell>{item.food_plan_carb}</TableCell>
@@ -441,7 +440,7 @@ export const UserList = () => {
           </TableHead>
           <TableBody>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.sleep_plan_startDt?.substring(5, 10)}</TableCell>
                 <TableCell>{item.sleep_plan_night}</TableCell>
                 <TableCell>{item.sleep_plan_morning}</TableCell>
@@ -524,51 +523,15 @@ export const UserList = () => {
         plan: planStr,
       }}
       objects={{
-        PAGING, COUNT
+        PAGING, COUNT, PART,
       }}
       functions={{
-        setPAGING, setCOUNT
+        setPAGING, setCOUNT, setPART,
       }}
       handlers={{
-        navParam
+        navParam, flowAdd, flowDelete
       }}
     />
-  );
-
-  // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Paper className={"flex-wrapper h-50 p-sticky bottom-0"} variant={"outlined"}>
-      <Div className={"d-center"}>
-        <TextField
-          select={false}
-          label={"추가"}
-          type={"text"}
-          variant={"outlined"}
-          id={"inputCount"}
-          name={"inputCount"}
-          className={"w-100 me-10"}
-          size={"small"}
-          value={COUNT?.inputCnt}
-          InputProps={{
-            readOnly: false
-          }}
-          onChange={(e) => (
-            setCOUNT((prev) => ({
-              ...prev,
-              inputCnt: Number(e.target.value)
-            }))
-          )}
-        />
-        <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-        onClick={() => (flowAdd(PART))}>
-          추가
-        </Button>
-        <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-        onClick={() => (flowDelete(PART))}>
-          삭제
-        </Button>
-      </Div>
-    </Paper>
   );
 
   // 10. return ----------------------------------------------------------------------------------->
