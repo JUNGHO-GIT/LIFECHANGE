@@ -93,8 +93,10 @@ export const SleepSavePlan = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
       navigate(SEND.toList, {
         state: SEND
       });
@@ -289,11 +291,16 @@ export const SleepSavePlan = () => {
                   ampm={false}
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                  sx={{
+                    width: "60vw",
+                    height: "60vh"
+                  }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
                       ...prev,
                       sleep_plan_night: moment(e).format("HH:mm")
                     }));
+                    closePopup();
                   }}
                 />
               </LocalizationProvider>
@@ -335,11 +342,16 @@ export const SleepSavePlan = () => {
                   ampm={false}
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                  sx={{
+                    width: "60vw",
+                    height: "60vh"
+                  }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
                       ...prev,
                       sleep_plan_morning: moment(e).format("HH:mm")
                     }));
+                    closePopup();
                   }}
                 />
               </LocalizationProvider>
@@ -369,23 +381,51 @@ export const SleepSavePlan = () => {
           </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            label={"수면"}
-            type={"text"}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-60vw"}
-            value={OBJECT?.sleep_plan_time}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adorn name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
-              ),
-              endAdornment: (
-                "h:m"
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"timePicker"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_plan_time, "HH:mm")}
+                  sx={{
+                    width: "60vw",
+                    height: "60vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"수면 목표"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={OBJECT?.sleep_plan_time}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Adorn name={"TbZzz"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );

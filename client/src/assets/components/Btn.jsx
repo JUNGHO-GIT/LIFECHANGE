@@ -48,8 +48,10 @@ export const Btn = ({
   const btnToUpdate = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
-      objects.SEND.startDt = objects?.DATE.startDt;
-      objects.SEND.endDt = objects?.DATE.endDt;
+      Object.assign(objects?.SEND, {
+        startDt: objects?.DATE.startDt,
+        endDt: objects?.DATE.endDt
+      });
       handlers.navigate(objects?.SEND.toUpdate, {
         state: objects?.SEND,
       });
@@ -60,8 +62,10 @@ export const Btn = ({
   const btnToList = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
-      objects.SEND.startDt = objects?.DATE.startDt;
-      objects.SEND.endDt = objects?.DATE.endDt;
+      Object.assign(objects?.SEND, {
+        startDt: objects?.DATE.startDt,
+        endDt: objects?.DATE.endDt
+      });
       handlers.navigate(objects?.SEND.toList, {
         state: objects?.SEND,
       });
@@ -72,8 +76,10 @@ export const Btn = ({
   const btnToFind = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
-      objects.SEND.startDt = objects?.DATE.startDt;
-      objects.SEND.endDt = objects?.DATE.endDt;
+      Object.assign(objects?.SEND, {
+        startDt: objects?.DATE.startDt,
+        endDt: objects?.DATE.endDt
+      });
       handlers.navigate(objects?.SEND.toFind, {
         state: objects?.SEND,
       });

@@ -143,8 +143,10 @@ export const ExerciseSave = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
       navigate(SEND.toList, {
         state: SEND
       });
@@ -616,7 +618,7 @@ export const ExerciseSave = () => {
                   value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
                   sx={{
                     width: "60vw",
-                    height: "50vh"
+                    height: "60vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -628,6 +630,7 @@ export const ExerciseSave = () => {
                         } : item
                       ))
                     }));
+                    closePopup();
                   }}
                 />
               </LocalizationProvider>

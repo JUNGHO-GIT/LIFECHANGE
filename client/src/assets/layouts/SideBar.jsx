@@ -87,8 +87,10 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                       key={to}
                       className={`sidebar-li2-text ${isSecondOpen === to?"highlight":""}`}
                       onClick={() => {
-                        SEND.startDt = koreanDate;
-                        SEND.endDt = koreanDate;
+                        Object.assign(SEND, {
+                          startDt: koreanDate,
+                          endDt: koreanDate
+                        });
                         navigate(to, {
                           state: SEND
                         });

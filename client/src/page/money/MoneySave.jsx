@@ -121,8 +121,10 @@ export const MoneySave = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
       navigate(SEND.toList, {
         state: SEND
       });

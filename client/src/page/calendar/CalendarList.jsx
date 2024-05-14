@@ -146,10 +146,9 @@ export const CalendarList = () => {
             category: "",
             toDetail: "/calendar/detail"
           });
-          navigate(
-            SEND.toDetail,
-            {state: SEND}
-          );
+          navigate(SEND.toDetail, {
+            state: SEND
+          });
         }}
         tileClassName={({date, view}) => {
           return "calendar-tile-text";
