@@ -1,8 +1,8 @@
 // Footer.jsx
 
-import {React, useState}from "../../import/ImportReacts.jsx";
+import {React}from "../../import/ImportReacts.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
-import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
+import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Navigation = ({
