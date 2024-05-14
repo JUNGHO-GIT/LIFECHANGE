@@ -5,8 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
@@ -155,7 +154,7 @@ export const ExerciseDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -201,7 +200,7 @@ export const ExerciseDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -229,7 +228,10 @@ export const ExerciseDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -309,7 +311,10 @@ export const ExerciseDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "회"
               )
             }}
           />
@@ -325,7 +330,10 @@ export const ExerciseDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "vol"
               )
             }}
           />
@@ -341,7 +349,10 @@ export const ExerciseDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "h:m"
               )
             }}
           />
@@ -357,7 +368,10 @@ export const ExerciseDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kg"
               )
             }}
           />

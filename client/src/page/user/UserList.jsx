@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -317,10 +317,10 @@ export const UserList = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>칼로리</TableCell>
-              <TableCell>탄수화물</TableCell>
-              <TableCell>단백질</TableCell>
-              <TableCell>지방</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

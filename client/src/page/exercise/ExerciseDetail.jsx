@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 
@@ -165,7 +165,10 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -192,7 +195,10 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -210,13 +216,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"총 볼륨"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}
+            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "vol"
               )
             }}
           />
@@ -232,7 +241,10 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "h:m"
               )
             }}
           />
@@ -242,13 +254,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"체중"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}
+            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kg"
               )
             }}
           />
@@ -324,7 +339,12 @@ export const ExerciseDetail = () => {
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
           >
             {exerciseArray.map((item, idx) => (
@@ -343,7 +363,12 @@ export const ExerciseDetail = () => {
             className={"w-25vw ms-10"}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
           >
             {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
@@ -358,13 +383,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"세트"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "set"
               )
             }}
           />
@@ -374,13 +402,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"횟수"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "rep"
               )
             }}
           />
@@ -390,13 +421,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"무게"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
+            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kg"
               )
             }}
           />
@@ -412,7 +446,10 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "h:m"
               )
             }}
           />

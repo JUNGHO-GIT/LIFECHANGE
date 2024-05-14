@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
@@ -234,7 +234,7 @@ export const CalendarDetail = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -280,7 +280,7 @@ export const CalendarDetail = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -309,7 +309,10 @@ export const CalendarDetail = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
@@ -371,7 +374,12 @@ export const CalendarDetail = () => {
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -403,7 +411,12 @@ export const CalendarDetail = () => {
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
             onChange={(e) => {
               const newColor = e.target.value;
@@ -438,7 +451,10 @@ export const CalendarDetail = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbPin"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbPin"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
@@ -467,7 +483,10 @@ export const CalendarDetail = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbNote"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbNote"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {

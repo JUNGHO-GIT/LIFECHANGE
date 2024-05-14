@@ -2,13 +2,11 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -154,7 +152,7 @@ export const MoneyDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -200,7 +198,7 @@ export const MoneyDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -228,7 +226,10 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -293,7 +294,8 @@ export const MoneyDetailPlan = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -308,11 +310,16 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
@@ -333,11 +340,16 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(99999999999, parseInt(rawValue));
               setOBJECT((prev) => ({
                 ...prev,
@@ -353,6 +365,9 @@ export const MoneyDetailPlan = () => {
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

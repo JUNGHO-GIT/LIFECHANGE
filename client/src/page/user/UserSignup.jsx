@@ -3,7 +3,7 @@
 import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 

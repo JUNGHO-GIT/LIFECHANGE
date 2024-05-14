@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
@@ -148,7 +148,7 @@ export const MoneySavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -194,7 +194,7 @@ export const MoneySavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -222,7 +222,10 @@ export const MoneySavePlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -243,14 +246,6 @@ export const MoneySavePlan = () => {
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         key={index}
         type={"dropdown"}
@@ -258,14 +253,11 @@ export const MoneySavePlan = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-            <Div className={"d-row align-center"}>
-              <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
-              <Div className={"fs-14"}>복사</Div>
-            </Div>
-            <Div className={"d-row align-center"}>
-              <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
-              <Div className={"fs-14"}>복사</Div>
-            </Div>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              closePopup();
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
           </>
         )}>
         {(popTrigger={}) => (
@@ -276,12 +268,12 @@ export const MoneySavePlan = () => {
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -296,11 +288,16 @@ export const MoneySavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -321,11 +318,16 @@ export const MoneySavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -341,6 +343,9 @@ export const MoneySavePlan = () => {
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

@@ -117,10 +117,10 @@ export const FoodFind = () => {
               <TableCell className={"w-max30vw"}>식품명</TableCell>
               <TableCell className={"w-max30vw"}>브랜드</TableCell>
               <TableCell className={"w-max30vw"}>제공량</TableCell>
-              <TableCell className={"w-max20vw"}>Kcal</TableCell>
-              <TableCell className={"w-max20vw"}>탄수화물</TableCell>
-              <TableCell className={"w-max20vw"}>단백질</TableCell>
-              <TableCell className={"w-max20vw"}>지방</TableCell>
+              <TableCell className={"w-max25vw"}>Kcal</TableCell>
+              <TableCell className={"w-max15vw"}>Carb</TableCell>
+              <TableCell className={"w-max15vw"}>Protein</TableCell>
+              <TableCell className={"w-max15vw"}>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -148,16 +148,16 @@ export const FoodFind = () => {
                   <TableCell className={"w-max30vw"}>
                     {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")} g)`}
                   </TableCell>
-                  <TableCell className={"w-max20vw"}>
+                  <TableCell className={"w-max25vw"}>
                     {`${numeral(item.food_kcal).format("0,0")} Kcal`}
                   </TableCell>
-                  <TableCell className={"w-max20vw"}>
+                  <TableCell className={"w-max15vw"}>
                     {`${numeral(item.food_carb).format("0,0")} g`}
                   </TableCell>
-                  <TableCell className={"w-max20vw"}>
+                  <TableCell className={"w-max15vw"}>
                     {`${numeral(item.food_protein).format("0,0")} g`}
                   </TableCell>
-                  <TableCell className={"w-max20vw"}>
+                  <TableCell className={"w-max15vw"}>
                     {`${numeral(item.food_fat).format("0,0")} g`}
                   </TableCell>
                 </TableRow>

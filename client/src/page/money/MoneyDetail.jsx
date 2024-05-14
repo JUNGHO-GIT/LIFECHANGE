@@ -5,11 +5,9 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -19,6 +17,8 @@ export const MoneyDetail = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
+  const session = sessionStorage.getItem("dataset") || "";
+  const moneyArray = JSON.parse(session)?.money || [];
   const navigate = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -163,7 +163,10 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -171,22 +174,37 @@ export const MoneyDetail = () => {
       </PopUp>
     );
     // 7-2. count
-    // detail은 validate 필요 x
     const countSection = () => (
-      <TextField
-        type={"text"}
-        label={"항목수"}
-        variant={"outlined"}
-        size={"small"}
-        className={"w-60vw"}
-        value={COUNT?.sectionCnt}
-        InputProps={{
-          readOnly: true,
-          startAdornment: (
-            <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
-          )
-        }}
-      />
+      <PopUp
+        type={"alert"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-60vw"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        )}
+      </PopUp>
     );
     // 7-3. total
     const totalSection = () => (
@@ -202,7 +220,10 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -218,12 +239,15 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={"총 자산"}
@@ -234,23 +258,26 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
         </Div>
       </Card>
     );
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         key={index}
         type={"dropdown"}
@@ -258,24 +285,31 @@ export const MoneyDetail = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-        <Div className={"d-row align-center"} onClick={() => {
-          flowDelete(id, sectionId);
-        }}>
-          <Icons name={"MdOutlineDelete"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>삭제</p>
-        </Div>
-        <Div className={"d-row align-center"} onClick={() => {
-          SEND.startDt = DATE.startDt;
-          SEND.endDt = DATE.endDt;
-          navigate(SEND.toUpdate, {
-            state: SEND,
-          });
-        }}>
-          <Icons name={"MdOutlineEdit"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>수정</p>
-        </Div>
-        </>
-      )}>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              flowDelete(id, sectionId);
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+            <Div className={"h-10"}/>
+            <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+              Object.assign(SEND, {
+                startDt: DATE.startDt,
+                endDt: DATE.endDt
+              });
+              navigate(SEND.toUpdate, {
+                state: SEND
+              });
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>수정</Div>
+            </Icons>
+          </>
+        )}>
         {(popTrigger={}) => (
           <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
@@ -284,39 +318,63 @@ export const MoneyDetail = () => {
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
-            select={false}
+            select={true}
+            type={"text"}
+            size={"small"}
             label={"파트"}
-            type={"text"}
             variant={"outlined"}
-            size={"small"}
             className={"w-25vw me-10"}
-            value={OBJECT?.money_section[i]?.money_part_val}
+            value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
-          />
+          >
+            {moneyArray.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.money_part}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
-            select={false}
-            label={"타이틀"}
+            select={true}
             type={"text"}
-            variant={"outlined"}
             size={"small"}
+            label={"종목"}
+            value={OBJECT?.money_section[i]?.money_title_idx}
+            variant={"outlined"}
             className={"w-25vw ms-10"}
-            value={OBJECT?.money_section[i]?.money_title_val}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
-          />
+          >
+            {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {title}
+              </MenuItem>
+            ))}
+          </TextField>
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
@@ -330,7 +388,10 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -347,7 +408,10 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />

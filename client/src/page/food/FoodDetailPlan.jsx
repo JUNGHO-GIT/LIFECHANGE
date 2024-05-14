@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge} from "../../import/ImportMuis.jsx";
 import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
@@ -155,7 +155,7 @@ export const FoodDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -201,7 +201,7 @@ export const FoodDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -229,7 +229,10 @@ export const FoodDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -310,7 +313,10 @@ export const FoodDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -327,7 +333,10 @@ export const FoodDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -344,7 +353,10 @@ export const FoodDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -361,7 +373,10 @@ export const FoodDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />

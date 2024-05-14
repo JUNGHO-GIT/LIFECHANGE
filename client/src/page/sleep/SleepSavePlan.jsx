@@ -1,13 +1,13 @@
 // SleepSavePlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {useStorage, useTime, useDate} from "../../import/ImportHooks.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -149,7 +149,7 @@ export const SleepSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -195,7 +195,7 @@ export const SleepSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -223,7 +223,10 @@ export const SleepSavePlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -244,14 +247,6 @@ export const SleepSavePlan = () => {
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         key={index}
         type={"dropdown"}
@@ -259,16 +254,13 @@ export const SleepSavePlan = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-        <Div className={"d-row align-center"}>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
-          <Div className={"fs-14"}>복사</Div>
-        </Div>
-        <Div className={"d-row align-center"}>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
-          <Div className={"fs-14"}>복사</Div>
-        </Div>
-        </>
-      )}>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              closePopup();
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+          </>
+        )}>
         {(popTrigger={}) => (
           <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
@@ -277,12 +269,12 @@ export const SleepSavePlan = () => {
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -317,7 +309,10 @@ export const SleepSavePlan = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -360,7 +355,10 @@ export const SleepSavePlan = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -371,22 +369,23 @@ export const SleepSavePlan = () => {
           </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <TextField
-              label={"수면"}
-              type={"text"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-60vw"}
-              value={OBJECT?.sleep_plan_time}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
-                )
-              }}
-            />
-          </LocalizationProvider>
+          <TextField
+            label={"수면"}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            className={"w-60vw"}
+            value={OBJECT?.sleep_plan_time}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
+              ),
+              endAdornment: (
+                "h:m"
+              )
+            }}
+          />
         </Div>
       </Card>
     );
@@ -395,6 +394,9 @@ export const SleepSavePlan = () => {
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

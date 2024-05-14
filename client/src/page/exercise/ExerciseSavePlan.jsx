@@ -5,8 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -151,7 +150,7 @@ export const ExerciseSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -197,7 +196,7 @@ export const ExerciseSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -225,7 +224,10 @@ export const ExerciseSavePlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -287,11 +289,16 @@ export const ExerciseSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "vol"
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -334,7 +341,10 @@ export const ExerciseSavePlan = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                    <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -355,11 +365,16 @@ export const ExerciseSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "회"
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -379,11 +394,16 @@ export const ExerciseSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kg"
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -439,7 +459,7 @@ export const ExerciseSavePlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowSave
       }}
     />
   );

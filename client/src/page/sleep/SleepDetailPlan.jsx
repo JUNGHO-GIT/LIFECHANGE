@@ -5,10 +5,9 @@ import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Badge, TextField, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -154,7 +153,7 @@ export const SleepDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -200,7 +199,7 @@ export const SleepDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
             />
@@ -228,7 +227,10 @@ export const SleepDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -293,7 +295,8 @@ export const SleepDetailPlan = () => {
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -323,7 +326,10 @@ export const SleepDetailPlan = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -360,7 +366,10 @@ export const SleepDetailPlan = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -381,7 +390,10 @@ export const SleepDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
+              <Adorn name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
+              ),
+              endAdornment: (
+                "h:m"
               )
             }}
           />

@@ -3,13 +3,13 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Paper, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell, TableFooter} from "../../import/ImportMuis.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSave = () => {
@@ -206,6 +206,10 @@ export const FoodSave = () => {
 
   // 4-1. handler --------------------------------------------------------------------------------->
   const handleCountChange = (index, newValue) => {
+
+    console.log("index", index);
+    console.log("newValue", newValue);
+
     const newCountValue = Number(newValue);
 
     setOBJECT((prev) => {
@@ -244,128 +248,406 @@ export const FoodSave = () => {
     });
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-7. table
+    // 7-1. date
+    const dateSection = () => (
+      <PopUp
+        type={"calendar"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              readOnly={false}
+              value={moment(DATE.startDt)}
+              sx={{
+                width: "80vw",
+                height: "60vh"
+              }}
+              onChange={(date) => {
+                setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD"),
+                  endDt: moment(date).format("YYYY-MM-DD"),
+                }));
+                closePopup();
+              }}
+            />
+          </LocalizationProvider>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            select={false}
+            label={"날짜"}
+            size={"small"}
+            value={DATE.startDt}
+            variant={"outlined"}
+            className={"w-60vw"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 7-2. count
+    const countSection = () => (
+      <PopUp
+        type={"alert"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-60vw"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 7-3. total
+    const totalSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 칼로리"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "Kcal"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 탄수화물"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 단백질"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center"}>
+          <TextField
+            select={false}
+            label={"총 지방"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+      </Card>
+    );
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <PopUp
+        key={index}
+        type={"dropdown"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+          </>
+        )}>
+        {(popTrigger={}) => (
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 7-6. table
     const tableFragment = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>파트</TableCell>
-              <TableCell>식품명</TableCell>
-              <TableCell>수량</TableCell>
-              <TableCell>g</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Fat</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>x</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.food_section?.map((item, sectionIndex) => (
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell>
-                  <TextField
-                    select={true}
-                    type={"text"}
-                    size={"small"}
-                    label={""}
-                    variant={"outlined"}
-                    value={item.food_part_idx}
-                    defaultValue={0}
-                    InputProps={{
-                      readOnly: false
-                    }}
-                    onChange={(e) => {
-                      const newIndex = Number(e.target.value);
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        food_section: prev.food_section.map((item, idx) => (
-                          idx === sectionIndex ? {
-                            ...item,
-                            food_part_idx: newIndex,
-                            food_part_val: foodArray[newIndex]?.food_part
-                          } : item
-                        ))
-                      }));
-                    }}
-                  >
-                    {foodArray?.map((item, idx) => (
-                      <MenuItem key={idx} value={idx}>
-                        {item.food_part}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </TableCell>
-                <TableCell>
-                  {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
-                </TableCell>
-                <TableCell>
-                  <TextField
-                    select={false}
-                    label={""}
-                    type={"text"}
-                    variant={"outlined"}
-                    size={"small"}
-                    value={`${numeral(item.food_count).format("0,0")}`}
-                    InputProps={{
-                      readOnly: false
-                    }}
-                    onChange={(e) => {
-                      const rawValue = e.target.value.replace(/,/g, "");
-                      const limitedValue = Math.min(Number(rawValue), 99);
-                      handleCountChange(sectionIndex, limitedValue);
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_gram).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_kcal).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_fat).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_carb).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_protein).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  <span className={"del-btn"} onClick={() => (
-                    handlerFoodDelete(sectionIndex)
-                  )}>
-                    x
-                  </span>
-                </TableCell>
-              </TableRow>
+      <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
+          {dropdownSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"분류"}
+            variant={"outlined"}
+            className={"w-60vw"}
+            defaultValue={0}
+            value={OBJECT?.food_section[i]?.food_part_idx}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+            onChange={(e) => {
+              const newIndex = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                food_section: prev.food_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    food_part_idx: newIndex,
+                    food_part_val: foodArray[newIndex]?.food_part
+                  } : item
+                ))
+              }));
+            }}
+          >
+            {foodArray?.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.food_part}
+              </MenuItem>
             ))}
-          </TableBody>
-          <TableFooter className={"table-tfoot"}>
-            <TableRow className={"table-tfoot-tr"}>
-              <TableCell></TableCell>
-              <TableCell>합계</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell>{`${numeral(OBJECT?.food_total_kcal).format("0,0")}`}</TableCell>
-              <TableCell>{`${numeral(OBJECT?.food_total_fat).format("0,0")}`}</TableCell>
-              <TableCell>{`${numeral(OBJECT?.food_total_carb).format("0,0")}`}</TableCell>
-              <TableCell>{`${numeral(OBJECT?.food_total_protein).format("0,0")}`}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+          </TextField>
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"식품명"}
+            size={"small"}
+            value={`${OBJECT?.food_section[i]?.food_title}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"제공량"}
+            size={"small"}
+            type={"text"}
+            value={OBJECT?.food_section[i]?.food_gram}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              // 최대 4자리까지 입력 가능
+              const limitedValue = rawValue.slice(0, 4);
+              handleCountChange(i, limitedValue);
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"kcal"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "Kcal"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"carb"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"protein"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"fat"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
+          />
+        </Div>
+      </Card>
     );
     // 7-7. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min70vh"}>
+        <Div className={"d-center mb-20"}>
+          {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
+        </Div>
+        <Div className={"d-column mb-20"}>
+          {totalSection()}
+        </Div>
         <Div className={"d-column"}>
-          {tableFragment(0)}
+          {OBJECT?.food_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );

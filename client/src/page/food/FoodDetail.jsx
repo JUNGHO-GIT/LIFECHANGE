@@ -5,10 +5,10 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -168,7 +168,10 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -195,7 +198,10 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onClick={(e) => {
@@ -213,13 +219,16 @@ export const FoodDetail = () => {
             select={false}
             label={"총 칼로리"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_in).format('0,0')} kcal`}
+            value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kcal"
               )
             }}
           />
@@ -229,13 +238,16 @@ export const FoodDetail = () => {
             select={false}
             label={"총 탄수화물"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -245,13 +257,16 @@ export const FoodDetail = () => {
             select={false}
             label={"총 단백질"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -261,13 +276,16 @@ export const FoodDetail = () => {
             select={false}
             label={"총 지방"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_fat).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -342,7 +360,12 @@ export const FoodDetail = () => {
             className={"w-25vw me-10"}
             InputProps={{
               readOnly: true,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
           />
           <TextField
@@ -354,7 +377,12 @@ export const FoodDetail = () => {
             className={"w-25vw ms-10"}
             InputProps={{
               readOnly: true,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
           />
         </Div>
@@ -363,13 +391,16 @@ export const FoodDetail = () => {
             select={false}
             label={"kcal"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')} kcal`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "kcal"
               )
             }}
           />
@@ -379,13 +410,16 @@ export const FoodDetail = () => {
             select={false}
             label={"carb"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -395,13 +429,16 @@ export const FoodDetail = () => {
             select={false}
             label={"protein"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -411,13 +448,16 @@ export const FoodDetail = () => {
             select={false}
             label={"fat"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')} g`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />

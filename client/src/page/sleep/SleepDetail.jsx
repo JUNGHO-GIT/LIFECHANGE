@@ -1,14 +1,13 @@
 // SleepDetail.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -157,23 +156,59 @@ export const SleepDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
         )}
       </PopUp>
     );
+    // 7-2. count
+    const countSection = () => (
+      <PopUp
+        type={"alert"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-60vw"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
+              )
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         key={index}
         type={"dropdown"}
@@ -181,24 +216,31 @@ export const SleepDetail = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-        <Div className={"d-row align-center"} onClick={() => {
-          flowDelete(id, sectionId);
-        }}>
-          <Icons name={"MdOutlineDelete"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>삭제</p>
-        </Div>
-        <Div className={"d-row align-center"} onClick={() => {
-          SEND.startDt = DATE.startDt;
-          SEND.endDt = DATE.endDt;
-          navigate(SEND.toUpdate, {
-            state: SEND,
-          });
-        }}>
-          <Icons name={"MdOutlineEdit"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>수정</p>
-        </Div>
-        </>
-      )}>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              flowDelete(id, sectionId);
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+            <Div className={"h-10"}/>
+            <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+              Object.assign(SEND, {
+                startDt: DATE.startDt,
+                endDt: DATE.endDt
+              });
+              navigate(SEND.toUpdate, {
+                state: SEND
+              });
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>수정</Div>
+            </Icons>
+          </>
+        )}>
         {(popTrigger={}) => (
           <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
@@ -207,12 +249,12 @@ export const SleepDetail = () => {
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
           {dropdownSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
@@ -242,7 +284,7 @@ export const SleepDetail = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
                   )
                 }}
                 onClick={(e) => {
@@ -279,7 +321,7 @@ export const SleepDetail = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
+                    <Adorn name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
                   )
                 }}
                 onClick={(e) => {
@@ -300,7 +342,10 @@ export const SleepDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
+                <Adorn name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -312,6 +357,9 @@ export const SleepDetail = () => {
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {OBJECT?.sleep_section.map((_, i) => (tableFragment(i)))}

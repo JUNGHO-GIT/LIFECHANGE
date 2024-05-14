@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
@@ -189,10 +189,15 @@ export const MoneySave = () => {
   };
 
   // 4-3. handler --------------------------------------------------------------------------------->
-  const handlerDelete = (i) =>{
-    if (i > -1) {
-      OBJECT.money_section.splice(i, 1);
-    }
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      money_section: prev.money_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -239,7 +244,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -266,7 +274,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
@@ -293,7 +304,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -309,7 +323,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -325,7 +342,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
           />
@@ -349,12 +369,12 @@ export const MoneySave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
-            <Div className={"fs-14"}>복사</Div>
-          </Icons>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
-            <Div className={"fs-14"}>복사</Div>
-          </Icons>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
           </>
         )}>
         {(popTrigger={}) => (
@@ -384,7 +404,12 @@ export const MoneySave = () => {
             value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -418,7 +443,12 @@ export const MoneySave = () => {
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: null
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
             onChange={(e) => {
               const newTitleIdx = Number(e.target.value);
@@ -455,11 +485,16 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {
-              const rawValue = e.target.value.replace(/,/g, "");
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
               const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
@@ -484,7 +519,10 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                null
               )
             }}
             onChange={(e) => {

@@ -50,7 +50,7 @@ export const Icons = ({...props}) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-export const Adornment = ({...props}) => {
+export const Adorn = ({...props}) => {
 
   if (!props.name) {
     return (
