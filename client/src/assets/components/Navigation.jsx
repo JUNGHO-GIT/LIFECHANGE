@@ -15,28 +15,28 @@ export const Navigation = ({
     <BottomNavigation
       showLabels={true}
       value={value}
-      className={"d-center w-100p m-auto"}
+      className={"d-center m-auto"}
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
     >
       <BottomNavigationAction label="Recents"
       icon={
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
+        <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
       } />
       <BottomNavigationAction label="Favorites"
       icon={
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
+        <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
       } />
       <BottomNavigationAction label="Archive" icon={
-        <Icons name={"TbTextPlus"} className={"w-18 h-18 dark"}/>
+        <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
       } />
     </BottomNavigation>
   );
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Div className={"block-wrapper d-row border-top h-40"}>
+    <Div className={"block-wrapper d-row h-40"}>
       {defaultNode()}
     </Div>
   );

@@ -22,44 +22,44 @@ export const PopUp = ({...props}) => {
 
   return (
     <>
-      <Popover
-        {...bindPopover(popupState)}
-        id={"popover"}
-        className={props.className}
-        open={popupState.isOpen}
-        anchorEl={popupState.anchorEl}
-        onClose={() => {
-          popupState.close();
-        }}
-        anchorOrigin={{
-          vertical: props.position === "top" ? "top" : "bottom",
-          horizontal: props.direction === "center" ? "center" : (
-            props.direction === "right" ? "left" : "right"
-          )
-        }}
-        transformOrigin={{
-          vertical: props.position === "top" ? "bottom" : "top",
-          horizontal: props.direction === "center" ? "center" : (
-            props.direction === "right" ? "left" : "right"
-          )
-        }}
-        slotProps={{
-          paper: {
-            style: popupStyle
-          }
-        }}
-      >
-        {props.contents}
-      </Popover>
-      {props.children({
-        openPopup: (anchorEl) => {
-          popupState.setAnchorEl(anchorEl);
-          popupState.open();
-        },
-        closePopup: () => {
-          popupState.close();
+    <Popover
+      {...bindPopover(popupState)}
+      id={"popover"}
+      className={props.className}
+      open={popupState.isOpen}
+      anchorEl={popupState.anchorEl}
+      onClose={() => {
+        popupState.close();
+      }}
+      anchorOrigin={{
+        vertical: props.position === "top" ? "top" : "bottom",
+        horizontal: props.direction === "center" ? "center" : (
+          props.direction === "right" ? "left" : "right"
+        )
+      }}
+      transformOrigin={{
+        vertical: props.position === "top" ? "bottom" : "top",
+        horizontal: props.direction === "center" ? "center" : (
+          props.direction === "right" ? "left" : "right"
+        )
+      }}
+      slotProps={{
+        paper: {
+          style: popupStyle
         }
-      })}
+      }}
+    >
+      {props.contents}
+    </Popover>
+    {props.children({
+      openPopup: (anchorEl) => {
+        popupState.setAnchorEl(anchorEl);
+        popupState.open();
+      },
+      closePopup: () => {
+        popupState.close();
+      }
+    })}
     </>
   );
 };

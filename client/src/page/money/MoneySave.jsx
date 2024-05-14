@@ -137,8 +137,8 @@ export const MoneySave = () => {
       alert(res.data.msg);
     }
   };
-  
-    // 4-1. handler --------------------------------------------------------------------------------->
+
+  // 4-1. handler --------------------------------------------------------------------------------->
   const handlerCount = (e) => {
     const newCount = Number(e);
     const defaultSection = {
@@ -193,11 +193,11 @@ export const MoneySave = () => {
       handlerCount(newValStr);
     }
   };
-  
-  // 4. handler
+
+  // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (i) =>{
     if (i > -1) {
-      OBJECT.money_section.splice(i, 1, "");
+      OBJECT.money_section.splice(i, 1);
     }
   };
 
@@ -247,114 +247,108 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
         )}
       </PopUp>
     );
-    // 7-3. count
+    // 7-2. count
     const countSection = () => (
-        <PopUp
-          type={"alert"}
-          elementId={"popover"}
-          className={""}
-          position={"bottom"}
-          direction={"left"}
-          contents={
-            <Div className={"d-center"}>
-              0이상 10이하의 숫자만 입력하세요.
-            </Div>
-          }>
-          {(popTrigger) => (
-            <TextField
-              type={"text"}
-              id={"sectionCnt"}
-              label={"항목수"}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-60vw"}
-              value={COUNT?.sectionCnt}
-              InputProps={{
-                readOnly: false,
-                startAdornment: (
-                  <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
-                )
-              }}
-              onChange={(e) => {
-                handlerValidate(e, popTrigger);
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
-          )}
-        </PopUp>
-      );
-    // 7-4. total
+      <PopUp
+        type={"alert"}
+        elementId={"popover"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <Div className={"d-center"}>
+            0이상 10이하의 숫자만 입력하세요.
+          </Div>
+        }>
+        {(popTrigger) => (
+          <TextField
+            type={"text"}
+            id={"sectionCnt"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-60vw"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+            onChange={(e) => {
+              handlerValidate(e, popTrigger);
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    // 7-3. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"총 수입"}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-60vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"총 지출"}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-60vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"총 자산"}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_property).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-60vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
-              )
-            }}
-          />
-        </Div>
+        <TextField
+          select={false}
+          label={"총 수입"}
+          size={"small"}
+          value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
+          variant={"outlined"}
+          className={"w-60vw mb-20"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+            )
+          }}
+        />
+        <TextField
+          select={false}
+          label={"총 지출"}
+          size={"small"}
+          value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
+          variant={"outlined"}
+          className={"w-60vw mb-20"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+            )
+          }}
+        />
+        <TextField
+          select={false}
+          label={"총 자산"}
+          size={"small"}
+          value={`${numeral(OBJECT?.money_property).format('0,0')}`}
+          variant={"outlined"}
+          className={"w-60vw mb-20"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+            )
+          }}
+        />
       </Card>
+    );
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         elementId={`popover-${index}`}
         type={"dropdown"}
@@ -363,34 +357,29 @@ export const MoneySave = () => {
         direction={"left"}
         contents={
           <>
-        <Div className={"d-row align-center"}>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>복사</p>
-        </Div>
-        <Div className={"d-row align-center"}
-        onClick={() => {
-          alert(OBJECT.money_section[index]);
-        }}>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>삭제</p>
-        </Div>
-        </>
-      }>
+          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+            <Div className={"fs-14"}>복사</Div>
+          </Icons>
+          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+            <Div className={"fs-14"}>복사</Div>
+          </Icons>
+          </>
+        }>
         {(popTrigger) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
-          {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
+          {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
@@ -435,8 +424,8 @@ export const MoneySave = () => {
             label={"타이틀"}
             id={`money_title_val-${i}`}
             name={`money_title_val-${i}`}
-            className={"w-25vw ms-10"}
             variant={"outlined"}
+            className={"w-25vw ms-10"}
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
               readOnly: false
@@ -469,17 +458,16 @@ export const MoneySave = () => {
           <TextField
             select={false}
             label={"금액"}
-            type={"text"}
+            size={"small"}
             variant={"outlined"}
             id={`money_amount-${i}`}
             name={`money_amount-${i}`}
             className={"w-60vw"}
-            size={"small"}
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -501,22 +489,22 @@ export const MoneySave = () => {
           <TextField
             select={false}
             label={"메모"}
-            type={"text"}
+            size={"small"}
             variant={"outlined"}
             id={`money_content-${i}`}
             name={`money_content-${i}`}
             className={"w-60vw"}
-            size={"small"}
             value={OBJECT?.money_section[i]?.money_content}
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
-              const limitedContent = e.target.value.slice(0, 100);
-              setOBJECT((prev) =>({
+              const rawValue = e.target.value;
+              const limitedContent = rawValue.slice(0, 100);
+              setOBJECT((prev) => ({
                 ...prev,
                 money_section: prev.money_section.map((item, idx) => (
                   idx === i ? {
@@ -532,9 +520,7 @@ export const MoneySave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div
-        className={"block-wrapper h-min110vh"}
-      >
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -580,7 +566,7 @@ export const MoneySave = () => {
         setDATE, setSEND, setCOUNT, setDAYPICKER
       }}
       handlers={{
-        navParam
+        navParam, flowSave
       }}
     />
   );

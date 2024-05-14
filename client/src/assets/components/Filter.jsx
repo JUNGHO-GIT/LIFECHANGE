@@ -247,34 +247,110 @@ export const Filter = ({
   );
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => (
-    strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {defaultNode()}
-        {exerciseNode()}
-      </Div>
-    ) : strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {defaultNode()}
-        {foodNode()}
-      </Div>
-    ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {defaultNode()}
-        {moneyNode()}
-      </Div>
-    ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {defaultNode()}
-      </Div>
-    ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {demoNode()}
-      </Div>
-    ) : (
-      null
-    )
-  );
+  const filterNode = () => {
+
+    // 1. calendar
+    if (strings?.part === "calendar") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 2. exercise
+    else if (strings?.part === "exercise") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {defaultNode()}
+            {exerciseNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 3. food
+    else if (strings?.part === "food") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {defaultNode()}
+            {foodNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 4. money
+    else if (strings?.part === "money") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {defaultNode()}
+            {moneyNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 5. sleep
+    else if (strings?.part === "sleep") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {defaultNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 6. user
+    else if (strings?.part === "user") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {demoNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "login") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "signup") {
+        return (
+          null
+        );
+      }
+    }
+  };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

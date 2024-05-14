@@ -2,9 +2,9 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Icons} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
@@ -71,8 +71,8 @@ export const CalendarList = () => {
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  // 7. calendar ---------------------------------------------------------------------------------->
+  const calendarNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
     );
@@ -162,7 +162,7 @@ export const CalendarList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
@@ -181,12 +181,33 @@ export const CalendarList = () => {
     <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
+  // 9. footer ------------------------------------------------------------------------------------>
+  const footerNode = () => (
+    <Footer
+      strings={{
+        part: partStr,
+        type: typeStr,
+        plan: planStr,
+      }}
+      objects={{
+        DATE, SEND
+      }}
+      functions={{
+        setDATE, setSEND
+      }}
+      handlers={{
+        navParam
+      }}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {Header()}
       {NavBar()}
-      {LOADING ? loadingNode() : tableNode()}
+      {LOADING ? loadingNode() : calendarNode()}
+      {footerNode()}
     </>
   );
 };

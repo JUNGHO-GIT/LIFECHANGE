@@ -6,7 +6,9 @@ import {InputAdornment} from "../../import/ImportMuis.jsx";
 export const Icons = ({...props}) => {
 
   if (!props.name) {
-    return null;
+    return (
+      null
+    );
   }
 
   // ex. 'FaHome' => (preStr = fa)
@@ -24,7 +26,9 @@ export const Icons = ({...props}) => {
     }
     else {
       console.warn(`Icon '${props.name}' not found!`);
-      return null;
+      return (
+        null
+      );
     }
   }
   catch (error) {
@@ -43,7 +47,9 @@ export const Icons = ({...props}) => {
 export const Adornment = ({...props}) => {
 
   if (!props.name) {
-    return null;
+    return (
+      null
+    );
   }
 
   // ex. 'FaHome' => (preStr = fa)
@@ -61,7 +67,9 @@ export const Adornment = ({...props}) => {
     }
     else {
       console.warn(`Icon '${props.name}' not found!`);
-      return null;
+      return (
+        null
+      );
     }
   }
   catch (error) {

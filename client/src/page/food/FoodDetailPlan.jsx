@@ -124,7 +124,7 @@ export const FoodDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -155,14 +155,14 @@ export const FoodDetailPlan = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -171,7 +171,7 @@ export const FoodDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -202,14 +202,14 @@ export const FoodDetailPlan = () => {
             size={"small"}
             value={DATE.endDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -278,12 +278,12 @@ export const FoodDetailPlan = () => {
             id={`food_plan_kcal-${i}`}
             name={`food_plan_kcal-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -297,12 +297,12 @@ export const FoodDetailPlan = () => {
             id={`food_plan_carb-${i}`}
             name={`food_plan_carb-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbBowl"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -316,12 +316,12 @@ export const FoodDetailPlan = () => {
             id={`food_plan_protein-${i}`}
             name={`food_plan_protein-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -335,12 +335,12 @@ export const FoodDetailPlan = () => {
             id={`food_plan_fat-${i}`}
             name={`food_plan_fat-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -349,7 +349,7 @@ export const FoodDetailPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

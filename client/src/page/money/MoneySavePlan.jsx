@@ -117,7 +117,7 @@ export const MoneySavePlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -148,14 +148,14 @@ export const MoneySavePlan = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -164,7 +164,7 @@ export const MoneySavePlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -195,14 +195,14 @@ export const MoneySavePlan = () => {
             size={"small"}
             value={DATE.endDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -230,11 +230,11 @@ export const MoneySavePlan = () => {
           <>
             <Div className={"d-row align-center"}>
               <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-              <p className={"fs-14"}>복사</p>
+              <Div className={"fs-14"}>복사</Div>
             </Div>
             <Div className={"d-row align-center"}>
               <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-              <p className={"fs-14"}>복사</p>
+              <Div className={"fs-14"}>복사</Div>
             </Div>
           </>
         }>
@@ -263,12 +263,12 @@ export const MoneySavePlan = () => {
             id={`money_plan_in-${i}`}
             name={`money_plan_in-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -290,12 +290,12 @@ export const MoneySavePlan = () => {
             id={`money_plan_out-${i}`}
             name={`money_plan_out-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -312,7 +312,7 @@ export const MoneySavePlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

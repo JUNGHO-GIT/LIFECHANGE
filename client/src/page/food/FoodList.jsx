@@ -172,7 +172,7 @@ export const FoodList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

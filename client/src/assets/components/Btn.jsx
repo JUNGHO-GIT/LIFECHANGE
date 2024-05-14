@@ -258,48 +258,118 @@ export const Btn = ({
   );
 
   // 7. btn --------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    strings?.part === "calendar" && (strings?.type === "list" || strings?.type === "diff") ? (
-      null
-    ) : strings?.part === "calendar" && (strings?.type === "detail" || strings?.type === "save") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnToSave()}
-        {btnToList()}
-      </Div>
-    ) : strings?.part === "exercise" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnOpenCalendar()}
-        {btnGetToday()}
-      </Div>
-    ) : strings?.part === "food" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnOpenCalendar()}
-        {btnGetToday()}
-      </Div>
-    ) : strings?.part === "money" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnOpenCalendar()}
-        {btnGetToday()}
-      </Div>
-    ) : strings?.part === "sleep" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnOpenCalendar()}
-        {btnGetToday()}
-      </Div>
-    ) : strings?.part === "user" && (strings?.type === "list" || strings?.type === "diff") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnInsertDemo()}
-      </Div>
-    ) : strings?.part === "user" && (strings?.type === "login") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnLogin()}
-      </Div>
-    ) : strings?.part === "user" && (strings?.type === "signup") ? (
-      <Div className={"block-wrapper d-row h-40"}>
-        {btnSignup()}
-      </Div>
-    ) : null
-  );
+  const btnNode = () => {
+
+    // 1. calendar
+    if (strings?.part === "calendar") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToSave()}
+            {btnToList()}
+          </Div>
+        );
+      }
+    }
+
+    // 2. exercise
+    else if (strings?.part === "exercise") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnOpenCalendar()}
+            {btnGetToday()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 3. food
+    else if (strings?.part === "food") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnOpenCalendar()}
+            {btnGetToday()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 4. money
+    else if (strings?.part === "money") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnOpenCalendar()}
+            {btnGetToday()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 5. sleep
+    else if (strings?.part === "sleep") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnOpenCalendar()}
+            {btnGetToday()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail" || strings?.type === "save") {
+        return (
+          null
+        );
+      }
+    }
+
+    // 6. user
+    else if (strings?.part === "user") {
+      if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnInsertDemo()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "login") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnLogin()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "signup") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnSignup()}
+          </Div>
+        );
+      }
+    }
+  };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

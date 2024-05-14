@@ -121,7 +121,7 @@ export const ExerciseDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -152,14 +152,14 @@ export const ExerciseDetailPlan = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -168,7 +168,7 @@ export const ExerciseDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -199,14 +199,14 @@ export const ExerciseDetailPlan = () => {
             size={"small"}
             value={DATE.endDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -274,12 +274,12 @@ export const ExerciseDetailPlan = () => {
             label={"목표 운동 횟수"}
             id={"exercise_plan_count"}
             name={"exercise_plan_count"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"MdOutlineFitnessCenter"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -292,12 +292,12 @@ export const ExerciseDetailPlan = () => {
             label={"목표 볼륨"}
             id={"exercise_plan_volume"}
             name={"exercise_plan_volume"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -310,12 +310,12 @@ export const ExerciseDetailPlan = () => {
             label={"목표 유산소"}
             id={"exercise_plan_cardio"}
             name={"exercise_plan_cardio"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={OBJECT?.exercise_plan_cardio}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -328,12 +328,12 @@ export const ExerciseDetailPlan = () => {
             label={"목표 체중"}
             id={"exercise_plan_weight"}
             name={"exercise_plan_weight"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -342,7 +342,7 @@ export const ExerciseDetailPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -149,14 +149,14 @@ export const SleepSavePlan = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -183,11 +183,11 @@ export const SleepSavePlan = () => {
           <>
         <Div className={"d-row align-center"}>
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>복사</p>
+          <Div className={"fs-14"}>복사</Div>
         </Div>
         <Div className={"d-row align-center"}>
           <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>복사</p>
+          <Div className={"fs-14"}>복사</Div>
         </Div>
         </>
       }>
@@ -236,12 +236,12 @@ export const SleepSavePlan = () => {
                 label={"취침 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-90p"}
+                className={"w-60vw"}
                 value={OBJECT?.sleep_plan_night}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"} />
+                    <Adornment name={"TbMoon"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
                   )
                 }}
                 onClick={(e) => {
@@ -280,12 +280,12 @@ export const SleepSavePlan = () => {
                 label={"기상 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-90p"}
+                className={"w-60vw"}
                 value={OBJECT?.sleep_plan_morning}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"} />
+                    <Adornment name={"TbSun"} className={"w-15 h-15 dark me-n5"} position={"start"}/>
                   )
                 }}
                 onClick={(e) => {
@@ -304,12 +304,12 @@ export const SleepSavePlan = () => {
               id={"sleep_time"}
               name={"sleep_time"}
               variant={"outlined"}
-              className={"w-90p"}
+              className={"w-60vw"}
               value={OBJECT?.sleep_plan_time}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"} />
+                  <Adornment name={"TbZzz"} className={"w-15 h-15  dark me-n5 pointer"} position={"start"}/>
                 )
               }}
             />
@@ -319,7 +319,7 @@ export const SleepSavePlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

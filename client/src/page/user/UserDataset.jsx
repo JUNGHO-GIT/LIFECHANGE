@@ -260,7 +260,7 @@ export const UserDataset = () => {
   const tableNode = () => {
     // 7-6-1. table
     const tableFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20 w-100p"} key={i}>
+      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
         <TableContainer className={"over-x-hidden"}>
           <Table className={"border"}>
             <TableHead>
@@ -414,7 +414,7 @@ export const UserDataset = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-column"}>
           {tableFragment1(0)}
         </Div>

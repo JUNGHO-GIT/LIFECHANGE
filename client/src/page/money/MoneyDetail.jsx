@@ -164,21 +164,21 @@ export const MoneyDetail = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
         )}
       </PopUp>
     );
-    // 7-3. count
+    // 7-2. count
     const countSection = () => (
       <TextField
         type={"text"}
@@ -186,17 +186,17 @@ export const MoneyDetail = () => {
         label={"항목수"}
         variant={"outlined"}
         size={"small"}
-        className={"w-90p"}
+        className={"w-60vw"}
         value={COUNT?.sectionCnt}
         InputProps={{
           readOnly: true,
           startAdornment: (
-            <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
           )
         }}
       />
     );
-    // 7-4. total
+    // 7-3. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
         <Div className={"d-center mb-20"}>
@@ -206,11 +206,11 @@ export const MoneyDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -222,11 +222,11 @@ export const MoneyDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -238,11 +238,11 @@ export const MoneyDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -334,12 +334,12 @@ export const MoneyDetail = () => {
             type={"text"}
             variant={"outlined"}
             size={"small"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -351,12 +351,12 @@ export const MoneyDetail = () => {
             type={"text"}
             variant={"outlined"}
             size={"small"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={OBJECT?.money_section[i]?.money_content}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -365,7 +365,7 @@ export const MoneyDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -123,7 +123,7 @@ export const MoneyDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -154,14 +154,14 @@ export const MoneyDetailPlan = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -170,7 +170,7 @@ export const MoneyDetailPlan = () => {
       <PopUp
         type={"calendar"}
         elementId={"popover"}
-        className={"w-90p"}
+        className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
         contents={
@@ -201,14 +201,14 @@ export const MoneyDetailPlan = () => {
             size={"small"}
             value={DATE.endDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -277,12 +277,12 @@ export const MoneyDetailPlan = () => {
             id={`money_plan_in-${i}`}
             name={`money_plan_in-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -304,12 +304,12 @@ export const MoneyDetailPlan = () => {
             id={`money_plan_out-${i}`}
             name={`money_plan_out-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -326,7 +326,7 @@ export const MoneyDetailPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

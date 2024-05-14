@@ -1,14 +1,14 @@
 // CalendarDetail.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -181,14 +181,14 @@ export const CalendarDetail = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -245,12 +245,12 @@ export const CalendarDetail = () => {
               label={"항목수"}
               variant={"outlined"}
               size={"small"}
-              className={"w-90p"}
+              className={"w-60vw"}
               value={COUNT?.sectionCnt}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                  <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
                 )
               }}
               onChange={(e) => {
@@ -362,7 +362,7 @@ export const CalendarDetail = () => {
             id={`calendar_title-${i}`}
             name={`calendar_title-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
               readOnly: false
@@ -390,7 +390,7 @@ export const CalendarDetail = () => {
             id={`calendar_detail-${i}`}
             name={`calendar_detail-${i}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_detail}
             InputProps={{
               readOnly: false
@@ -413,7 +413,7 @@ export const CalendarDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

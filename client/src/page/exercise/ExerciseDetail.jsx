@@ -167,21 +167,21 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
         )}
       </PopUp>
     );
-    // 7-3. count
+    // 7-2. count
     const countSection = () => (
       <TextField
         type={"text"}
@@ -189,17 +189,17 @@ export const ExerciseDetail = () => {
         label={"항목수"}
         variant={"outlined"}
         size={"small"}
-        className={"w-90p"}
+        className={"w-60vw"}
         value={COUNT?.sectionCnt}
         InputProps={{
           readOnly: true,
           startAdornment: (
-            <Adornment name={"TbTextPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
           )
         }}
       />
     );
-    // 7-4. total
+    // 7-3. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
         <Div className={"d-center mb-20"}>
@@ -209,11 +209,11 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -225,11 +225,11 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${OBJECT?.exercise_total_cardio}`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -241,11 +241,11 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"} />
+                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -381,7 +381,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={OBJECT?.exercise_section[i]?.exercise_cardio}
             variant={"outlined"}
-            className={"w-90p"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true
             }}
@@ -391,7 +391,7 @@ export const ExerciseDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500"}>
+      <Div className={"block-wrapper h-min110vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
