@@ -10,7 +10,7 @@ import {Paper} from "../../import/ImportMuis.jsx";
 export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -39,13 +39,13 @@ export const Header = () => {
       contents={
       <>
         <Div className={"d-row align-center pointer"} onClick={() => {
-          navParam(`/user/login`);
+          navigate(`/user/login`);
         }}>
           <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
           <p className={"fs-14"}>Login</p>
         </Div>
         <Div className={"d-row align-center pointer"} onClick={() => {
-          navParam(`/user/signup`);
+          navigate(`/user/signup`);
         }}>
           <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
           <p className={"fs-14"}>Signup</p>

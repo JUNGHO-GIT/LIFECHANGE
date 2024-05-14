@@ -8974,6 +8974,8 @@
   border: none !important;
 }
 
+
+/** 99. color *************************************************************************************/
 .primary {
   color: #3B82F6 !important;
 }
@@ -8997,4 +8999,37 @@
 }
 .dark {
   color: #697A8D !important;
+}
+.red {
+  color: #EF4444 !important;
+}
+.orange {
+  color: #F59E0B !important;
+}
+.yellow {
+  color: #FBBF24 !important;
+}
+.green {
+  color: #10B981 !important;
+}
+.blue {
+  color: #3B82F6 !important;
+}
+.navy {
+  color: #2563EB !important;
+}
+.purple {
+  color: #8B5CF6 !important;
+}
+.pink {
+  color: #EC4899 !important;
+}
+.white {
+  color: #FFFFFF !important;
+}
+.gray {
+  color: #9CA3AF !important;
+}
+.black {
+  color: #111827 !important;
 }

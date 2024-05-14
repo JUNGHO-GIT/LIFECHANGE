@@ -18,7 +18,6 @@ import "./assets/css/Btn.css";
 import "./assets/css/DataSet.css";
 import "./assets/css/Dash.css";
 import "./assets/css/Mui.css";
-import "./assets/css/Custom.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 

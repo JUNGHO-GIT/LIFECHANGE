@@ -21,7 +21,7 @@ export const CalendarDetail = () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -103,11 +103,11 @@ export const CalendarDetail = () => {
     setOBJECT(res.data.result || OBJECT_DEF);
     if (res.data.status === "success") {
       alert(res.data.msg);
-      navParam(SEND?.toList);
+      navigate(SEND?.toList);
     }
     else {
       alert(res.data.msg);
-      navParam(SEND?.toList);
+      navigate(SEND?.toList);
     }
   };
 
@@ -127,7 +127,7 @@ export const CalendarDetail = () => {
         setOBJECT(res.data.result);
       }
       else {
-        navParam(SEND.toList);
+        navigate(SEND.toList);
       }
     }
     else {
@@ -427,7 +427,8 @@ export const CalendarDetail = () => {
           >
             {colors.map((item, idx) => (
               <MenuItem key={idx} value={item}>
-                {item}
+                <span className={`${item}`}>●</span>
+                <span className={"ms-10"}>{item}</span>
               </MenuItem>
             ))}
           </TextField>
@@ -541,7 +542,7 @@ export const CalendarDetail = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navParam, flowSave, flowDelete
+        navigate, flowSave, flowDelete
       }}
     />
   );

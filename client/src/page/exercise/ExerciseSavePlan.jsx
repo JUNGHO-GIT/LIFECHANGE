@@ -20,7 +20,7 @@ export const ExerciseSavePlan = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -98,7 +98,7 @@ export const ExerciseSavePlan = () => {
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
+      navigate(SEND.toList, {
         state: SEND
       });
     }
@@ -418,7 +418,7 @@ export const ExerciseSavePlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

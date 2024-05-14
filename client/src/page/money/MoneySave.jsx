@@ -22,7 +22,7 @@ export const MoneySave = () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -124,7 +124,7 @@ export const MoneySave = () => {
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
+      navigate(SEND.toList, {
         state: SEND
       });
     }
@@ -559,7 +559,7 @@ export const MoneySave = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navParam, flowSave
+        navigate, flowSave
       }}
     />
   );

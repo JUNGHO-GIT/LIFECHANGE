@@ -22,7 +22,7 @@ export const FoodSave = () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
   const foodArray = JSON.parse(session)?.food || [];
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -196,7 +196,7 @@ export const FoodSave = () => {
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
+      navigate(SEND.toList, {
         state: SEND
       });
     }
@@ -405,7 +405,7 @@ export const FoodSave = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

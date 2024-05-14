@@ -17,7 +17,7 @@ export const UserList = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
@@ -205,7 +205,7 @@ export const UserList = () => {
         ...prev,
         page: 1
       }));
-      navParam("/user/list");
+      navigate("/user/list");
     }
   };
 
@@ -227,7 +227,7 @@ export const UserList = () => {
         ...prev,
         page: 1
       }));
-      navParam("/user/list");
+      navigate("/user/list");
     }
   };
 
@@ -529,7 +529,7 @@ export const UserList = () => {
         setPAGING, setCOUNT, setPART,
       }}
       handlers={{
-        navParam, flowAdd, flowDelete
+        navigate, flowAdd, flowDelete
       }}
     />
   );

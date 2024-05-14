@@ -20,7 +20,7 @@ export const SleepDetailPlan = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -102,7 +102,7 @@ export const SleepDetailPlan = () => {
         setOBJECT(res.data.result);
       }
       else {
-        navParam(SEND.toList);
+        navigate(SEND.toList);
       }
     }
     else {
@@ -189,7 +189,7 @@ export const SleepDetailPlan = () => {
             <Div className={"d-row align-center"} onClick={() => {
               SEND.startDt = DATE.startDt;
               SEND.endDt = DATE.endDt;
-              navParam(SEND.toUpdate, {
+              navigate(SEND.toUpdate, {
                 state: SEND,
               });
             }}>
@@ -352,7 +352,7 @@ export const SleepDetailPlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

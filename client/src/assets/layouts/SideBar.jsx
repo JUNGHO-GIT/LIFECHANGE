@@ -13,7 +13,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -89,7 +89,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                       onClick={() => {
                         SEND.startDt = koreanDate;
                         SEND.endDt = koreanDate;
-                        navParam(to, {
+                        navigate(to, {
                           state: SEND
                         });
                         setIsSidebarOpen(false);

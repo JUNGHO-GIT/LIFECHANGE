@@ -50,7 +50,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       objects.SEND.startDt = objects?.DATE.startDt;
       objects.SEND.endDt = objects?.DATE.endDt;
-      handlers.navParam(objects?.SEND.toUpdate, {
+      handlers.navigate(objects?.SEND.toUpdate, {
         state: objects?.SEND,
       });
     }}>
@@ -62,7 +62,7 @@ export const Btn = ({
     className={"secondary-btn"} onClick={() => {
       objects.SEND.startDt = objects?.DATE.startDt;
       objects.SEND.endDt = objects?.DATE.endDt;
-      handlers.navParam(objects?.SEND.toList, {
+      handlers.navigate(objects?.SEND.toList, {
         state: objects?.SEND,
       });
     }}>
@@ -74,7 +74,7 @@ export const Btn = ({
     className={"secondary-btn"} onClick={() => {
       objects.SEND.startDt = objects?.DATE.startDt;
       objects.SEND.endDt = objects?.DATE.endDt;
-      handlers.navParam(objects?.SEND.toSearch, {
+      handlers.navigate(objects?.SEND.toSearch, {
         state: objects?.SEND,
       });
     }}>
@@ -100,7 +100,7 @@ export const Btn = ({
   const btnRefresh = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
-      handlers.navParam(0);
+      handlers.navigate(0);
     }}>
       Refresh
     </Button>

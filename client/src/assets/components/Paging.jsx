@@ -24,6 +24,8 @@ export const Paging = ({
       count={objects?.COUNT.totalCnt}
       rowsPerPage={objects?.PAGING.limit}
       page={objects?.PAGING.page - 1}
+      showFirstButton={true}
+      showLastButton={true}
       onPageChange={(event, newPage) => {
         functions.setPAGING((prev) => ({
           ...prev,

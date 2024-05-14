@@ -19,7 +19,7 @@ export const SleepDiff = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -134,7 +134,7 @@ export const SleepDiff = () => {
                   SEND.id = item._id;
                   SEND.startDt = item.sleep_plan_startDt;
                   SEND.endDt = item.sleep_plan_endDt;
-                  navParam(SEND.toDetail, {
+                  navigate(SEND.toDetail, {
                     state: SEND
                   });
                 }}>
@@ -230,7 +230,7 @@ export const SleepDiff = () => {
         setDATE, setFILTER, setSEND, setPAGING, setCOUNT
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

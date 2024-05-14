@@ -15,7 +15,7 @@ export const CalendarList = () => {
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
@@ -94,7 +94,7 @@ export const CalendarList = () => {
                 startDt: calendar.calendar_startDt,
                 endDt: calendar.calendar_endDt,
               });
-              navParam(SEND.toDetail, {
+              navigate(SEND.toDetail, {
                 state: SEND
               });
             }}
@@ -146,9 +146,10 @@ export const CalendarList = () => {
             category: "",
             toDetail: "/calendar/detail"
           });
-          navParam(SEND.toDetail, {
-            state: SEND
-          });
+          navigate(
+            SEND.toDetail,
+            {state: SEND}
+          );
         }}
         tileClassName={({date, view}) => {
           return "calendar-tile-text";
@@ -199,7 +200,7 @@ export const CalendarList = () => {
         setDATE, setSEND
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

@@ -23,7 +23,7 @@ export const UserDataset = () => {
   const foodArray = JSON.parse(session)?.food || [];
   const moneyArray = JSON.parse(session)?.money || [];
   const sleepArray = JSON.parse(session)?.sleep || [];
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -103,7 +103,7 @@ export const UserDataset = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
-      navParam(SEND.toDataset);
+      navigate(SEND.toDataset);
     }
     else {
       alert(res.data.msg);
@@ -455,7 +455,7 @@ export const UserDataset = () => {
         setDATE, setSEND
       }}
       handlers={{
-        navParam, flowSave
+        navigate, flowSave
       }}
     />
   );

@@ -18,7 +18,7 @@ export const FoodSearch = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -118,7 +118,7 @@ export const FoodSearch = () => {
       sessionStorage.setItem("food_section", JSON.stringify(param));
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
-      navParam(SEND.toSave, {
+      navigate(SEND.toSave, {
         state: SEND
       });
     };
@@ -204,7 +204,7 @@ export const FoodSearch = () => {
         setDATE, setFILTER, setSEND, setCOUNT
       }}
       handlers={{
-        navParam
+        navigate
       }}
     />
   );

@@ -16,7 +16,7 @@ export const UserLogin = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
@@ -39,7 +39,7 @@ export const UserLogin = () => {
       sessionStorage.setItem("user_id", user_id);
       sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
       percent();
-      navParam("/calendar/list");
+      navigate("/calendar/list");
     }
     else {
       alert(res.data.msg);
@@ -134,7 +134,7 @@ export const UserLogin = () => {
 
       }}
       handlers={{
-        navParam, flowSave
+        navigate, flowSave
       }}
     />
   );

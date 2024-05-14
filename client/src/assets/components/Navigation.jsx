@@ -36,7 +36,7 @@ export const Navigation = ({
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Div className={"block-wrapper d-row h-40"}>
+    <Div className={"block-wrapper d-row border-top h-40"}>
       {defaultNode()}
     </Div>
   );

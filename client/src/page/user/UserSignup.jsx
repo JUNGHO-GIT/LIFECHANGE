@@ -15,7 +15,7 @@ export const UserSignup = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const navParam = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
@@ -39,7 +39,7 @@ export const UserSignup = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      navParam("/user/login");
+      navigate("/user/login");
     }
     else if (res.data.status === "duplicated") {
       alert(res.data.msg);
@@ -138,7 +138,7 @@ export const UserSignup = () => {
 
       }}
       handlers={{
-        navParam, flowSave
+        navigate, flowSave
       }}
     />
   );
