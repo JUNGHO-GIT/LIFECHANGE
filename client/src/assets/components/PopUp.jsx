@@ -13,11 +13,11 @@ export const PopUp = ({...props}) => {
   ? ({
     border: '1px solid red',
     boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
-    padding: "10px 10px 10px 10px",
+    padding: "6px 6px 6px 6px",
   }) : ({
     border: '0.2px solid rgba(0, 0, 0, 0.2)',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-    padding: "10px 10px 10px 10px",
+    padding: "6px 6px 6px 6px",
   });
 
   return (

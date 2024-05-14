@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
@@ -481,7 +481,7 @@ export const UserList = () => {
         </Table>
       </TableContainer>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
@@ -496,9 +496,9 @@ export const UserList = () => {
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -535,8 +535,6 @@ export const UserList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

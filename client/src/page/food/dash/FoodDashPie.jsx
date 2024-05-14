@@ -1,12 +1,12 @@
 // FoodDashPie.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {axios} from "../../../import/ImportLibs.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";
+import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
@@ -423,101 +423,105 @@ export const FoodDashPie = () => {
     );
   };
 
-  // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
-    <TextField
-      select={true}
-      type={"text"}
-      size={"small"}
-      className={"w-65 mt-5"}
-      variant={"outlined"}
-      value={SECTION}
-      onChange={(e) => (
-        setSECTION(e.target.value)
-      )}
-    >
-      <MenuItem value={"today"}>오늘</MenuItem>
-      <MenuItem value={"week"}>주간</MenuItem>
-      <MenuItem value={"month"}>월간</MenuItem>
-    </TextField>
-  );
-
-  // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
-    <PopUp
-      elementId={`popover`}
-      type={"dropdown"}
-      className={""}
-      position={"bottom"}
-      direction={"left"}
-      contents={({closePopup}) => (
-      ["kcal", "nut"]?.map((key, index) => (
-        <FormGroup key={index} className={"p-5 pe-10"}>
-          <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-            if (LINE === key) {
-              setLINE("");
-            }
-            else {
-              setLINE(key);
-            }
-          }}/>} label={key} labelPlacement={"start"}>
-          </FormControlLabel>
-        </FormGroup>
-      ))
-      )}>
-      {(popTrigger={}) => (
-        <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}/>
-      )}
-    </PopUp>
-  );
+  // 7. dash -------------------------------------------------------------------------------------->
+  const dashNode = () => {
+    // 7-5-1. dropdown
+    const dropdownSection1 = () => (
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        className={"w-65 mt-5"}
+        variant={"outlined"}
+        value={SECTION}
+        onChange={(e) => (
+          setSECTION(e.target.value)
+        )}
+      >
+        <MenuItem value={"today"}>오늘</MenuItem>
+        <MenuItem value={"week"}>주간</MenuItem>
+        <MenuItem value={"month"}>월간</MenuItem>
+      </TextField>
+    );
+    // 7-5-2. dropdown
+    const dropdownSection2 = () => (
+      <PopUp
+        elementId={"popover"}
+        type={"dropdown"}
+        position={"bottom"}
+        direction={"left"}
+        contents={({closePopup}) => (
+        ["kcal", "nut"]?.map((key, index) => (
+          <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+              if (LINE === key) {
+                setLINE("");
+              }
+              else {
+                setLINE(key);
+              }
+            }}/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
+        ))
+        )}>
+        {(popTrigger={}) => (
+          <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
+        )}
+      </PopUp>
+    );
+    // 7-6. dash
+    const dashSection = () => (
+      <Div className={"block-wrapper h-min40vh"}>
+        <Div className={"d-center"}>
+          <Div className={"ms-0"}>{dropdownSection1()}</Div>
+          <Div className={"m-auto fsr-1"}>칼로리/영양소 비율</Div>
+          <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        </Div>
+        <Div className={"d-column"}>
+          {SECTION === "today" && LINE === "kcal" && (
+            LOADING ? loadingNode() : chartKcalToday()
+          )}
+          {SECTION === "today" && LINE === "nut" && (
+            LOADING ? loadingNode() : chartNutToday()
+          )}
+          {SECTION === "week" && LINE === "kcal" && (
+            LOADING ? loadingNode() : chartKcalWeek()
+          )}
+          {SECTION === "week" && LINE === "nut" && (
+            LOADING ? loadingNode() : chartNutWeek()
+          )}
+          {SECTION === "month" && LINE === "kcal" && (
+            LOADING ? loadingNode() : chartKcalMonth()
+          )}
+          {SECTION === "month" && LINE === "nut" && (
+            LOADING ? loadingNode() : chartNutMonth()
+          )}
+        </Div>
+      </Div>
+    );
+    // 7-7 return
+    return (
+      <Paper className={"content-wrapper border-bottom mt-5 mb-5"}>
+        {dashSection()}
+      </Paper>
+    );
+  };
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      <Paper className={"content-wrapper over-x-hidden"} variant={"outlined"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
-            </Grid2>
-            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <p className={"dash-title"}>칼로리/영양소 비율</p>
-            </Grid2>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
-            </Grid2>
-          </Grid2>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {SECTION === "today" && LINE === "kcal" && (
-                LOADING ? loadingNode() : chartKcalToday()
-              )}
-              {SECTION === "today" && LINE === "nut" && (
-                LOADING ? loadingNode() : chartNutToday()
-              )}
-              {SECTION === "week" && LINE === "kcal" && (
-                LOADING ? loadingNode() : chartKcalWeek()
-              )}
-              {SECTION === "week" && LINE === "nut" && (
-                LOADING ? loadingNode() : chartNutWeek()
-              )}
-              {SECTION === "month" && LINE === "kcal" && (
-                LOADING ? loadingNode() : chartKcalMonth()
-              )}
-              {SECTION === "month" && LINE === "nut" && (
-                LOADING ? loadingNode() : chartNutMonth()
-              )}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Paper>
+      {dashNode()}
     </>
   );
 };

@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -263,7 +263,7 @@ export const MoneyDetailPlan = () => {
                 closePopup();
               }, 1000);
             }}>
-              <Div className={"fs-14"}>삭제</Div>
+              <Div className={"fsr-0-8"}>삭제</Div>
             </Icons>
             <Div className={"h-10"}/>
             <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
@@ -278,7 +278,7 @@ export const MoneyDetailPlan = () => {
                 closePopup();
               }, 1000);
             }}>
-              <Div className={"fs-14"}>수정</Div>
+              <Div className={"fsr-0-8"}>수정</Div>
             </Icons>
           </>
         )}>
@@ -291,7 +291,8 @@ export const MoneyDetailPlan = () => {
         )}
       </PopUp>
     );
-    // 7-6. table
+    // 7-6-1. table (detail, save 는 empty x)
+    // 7-6-2. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between mb-40"}>
@@ -360,7 +361,7 @@ export const MoneyDetailPlan = () => {
         </Div>
       </Card>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
@@ -374,9 +375,9 @@ export const MoneyDetailPlan = () => {
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -413,8 +414,6 @@ export const MoneyDetailPlan = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

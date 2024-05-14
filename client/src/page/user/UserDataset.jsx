@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
@@ -266,7 +266,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <p className={"fs-15"}>Section</p>
+                    <Div className={"fsr-1"}>Section</Div>
                   </Div>
                 </TableCell>
               </TableRow>
@@ -294,7 +294,7 @@ export const UserDataset = () => {
                 >
                   <TableCell>
                     <Div className={"dataset-title"}>
-                      <p className={"fs-15"}>{item}</p>
+                      <Div className={"fsr-1 ms-0"}>{item}</Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -313,7 +313,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <p className={"fs-15 ms-auto"}>Part</p>
+                    <Div className={"fsr-1 ms-auto"}>Part</Div>
                     <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("part");
                     }} />
@@ -340,7 +340,7 @@ export const UserDataset = () => {
                         partIdx: index
                       }));
                     }}>
-                      <p className={"fs-15 ms-auto"}>{item[`${dataType}_part`]}</p>
+                      <Div className={"fsr-1 ms-auto"}>{item[`${dataType}_part`]}</Div>
                       <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("part", index);
                       }} />
@@ -365,7 +365,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <p className={"fs-15 ms-auto"}>Title</p>
+                    <Div className={"fsr-1 ms-auto"}>Title</Div>
                     <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("title");
                     }} />
@@ -393,9 +393,9 @@ export const UserDataset = () => {
                         titleIdx: index
                       }));
                     }}>
-                      <p className={"fs-15 ms-auto"}>
+                      <Div className={"fsr-1 ms-auto"}>
                         {item}
-                      </p>
+                      </Div>
                       <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("title", index);
                       }} />
@@ -411,7 +411,7 @@ export const UserDataset = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
@@ -423,9 +423,9 @@ export const UserDataset = () => {
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -462,8 +462,6 @@ export const UserDataset = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

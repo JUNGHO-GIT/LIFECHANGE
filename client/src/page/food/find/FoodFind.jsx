@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -108,7 +108,32 @@ export const FoodFind = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6. table
+    // 7-6-1. table
+    const tableFragmentEmpty = () => (
+      <TableContainer key={"empty"}>
+        <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell className={"w-max30vw"}>식품명</TableCell>
+              <TableCell className={"w-max30vw"}>브랜드</TableCell>
+              <TableCell className={"w-max30vw"}>제공량</TableCell>
+              <TableCell className={"w-max25vw"}>Kcal</TableCell>
+              <TableCell className={"w-max15vw"}>Carb</TableCell>
+              <TableCell className={"w-max15vw"}>Protein</TableCell>
+              <TableCell className={"w-max15vw"}>Fat</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={7}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-2. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
         <Table className={"border"}>
@@ -167,17 +192,17 @@ export const FoodFind = () => {
         </Table>
       </TableContainer>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper w-min170vw h-min70vh"}>
         <Div className={"d-column"}>
-          {tableFragment(0)}
+          {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -214,8 +239,6 @@ export const FoodFind = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

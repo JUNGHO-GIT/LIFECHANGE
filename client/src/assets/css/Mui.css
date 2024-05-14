@@ -25,3 +25,7 @@
 [class$="MuiFormLabel-root-MuiInputLabel-root"] {
   line-height: 1.0rem !important;
 }
+[class$="MuiButtonBase-root-MuiBottomNavigationAction-root"] {
+  min-width: 0px !important;
+  max-width: 100vw !important;
+}

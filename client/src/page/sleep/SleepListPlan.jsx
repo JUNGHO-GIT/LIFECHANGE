@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -99,7 +99,29 @@ export const SleepListPlan = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6. table
+    // 7-6-1. table
+    const tableFragmentEmpty = () => (
+      <TableContainer key={"empty"}>
+        <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={3}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-2. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
         <Table className={"border"}>
@@ -125,9 +147,9 @@ export const SleepListPlan = () => {
                     state: SEND
                   });
                 }}>
-                  <p>{item.sleep_plan_startDt?.substring(5, 10)}</p>
-                  <p>~</p>
-                  <p>{item.sleep_plan_endDt?.substring(5, 10)}</p>
+                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -147,17 +169,17 @@ export const SleepListPlan = () => {
         </Table>
       </TableContainer>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
-          {tableFragment(0)}
+          {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -194,8 +216,6 @@ export const SleepListPlan = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

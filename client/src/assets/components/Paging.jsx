@@ -92,7 +92,7 @@ export const Paging = ({
     else if (strings?.part === "exercise") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -113,14 +113,14 @@ export const Paging = ({
     else if (strings?.part === "food") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
       }
       else if (strings?.type === "find") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {findNode()}
           </Div>
         );
@@ -141,7 +141,7 @@ export const Paging = ({
     else if (strings?.part === "money") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -162,7 +162,7 @@ export const Paging = ({
     else if (strings?.part === "sleep") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -183,7 +183,9 @@ export const Paging = ({
     else if (strings?.part === "user") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
         );
       }
       else if (strings?.type === "dataset") {

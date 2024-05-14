@@ -3,7 +3,7 @@
 import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
@@ -48,7 +48,7 @@ export const UserLogin = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6. table
+    // 7-6-2. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-center mb-20"}>
@@ -64,7 +64,7 @@ export const UserLogin = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -78,29 +78,20 @@ export const UserLogin = () => {
         </Div>
       </Card>
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min400"}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%"
-        }}
-      >
+      <Div className={"block-wrapper d-center h-min70vh"}>
         <Div className={"d-center p-10"}>
-          <p className={"fs-15"}>
-            로그인
-          </p>
+          <Div className={"fsr-1-5"}>Login</Div>
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -137,8 +128,6 @@ export const UserLogin = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>

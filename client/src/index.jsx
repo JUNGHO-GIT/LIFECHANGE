@@ -3,14 +3,13 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {useScrollTop} from "./assets/hooks/useScrollTop";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import "./index.css";
 import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";
-import "./assets/css/Header.css";
-import "./assets/css/NavBar.css";
 import "./assets/css/SideBar.css";
 import "./assets/css/Table.css";
 import "./assets/css/ScrollBar.css";
@@ -20,6 +19,10 @@ import "./assets/css/Dash.css";
 import "./assets/css/Mui.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
+
+import {Header} from "./import/ImportLayouts.jsx";
+import {NavBar} from "./import/ImportLayouts.jsx";
+import {Bottom} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList";
 import {CalendarDetail} from "./page/calendar/CalendarDetail";
@@ -137,8 +140,11 @@ const User = () => (
 );
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
+  useScrollTop();
   return (
     <div className={"App"}>
+      <Header />
+      <NavBar />
       <Routes>
         <Route path="/" element={<CalendarList />} />
         <Route path="/calendar/*" element={<Calendar />} />
@@ -148,6 +154,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
+      <Bottom />
     </div>
   );
 };

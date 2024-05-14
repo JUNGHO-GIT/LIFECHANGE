@@ -273,7 +273,7 @@ export const Btn = ({
       }
       else if (strings?.type === "detail") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToSave()}
             {btnToList()}
             {btnRefresh()}
@@ -291,7 +291,7 @@ export const Btn = ({
     else if (strings?.part === "exercise") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnOpenCalendar()}
             {btnGetToday()}
             {btnRefresh()}
@@ -300,7 +300,7 @@ export const Btn = ({
       }
       else if (strings?.type === "detail") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToUpdate()}
             {btnToList()}
             {btnRefresh()}
@@ -309,7 +309,7 @@ export const Btn = ({
       }
       else if (strings?.type === "save") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToSave()}
             {btnToList()}
             {btnRefresh()}
@@ -322,7 +322,7 @@ export const Btn = ({
     else if (strings?.part === "food") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnOpenCalendar()}
             {btnGetToday()}
             {btnRefresh()}
@@ -331,14 +331,14 @@ export const Btn = ({
       }
       else if (strings?.type === "find") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetFind()}
           </Div>
         );
       }
       else if (strings?.type === "detail") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToUpdate()}
             {btnToList()}
             {btnRefresh()}
@@ -347,7 +347,7 @@ export const Btn = ({
       }
       else if (strings?.type === "save") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToSave()}
             {btnToFind()}
             {btnRefresh()}
@@ -360,7 +360,7 @@ export const Btn = ({
     else if (strings?.part === "money") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnOpenCalendar()}
             {btnGetToday()}
             {btnRefresh()}
@@ -369,7 +369,7 @@ export const Btn = ({
       }
       else if (strings?.type === "detail") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToUpdate()}
             {btnToList()}
             {btnRefresh()}
@@ -378,7 +378,7 @@ export const Btn = ({
       }
       else if (strings?.type === "save") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToSave()}
             {btnToList()}
             {btnRefresh()}
@@ -391,7 +391,7 @@ export const Btn = ({
     else if (strings?.part === "sleep") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnOpenCalendar()}
             {btnGetToday()}
             {btnRefresh()}
@@ -400,7 +400,7 @@ export const Btn = ({
       }
       else if (strings?.type === "detail") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToUpdate()}
             {btnToList()}
             {btnRefresh()}
@@ -409,7 +409,7 @@ export const Btn = ({
       }
       else if (strings?.type === "save") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnToSave()}
             {btnToList()}
             {btnRefresh()}
@@ -422,15 +422,14 @@ export const Btn = ({
     else if (strings?.part === "user") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnInsertDemo()}
-            {btnRefresh()}
           </Div>
         );
       }
       else if (strings?.type === "dataset") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnResetDefault()}
             {btnRefresh()}
           </Div>
@@ -438,14 +437,14 @@ export const Btn = ({
       }
       else if (strings?.type === "login") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnLogin()}
           </Div>
         );
       }
       else if (strings?.type === "signup") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {btnSignup()}
           </Div>
         );

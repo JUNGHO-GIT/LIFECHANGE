@@ -34,48 +34,61 @@ export const NavBar = () => {
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (label) => {
     if (percent?.[`${label}`] < 2) {
-      return <img src={smile1} className={"nav-image-smile"} alt="Icon 1" />;
+      return (
+        <img src={smile1} className={"w-max5vw h-max5vh"} alt="Icon 1" />
+      );
     }
     else if (percent?.[`${label}`] < 3) {
-      return <img src={smile2} className={"nav-image-smile"} alt="Icon 2" />;
+      return (
+        <img src={smile2} className={"w-max5vw h-max5vh"} alt="Icon 2" />
+      );
     }
     else if (percent?.[`${label}`] < 4) {
-      return <img src={smile3} className={"nav-image-smile"} alt="Icon 3" />;
+      return (
+        <img src={smile3} className={"w-max5vw h-max5vh"} alt="Icon 3" />
+      );
     }
     else {
-      return <img src={smile4} className={"nav-image-smile"} alt="Icon 4" />;
+      return (
+        <img src={smile4} className={"w-max5vw h-max5vh"} alt="Icon 4" />
+      );
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Paper className={"flex-wrapper h-40 p-sticky top-40 border-bottom"}>
-      <Div className={"d-flex w-100vw"}>
-        <Div className={"d-center ms-10"}>
-          <span className={"nav-icon-text"}>Total</span>
-          <span className={"w-5"}></span>
-          <span className={"nav-image-smile"}>{makeIcon("total")}</span>
-        </Div>
-        <Div className={"d-center ms-auto"}>
-          {!preFix ? (
-            <span className={"nav-text"}>Home</span>
-          ) : (
-            <span className={"nav-text"}>{preFix} / {subFix}</span>
-          )}
-        </Div>
-        <Div className={"d-center ms-auto me-10"}>
-          <span className={"nav-icon-text"}>{`${preFix}`}</span>
-          <span className={"w-5"}></span>
-          <span className={"nav-image-smile"}>{makeIcon("sub")}</span>
-        </Div>
+  // 6. default ----------------------------------------------------------------------------------->
+  const defaultNode = () => (
+    <Div className={"block-wrapper d-row h-7vh w-100vw"}>
+      <Div className={"d-center"}>
+        {!preFix ? (
+          <Div className={"fsr-1-4 fw-bold"}>Total / {subFix}</Div>
+        ) : (
+          <Div className={"fsr-1-4 fw-bold"}>{preFix} / {subFix}</Div>
+        )}
       </Div>
+      <Div className={"d-center ms-auto"}>
+        <Div className={"fsr-1"}>Total</Div>
+        <Div className={"w-5"}></Div>
+        <Div className={"d-center"}>{makeIcon("total")}</Div>
+      </Div>
+      <Div className={"d-center ms-auto"}>
+        <Div className={"fsr-1"}>{`${preFix}`}</Div>
+        <Div className={"w-5"}></Div>
+        <Div className={"d-center"}>{makeIcon("sub")}</Div>
+      </Div>
+    </Div>
+  );
+
+  // 7. navbar ------------------------------------------------------------------------------------>
+  const navbarNode = () => (
+    <Paper className={"flex-wrapper p-sticky top-7vh border-bottom"}>
+      {defaultNode()}
     </Paper>
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {navbarNode()}
     </>
   );
 };

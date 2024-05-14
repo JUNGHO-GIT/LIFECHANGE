@@ -33,24 +33,28 @@ export const Header = () => {
   const btnUser = () => (
     <PopUp
       type={"dropdown"}
-      className={""}
       position={"bottom"}
-      direction={"right"}
+      direction={"left"}
       contents={({closePopup}) => (
-      <>
-        <Div className={"d-row align-center pointer"} onClick={() => {
-          navigate(`/user/login`);
-        }}>
-          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>Login</p>
-        </Div>
-        <Div className={"d-row align-center pointer"} onClick={() => {
-          navigate(`/user/signup`);
-        }}>
-          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} />
-          <p className={"fs-14"}>Signup</p>
-        </Div>
-      </>
+        <>
+          <Icons name={"TbLogin"} className={"w-24 h-24 dark"} onClick={() => {
+            navigate("/user/login");
+            setTimeout(() => {
+              closePopup();
+            }, 1000);
+          }}>
+            <Div className={"fsr-0-8"}>Login</Div>
+          </Icons>
+          <Div className={"h-10"}/>
+          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} onClick={() => {
+            navigate("/user/signup");
+            setTimeout(() => {
+              closePopup();
+            }, 1000);
+          }}>
+            <Div className={"fsr-0-8"}>Sign Up</Div>
+          </Icons>
+        </>
       )}>
       {(popTrigger={}) => (
         <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
@@ -62,30 +66,34 @@ export const Header = () => {
     </PopUp>
   );
 
-  // 7. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <Paper className={"flex-wrapper h-40 p-sticky top-0"}>
-      <Div className={"d-center w-100vw"}>
-        <Div className={"d-center ms-10"}>
-          {btnSideBar()}
-        </Div>
-        <Div className={"d-center ms-auto"}>
-          <span className={"head-text"}>
-            {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
-          </span>
-        </Div>
-        <Div className={"d-center ms-auto me-10"}>
-          {btnUser()}
+  // 6. default ----------------------------------------------------------------------------------->
+  const defaultNode = () => (
+    <Div className={"block-wrapper d-row h-7vh w-100vw"}>
+      <Div className={"d-center"}>
+        {btnSideBar()}
+      </Div>
+      <Div className={"d-center ms-auto"}>
+        <Div className={"fsr-1-4"}>
+          {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
         </Div>
       </Div>
-    </Paper>
+      <Div className={"d-center ms-auto"}>
+        {btnUser()}
+      </Div>
+    </Div>
   );
 
+  // 7. header ------------------------------------------------------------------------------------>
+  const navbarNode = () => (
+    <Paper className={"flex-wrapper p-sticky top-0"}>
+      {defaultNode()}
+    </Paper>
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {navbarNode()}
     </>
   );
 };

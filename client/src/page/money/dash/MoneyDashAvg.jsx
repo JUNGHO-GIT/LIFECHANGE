@@ -275,94 +275,98 @@ export const MoneyDashAvg = () => {
     );
   };
 
-  // 7-1. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection1 = () => (
-    <TextField
-      select={true}
-      type={"text"}
-      size={"small"}
-      className={"w-65 mt-5"}
-      variant={"outlined"}
-      value={SECTION}
-      onChange={(e) => (
-        setSECTION(e.target.value)
-      )}
-    >
-      <MenuItem value={"month"}>월간</MenuItem>
-      <MenuItem value={"year"}>연간</MenuItem>
-    </TextField>
-  );
-
-  // 7-3. dropdown -------------------------------------------------------------------------------->
-  const dropdownSection3 = () => (
-    <PopUp
-      elementId={`popover`}
-      type={"dropdown"}
-      className={""}
-      position={"bottom"}
-      direction={"left"}
-      contents={({closePopup}) => (
-      ["in", "out"]?.map((key, index) => (
-        <FormGroup key={index} className={"p-5 pe-10"}>
-          <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-            if (LINE === key) {
-              setLINE("");
-            }
-            else {
-              setLINE(key);
-            }
-          }}/>} label={key} labelPlacement={"start"}>
-          </FormControlLabel>
-        </FormGroup>
-      ))
-      )}>
-      {(popTrigger={}) => (
-        <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}/>
-      )}
-    </PopUp>
-  );
+  // 7. dash -------------------------------------------------------------------------------------->
+  const dashNode = () => {
+    // 7-5-1. dropdown
+    const dropdownSection1 = () => (
+      <TextField
+        select={true}
+        type={"text"}
+        size={"small"}
+        className={"w-65 mt-5"}
+        variant={"outlined"}
+        value={SECTION}
+        onChange={(e) => (
+          setSECTION(e.target.value)
+        )}
+      >
+        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"year"}>연간</MenuItem>
+      </TextField>
+    );
+    // 7-5-2. dropdown
+    const dropdownSection2 = () => (
+      <PopUp
+        elementId={"popover"}
+        type={"dropdown"}
+        position={"bottom"}
+        direction={"left"}
+        contents={({closePopup}) => (
+        ["in", "out"]?.map((key, index) => (
+          <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+              if (LINE === key) {
+                setLINE("");
+              }
+              else {
+                setLINE(key);
+              }
+            }}/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
+        ))
+        )}>
+        {(popTrigger={}) => (
+          <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
+        )}
+      </PopUp>
+    );
+    // 7-6. dash
+    const dashSection = () => (
+      <Div className={"block-wrapper h-min40vh"}>
+        <Div className={"d-center"}>
+          <Div className={"ms-0"}>{dropdownSection1()}</Div>
+          <Div className={"m-auto fsr-1"}>수입/지출 평균</Div>
+          <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        </Div>
+        <Div className={"d-column"}>
+          {SECTION === "month" && LINE === "in" && (
+            LOADING ? loadingNode() : chartInMonth()
+          )}
+          {SECTION === "month" && LINE === "out" && (
+            LOADING ? loadingNode() : chartOutMonth()
+          )}
+          {SECTION === "year" && LINE === "in" && (
+            LOADING ? loadingNode() : chartInYear()
+          )}
+          {SECTION === "year" && LINE === "out" && (
+            LOADING ? loadingNode() : chartOutYear()
+          )}
+        </Div>
+      </Div>
+    );
+    // 7-7 return
+    return (
+      <Paper className={"content-wrapper border-bottom mt-5 mb-5"}>
+        {dashSection()}
+      </Paper>
+    );
+  };
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
   );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      <Paper className={"content-wrapper over-x-hidden"} variant={"outlined"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              {dropdownSection1()}
-            </Grid2>
-            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <p className={"dash-title"}>수입/지출 평균</p>
-            </Grid2>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {dropdownSection3()}
-            </Grid2>
-          </Grid2>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {SECTION === "month" && LINE === "in" && (
-                LOADING ? loadingNode() : chartInMonth()
-              )}
-              {SECTION === "month" && LINE === "out" && (
-                LOADING ? loadingNode() : chartOutMonth()
-              )}
-              {SECTION === "year" && LINE === "in" && (
-                LOADING ? loadingNode() : chartInYear()
-              )}
-              {SECTION === "year" && LINE === "out" && (
-                LOADING ? loadingNode() : chartOutYear()
-              )}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Paper>
+      {dashNode()}
     </>
   );
 };

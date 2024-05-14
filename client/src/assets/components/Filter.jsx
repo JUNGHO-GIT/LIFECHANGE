@@ -256,7 +256,7 @@ export const Filter = ({
     else if (strings?.part === "exercise") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
             {exerciseNode()}
           </Div>
@@ -278,7 +278,7 @@ export const Filter = ({
     else if (strings?.part === "food") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
             {foodNode()}
           </Div>
@@ -305,7 +305,7 @@ export const Filter = ({
     else if (strings?.part === "money") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
             {moneyNode()}
           </Div>
@@ -327,7 +327,7 @@ export const Filter = ({
     else if (strings?.part === "sleep") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -348,7 +348,7 @@ export const Filter = ({
     else if (strings?.part === "user") {
       if (strings?.type === "list" || strings?.type === "diff") {
         return (
-          <Div className={"block-wrapper d-row h-40"}>
+          <Div className={"block-wrapper d-row h-7vh"}>
             {demoNode()}
           </Div>
         );

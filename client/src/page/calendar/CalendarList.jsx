@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
@@ -163,7 +163,7 @@ export const CalendarList = () => {
         }}
       />
     );
-    // 7-7. table
+    // 7-6-3. table
     const tableSection = () => (
       <Div className={"block-wrapper h-min80vh"}>
         <Div className={"d-column"}>
@@ -171,9 +171,9 @@ export const CalendarList = () => {
         </Div>
       </Div>
     );
-    // 7-8. return
+    // 7-7. return
     return (
-      <Paper className={"content-wrapper"} variant={"outlined"}>
+      <Paper className={"content-wrapper"}>
         {tableSection()}
       </Paper>
     );
@@ -181,7 +181,10 @@ export const CalendarList = () => {
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
   );
 
   // 9. footer ------------------------------------------------------------------------------------>
@@ -207,8 +210,6 @@ export const CalendarList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {Header()}
-      {NavBar()}
       {LOADING ? loadingNode() : calendarNode()}
       {footerNode()}
     </>

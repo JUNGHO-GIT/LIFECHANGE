@@ -1,17 +1,101 @@
-(코스트코)
-(GS)
-(버거킹 (Burger King))
-(코다노)
-(샐러딩)
-(파파이스 (Popeye's))
-(하림)
-
-
-
-[(] (.[^(]|[^)]+)  [)]
-
-[(] ([가-힣a-zA-Z0-9]+?) (\(.*\)) [)]
-
-([(])(\s*)([가-힣|a-z|A-Z]+)(\s*)([(][a-zA-Z0-9'"!? ]+?[)])([)])
-
-([(])(\s*)([가-힣|a-z|A-Z]+)(\s*)([)])
+.bottom-0vh {bottom: 0vh !important;}
+.bottom-1vh {bottom: 1vh !important;}
+.bottom-2vh {bottom: 2vh !important;}
+.bottom-3vh {bottom: 3vh !important;}
+.bottom-4vh {bottom: 4vh !important;}
+.bottom-5vh {bottom: 5vh !important;}
+.bottom-6vh {bottom: 6vh !important;}
+.bottom-7vh {bottom: 7vh !important;}
+.bottom-8vh {bottom: 8vh !important;}
+.bottom-9vh {bottom: 9vh !important;}
+.bottom-10vh {bottom: 10vh !important;}
+.bottom-11vh {bottom: 11vh !important;}
+.bottom-12vh {bottom: 12vh !important;}
+.bottom-13vh {bottom: 13vh !important;}
+.bottom-14vh {bottom: 14vh !important;}
+.bottom-15vh {bottom: 15vh !important;}
+.bottom-16vh {bottom: 16vh !important;}
+.bottom-17vh {bottom: 17vh !important;}
+.bottom-18vh {bottom: 18vh !important;}
+.bottom-19vh {bottom: 19vh !important;}
+.bottom-20vh {bottom: 20vh !important;}
+.bottom-21vh {bottom: 21vh !important;}
+.bottom-22vh {bottom: 22vh !important;}
+.bottom-23vh {bottom: 23vh !important;}
+.bottom-24vh {bottom: 24vh !important;}
+.bottom-25vh {bottom: 25vh !important;}
+.bottom-26vh {bottom: 26vh !important;}
+.bottom-27vh {bottom: 27vh !important;}
+.bottom-28vh {bottom: 28vh !important;}
+.bottom-29vh {bottom: 29vh !important;}
+.bottom-30vh {bottom: 30vh !important;}
+.bottom-31vh {bottom: 31vh !important;}
+.bottom-32vh {bottom: 32vh !important;}
+.bottom-33vh {bottom: 33vh !important;}
+.bottom-34vh {bottom: 34vh !important;}
+.bottom-35vh {bottom: 35vh !important;}
+.bottom-36vh {bottom: 36vh !important;}
+.bottom-37vh {bottom: 37vh !important;}
+.bottom-38vh {bottom: 38vh !important;}
+.bottom-39vh {bottom: 39vh !important;}
+.bottom-40vh {bottom: 40vh !important;}
+.bottom-41vh {bottom: 41vh !important;}
+.bottom-42vh {bottom: 42vh !important;}
+.bottom-43vh {bottom: 43vh !important;}
+.bottom-44vh {bottom: 44vh !important;}
+.bottom-45vh {bottom: 45vh !important;}
+.bottom-46vh {bottom: 46vh !important;}
+.bottom-47vh {bottom: 47vh !important;}
+.bottom-48vh {bottom: 48vh !important;}
+.bottom-49vh {bottom: 49vh !important;}
+.bottom-50vh {bottom: 50vh !important;}
+.bottom-51vh {bottom: 51vh !important;}
+.bottom-52vh {bottom: 52vh !important;}
+.bottom-53vh {bottom: 53vh !important;}
+.bottom-54vh {bottom: 54vh !important;}
+.bottom-55vh {bottom: 55vh !important;}
+.bottom-56vh {bottom: 56vh !important;}
+.bottom-57vh {bottom: 57vh !important;}
+.bottom-58vh {bottom: 58vh !important;}
+.bottom-59vh {bottom: 59vh !important;}
+.bottom-60vh {bottom: 60vh !important;}
+.bottom-61vh {bottom: 61vh !important;}
+.bottom-62vh {bottom: 62vh !important;}
+.bottom-63vh {bottom: 63vh !important;}
+.bottom-64vh {bottom: 64vh !important;}
+.bottom-65vh {bottom: 65vh !important;}
+.bottom-66vh {bottom: 66vh !important;}
+.bottom-67vh {bottom: 67vh !important;}
+.bottom-68vh {bottom: 68vh !important;}
+.bottom-69vh {bottom: 69vh !important;}
+.bottom-70vh {bottom: 70vh !important;}
+.bottom-71vh {bottom: 71vh !important;}
+.bottom-72vh {bottom: 72vh !important;}
+.bottom-73vh {bottom: 73vh !important;}
+.bottom-74vh {bottom: 74vh !important;}
+.bottom-75vh {bottom: 75vh !important;}
+.bottom-76vh {bottom: 76vh !important;}
+.bottom-77vh {bottom: 77vh !important;}
+.bottom-78vh {bottom: 78vh !important;}
+.bottom-79vh {bottom: 79vh !important;}
+.bottom-80vh {bottom: 80vh !important;}
+.bottom-81vh {bottom: 81vh !important;}
+.bottom-82vh {bottom: 82vh !important;}
+.bottom-83vh {bottom: 83vh !important;}
+.bottom-84vh {bottom: 84vh !important;}
+.bottom-85vh {bottom: 85vh !important;}
+.bottom-86vh {bottom: 86vh !important;}
+.bottom-87vh {bottom: 87vh !important;}
+.bottom-88vh {bottom: 88vh !important;}
+.bottom-89vh {bottom: 89vh !important;}
+.bottom-90vh {bottom: 90vh !important;}
+.bottom-91vh {bottom: 91vh !important;}
+.bottom-92vh {bottom: 92vh !important;}
+.bottom-93vh {bottom: 93vh !important;}
+.bottom-94vh {bottom: 94vh !important;}
+.bottom-95vh {bottom: 95vh !important;}
+.bottom-96vh {bottom: 96vh !important;}
+.bottom-97vh {bottom: 97vh !important;}
+.bottom-98vh {bottom: 98vh !important;}
+.bottom-99vh {bottom: 99vh !important;}
+.bottom-100vh {bottom: 100vh !important;}

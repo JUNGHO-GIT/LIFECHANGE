@@ -39,23 +39,12 @@ export const Footer = ({
     />
   );
 
-  // 6. navigationNode ---------------------------------------------------------------------------->
-  const navigationNode = () => (
-    <Navigation
-      strings={strings}
-      objects={objects}
-      functions={functions}
-      handlers={handlers}
-    />
-  );
-
-  // 7. footer -------------------------------------------------------------------------------------->
+  // 7. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0 border"}>
+    <Paper className={"flex-wrapper p-sticky bottom-7vh border-top"}>
       {pagingNode()}
       {filterNode()}
       {btnNode()}
-      {navigationNode()}
     </Paper>
   );
 
