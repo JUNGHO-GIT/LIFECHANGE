@@ -18,13 +18,7 @@ export const Loading = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"content-wrapper"} variant={"outlined"}>
-      <Div className={"block-wrapper h-min400"}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%"
-        }}>
+      <Div className={"block-wrapper d-center h-min80vh"}>
         <Icons name={"FaSpinner"} className={"w-24 h-24 dark"} />
       </Div>
     </Paper>
@@ -33,7 +27,7 @@ export const Loading = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+    {tableNode()}
     </>
   );
 };

@@ -4,8 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Icons} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
+import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -89,10 +88,12 @@ export const CalendarList = () => {
             }}
             onClick={(e) => {
               e.stopPropagation();
-              SEND.id = calendar._id;
-              SEND.section_id = section._id;
-              SEND.startDt = calendar.calendar_startDt;
-              SEND.endDt = calendar.calendar_endDt;
+              Object.assign(SEND, {
+                id: calendar._id,
+                section_id: section._id,
+                startDt: calendar.calendar_startDt,
+                endDt: calendar.calendar_endDt,
+              });
               navParam(SEND.toDetail, {
                 state: SEND
               });
@@ -121,8 +122,8 @@ export const CalendarList = () => {
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
-        nextLabel={<Icons name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
+        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24 dark"} />}
+        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24 dark"} />}
         prev2Label={null}
         next2Label={null}
         formatDay={(locale, date) => (moment(date).format("D"))}
@@ -138,11 +139,13 @@ export const CalendarList = () => {
           return week[day];
         }}
         onClickDay={(date) => {
-          SEND.id = "";
-          SEND.startDt = formatDate(date);
-          SEND.endDt = formatDate(date);
-          SEND.category = "";
-          SEND.toDetail = "/calendar/detail";
+          Object.assign(SEND, {
+            id: "",
+            startDt: formatDate(date),
+            endDt: formatDate(date),
+            category: "",
+            toDetail: "/calendar/detail"
+          });
           navParam(SEND.toDetail, {
             state: SEND
           });
@@ -162,7 +165,7 @@ export const CalendarList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min80vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
