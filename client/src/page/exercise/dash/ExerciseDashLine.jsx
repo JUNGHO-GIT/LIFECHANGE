@@ -5,7 +5,7 @@ import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10, Paging, Filter, Btn} from "../../../import/ImportComponents.jsx";
+import {Div, Hr10, Br10} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
@@ -300,7 +300,7 @@ export const ExerciseDashLine = () => {
       className={""}
       position={"bottom"}
       direction={"left"}
-      contents={
+      contents={({closePopup}) => (
       ["volume", "cardio"].map((key, index) => (
         <FormGroup key={index} className={"p-5 pe-10"}>
           <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
@@ -314,9 +314,9 @@ export const ExerciseDashLine = () => {
           </FormControlLabel>
         </FormGroup>
       ))
-    }>
+      )}>
       {(popTrigger={}) => (
-        <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark pointer"}
+        <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"}
           id={"popChild"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}

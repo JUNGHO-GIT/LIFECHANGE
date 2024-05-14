@@ -3,13 +3,12 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent, koreanDate} from "../../import/ImportLogics";
+import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -67,10 +66,9 @@ export const ExerciseSave = () => {
       exercise_part_val: "전체",
       exercise_title_idx: 0,
       exercise_title_val: "전체",
-      exercise_set: 1,
-      exercise_rep: 1,
-      exercise_kg: 1,
-      exercise_rest: 1,
+      exercise_set: 0,
+      exercise_rep: 0,
+      exercise_kg: 0,
       exercise_volume: 0,
       exercise_cardio: "00:00",
     }],
@@ -168,7 +166,6 @@ export const ExerciseSave = () => {
       exercise_set: 0,
       exercise_rep: 0,
       exercise_kg: 0,
-      exercise_rest: 0,
       exercise_volume: 0,
       exercise_cardio: "00:00",
     };
@@ -226,7 +223,7 @@ export const ExerciseSave = () => {
         className={""}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -247,7 +244,7 @@ export const ExerciseSave = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -276,11 +273,11 @@ export const ExerciseSave = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <Div className={"d-center"}>
             0이상 10이하의 숫자만 입력하세요.
           </Div>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
@@ -369,18 +366,18 @@ export const ExerciseSave = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
             <Div className={"fs-14"}>복사</Div>
           </Icons>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
             <Div className={"fs-14"}>복사</Div>
           </Icons>
           </>
-        }>
+        )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -407,7 +404,8 @@ export const ExerciseSave = () => {
             className={"w-25vw me-10"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -442,7 +440,8 @@ export const ExerciseSave = () => {
             className={"w-25vw ms-10"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newTitleIdx = Number(e.target.value);
@@ -481,7 +480,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -505,10 +504,15 @@ export const ExerciseSave = () => {
             label={"횟수"}
             size={"small"}
             variant={"outlined"}
+            id={`exercise_rep-${i}`}
+            name={`exercise_rep-${i}`}
             className={"w-60vw"}
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: (
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
             onChange={(e) => {
               const rawValue = e.target.value.replace(/,/g, "");
@@ -538,7 +542,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adornment name={"BiEditAlt"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
             onChange={(e) => {
@@ -563,7 +567,7 @@ export const ExerciseSave = () => {
             className={""}
             position={"top"}
             direction={"center"}
-            contents={
+            contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DigitalClock
                   timeStep={10}
@@ -583,17 +587,22 @@ export const ExerciseSave = () => {
                   }}
                 />
               </LocalizationProvider>
-            }>
+            )}>
             {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"유산소"}
                 size={"small"}
                 variant={"outlined"}
+                id={`exercise_cardio-${i}`}
+                name={`exercise_cardio-${i}`}
                 className={"w-60vw"}
                 value={OBJECT?.exercise_section[i]?.exercise_cardio}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
+                  startAdornment: (
+                    <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -606,7 +615,7 @@ export const ExerciseSave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

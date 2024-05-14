@@ -2,15 +2,13 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDetail = () => {
@@ -20,6 +18,8 @@ export const ExerciseDetail = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
+  const session = sessionStorage.getItem("dataset") || "";
+  const exerciseArray = JSON.parse(session)?.exercise || [];
   const navigate = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -71,7 +71,6 @@ export const ExerciseDetail = () => {
       exercise_set: 0,
       exercise_rep: 0,
       exercise_kg: 0,
-      exercise_rest: 0,
       exercise_cardio: "00:00",
     }],
   };
@@ -132,7 +131,7 @@ export const ExerciseDetail = () => {
         className={""}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -153,7 +152,7 @@ export const ExerciseDetail = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -177,21 +176,37 @@ export const ExerciseDetail = () => {
     );
     // 7-2. count
     const countSection = () => (
-      <TextField
-        type={"text"}
-        id={"sectionCnt"}
-        label={"항목수"}
-        variant={"outlined"}
-        size={"small"}
-        className={"w-60vw"}
-        value={COUNT?.sectionCnt}
-        InputProps={{
-          readOnly: true,
-          startAdornment: (
-            <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
-          )
-        }}
-      />
+      <PopUp
+        type={"alert"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>
+            0이상 10이하의 숫자만 입력하세요.
+          </Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            id={"sectionCnt"}
+            label={"항목수"}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-60vw"}
+            value={COUNT?.sectionCnt}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        )}
+      </PopUp>
     );
     // 7-3. total
     const totalSection = () => (
@@ -228,7 +243,7 @@ export const ExerciseDetail = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={"체중"}
@@ -246,125 +261,159 @@ export const ExerciseDetail = () => {
         </Div>
       </Card>
     );
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-      <Div className={"d-center"}>
-        <Badge
-          badgeContent={index + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </Div>
       <PopUp
         key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
-        <Div className={"d-row align-center"} onClick={() => {
-          flowDelete(id, sectionId);
-        }}>
-          <Icons name={"MdOutlineDelete"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>삭제</p>
-        </Div>
-        <Div className={"d-row align-center"} onClick={() => {
-          SEND.startDt = DATE.startDt;
-          SEND.endDt = DATE.endDt;
-          navigate(SEND.toUpdate, {
-            state: SEND,
-          });
-        }}>
-          <Icons name={"MdOutlineEdit"} className={"w-24 h-24 dark pointer"} />
-          <p className={"fs-14"}>수정</p>
-        </Div>
-        </>
-      }>
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+            flowDelete(id, sectionId);
+            setTimeout(() => {
+              closePopup();
+            }, 1000);
+          }}>
+            <Div className={"fs-14"}>삭제</Div>
+          </Icons>
+          <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+            Object.assign(SEND, {
+              startDt: DATE.startDt,
+              endDt: DATE.endDt
+            });
+            navigate(SEND.toUpdate, {
+              state: SEND
+            });
+            setTimeout(() => {
+              closePopup();
+            }, 1000);
+          }}>
+            <Div className={"fs-14"}>수정</Div>
+          </Icons>
+          </>
+        )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
           />
         )}
       </PopUp>
-      </>
     );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mt-n15 mb-20"}>
-          {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
+          {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]?._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
-            select={false}
-            label={"부위"}
+            select={true}
+            type={"text"}
             size={"small"}
-            value={OBJECT?.exercise_section[i]?.exercise_part_val}
+            label={"파트"}
+            id={`exercise_part_val-${i}`}
+            name={`exercise_part_val-${i}`}
             variant={"outlined"}
             className={"w-25vw me-10"}
+            value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
-              readOnly: true
+              readOnly: false,
+              startAdornment: null
             }}
-          />
+          >
+            {exerciseArray.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.exercise_part}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
-            select={false}
-            label={"종목"}
+            select={true}
+            type={"text"}
             size={"small"}
-            value={OBJECT?.exercise_section[i]?.exercise_title_val}
+            label={"종목"}
+            id={`exercise_title_val-${i}`}
+            name={`exercise_title_val-${i}`}
+            value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             variant={"outlined"}
             className={"w-25vw ms-10"}
             InputProps={{
-              readOnly: true
+              readOnly: false,
+              startAdornment: null
             }}
-          />
+          >
+            {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {title}
+              </MenuItem>
+            ))}
+          </TextField>
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"세트"}
             size={"small"}
+            id={`exercise_set-${i}`}
+            name={`exercise_set-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
             variant={"outlined"}
-            className={""}
+            className={"w-60vw"}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
           />
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"횟수"}
             size={"small"}
+            id={`exercise_rep-${i}`}
+            name={`exercise_rep-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
             variant={"outlined"}
-            className={""}
+            className={"w-60vw"}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
           />
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"무게"}
             size={"small"}
+            id={`exercise_kg-${i}`}
+            name={`exercise_kg-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
             variant={"outlined"}
-            className={""}
+            className={"w-60vw"}
             InputProps={{
-              readOnly: true
-            }}
-          />
-          <TextField
-            select={false}
-            label={"휴식"}
-            size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rest).format('0,0')} sec`}
-            variant={"outlined"}
-            className={""}
-            InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
           />
         </Div>
@@ -373,11 +422,16 @@ export const ExerciseDetail = () => {
             select={false}
             label={"유산소"}
             size={"small"}
+            id={`exercise_cardio-${i}`}
+            name={`exercise_cardio-${i}`}
             value={OBJECT?.exercise_section[i]?.exercise_cardio}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
           />
         </Div>
@@ -385,7 +439,7 @@ export const ExerciseDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -431,7 +485,7 @@ export const ExerciseDetail = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowDelete
       }}
     />
   );

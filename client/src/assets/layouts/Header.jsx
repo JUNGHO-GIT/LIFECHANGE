@@ -36,7 +36,7 @@ export const Header = () => {
       className={""}
       position={"bottom"}
       direction={"right"}
-      contents={
+      contents={({closePopup}) => (
       <>
         <Div className={"d-row align-center pointer"} onClick={() => {
           navigate(`/user/login`);
@@ -51,7 +51,7 @@ export const Header = () => {
           <p className={"fs-14"}>Signup</p>
         </Div>
       </>
-    }>
+      )}>
       {(popTrigger={}) => (
         <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
           onClick={(e) => {

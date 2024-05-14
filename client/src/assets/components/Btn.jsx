@@ -144,7 +144,7 @@ export const Btn = ({
       className={""}
       position={"top"}
       direction={"center"}
-      contents={
+      contents={({closePopup}) => (
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
           <DateCalendar
             timezone={"Asia/Seoul"}
@@ -215,7 +215,7 @@ export const Btn = ({
             }}
           />
         </LocalizationProvider>
-      }>
+        )}>
       {(popTrigger={}) => (
         <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
         className={"primary-btn"} onClick={(e) => {

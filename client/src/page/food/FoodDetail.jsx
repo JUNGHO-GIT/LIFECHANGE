@@ -134,7 +134,7 @@ export const FoodDetail = () => {
         className={""}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -155,7 +155,7 @@ export const FoodDetail = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -178,6 +178,7 @@ export const FoodDetail = () => {
       </PopUp>
     );
     // 7-2. count
+    // detail은 validate 필요 x
     const countSection = () => (
       <TextField
         type={"text"}
@@ -280,7 +281,7 @@ export const FoodDetail = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
           <Div className={"d-row align-center"} onClick={() => {
             flowDelete(id, sectionId);
@@ -299,9 +300,9 @@ export const FoodDetail = () => {
             <p className={"fs-14"}>수정</p>
           </Div>
         </>
-      }>
+      )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -325,7 +326,8 @@ export const FoodDetail = () => {
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: null
             }}
           />
         </Div>
@@ -338,7 +340,8 @@ export const FoodDetail = () => {
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
-              readOnly: true
+              readOnly: true,
+              startAdornment: null
             }}
           />
         </Div>
@@ -410,7 +413,7 @@ export const FoodDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

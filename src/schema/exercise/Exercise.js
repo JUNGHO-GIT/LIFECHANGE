@@ -84,11 +84,6 @@ const schema = new mongoose.Schema({
       default: 0,
       required: false,
     },
-    exercise_rest: {
-      type: Number,
-      default: 0,
-      required: false,
-    },
     exercise_volume: {
       type: Number,
       default: 0,

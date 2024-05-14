@@ -62,7 +62,6 @@ export const UserList = () => {
       exercise_set: 0,
       exercise_rep: 0,
       exercise_kg: 0,
-      exercise_rest: 0,
       exercise_volume: 0,
       exercise_cardio: "00:00",
     }],
@@ -485,7 +484,7 @@ export const UserList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}

@@ -205,7 +205,7 @@ export const MoneySave = () => {
         className={""}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -226,7 +226,7 @@ export const MoneySave = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -255,11 +255,11 @@ export const MoneySave = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <Div className={"d-center"}>
             0이상 10이하의 숫자만 입력하세요.
           </Div>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
@@ -288,48 +288,54 @@ export const MoneySave = () => {
     // 7-3. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
-        <TextField
-          select={false}
-          label={"총 수입"}
-          size={"small"}
-          value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
-            )
-          }}
-        />
-        <TextField
-          select={false}
-          label={"총 지출"}
-          size={"small"}
-          value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
-            )
-          }}
-        />
-        <TextField
-          select={false}
-          label={"총 자산"}
-          size={"small"}
-          value={`${numeral(OBJECT?.money_property).format('0,0')}`}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
-            )
-          }}
-        />
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 수입"}
+            size={"small"}
+            value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 지출"}
+            size={"small"}
+            value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center"}>
+          <TextField
+            select={false}
+            label={"총 자산"}
+            size={"small"}
+            value={`${numeral(OBJECT?.money_property).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Div>
       </Card>
     );
     // 7-4. badge
@@ -348,18 +354,18 @@ export const MoneySave = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
             <Div className={"fs-14"}>복사</Div>
           </Icons>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"}>
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
             <Div className={"fs-14"}>복사</Div>
           </Icons>
           </>
-        }>
+        )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -386,7 +392,8 @@ export const MoneySave = () => {
             className={"w-25vw me-10"}
             value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -421,7 +428,8 @@ export const MoneySave = () => {
             className={"w-25vw ms-10"}
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newTitleIdx = Number(e.target.value);
@@ -513,7 +521,7 @@ export const MoneySave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

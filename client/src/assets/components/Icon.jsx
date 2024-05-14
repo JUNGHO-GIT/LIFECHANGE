@@ -12,7 +12,13 @@ export const Icons = ({...props}) => {
   }
 
   // ex. 'FaHome' => (preStr = fa)
-  const preStr = props.name.slice(0, 2).toLowerCase();
+  let preStr = "";
+  if (props.name.startsWith("Li")) {
+    preStr = "lia";
+  }
+  else {
+    preStr = props.name.slice(0, 2).toLowerCase();
+  }
 
   let importCode = null;
   let importIcon = null;
@@ -53,7 +59,13 @@ export const Adornment = ({...props}) => {
   }
 
   // ex. 'FaHome' => (preStr = fa)
-  const preStr = props.name.slice(0, 2).toLowerCase();
+  let preStr = "";
+  if (props.name.startsWith("Li")) {
+    preStr = "lia";
+  }
+  else {
+    preStr = props.name.slice(0, 2).toLowerCase();
+  }
 
   let importCode = null;
   let importIcon = null;

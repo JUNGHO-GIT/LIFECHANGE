@@ -6,10 +6,8 @@ import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -118,7 +116,7 @@ export const ExerciseDetailPlan = () => {
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -138,7 +136,7 @@ export const ExerciseDetailPlan = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -164,7 +162,7 @@ export const ExerciseDetailPlan = () => {
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -184,7 +182,7 @@ export const ExerciseDetailPlan = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -223,7 +221,7 @@ export const ExerciseDetailPlan = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
           <Div className={"d-row align-center"} onClick={() => {
             flowDelete(id);
@@ -242,9 +240,9 @@ export const ExerciseDetailPlan = () => {
             <p className={"fs-14"}>수정</p>
           </Div>
         </>
-      }>
+      )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -335,7 +333,7 @@ export const ExerciseDetailPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

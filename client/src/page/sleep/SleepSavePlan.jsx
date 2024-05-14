@@ -114,7 +114,7 @@ export const SleepSavePlan = () => {
         className={""}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -135,7 +135,7 @@ export const SleepSavePlan = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -173,20 +173,20 @@ export const SleepSavePlan = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
         <Div className={"d-row align-center"}>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
           <Div className={"fs-14"}>복사</Div>
         </Div>
         <Div className={"d-row align-center"}>
-          <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
           <Div className={"fs-14"}>복사</Div>
         </Div>
         </>
-      }>
+      )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -208,7 +208,7 @@ export const SleepSavePlan = () => {
             className={""}
             position={"bottom"}
             direction={"center"}
-            contents={
+            contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DigitalClock
                   timeStep={10}
@@ -223,7 +223,7 @@ export const SleepSavePlan = () => {
                   }}
                 />
               </LocalizationProvider>
-            }>
+            )}>
             {(popTrigger={}) => (
               <TextField
                 select={false}
@@ -252,7 +252,7 @@ export const SleepSavePlan = () => {
             className={""}
             position={"bottom"}
             direction={"center"}
-            contents={
+            contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DigitalClock
                   timeStep={10}
@@ -267,7 +267,7 @@ export const SleepSavePlan = () => {
                   }}
                 />
               </LocalizationProvider>
-            }>
+            )}>
             {(popTrigger={}) => (
               <TextField
                 select={false}
@@ -313,7 +313,7 @@ export const SleepSavePlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -154,7 +154,7 @@ export const FoodListPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min500 w-min400"}>
+      <Div className={"block-wrapper w-min110vw h-min100vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

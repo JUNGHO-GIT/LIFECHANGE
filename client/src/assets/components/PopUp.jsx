@@ -22,15 +22,22 @@ export const PopUp = ({...props}) => {
 
   return (
     <>
+    {props.children({
+      openPopup: (anchorEl) => {
+        popupState.setAnchorEl(anchorEl);
+        popupState.open();
+      },
+      closePopup: () => {
+        popupState.close();
+      }
+    })}
     <Popover
       {...bindPopover(popupState)}
       id={"popover"}
       className={props.className}
       open={popupState.isOpen}
       anchorEl={popupState.anchorEl}
-      onClose={() => {
-        popupState.close();
-      }}
+      onClose={popupState.close}
       anchorOrigin={{
         vertical: props.position === "top" ? "top" : "bottom",
         horizontal: props.direction === "center" ? "center" : (
@@ -49,17 +56,11 @@ export const PopUp = ({...props}) => {
         }
       }}
     >
-      {props.contents}
-    </Popover>
-    {props.children({
-      openPopup: (anchorEl) => {
-        popupState.setAnchorEl(anchorEl);
-        popupState.open();
-      },
-      closePopup: () => {
-        popupState.close();
+      {typeof props.contents === "function"
+        ? props.contents({ closePopup: popupState.close })
+        : props.contents
       }
-    })}
+    </Popover>
     </>
   );
 };

@@ -205,7 +205,6 @@ export const add = async (
           exercise_set: randomNumber(10),
           exercise_rep: randomNumber(10),
           exercise_kg: randomNumber(100),
-          exercise_rest: randomNumber(100),
           exercise_volume: randomNumber(1000),
           exercise_cardio: randomTime(),
         };

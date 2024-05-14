@@ -2,13 +2,10 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Paper, BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table, TextField} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper, TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -81,7 +78,6 @@ export const ExerciseList = () => {
       exercise_set: 0,
       exercise_rep: 0,
       exercise_kg: 0,
-      exercise_rest: 0,
       exercise_volume: 0,
       exercise_cardio: "00:00",
     }],
@@ -163,7 +159,7 @@ export const ExerciseList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

@@ -6,10 +6,9 @@ import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -117,7 +116,7 @@ export const ExerciseSavePlan = () => {
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -137,7 +136,7 @@ export const ExerciseSavePlan = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -163,7 +162,7 @@ export const ExerciseSavePlan = () => {
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -183,7 +182,7 @@ export const ExerciseSavePlan = () => {
               }}
             />
           </LocalizationProvider>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             select={false}
@@ -222,20 +221,20 @@ export const ExerciseSavePlan = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <>
           <Div className={"d-row align-center"}>
-            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
             <Div className={"fs-14"}>복사</Div>
           </Div>
           <Div className={"d-row align-center"}>
-            <Icons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} />
             <Div className={"fs-14"}>복사</Div>
           </Div>
         </>
-      }>
+      )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -283,7 +282,7 @@ export const ExerciseSavePlan = () => {
             className={""}
             position={"top"}
             direction={"center"}
-            contents={
+            contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DigitalClock
                   timeStep={10}
@@ -303,7 +302,7 @@ export const ExerciseSavePlan = () => {
                   }}
                 />
               </LocalizationProvider>
-            }>
+            )}>
             {(popTrigger={}) => (
               <TextField
                 select={false}
@@ -378,7 +377,7 @@ export const ExerciseSavePlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

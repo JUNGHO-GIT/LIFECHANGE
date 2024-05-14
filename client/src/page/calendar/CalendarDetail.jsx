@@ -200,7 +200,7 @@ export const CalendarDetail = () => {
           className={""}
           position={"bottom"}
           direction={"center"}
-          contents={
+          contents={({closePopup}) => (
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DateCalendar
                 timezone={"Asia/Seoul"}
@@ -220,7 +220,7 @@ export const CalendarDetail = () => {
                 }}
               />
             </LocalizationProvider>
-          }>
+          )}>
           {(popTrigger={}) => (
             <TextField
               select={false}
@@ -246,7 +246,7 @@ export const CalendarDetail = () => {
           className={""}
           position={"bottom"}
           direction={"center"}
-          contents={
+          contents={({closePopup}) => (
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DateCalendar
                 timezone={"Asia/Seoul"}
@@ -266,7 +266,7 @@ export const CalendarDetail = () => {
                 }}
               />
             </LocalizationProvider>
-          }>
+          )}>
           {(popTrigger={}) => (
             <TextField
               select={false}
@@ -296,11 +296,11 @@ export const CalendarDetail = () => {
         className={"ms-n6"}
         position={"bottom"}
         direction={"center"}
-        contents={
+        contents={({closePopup}) => (
           <Div className={"d-center"}>
             0이상 10이하의 숫자만 입력하세요.
           </Div>
-        }>
+        )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
@@ -342,15 +342,15 @@ export const CalendarDetail = () => {
         className={""}
         position={"bottom"}
         direction={"left"}
-        contents={
+        contents={({closePopup}) => (
           <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
             flowDelete(id, sectionId);
           }}>
             <Div className={"fs-14"}>삭제</Div>
           </Icons>
-        }>
+        )}>
         {(popTrigger={}) => (
-          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -377,7 +377,8 @@ export const CalendarDetail = () => {
             className={"w-25vw me-10"}
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -410,7 +411,8 @@ export const CalendarDetail = () => {
             className={"w-25vw ms-10"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: null
             }}
             onChange={(e) => {
               const newColor = e.target.value;
@@ -499,7 +501,7 @@ export const CalendarDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min110vh"}>
+      <Div className={"block-wrapper h-min100vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
