@@ -119,7 +119,7 @@ export const save = {
   }
 };
 
-// 4. delete -------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
     user_id_param, _id_param, startDt_param, endDt_param
@@ -138,6 +138,34 @@ export const deletes = {
     })
     .lean();
     return finalResult;
+  },
+
+  update: async (
+    user_id_param, _id_param, section_id_param, startDt_param, endDt_param
+  ) => {
+    const updateResult = await Calendar.findOneAndUpdate(
+      {user_id: user_id_param,
+        _id: !_id_param ? {$exists:true} : _id_param,
+        calendar_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        calendar_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      },
+      {$pull: {
+        calendar_section: {
+          _id: section_id_param
+        },
+      },
+      $set: {
+        calendar_updateDt: newDate,
+      }}
+    )
+    .lean();
+    return updateResult;
   },
 
   deletes: async (

@@ -49,11 +49,6 @@ export const MoneySavePlan = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -116,7 +111,6 @@ export const MoneySavePlan = () => {
       <>
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
@@ -141,7 +135,7 @@ export const MoneySavePlan = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"시작일"}
@@ -163,7 +157,6 @@ export const MoneySavePlan = () => {
       </PopUp>
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={"w-60vw"}
         position={"bottom"}
         direction={"center"}
@@ -188,7 +181,7 @@ export const MoneySavePlan = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"종료일"}
@@ -221,7 +214,7 @@ export const MoneySavePlan = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -238,7 +231,7 @@ export const MoneySavePlan = () => {
             </Div>
           </>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -346,10 +339,10 @@ export const MoneySavePlan = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

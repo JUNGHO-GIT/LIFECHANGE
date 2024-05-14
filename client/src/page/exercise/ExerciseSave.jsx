@@ -51,11 +51,6 @@ export const ExerciseSave = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -228,7 +223,6 @@ export const ExerciseSave = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -254,7 +248,7 @@ export const ExerciseSave = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -279,7 +273,6 @@ export const ExerciseSave = () => {
     const countSection = () => (
       <PopUp
         type={"alert"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"left"}
@@ -288,7 +281,7 @@ export const ExerciseSave = () => {
             0이상 10이하의 숫자만 입력하세요.
           </Div>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             type={"text"}
             id={"sectionCnt"}
@@ -371,7 +364,7 @@ export const ExerciseSave = () => {
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -386,7 +379,7 @@ export const ExerciseSave = () => {
           </Icons>
           </>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -591,7 +584,7 @@ export const ExerciseSave = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"유산소"}
@@ -624,7 +617,7 @@ export const ExerciseSave = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.exercise_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -653,10 +646,10 @@ export const ExerciseSave = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam, flowSave

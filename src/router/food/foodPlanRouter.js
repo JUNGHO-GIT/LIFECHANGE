@@ -105,7 +105,7 @@ router.post("/save/plan", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-router.delete("/delete/plan", async (req, res) => {
+router.delete("/deletes/plan", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query.user_id,

@@ -104,11 +104,12 @@ router.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-router.delete("/delete", async (req, res) => {
+router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query.user_id,
       req.query._id,
+      req.query.section_id,
       req.query.duration
     );
     result = await middleware.deletes(result);

@@ -62,11 +62,6 @@ export const MoneyDiff = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -215,10 +210,10 @@ export const MoneyDiff = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, FILTER, SEND, PAGING, COUNT, DAYPICKER
+        DATE, FILTER, SEND, PAGING, COUNT
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setDAYPICKER
+        setDATE, setFILTER, setSEND, setPAGING, setCOUNT
       }}
       handlers={{
         navParam

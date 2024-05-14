@@ -52,11 +52,6 @@ export const ExerciseDetail = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -105,7 +100,7 @@ export const ExerciseDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
-    const res = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       params: {
         user_id: user_id,
         _id: id,
@@ -134,7 +129,6 @@ export const ExerciseDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -160,7 +154,7 @@ export const ExerciseDetail = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -174,7 +168,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -263,7 +257,7 @@ export const ExerciseDetail = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -288,7 +282,7 @@ export const ExerciseDetail = () => {
         </Div>
         </>
       }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -311,7 +305,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={OBJECT?.exercise_section[i]?.exercise_part_val}
             variant={"outlined"}
-            className={"w-45p me-10"}
+            className={"w-25vw me-10"}
             InputProps={{
               readOnly: true
             }}
@@ -322,7 +316,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={OBJECT?.exercise_section[i]?.exercise_title_val}
             variant={"outlined"}
-            className={"w-45p ms-10"}
+            className={"w-25vw ms-10"}
             InputProps={{
               readOnly: true
             }}
@@ -402,7 +396,7 @@ export const ExerciseDetail = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.exercise_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -431,10 +425,10 @@ export const ExerciseDetail = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

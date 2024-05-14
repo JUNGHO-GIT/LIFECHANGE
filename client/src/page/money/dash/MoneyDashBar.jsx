@@ -203,7 +203,7 @@ export const MoneyDashBar = () => {
         </FormGroup>
       ))
     }>
-      {(popTrigger) => (
+      {(popTrigger={}) => (
         <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark pointer"}
           id={"popChild"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)

@@ -70,7 +70,7 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  user_id_param, _id_param, duration_param
+  user_id_param, _id_param, section_id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
@@ -78,14 +78,29 @@ export const deletes = async (
   const findResult = await repository.deletes.detail(
     user_id_param, _id_param, startDt_param, endDt_param
   );
-
   if (!findResult) {
     return null;
   }
   else {
-    await repository.deletes.deletes(
-      user_id_param, _id_param
+    const updateResult = await repository.deletes.update(
+      user_id_param, _id_param, section_id_param, startDt_param, endDt_param
     );
-    return "deleted";
+    if (!updateResult) {
+      return null;
+    }
+    else {
+      const findAgain = await repository.deletes.detail(
+        user_id_param, _id_param, startDt_param, endDt_param
+      );
+      if (findAgain?.calendar_section.length === 0) {
+        await repository.deletes.deletes(
+          user_id_param, _id_param
+        );
+        return "deleted";
+      }
+      else {
+        return findAgain;
+      }
+    }
   }
 }

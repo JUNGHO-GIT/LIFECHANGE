@@ -52,11 +52,6 @@ export const MoneyDetail = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -102,7 +97,7 @@ export const MoneyDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
-    const res = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       params: {
         user_id: user_id,
         _id: id,
@@ -131,7 +126,6 @@ export const MoneyDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -157,7 +151,7 @@ export const MoneyDetail = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -171,7 +165,7 @@ export const MoneyDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -260,7 +254,7 @@ export const MoneyDetail = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -285,7 +279,7 @@ export const MoneyDetail = () => {
         </Div>
         </>
       }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -308,7 +302,7 @@ export const MoneyDetail = () => {
             type={"text"}
             variant={"outlined"}
             size={"small"}
-            className={"w-45p me-10"}
+            className={"w-25vw me-10"}
             value={OBJECT?.money_section[i]?.money_part_val}
             InputProps={{
               readOnly: true,
@@ -320,7 +314,7 @@ export const MoneyDetail = () => {
             type={"text"}
             variant={"outlined"}
             size={"small"}
-            className={"w-45p ms-10"}
+            className={"w-25vw ms-10"}
             value={OBJECT?.money_section[i]?.money_title_val}
             InputProps={{
               readOnly: true,
@@ -376,7 +370,7 @@ export const MoneyDetail = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.money_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.money_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -405,10 +399,10 @@ export const MoneyDetail = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

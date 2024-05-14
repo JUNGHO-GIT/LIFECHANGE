@@ -2,11 +2,11 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -54,11 +54,6 @@ export const CalendarDetail = () => {
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
-  });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -117,28 +112,81 @@ export const CalendarDetail = () => {
   };
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const res = await axios.delete(`${URL_OBJECT}/delete`, {
+  const flowDelete = async (id, section_id) => {
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       params: {
         user_id: user_id,
         _id: id,
+        section_id: section_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (res.data.status === "success") {
+      alert(res.data.msg);
       if (Object.keys(res.data.result).length > 0) {
-        alert(res.data.msg);
         setOBJECT(res.data.result);
-        navParam(SEND?.toList);
       }
       else {
-        alert(res.data.msg);
-        navParam(SEND?.toList);
+        navParam(SEND.toList);
       }
     }
     else {
       alert(res.data.msg);
-      navParam(SEND?.toList);
+    }
+  };
+
+  // 4-1. handler --------------------------------------------------------------------------------->
+  const handlerCount = (e) => {
+    const newCount = Number(e);
+    const defaultSection = {
+      calendar_part_idx: 0,
+      calendar_part_val: "전체",
+      calendar_title: "",
+      calendar_color: "#000000",
+      calendar_detail: ""
+    };
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: newCount
+    }));
+    if (newCount > 0) {
+      let updatedSection = Array(newCount).fill(null).map((_, idx) => (
+        idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
+      ));
+      setOBJECT((prev) => ({
+        ...prev,
+        calendar_section: updatedSection
+      }));
+    }
+    else {
+      setOBJECT((prev) => ({
+        ...prev,
+        calendar_section: []
+      }));
+    }
+  };
+
+  // 4-2. handler --------------------------------------------------------------------------------->
+  const handlerValidate = (e, popTrigger) => {
+    const newValInt = Number(e.target.value);
+    const newValStr = String(e.target.value);
+    if (newValInt < 0) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValInt > 10) {
+      popTrigger.openPopup(e.currentTarget);
+    }
+    else if (newValStr === "") {
+      handlerCount("");
+    }
+    else if (isNaN(newValInt) || newValStr === "NaN") {
+      handlerCount("0");
+    }
+    else if (newValStr.startsWith("0")) {
+      handlerCount(newValStr.replace(/^0+/, ""));
+    }
+    else {
+      handlerCount(newValStr);
     }
   };
 
@@ -146,146 +194,177 @@ export const CalendarDetail = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
+      <Div className={"d-column"}>
+        <PopUp
+          type={"calendar"}
+          className={""}
+          position={"bottom"}
+          direction={"center"}
+          contents={
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={"ms-n5"}
+                readOnly={false}
+                value={moment(DATE.startDt)}
+                sx={{
+                  width: "280px",
+                  height: "330px"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    startDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
+          }>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"시작일"}
+              size={"small"}
+              value={DATE.startDt}
+              variant={"outlined"}
+              className={"w-60vw mb-20"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+        <PopUp
+          type={"calendar"}
+          className={""}
+          position={"bottom"}
+          direction={"center"}
+          contents={
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={"ms-n5"}
+                readOnly={false}
+                value={moment(DATE.endDt)}
+                sx={{
+                  width: "280px",
+                  height: "330px"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    endDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
+          }>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"종료일"}
+              size={"small"}
+              value={DATE.endDt}
+              variant={"outlined"}
+              className={"w-60vw"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
+    );
+    // 7-2. count
+    const countSection = () => (
       <PopUp
-        type={"calendar"}
-        elementId={"popover"}
-        className={""}
+        type={"alert"}
+        className={"ms-n6"}
         position={"bottom"}
         direction={"center"}
         contents={
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              className={"ms-n5"}
-              readOnly={false}
-              value={moment(DATE.startDt)}
-              sx={{
-                width: "280px",
-                height: "330px"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  startDt: moment(date).format("YYYY-MM-DD"),
-                  endDt: moment(date).format("YYYY-MM-DD"),
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <Div className={"d-center"}>
+            0이상 10이하의 숫자만 입력하세요.
+          </Div>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
-            select={false}
-            label={"날짜"}
-            size={"small"}
-            value={DATE.startDt}
+            type={"text"}
+            id={"sectionCnt"}
+            label={"항목수"}
             variant={"outlined"}
+            size={"small"}
             className={"w-60vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            value={COUNT?.sectionCnt}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
+            }}
+            onChange={(e) => {
+              handlerValidate(e, popTrigger);
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
             }}
           />
         )}
       </PopUp>
     );
-    // 7-3. count
-    const countSection = () => {
-      const handlerCount = (e) => {
-        const newCount = Number(e);
-        const defaultSection = {
-          calendar_part_idx: 0,
-          calendar_part_val: "전체",
-          calendar_title: "",
-          calendar_color: "#000000",
-          calendar_detail: ""
-        };
-        setCOUNT((prev) => ({
-          ...prev,
-          sectionCnt: newCount
-        }));
-        if (newCount > 0) {
-          let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-            idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
-          ));
-          setOBJECT((prev) => ({
-            ...prev,
-            calendar_section: updatedSection
-          }));
-        }
-        else {
-          setOBJECT((prev) => ({
-            ...prev,
-            calendar_section: []
-          }));
-        }
-      };
-      return (
-        <PopUp
-          type={"alert"}
-          elementId={"popover"}
-          className={""}
-          position={"bottom"}
-          direction={"center"}
-          contents={
-            <Div className={"d-center"}>
-              0이상 10이하의 숫자만 입력하세요.
-            </Div>
-          }>
-          {(popTrigger) => (
-            <TextField
-              type={"text"}
-              id={"sectionCnt"}
-              label={"항목수"}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-60vw"}
-              value={COUNT?.sectionCnt}
-              InputProps={{
-                readOnly: false,
-                startAdornment: (
-                  <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
-                )
-              }}
-              onChange={(e) => {
-                const newValInt = Number(e.target.value);
-                const newValStr = String(e.target.value);
-                if (newValInt < 0) {
-                  popTrigger.openPopup(e.currentTarget);
-                }
-                else if (newValInt > 10) {
-                  popTrigger.openPopup(e.currentTarget);
-                }
-                else if (newValStr === "") {
-                  handlerCount("");
-                }
-                else if (isNaN(newValInt) || newValStr === "NaN") {
-                  handlerCount("0");
-                }
-                else if (newValStr.startsWith("0")) {
-                  handlerCount(newValStr.replace(/^0+/, ""));
-                }
-                else {
-                  handlerCount(newValStr);
-                }
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
-          )}
-        </PopUp>
-      );
-    };
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <PopUp
+        key={index}
+        type={"dropdown"}
+        className={""}
+        position={"bottom"}
+        direction={"left"}
+        contents={
+          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+            flowDelete(id, sectionId);
+          }}>
+            <Div className={"fs-14"}>삭제</Div>
+          </Icons>
+        }>
+        {(popTrigger={}) => (
+          <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark mt-n10 me-n10"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopUp>
+    );
     // 7-6. table
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
+        <Div className={"d-between mb-40"}>
+          {badgeSection(i)}
+          {dropdownSection(OBJECT?._id, OBJECT?.calendar_section[i]?._id, i)}
+        </Div>
         <Div className={"d-center mb-20"}>
           <TextField
             select={true}
@@ -295,7 +374,7 @@ export const CalendarDetail = () => {
             id={`calendar_part_val-${i}`}
             name={`calendar_part_val-${i}`}
             variant={"outlined"}
-            className={"w-45p me-10"}
+            className={"w-25vw me-10"}
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
             InputProps={{
               readOnly: false
@@ -328,7 +407,7 @@ export const CalendarDetail = () => {
             id={`calendar_color-${i}`}
             name={`calendar_color-${i}`}
             variant={"outlined"}
-            className={"w-45p ms-10"}
+            className={"w-25vw ms-10"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
               readOnly: false
@@ -365,7 +444,10 @@ export const CalendarDetail = () => {
             className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: (
+                <Adornment name={"TbPin"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
             onChange={(e) => {
               const newTitle = e.target.value;
@@ -393,7 +475,10 @@ export const CalendarDetail = () => {
             className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_detail}
             InputProps={{
-              readOnly: false
+              readOnly: false,
+              startAdornment: (
+                <Adornment name={"TbNote"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
             }}
             onChange={(e) => {
               const newDetail = e.target.value;
@@ -421,7 +506,7 @@ export const CalendarDetail = () => {
           {countSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.calendar_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -450,10 +535,10 @@ export const CalendarDetail = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam, flowSave, flowDelete

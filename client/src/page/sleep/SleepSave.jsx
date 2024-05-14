@@ -119,7 +119,6 @@ export const SleepSave = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -145,7 +144,7 @@ export const SleepSave = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -159,7 +158,7 @@ export const SleepSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -177,7 +176,7 @@ export const SleepSave = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -194,7 +193,7 @@ export const SleepSave = () => {
         </Div>
         </>
       }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -238,7 +237,7 @@ export const SleepSave = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"취침"}
@@ -287,7 +286,7 @@ export const SleepSave = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"기상"}
@@ -335,7 +334,7 @@ export const SleepSave = () => {
           {dateSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.sleep_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.sleep_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -364,10 +363,10 @@ export const SleepSave = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam, flowSave

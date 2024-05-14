@@ -33,7 +33,6 @@ export const Header = () => {
   const btnUser = () => (
     <PopUp
       type={"dropdown"}
-      elementId={"popover"}
       className={""}
       position={"bottom"}
       direction={"right"}
@@ -53,7 +52,7 @@ export const Header = () => {
         </Div>
       </>
     }>
-      {(popTrigger) => (
+      {(popTrigger={}) => (
         <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)

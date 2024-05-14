@@ -211,7 +211,7 @@ export const UserList = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (type_param) => {
-    const res = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       params: {
         user_id: user_id,
         PART: type_param

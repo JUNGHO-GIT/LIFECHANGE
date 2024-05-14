@@ -52,11 +52,6 @@ export const FoodDetail = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -107,7 +102,7 @@ export const FoodDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
-    const res = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       params: {
         user_id: user_id,
         _id: id,
@@ -136,7 +131,6 @@ export const FoodDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -162,7 +156,7 @@ export const FoodDetail = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -176,7 +170,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -281,7 +275,7 @@ export const FoodDetail = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -306,7 +300,7 @@ export const FoodDetail = () => {
           </Div>
         </>
       }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -427,7 +421,7 @@ export const FoodDetail = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.food_section.map((item, i) => tableFragment(i))}
+          {OBJECT?.food_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -456,10 +450,10 @@ export const FoodDetail = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

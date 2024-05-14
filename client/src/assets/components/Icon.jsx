@@ -25,7 +25,7 @@ export const Icons = ({...props}) => {
       IconComponent = importCode[props.name];
     }
     else {
-      console.warn(`Icon '${props.name}' not found!`);
+      console.log(`Icon '${props.name}' not found!`);
       return (
         null
       );
@@ -66,7 +66,7 @@ export const Adornment = ({...props}) => {
       IconComponent = importCode[props.name];
     }
     else {
-      console.warn(`Icon '${props.name}' not found!`);
+      console.log(`Icon '${props.name}' not found!`);
       return (
         null
       );

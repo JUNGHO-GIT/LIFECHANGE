@@ -48,11 +48,6 @@ export const SleepSavePlan = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -116,7 +111,6 @@ export const SleepSavePlan = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -142,7 +136,7 @@ export const SleepSavePlan = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -156,7 +150,7 @@ export const SleepSavePlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -174,7 +168,7 @@ export const SleepSavePlan = () => {
         />
       </Div>
       <PopUp
-        elementId={`popover-${index}`}
+        key={index}
         type={"dropdown"}
         className={""}
         position={"bottom"}
@@ -191,7 +185,7 @@ export const SleepSavePlan = () => {
         </Div>
         </>
       }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
@@ -230,7 +224,7 @@ export const SleepSavePlan = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"취침 목표"}
@@ -274,7 +268,7 @@ export const SleepSavePlan = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"기상 목표"}
@@ -353,10 +347,10 @@ export const SleepSavePlan = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

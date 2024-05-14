@@ -130,7 +130,7 @@ export const save = {
     return finalResult;
   }
 };
-// 4. delete -------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
     user_id_param, _id_param, startDt_param, endDt_param

@@ -141,7 +141,6 @@ export const Btn = ({
   const btnOpenCalendar = () => (
     <PopUp
       type={"calendar"}
-      elementId={"popover"}
       className={""}
       position={"top"}
       direction={"center"}
@@ -217,7 +216,7 @@ export const Btn = ({
           />
         </LocalizationProvider>
       }>
-      {(popTrigger) => (
+      {(popTrigger={}) => (
         <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
         className={"primary-btn"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)

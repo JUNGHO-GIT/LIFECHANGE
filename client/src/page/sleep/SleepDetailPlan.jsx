@@ -51,11 +51,6 @@ export const SleepDetailPlan = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -93,7 +88,7 @@ export const SleepDetailPlan = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const res = await axios.delete(`${URL_OBJECT}/plan/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/plan/deletes`, {
       params: {
         user_id: user_id,
         _id: id,
@@ -121,7 +116,6 @@ export const SleepDetailPlan = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        elementId={"popover"}
         className={""}
         position={"bottom"}
         direction={"center"}
@@ -147,7 +141,7 @@ export const SleepDetailPlan = () => {
             />
           </LocalizationProvider>
         }>
-        {(popTrigger) => (
+        {(popTrigger={}) => (
           <TextField
             select={false}
             label={"날짜"}
@@ -161,7 +155,7 @@ export const SleepDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
           />
@@ -204,7 +198,7 @@ export const SleepDetailPlan = () => {
             </Div>
           </>
         }>
-          {(popTrigger) => (
+          {(popTrigger={}) => (
             <Icons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark me-n10"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget)
@@ -237,7 +231,7 @@ export const SleepDetailPlan = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"취침 목표"}
@@ -275,7 +269,7 @@ export const SleepDetailPlan = () => {
                 />
               </LocalizationProvider>
             }>
-            {(popTrigger) => (
+            {(popTrigger={}) => (
               <TextField
                 select={false}
                 label={"기상 목표"}
@@ -352,10 +346,10 @@ export const SleepDetailPlan = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, SEND, COUNT, DAYPICKER
+        DATE, SEND, COUNT
       }}
       functions={{
-        setDATE, setSEND, setCOUNT, setDAYPICKER
+        setDATE, setSEND, setCOUNT
       }}
       handlers={{
         navParam

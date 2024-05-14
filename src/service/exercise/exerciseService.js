@@ -109,5 +109,4 @@ export const deletes = async (
       }
     }
   }
-
 };
