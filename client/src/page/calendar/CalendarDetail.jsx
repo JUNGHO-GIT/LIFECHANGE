@@ -4,8 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 import {MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";

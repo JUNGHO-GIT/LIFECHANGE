@@ -3,8 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";

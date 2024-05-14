@@ -4,8 +4,7 @@ import {React, useState, useNavigate, useLocation} from "../../import/ImportReac
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div, Hr10, Br10} from "../../import/ImportComponents.jsx";
+import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 

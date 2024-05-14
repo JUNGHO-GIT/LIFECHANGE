@@ -10,22 +10,6 @@ export const Div = (props) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-export const Br5 = (props) => {
-  const style = {
-    margin: "5px 0px 5px 0px",
-  };
-
-  return React.createElement("br", {...props, style});
-};
-export const Br10 = (props) => {
-  const style = {
-    margin: "10px 0px 10px 0px",
-  };
-
-  return React.createElement("br", {...props, style});
-};
-
-// ------------------------------------------------------------------------------------------------>
 export const Hr5 = (props) => {
   const style = {
     border: "none",
@@ -36,6 +20,8 @@ export const Hr5 = (props) => {
 
   return React.createElement("hr", {...props, style});
 };
+
+// ------------------------------------------------------------------------------------------------>
 export const Hr10 = (props) => {
   const style = {
     border: "none",

@@ -5,8 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Div, Adornment, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 
@@ -279,28 +278,29 @@ export const ExerciseDetail = () => {
         direction={"left"}
         contents={({closePopup}) => (
           <>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
-            flowDelete(id, sectionId);
-            setTimeout(() => {
-              closePopup();
-            }, 1000);
-          }}>
-            <Div className={"fs-14"}>삭제</Div>
-          </Icons>
-          <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
-            Object.assign(SEND, {
-              startDt: DATE.startDt,
-              endDt: DATE.endDt
-            });
-            navigate(SEND.toUpdate, {
-              state: SEND
-            });
-            setTimeout(() => {
-              closePopup();
-            }, 1000);
-          }}>
-            <Div className={"fs-14"}>수정</Div>
-          </Icons>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              flowDelete(id, sectionId);
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+            <Div className={"h-10"}/>
+            <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+              Object.assign(SEND, {
+                startDt: DATE.startDt,
+                endDt: DATE.endDt
+              });
+              navigate(SEND.toUpdate, {
+                state: SEND
+              });
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
+            }}>
+              <Div className={"fs-14"}>수정</Div>
+            </Icons>
           </>
         )}>
         {(popTrigger={}) => (
