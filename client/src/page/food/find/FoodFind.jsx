@@ -1,16 +1,16 @@
-// FoodSearch.jsx
+// FoodFind.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {Header, NavBar, Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
+import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSearch = () => {
+export const FoodFind = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -35,9 +35,7 @@ export const FoodSearch = () => {
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
-      query: "",
-      page: 0,
-      limit: 10,
+      query: ""
     }
   );
 
@@ -49,6 +47,10 @@ export const FoodSearch = () => {
     endDt: "0000-00-00",
     toSave:"/food/save",
   });
+  const [PAGING, setPAGING] = useState({
+    page: 0,
+    limit: 10,
+  });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
@@ -56,29 +58,24 @@ export const FoodSearch = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_total_kcal: 0,
-    food_total_fat: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_section: [{
-      food_part_idx: 1,
-      food_part_val: "아침",
-      food_title: "",
-      food_count: 0,
-      food_serv: "회",
-      food_gram:  0,
-      food_kcal: 0,
-      food_fat: 0,
-      food_carb: 0,
-      food_protein: 0,
-    }]
+    food_title: "",
+    food_brand: "",
+    food_count: 0,
+    food_serv: "",
+    food_gram: 0,
+    food_kcal: 0,
+    food_carb: 0,
+    food_protein: 0,
+    food_fat: 0,
   }];
-  const {val:OBJECT, set:setOBJECT} = useStorage(
-    `OBJECT(food)`, OBJECT_DEF
-  );
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
+
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -86,23 +83,22 @@ export const FoodSearch = () => {
       return;
     }
     else {
-      flowSearch();
+      flowFind();
     }
-  }, [FILTER?.page]);
+  }, [PAGING.page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSearch = async () => {
+  const flowFind = async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/search`, {
+    const res = await axios.get(`${URL_OBJECT}/find`, {
       params: {
         user_id: user_id,
-        FILTER: FILTER
-      }
+        FILTER: FILTER,
+        PAGING: PAGING,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+      },
     });
-    setOBJECT((prev) => ({
-      ...prev,
-      food_section: res.data.result
-    }));
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
@@ -112,53 +108,60 @@ export const FoodSearch = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-5. handleStorage
-    const handleStorage = (param) => {
-      sessionStorage.setItem("food_section", JSON.stringify(param));
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navigate(SEND.toSave, {
-        state: SEND
-      });
-    };
     // 7-6. table
     const tableFragment = (i) => (
       <TableContainer key={i}>
         <Table className={"border"}>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>식품명</TableCell>
-              <TableCell>제공량</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell className={"w-max30vw"}>식품명</TableCell>
+              <TableCell className={"w-max30vw"}>브랜드</TableCell>
+              <TableCell className={"w-max30vw"}>제공량</TableCell>
+              <TableCell className={"w-max20vw"}>Kcal</TableCell>
+              <TableCell className={"w-max20vw"}>탄수화물</TableCell>
+              <TableCell className={"w-max20vw"}>단백질</TableCell>
+              <TableCell className={"w-max20vw"}>지방</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.food_section?.map((item, sectionIndex) => (
-              <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                <TableCell className={"pointer"} onClick={() => {
-                  handleStorage(item);
-                }}>
-                  {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
-                </TableCell>
-                <TableCell>
-                  {`${item.food_count}${item.food_serv} (${item.food_gram}g)`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_kcal).format("0,0")} Kcal`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_carb).format("0,0")} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_protein).format("0,0")} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_fat).format("0,0")} g`}
-                </TableCell>
-              </TableRow>
+            {OBJECT?.map((item, index) => (
+              <>
+                <TableRow className={"table-tbody-tr"} key={`title-${index}`}>
+                  <TableCell rowSpan={2} className={"pointer w-max30vw"} onClick={() => {
+                    sessionStorage.setItem("food_section", JSON.stringify(item));
+                    Object.assign(SEND, {
+                      id: user_id,
+                      startDt: DATE.startDt,
+                      endDt: DATE.endDt
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.food_title}
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
+                  <TableCell className={"w-max30vw"}>
+                    {item.food_brand}
+                  </TableCell>
+                  <TableCell className={"w-max30vw"}>
+                    {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")} g)`}
+                  </TableCell>
+                  <TableCell className={"w-max20vw"}>
+                    {`${numeral(item.food_kcal).format("0,0")} Kcal`}
+                  </TableCell>
+                  <TableCell className={"w-max20vw"}>
+                    {`${numeral(item.food_carb).format("0,0")} g`}
+                  </TableCell>
+                  <TableCell className={"w-max20vw"}>
+                    {`${numeral(item.food_protein).format("0,0")} g`}
+                  </TableCell>
+                  <TableCell className={"w-max20vw"}>
+                    {`${numeral(item.food_fat).format("0,0")} g`}
+                  </TableCell>
+                </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
@@ -166,7 +169,7 @@ export const FoodSearch = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min110vw h-min100vh"}>
+      <Div className={"block-wrapper w-min170vw h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>
@@ -197,13 +200,13 @@ export const FoodSearch = () => {
         plan: planStr,
       }}
       objects={{
-        DATE, FILTER, SEND, COUNT
+        DATE, FILTER, SEND, PAGING, COUNT
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setCOUNT
+        setDATE, setFILTER, setSEND, setPAGING, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowFind
       }}
     />
   );

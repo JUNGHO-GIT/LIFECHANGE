@@ -1,11 +1,10 @@
 // MoneyList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -128,9 +127,11 @@ export const MoneyList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.money_startDt;
-                  SEND.endDt = item.money_endDt;
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.money_startDt,
+                    endDt: item.money_endDt
+                  });
                   navigate(SEND.toDetail, {
                     state: SEND
                   });
@@ -154,7 +155,7 @@ export const MoneyList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

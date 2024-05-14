@@ -125,7 +125,6 @@ export const MoneyDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -133,12 +132,11 @@ export const MoneyDetail = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -146,6 +144,7 @@ export const MoneyDetail = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -176,7 +175,6 @@ export const MoneyDetail = () => {
     const countSection = () => (
       <TextField
         type={"text"}
-        id={"sectionCnt"}
         label={"항목수"}
         variant={"outlined"}
         size={"small"}
@@ -256,9 +254,8 @@ export const MoneyDetail = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
         <Div className={"d-row align-center"} onClick={() => {
@@ -359,7 +356,7 @@ export const MoneyDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

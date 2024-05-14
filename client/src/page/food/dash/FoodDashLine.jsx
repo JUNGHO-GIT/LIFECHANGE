@@ -285,8 +285,6 @@ export const FoodDashLine = () => {
       select={true}
       type={"text"}
       size={"small"}
-      id={"section"}
-      name={"section"}
       className={"w-65 mt-5"}
       variant={"outlined"}
       value={SECTION}
@@ -323,11 +321,9 @@ export const FoodDashLine = () => {
       ))
       )}>
       {(popTrigger={}) => (
-        <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"}
-          id={"popChild"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}
-        />
+        <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}/>
       )}
     </PopUp>
   );

@@ -65,8 +65,6 @@ export const UserSignup = () => {
             select={false}
             type={"text"}
             size={"small"}
-            id={"user_id"}
-            name={"user_id"}
             label={"ID"}
             value={user_id}
             onChange={(e) => (
@@ -79,8 +77,6 @@ export const UserSignup = () => {
             select={false}
             type={"password"}
             size={"small"}
-            id={"user_pw"}
-            name={"user_pw"}
             label={"Password"}
             value={user_pw}
             onChange={(e) => (

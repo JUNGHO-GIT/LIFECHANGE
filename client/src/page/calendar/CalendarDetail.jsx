@@ -196,7 +196,6 @@ export const CalendarDetail = () => {
       <Div className={"d-column"}>
         <PopUp
           type={"calendar"}
-          className={""}
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
@@ -204,18 +203,19 @@ export const CalendarDetail = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={"ms-n5"}
+                className={""}
                 readOnly={false}
                 value={moment(DATE.startDt)}
                 sx={{
-                  width: "280px",
-                  height: "330px"
+                  width: "80vw",
+                  height: "60vh"
                 }}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
                     startDt: moment(date).format("YYYY-MM-DD")
                   }));
+                  closePopup();
                 }}
               />
             </LocalizationProvider>
@@ -242,7 +242,6 @@ export const CalendarDetail = () => {
         </PopUp>
         <PopUp
           type={"calendar"}
-          className={""}
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
@@ -250,18 +249,19 @@ export const CalendarDetail = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={"ms-n5"}
+                className={""}
                 readOnly={false}
                 value={moment(DATE.endDt)}
                 sx={{
-                  width: "280px",
-                  height: "330px"
+                  width: "80vw",
+                  height: "60vh"
                 }}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
                     endDt: moment(date).format("YYYY-MM-DD")
                   }));
+                  closePopup();
                 }}
               />
             </LocalizationProvider>
@@ -296,14 +296,11 @@ export const CalendarDetail = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </Div>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            id={"sectionCnt"}
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
@@ -338,9 +335,8 @@ export const CalendarDetail = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
             flowDelete(id, sectionId);
@@ -370,8 +366,6 @@ export const CalendarDetail = () => {
             type={"text"}
             size={"small"}
             label={"파트"}
-            id={`calendar_part_val-${i}`}
-            name={`calendar_part_val-${i}`}
             variant={"outlined"}
             className={"w-25vw me-10"}
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
@@ -404,8 +398,6 @@ export const CalendarDetail = () => {
             type={"text"}
             size={"small"}
             label={"색상"}
-            id={`calendar_color-${i}`}
-            name={`calendar_color-${i}`}
             variant={"outlined"}
             className={"w-25vw ms-10"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
@@ -440,8 +432,6 @@ export const CalendarDetail = () => {
             type={"text"}
             size={"small"}
             label={"제목"}
-            id={`calendar_title-${i}`}
-            name={`calendar_title-${i}`}
             variant={"outlined"}
             className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_title}
@@ -471,8 +461,6 @@ export const CalendarDetail = () => {
             type={"text"}
             size={"small"}
             label={"상세"}
-            id={`calendar_detail-${i}`}
-            name={`calendar_detail-${i}`}
             variant={"outlined"}
             className={"w-60vw"}
             value={OBJECT?.calendar_section[i]?.calendar_detail}
@@ -500,7 +488,7 @@ export const CalendarDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

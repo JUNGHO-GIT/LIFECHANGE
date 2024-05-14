@@ -2,10 +2,10 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -134,14 +134,7 @@ export const FoodDiff = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.food_plan_startDt;
-                  SEND.endDt = item.food_plan_endDt;
-                  navigate(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
+                <TableCell rowSpan={4} className={"pointer"}>
                   <p>{item.food_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
                   <p>{item.food_plan_endDt?.substring(5, 10)}</p>
@@ -206,7 +199,7 @@ export const FoodDiff = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min110vw h-min100vh"}>
+      <Div className={"block-wrapper w-min100vw h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

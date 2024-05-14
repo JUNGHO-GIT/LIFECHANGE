@@ -20,17 +20,15 @@ export const Navigation = ({
         setValue(newValue);
       }}
     >
-      <BottomNavigationAction label="Recents"
-      icon={
+      <BottomNavigationAction label="Recents" icon={
         <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
-      } />
-      <BottomNavigationAction label="Favorites"
-      icon={
+      }/>
+      <BottomNavigationAction label="Favorites" icon={
         <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
-      } />
+      }/>
       <BottomNavigationAction label="Archive" icon={
         <Icons name={"TbTextPlus"} className={"w-16 h-16 dark"}/>
-      } />
+      }/>
     </BottomNavigation>
   );
 

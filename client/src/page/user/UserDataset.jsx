@@ -413,7 +413,7 @@ export const UserDataset = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment1(0)}
         </Div>

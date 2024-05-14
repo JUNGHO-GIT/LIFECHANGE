@@ -8,7 +8,7 @@ import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -201,7 +201,6 @@ export const MoneySave = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -209,12 +208,11 @@ export const MoneySave = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -222,6 +220,7 @@ export const MoneySave = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -251,18 +250,14 @@ export const MoneySave = () => {
     const countSection = () => (
       <PopUp
         type={"alert"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </Div>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            id={"sectionCnt"}
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
@@ -350,9 +345,8 @@ export const MoneySave = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
           <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
@@ -385,8 +379,6 @@ export const MoneySave = () => {
             type={"text"}
             size={"small"}
             label={"파트"}
-            id={`money_part_val-${i}`}
-            name={`money_part_val-${i}`}
             variant={"outlined"}
             className={"w-25vw me-10"}
             value={OBJECT?.money_section[i]?.money_part_idx}
@@ -421,8 +413,6 @@ export const MoneySave = () => {
             type={"text"}
             size={"small"}
             label={"타이틀"}
-            id={`money_title_val-${i}`}
-            name={`money_title_val-${i}`}
             variant={"outlined"}
             className={"w-25vw ms-10"}
             value={OBJECT?.money_section[i]?.money_title_idx}
@@ -460,8 +450,6 @@ export const MoneySave = () => {
             label={"금액"}
             size={"small"}
             variant={"outlined"}
-            id={`money_amount-${i}`}
-            name={`money_amount-${i}`}
             className={"w-60vw"}
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
@@ -491,8 +479,6 @@ export const MoneySave = () => {
             label={"메모"}
             size={"small"}
             variant={"outlined"}
-            id={`money_content-${i}`}
-            name={`money_content-${i}`}
             className={"w-60vw"}
             value={OBJECT?.money_section[i]?.money_content}
             InputProps={{
@@ -520,7 +506,7 @@ export const MoneySave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

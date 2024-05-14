@@ -133,14 +133,7 @@ export const ExerciseDiff = () => {
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.exercise_plan_startDt;
-                  SEND.endDt = item.exercise_plan_endDt;
-                  navigate(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
+                <TableCell rowSpan={4} className={"pointer"}>
                   <p>{item.exercise_plan_startDt?.substring(5, 10)}</p>
                   <p>~</p>
                   <p>{item.exercise_plan_endDt?.substring(5, 10)}</p>
@@ -205,7 +198,7 @@ export const ExerciseDiff = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min110vw h-min100vh"}>
+      <Div className={"block-wrapper w-min100vw h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

@@ -118,7 +118,6 @@ export const SleepSave = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -126,12 +125,11 @@ export const SleepSave = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -139,6 +137,7 @@ export const SleepSave = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -177,9 +176,8 @@ export const SleepSave = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
         <Div className={"d-row align-center"}>
@@ -210,9 +208,8 @@ export const SleepSave = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -259,9 +256,8 @@ export const SleepSave = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -310,8 +306,6 @@ export const SleepSave = () => {
           <TextField
             label={"수면"}
             type={"text"}
-            id={"sleep_time"}
-            name={"sleep_time"}
             size={"small"}
             variant={"outlined"}
             className={"w-60vw"}
@@ -328,7 +322,7 @@ export const SleepSave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

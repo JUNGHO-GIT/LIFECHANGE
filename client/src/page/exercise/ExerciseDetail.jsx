@@ -127,7 +127,6 @@ export const ExerciseDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -135,12 +134,11 @@ export const ExerciseDetail = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -148,6 +146,7 @@ export const ExerciseDetail = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -177,18 +176,14 @@ export const ExerciseDetail = () => {
     const countSection = () => (
       <PopUp
         type={"alert"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </Div>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            id={"sectionCnt"}
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
@@ -273,9 +268,8 @@ export const ExerciseDetail = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
             <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
@@ -325,8 +319,6 @@ export const ExerciseDetail = () => {
             type={"text"}
             size={"small"}
             label={"파트"}
-            id={`exercise_part_val-${i}`}
-            name={`exercise_part_val-${i}`}
             variant={"outlined"}
             className={"w-25vw me-10"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
@@ -346,8 +338,6 @@ export const ExerciseDetail = () => {
             type={"text"}
             size={"small"}
             label={"종목"}
-            id={`exercise_title_val-${i}`}
-            name={`exercise_title_val-${i}`}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             variant={"outlined"}
             className={"w-25vw ms-10"}
@@ -368,8 +358,6 @@ export const ExerciseDetail = () => {
             select={false}
             label={"세트"}
             size={"small"}
-            id={`exercise_set-${i}`}
-            name={`exercise_set-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
             variant={"outlined"}
             className={"w-60vw"}
@@ -386,8 +374,6 @@ export const ExerciseDetail = () => {
             select={false}
             label={"횟수"}
             size={"small"}
-            id={`exercise_rep-${i}`}
-            name={`exercise_rep-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
             variant={"outlined"}
             className={"w-60vw"}
@@ -404,8 +390,6 @@ export const ExerciseDetail = () => {
             select={false}
             label={"무게"}
             size={"small"}
-            id={`exercise_kg-${i}`}
-            name={`exercise_kg-${i}`}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
             variant={"outlined"}
             className={"w-60vw"}
@@ -422,8 +406,6 @@ export const ExerciseDetail = () => {
             select={false}
             label={"유산소"}
             size={"small"}
-            id={`exercise_cardio-${i}`}
-            name={`exercise_cardio-${i}`}
             value={OBJECT?.exercise_section[i]?.exercise_cardio}
             variant={"outlined"}
             className={"w-60vw"}
@@ -439,7 +421,7 @@ export const ExerciseDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -107,100 +107,139 @@ export const MoneySavePlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <>
+      <Div className={"d-column"}>
+        <PopUp
+          type={"calendar"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={""}
+                readOnly={false}
+                value={moment(DATE.startDt)}
+                sx={{
+                  width: "80vw",
+                  height: "60vh"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    startDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"시작일"}
+              size={"small"}
+              value={DATE.startDt}
+              variant={"outlined"}
+              className={"w-60vw mb-20"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+        <PopUp
+          type={"calendar"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={""}
+                readOnly={false}
+                value={moment(DATE.endDt)}
+                sx={{
+                  width: "80vw",
+                  height: "60vh"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    endDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"종료일"}
+              size={"small"}
+              value={DATE.endDt}
+              variant={"outlined"}
+              className={"w-60vw"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
+    );
+    // 7-2. count
+    const countSection = () => (
       <PopUp
-        type={"calendar"}
-        className={"w-60vw"}
+        type={"alert"}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              className={"ms-n5"}
-              readOnly={false}
-              value={moment(DATE.startDt)}
-              sx={{
-                width: "280px",
-                height: "330px"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  startDt: moment(date).format("YYYY-MM-DD")
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
-            select={false}
-            label={"시작일"}
-            size={"small"}
-            value={DATE.startDt}
+            type={"text"}
+            label={"항목수"}
             variant={"outlined"}
+            size={"small"}
             className={"w-60vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
             }}
-          />
-        )}
-      </PopUp>
-      <PopUp
-        type={"calendar"}
-        className={"w-60vw"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              className={"ms-n5"}
-              readOnly={false}
-              value={moment(DATE.endDt)}
-              sx={{
-                width: "280px",
-                height: "330px"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  endDt: moment(date).format("YYYY-MM-DD")
-                }));
-              }}
-            />
-          </LocalizationProvider>
-        )}>
-        {(popTrigger={}) => (
-          <TextField
-            select={false}
-            label={"종료일"}
-            size={"small"}
-            value={DATE.endDt}
-            variant={"outlined"}
-            className={"w-60vw"}
             onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
-              )
+              e.stopPropagation();
             }}
           />
         )}
       </PopUp>
-      </>
+    );
+    // 7-3. total (plan 은 total x)
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
     );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
@@ -215,9 +254,8 @@ export const MoneySavePlan = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
             <Div className={"d-row align-center"}>
@@ -252,8 +290,6 @@ export const MoneySavePlan = () => {
             type={"text"}
             size={"small"}
             label={"목표 수입"}
-            id={`money_plan_in-${i}`}
-            name={`money_plan_in-${i}`}
             variant={"outlined"}
             className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
@@ -279,8 +315,6 @@ export const MoneySavePlan = () => {
             type={"text"}
             size={"small"}
             label={"목표 지출"}
-            id={`money_plan_out-${i}`}
-            name={`money_plan_out-${i}`}
             variant={"outlined"}
             className={"w-60vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
@@ -304,7 +338,7 @@ export const MoneySavePlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

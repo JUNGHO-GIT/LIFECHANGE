@@ -23,8 +23,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"type"}
-        name={"type"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.type}
@@ -48,8 +46,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"order"}
-        name={"order"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.order}
@@ -75,8 +71,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"part"}
-        name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
@@ -105,8 +99,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"title"}
-        name={"title"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
@@ -135,8 +127,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"part"}
-        name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
@@ -167,8 +157,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"part"}
-        name={"part"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
@@ -197,8 +185,6 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        id={"title"}
-        name={"title"}
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
@@ -226,8 +212,6 @@ export const Filter = ({
       select={true}
       type={"text"}
       size={"small"}
-      id={"part"}
-      name={"part"}
       className={"ms-2 me-2"}
       variant={"outlined"}
       value={objects?.PART}
@@ -256,7 +240,12 @@ export const Filter = ({
           null
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -273,7 +262,12 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -290,7 +284,17 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "find") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -307,7 +311,12 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -323,7 +332,12 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -337,6 +351,11 @@ export const Filter = ({
           <Div className={"block-wrapper d-row h-40"}>
             {demoNode()}
           </Div>
+        );
+      }
+      else if (strings?.type === "dataset") {
+        return (
+          null
         );
       }
       else if (strings?.type === "login") {

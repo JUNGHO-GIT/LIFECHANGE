@@ -16,7 +16,7 @@ export const dataArray = [
     label: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
-      {to: "/food/search", label: "FoodSearch"},
+      {to: "/food/find", label: "FoodFind"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
       {to: "/food/list", label: "FoodListPlan"},

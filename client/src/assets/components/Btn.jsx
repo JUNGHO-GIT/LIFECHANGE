@@ -69,16 +69,16 @@ export const Btn = ({
       List
     </Button>
   );
-  const btnToSearch = () => (
+  const btnToFind = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
       objects.SEND.startDt = objects?.DATE.startDt;
       objects.SEND.endDt = objects?.DATE.endDt;
-      handlers.navigate(objects?.SEND.toSearch, {
+      handlers.navigate(objects?.SEND.toFind, {
         state: objects?.SEND,
       });
     }}>
-      Search
+      Find
     </Button>
   );
   const btnLogin = () => (
@@ -105,7 +105,7 @@ export const Btn = ({
       Refresh
     </Button>
   );
-  const btnGetSearch = () => (
+  const btnGetFind = () => (
     <Div className={"d-center"}>
       <TextField
         select={false}
@@ -122,13 +122,17 @@ export const Btn = ({
             ...prev,
             query: e.target.value
           }));
+          functions?.setPAGING((prev) => ({
+            ...prev,
+            page: 0
+          }));
         }}
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"outlined"}
       className={"primary-btn"} onClick={() => {
-        handlers.flowSave();
+        handlers.flowFind();
       }}>
-        Search
+        Find
       </Button>
     </Div>
   );
@@ -141,7 +145,6 @@ export const Btn = ({
   const btnOpenCalendar = () => (
     <PopUp
       type={"calendar"}
-      className={""}
       position={"top"}
       direction={"center"}
       contents={({closePopup}) => (
@@ -149,12 +152,11 @@ export const Btn = ({
           <DateCalendar
             timezone={"Asia/Seoul"}
             views={["year", "day"]}
-            className={"m-auto"}
             readOnly={false}
             defaultValue={moment(koreanDate)}
             sx={{
-              "width": "250px",
-              "height": "330px"
+              width: "80vw",
+              height: "60vh"
             }}
             onChange={(date) => {
               (objects?.FILTER && objects?.FILTER.type !== "day") && (
@@ -215,7 +217,7 @@ export const Btn = ({
             }}
           />
         </LocalizationProvider>
-        )}>
+      )}>
       {(popTrigger={}) => (
         <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
         className={"primary-btn"} onClick={(e) => {
@@ -233,9 +235,6 @@ export const Btn = ({
         label={"추가"}
         type={"text"}
         variant={"outlined"}
-        id={"inputCount"}
-        name={"inputCount"}
-        className={""}
         size={"small"}
         value={Math.min(objects?.COUNT?.inputCnt, 10)}
         InputProps={{
@@ -266,12 +265,18 @@ export const Btn = ({
           null
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-40"}>
             {btnToSave()}
             {btnToList()}
+            {btnRefresh()}
           </Div>
+        );
+      }
+      else if (strings?.type === "save") {
+        return (
+          null
         );
       }
     }
@@ -283,12 +288,26 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-40"}>
             {btnOpenCalendar()}
             {btnGetToday()}
+            {btnRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToUpdate()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToSave()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
         );
       }
     }
@@ -300,12 +319,33 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-40"}>
             {btnOpenCalendar()}
             {btnGetToday()}
+            {btnRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "find") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnGetFind()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToUpdate()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToSave()}
+            {btnToFind()}
+            {btnRefresh()}
+          </Div>
         );
       }
     }
@@ -317,12 +357,26 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-40"}>
             {btnOpenCalendar()}
             {btnGetToday()}
+            {btnRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToUpdate()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToSave()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
         );
       }
     }
@@ -334,12 +388,26 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-40"}>
             {btnOpenCalendar()}
             {btnGetToday()}
+            {btnRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToUpdate()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnToSave()}
+            {btnToList()}
+            {btnRefresh()}
+          </Div>
         );
       }
     }
@@ -350,6 +418,15 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-40"}>
             {btnInsertDemo()}
+            {btnRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "dataset") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {btnResetDefault()}
+            {btnRefresh()}
           </Div>
         );
       }

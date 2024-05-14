@@ -1,7 +1,7 @@
 // ExerciseList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
@@ -130,9 +130,11 @@ export const ExerciseList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.exercise_startDt;
-                  SEND.endDt = item.exercise_endDt;
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.exercise_startDt,
+                    endDt: item.exercise_endDt
+                  });
                   navigate(SEND.toDetail, {
                     state: SEND
                   });
@@ -159,7 +161,7 @@ export const ExerciseList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

@@ -113,99 +113,182 @@ export const SleepDetailPlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
+      <Div className={"d-column"}>
+        <PopUp
+          type={"calendar"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={""}
+                readOnly={false}
+                value={moment(DATE.startDt)}
+                sx={{
+                  width: "80vw",
+                  height: "60vh"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    startDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"시작일"}
+              size={"small"}
+              value={DATE.startDt}
+              variant={"outlined"}
+              className={"w-60vw mb-20"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+        <PopUp
+          type={"calendar"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["day"]}
+                className={""}
+                readOnly={false}
+                value={moment(DATE.endDt)}
+                sx={{
+                  width: "80vw",
+                  height: "60vh"
+                }}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    endDt: moment(date).format("YYYY-MM-DD")
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              select={false}
+              label={"종료일"}
+              size={"small"}
+              value={DATE.endDt}
+              variant={"outlined"}
+              className={"w-60vw"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
+    );
+    // 7-2. count
+    const countSection = () => (
       <PopUp
-        type={"calendar"}
-        className={""}
+        type={"alert"}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              className={"ms-n5"}
-              readOnly={false}
-              value={moment(DATE.startDt)}
-              sx={{
-                width: "280px",
-                height: "330px"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  startDt: moment(date).format("YYYY-MM-DD"),
-                  endDt: moment(date).format("YYYY-MM-DD"),
-                }));
-              }}
-            />
-          </LocalizationProvider>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
-            select={false}
-            label={"날짜"}
-            size={"small"}
-            value={DATE.startDt}
+            type={"text"}
+            label={"항목수"}
             variant={"outlined"}
+            size={"small"}
             className={"w-60vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adornment name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adornment name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
               )
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
             }}
           />
         )}
       </PopUp>
     );
+    // 7-3. total (plan 은 total x)
+    // 7-4. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
     // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <>
-        <Div className={"d-center"}>
-          <Badge
-            badgeContent={index + 1}
-            color={"primary"}
-            showZero={true}
-          />
-        </Div>
-        <PopUp
-          elementId={`popover-${index}`}
-          type={"dropdown"}
-          className={""}
-          position={"bottom"}
-          direction={"left"}
-          contents={({closePopup}) => (
-            <>
-            <Div className={"d-row align-center"} onClick={() => {
+      <PopUp
+        key={index}
+        type={"dropdown"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
               flowDelete(id);
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
             }}>
-              <Icons name={"MdOutlineDelete"} className={"w-24 h-24 dark pointer"} />
-              <p className={"fs-14"}>삭제</p>
-            </Div>
-            <Div className={"d-row align-center"} onClick={() => {
-              SEND.startDt = DATE.startDt;
-              SEND.endDt = DATE.endDt;
-              navigate(SEND.toUpdate, {
-                state: SEND,
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
+            <Div className={"h-10"}/>
+            <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+              Object.assign(SEND, {
+                startDt: DATE.startDt,
+                endDt: DATE.endDt
               });
+              navigate(SEND.toUpdate, {
+                state: SEND
+              });
+              setTimeout(() => {
+                closePopup();
+              }, 1000);
             }}>
-              <Icons name={"MdOutlineEdit"} className={"w-24 h-24 dark pointer"} />
-              <p className={"fs-14"}>수정</p>
-            </Div>
+              <Div className={"fs-14"}>수정</Div>
+            </Icons>
           </>
         )}>
-          {(popTrigger={}) => (
-            <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget)
-              }}
-            />
-          )}
-        </PopUp>
-      </>
+        {(popTrigger={}) => (
+          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}
+          />
+        )}
+      </PopUp>
     );
     // 7-6. table
     const tableFragment = (i) => (
@@ -215,9 +298,8 @@ export const SleepDetailPlan = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -253,9 +335,8 @@ export const SleepDetailPlan = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -294,8 +375,6 @@ export const SleepDetailPlan = () => {
             label={"수면 목표"}
             type={"text"}
             size={"small"}
-            id={"sleep_time"}
-            name={"sleep_time"}
             variant={"outlined"}
             className={"w-60vw"}
             value={OBJECT?.sleep_plan_time}
@@ -311,7 +390,7 @@ export const SleepDetailPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-row mb-20"}>
           {dateSection()}
         </Div>

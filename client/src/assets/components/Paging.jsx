@@ -10,11 +10,11 @@ export const Paging = ({
 }) => {
 
   const pageOption =
-    strings.type === "search" ? (
-      [10]
-    ) : (
-      [5, 10, 20, 30]
-    );
+  strings.type === "find" ? (
+    [10]
+  ) : (
+    [5, 10, 20, 30]
+  );
 
   const defaultNode = () => (
     <TablePagination
@@ -41,6 +41,31 @@ export const Paging = ({
     />
   );
 
+  const findNode = () => (
+    <TablePagination
+      rowsPerPageOptions={pageOption}
+      component={"div"}
+      labelRowsPerPage={""}
+      count={objects?.COUNT.totalCnt}
+      rowsPerPage={objects?.PAGING.limit}
+      page={objects?.PAGING.page}
+      showFirstButton={true}
+      showLastButton={true}
+      onPageChange={(event, newPage) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          page: newPage
+        }));
+      }}
+      onRowsPerPageChange={(event) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          limit: parseInt(event.target.value, 10)
+        }));
+      }}
+    />
+  );
+
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
 
@@ -51,7 +76,12 @@ export const Paging = ({
           null
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -67,7 +97,12 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -83,7 +118,19 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "find") {
+        return (
+          <Div className={"block-wrapper d-row h-40"}>
+            {findNode()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -99,7 +146,12 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -115,7 +167,12 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail" || strings?.type === "save") {
+      else if (strings?.type === "detail") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "save") {
         return (
           null
         );
@@ -125,6 +182,11 @@ export const Paging = ({
     // 6. user
     else if (strings?.part === "user") {
       if (strings?.type === "list" || strings?.type === "diff") {
+        return (
+          null
+        );
+      }
+      else if (strings?.type === "dataset") {
         return (
           null
         );

@@ -214,13 +214,24 @@ export const ExerciseSave = () => {
     }
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -228,12 +239,11 @@ export const ExerciseSave = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -241,6 +251,7 @@ export const ExerciseSave = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -270,18 +281,14 @@ export const ExerciseSave = () => {
     const countSection = () => (
       <PopUp
         type={"alert"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            0이상 10이하의 숫자만 입력하세요.
-          </Div>
+          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
         )}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            id={"sectionCnt"}
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
@@ -306,48 +313,54 @@ export const ExerciseSave = () => {
     // 7-3. total
     const totalSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
-        <TextField
-          select={false}
-          label={"총 볼륨"}
-          size={"small"}
-          value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"}position={"start"}/>
-            )
-          }}
-        />
-        <TextField
-          select={false}
-          label={"총 유산소 시간"}
-          size={"small"}
-          value={OBJECT?.exercise_total_cardio}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
-            )
-          }}
-        />
-        <TextField
-          select={false}
-          label={"체중"}
-          size={"small"}
-          value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
-          variant={"outlined"}
-          className={"w-60vw mb-20"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
-            )
-          }}
-        />
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 볼륨"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"}position={"start"}/>
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 유산소 시간"}
+            size={"small"}
+            value={OBJECT?.exercise_total_cardio}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center"}>
+          <TextField
+            select={false}
+            label={"체중"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adornment name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Div>
       </Card>
     );
     // 7-4. badge
@@ -363,17 +376,16 @@ export const ExerciseSave = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
-            <Div className={"fs-14"}>복사</Div>
-          </Icons>
-          <Icons name={"TbTrash"} className={"w-24 h-24 dark"}>
-            <Div className={"fs-14"}>복사</Div>
-          </Icons>
+            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}>
+              <Div className={"fs-14"}>삭제</Div>
+            </Icons>
           </>
         )}>
         {(popTrigger={}) => (
@@ -398,8 +410,6 @@ export const ExerciseSave = () => {
             type={"text"}
             size={"small"}
             label={"파트"}
-            id={`exercise_part_val-${i}`}
-            name={`exercise_part_val-${i}`}
             variant={"outlined"}
             className={"w-25vw me-10"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
@@ -434,8 +444,6 @@ export const ExerciseSave = () => {
             type={"text"}
             size={"small"}
             label={"타이틀"}
-            id={`exercise_title_val-${i}`}
-            name={`exercise_title_val-${i}`}
             variant={"outlined"}
             className={"w-25vw ms-10"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
@@ -473,8 +481,6 @@ export const ExerciseSave = () => {
             label={"세트"}
             size={"small"}
             variant={"outlined"}
-            id={`exercise_set-${i}`}
-            name={`exercise_set-${i}`}
             className={"w-60vw"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
@@ -504,8 +510,6 @@ export const ExerciseSave = () => {
             label={"횟수"}
             size={"small"}
             variant={"outlined"}
-            id={`exercise_rep-${i}`}
-            name={`exercise_rep-${i}`}
             className={"w-60vw"}
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
@@ -535,8 +539,6 @@ export const ExerciseSave = () => {
             label={"무게"}
             size={"small"}
             variant={"outlined"}
-            id={`exercise_kg-${i}`}
-            name={`exercise_kg-${i}`}
             className={"w-60vw"}
             value={OBJECT?.exercise_section[i]?.exercise_kg}
             InputProps={{
@@ -562,9 +564,8 @@ export const ExerciseSave = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -574,6 +575,10 @@ export const ExerciseSave = () => {
                   ampm={false}
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                  sx={{
+                    width: "60vw",
+                    height: "50vh"
+                  }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
                       ...prev,
@@ -594,8 +599,6 @@ export const ExerciseSave = () => {
                 label={"유산소"}
                 size={"small"}
                 variant={"outlined"}
-                id={`exercise_cardio-${i}`}
-                name={`exercise_cardio-${i}`}
                 className={"w-60vw"}
                 value={OBJECT?.exercise_section[i]?.exercise_cardio}
                 InputProps={{
@@ -615,7 +618,7 @@ export const ExerciseSave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

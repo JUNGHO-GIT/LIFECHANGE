@@ -118,9 +118,11 @@ export const ExerciseListPlan = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.exercise_plan_startDt;
-                  SEND.endDt = item.exercise_plan_endDt;
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.exercise_plan_startDt,
+                    endDt: item.exercise_plan_endDt
+                  });
                   navigate(SEND.toDetail, {
                     state: SEND
                   });
@@ -152,7 +154,7 @@ export const ExerciseListPlan = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min110vw h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

@@ -143,13 +143,11 @@ export const ExerciseDashScatter = () => {
             tick={{fill:"#666", fontSize:14}}
           />
           <Scatter
-            name={"목표"}
             dataKey={"목표"}
             fill={"#8884d8"}
             line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
           />
           <Scatter
-            name={"실제"}
             dataKey={"실제"}
             fill={"#82ca9d"}
             line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
@@ -203,13 +201,11 @@ export const ExerciseDashScatter = () => {
             tick={{fill:"#666", fontSize:14}}
           />
           <Scatter
-            name={"목표"}
             dataKey={"목표"}
             fill={"#8884d8"}
             line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
           />
           <Scatter
-            name={"실제"}
             dataKey={"실제"}
             fill={"#82ca9d"}
             line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
@@ -245,8 +241,6 @@ export const ExerciseDashScatter = () => {
       select={true}
       type={"text"}
       size={"small"}
-      id={"section"}
-      name={"section"}
       className={"w-65 mt-5"}
       variant={"outlined"}
       value={SECTION}

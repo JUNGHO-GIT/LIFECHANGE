@@ -103,8 +103,6 @@ export const SleepDashBar = () => {
       select={true}
       type={"text"}
       size={"small"}
-      id={"section"}
-      name={"section"}
       className={"w-65 mt-5"}
       variant={"outlined"}
       value={SECTION}

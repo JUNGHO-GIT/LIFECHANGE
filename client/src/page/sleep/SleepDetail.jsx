@@ -119,7 +119,6 @@ export const SleepDetail = () => {
     const dateSection = () => (
       <PopUp
         type={"calendar"}
-        className={""}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
@@ -127,12 +126,11 @@ export const SleepDetail = () => {
             <DateCalendar
               timezone={"Asia/Seoul"}
               views={["day"]}
-              className={"ms-n5"}
               readOnly={false}
               value={moment(DATE.startDt)}
               sx={{
-                width: "280px",
-                height: "330px"
+                width: "80vw",
+                height: "60vh"
               }}
               onChange={(date) => {
                 setDATE((prev) => ({
@@ -140,6 +138,7 @@ export const SleepDetail = () => {
                   startDt: moment(date).format("YYYY-MM-DD"),
                   endDt: moment(date).format("YYYY-MM-DD"),
                 }));
+                closePopup();
               }}
             />
           </LocalizationProvider>
@@ -178,9 +177,8 @@ export const SleepDetail = () => {
       <PopUp
         key={index}
         type={"dropdown"}
-        className={""}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
         <Div className={"d-row align-center"} onClick={() => {
@@ -219,9 +217,8 @@ export const SleepDetail = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -257,9 +254,8 @@ export const SleepDetail = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
-            elementId={`popover-${i}`}
+            key={i}
             type={"timePicker"}
-            className={""}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
@@ -297,8 +293,6 @@ export const SleepDetail = () => {
           <TextField
             type={"text"}
             size={"small"}
-            id={"sleep_time"}
-            name={"sleep_time"}
             label={"수면"}
             variant={"outlined"}
             className={"w-60vw"}
@@ -315,7 +309,7 @@ export const SleepDetail = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

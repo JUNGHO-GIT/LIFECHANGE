@@ -1,10 +1,10 @@
 // SleepList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Header, NavBar, Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adornment, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
@@ -119,33 +119,33 @@ export const SleepList = () => {
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                <>
-                <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                  <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.sleep_startDt;
-                    SEND.endDt = item.sleep_endDt;
-                    navigate(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.sleep_startDt?.substring(5, 10)}
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                  <TableCell>
-                    {section.sleep_night}
-                  </TableCell>
-                  <TableCell>
-                    {section.sleep_morning}
-                  </TableCell>
-                  <TableCell>
-                    {section.sleep_time}
-                  </TableCell>
-                </TableRow>
-                </>
-              ))
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.sleep_startDt,
+                    endDt: item.sleep_endDt
+                  });
+                  navigate(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.sleep_startDt?.substring(5, 10)}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_night}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_morning}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_time}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
@@ -153,7 +153,7 @@ export const SleepList = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

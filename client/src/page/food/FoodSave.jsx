@@ -46,7 +46,7 @@ export const FoodSave = () => {
     endDt: "0000-00-00",
     toList:"/food/list",
     toSave:"/food/save",
-    toSearch:"/food/search",
+    toFind:"/food/find",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -272,8 +272,6 @@ export const FoodSave = () => {
                     type={"text"}
                     size={"small"}
                     label={""}
-                    id={"food_part_idx"}
-                    name={"food_part_idx"}
                     variant={"outlined"}
                     value={item.food_part_idx}
                     defaultValue={0}
@@ -310,8 +308,6 @@ export const FoodSave = () => {
                     label={""}
                     type={"text"}
                     variant={"outlined"}
-                    id={"food_count"}
-                    name={"food_count"}
                     size={"small"}
                     value={`${numeral(item.food_count).format("0,0")}`}
                     InputProps={{
@@ -367,7 +363,7 @@ export const FoodSave = () => {
     );
     // 7-7. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min100vh"}>
+      <Div className={"block-wrapper h-min70vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

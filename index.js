@@ -18,6 +18,7 @@ import {router as exercisePlanRouter} from "./src/router/exercise/exercisePlanRo
 
 import {router as foodDashRouter} from "./src/router/food/foodDashRouter.js";
 import {router as foodDiffRouter} from "./src/router/food/foodDiffRouter.js";
+import {router as foodFindRouter} from "./src/router/food/foodFindRouter.js";
 import {router as foodRouter} from "./src/router/food/foodRouter.js";
 import {router as foodPlanRouter} from "./src/router/food/foodPlanRouter.js";
 
@@ -101,6 +102,7 @@ app.use("/exercise", exercisePlanRouter);
 
 app.use("/food", foodDashRouter);
 app.use("/food", foodDiffRouter);
+app.use("/food", foodFindRouter);
 app.use("/food", foodRouter);
 app.use("/food", foodPlanRouter);
 
