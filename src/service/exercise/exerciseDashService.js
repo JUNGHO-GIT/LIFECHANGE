@@ -286,8 +286,8 @@ export const avgMonth = async (
     return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
   });
 
-  let sumExerciseVolume = Array(5).fill(0);
-  let sumExerciseCardio = Array(5).fill(0);
+  let sumVolume = Array(5).fill(0);
+  let sumCardio = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResultVolume = [];
@@ -311,7 +311,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumExerciseVolume[weekNum] += intFormat(item.exercise_total_volume);
+      sumVolume[weekNum] += intFormat(item.exercise_total_volume);
       countRecords[weekNum]++;
     }
   });
@@ -323,7 +323,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumExerciseCardio[weekNum] += intFormat(item.exercise_total_cardio);
+      sumCardio[weekNum] += intFormat(item.exercise_total_cardio);
       countRecords[weekNum]++;
     }
   });
@@ -331,11 +331,11 @@ export const avgMonth = async (
   data.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
-      볼륨: intFormat(sumExerciseVolume[index] / countRecords[index])
+      볼륨: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
-      시간: intFormat(sumExerciseCardio[index] / countRecords[index])
+      시간: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 
@@ -357,8 +357,8 @@ export const avgYear = async (
     return `${i + 1}월`;
   });
 
-  let sumExerciseVolume = Array(12).fill(0);
-  let sumExerciseCardio = Array(12).fill(0);
+  let sumVolume = Array(12).fill(0);
+  let sumCardio = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
   let findResultVolume = [];
@@ -379,25 +379,25 @@ export const avgYear = async (
   findResultVolume.forEach((item) => {
     const exerciseDate = new Date(item.exercise_startDt);
     const monthNum = exerciseDate.getMonth();
-    sumExerciseVolume[monthNum] += intFormat(item.exercise_total_volume);
+    sumVolume[monthNum] += intFormat(item.exercise_total_volume);
     countRecords[monthNum]++;
   });
   // cardio
   findResultCardio.forEach((item) => {
     const exerciseDate = new Date(item.exercise_startDt);
     const monthNum = exerciseDate.getMonth();
-    sumExerciseCardio[monthNum] += intFormat(item.exercise_total_cardio);
+    sumCardio[monthNum] += intFormat(item.exercise_total_cardio);
     countRecords[monthNum]++;
   });
 
   data.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
-      볼륨: intFormat(sumExerciseVolume[index] / countRecords[index])
+      볼륨: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
-      시간: intFormat(sumExerciseCardio[index] / countRecords[index])
+      시간: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 

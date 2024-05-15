@@ -278,8 +278,8 @@ export const avgMonth = async (
     return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
   });
 
-  let sumMoneyIn = Array(5).fill(0);
-  let sumMoneyOut = Array(5).fill(0);
+  let sumIn = Array(5).fill(0);
+  let sumOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResultIn = [];
@@ -303,7 +303,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumMoneyIn[weekNum] += intFormat(item.money_total_in);
+      sumIn[weekNum] += intFormat(item.money_total_in);
       countRecords[weekNum]++;
     }
   });
@@ -314,7 +314,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumMoneyOut[weekNum] += intFormat(item.money_total_out);
+      sumOut[weekNum] += intFormat(item.money_total_out);
       countRecords[weekNum]++;
     }
   });
@@ -322,11 +322,11 @@ export const avgMonth = async (
   data.forEach((data, index) => {
     finalResultIn.push({
       name: data,
-      수입: intFormat(sumMoneyIn[index] / countRecords[index])
+      수입: intFormat(sumIn[index] / countRecords[index])
     });
     finalResultOut.push({
       name: data,
-      지출: intFormat(sumMoneyOut[index] / countRecords[index])
+      지출: intFormat(sumOut[index] / countRecords[index])
     });
   });
 
@@ -348,8 +348,8 @@ export const avgYear = async (
     return `${i + 1}월`;
   });
 
-  let sumMoneyIn = Array(5).fill(0);
-  let sumMoneyOut = Array(5).fill(0);
+  let sumIn = Array(5).fill(0);
+  let sumOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResultIn = [];
@@ -368,27 +368,27 @@ export const avgYear = async (
 
   // in
   findResultIn.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
-    const monthNum = foodDate.getMonth();
-    sumMoneyIn[monthNum] += intFormat(item.money_total_in);
+    const moneyDate = new Date(item.money_startDt);
+    const monthNum = moneyDate.getMonth();
+    sumIn[monthNum] += intFormat(item.money_total_in);
     countRecords[monthNum]++;
   });
   // out
   findResultOut.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
-    const monthNum = foodDate.getMonth();
-    sumMoneyOut[monthNum] += intFormat(item.money_total_out);
+    const moneyDate = new Date(item.money_startDt);
+    const monthNum = moneyDate.getMonth();
+    sumOut[monthNum] += intFormat(item.money_total_out);
     countRecords[monthNum]++;
   });
 
   data.forEach((data, index) => {
     finalResultIn.push({
       name: data,
-      수입: intFormat(sumMoneyIn[index] / countRecords[index])
+      수입: intFormat(sumIn[index] / countRecords[index])
     });
     finalResultOut.push({
       name: data,
-      지출: intFormat(sumMoneyOut[index] / countRecords[index])
+      지출: intFormat(sumOut[index] / countRecords[index])
     });
   });
 

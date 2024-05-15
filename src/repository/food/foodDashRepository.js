@@ -368,7 +368,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
   listKcal: async (
     user_id_param, startDt_param, endDt_param

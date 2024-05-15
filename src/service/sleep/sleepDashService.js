@@ -127,9 +127,9 @@ export const avgMonth = async (
     return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
   });
 
-  let sumSleepStart = Array(5).fill(0);
-  let sumSleepEnd = Array(5).fill(0);
-  let sumSleepTime = Array(5).fill(0);
+  let sumStart = Array(5).fill(0);
+  let sumEnd = Array(5).fill(0);
+  let sumTime = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResult = [];
@@ -144,9 +144,9 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumSleepStart[weekNum] += timeFormat(item.sleep_section[0]?.sleep_night);
-      sumSleepEnd[weekNum] += timeFormat(item.sleep_section[0]?.sleep_morning);
-      sumSleepTime[weekNum] += timeFormat(item.sleep_section[0]?.sleep_time);
+      sumStart[weekNum] += timeFormat(item.sleep_section[0]?.sleep_night);
+      sumEnd[weekNum] += timeFormat(item.sleep_section[0]?.sleep_morning);
+      sumTime[weekNum] += timeFormat(item.sleep_section[0]?.sleep_time);
       countRecords[weekNum]++;
     }
   });
@@ -154,9 +154,9 @@ export const avgMonth = async (
   data.forEach((data, index) => {
     finalResult.push({
       name: data,
-      취침: timeFormat(sumSleepStart[index] / countRecords[index]),
-      기상: timeFormat(sumSleepEnd[index] / countRecords[index]),
-      수면: timeFormat(sumSleepTime[index] / countRecords[index]),
+      취침: timeFormat(sumStart[index] / countRecords[index]),
+      기상: timeFormat(sumEnd[index] / countRecords[index]),
+      수면: timeFormat(sumTime[index] / countRecords[index]),
     });
   });
 
@@ -175,9 +175,9 @@ export const avgYear = async (
     return `${i + 1}월`;
   });
 
-  let sumSleepStart = Array(12).fill(0);
-  let sumSleepEnd = Array(12).fill(0);
-  let sumSleepTime = Array(12).fill(0);
+  let sumStart = Array(12).fill(0);
+  let sumEnd = Array(12).fill(0);
+  let sumTime = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
   let findResult = [];
@@ -189,18 +189,18 @@ export const avgYear = async (
   findResult.forEach((element) => {
     const sleepDate = new Date(element.sleep_startDt);
     const monthNum = sleepDate.getMonth();
-    sumSleepStart[monthNum] += timeFormat(element.sleep_section[0]?.sleep_night);
-    sumSleepEnd[monthNum] += timeFormat(element.sleep_section[0]?.sleep_morning);
-    sumSleepTime[monthNum] += timeFormat(element.sleep_section[0]?.sleep_time);
+    sumStart[monthNum] += timeFormat(element.sleep_section[0]?.sleep_night);
+    sumEnd[monthNum] += timeFormat(element.sleep_section[0]?.sleep_morning);
+    sumTime[monthNum] += timeFormat(element.sleep_section[0]?.sleep_time);
     countRecords[monthNum]++;
   });
 
   data.forEach((data, index) => {
     finalResult.push({
       name: data,
-      취침: timeFormat(sumSleepStart[index] / countRecords[index]),
-      기상: timeFormat(sumSleepEnd[index] / countRecords[index]),
-      수면: timeFormat(sumSleepTime[index] / countRecords[index]),
+      취침: timeFormat(sumStart[index] / countRecords[index]),
+      기상: timeFormat(sumEnd[index] / countRecords[index]),
+      수면: timeFormat(sumTime[index] / countRecords[index]),
     });
   });
 

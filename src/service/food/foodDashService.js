@@ -283,7 +283,7 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. dash (avg-month) -------------------------------------------------------------------------->
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
   user_id_param
 ) => {
@@ -316,6 +316,7 @@ export const avgMonth = async (
     user_id_param, startDt, endDt
   );
 
+  // kcal
   findResultKcal.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
     const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
@@ -327,6 +328,7 @@ export const avgMonth = async (
     }
   });
 
+  // carb, protein, fat
   findResultNut.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
     const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
@@ -394,24 +396,18 @@ export const avgYear = async (
   // kcal
   findResultKcal.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
-    const diffTime = Math.abs(foodDate.getTime() - curMonthStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays >= 0 && diffDays < curMonthEnd.date()) {
-      sumKcal[diffDays] += intFormat(item.food_total_kcal);
-      countRecords[diffDays]++;
-    }
+    const monthNum = foodDate.getMonth();
+    sumKcal[monthNum] += intFormat(item.food_total_kcal);
+    countRecords[monthNum]++;
   });
   // carb, protein, fat
   findResultNut.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
-    const diffTime = Math.abs(foodDate.getTime() - curMonthStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays >= 0 && diffDays < curMonthEnd.date()) {
-      sumCarb[diffDays] += intFormat(item.food_total_carb);
-      sumProtein[diffDays] += intFormat(item.food_total_protein);
-      sumFat[diffDays] += intFormat(item.food_total_fat);
-      countRecords[diffDays]++;
-    }
+    const monthNum = foodDate.getMonth();
+    sumCarb[monthNum] += intFormat(item.food_total_carb);
+    sumProtein[monthNum] += intFormat(item.food_total_protein);
+    sumFat[monthNum] += intFormat(item.food_total_fat);
+    countRecords[monthNum]++;
   });
 
   data.forEach((data, index) => {
