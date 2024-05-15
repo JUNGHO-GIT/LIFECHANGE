@@ -344,7 +344,7 @@ export const CalendarDetail = () => {
           <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
             flowDelete(id, sectionId);
           }}>
-            <Div className={"fsr-0-8"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>삭제</Div>
           </Icons>
         )}>
         {(popTrigger={}) => (

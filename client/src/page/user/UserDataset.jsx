@@ -266,7 +266,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <Div className={"fsr-1"}>Section</Div>
+                    <Div className={"fs-1-0rem"}>Section</Div>
                   </Div>
                 </TableCell>
               </TableRow>
@@ -294,7 +294,7 @@ export const UserDataset = () => {
                 >
                   <TableCell>
                     <Div className={"dataset-title"}>
-                      <Div className={"fsr-1 ms-0"}>{item}</Div>
+                      <Div className={"fs-1-0rem ms-0"}>{item}</Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -313,7 +313,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <Div className={"fsr-1 ms-auto"}>Part</Div>
+                    <Div className={"fs-1-0rem ms-auto"}>Part</Div>
                     <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("part");
                     }} />
@@ -340,7 +340,7 @@ export const UserDataset = () => {
                         partIdx: index
                       }));
                     }}>
-                      <Div className={"fsr-1 ms-auto"}>{item[`${dataType}_part`]}</Div>
+                      <Div className={"fs-1-0rem ms-auto"}>{item[`${dataType}_part`]}</Div>
                       <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
                         handlerRename("part", index);
                       }} />
@@ -365,7 +365,7 @@ export const UserDataset = () => {
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
-                    <Div className={"fsr-1 ms-auto"}>Title</Div>
+                    <Div className={"fs-1-0rem ms-auto"}>Title</Div>
                     <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
                       handlerAdd("title");
                     }} />
@@ -393,7 +393,7 @@ export const UserDataset = () => {
                         titleIdx: index
                       }));
                     }}>
-                      <Div className={"fsr-1 ms-auto"}>
+                      <Div className={"fs-1-0rem ms-auto"}>
                         {item}
                       </Div>
                       <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {

@@ -8679,26 +8679,26 @@
 .fs-100 {font-size: 100px !important;}
 
 /** 7-2. font (rem) *******************************************************************************/
-.fsr-0-1 {font-size: 0.1rem !important;}
-.fsr-0-2 {font-size: 0.2rem !important;}
-.fsr-0-3 {font-size: 0.3rem !important;}
-.fsr-0-4 {font-size: 0.4rem !important;}
-.fsr-0-5 {font-size: 0.5rem !important;}
-.fsr-0-6 {font-size: 0.6rem !important;}
-.fsr-0-7 {font-size: 0.7rem !important;}
-.fsr-0-8 {font-size: 0.8rem !important;}
-.fsr-0-9 {font-size: 0.9rem !important;}
-.fsr-1 {font-size: 1rem !important;}
-.fsr-1-1 {font-size: 1.1rem !important;}
-.fsr-1-2 {font-size: 1.2rem !important;}
-.fsr-1-3 {font-size: 1.3rem !important;}
-.fsr-1-4 {font-size: 1.4rem !important;}
-.fsr-1-5 {font-size: 1.5rem !important;}
-.fsr-1-6 {font-size: 1.6rem !important;}
-.fsr-1-7 {font-size: 1.7rem !important;}
-.fsr-1-8 {font-size: 1.8rem !important;}
-.fsr-1-9 {font-size: 1.9rem !important;}
-.fsr-2 {font-size: 2rem !important;}
+.fs-0-1rem {font-size: 0.1rem !important;}
+.fs-0-2rem {font-size: 0.2rem !important;}
+.fs-0-3rem {font-size: 0.3rem !important;}
+.fs-0-4rem {font-size: 0.4rem !important;}
+.fs-0-5rem {font-size: 0.5rem !important;}
+.fs-0-6rem {font-size: 0.6rem !important;}
+.fs-0-7rem {font-size: 0.7rem !important;}
+.fs-0-8rem {font-size: 0.8rem !important;}
+.fs-0-9rem {font-size: 0.9rem !important;}
+.fs-1-0rem {font-size: 1.0rem !important;}
+.fs-1-1rem {font-size: 1.1rem !important;}
+.fs-1-2rem {font-size: 1.2rem !important;}
+.fs-1-3rem {font-size: 1.3rem !important;}
+.fs-1-4rem {font-size: 1.4rem !important;}
+.fs-1-5rem {font-size: 1.5rem !important;}
+.fs-1-6rem {font-size: 1.6rem !important;}
+.fs-1-7rem {font-size: 1.7rem !important;}
+.fs-1-8rem {font-size: 1.8rem !important;}
+.fs-1-9rem {font-size: 1.9rem !important;}
+.fs-2-0rem {font-size: 2.0rem !important;}
 
 /** 7-3. font (weight) ****************************************************************************/
 .fw-100 {font-weight: 100 !important;}

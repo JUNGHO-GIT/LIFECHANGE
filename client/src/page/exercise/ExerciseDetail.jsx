@@ -293,7 +293,7 @@ export const ExerciseDetail = () => {
                 closePopup();
               }, 1000);
             }}>
-              <Div className={"fsr-0-8"}>삭제</Div>
+              <Div className={"fs-0-8rem"}>삭제</Div>
             </Icons>
             <Div className={"h-10"}/>
             <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
@@ -308,7 +308,7 @@ export const ExerciseDetail = () => {
                 closePopup();
               }, 1000);
             }}>
-              <Div className={"fsr-0-8"}>수정</Div>
+              <Div className={"fs-0-8rem"}>수정</Div>
             </Icons>
           </>
         )}>

@@ -118,7 +118,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           />
         </ComposedChart>
@@ -177,7 +177,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           />
         </ComposedChart>
@@ -232,7 +232,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           />
         </ComposedChart>
@@ -291,7 +291,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           />
         </ComposedChart>
@@ -352,7 +352,7 @@ export const FoodDashAvg = () => {
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
-          <Div className={"m-auto fsr-1"}>칼로리/영양소 평균</Div>
+          <Div className={"m-auto fs-1-0rem"}>칼로리/영양소 평균</Div>
           <Div className={"ms-auto"}>{dropdownSection2()}</Div>
         </Div>
         <Div className={"d-column"}>

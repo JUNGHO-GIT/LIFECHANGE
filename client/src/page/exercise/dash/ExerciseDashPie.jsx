@@ -109,7 +109,7 @@ export const ExerciseDashPie = () => {
 
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"dash-pie-text"}>
+      className={"fs-0-6rem"}>
         {`${OBJECT_PART_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
@@ -126,7 +126,7 @@ export const ExerciseDashPie = () => {
 
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"dash-pie-text"}>
+      className={"fs-0-6rem"}>
         {`${OBJECT_TITLE_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
@@ -143,7 +143,7 @@ export const ExerciseDashPie = () => {
 
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"dash-pie-text"}>
+      className={"fs-0-6rem"}>
         {`${OBJECT_PART_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
@@ -160,7 +160,7 @@ export const ExerciseDashPie = () => {
 
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"dash-pie-text"}>
+      className={"fs-0-6rem"}>
         {`${OBJECT_TITLE_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
@@ -329,7 +329,7 @@ export const ExerciseDashPie = () => {
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
-        ["part", "title"]?.map((key, index) => (
+          ["part", "title"]?.map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {
@@ -355,7 +355,7 @@ export const ExerciseDashPie = () => {
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
-          <Div className={"m-auto fsr-1"}>부위/운동 비율</Div>
+          <Div className={"m-auto fs-1-0rem"}>부위/운동 비율</Div>
           <Div className={"ms-auto"}>{dropdownSection2()}</Div>
         </Div>
         <Div className={"d-column"}>

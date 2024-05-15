@@ -82,7 +82,7 @@ export const UserLogin = () => {
     const tableSection = () => (
       <Div className={"block-wrapper d-center h-min70vh"}>
         <Div className={"d-center p-10"}>
-          <Div className={"fsr-1-5"}>Login</Div>
+          <Div className={"fs-1-0rem-5"}>Login</Div>
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

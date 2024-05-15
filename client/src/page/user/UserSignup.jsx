@@ -90,7 +90,7 @@ export const UserSignup = () => {
     const tableSection = () => (
       <Div className={"block-wrapper d-center h-min70vh"}>
         <Div className={"d-center p-10"}>
-          <Div className={"fsr-1-5"}>SignUp</Div>
+          <Div className={"fs-1-0rem-5"}>SignUp</Div>
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

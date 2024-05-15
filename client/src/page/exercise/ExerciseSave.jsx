@@ -400,7 +400,7 @@ export const ExerciseSave = () => {
               handlerDelete(index);
               closePopup();
             }}>
-              <Div className={"fsr-0-8"}>삭제</Div>
+              <Div className={"fs-0-8rem"}>삭제</Div>
             </Icons>
           </>
         )}>

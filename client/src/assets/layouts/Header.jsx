@@ -44,7 +44,7 @@ export const Header = () => {
             closePopup();
           }, 1000);
         }}>
-          <Div className={"fsr-0-8"}>Login</Div>
+          <Div className={"fs-0-8rem"}>Login</Div>
         </Icons>
         <Div className={"h-10"}/>
         <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} onClick={() => {
@@ -53,7 +53,7 @@ export const Header = () => {
             closePopup();
           }, 1000);
         }}>
-          <Div className={"fsr-0-8"}>SignUp</Div>
+          <Div className={"fs-0-8rem"}>SignUp</Div>
         </Icons>
         </>
       )}>
