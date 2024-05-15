@@ -5,8 +5,6 @@ import {moment} from "../../import/ImportLibs.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Button, Paper, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis.jsx";
-import {newDate, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, curYearStart, curYearEnd}
-from "../../import/ImportLogics.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Btn = ({
@@ -16,23 +14,25 @@ export const Btn = ({
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
     className={"success-btn"} onClick={() => {
-      (objects?.FILTER && objects?.FILTER.type !== "day") && (
+      (objects?.FILTER) && (
         functions?.setFILTER((prev) => ({
           ...prev,
           type: "day",
         }))
       );
-      (objects?.PAGING && objects?.PAGING.page !== 1) && (
+      (objects?.PAGING) && (
         functions?.setPAGING((prev) => ({
           ...prev,
           page: 1,
         }))
       );
-      functions?.setDATE((prev) => ({
-        ...prev,
-        startDt: koreanDate,
-        endDt: koreanDate,
-      }));
+      (objects?.DATE) && (
+        functions?.setDATE((prev) => ({
+          ...prev,
+          startDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+          endDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+        }))
+      );
     }}>
       Today
     </Button>
@@ -159,67 +159,67 @@ export const Btn = ({
             timezone={"Asia/Seoul"}
             views={["year", "day"]}
             readOnly={false}
-            defaultValue={moment(koreanDate)}
+            defaultValue={moment(objects?.DATE.startDt)}
             sx={{
               width: "80vw",
               height: "60vh"
             }}
             onChange={(date) => {
-              (objects?.FILTER && objects?.FILTER.type !== "day") && (
+              (objects?.FILTER) && (
                 functions?.setFILTER((prev) => ({
                   ...prev,
                   type: "day",
                 }))
               );
-              (objects?.PAGING && objects?.PAGING.page !== 1) && (
+              (objects?.PAGING) && (
                 functions?.setPAGING((prev) => ({
                   ...prev,
                   page: 1,
                 }))
               );
-              functions?.setDATE((prev) => ({
-                ...prev,
-                startDt: koreanDate,
-                endDt: koreanDate,
-              }));
+              (objects?.DATE) && (
+                functions?.setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).format("YYYY-MM-DD"),
+                  endDt: moment(date).format("YYYY-MM-DD")
+                }))
+              );
             }}
             onMonthChange={(date) => {
-              (objects?.FILTER && objects?.FILTER.type !== "month") && (
+              (objects?.FILTER) && (
                 functions?.setFILTER((prev) => ({
                   ...prev,
                   type: "month",
                 }))
               );
-              (objects?.PAGING && objects?.PAGING.page !== 1) && (
-                functions?.setPAGING((prev) => ({
+              (objects?.DATE) && (
+                functions?.setDATE((prev) => ({
                   ...prev,
-                  page: 1,
+                  startDt: moment(date).startOf("month").format("YYYY-MM-DD"),
+                  endDt: moment(date).endOf("month").format("YYYY-MM-DD")
                 }))
               );
-              functions?.setDATE((prev) => ({
-                ...prev,
-                startDt: curMonthStart,
-                endDt: curMonthEnd
-              }));
             }}
             onYearChange={(date) => {
-              (objects?.FILTER && objects?.FILTER.type !== "year") && (
+              (objects?.FILTER) && (
                 functions?.setFILTER((prev) => ({
                   ...prev,
                   type: "year",
                 }))
               );
-              (objects?.PAGING && objects?.PAGING.page !== 1) && (
+              (objects?.PAGING) && (
                 functions?.setPAGING((prev) => ({
                   ...prev,
                   page: 1,
                 }))
               );
-              functions?.setDATE((prev) => ({
-                ...prev,
-                startDt: curYearStart,
-                endDt: curYearEnd
-              }));
+              (objects?.DATE) && (
+                functions?.setDATE((prev) => ({
+                  ...prev,
+                  startDt: moment(date).startOf("year").format("YYYY-MM-DD"),
+                  endDt: moment(date).endOf("year").format("YYYY-MM-DD")
+                }))
+              );
             }}
           />
         </LocalizationProvider>
