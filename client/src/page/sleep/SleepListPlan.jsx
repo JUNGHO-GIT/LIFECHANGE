@@ -1,12 +1,13 @@
 // SleepListPlan.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
+import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListPlan = () => {
@@ -113,7 +114,7 @@ export const SleepListPlan = () => {
           </TableHead>
           <TableBody>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={4}>
                 데이터가 없습니다.
               </TableCell>
             </TableRow>
