@@ -5,6 +5,7 @@ import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
+import {logo2, logo3} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -37,23 +38,23 @@ export const Header = () => {
       direction={"left"}
       contents={({closePopup}) => (
         <>
-          <Icons name={"TbLogin"} className={"w-24 h-24 dark"} onClick={() => {
-            navigate("/user/login");
-            setTimeout(() => {
-              closePopup();
-            }, 1000);
-          }}>
-            <Div className={"fsr-0-8"}>Login</Div>
-          </Icons>
-          <Div className={"h-10"}/>
-          <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} onClick={() => {
-            navigate("/user/signup");
-            setTimeout(() => {
-              closePopup();
-            }, 1000);
-          }}>
-            <Div className={"fsr-0-8"}>Sign Up</Div>
-          </Icons>
+        <Icons name={"TbLogin"} className={"w-24 h-24 dark"} onClick={() => {
+          navigate("/user/login");
+          setTimeout(() => {
+            closePopup();
+          }, 1000);
+        }}>
+          <Div className={"fsr-0-8"}>Login</Div>
+        </Icons>
+        <Div className={"h-10"}/>
+        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} onClick={() => {
+          navigate("/user/signup");
+          setTimeout(() => {
+            closePopup();
+          }, 1000);
+        }}>
+          <Div className={"fsr-0-8"}>SignUp</Div>
+        </Icons>
         </>
       )}>
       {(popTrigger={}) => (
@@ -69,13 +70,9 @@ export const Header = () => {
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
-      <Div className={"d-center"}>
-        {btnSideBar()}
-      </Div>
-      <Div className={"d-center ms-auto"}>
-        <Div className={"fsr-1-4"}>
-          {moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}
-        </Div>
+      <Div className={"d-center ms-0"}>
+        <img src={logo2} className={"w-max9vw h-max9vh"} alt="logo2" />
+        <img src={logo3} className={"w-max48vw h-max48vh"} alt="logo3" />
       </Div>
       <Div className={"d-center ms-auto"}>
         {btnUser()}

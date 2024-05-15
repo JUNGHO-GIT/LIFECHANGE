@@ -14,41 +14,61 @@ export const TabBar = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [valueDefault, setValueDefault] = useState("dash");
-  const [valueCalendar, setValueCalendar] = useState("list");
+  const [value, setValue] = useState("dash");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (partStr === "calendar") {
-      setValueCalendar(typeStr);
+    if (planStr !== "plan") {
+      if (typeStr === "dash") {
+        setValue("dash");
+      }
+      else if (typeStr === "diff") {
+        setValue("diff");
+      }
+      else if (typeStr === "list") {
+        setValue("list");
+      }
+      else if (typeStr === "save") {
+        setValue("save");
+      }
+      else if (typeStr === "detail") {
+        setValue("detail");
+      }
     }
     else {
-      setValueDefault(typeStr);
+      if (typeStr === "list") {
+        setValue("list/plan");
+      }
+      else if (typeStr === "save") {
+        setValue("save/plan");
+      }
     }
-  }, [partStr]);
+  }, [typeStr, planStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row w-100vw h-7vh"}>
-      <Tabs value={valueDefault}
+      <Tabs value={value}
         variant={"scrollable"}
         scrollButtons={"auto"}
         allowScrollButtonsMobile={true}
+        selectionFollowsFocus={true}
         sx={{
           [`& .${tabsClasses.scrollButtons}`]: {
             '&.Mui-disabled': { opacity: 0.3 },
           },
         }}
         onChange={(event, newValue) => {
-          setValueDefault(newValue);
+          setValue(newValue);
         }}>
         <Tab
           label={"통계"}
           value={"dash"}
           onClick={() => {
-            setValueDefault("dash");
+            setValue("dash");
             navigate(`${partStr}/dash`);
           }}
         />
@@ -56,7 +76,7 @@ export const TabBar = () => {
           label={"비교"}
           value={"diff"}
           onClick={() => {
-            setValueDefault("diff");
+            setValue("diff");
             navigate(`${partStr}/diff`);
           }}
         />
@@ -64,7 +84,7 @@ export const TabBar = () => {
           label={"리스트"}
           value={"list"}
           onClick={() => {
-            setValueDefault("list");
+            setValue("list");
             navigate(`${partStr}/list`);
           }}
         />
@@ -72,7 +92,7 @@ export const TabBar = () => {
           label={"저장"}
           value={"save"}
           onClick={() => {
-            setValueDefault("save");
+            setValue("save");
             navigate(`${partStr}/save`);
           }}
         />
@@ -80,7 +100,7 @@ export const TabBar = () => {
           label={"리스트(계획)"}
           value={"list/plan"}
           onClick={() => {
-            setValueDefault("list/plan");
+            setValue("list/plan");
             navigate(`${partStr}/list/plan`);
           }}
         />
@@ -88,30 +108,8 @@ export const TabBar = () => {
           label={"저장(계획)"}
           value={"save/plan"}
           onClick={() => {
-            setValueDefault("save/plan");
+            setValue("save/plan");
             navigate(`${partStr}/save/plan`);
-          }}
-        />
-      </Tabs>
-    </Div>
-  );
-
-  // 6. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => (
-    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
-      <Tabs value={valueCalendar}
-        variant={"scrollable"}
-        scrollButtons={"auto"}
-        allowScrollButtonsMobile={true}
-        onChange={(event, newValue) => {
-          setValueCalendar(newValue);
-        }}>
-        <Tab
-          label={"달력"}
-          value={"list"}
-          onClick={() => {
-            setValueCalendar("list");
-            navigate(`${partStr}/list`);
           }}
         />
       </Tabs>
@@ -120,8 +118,13 @@ export const TabBar = () => {
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-14vh border-bottom"}>
-      {partStr === "calendar" ? calendarNode() : defaultNode()}
+    <Paper className={"flex-wrapper p-sticky top-14vh border-top border-bottom"}>
+      {partStr === "exercise" || partStr === "food" ||
+        partStr === "money" || partStr === "sleep" ? (
+        defaultNode()
+      ) : (
+        null
+      )}
     </Paper>
   );
 

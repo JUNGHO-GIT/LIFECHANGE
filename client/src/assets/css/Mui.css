@@ -35,3 +35,20 @@
 [class$="MuiTab-root"] {
   min-width: 0px !important;
 }
+
+.MuiTab-root.Mui-selected {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+}
+.MuiBottomNavigationAction-root.Mui-selected {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+}
+.MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+}
+.MuiFormControlLabel-root {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}

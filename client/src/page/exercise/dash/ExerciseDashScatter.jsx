@@ -70,7 +70,7 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -110,8 +110,11 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -124,7 +127,7 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -168,8 +171,11 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -182,7 +188,7 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -226,8 +232,11 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -257,7 +266,7 @@ export const ExerciseDashScatter = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>몸무게 목표/실제</Div>

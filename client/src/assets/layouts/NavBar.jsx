@@ -13,6 +13,12 @@ export const NavBar = () => {
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
   const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const part = partStr.charAt(0).toUpperCase() + partStr.slice(1);
+  const type = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
+  const plan = planStr.charAt(0).toUpperCase() + planStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isActive, setIsActive] = useState(PATH);
@@ -35,22 +41,22 @@ export const NavBar = () => {
   const makeIcon = (label) => {
     if (percent?.[`${label}`] < 2) {
       return (
-        <img src={smile1} className={"w-max5vw h-max5vh"} alt="Icon 1" />
+        <img src={smile1} className={"w-max5vw h-max5vh"} alt="smile1" />
       );
     }
     else if (percent?.[`${label}`] < 3) {
       return (
-        <img src={smile2} className={"w-max5vw h-max5vh"} alt="Icon 2" />
+        <img src={smile2} className={"w-max5vw h-max5vh"} alt="smile2" />
       );
     }
     else if (percent?.[`${label}`] < 4) {
       return (
-        <img src={smile3} className={"w-max5vw h-max5vh"} alt="Icon 3" />
+        <img src={smile3} className={"w-max5vw h-max5vh"} alt="smile3" />
       );
     }
     else {
       return (
-        <img src={smile4} className={"w-max5vw h-max5vh"} alt="Icon 4" />
+        <img src={smile4} className={"w-max5vw h-max5vh"} alt="smile4" />
       );
     }
   };
@@ -59,19 +65,14 @@ export const NavBar = () => {
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
       <Div className={"d-center"}>
-        {!preFix ? (
-          <Div className={"fsr-1-4 fw-bold"}>Total / {subFix}</Div>
-        ) : (
-          <Div className={"fsr-1-4 fw-bold"}>{preFix} / {subFix}</Div>
-        )}
+        <Div className={"fsr-1-2 fw-bold"}>
+          {part}
+          {type ? ` / ${type}` : ""}
+          {plan ? ` / ${plan}` : ""}
+        </Div>
       </Div>
       <Div className={"d-center ms-auto"}>
-        <Div className={"fsr-1"}>Total</Div>
-        <Div className={"w-5"}></Div>
         <Div className={"d-center"}>{makeIcon("total")}</Div>
-      </Div>
-      <Div className={"d-center ms-auto"}>
-        <Div className={"fsr-1"}>{`${preFix}`}</Div>
         <Div className={"w-5"}></Div>
         <Div className={"d-center"}>{makeIcon("sub")}</Div>
       </Div>
@@ -80,7 +81,7 @@ export const NavBar = () => {
 
   // 7. navbar ------------------------------------------------------------------------------------>
   const navbarNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-7vh border-bottom"}>
+    <Paper className={"flex-wrapper p-sticky top-7vh"}>
       {defaultNode()}
     </Paper>
   );

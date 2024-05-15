@@ -325,12 +325,12 @@ export const ExerciseDashPie = () => {
     const dropdownSection2 = () => (
       <PopUp
         elementId={"popover"}
-        type={"dropdown"}
+        type={"dash"}
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
         ["part", "title"]?.map((key, index) => (
-            <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {
                   setLINE("");
@@ -352,7 +352,7 @@ export const ExerciseDashPie = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>부위/운동 비율</Div>

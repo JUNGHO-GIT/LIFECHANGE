@@ -102,8 +102,8 @@ export const ExerciseListPlan = () => {
   const tableNode = () => {
     // 7-6-1. table
     const tableFragmentEmpty = () => (
-      <TableContainer key={"empty"}>
-        <Table className={"border"}>
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -125,8 +125,8 @@ export const ExerciseListPlan = () => {
     );
     // 7-6-2. table
     const tableFragment = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>

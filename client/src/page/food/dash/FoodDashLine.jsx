@@ -112,8 +112,11 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -166,8 +169,11 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -216,8 +222,11 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -270,8 +279,11 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -302,12 +314,12 @@ export const FoodDashLine = () => {
     const dropdownSection2 = () => (
       <PopUp
         elementId={"popover"}
-        type={"dropdown"}
+        type={"dash"}
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
         ["kcal", "nut"]?.map((key, index) => (
-          <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
                 setLINE("");
@@ -329,7 +341,7 @@ export const FoodDashLine = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>칼로리/영양소 추이</Div>

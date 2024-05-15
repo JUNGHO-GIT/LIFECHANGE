@@ -261,7 +261,7 @@ export const UserDataset = () => {
     const tableFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
         <TableContainer className={"over-x-hidden"}>
-          <Table className={"border"}>
+          <Table>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
@@ -308,7 +308,7 @@ export const UserDataset = () => {
     const tableFragment2 = (i) => (
       <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
         <TableContainer className={"over-x-hidden"}>
-          <Table className={"border"}>
+          <Table>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
@@ -360,7 +360,7 @@ export const UserDataset = () => {
     const tableFragment3 = (i) => (
       <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
         <TableContainer className={"over-x-hidden"}>
-          <Table className={"border"}>
+          <Table>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>

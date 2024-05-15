@@ -21,14 +21,14 @@
   font-size: 0.600rem !important;
 };
 .dataset-title:hover {
-  color: #164a60 !important;
+  color: #006ab3 !important;
 }
 .dataset-rename {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer!important;
-  color: #164a60 !important;
+  color: #006ab3 !important;
   font-weight: 500 !important;
   font-size: 0.400rem !important;
 };

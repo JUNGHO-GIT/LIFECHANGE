@@ -233,8 +233,8 @@ export const UserList = () => {
   const tableNode = () => {
     // 7-6-1. table
     const tableFragment1 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -260,8 +260,8 @@ export const UserList = () => {
     );
     // 7-6-2. table
     const tableFragment2 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -312,8 +312,8 @@ export const UserList = () => {
     );
     // 7-6-3. table
     const tableFragment3 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -339,8 +339,8 @@ export const UserList = () => {
     );
     // 7-6-4. table
     const tableFragment4 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -371,8 +371,8 @@ export const UserList = () => {
     );
     // 7-6-5. table
     const tableFragment5 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -394,8 +394,8 @@ export const UserList = () => {
     );
     // 7-6-6. table
     const tableFragment6 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -426,8 +426,8 @@ export const UserList = () => {
     );
     // 7-6-7. table
     const tableFragment7 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
@@ -451,8 +451,8 @@ export const UserList = () => {
     );
     // 7-6-8. table
     const tableFragment8 = (i) => (
-      <TableContainer key={i}>
-        <Table className={"border"}>
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>

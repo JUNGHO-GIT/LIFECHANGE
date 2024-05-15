@@ -77,7 +77,7 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -113,8 +113,11 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -128,7 +131,7 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -164,8 +167,11 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -216,8 +222,11 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -231,7 +240,7 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_YEAR} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -268,7 +277,10 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -299,12 +311,12 @@ export const ExerciseDashAvg = () => {
     const dropdownSection2 = () => (
       <PopUp
         elementId={"popover"}
-        type={"dropdown"}
+        type={"dash"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           ["volume", "cardio"].map((key, index) => (
-            <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {
                   setLINE("");
@@ -326,7 +338,7 @@ export const ExerciseDashAvg = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>볼륨 / 유산소 평균</Div>

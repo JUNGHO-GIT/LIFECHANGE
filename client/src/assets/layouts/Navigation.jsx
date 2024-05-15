@@ -1,6 +1,6 @@
 // Navigation.jsx
 
-import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -14,9 +14,29 @@ export const Navigation = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const planStr = PATH?.split("/")[3] ? "plan" : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("calendar");
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    if (partStr === "exercise") {
+      setValue("exercise");
+    }
+    else if (partStr === "food") {
+      setValue("food");
+    }
+    else if (partStr === "calendar") {
+      setValue("calendar");
+    }
+    else if (partStr === "money") {
+      setValue("money");
+    }
+    else if (partStr === "sleep") {
+      setValue("sleep");
+    }
+  }, [partStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (

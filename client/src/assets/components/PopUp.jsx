@@ -9,11 +9,14 @@ export const PopUp = ({...props}) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
-  const popupStyle = props.type === "alert"
-  ? ({
+  const popupStyle = props.type === "alert" ? ({
     border: '1px solid red',
     boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
     padding: "6px 6px 6px 6px",
+  }) : props.type === "dash" ? ({
+    border: '0.2px solid rgba(0, 0, 0, 0.2)',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+    padding: "6px 6px 6px 15px",
   }) : ({
     border: '0.2px solid rgba(0, 0, 0, 0.2)',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',

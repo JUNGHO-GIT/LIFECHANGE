@@ -113,8 +113,11 @@ export const MoneyDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -164,8 +167,11 @@ export const MoneyDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -215,8 +221,11 @@ export const MoneyDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -266,8 +275,11 @@ export const MoneyDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </ComposedChart>
@@ -298,12 +310,12 @@ export const MoneyDashAvg = () => {
     const dropdownSection2 = () => (
       <PopUp
         elementId={"popover"}
-        type={"dropdown"}
+        type={"dash"}
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
         ["in", "out"]?.map((key, index) => (
-          <FormGroup key={index} className={"p-5 pe-10"}>
+          <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
               if (LINE === key) {
                 setLINE("");
@@ -325,7 +337,7 @@ export const MoneyDashAvg = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>수입/지출 평균</Div>

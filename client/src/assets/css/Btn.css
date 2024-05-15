@@ -4,6 +4,7 @@
 .del-btn {
   cursor: pointer !important;
   font-weight: 600 !important;
+  font-size: 0.800rem !important;
   color: #dc3545 !important;
 }
 .del-btn:hover, .del-btn:active, .del-btn:disabled {
@@ -19,6 +20,7 @@
   max-height: 25px;
   cursor: pointer!important;
   font-weight: 500 !important;
+  font-size: 0.800rem !important;
   margin: 0rem 0.15rem 0rem 0.15rem !important;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #ffffff !important;
@@ -39,11 +41,12 @@
   max-height: 25px;
   cursor: pointer!important;
   font-weight: 500 !important;
+  font-size: 0.800rem !important;
   margin: 0rem 0.15rem 0rem 0.15rem !important;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #ffffff !important;
-  background-color: #164a60 !important;
-  border: 1px solid #164a60 !important;
+  background-color: #006ab3 !important;
+  border: 1px solid #006ab3 !important;
 }
 .primary-btn:hover, .primary-btn:active, .primary-btn:disabled {
   color: #ffffff !important;
@@ -59,6 +62,7 @@
   max-height: 25px;
   cursor: pointer!important;
   font-weight: 500 !important;
+  font-size: 0.800rem !important;
   margin: 0rem 0.15rem 0rem 0.15rem !important;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #ffffff;
@@ -79,6 +83,7 @@
   max-height: 25px;
   cursor: pointer!important;
   font-weight: 500 !important;
+  font-size: 0.800rem !important;
   margin: 0rem 0.15rem 0rem 0.15rem !important;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #ffffff !important;
@@ -119,6 +124,7 @@
   max-height: 25px;
   cursor: pointer!important;
   font-weight: 500 !important;
+  font-size: 0.800rem !important;
   margin: 0rem 0.15rem 0rem 0.15rem !important;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #ffffff !important;
@@ -129,227 +135,4 @@
   color: #ffffff !important;
   background-color: #4b5156 !important;
   border: 1px solid #4b5156 !important;
-}
-.dataset-add {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer!important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
-  font-size: 0.800rem !important;
-};
-.dataset-add:hover {
-  color: #ffffff !important;
-}
-.dataset-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer!important;
-  color: #0b2730 !important;
-  font-weight: 500 !important;
-  font-size: 0.600rem !important;
-};
-.dataset-title:hover {
-  color: #164a60 !important;
-}
-.dataset-rename {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer!important;
-  color: #164a60 !important;
-  font-weight: 500 !important;
-  font-size: 0.400rem !important;
-};
-.dataset-rename:hover {
-  color: #23486f !important;
-}
-.dataset-delete {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer!important;
-  color: #dc3545 !important;
-  font-weight: 600 !important;
-  font-size: 0.500rem !important;
-};
-.dataset-delete:hover {
-  color: #bd2130 !important;
-}
-
-/** 1. Small (0 ~ 479px) **************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
-
-  /** non display **/
-
-  /** display **/
-  .del-btn {
-    font-size: 0.700rem !important;
-  }
-  .dark-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-  .primary-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-  .success-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-  .warning-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-  .danger-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-  .secondary-btn {
-    font-size: 0.700rem !important;
-    line-height: 0.700rem !important;
-  }
-}
-
-/** 2. Mobile (480px ~ 767px) *********************************************************************/
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-
-  /** non display **/
-
-  /** display **/
-  .del-btn {
-    font-size: 0.900rem !important;
-  }
-  .dark-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-  .primary-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-  .success-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-  .warning-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-  .danger-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-  .secondary-btn {
-    font-size: 0.775rem !important;
-    line-height: 0.775rem !important;
-  }
-}
-
-/** 3. Pablet (768px ~ 991px) *********************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-  .del-btn {
-    font-size: 1.000rem !important;
-  }
-  .dark-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-  .primary-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-  .success-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-  .warning-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-  .danger-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-  .secondary-btn {
-    font-size: 0.850rem !important;
-    line-height: 0.850rem !important;
-  }
-}
-
-/** 4. Tablet (992px ~ 1199px) ********************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .del-btn {
-    font-size: 1.100rem !important;
-  }
-  .dark-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-  .primary-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-  .success-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-  .warning-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-  .danger-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-  .secondary-btn {
-    font-size: 0.925rem !important;
-    line-height: 0.925rem !important;
-  }
-}
-
-/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
-  .del-btn {
-    font-size: 1.200rem !important;
-  }
-  .dark-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
-  .primary-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
-  .success-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
-  .warning-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
-  .danger-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
-  .secondary-btn {
-    font-size: 1.000rem !important;
-    line-height: 1.000rem !important;
-  }
 }

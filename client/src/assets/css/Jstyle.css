@@ -8867,13 +8867,13 @@
 .d-left {
   display: flex !important;
   justify-content: flex-start !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   text-align: left !important;
 }
 .d-right {
   display: flex !important;
   justify-content: flex-end !important;
-  align-items: center !important;
+  align-items: flex-end !important;
   text-align: right !important;
 }
 .d-column {
@@ -8942,30 +8942,30 @@
 
 /** 97. radius ************************************************************************************/
 .radius {
-  border-radius: 5px !important;
+  border-radius: 10px !important;
 }
 .radius-top {
-  border-top-left-radius : 5px !important;
-  border-top-right-radius: 5px !important;
+  border-top-left-radius : 10px !important;
+  border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-right {
   border-top-left-radius : 0px !important;
-  border-top-right-radius: 5px !important;
+  border-top-right-radius: 10px !important;
   border-bottom-left-radius: 0px !important;
-  border-bottom-right-radius: 5px !important;
+  border-bottom-right-radius: 10px !important;
 }
 .radius-bottom {
   border-top-left-radius : 0px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 5px !important;
-  border-bottom-right-radius: 5px !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 }
 .radius-left {
-  border-top-left-radius : 5px !important;
+  border-top-left-radius : 10px !important;
   border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 5px !important;
+  border-bottom-left-radius: 10px !important;
   border-bottom-right-radius: 0px !important;
 }
 .radius-none {

@@ -100,7 +100,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      Sign Up
+      SignUp
     </Button>
   );
   const btnRefresh = () => (

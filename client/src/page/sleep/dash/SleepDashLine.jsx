@@ -62,7 +62,7 @@ export const SleepDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -108,8 +108,11 @@ export const SleepDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -122,7 +125,7 @@ export const SleepDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -168,8 +171,11 @@ export const SleepDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+             wrapperStyle={{
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              left: "none",
             }}
           />
         </LineChart>
@@ -200,12 +206,12 @@ export const SleepDashLine = () => {
     const dropdownSection2 = () => (
       <PopUp
         elementId={"popover"}
-        type={"dropdown"}
+        type={"dash"}
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
           ["취침", "기상", "수면"]?.map((key, index) => (
-            <FormGroup key={index} className={"p-5 pe-10"}>
+            <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
                 if (PART.includes(key)) {
                   setPART(PART?.filter((item) => (item !== key)));
@@ -228,7 +234,7 @@ export const SleepDashLine = () => {
     );
     // 7-6. dash
     const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh"}>
+      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"ms-0"}>{dropdownSection1()}</Div>
           <Div className={"m-auto fsr-1"}>수면 추이</Div>
