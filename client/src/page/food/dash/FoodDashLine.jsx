@@ -1,13 +1,12 @@
 // FoodDashLine.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {axios} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis.jsx";
+import {Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Paper,MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -76,7 +75,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -130,7 +129,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_NUT_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={OBJECT_NUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -188,7 +187,8 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -242,7 +242,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}

@@ -376,23 +376,49 @@ export const FoodDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            select={false}
-            label={"gram"}
-            size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_gram).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-25vw ms-10"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Adorn name={"TbScale"} className={"w-16 h-16 icon"} position={"start"}/>
-              ),
-              endAdornment: (
-                "g"
-              )
-            }}
-          />
+          {(OBJECT?.food_section[i]?.food_gram === "-" ||
+            OBJECT?.food_section[i]?.food_gram === "0" ||
+            OBJECT?.food_section[i]?.food_gram === "00" ||
+            OBJECT?.food_section[i]?.food_gram === 0
+          ) ? (
+            <TextField
+              select={false}
+              label={"회"}
+              size={"small"}
+              type={"text"}
+              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+              variant={"outlined"}
+              className={"w-25vw ms-10"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  null
+                ),
+                endAdornment: (
+                  "회"
+                )
+              }}
+            />
+          ) : (
+            <TextField
+              select={false}
+              label={"gram"}
+              size={"small"}
+              type={"text"}
+              value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+              variant={"outlined"}
+              className={"w-25vw ms-10"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  null
+                ),
+                endAdornment: (
+                  "g"
+                )
+              }}
+            />
+          )}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField

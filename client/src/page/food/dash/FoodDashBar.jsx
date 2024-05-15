@@ -57,7 +57,7 @@ export const FoodDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}} barGap={80} barCategoryGap={"20%"}>
+        <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}} barGap={80} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -115,7 +115,7 @@ export const FoodDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_TODAY, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+        <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis

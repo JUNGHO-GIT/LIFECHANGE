@@ -37,7 +37,7 @@ export const Btn = ({
       Today
     </Button>
   );
-  const btnToSave = () => (
+  const btnFlowSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
@@ -45,7 +45,7 @@ export const Btn = ({
       Save
     </Button>
   );
-  const btnToUpdate = () => (
+  const btnGoToUpdate = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -59,7 +59,7 @@ export const Btn = ({
       Update
     </Button>
   );
-  const btnToList = () => (
+  const btnGoToList = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -73,7 +73,7 @@ export const Btn = ({
       List
     </Button>
   );
-  const btnToFind = () => (
+  const btnGoToFind = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -87,7 +87,7 @@ export const Btn = ({
       Find
     </Button>
   );
-  const btnLogin = () => (
+  const btnFlowLogin = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
@@ -95,7 +95,7 @@ export const Btn = ({
       Log In
     </Button>
   );
-  const btnSignup = () => (
+  const btnFlowSignup = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
@@ -111,7 +111,7 @@ export const Btn = ({
       Refresh
     </Button>
   );
-  const btnGetFind = () => (
+  const btnFlowFind = () => (
     <Div className={"d-center"}>
       <TextField
         select={false}
@@ -138,7 +138,7 @@ export const Btn = ({
       </Button>
     </Div>
   );
-  const btnFoodDone = () => (
+  const btnGoToFindSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -284,8 +284,8 @@ export const Btn = ({
       else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToList()}
+            {btnFlowSave()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -311,8 +311,8 @@ export const Btn = ({
       else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToUpdate()}
-            {btnToList()}
+            {btnGoToUpdate()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -320,8 +320,8 @@ export const Btn = ({
       else if (strings?.type === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToList()}
+            {btnFlowSave()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -342,16 +342,16 @@ export const Btn = ({
       else if (strings?.type === "find" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetFind()}
-            {btnFoodDone()}
+            {btnFlowFind()}
+            {btnGoToFindSave()}
           </Div>
         );
       }
       else if (strings?.type === "find" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToFind()}
+            {btnFlowSave()}
+            {btnGoToFind()}
             {btnRefresh()}
           </Div>
         );
@@ -359,8 +359,8 @@ export const Btn = ({
       else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToUpdate()}
-            {btnToList()}
+            {btnGoToUpdate()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -368,8 +368,8 @@ export const Btn = ({
       else if (strings?.type === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToFind()}
+            {btnFlowSave()}
+            {btnGoToFind()}
             {btnRefresh()}
           </Div>
         );
@@ -390,8 +390,8 @@ export const Btn = ({
       else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToUpdate()}
-            {btnToList()}
+            {btnGoToUpdate()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -399,8 +399,8 @@ export const Btn = ({
       else if (strings?.type === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToList()}
+            {btnFlowSave()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -421,8 +421,8 @@ export const Btn = ({
       else if (strings?.type === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToUpdate()}
-            {btnToList()}
+            {btnGoToUpdate()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -430,8 +430,8 @@ export const Btn = ({
       else if (strings?.type === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnToSave()}
-            {btnToList()}
+            {btnFlowSave()}
+            {btnGoToList()}
             {btnRefresh()}
           </Div>
         );
@@ -458,14 +458,14 @@ export const Btn = ({
       else if (strings?.type === "login") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnLogin()}
+            {btnFlowLogin()}
           </Div>
         );
       }
       else if (strings?.type === "signup") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnSignup()}
+            {btnFlowSignup()}
           </Div>
         );
       }

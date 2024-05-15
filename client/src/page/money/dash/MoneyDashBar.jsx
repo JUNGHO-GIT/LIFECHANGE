@@ -57,7 +57,7 @@ export const MoneyDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_TODAY, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_IN_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+        <ComposedChart data={OBJECT_IN_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -115,7 +115,7 @@ export const MoneyDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_TODAY, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_OUT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+        <ComposedChart data={OBJECT_OUT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis

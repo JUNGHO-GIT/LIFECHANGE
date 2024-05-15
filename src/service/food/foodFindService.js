@@ -69,6 +69,7 @@ export const list = async (
     const matches = param.match(regex);
 
     if (matches) {
+
       let found = false;
       // 1. servArray에 포함된 단어가 있는 경우
       servArray.forEach((el) => {

@@ -78,7 +78,6 @@ export const FoodFindSave = () => {
       food_protein: 0,
     }],
   };
-  const [OBJECT_BEFORE, setOBJECT_BEFORE] = useState(OBJECT_DEF);
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -115,15 +114,6 @@ export const FoodFindSave = () => {
     setLOADING(false);
 
   }, [user_id, DATE.startDt, DATE.endDt]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    // 초기 영양소 값 설정
-    setOBJECT_BEFORE((prev) => ({
-      ...prev,
-      food_section: [...OBJECT?.food_section],
-    }));
-  }, [OBJECT?.food_section]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -168,53 +158,33 @@ export const FoodFindSave = () => {
     }
   };
 
-  // 4-1. handler --------------------------------------------------------------------------------->
-  const handleCountChange = (index, newValue) => {
-
-    const newCountValue = Number(newValue);
-
-    setOBJECT((prev) => {
-      const newFoodSection = [...prev.food_section];
-      const section = newFoodSection[index];
-      const defaultSection = OBJECT_BEFORE.food_section[index];
-      const ratio = newCountValue / (defaultSection.food_count || 1);
-
-      if (defaultSection) {
-        newFoodSection[index] = {
-          ...section,
-          food_count: newCountValue,
-          food_gram: Number(((defaultSection?.food_gram) * ratio).toFixed(1)),
-          food_kcal: Number(((defaultSection?.food_kcal) * ratio).toFixed(1)),
-          food_carb: Number(((defaultSection?.food_carb) * ratio).toFixed(1)),
-          food_protein: Number(((defaultSection?.food_protein) * ratio).toFixed(1)),
-          food_fat: Number(((defaultSection?.food_fat) * ratio).toFixed(1)),
-        };
-      }
-      return {
-        ...prev,
-        food_section: newFoodSection,
-      };
-    });
-  };
-
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerFoodDelete = (index) => {
-    setOBJECT((prev) => {
-      const newFoodSection = [...prev.food_section];
-      newFoodSection.splice(index, 1);
-      return {
-        ...prev,
-        food_section: newFoodSection,
-      };
-    });
-  };
-
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
+    // 스토리지 데이터 가져오기
+    let sectionArray = [];
+    let section = sessionStorage.getItem("food_section");
+
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+    else {
+      sectionArray = [];
+    }
+
+    // sectionArray 삭제
+    sectionArray.splice(index, 1);
+
+    // 스토리지 데이터 설정
+    sessionStorage.setItem("food_section", JSON.stringify(sectionArray));
+
+    // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
       food_section: prev.food_section.filter((_, idx) => (idx !== index))
     }));
+
+    // COUNT 설정
     setCOUNT((prev) => ({
       ...prev,
       sectionCnt: prev.sectionCnt - 1
@@ -316,7 +286,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"총 칼로리"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_kcal).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_kcal).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -335,7 +305,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"총 탄수화물"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_carb).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -354,7 +324,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"총 단백질"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_protein).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -373,7 +343,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"총 지방"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_fat).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -470,31 +440,93 @@ export const FoodFindSave = () => {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            select={false}
-            label={"gram"}
-            size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_gram).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-25vw ms-10"}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                "g"
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              // 최대 4자리까지 입력 가능
-              const limitedValue = rawValue.slice(0, 4);
-              handleCountChange(i, limitedValue);
-            }}
-          />
+          {(OBJECT?.food_section[i]?.food_gram === "-" ||
+            OBJECT?.food_section[i]?.food_gram === "0" ||
+            OBJECT?.food_section[i]?.food_gram === "00" ||
+            OBJECT?.food_section[i]?.food_gram === 0
+          ) ? (
+            <TextField
+              select={false}
+              label={"회"}
+              size={"small"}
+              type={"text"}
+              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+              variant={"outlined"}
+              className={"w-25vw ms-10"}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  null
+                ),
+                endAdornment: (
+                  "회"
+                )
+              }}
+              onChange={(e) => {
+                const newCount = Number(e.target.value);
+                if (isNaN(newCount) || newCount < 0) {
+                  return;
+                }
+                else if (newCount === 0) {
+                  return;
+                }
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_count: newCount,
+                      food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
+                      food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
+                      food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
+                      food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          ) : (
+            <TextField
+              select={false}
+              label={"gram"}
+              size={"small"}
+              type={"text"}
+              value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+              variant={"outlined"}
+              className={"w-25vw ms-10"}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  null
+                ),
+                endAdornment: (
+                  "g"
+                )
+              }}
+              onChange={(e) => {
+                const newGram = Number(e.target.value);
+                if (isNaN(newGram) || newGram < 0) {
+                  return;
+                }
+                else if (newGram === 0) {
+                  return;
+                }
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_gram: newGram,
+                      food_kcal: Number(((newGram * item.food_kcal) / item.food_gram).toFixed(2)),
+                      food_fat: Number(((newGram * item.food_fat) / item.food_gram).toFixed(2)),
+                      food_carb: Number(((newGram * item.food_carb) / item.food_gram).toFixed(2)),
+                      food_protein: Number(((newGram * item.food_protein) / item.food_gram).toFixed(2)),
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          )}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
@@ -520,7 +552,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"kcal"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -539,7 +571,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"carb"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -558,7 +590,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"protein"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
@@ -577,7 +609,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"fat"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
