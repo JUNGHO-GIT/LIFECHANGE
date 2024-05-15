@@ -341,10 +341,10 @@ export const UserDataset = () => {
                       }));
                     }}>
                       <Div className={"fs-1-0rem ms-auto"}>{item[`${dataType}_part`]}</Div>
-                      <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
+                      <Icons name={"BiEdit"} className={"w-18 h-18 icon ms-auto"} onClick={() => {
                         handlerRename("part", index);
                       }} />
-                      <Icons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
+                      <Icons name={"BiTrash"} className={"w-18 h-18 icon ms-10"} onClick={() => {
                         handlerRemove("part", index);
                       }} />
                     </Div>
@@ -396,10 +396,10 @@ export const UserDataset = () => {
                       <Div className={"fs-1-0rem ms-auto"}>
                         {item}
                       </Div>
-                      <Icons name={"BiEdit"} className={"w-18 h-18 dark ms-auto"} onClick={() => {
+                      <Icons name={"BiEdit"} className={"w-18 h-18 icon ms-auto"} onClick={() => {
                         handlerRename("title", index);
                       }} />
-                      <Icons name={"BiTrash"} className={"w-18 h-18 dark ms-10"} onClick={() => {
+                      <Icons name={"BiTrash"} className={"w-18 h-18 icon ms-10"} onClick={() => {
                         handlerRemove("title", index);
                       }} />
                     </Div>

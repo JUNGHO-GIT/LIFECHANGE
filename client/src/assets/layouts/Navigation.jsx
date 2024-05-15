@@ -48,7 +48,7 @@ export const Navigation = () => {
           label={"운동"}
           value={"exercise"}
           className={"w-min20p"}
-          icon={<Icons name={"LuDumbbell"} className={"w-16 h-16 dark"}/>}
+          icon={<Icons name={"LuDumbbell"} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("exercise");
             navigate("exercise/dash");
@@ -57,7 +57,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"식단"}
           value={"food"}
-          icon={<Icons name={"BiBowlHot"} className={"w-16 h-16 dark"}/>}
+          icon={<Icons name={"BiBowlHot"} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("food");
             navigate("food/dash");
@@ -66,7 +66,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"달력"}
           value={"calendar"}
-          icon={<Icons name={"LuCalendarCheck"} className={"w-16 h-16 dark"}/>}
+          icon={<Icons name={"LuCalendarCheck"} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("calendar");
             navigate("calendar/list");
@@ -75,7 +75,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"재무"}
           value={"money"}
-          icon={<Icons name={"TbPigMoney"} className={"w-16 h-16 dark"}/>}
+          icon={<Icons name={"TbPigMoney"} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("money");
             navigate("money/dash");
@@ -84,7 +84,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"수면"}
           value={"sleep"}
-          icon={<Icons name={"TbMoon"} className={"w-16 h-16 dark"}/>}
+          icon={<Icons name={"TbMoon"} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/dash");

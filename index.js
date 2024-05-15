@@ -45,10 +45,10 @@ const __dirname = path.dirname(__filename);
 // ------------------------------------------------------------------------------------------------>
 const id = "eric4757";
 const pw = "M7m7m7m7m7!";
-const host = "34.75.165.209";
+const host = "34.23.233.23";
 const port = "27017";
 const db = "LIFECHANGE";
-// mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.75.165.209:27017/LIFECHANGE");
+// mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE");
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {

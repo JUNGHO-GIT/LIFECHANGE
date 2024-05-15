@@ -152,7 +152,7 @@ export const MoneyDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
                 )
               }}
             />
@@ -198,7 +198,7 @@ export const MoneyDetailPlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
                 )
               }}
             />
@@ -226,7 +226,7 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -257,7 +257,7 @@ export const MoneyDetailPlan = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+            <Icons name={"TbTrash"} className={"w-24 h-24 icon"} onClick={() => {
               flowDelete(id);
               setTimeout(() => {
                 closePopup();
@@ -266,7 +266,7 @@ export const MoneyDetailPlan = () => {
               <Div className={"fs-0-8rem"}>삭제</Div>
             </Icons>
             <Div className={"h-10"}/>
-            <Icons name={"TbEdit"} className={"w-24 h-24 dark"} onClick={() => {
+            <Icons name={"TbEdit"} className={"w-24 h-24 icon"} onClick={() => {
               Object.assign(SEND, {
                 startDt: DATE.startDt,
                 endDt: DATE.endDt
@@ -283,7 +283,7 @@ export const MoneyDetailPlan = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 icon mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -311,7 +311,7 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -341,7 +341,7 @@ export const MoneyDetailPlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"BiWon"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiWon"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null

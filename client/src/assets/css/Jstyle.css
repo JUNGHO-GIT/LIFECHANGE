@@ -8996,59 +8996,141 @@
 .primary {
   color: #3B82F6 !important;
 }
+.primary:hover, .primary:focus, .primary:active {
+  color: #2563EB !important;
+}
+
 .secondary {
   color: #93C5FD !important;
 }
+.secondary:hover, .secondary:focus, .secondary:active {
+  color: #60A5FA !important;
+}
+
 .success {
   color: #10B981 !important;
 }
+.success:hover, .success:focus, .success:active {
+  color: #059669 !important;
+}
+
 .danger {
   color: #EF4444 !important;
 }
+.danger:hover, .danger:focus, .danger:active {
+  color: #DC2626 !important;
+}
+
 .warning {
   color: #F59E0B !important;
 }
+.warning:hover, .warning:focus, .warning:active {
+  color: #D97706 !important;
+}
+
 .info {
   color: #3B82F6 !important;
 }
+.info:hover, .info:focus, .info:active {
+  color: #2563EB !important;
+}
+
 .light {
   color: #F4F5F7 !important;
 }
+.light:hover, .light:focus, .light:active {
+  color: #E5E7EB !important;
+}
+
 .dark {
   color: #697A8D !important;
 }
+.dark:hover, .dark:focus, .dark:active {
+  color: #4B5563 !important;
+}
+
 .red {
   color: #EF4444 !important;
 }
+.red:hover, .red:focus, .red:active {
+  color: #DC2626 !important;
+}
+
 .orange {
   color: #F59E0B !important;
 }
+.orange:hover, .orange:focus, .orange:active {
+  color: #D97706 !important;
+}
+
 .yellow {
   color: #FBBF24 !important;
 }
+.yellow:hover, .yellow:focus, .yellow:active {
+  color: #D97706 !important;
+}
+
 .green {
   color: #10B981 !important;
 }
+.green:hover, .green:focus, .green:active {
+  color: #059669 !important;
+}
+
 .blue {
   color: #3B82F6 !important;
 }
-.navy {
+.blue:hover, .blue:focus, .blue:active {
   color: #2563EB !important;
 }
+
+.navy {
+  color: #164a60 !important;
+}
+.navy:hover, .navy:focus, .navy:active {
+  color: #0b2730 !important;
+}
+
 .purple {
   color: #8B5CF6 !important;
 }
+.purple:hover, .purple:focus, .purple:active {
+  color: #7C3AED !important;
+}
+
 .pink {
   color: #EC4899 !important;
 }
+.pink:hover, .pink:focus, .pink:active {
+  color: #DB2777 !important;
+}
+
 .white {
   color: #FFFFFF !important;
 }
-.gray {
+.white:hover, .white:focus, .white:active {
+  color: #F9FAFB !important;
+}
+
+.grey {
   color: #9CA3AF !important;
 }
+.grey:hover, .grey:focus, .grey:active {
+  color: #6B7280 !important;
+}
+
 .black {
   color: #111827 !important;
+}
+.black:hover, .black:focus, .black:active {
+  color: #000 !important;
+}
+
+.icon {
+  color: #6B7280 !important;
+}
+.icon:hover, .icon:focus, .icon:active {
+  color: #0b2730 !important;
 }
 
 /** 100. etc **************************************************************************************/

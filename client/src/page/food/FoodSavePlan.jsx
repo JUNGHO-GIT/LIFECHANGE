@@ -152,7 +152,7 @@ export const FoodSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
                 )
               }}
             />
@@ -198,7 +198,7 @@ export const FoodSavePlan = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                  <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
                 )
               }}
             />
@@ -226,7 +226,7 @@ export const FoodSavePlan = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -257,7 +257,7 @@ export const FoodSavePlan = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+            <Icons name={"TbTrash"} className={"w-24 h-24 icon"} onClick={() => {
               closePopup();
             }}>
               <Div className={"fs-0-8rem"}>삭제</Div>
@@ -265,7 +265,7 @@ export const FoodSavePlan = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 icon mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -293,7 +293,7 @@ export const FoodSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"TbCalculator"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "Kcal"
@@ -323,7 +323,7 @@ export const FoodSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"BiBowlRice"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "g"
@@ -353,7 +353,7 @@ export const FoodSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"TbMilk"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMilk"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "g"
@@ -383,7 +383,7 @@ export const FoodSavePlan = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"TbMeat"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "g"

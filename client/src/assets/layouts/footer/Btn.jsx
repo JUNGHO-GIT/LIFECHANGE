@@ -134,7 +134,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} type={"button"} color={"primary"} variant={"outlined"}
+      <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
       className={"secondary-btn"} onClick={() => {
         handlers.flowFind();
       }}>

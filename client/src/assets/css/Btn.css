@@ -1,16 +1,27 @@
-/** 0. Non Media **********************************************************************************/
-
-/** 0. Media **************************************************************************************/
+/** del **/
 .del-btn {
-  cursor: pointer !important;
-  font-weight: 600 !important;
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
   font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
   color: #dc3545 !important;
+  background-color: #f8d7da !important;
+  border: 1px solid #f8d7da !important;
 }
 .del-btn:hover, .del-btn:active, .del-btn:disabled {
-  color: #8b202b !important;
+  color: #f8d7da !important;
+  background-color:#8b202b !important;
   border: 1px solid #8b202b !important;
 }
+
+/** dark **/
 .dark-btn {
   min-width: min-content !important;
   width: auto;
@@ -32,6 +43,8 @@
   background-color: #000b15 !important;
   border: 1px solid #000b15 !important;
 }
+
+/** primary **/
 .primary-btn {
   min-width: min-content !important;
   width: auto;
@@ -53,6 +66,8 @@
   background-color: #23486f !important;
   border: 1px solid #23486f !important;
 }
+
+/** success **/
 .success-btn {
   min-width: min-content !important;
   width: auto;
@@ -74,6 +89,8 @@
   background-color: #2e7b18 !important;
   border: 1px solid #2e7b18 !important;
 }
+
+/** warning **/
 .warning-btn {
   min-width: min-content !important;
   width: auto;
@@ -95,6 +112,8 @@
   background-color: #d39e00 !important;
   border: 1px solid #d39e00 !important;
 }
+
+/** danger **/
 .danger-btn {
   min-width: min-content !important;
   width: auto;
@@ -115,6 +134,8 @@
   background-color: #bd2130 !important;
   border: 1px solid #bd2130 !important;
 }
+
+/** secondary **/
 .secondary-btn {
   min-width: min-content !important;
   width: auto;

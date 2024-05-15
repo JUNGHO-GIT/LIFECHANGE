@@ -19,7 +19,7 @@ export const Loading = ({
   const tableNode = () => (
     <Paper className={"content-wrapper"}>
       <Div className={"block-wrapper d-center h-min80vh"}>
-        <Icons name={"FaSpinner"} className={"w-24 h-24 dark"} />
+        <Icons name={"FaSpinner"} className={"w-24 h-24 icon"} />
       </Div>
     </Paper>
   );

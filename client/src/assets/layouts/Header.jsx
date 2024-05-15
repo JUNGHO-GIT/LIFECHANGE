@@ -25,7 +25,7 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <>
-    <Icons name={"TbAlignLeft"} className={"w-24 h-24 dark pointer"} onClick={openSidebar}/>
+    <Icons name={"TbAlignLeft"} className={"w-24 h-24 icon pointer"} onClick={openSidebar}/>
     <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
     </>
   );
@@ -38,7 +38,7 @@ export const Header = () => {
       direction={"left"}
       contents={({closePopup}) => (
         <>
-        <Icons name={"TbLogin"} className={"w-24 h-24 dark"} onClick={() => {
+        <Icons name={"TbLogin"} className={"w-24 h-24 icon"} onClick={() => {
           navigate("/user/login");
           setTimeout(() => {
             closePopup();
@@ -47,7 +47,7 @@ export const Header = () => {
           <Div className={"fs-0-8rem"}>Login</Div>
         </Icons>
         <Div className={"h-10"}/>
-        <Icons name={"TbLogin2"} className={"w-24 h-24 dark"} onClick={() => {
+        <Icons name={"TbLogin2"} className={"w-24 h-24 icon"} onClick={() => {
           navigate("/user/signup");
           setTimeout(() => {
             closePopup();
@@ -58,7 +58,7 @@ export const Header = () => {
         </>
       )}>
       {(popTrigger={}) => (
-        <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 dark pointer mb-n5"}
+        <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 icon pointer mb-n5"}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}
@@ -71,8 +71,8 @@ export const Header = () => {
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
       <Div className={"d-center ms-0"}>
-        <img src={logo2} className={"w-max9vw h-max9vh"} alt="logo2" />
-        <img src={logo3} className={"w-max48vw h-max48vh"} alt="logo3" />
+        <img src={logo2} className={"w-max170 h-max30"} alt="logo2" />
+        <img src={logo3} className={"w-max170 h-max30"} alt="logo3" />
       </Div>
       <Div className={"d-center ms-auto"}>
         {btnUser()}

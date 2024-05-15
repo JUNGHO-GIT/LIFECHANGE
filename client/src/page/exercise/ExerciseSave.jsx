@@ -271,7 +271,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -301,7 +301,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"TbTextPlus"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbTextPlus"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -331,7 +331,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"}position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"}position={"start"}/>
               ),
               endAdornment: (
                 "vol"
@@ -350,7 +350,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbRun"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "h:m"
@@ -369,7 +369,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "kg"
@@ -396,7 +396,7 @@ export const ExerciseSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <>
-            <Icons name={"TbTrash"} className={"w-24 h-24 dark"} onClick={() => {
+            <Icons name={"TbTrash"} className={"w-24 h-24 icon"} onClick={() => {
               handlerDelete(index);
               closePopup();
             }}>
@@ -405,7 +405,7 @@ export const ExerciseSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <Icons name={"TbDots"} className={"w-24 h-24 dark mt-n10 me-n10"}
+          <Icons name={"TbDots"} className={"w-24 h-24 icon mt-n10 me-n10"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -513,7 +513,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "set"
@@ -547,7 +547,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "per"
@@ -581,7 +581,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 dark"} position={"start"}/>
+                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 "kg"
@@ -647,7 +647,7 @@ export const ExerciseSave = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <Adorn name={"TbRun"} className={"w-16 h-16 dark"} position={"start"}/>
+                    <Adorn name={"TbRun"} className={"w-16 h-16 icon"} position={"start"}/>
                   ),
                   endAdornment: (
                     "h:m"

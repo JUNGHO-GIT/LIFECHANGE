@@ -209,7 +209,7 @@ export const MoneyDashBar = () => {
         ))
         )}>
         {(popTrigger={}) => (
-          <Icons name={"TbDots"} className={"w-24 h-24 dark pointer"} onClick={(e) => {
+          <Icons name={"TbDots"} className={"w-24 h-24 icon pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}/>
         )}

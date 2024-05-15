@@ -109,7 +109,6 @@ export const find = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_unique: "",
         food_title: titleElement,
         food_brand: brandElement,
         food_count: nutritionElement.count,
