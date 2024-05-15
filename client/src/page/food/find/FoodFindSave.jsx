@@ -34,8 +34,8 @@ export const FoodFindSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: location_startDt || moment().format("YYYY-MM-DD"),
+      endDt: location_endDt || moment().format("YYYY-MM-DD"),
     }
   );
 
@@ -62,9 +62,9 @@ export const FoodFindSave = () => {
     food_startDt: "0000-00-00",
     food_endDt: "0000-00-00",
     food_total_kcal: 0,
-    food_total_fat: 0,
     food_total_carb: 0,
     food_total_protein: 0,
+    food_total_fat: 0,
     food_section: [{
       food_part_idx: 1,
       food_part_val: "아침",
@@ -84,18 +84,36 @@ export const FoodFindSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
+
   // 2-3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
     // 스토리지 데이터 가져오기
-    const getItem = sessionStorage.getItem("food_section");
-    let storageSection = getItem ? JSON.parse(getItem) : null;
+    let sectionArray = [];
+    let section = sessionStorage.getItem("food_section");
 
-    // 상세 데이터 가져오기
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+    else {
+      sectionArray = [];
+    }
+
+    // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
-      food_section: storageSection,
+      food_section: sectionArray,
     }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: sectionArray.length
+    }));
+
     setLOADING(false);
+
   }, [user_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -105,7 +123,7 @@ export const FoodFindSave = () => {
       ...prev,
       food_section: [...OBJECT?.food_section],
     }));
-  }, [OBJECT]);
+  }, [OBJECT?.food_section]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -298,7 +316,7 @@ export const FoodFindSave = () => {
             select={false}
             label={"총 칼로리"}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_kcal).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{

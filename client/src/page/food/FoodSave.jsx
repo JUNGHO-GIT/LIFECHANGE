@@ -33,8 +33,8 @@ export const FoodSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: location_startDt || moment().format("YYYY-MM-DD"),
+      endDt: location_endDt || moment().format("YYYY-MM-DD"),
     }
   );
 
@@ -83,86 +83,23 @@ export const FoodSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2-3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {
-    // 스토리지 데이터 가져오기
-    const getItem = sessionStorage.getItem("food_section");
-    let storageSection = getItem ? JSON.parse(getItem) : null;
-
-    // 상세 데이터 가져오기
-    setLOADING(true);
-    const fetchDetail = async () => {
-      const res = await axios.get(`${URL_OBJECT}/detail`, {
-        params: {
-          _id: "",
-          user_id: user_id,
-          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-        },
-      });
-
-      // 결과 있는경우 OBJECT 상태 업데이트
-      if (res.data.result !== null && !storageSection) {
-        setOBJECT((prev) => ({
-          ...prev,
-          ...res.data.result,
-        }));
-      }
-
-      // 결과가 null 이면서 스토리지 데이터가 있는 경우 (기본값 없이 스토리지 데이터 쌓기)
-      else if (res.data.result === null && storageSection) {
-        setOBJECT((prev) => ({
-          ...prev,
-          food_section: storageSection,
-        }));
-      }
-
-      // 결과가 null 이 아니면서 스토리지 데이터가 있는 경우 (결과 밑에 스토리지 데이터 쌓기)
-      else if (res.data.result !== null && storageSection) {
-        setOBJECT((prev) => ({
-          ...prev,
-          ...res.data.result,
-          food_section: [...res.data.result.food_section, ...storageSection],
-        }));
-      }
-
-      setCOUNT((prev) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-      }));
-    };
-    fetchDetail();
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const res = await axios.get(`${URL_OBJECT}/detail`, {
+      params: {
+        user_id: user_id,
+        _id: "",
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      },
+    });
+    setOBJECT(res.data.result || OBJECT_DEF);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
+    }));
     setLOADING(false);
-  }, [user_id, DATE.startDt, DATE.endDt]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    // 초기 영양소 값 설정
-    setOBJECT_BEFORE((prev) => ({
-      ...prev,
-      food_section: [...OBJECT?.food_section],
-    }));
-  }, [OBJECT]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const totals = OBJECT?.food_section?.reduce((acc, current) => {
-      return {
-        totalKcal: acc.totalKcal + Number(current.food_kcal),
-        totalFat: acc.totalFat + Number(current.food_fat),
-        totalCarb: acc.totalCarb + Number(current.food_carb),
-        totalProtein: acc.totalProtein + Number(current.food_protein),
-      };
-    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
-
-    setOBJECT((prev) => ({
-      ...prev,
-      food_total_kcal: Number(totals.totalKcal.toFixed(1)),
-      food_total_fat: Number(totals.totalFat.toFixed(1)),
-      food_total_carb: Number(totals.totalCarb.toFixed(1)),
-      food_total_protein: Number(totals.totalProtein.toFixed(1)),
-    }));
-  }, [OBJECT?.food_section]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {

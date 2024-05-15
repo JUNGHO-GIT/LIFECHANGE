@@ -41,8 +41,8 @@ export const UserDataset = () => {
     toDataset: "/user/dataset",
   });
   const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
+    startDt: location_startDt || moment().format("YYYY-MM-DD"),
+    endDt: location_endDt || moment().format("YYYY-MM-DD"),
   });
   const [idx, setIdx] = useState({
     sectionIdx: 0,

@@ -28,11 +28,11 @@ export const TabBar = () => {
       else if (typeStr === "diff") {
         setValue("diff");
       }
-      else if (typeStr === "find" && partStr === "list") {
+      else if (typeStr === "find" && thirdStr === "list") {
         setValue("find/list");
       }
-      else if (typeStr === "find" && partStr === "save") {
-        setValue("find/save");
+      else if (typeStr === "find" && thirdStr === "save") {
+        setValue("find/list");
       }
       else if (typeStr === "list") {
         setValue("list");
@@ -118,12 +118,84 @@ export const TabBar = () => {
     </Div>
   );
 
+  // 6. food -------------------------------------------------------------------------------------->
+  const foodNode = () => (
+    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
+      <Tabs
+        value={value}
+        variant={"scrollable"}
+        scrollButtons={"auto"}
+        allowScrollButtonsMobile={true}
+        selectionFollowsFocus={true}
+        sx={{
+          [`& .${tabsClasses.scrollButtons}`]: {
+            '&.Mui-disabled': { opacity: 0.3 },
+          },
+        }}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          navigate(`${partStr}/${newValue}`);
+        }}>
+        <Tab
+          label={"통계"}
+          value={"dash"}
+          onClick={() => {
+            setValue("dash");
+          }}
+        />
+        <Tab
+          label={"비교"}
+          value={"diff"}
+          onClick={() => {
+            setValue("diff");
+          }}
+        />
+        <Tab
+          label={"검색"}
+          value={"find/list"}
+          onClick={() => {
+            setValue("find/list");
+          }}
+        />
+        <Tab
+          label={"리스트"}
+          value={"list"}
+          onClick={() => {
+            setValue("list");
+          }}
+        />
+        <Tab
+          label={"저장"}
+          value={"save"}
+          onClick={() => {
+            setValue("save");
+          }}
+        />
+        <Tab
+          label={"리스트(계획)"}
+          value={"list/plan"}
+          onClick={() => {
+            setValue("list/plan");
+          }}
+        />
+        <Tab
+          label={"저장(계획)"}
+          value={"save/plan"}
+          onClick={() => {
+            setValue("save/plan");
+          }}
+        />
+      </Tabs>
+    </Div>
+  );
+
   // 7. tabBar ------------------------------------------------------------------------------------>
   const tabBarNode = () => (
     <Paper className={"flex-wrapper p-sticky top-14vh border-top border-bottom"}>
-      {partStr === "exercise" || partStr === "food" ||
-        partStr === "money" || partStr === "sleep" ? (
+      {partStr === "exercise" || partStr === "money" || partStr === "sleep" ? (
         defaultNode()
+      ) : partStr === "food" ? (
+        foodNode()
       ) : (
         null
       )}

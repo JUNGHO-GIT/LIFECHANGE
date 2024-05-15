@@ -17,8 +17,8 @@ export const useDate = (
     if (location_startDt && location_endDt) {
       setDATE((prev) => ({
         ...prev,
-        startDt: location_startDt,
-        endDt: location_endDt,
+        startDt: location_startDt || moment().format("YYYY-MM-DD"),
+        endDt: location_endDt || moment().format("YYYY-MM-DD"),
       }));
     }
   }, [location_startDt, location_endDt]);

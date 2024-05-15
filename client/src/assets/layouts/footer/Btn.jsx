@@ -128,10 +128,6 @@ export const Btn = ({
             ...prev,
             query: e.target.value
           }));
-          functions?.setPAGING((prev) => ({
-            ...prev,
-            page: 0
-          }));
         }}
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}

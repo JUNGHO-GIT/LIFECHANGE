@@ -32,8 +32,8 @@ export const ExerciseDetail = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: location_startDt || moment().format("YYYY-MM-DD"),
+      endDt: location_endDt || moment().format("YYYY-MM-DD"),
     }
   );
 

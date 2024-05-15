@@ -2,6 +2,7 @@
 
 import {JSDOM} from "jsdom";
 import axios from "axios";
+import * as repository from "../../repository/food/foodFindRepository.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
@@ -13,7 +14,6 @@ export const list = async (
   const page = PAGING_param.page;
 
   let finalResult = [];
-  let totalCnt = 0;
   let serv = "";
   let gram = "";
   let servArray = [
@@ -40,9 +40,10 @@ export const list = async (
   const findResult = await getFindResult();
   const document = new JSDOM(findResult).window.document;
 
+  // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;
-  totalCnt = count ? Math.ceil(parseInt(count.split("중")[0]?.trim(), 10) / 10) : 0;
-
+  const countMatch = count ? count.match(/(\d+)중\s+(\d+)에서\s+(\d+)/) : null;
+  const totalCnt = countMatch ? parseInt(countMatch[1]) : 0;
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
   const regexBrand = (param) => {
@@ -113,7 +114,7 @@ export const list = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_pagePerNumber: (page - 1) * 10 + tableIndex * rows.length + rowIndex + 1,
+        food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
         food_title: titleElement,
         food_brand: brandElement,
         food_count: nutritionElement.count,
@@ -131,4 +132,30 @@ export const list = async (
     totalCnt: totalCnt,
     result: finalResult,
   };
+};
+
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (
+  user_id_param, OBJECT_param, duration_param
+) => {
+
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
+
+  const findResult = await repository.save.detail(
+    user_id_param, "", startDt_param, endDt_param
+  );
+
+  let finalResult = null;
+  if (!findResult) {
+    finalResult = await repository.save.create(
+      user_id_param, OBJECT_param, startDt_param, endDt_param
+    );
+  }
+  else {
+    finalResult = await repository.save.update(
+      user_id_param, findResult._id, OBJECT_param, startDt_param, endDt_param
+    );
+  }
+
+  return finalResult
 };

@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {axios, numeral} from "../../../import/ImportLibs.jsx";
+import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
@@ -29,8 +29,8 @@ export const FoodFindList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: location_startDt || moment().format("YYYY-MM-DD"),
+      endDt: location_endDt || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -41,8 +41,7 @@ export const FoodFindList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
-  const [checked, setChecked] = useState([false]);
-  const [checkedUnique, setCheckedUnique] = useState([""]);
+  const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
     id: "",
     startDt: "0000-00-00",
@@ -60,7 +59,7 @@ export const FoodFindList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_pagePerNumber: "",
+    food_perNumber: 1,
     food_title: "",
     food_brand: "",
     food_count: 0,
@@ -77,8 +76,42 @@ export const FoodFindList = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 페이지 번호 변경 시 flowFind
   useEffect(() => {
+    if (FILTER?.query === "") {
+      return;
+    }
+    else {
+      flowFind();
+    }
+  }, [PAGING.page]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 페이지 로드 시 체크박스 상태 초기화
+  useEffect(() => {
+    let sectionArray = [];
+    let section = sessionStorage.getItem("food_section");
+
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+    else {
+      sectionArray = [];
+    }
+    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const newChecked = OBJECT.map(item =>
+      sectionArray.some(sectionItem => sectionItem.food_title === item.food_title)
+    );
+    setCheckedQueries({
+      ...checkedQueries,
+      [queryKey]: newChecked
+    });
+  }, [OBJECT]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 체크박스 상태 변경 시 sessionStorage에 저장
+  useEffect(() => {
     let sectionArray = [];
     let section = sessionStorage.getItem("food_section");
 
@@ -90,39 +123,30 @@ export const FoodFindList = () => {
       sectionArray = [];
     }
 
-    // 체크박스 true or false 설정
-    let checkedArray = [];
-    for (let i = 0; i < OBJECT.length; i++) {
-      checkedArray.push(false);
-    }
+    // 현재 쿼리와 페이지의 체크된 상태
+    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const pageChecked = checkedQueries[queryKey] || [];
 
-    // 체크된 항목 sectionArray에 추가
-    checked.forEach((isChecked, index) => {
-      if (isChecked && !sectionArray.some(item => item.food_unique === OBJECT[index].food_unique)) {
+    // 체크된 항목들 sectionArray에 추가 또는 제거
+    pageChecked.forEach((el, index) => {
+      if (el) {
         sectionArray.push(OBJECT[index]);
+      }
+      else {
+        sectionArray = sectionArray.filter(item => item.food_title !== OBJECT[index].food_title);
       }
     });
 
-    // unchecked 항목 sectionArray에서 제거
-    checked.forEach((isChecked, index) => {
-      if (!isChecked) {
-        sectionArray = sectionArray.filter(item => item.food_unique !== OBJECT[index].food_unique);
-      }
+    // sectionArray 중복 제거
+    sectionArray = sectionArray.filter((el, index, self) => {
+      return index === self.findIndex((t) => (
+        t.food_title === el.food_title
+      ));
     });
 
     // sessionStorage에 저장
     sessionStorage.setItem("food_section", JSON.stringify(sectionArray));
-  }, [checked]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    if (FILTER?.query === "") {
-      return;
-    }
-    else {
-      flowFind();
-    }
-  }, [PAGING.page]);
+  }, [checkedQueries, PAGING.page, FILTER.query, OBJECT]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFind = async () => {
@@ -143,21 +167,15 @@ export const FoodFindList = () => {
     setLOADING(false);
   };
 
-  // 4-1. handler --------------------------------------------------------------------------------->
-   const handlerCheck = (e, index) => {
-    const updatedChecked = [...checked];
-    updatedChecked[index] = e.target.checked;
-    setChecked(updatedChecked);
-  };
-
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerCheckUnique = (e, index) => {
-    if (e.target.checked) {
-      setCheckedUnique([...checkedUnique, OBJECT[index].food_unique]);
-    }
-    else {
-      setCheckedUnique(checkedUnique.filter((el) => el !== OBJECT[index].food_unique));
-    }
+  // 4. handler ----------------------------------------------------------------------------------->
+  const handlerCheckboxChange = (index) => {
+    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const updatedChecked = [...(checkedQueries[queryKey] || [])];
+    updatedChecked[index] = !updatedChecked[index];
+    setCheckedQueries({
+      ...checkedQueries,
+      [queryKey]: updatedChecked
+    });
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -168,6 +186,7 @@ export const FoodFindList = () => {
         <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
+              <TableCell>번호</TableCell>
               <TableCell>식품명</TableCell>
               <TableCell>브랜드</TableCell>
               <TableCell>제공량</TableCell>
@@ -193,6 +212,7 @@ export const FoodFindList = () => {
         <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
+              <TableCell>번호</TableCell>
               <TableCell className={"w-max30vw"}>식품명</TableCell>
               <TableCell className={"w-max20vw"}>브랜드</TableCell>
               <TableCell>제공량</TableCell>
@@ -206,12 +226,13 @@ export const FoodFindList = () => {
           <TableBody>
             {OBJECT?.map((item, index) => (
               <>
-                <TableRow className={"table-tbody-tr"} key={`title-${index}`}>
-                  <TableCell rowSpan={2} className={"w-max30vw"}>
+                <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
+                  <TableCell>
+                    {item.food_perNumber}
+                  </TableCell>
+                  <TableCell className={"w-max30vw"}>
                     {item.food_title}
                   </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
                   <TableCell className={"w-max20vw"}>
                     {item.food_brand}
                   </TableCell>
@@ -235,10 +256,14 @@ export const FoodFindList = () => {
                       key={`check-${index}`}
                       color={"primary"}
                       size={"small"}
-                      checked={checked[index] || false}
-                      onChange={(e) => {
-                        handlerCheck(e, index);
-                        handlerCheckUnique(e, index);
+                      checked={
+                        !! (
+                          checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
+                          checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
+                        )
+                      }
+                      onChange={() => {
+                        handlerCheckboxChange(index);
                       }}
                     />
                   </TableCell>

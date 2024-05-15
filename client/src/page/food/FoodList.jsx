@@ -1,7 +1,7 @@
 // FoodList.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
@@ -28,8 +28,8 @@ export const FoodList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: location_startDt || moment().format("YYYY-MM-DD"),
+      endDt: location_endDt || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(

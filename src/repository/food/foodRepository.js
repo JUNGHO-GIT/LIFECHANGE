@@ -1,4 +1,4 @@
-// foodPlanRepository.js
+// foodRepository.js
 
 import mongoose from "mongoose";
 import {Food} from "../../schema/food/Food.js";
