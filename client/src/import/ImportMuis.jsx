@@ -57,7 +57,7 @@ import {
 
 // t
 import {
-  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab
+  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses
 } from "@mui/material";
 
 // u ~ z
@@ -120,7 +120,7 @@ export {
   ScopedCssBaseline, Select, Skeleton, Slide, Slider, Snackbar, SnackbarContent, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, Step, StepButton, StepConnector, StepContent, StepIcon, StepLabel, Stepper, SvgIcon, SwipeableDrawer, Switch,
 
   // t
-  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab,
+  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses,
 
   // u ~ z
   useAutocomplete, GlobalStyles,

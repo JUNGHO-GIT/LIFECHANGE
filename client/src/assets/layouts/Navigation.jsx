@@ -1,6 +1,6 @@
 // Navigation.jsx
 
-import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -8,23 +8,30 @@ import {Paper} from "../../import/ImportMuis.jsx";
 // ------------------------------------------------------------------------------------------------>
 export const Navigation = () => {
 
-  const [value, setValue] = useState("exercise");
+  // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
+  const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [value, setValue] = useState("calendar");
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-7vh"}>
-      <BottomNavigation showLabels={true} value={value} className={"w-100p"}
-      onChange={(event, newValue) => {
+    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
+      <BottomNavigation showLabels={true} value={value} onChange={(event, newValue) => {
         setValue(newValue);
       }}>
         <BottomNavigationAction
           label={"운동"}
           value={"exercise"}
+          className={"w-min20p"}
           icon={<Icons name={"LuDumbbell"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
             setValue("exercise");
-            navigate("/exercise/list");
+            navigate("exercise/dash");
           }}
         />
         <BottomNavigationAction
@@ -33,16 +40,16 @@ export const Navigation = () => {
           icon={<Icons name={"BiBowlHot"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
             setValue("food");
-            navigate("/food/list");
+            navigate("food/dash");
           }}
         />
         <BottomNavigationAction
-          label={"메인"}
+          label={"달력"}
           value={"calendar"}
           icon={<Icons name={"LuCalendarCheck"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
             setValue("calendar");
-            navigate("/calendar/list");
+            navigate("calendar/list");
           }}
         />
         <BottomNavigationAction
@@ -51,7 +58,7 @@ export const Navigation = () => {
           icon={<Icons name={"TbPigMoney"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
             setValue("money");
-            navigate("/money/list");
+            navigate("money/dash");
           }}
         />
         <BottomNavigationAction
@@ -60,7 +67,7 @@ export const Navigation = () => {
           icon={<Icons name={"TbMoon"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
             setValue("sleep");
-            navigate("/sleep/list");
+            navigate("sleep/dash");
           }}
         />
       </BottomNavigation>

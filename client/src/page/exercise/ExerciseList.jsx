@@ -87,10 +87,6 @@ export const ExerciseList = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
 
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
-
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/list`, {

@@ -552,7 +552,7 @@ export const MoneyDashPie = () => {
     );
     // 7-7 return
     return (
-      <Paper className={"content-wrapper border-bottom mt-5 mb-5"}>
+      <Paper className={"content-wrapper border-bottom"}>
         {dashSection()}
       </Paper>
     );
