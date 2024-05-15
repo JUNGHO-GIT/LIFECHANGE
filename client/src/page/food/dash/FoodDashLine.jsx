@@ -117,6 +117,7 @@ export const FoodDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>
@@ -174,6 +175,7 @@ export const FoodDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>
@@ -227,6 +229,7 @@ export const FoodDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>
@@ -284,6 +287,7 @@ export const FoodDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>

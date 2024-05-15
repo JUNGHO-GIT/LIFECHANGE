@@ -113,6 +113,7 @@ export const SleepDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>
@@ -176,6 +177,7 @@ export const SleepDashLine = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </LineChart>

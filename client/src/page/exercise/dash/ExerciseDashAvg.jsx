@@ -118,6 +118,7 @@ export const ExerciseDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -172,6 +173,7 @@ export const ExerciseDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -227,6 +229,7 @@ export const ExerciseDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -281,6 +284,7 @@ export const ExerciseDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>

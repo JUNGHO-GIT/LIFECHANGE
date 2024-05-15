@@ -114,6 +114,7 @@ export const SleepDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -178,6 +179,7 @@ export const SleepDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>

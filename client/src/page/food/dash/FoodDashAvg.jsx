@@ -118,6 +118,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -176,6 +177,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -230,6 +232,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -288,6 +291,7 @@ export const FoodDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>

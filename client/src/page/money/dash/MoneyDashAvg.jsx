@@ -118,6 +118,7 @@ export const MoneyDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -172,6 +173,7 @@ export const MoneyDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -226,6 +228,7 @@ export const MoneyDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
@@ -280,6 +283,7 @@ export const MoneyDashAvg = () => {
               justifyContent:"center",
               alignItems:"center",
               left: "none",
+              fontSize: "1rem",
             }}
           />
         </ComposedChart>
