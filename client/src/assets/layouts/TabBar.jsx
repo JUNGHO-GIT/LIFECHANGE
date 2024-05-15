@@ -1,75 +1,76 @@
-// Navigation.jsx
+// TabBar.jsx
 
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
-import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
+import {Tabs, Tab} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Navigation = () => {
+export const TabBar = () => {
 
-  const [value, setValue] = useState("exercise");
+  // 1. common ------------------------------------------------------------------------------------>
+
   const navigate = useNavigate();
+  const [value, setValue] = useState(0);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh"}>
-      <BottomNavigation showLabels={true} value={value} className={"w-100p"}
-      onChange={(event, newValue) => {
+      <Tabs value={value} className={"w-100p"} onChange={(event, newValue) => {
         setValue(newValue);
       }}>
-        <BottomNavigationAction
+        <Tab
           label={"운동"}
-          value={"exercise"}
+          value={0}
           icon={<Icons name={"LuDumbbell"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
-            setValue("exercise");
+            setValue(0);
             navigate("/exercise/list");
           }}
         />
-        <BottomNavigationAction
+        <Tab
           label={"식단"}
-          value={"food"}
+          value={1}
           icon={<Icons name={"BiBowlHot"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
-            setValue("food");
+            setValue(1);
             navigate("/food/list");
           }}
         />
-        <BottomNavigationAction
+        <Tab
           label={"메인"}
-          value={"calendar"}
+          value={2}
           icon={<Icons name={"LuCalendarCheck"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
-            setValue("calendar");
+            setValue(2);
             navigate("/calendar/list");
           }}
         />
-        <BottomNavigationAction
+        <Tab
           label={"재무"}
-          value={"money"}
+          value={3}
           icon={<Icons name={"TbPigMoney"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
-            setValue("money");
+            setValue(3);
             navigate("/money/list");
           }}
         />
-        <BottomNavigationAction
+        <Tab
           label={"수면"}
-          value={"sleep"}
+          value={4}
           icon={<Icons name={"TbMoon"} className={"w-16 h-16 dark"}/>}
           onClick={() => {
-            setValue("sleep");
+            setValue(4);
             navigate("/sleep/list");
           }}
         />
-      </BottomNavigation>
+      </Tabs>
     </Div>
   );
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh border-top"}>
+    <Paper className={"flex-wrapper p-sticky top-14vh border-bottom"}>
       {defaultNode()}
     </Paper>
   );

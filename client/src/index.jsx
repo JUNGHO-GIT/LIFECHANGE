@@ -22,6 +22,7 @@ import "./assets/css/Jstyle.css";
 
 import {Header} from "./import/ImportLayouts.jsx";
 import {NavBar} from "./import/ImportLayouts.jsx";
+import {TabBar} from "./import/ImportLayouts.jsx";
 import {Navigation} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList";
@@ -145,6 +146,7 @@ const App = () => {
     <div className={"App"}>
       <Header />
       <NavBar />
+      <TabBar />
       <Routes>
         <Route path="/" element={<CalendarList />} />
         <Route path="/calendar/*" element={<Calendar />} />

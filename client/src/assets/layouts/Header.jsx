@@ -85,7 +85,7 @@ export const Header = () => {
 
   // 7. header ------------------------------------------------------------------------------------>
   const navbarNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-0"}>
+    <Paper className={"flex-wrapper p-sticky top-0vh"}>
       {defaultNode()}
     </Paper>
   );
