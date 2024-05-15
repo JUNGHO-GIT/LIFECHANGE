@@ -1,7 +1,7 @@
 // useStorage.jsx
 
-import React, {useState, useEffect} from "react";
-import {parseISO, formatISO} from "date-fns";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {parseISO, formatISO} from "../../import/ImportLibs.jsx";
 
 export const useStorage = (key, initialVal) => {
   const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");

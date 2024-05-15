@@ -1,6 +1,6 @@
 // useDeveloperMode.jsx
 
-import React, {createContext, useContext, useState} from "react";
+import {React, useState, createContext, useContext} from "../../import/ImportReacts.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const defaultDeveloperModeContext = {

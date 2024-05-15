@@ -1,7 +1,6 @@
 // useScrollTop.jsx
 
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import {React, useEffect, useLocation} from "../../import/ImportReacts.jsx";
 
 export const useScrollTop = () => {
   const {pathname} = useLocation();
