@@ -114,13 +114,13 @@ export const FoodFind = () => {
         <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
-              <TableCell className={"w-max30vw"}>식품명</TableCell>
-              <TableCell className={"w-max30vw"}>브랜드</TableCell>
-              <TableCell className={"w-max30vw"}>제공량</TableCell>
-              <TableCell className={"w-max25vw"}>Kcal</TableCell>
-              <TableCell className={"w-max15vw"}>Carb</TableCell>
-              <TableCell className={"w-max15vw"}>Protein</TableCell>
-              <TableCell className={"w-max15vw"}>Fat</TableCell>
+              <TableCell>식품명</TableCell>
+              <TableCell>브랜드</TableCell>
+              <TableCell>제공량</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -140,12 +140,12 @@ export const FoodFind = () => {
           <TableHead>
             <TableRow className={"table-thead-tr"}>
               <TableCell className={"w-max30vw"}>식품명</TableCell>
-              <TableCell className={"w-max30vw"}>브랜드</TableCell>
-              <TableCell className={"w-max30vw"}>제공량</TableCell>
-              <TableCell className={"w-max25vw"}>Kcal</TableCell>
-              <TableCell className={"w-max15vw"}>Carb</TableCell>
-              <TableCell className={"w-max15vw"}>Protein</TableCell>
-              <TableCell className={"w-max15vw"}>Fat</TableCell>
+              <TableCell className={"w-max20vw"}>브랜드</TableCell>
+              <TableCell>제공량</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -167,22 +167,22 @@ export const FoodFind = () => {
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
-                  <TableCell className={"w-max30vw"}>
+                  <TableCell className={"w-max20vw"}>
                     {item.food_brand}
                   </TableCell>
-                  <TableCell className={"w-max30vw"}>
+                  <TableCell>
                     {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")} g)`}
                   </TableCell>
-                  <TableCell className={"w-max25vw"}>
+                  <TableCell>
                     {`${numeral(item.food_kcal).format("0,0")} Kcal`}
                   </TableCell>
-                  <TableCell className={"w-max15vw"}>
+                  <TableCell>
                     {`${numeral(item.food_carb).format("0,0")} g`}
                   </TableCell>
-                  <TableCell className={"w-max15vw"}>
+                  <TableCell>
                     {`${numeral(item.food_protein).format("0,0")} g`}
                   </TableCell>
-                  <TableCell className={"w-max15vw"}>
+                  <TableCell>
                     {`${numeral(item.food_fat).format("0,0")} g`}
                   </TableCell>
                 </TableRow>
@@ -194,7 +194,7 @@ export const FoodFind = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min170vw h-min70vh"}>
+      <Div className={"block-wrapper w-min150vw h-min70vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>

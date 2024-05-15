@@ -41,6 +41,7 @@
   flex-wrap: wrap;
   align-content: stretch;
   border-bottom: 0.3px solid #dadada;
+  border-right: 0.3px solid #dadada;
 }
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -48,12 +49,11 @@
   font: inherit;
   font-size: 0.75rem;
   font-weight: bold;
-  border-right: 0.3px solid #dadada;
 }
 .react-calendar__month-view__weekdays__weekday {
   padding: 0.5rem;
-  border-top: 0.3px solid #dadada;
-  border-left: 0.3px solid #dadada;
+  border-top: 0.3px solid transparent;
+  border-left: 0.3px solid transparent;
   background-color: #006ab3;
   color: #ffffff;
 }
@@ -88,6 +88,7 @@
   text-decoration: none;
   color: #000000;
   font-weight: 500;
+  font-size: 0.6rem;
 }
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
   justify-content: center !important;
@@ -134,15 +135,20 @@
   font-weight: 500;
   color: #000000;
   background: #ffffff;
+  font-size: 0.6rem;
 }
 .react-calendar__navigation__label__labelText--from {
   color: #000000;
   text-align: center;
   justify-content: center;
   display: flex;
+  font-size: 1.2rem;
+}
+.react-calendar button {
+  max-height: 6.0rem;
 }
 .calendar-filled {
-  width: -webkit-fill-available;
+  width: -webkit-fill-available !important;
   height: auto;
   max-height: 1.0rem;
   text-align: left;
@@ -151,10 +157,12 @@
   padding: 0px 0px 0px 0px;
   opacity: 0.7;
   border-radius: 5px;
+  max-width: 1.6rem;
 }
 .calendar-unfilled {
   width: -webkit-fill-available;
   height: auto;
+  max-width: 1.6rem;
   max-height: 1.0rem;
   text-align: left;
   color: #ffffff;
@@ -166,10 +174,12 @@
 .calendar-category {
   margin: 0px 0px 0px 3px;
   color: #ffffff;
+  font-size: 0.6rem;
 }
 abbr[title] {
   text-decoration: none;
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
+  font-size: 0.8rem;
 }

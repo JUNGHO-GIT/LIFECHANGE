@@ -190,10 +190,7 @@ export const FoodList = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min70vh"}>
-        <Div className={"d-center mb-20"}>
-          {DATE.startDt + "~~~" + DATE.endDt}
-        </Div>
+      <Div className={"block-wrapper h-min70vh w-min110vw"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>

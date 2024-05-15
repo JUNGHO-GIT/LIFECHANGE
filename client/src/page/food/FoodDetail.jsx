@@ -5,11 +5,9 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
@@ -19,6 +17,8 @@ export const FoodDetail = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
+  const session = sessionStorage.getItem("dataset") || "";
+  const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -353,14 +353,15 @@ export const FoodDetail = () => {
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
-            select={false}
-            label={"분류"}
+            select={true}
+            type={"text"}
             size={"small"}
-            value={OBJECT?.food_section[i]?.food_part_val}
+            label={"분류"}
             variant={"outlined"}
             className={"w-25vw me-10"}
+            value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 null
               ),
@@ -368,14 +369,39 @@ export const FoodDetail = () => {
                 null
               )
             }}
+          >
+            {foodArray.map((item, idx) => (
+              <MenuItem key={idx} value={idx}>
+                {item.food_part}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select={false}
+            label={"gram"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_section[i]?.food_gram).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-25vw ms-10"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbScale"} className={"w-16 h-16 dark"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
+              )
+            }}
           />
+        </Div>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"식품명"}
             size={"small"}
             value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
             variant={"outlined"}
-            className={"w-25vw ms-10"}
+            className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (

@@ -254,7 +254,7 @@ export const FoodSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+      food_section: prev.food_section.filter((_, idx) => (idx !== index))
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -479,8 +479,7 @@ export const FoodSave = () => {
             size={"small"}
             label={"분류"}
             variant={"outlined"}
-            className={"w-60vw"}
-            defaultValue={0}
+            className={"w-25vw me-10"}
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
@@ -505,41 +504,19 @@ export const FoodSave = () => {
               }));
             }}
           >
-            {foodArray?.map((item, idx) => (
+            {foodArray.map((item, idx) => (
               <MenuItem key={idx} value={idx}>
                 {item.food_part}
               </MenuItem>
             ))}
           </TextField>
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"식품명"}
+            label={"gram"}
             size={"small"}
-            value={`${OBJECT?.food_section[i]?.food_title}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_gram).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"제공량"}
-            size={"small"}
-            type={"text"}
-            value={OBJECT?.food_section[i]?.food_gram}
-            variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-25vw ms-10"}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -556,6 +533,25 @@ export const FoodSave = () => {
               // 최대 4자리까지 입력 가능
               const limitedValue = rawValue.slice(0, 4);
               handleCountChange(i, limitedValue);
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"식품명"}
+            size={"small"}
+            value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
+                null
+              )
             }}
           />
         </Div>
