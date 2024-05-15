@@ -18,7 +18,7 @@ export const Loading = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <Paper className={"content-wrapper"}>
-      <Div className={"block-wrapper d-center h-min70vh"}>
+      <Div className={"block-wrapper d-center h-min80vh"}>
         <Icons name={"FaSpinner"} className={"w-24 h-24 dark"} />
       </Div>
     </Paper>

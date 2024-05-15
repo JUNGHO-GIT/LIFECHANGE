@@ -1,7 +1,9 @@
 // Footer.jsx
 
 import {React}from "../../import/ImportReacts.jsx";
-import {Paging, Filter, Btn, Navigation} from "../../import/ImportComponents.jsx";
+import {Paging} from "./footer/Paging.jsx";
+import {Filter} from "./footer/Filter.jsx";
+import {Btn} from "./footer/Btn.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>

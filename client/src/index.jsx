@@ -22,7 +22,7 @@ import "./assets/css/Jstyle.css";
 
 import {Header} from "./import/ImportLayouts.jsx";
 import {NavBar} from "./import/ImportLayouts.jsx";
-import {Bottom} from "./import/ImportLayouts.jsx";
+import {Navigation} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList";
 import {CalendarDetail} from "./page/calendar/CalendarDetail";
@@ -154,7 +154,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      <Bottom />
+      <Navigation />
     </div>
   );
 };
