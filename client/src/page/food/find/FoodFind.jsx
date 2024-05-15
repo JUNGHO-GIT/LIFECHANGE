@@ -6,7 +6,7 @@ import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Checkbox} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -41,6 +41,8 @@ export const FoodFind = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
+  const [checked, setChecked] = useState([false]);
+  const [checkedUnique, setCheckedUnique] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     startDt: "0000-00-00",
@@ -58,6 +60,7 @@ export const FoodFind = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
+    food_unique: "",
     food_title: "",
     food_brand: "",
     food_count: 0,
@@ -73,9 +76,39 @@ export const FoodFind = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
+
+    let sectionArray = [];
+    let section = sessionStorage.getItem("food_section");
+
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+    else {
+      sectionArray = [];
+    }
+
+    // 체크박스 true or false 설정
+    let checkedArray = [];
+    for (let i = 0; i < OBJECT.length; i++) {
+      checkedArray.push(false);
+    }
+
+    // 체크된 항목 sectionArray에 추가
+    checked.forEach((isChecked, index) => {
+      if (isChecked && !sectionArray.some(item => item.food_unique === OBJECT[index].food_unique)) {
+        sectionArray.push(OBJECT[index]);
+      }
+      if (!isChecked) {
+        sectionArray = sectionArray.filter(item => item.food_unique !== OBJECT[index].food_unique);
+      }
+    });
+
+    // sessionStorage에 저장
+    sessionStorage.setItem("food_section", JSON.stringify(sectionArray));
+  }, [checked]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -104,6 +137,23 @@ export const FoodFind = () => {
       totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
     }));
     setLOADING(false);
+  };
+
+  // 4-1. handler --------------------------------------------------------------------------------->
+   const handlerCheck = (e, index) => {
+    const updatedChecked = [...checked];
+    updatedChecked[index] = e.target.checked;
+    setChecked(updatedChecked);
+  };
+
+  // 4-2. handler --------------------------------------------------------------------------------->
+  const handlerCheckUnique = (e, index) => {
+    if (e.target.checked) {
+      setCheckedUnique([...checkedUnique, OBJECT[index].food_unique]);
+    }
+    else {
+      setCheckedUnique(checkedUnique.filter((el) => el !== OBJECT[index].food_unique));
+    }
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -135,7 +185,7 @@ export const FoodFind = () => {
     );
     // 7-6-2. table
     const tableFragment = (i) => (
-      <TableContainer key={i} className={"border radius"}>
+      <TableContainer key={`${PAGING.page}-${i}`} className={"border radius"}>
         <Table>
           <TableHead>
             <TableRow className={"table-thead-tr"}>
@@ -146,23 +196,14 @@ export const FoodFind = () => {
               <TableCell>Carb</TableCell>
               <TableCell>Protein</TableCell>
               <TableCell>Fat</TableCell>
+              <TableCell>v</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
               <>
                 <TableRow className={"table-tbody-tr"} key={`title-${index}`}>
-                  <TableCell rowSpan={2} className={"pointer w-max30vw"} onClick={() => {
-                    sessionStorage.setItem("food_section", JSON.stringify(item));
-                    Object.assign(SEND, {
-                      id: user_id,
-                      startDt: DATE.startDt,
-                      endDt: DATE.endDt
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }}>
+                  <TableCell rowSpan={2} className={"w-max30vw"}>
                     {item.food_title}
                   </TableCell>
                 </TableRow>
@@ -184,6 +225,18 @@ export const FoodFind = () => {
                   </TableCell>
                   <TableCell>
                     {`${numeral(item.food_fat).format("0,0")} g`}
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      key={`check-${index}`}
+                      color={"primary"}
+                      size={"small"}
+                      checked={checked[index] || false}
+                      onChange={(e) => {
+                        handlerCheck(e, index);
+                        handlerCheckUnique(e, index);
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               </>

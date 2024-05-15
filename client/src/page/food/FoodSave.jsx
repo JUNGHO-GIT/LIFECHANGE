@@ -7,7 +7,7 @@ import {percent} from "../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {Badge, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 
@@ -83,9 +83,12 @@ export const FoodSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
+
   // 2-3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
-
     // 스토리지 데이터 가져오기
     const getItem = sessionStorage.getItem("food_section");
     let storageSection = getItem ? JSON.parse(getItem) : null;
@@ -109,45 +112,27 @@ export const FoodSave = () => {
         }));
       }
 
-      // 결과가 null or !null 이면서 스토리지 데이터가 있는 경우, OBJECT 상태 업데이트
-      else if (
-        (res.data.result !== null && storageSection) ||
-        (res.data.result === null && storageSection)
-      ) {
-        if (storageSection) {
-          setOBJECT((prev) => {
-            let newFoodSection = [...prev.food_section];
-
-            // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
-            if (
-              newFoodSection.length > 0 &&
-              Object.values(newFoodSection[0]).every((value) => (value === ""))
-            ) {
-              newFoodSection.shift();
-            }
-
-            // 새로운 데이터가 배열인 경우 배열, 단일 객체인 경우 단일 객체를 추가
-            Array.isArray(storageSection)
-            ? newFoodSection.push(...storageSection)
-            : newFoodSection.push(storageSection);
-
-            return {
-              ...prev,
-              food_section: newFoodSection,
-            };
-          })
-        }
+      // 결과가 null 이면서 스토리지 데이터가 있는 경우 (기본값 없이 스토리지 데이터 쌓기)
+      else if (res.data.result === null && storageSection) {
+        setOBJECT((prev) => ({
+          ...prev,
+          food_section: storageSection,
+        }));
       }
 
-      // 결과가 null 일 경우, OBJECT 상태를 명시적으로 초기화
-      else {
-        setOBJECT(OBJECT_DEF);
+      // 결과가 null 이 아니면서 스토리지 데이터가 있는 경우 (결과 밑에 스토리지 데이터 쌓기)
+      else if (res.data.result !== null && storageSection) {
+        setOBJECT((prev) => ({
+          ...prev,
+          ...res.data.result,
+          food_section: [...res.data.result.food_section, ...storageSection],
+        }));
       }
 
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0
+        sectionCnt: res.data.sectionCnt || 0,
       }));
     };
     fetchDetail();
@@ -208,9 +193,6 @@ export const FoodSave = () => {
 
   // 4-1. handler --------------------------------------------------------------------------------->
   const handleCountChange = (index, newValue) => {
-
-    console.log("index", index);
-    console.log("newValue", newValue);
 
     const newCountValue = Number(newValue);
 
@@ -480,6 +462,7 @@ export const FoodSave = () => {
             label={"분류"}
             variant={"outlined"}
             className={"w-25vw me-10"}
+            defaultValue={1}
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
@@ -681,7 +664,7 @@ export const FoodSave = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowSave
       }}
     />
   );

@@ -135,12 +135,26 @@ export const Btn = ({
         }}
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"outlined"}
-      className={"primary-btn"} onClick={() => {
+      className={"secondary-btn"} onClick={() => {
         handlers.flowFind();
       }}>
         Find
       </Button>
     </Div>
+  );
+  const btnFoodSave = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      Object.assign(objects?.SEND, {
+        startDt: objects?.DATE.startDt,
+        endDt: objects?.DATE.endDt
+      });
+      handlers.navigate(objects?.SEND.toSave, {
+        state: objects?.SEND,
+      });
+    }}>
+      Save
+    </Button>
   );
   const btnResetDefault = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
@@ -333,6 +347,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetFind()}
+            {btnFoodSave()}
           </Div>
         );
       }
