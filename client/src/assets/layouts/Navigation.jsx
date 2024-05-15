@@ -14,21 +14,21 @@ export const Navigation = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("calendar");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (partStr === "exercise") {
+    if (partStr === "calendar") {
+      setValue("calendar");
+    }
+    else if (partStr === "exercise") {
       setValue("exercise");
     }
     else if (partStr === "food") {
       setValue("food");
-    }
-    else if (partStr === "calendar") {
-      setValue("calendar");
     }
     else if (partStr === "money") {
       setValue("money");
@@ -41,9 +41,12 @@ export const Navigation = () => {
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row w-100vw h-7vh"}>
-      <BottomNavigation showLabels={true} value={value} onChange={(event, newValue) => {
-        setValue(newValue);
-      }}>
+      <BottomNavigation
+        showLabels={true}
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}>
         <BottomNavigationAction
           label={"운동"}
           value={"exercise"}

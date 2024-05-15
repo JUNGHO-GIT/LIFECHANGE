@@ -25,7 +25,7 @@ export const ExerciseSavePlan = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -457,7 +457,7 @@ export const ExerciseSavePlan = () => {
       strings={{
         part: partStr,
         type: typeStr,
-        plan: planStr,
+        third: thirdStr,
       }}
       objects={{
         DATE, SEND, COUNT

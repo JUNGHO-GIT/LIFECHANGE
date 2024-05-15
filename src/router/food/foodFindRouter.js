@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/food/foodFindService.js";
 export const router = express.Router();
 
-// 1. find ---------------------------------------------------------------------------------------->
-router.get("/find", async (req, res) => {
+// 1. list ---------------------------------------------------------------------------------------->
+router.get("/find/list", async (req, res) => {
   try {
-    let result = await service.find(
+    let result = await service.list (
       req.query.user_id,
       req.query.FILTER,
       req.query.PAGING,

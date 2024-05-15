@@ -29,7 +29,7 @@ export const dataArray = [
     items: [
       {to: "/food/dash", label: "FoodDash"},
       {to: "/food/diff", label: "FoodDiff"},
-      {to: "/food/find", label: "FoodFind"},
+      {to: "/food/find", label: "FoodFindList"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/list/plan", label: "FoodListPlan"},
       {to: "/food/save", label: "FoodSave"},

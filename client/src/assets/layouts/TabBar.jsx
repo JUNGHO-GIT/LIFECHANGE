@@ -14,19 +14,25 @@ export const TabBar = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("dash");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (planStr !== "plan") {
+    if (thirdStr !== "plan") {
       if (typeStr === "dash") {
         setValue("dash");
       }
       else if (typeStr === "diff") {
         setValue("diff");
+      }
+      else if (typeStr === "find" && partStr === "list") {
+        setValue("find/list");
+      }
+      else if (typeStr === "find" && partStr === "save") {
+        setValue("find/save");
       }
       else if (typeStr === "list") {
         setValue("list");
@@ -38,7 +44,7 @@ export const TabBar = () => {
         setValue("detail");
       }
     }
-    else {
+    else if (thirdStr === "plan") {
       if (typeStr === "list") {
         setValue("list/plan");
       }
@@ -46,12 +52,13 @@ export const TabBar = () => {
         setValue("save/plan");
       }
     }
-  }, [typeStr, planStr]);
+  }, [typeStr, thirdStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row w-100vw h-7vh"}>
-      <Tabs value={value}
+      <Tabs
+        value={value}
         variant={"scrollable"}
         scrollButtons={"auto"}
         allowScrollButtonsMobile={true}
@@ -63,13 +70,13 @@ export const TabBar = () => {
         }}
         onChange={(event, newValue) => {
           setValue(newValue);
+          navigate(`${partStr}/${newValue}`);
         }}>
         <Tab
           label={"통계"}
           value={"dash"}
           onClick={() => {
             setValue("dash");
-            navigate(`${partStr}/dash`);
           }}
         />
         <Tab
@@ -77,7 +84,6 @@ export const TabBar = () => {
           value={"diff"}
           onClick={() => {
             setValue("diff");
-            navigate(`${partStr}/diff`);
           }}
         />
         <Tab
@@ -85,7 +91,6 @@ export const TabBar = () => {
           value={"list"}
           onClick={() => {
             setValue("list");
-            navigate(`${partStr}/list`);
           }}
         />
         <Tab
@@ -93,7 +98,6 @@ export const TabBar = () => {
           value={"save"}
           onClick={() => {
             setValue("save");
-            navigate(`${partStr}/save`);
           }}
         />
         <Tab
@@ -101,7 +105,6 @@ export const TabBar = () => {
           value={"list/plan"}
           onClick={() => {
             setValue("list/plan");
-            navigate(`${partStr}/list/plan`);
           }}
         />
         <Tab
@@ -109,15 +112,14 @@ export const TabBar = () => {
           value={"save/plan"}
           onClick={() => {
             setValue("save/plan");
-            navigate(`${partStr}/save/plan`);
           }}
         />
       </Tabs>
     </Div>
   );
 
-  // 7. navigation -------------------------------------------------------------------------------->
-  const navigationNode = () => (
+  // 7. tabBar ------------------------------------------------------------------------------------>
+  const tabBarNode = () => (
     <Paper className={"flex-wrapper p-sticky top-14vh border-top border-bottom"}>
       {partStr === "exercise" || partStr === "food" ||
         partStr === "money" || partStr === "sleep" ? (
@@ -131,7 +133,7 @@ export const TabBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {navigationNode()}
+      {tabBarNode()}
     </>
   );
 };

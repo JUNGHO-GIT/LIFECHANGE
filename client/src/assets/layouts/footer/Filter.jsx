@@ -284,7 +284,7 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "find") {
+      else if (strings?.type === "find" && strings?.third === "list") {
         return (
           null
         );

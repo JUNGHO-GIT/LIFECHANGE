@@ -28,7 +28,7 @@ export const FoodSave = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -46,7 +46,7 @@ export const FoodSave = () => {
     endDt: "0000-00-00",
     toList:"/food/list",
     toSave:"/food/save",
-    toFind:"/food/find",
+    toFind:"/food/find/list",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -82,10 +82,6 @@ export const FoodSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
-
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
 
   // 2-3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
@@ -655,7 +651,7 @@ export const FoodSave = () => {
       strings={{
         part: partStr,
         type: typeStr,
-        plan: planStr,
+        third: thirdStr,
       }}
       objects={{
         DATE, SEND, COUNT

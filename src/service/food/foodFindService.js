@@ -3,8 +3,8 @@
 import {JSDOM} from "jsdom";
 import axios from "axios";
 
-// 1. find ---------------------------------------------------------------------------------------->
-export const find = async (
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = async (
   user_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
@@ -39,6 +39,10 @@ export const find = async (
 
   const findResult = await getFindResult();
   const document = new JSDOM(findResult).window.document;
+
+  const count = document.querySelector(".searchResultSummary")?.textContent;
+  totalCnt = count ? Math.ceil(parseInt(count.split("중")[0]?.trim(), 10) / 10) : 0;
+
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
   const regexBrand = (param) => {
@@ -101,14 +105,15 @@ export const find = async (
     };
   };
 
-  tables.forEach((param) => {
+  tables.forEach((param, tableIndex) => {
     const rows = param.querySelectorAll("tr");
-    Array.from(rows).forEach((prev) => {
+    Array.from(rows).forEach((prev, rowIndex) => {
       const titleElement = prev.querySelector("a.prominent")?.textContent?.trim();
       const brandElement = regexBrand(prev.querySelector("a.brand")?.textContent?.trim());
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
+        food_pagePerNumber: (page - 1) * 10 + tableIndex * rows.length + rowIndex + 1,
         food_title: titleElement,
         food_brand: brandElement,
         food_count: nutritionElement.count,
@@ -119,9 +124,6 @@ export const find = async (
         food_carb: nutritionElement.carb,
         food_protein: nutritionElement.protein,
       });
-
-      const count = document.querySelector(".searchResultSummary")?.textContent;
-      totalCnt = count ? Math.ceil(parseInt(count.split("중")[0]?.trim(), 10) / 10) : 0;
     });
   });
 

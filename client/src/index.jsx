@@ -39,7 +39,8 @@ import {ExerciseSavePlan} from "./page/exercise/ExerciseSavePlan";
 
 import {FoodDash} from "./page/food/dash/FoodDash";
 import {FoodDiff} from "./page/food/diff/FoodDiff";
-import {FoodFind} from "./page/food/find/FoodFind";
+import {FoodFindList} from "./page/food/find/FoodFindList";
+import {FoodFindSave} from "./page/food/find/FoodFindSave";
 import {FoodList} from "./page/food/FoodList";
 import {FoodListPlan} from "./page/food/FoodListPlan";
 import {FoodDetail} from "./page/food/FoodDetail";
@@ -95,7 +96,8 @@ const Food = () => (
   <Routes>
     <Route path="/dash" element={<FoodDash />} />
     <Route path="/diff" element={<FoodDiff />} />
-    <Route path="/find" element={<FoodFind />} />
+    <Route path="/find/list" element={<FoodFindList />} />
+    <Route path="/find/save" element={<FoodFindSave />} />
     <Route path="/list" element={<FoodList />} />
     <Route path="/list/plan" element={<FoodListPlan />} />
     <Route path="/detail" element={<FoodDetail />} />

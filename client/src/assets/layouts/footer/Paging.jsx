@@ -118,7 +118,7 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.type === "find") {
+      else if (strings?.type === "find" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {findNode()}

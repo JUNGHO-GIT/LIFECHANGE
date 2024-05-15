@@ -15,10 +15,10 @@ export const NavBar = () => {
   const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
   const part = partStr.charAt(0).toUpperCase() + partStr.slice(1);
   const type = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
-  const plan = planStr.charAt(0).toUpperCase() + planStr.slice(1);
+  const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isActive, setIsActive] = useState(PATH);

@@ -142,7 +142,7 @@ export const Btn = ({
       </Button>
     </Div>
   );
-  const btnFoodSave = () => (
+  const btnFoodDone = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -153,7 +153,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      Save
+      Done
     </Button>
   );
   const btnResetDefault = () => (
@@ -343,11 +343,20 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.type === "find") {
+      else if (strings?.type === "find" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetFind()}
-            {btnFoodSave()}
+            {btnFoodDone()}
+          </Div>
+        );
+      }
+      else if (strings?.type === "find" && strings?.third === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnToSave()}
+            {btnToFind()}
+            {btnRefresh()}
           </Div>
         );
       }

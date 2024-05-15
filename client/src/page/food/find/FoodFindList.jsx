@@ -1,4 +1,4 @@
-// FoodFind.jsx
+// FoodFindList.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
@@ -10,7 +10,7 @@ import {Paper, TableContainer, Table, Checkbox} from "../../../import/ImportMuis
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodFind = () => {
+export const FoodFindList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -24,7 +24,7 @@ export const FoodFind = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
@@ -47,7 +47,7 @@ export const FoodFind = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toSave:"/food/save",
+    toSave:"/food/find/save",
   });
   const [PAGING, setPAGING] = useState({
     page: 0,
@@ -60,7 +60,7 @@ export const FoodFind = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_unique: "",
+    food_pagePerNumber: "",
     food_title: "",
     food_brand: "",
     food_count: 0,
@@ -101,6 +101,10 @@ export const FoodFind = () => {
       if (isChecked && !sectionArray.some(item => item.food_unique === OBJECT[index].food_unique)) {
         sectionArray.push(OBJECT[index]);
       }
+    });
+
+    // unchecked 항목 sectionArray에서 제거
+    checked.forEach((isChecked, index) => {
       if (!isChecked) {
         sectionArray = sectionArray.filter(item => item.food_unique !== OBJECT[index].food_unique);
       }
@@ -123,7 +127,7 @@ export const FoodFind = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFind = async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/find`, {
+    const res = await axios.get(`${URL_OBJECT}/find/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -275,7 +279,7 @@ export const FoodFind = () => {
       strings={{
         part: partStr,
         type: typeStr,
-        plan: planStr,
+        third: thirdStr,
       }}
       objects={{
         DATE, FILTER, SEND, PAGING, COUNT

@@ -20,7 +20,7 @@ export const UserLogin = () => {
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const planStr = PATH?.split("/")[3] ? "plan" : "";
+  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -111,7 +111,7 @@ export const UserLogin = () => {
       strings={{
         part: partStr,
         type: typeStr,
-        plan: planStr,
+        third: thirdStr,
       }}
       objects={{
 

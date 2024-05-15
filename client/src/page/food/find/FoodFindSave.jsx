@@ -1,27 +1,29 @@
-// ExerciseDetail.jsx
+// FoodFindSave.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {percent} from "../../../import/ImportLogics.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Adorn, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseDetail = () => {
+export const FoodFindSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataset") || "";
-  const exerciseArray = JSON.parse(session)?.exercise || [];
+  const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -43,9 +45,9 @@ export const ExerciseDetail = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/exercise/list",
-    toDetail:"/exercise/detail",
-    toUpdate:"/exercise/save",
+    toList:"/food/list",
+    toFind:"/food/find/list",
+    toSave:"/food/find/save",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -55,70 +57,150 @@ export const ExerciseDetail = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    exercise_number: 0,
-    exercise_demo: false,
-    exercise_startDt: "0000-00-00",
-    exercise_endDt: "0000-00-00",
-    exercise_total_volume: 0,
-    exercise_total_cardio: "00:00",
-    exercise_body_weight: 0,
-    exercise_section: [{
-      exercise_part_idx: 0,
-      exercise_part_val: "전체",
-      exercise_title_idx: 0,
-      exercise_title_val: "전체",
-      exercise_set: 0,
-      exercise_rep: 0,
-      exercise_kg: 0,
-      exercise_cardio: "00:00",
+    food_number: 0,
+    food_demo: false,
+    food_startDt: "0000-00-00",
+    food_endDt: "0000-00-00",
+    food_total_kcal: 0,
+    food_total_fat: 0,
+    food_total_carb: 0,
+    food_total_protein: 0,
+    food_section: [{
+      food_part_idx: 1,
+      food_part_val: "아침",
+      food_title: "",
+      food_count: 0,
+      food_serv: "회",
+      food_gram:  0,
+      food_kcal: 0,
+      food_fat: 0,
+      food_carb: 0,
+      food_protein: 0,
     }],
   };
+  const [OBJECT_BEFORE, setOBJECT_BEFORE] = useState(OBJECT_DEF);
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/detail`, {
-      params: {
-        user_id: user_id,
-        _id: location_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      },
-    });
-    setOBJECT(res.data.result || OBJECT_DEF);
-    setCOUNT((prev) => ({
+  // 2-3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {
+    // 스토리지 데이터 가져오기
+    const getItem = sessionStorage.getItem("food_section");
+    let storageSection = getItem ? JSON.parse(getItem) : null;
+
+    // 상세 데이터 가져오기
+    setOBJECT((prev) => ({
       ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      food_section: storageSection,
     }));
     setLOADING(false);
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  }, [user_id, DATE.startDt, DATE.endDt]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    // 초기 영양소 값 설정
+    setOBJECT_BEFORE((prev) => ({
+      ...prev,
+      food_section: [...OBJECT?.food_section],
+    }));
+  }, [OBJECT]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const totals = OBJECT?.food_section?.reduce((acc, current) => {
+      return {
+        totalKcal: acc.totalKcal + Number(current.food_kcal),
+        totalFat: acc.totalFat + Number(current.food_fat),
+        totalCarb: acc.totalCarb + Number(current.food_carb),
+        totalProtein: acc.totalProtein + Number(current.food_protein),
+      };
+    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
+
+    setOBJECT((prev) => ({
+      ...prev,
+      food_total_kcal: Number(totals.totalKcal.toFixed(1)),
+      food_total_fat: Number(totals.totalFat.toFixed(1)),
+      food_total_carb: Number(totals.totalCarb.toFixed(1)),
+      food_total_protein: Number(totals.totalProtein.toFixed(1)),
+    }));
+  }, [OBJECT?.food_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id, section_id) => {
-    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
-      params: {
-        user_id: user_id,
-        _id: id,
-        section_id: section_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      },
+  const flowSave = async () => {
+    const res = await axios.post(`${URL_OBJECT}/find/save`, {
+      user_id: user_id,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navigate(SEND.toList);
-      }
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
+      navigate(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(res.data.msg);
     }
+  };
+
+  // 4-1. handler --------------------------------------------------------------------------------->
+  const handleCountChange = (index, newValue) => {
+
+    const newCountValue = Number(newValue);
+
+    setOBJECT((prev) => {
+      const newFoodSection = [...prev.food_section];
+      const section = newFoodSection[index];
+      const defaultSection = OBJECT_BEFORE.food_section[index];
+      const ratio = newCountValue / (defaultSection.food_count || 1);
+
+      if (defaultSection) {
+        newFoodSection[index] = {
+          ...section,
+          food_count: newCountValue,
+          food_gram: Number(((defaultSection?.food_gram) * ratio).toFixed(1)),
+          food_kcal: Number(((defaultSection?.food_kcal) * ratio).toFixed(1)),
+          food_carb: Number(((defaultSection?.food_carb) * ratio).toFixed(1)),
+          food_protein: Number(((defaultSection?.food_protein) * ratio).toFixed(1)),
+          food_fat: Number(((defaultSection?.food_fat) * ratio).toFixed(1)),
+        };
+      }
+      return {
+        ...prev,
+        food_section: newFoodSection,
+      };
+    });
+  };
+
+  // 4-2. handler --------------------------------------------------------------------------------->
+  const handlerFoodDelete = (index) => {
+    setOBJECT((prev) => {
+      const newFoodSection = [...prev.food_section];
+      newFoodSection.splice(index, 1);
+      return {
+        ...prev,
+        food_section: newFoodSection,
+      };
+    });
+  };
+
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      food_section: prev.food_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -165,7 +247,7 @@ export const ExerciseDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
                 null
@@ -214,18 +296,18 @@ export const ExerciseDetail = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 볼륨"}
+            label={"총 칼로리"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "vol"
+                "Kcal"
               )
             }}
           />
@@ -233,18 +315,37 @@ export const ExerciseDetail = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 유산소 시간"}
+            label={"총 탄수화물"}
             size={"small"}
-            value={`${OBJECT?.exercise_total_cardio}`}
+            value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbRun"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "h:m"
+                "g"
+              )
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"총 단백질"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Adorn name={"TbMilk"} className={"w-16 h-16 icon"} position={"start"}/>
+              ),
+              endAdornment: (
+                "g"
               )
             }}
           />
@@ -252,18 +353,18 @@ export const ExerciseDetail = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={"체중"}
+            label={"총 지방"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbScaleOutline"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "kg"
+                "g"
               )
             }}
           />
@@ -288,27 +389,10 @@ export const ExerciseDetail = () => {
         contents={({closePopup}) => (
           <>
             <Icons name={"TbTrash"} className={"w-24 h-24 icon"} onClick={() => {
-              flowDelete(id, sectionId);
-              setTimeout(() => {
-                closePopup();
-              }, 1000);
+              handlerDelete(index);
+              closePopup();
             }}>
               <Div className={"fs-0-8rem"}>삭제</Div>
-            </Icons>
-            <Div className={"h-10"}/>
-            <Icons name={"TbEdit"} className={"w-24 h-24 icon"} onClick={() => {
-              Object.assign(SEND, {
-                startDt: DATE.startDt,
-                endDt: DATE.endDt
-              });
-              navigate(SEND.toUpdate, {
-                state: SEND
-              });
-              setTimeout(() => {
-                closePopup();
-              }, 1000);
-            }}>
-              <Div className={"fs-0-8rem"}>수정</Div>
             </Icons>
           </>
         )}>
@@ -327,17 +411,18 @@ export const ExerciseDetail = () => {
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between mb-40"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, OBJECT?.exercise_section[i]?._id, i)}
+          {dropdownSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
             select={true}
             type={"text"}
             size={"small"}
-            label={"파트"}
+            label={"분류"}
             variant={"outlined"}
             className={"w-25vw me-10"}
-            value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+            defaultValue={1}
+            value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -347,19 +432,31 @@ export const ExerciseDetail = () => {
                 null
               )
             }}
+            onChange={(e) => {
+              const newIndex = Number(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                food_section: prev.food_section.map((item, idx) => (
+                  idx === i ? {
+                    ...item,
+                    food_part_idx: newIndex,
+                    food_part_val: foodArray[newIndex]?.food_part
+                  } : item
+                ))
+              }));
+            }}
           >
-            {exerciseArray.map((item, idx) => (
+            {foodArray.map((item, idx) => (
               <MenuItem key={idx} value={idx}>
-                {item.exercise_part}
+                {item.food_part}
               </MenuItem>
             ))}
           </TextField>
           <TextField
-            select={true}
-            type={"text"}
+            select={false}
+            label={"gram"}
             size={"small"}
-            label={"종목"}
-            value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+            value={`${numeral(OBJECT?.food_section[i]?.food_gram).format('0,0')}`}
             variant={"outlined"}
             className={"w-25vw ms-10"}
             InputProps={{
@@ -368,32 +465,53 @@ export const ExerciseDetail = () => {
                 null
               ),
               endAdornment: (
+                "g"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              // 최대 4자리까지 입력 가능
+              const limitedValue = rawValue.slice(0, 4);
+              handleCountChange(i, limitedValue);
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            label={"식품명"}
+            size={"small"}
+            value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+            variant={"outlined"}
+            className={"w-60vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                null
+              ),
+              endAdornment: (
                 null
               )
             }}
-          >
-            {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
-              <MenuItem key={idx} value={idx}>
-                {title}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"세트"}
+            label={"kcal"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbCalculator"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "set"
+                "Kcal"
               )
             }}
           />
@@ -401,18 +519,18 @@ export const ExerciseDetail = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"횟수"}
+            label={"carb"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"BiBowlRice"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "rep"
+                "g"
               )
             }}
           />
@@ -420,18 +538,18 @@ export const ExerciseDetail = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"무게"}
+            label={"protein"}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')}`}
+            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"LiaDumbbellSolid"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbMilk"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "kg"
+                "g"
               )
             }}
           />
@@ -439,18 +557,18 @@ export const ExerciseDetail = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"유산소"}
+            label={"fat"}
             size={"small"}
-            value={OBJECT?.exercise_section[i]?.exercise_cardio}
+            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
             variant={"outlined"}
             className={"w-60vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbRun"} className={"w-16 h-16 icon"} position={"start"}/>
+                <Adorn name={"TbMeat"} className={"w-16 h-16 icon"} position={"start"}/>
               ),
               endAdornment: (
-                "h:m"
+                "g"
               )
             }}
           />
@@ -470,7 +588,7 @@ export const ExerciseDetail = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.exercise_section.map((_, i) => (tableFragment(i)))}
+          {OBJECT?.food_section.map((_, i) => (tableFragment(i)))}
         </Div>
       </Div>
     );
@@ -505,7 +623,7 @@ export const ExerciseDetail = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate, flowDelete
+        navigate, flowSave
       }}
     />
   );
