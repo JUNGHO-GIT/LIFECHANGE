@@ -25,11 +25,6 @@ import {
   Fab, Fade, FilledInput, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel
 } from "@mui/material";
 
-// g
-import {
-  Grid, Unstable_Grid2, Grow
-} from "@mui/material";
-
 // i ~ k
 import {
   InputAdornment, InputBase, InputLabel
@@ -104,9 +99,6 @@ export {
 
   // f
   Fab, Fade, FilledInput, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel,
-
-  // g
-  Grid, Unstable_Grid2, Grow,
 
   // h ~ k
   InputAdornment, InputBase, InputLabel,

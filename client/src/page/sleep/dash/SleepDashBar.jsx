@@ -1,7 +1,7 @@
 // SleepDashBar.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {axios} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
