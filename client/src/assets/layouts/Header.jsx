@@ -35,26 +35,26 @@ export const Header = () => {
     <PopUp
       type={"dropdown"}
       position={"bottom"}
-      direction={"left"}
+      direction={"center"}
       contents={({closePopup}) => (
         <>
-        <Icons name={"TbLogin"} className={"w-24 h-24 icon"} onClick={() => {
+        <Div className={"d-center mb-10"} onClick={() => {
           navigate("/user/login");
-          setTimeout(() => {
-            closePopup();
-          }, 1000);
+          closePopup();
         }}>
-          <Div className={"fs-0-8rem"}>Login</Div>
-        </Icons>
-        <Div className={"h-10"}/>
-        <Icons name={"TbLogin2"} className={"w-24 h-24 icon"} onClick={() => {
+          <Icons name={"TbLogin"} className={"w-24 h-24 icon"}>
+            <Div className={"fs-0-8rem"}>Login</Div>
+          </Icons>
+        </Div>
+        <Div className={"d-center"} onClick={() => {
           navigate("/user/signup");
-          setTimeout(() => {
-            closePopup();
-          }, 1000);
-        }}>
-          <Div className={"fs-0-8rem"}>SignUp</Div>
-        </Icons>
+          closePopup();
+        }
+        }>
+          <Icons name={"TbLogin2"} className={"w-24 h-24 icon"}>
+            <Div className={"fs-0-8rem"}>SignUp</Div>
+          </Icons>
+        </Div>
         </>
       )}>
       {(popTrigger={}) => (
@@ -70,7 +70,7 @@ export const Header = () => {
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
-      <Div className={"d-center ms-0"}>
+      <Div className={"d-center ms-0"} onClick={() => navigate("/calendar/list")}>
         <img src={logo2} className={"w-max170 h-max30"} alt="logo2" />
         <img src={logo3} className={"w-max170 h-max30"} alt="logo3" />
       </Div>

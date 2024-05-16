@@ -343,7 +343,7 @@ export const MoneySavePlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min70vh"}>
+      <Div className={"block-wrapper h-min68vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

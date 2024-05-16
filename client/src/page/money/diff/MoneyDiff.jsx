@@ -193,7 +193,7 @@ export const MoneyDiff = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min100vw h-min70vh"}>
+      <Div className={"block-wrapper w-min100vw h-min68vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>

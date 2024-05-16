@@ -72,7 +72,7 @@ export const UserSignup = () => {
             )}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"password"}
@@ -88,9 +88,9 @@ export const UserSignup = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper d-center h-min70vh"}>
+      <Div className={"block-wrapper d-center h-min68vh"}>
         <Div className={"d-center p-10"}>
-          <Div className={"fs-1-0rem-5"}>SignUp</Div>
+          <Div className={"fs-2-0rem"}>SignUp</Div>
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}
@@ -122,10 +122,8 @@ export const UserSignup = () => {
         third: thirdStr,
       }}
       objects={{
-
       }}
       functions={{
-
       }}
       handlers={{
         navigate, flowSave
