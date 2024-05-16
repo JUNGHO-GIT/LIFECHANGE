@@ -1,23 +1,14 @@
 // ExerciseDashScatter.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {axios} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashScatter = () => {
@@ -79,7 +70,8 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
+        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -137,7 +129,8 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
+        <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -199,7 +192,8 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -25}}>
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -281,7 +275,7 @@ export const ExerciseDashScatter = () => {
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
           <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
-          <Div className={"d-center m-auto fs-1-0rem"}>몸무게 목표/실제</Div>
+          <Div className={"d-center m-auto fs-1-0rem"}>체중 목표</Div>
           <Div className={"d-center ms-auto me-10"}>&nbsp;</Div>
         </Div>
         <Div className={"d-column"}>

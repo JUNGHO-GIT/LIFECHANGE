@@ -23,6 +23,7 @@ export const barToday = async (
     user_id_param, startDt, endDt
   );
 
+  // kcal
   finalResultKcal = [
     {
       name: "칼로리",
@@ -31,6 +32,7 @@ export const barToday = async (
     }
   ];
 
+  // nut
   finalResultNut = [
     {
       name: "탄수화물",
@@ -72,7 +74,7 @@ export const pieToday = async (
   findResultKcal = await repository.pieToday.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.pieToday.listNut(
     user_id_param, startDt, endDt
   );
@@ -82,7 +84,7 @@ export const pieToday = async (
     name: item._id,
     value: intFormat(item.value)
   }));
-  // carb, protein, fat
+  // nut
   finalResultNut = findResultNut.map((item) => [
     {name: "탄수화물", value: intFormat(item.food_total_carb)},
     {name: "단백질", value: intFormat(item.food_total_protein)},
@@ -113,7 +115,7 @@ export const pieWeek = async (
   findResultKcal = await repository.pieWeek.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.pieWeek.listNut(
     user_id_param, startDt, endDt
   );
@@ -123,7 +125,7 @@ export const pieWeek = async (
     name: item._id,
     value: intFormat(item.value)
   }));
-  // carb, protein, fat
+  // nut
   finalResultNut = findResultNut.map((item) => [
     {name: "탄수화물", value: intFormat(item.food_total_carb)},
     {name: "단백질", value: intFormat(item.food_total_protein)},
@@ -154,7 +156,7 @@ export const pieMonth = async (
   findResultKcal = await repository.pieMonth.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.pieMonth.listNut(
     user_id_param, startDt, endDt
   );
@@ -164,7 +166,7 @@ export const pieMonth = async (
     name: item._id,
     value: intFormat(item.value)
   }));
-  // carb, protein, fat
+  // nut
   finalResultNut = findResultNut.map((item) => [
     {name: "탄수화물", value: intFormat(item.food_total_carb)},
     {name: "단백질", value: intFormat(item.food_total_protein)},
@@ -186,9 +188,14 @@ export const lineWeek = async (
   const startDt = curWeekStart.format("YYYY-MM-DD");
   const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월 (00-00)
-  const data = Array.from({ length: 7 }, (_, i) => {
-    return curWeekStart.clone().add(i, 'days').format("dd (MM-DD)");
+  // ex 월
+  const name = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  // ex. 00-00
+  const date = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultKcal = [];
@@ -200,12 +207,12 @@ export const lineWeek = async (
   findResultKcal = await repository.lineWeek.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.lineWeek.listNut(
     user_id_param, startDt, endDt
   );
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
       new Date(item.food_startDt).getDate() === index
     ));
@@ -215,10 +222,12 @@ export const lineWeek = async (
 
     finalResultKcal.push({
       name: data,
+      date: date[index],
       칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
+      date: date[index],
       탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
       단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
       지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
@@ -239,8 +248,14 @@ export const lineMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+  // ex. 00일
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return `${i + 1}일`;
+  });
+
+  // ex. 00-00
+  const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultKcal = [];
@@ -252,12 +267,12 @@ export const lineMonth = async (
   findResultKcal = await repository.lineMonth.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.lineMonth.listNut(
     user_id_param, startDt, endDt
   );
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
       new Date(item.food_startDt).getDate() === index + 1
     ));
@@ -267,10 +282,12 @@ export const lineMonth = async (
 
     finalResultKcal.push({
       name: data,
+      date: date[index],
       칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
+      date: date[index],
       탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
       단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
       지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
@@ -291,9 +308,14 @@ export const avgMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  // ex. 00주차 (00-00 ~ 00-00)
-  const data  = Array.from({ length: 5 }, (_, i) => {
-    return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => {
+    return `${i + 1}주차`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    return `${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")}`;
   });
 
   let sumKcal = Array(5).fill(0);
@@ -311,7 +333,7 @@ export const avgMonth = async (
   findResultKcal = await repository.avgMonth.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.avgMonth.listNut(
     user_id_param, startDt, endDt
   );
@@ -328,7 +350,7 @@ export const avgMonth = async (
     }
   });
 
-  // carb, protein, fat
+  // nut
   findResultNut.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
     const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
@@ -342,13 +364,15 @@ export const avgMonth = async (
     }
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,
+      date: date[index],
       칼로리: intFormat(sumKcal[index] / countRecords[index])
     });
     finalResultNut.push({
       name: data,
+      date: date[index],
       탄수화물: intFormat(sumCarb[index] / countRecords[index]),
       단백질: intFormat(sumProtein[index] / countRecords[index]),
       지방: intFormat(sumFat[index] / countRecords[index])
@@ -369,8 +393,14 @@ export const avgYear = async (
   const startDt = curYearStart.format("YYYY-MM-DD");
   const endDt = curYearEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 12 }, (_, i) => {
+  // ex. 00월
+  const name = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 12 }, (_, i) => {
+    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
   });
 
   let sumKcal = Array(12).fill(0);
@@ -388,7 +418,7 @@ export const avgYear = async (
   findResultKcal = await repository.avgYear.listKcal(
     user_id_param, startDt, endDt
   );
-  // carb, protein, fat
+  // nut
   findResultNut = await repository.avgYear.listNut(
     user_id_param, startDt, endDt
   );
@@ -400,7 +430,7 @@ export const avgYear = async (
     sumKcal[monthNum] += intFormat(item.food_total_kcal);
     countRecords[monthNum]++;
   });
-  // carb, protein, fat
+  // nut
   findResultNut.forEach((item) => {
     const foodDate = new Date(item.food_startDt);
     const monthNum = foodDate.getMonth();
@@ -410,13 +440,15 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,
+      date: date[index],
       칼로리: intFormat(sumKcal[index] / countRecords[index])
     });
     finalResultNut.push({
       name: data,
+      date: date[index],
       탄수화물: intFormat(sumCarb[index] / countRecords[index]),
       단백질: intFormat(sumProtein[index] / countRecords[index]),
       지방: intFormat(sumFat[index] / countRecords[index])

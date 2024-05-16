@@ -21,10 +21,10 @@ export const PopUp = ({...props}) => {
     popupStyle = {
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "6px 6px 6px 6px",
+      padding: "6px 6px 6px 15px",
     };
   }
-  else if (props.type === "memo") {
+  else {
     popupStyle = {
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
@@ -98,6 +98,11 @@ export const PopUp = ({...props}) => {
       open={popupState.isOpen}
       anchorEl={null}
       onClose={popupState.close}
+      anchorReference={"anchorPosition"}
+      anchorPosition={{
+        top: window.innerHeight / 2,
+        left: window.innerWidth / 2
+      }}
       anchorOrigin={{
         vertical: "center",
         horizontal: "center",
@@ -105,11 +110,6 @@ export const PopUp = ({...props}) => {
       transformOrigin={{
         vertical: "center",
         horizontal: "center",
-      }}
-      anchorReference={"anchorPosition"}
-      anchorPosition={{
-        top: window.innerHeight / 2,
-        left: window.innerWidth / 2
       }}
       slotProps={{
         paper: {

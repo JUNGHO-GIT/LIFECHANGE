@@ -12,7 +12,7 @@ import {
 
 // c
 import {
-  Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Checkbox, CircularProgress, ClickAwayListener, Collapse, Container, CssBaseline
+  Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Checkbox, CircularProgress, ClickAwayListener, Collapse, CssBaseline
 } from "@mui/material";
 
 // d ~ e
@@ -92,7 +92,7 @@ export {
 
   // c
   Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Checkbox,
-  CircularProgress, ClickAwayListener, Collapse, Container, CssBaseline,
+  CircularProgress, ClickAwayListener, Collapse, CssBaseline,
 
   // d ~ e
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer,

@@ -181,9 +181,14 @@ export const lineWeek = async (
   const startDt = curWeekStart.format("YYYY-MM-DD");
   const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월 (00-00)
-  const data = Array.from({ length: 7 }, (_, i) => {
-    return curWeekStart.clone().add(i, 'days').format("dd (MM-DD)");
+  // ex 월
+  const name = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  // ex. 00-00
+  const date = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultVolume = [];
@@ -200,7 +205,7 @@ export const lineWeek = async (
     user_id_param, startDt, endDt
   );
 
-  data.forEach((item, index) => {
+  name.forEach((data, index) => {
     const findIndexVolume = findResultVolume?.findIndex((item) => (
       new Date(item.exercise_startDt).getDate() === index
     ));
@@ -208,11 +213,13 @@ export const lineWeek = async (
       new Date(item.exercise_startDt).getDate() === index
     ));
     finalResultVolume.push({
-      name: item,
+      name: data,
+      date: date[index],
       볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
-      name: item,
+      name: data,
+      date: date[index],
       시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
@@ -231,8 +238,14 @@ export const lineMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+  // ex. 00일
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return `${i + 1}일`;
+  });
+
+  // ex. 00-00
+  const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultVolume = [];
@@ -249,7 +262,7 @@ export const lineMonth = async (
     user_id_param, startDt, endDt
   );
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     const findIndexVolume = findResultVolume.findIndex((item) => (
       new Date(item.exercise_startDt).getDate() === index + 1
     ));
@@ -259,10 +272,12 @@ export const lineMonth = async (
 
     finalResultVolume.push({
       name: data,
+      date: date[index],
       볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: data,
+      date: date[index],
       시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
@@ -281,9 +296,14 @@ export const avgMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  // ex. 00주차 (00-00 ~ 00-00)
-  const data  = Array.from({ length: 5 }, (_, i) => {
-    return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => {
+    return `${i + 1}주차`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    return `${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")}`;
   });
 
   let sumVolume = Array(5).fill(0);
@@ -328,13 +348,15 @@ export const avgMonth = async (
     }
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
+      date: date[index],
       볼륨: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
+      date: date[index],
       시간: intFormat(sumCardio[index] / countRecords[index])
     });
   });
@@ -353,8 +375,14 @@ export const avgYear = async (
   const startDt = curYearStart.format("YYYY-MM-DD");
   const endDt = curYearEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 12 }, (_, i) => {
+  // ex. 00월
+  const name = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 12 }, (_, i) => {
+    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
   });
 
   let sumVolume = Array(12).fill(0);
@@ -390,13 +418,15 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
+      date: date[index],
       볼륨: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
+      date: date[index],
       시간: intFormat(sumCardio[index] / countRecords[index])
     });
   });

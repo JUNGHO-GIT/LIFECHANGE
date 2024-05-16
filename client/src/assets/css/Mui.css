@@ -1,4 +1,3 @@
-/** 페이퍼 루트 **/
 [class$="MuiPaper-root"] {
   border: 0px !important;
   border-radius: 0px !important;
@@ -22,7 +21,6 @@
 [class$="MuiFormLabel-root-MuiInputLabel-root"] {
   line-height: 1.0rem !important;
 }
-
 [class$="MuiBottomNavigation-root"] {
   width: -webkit-fill-available !important;
 }
@@ -32,38 +30,31 @@
 [class$="MuiTab-root"] {
   min-width: 0px !important;
 }
-
 [class$="MuiToolbar-root-MuiTablePagination-toolbar"] {
   padding: 0px 0px 0px 0px !important;
 }
-
-.MuiTab-root.Mui-selected {
-  color: #006ab3 !important;
-  font-weight: bold !important;
-}
-.MuiTab-root.Mui-selected svg {
-  color: #0b2730 !important;
-  font-weight: bold !important;
-}
-
-.MuiBottomNavigationAction-root.Mui-selected {
-  color: #006ab3 !important;
-  font-weight: bold !important;
-}
-.MuiBottomNavigationAction-root.Mui-selected svg {
-  color: #0b2730 !important;
-  font-weight: bold !important;
-}
-
-.MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
-  color: #006ab3 !important;
-  font-weight: bold !important;
-}
-
 .MuiFormControlLabel-root {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
 .MuiTableCell-root {
   font-size: 0.7rem !important;
+}
+
+.MuiTab-root.Mui-selected {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+  scale: 1.2 !important;
+}
+
+.MuiBottomNavigationAction-root.Mui-selected {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+  scale: 1.2 !important;
+}
+
+.MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+  color: #006ab3 !important;
+  font-weight: bold !important;
+  scale: 1.2 !important;
 }

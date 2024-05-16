@@ -4,20 +4,12 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Paper,MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../../import/ImportImages.jsx";
+import {setting4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashLine = () => {
@@ -36,16 +28,16 @@ export const FoodDashLine = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_WEEK_DEF = [
-    {name:"", 칼로리: 0},
+    {name:"", date:"", 칼로리: 0},
   ];
   const OBJECT_NUT_WEEK_DEF = [
-    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
   const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", 칼로리: 0},
+    {name:"", date:"", 칼로리: 0},
   ];
   const OBJECT_NUT_MONTH_DEF = [
-    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);
@@ -326,7 +318,6 @@ export const FoodDashLine = () => {
     // 7-5-2. dropdown
     const dropdownSection2 = () => (
       <PopUp
-        elementId={"popover"}
         type={"dash"}
         position={"bottom"}
         direction={"left"}

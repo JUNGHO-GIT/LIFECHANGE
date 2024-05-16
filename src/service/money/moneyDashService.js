@@ -174,9 +174,14 @@ export const lineWeek = async (
   const startDt = curWeekStart.format("YYYY-MM-DD");
   const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월 (00-00)
-  const data = Array.from({ length: 7 }, (_, i) => {
-    return curWeekStart.clone().add(i, 'days').format("dd (MM-DD)");
+  // ex 월
+  const name = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  // ex. 00-00
+  const date = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultIn = [];
@@ -193,7 +198,7 @@ export const lineWeek = async (
     user_id_param, startDt, endDt
   );
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     const findIndexIn = findResultIn.findIndex((item) => (
       new Date(item.money_startDt).getDay() === index
     ));
@@ -202,10 +207,12 @@ export const lineWeek = async (
     ));
     finalResultIn.push({
       name: data,
+      date: date[index],
       수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
     });
     finalResultOut.push({
       name: data,
+      date: date[index],
       지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
     });
   });
@@ -224,8 +231,14 @@ export const lineMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+  // ex. 00일
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return `${i + 1}일`;
+  });
+
+  // ex. 00-00
+  const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
   let findResultIn = [];
@@ -240,7 +253,7 @@ export const lineMonth = async (
     user_id_param, startDt, endDt
   );
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     const findIndexIn = findResultIn.findIndex((item) => (
       new Date(item.money_startDt).getDay() === index + 1
     ));
@@ -250,10 +263,12 @@ export const lineMonth = async (
 
     finalResultIn.push({
       name: data,
+      date: date[index],
       수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
     });
     finalResultOut.push({
       name: data,
+      date: date[index],
       지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
     });
   });
@@ -272,10 +287,14 @@ export const avgMonth = async (
   const startDt = curMonthStart.format("YYYY-MM-DD");
   const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 5 }, (_, i) => {
-    const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
-    const weekEnd = curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD");
-    return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => {
+    return `${i + 1}주차`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    return `${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")}`;
   });
 
   let sumIn = Array(5).fill(0);
@@ -319,13 +338,15 @@ export const avgMonth = async (
     }
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultIn.push({
       name: data,
+      date: date[index],
       수입: intFormat(sumIn[index] / countRecords[index])
     });
     finalResultOut.push({
       name: data,
+      date: date[index],
       지출: intFormat(sumOut[index] / countRecords[index])
     });
   });
@@ -344,8 +365,14 @@ export const avgYear = async (
   const startDt = curYearStart.format("YYYY-MM-DD");
   const endDt = curYearEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 12 }, (_, i) => {
+  // ex. 00월
+  const name = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
+  });
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 12 }, (_, i) => {
+    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
   });
 
   let sumIn = Array(5).fill(0);
@@ -381,13 +408,15 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
-  data.forEach((data, index) => {
+  name.forEach((data, index) => {
     finalResultIn.push({
       name: data,
+      date: date[index],
       수입: intFormat(sumIn[index] / countRecords[index])
     });
     finalResultOut.push({
       name: data,
+      date: date[index],
       지출: intFormat(sumOut[index] / countRecords[index])
     });
   });

@@ -34,7 +34,7 @@ export const Header = () => {
     <PopUp
       type={"dropdown"}
       position={"bottom"}
-      direction={"center"}
+      direction={"right"}
       contents={({closePopup}) => (
         <>
         <Div className={"d-center mb-10"} onClick={() => {
@@ -57,9 +57,8 @@ export const Header = () => {
       )}>
       {(popTrigger={}) => (
         <img src={user1} className={"w-24 h-24 pointer"} alt={"user1"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}
-        />
+          popTrigger.openPopup(e.currentTarget)
+        }}/>
       )}
     </PopUp>
   );
