@@ -1,7 +1,9 @@
 // handlerY.js
 
 // ------------------------------------------------------------------------------------------------>
-export const handlerY = (value, array, extra) => {
+export const handlerY = (
+  value=[{}], array=[""], type=""
+) => {
 
   let ticks = [];
   let maxValue = 0;
