@@ -115,11 +115,23 @@ export const SleepSavePlan = () => {
     }
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      sleep_section: prev.sleep_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -153,7 +165,7 @@ export const SleepSavePlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -161,6 +173,9 @@ export const SleepSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -199,7 +214,7 @@ export const SleepSavePlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -207,6 +222,9 @@ export const SleepSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -229,7 +247,7 @@ export const SleepSavePlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -268,6 +286,7 @@ export const SleepSavePlan = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -305,8 +324,8 @@ export const SleepSavePlan = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -324,7 +343,7 @@ export const SleepSavePlan = () => {
                 label={"취침 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_plan_night}
                 InputProps={{
                   readOnly: true,
@@ -356,8 +375,8 @@ export const SleepSavePlan = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -375,7 +394,7 @@ export const SleepSavePlan = () => {
                 label={"기상 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_plan_morning}
                 InputProps={{
                   readOnly: true,
@@ -407,8 +426,8 @@ export const SleepSavePlan = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_time, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     closePopup();
@@ -422,7 +441,7 @@ export const SleepSavePlan = () => {
                 label={"수면 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_plan_time}
                 InputProps={{
                   readOnly: true,
@@ -444,7 +463,7 @@ export const SleepSavePlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -487,7 +506,7 @@ export const SleepSavePlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowSave
       }}
     />
   );

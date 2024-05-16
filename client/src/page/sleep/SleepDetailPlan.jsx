@@ -121,7 +121,7 @@ export const SleepDetailPlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -155,7 +155,7 @@ export const SleepDetailPlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -163,6 +163,9 @@ export const SleepDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -201,7 +204,7 @@ export const SleepDetailPlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -209,6 +212,9 @@ export const SleepDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -231,7 +237,7 @@ export const SleepDetailPlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -327,6 +333,13 @@ export const SleepDetailPlan = () => {
                   ampm={false}
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
                 />
               </LocalizationProvider>
             )}>
@@ -336,7 +349,7 @@ export const SleepDetailPlan = () => {
                 label={"취침 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_plan_night}
                 InputProps={{
                   readOnly: true,
@@ -367,6 +380,13 @@ export const SleepDetailPlan = () => {
                   ampm={false}
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
                 />
               </LocalizationProvider>
             )}>
@@ -376,7 +396,7 @@ export const SleepDetailPlan = () => {
                 label={"기상 목표"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_plan_morning}
                 InputProps={{
                   readOnly: true,
@@ -395,31 +415,62 @@ export const SleepDetailPlan = () => {
           </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            label={"수면 목표"}
-            type={"text"}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-60vw"}
-            value={OBJECT?.sleep_plan_time}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-              <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
-              ),
-              endAdornment: (
-                "h:m"
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"timePicker"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_plan_time, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"수면 목표"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw"}
+                value={OBJECT?.sleep_plan_time}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
-        <Div className={"d-row mb-20"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+        <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

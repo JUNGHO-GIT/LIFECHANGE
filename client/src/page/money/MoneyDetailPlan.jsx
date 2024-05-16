@@ -120,7 +120,7 @@ export const MoneyDetailPlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -154,7 +154,7 @@ export const MoneyDetailPlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -162,6 +162,9 @@ export const MoneyDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -200,7 +203,7 @@ export const MoneyDetailPlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -208,6 +211,9 @@ export const MoneyDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -230,7 +236,7 @@ export const MoneyDetailPlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -320,7 +326,7 @@ export const MoneyDetailPlan = () => {
             size={"small"}
             label={"목표 수입"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: true,
@@ -328,7 +334,7 @@ export const MoneyDetailPlan = () => {
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
             onChange={(e) => {
@@ -350,7 +356,7 @@ export const MoneyDetailPlan = () => {
             size={"small"}
             label={"목표 지출"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: true,
@@ -358,7 +364,7 @@ export const MoneyDetailPlan = () => {
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
             onChange={(e) => {
@@ -377,7 +383,7 @@ export const MoneyDetailPlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

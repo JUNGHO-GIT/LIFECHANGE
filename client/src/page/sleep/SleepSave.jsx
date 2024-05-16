@@ -173,7 +173,7 @@ export const SleepSave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -205,7 +205,7 @@ export const SleepSave = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -243,6 +243,7 @@ export const SleepSave = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -281,8 +282,8 @@ export const SleepSave = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_section[i]?.sleep_night, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -305,7 +306,7 @@ export const SleepSave = () => {
                 label={"취침"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_section[i].sleep_night}
                 InputProps={{
                   readOnly: true,
@@ -337,8 +338,8 @@ export const SleepSave = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_section[i]?.sleep_morning, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -361,7 +362,7 @@ export const SleepSave = () => {
                 label={"기상"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_section[i].sleep_morning}
                 InputProps={{
                   readOnly: true,
@@ -393,8 +394,8 @@ export const SleepSave = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_section[i]?.sleep_time, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     closePopup();
@@ -408,7 +409,7 @@ export const SleepSave = () => {
                 label={"수면"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_section[i].sleep_time}
                 InputProps={{
                   readOnly: true,
@@ -430,7 +431,7 @@ export const SleepSave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

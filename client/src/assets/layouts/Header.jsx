@@ -24,8 +24,8 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <>
-    <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
-    <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
+      <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
+      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
     </>
   );
 
@@ -56,7 +56,7 @@ export const Header = () => {
         </>
       )}>
       {(popTrigger={}) => (
-        <img src={user1} className={"w-24 h-24 pointer mb-n5"} alt={"user1"} onClick={(e) => {
+        <img src={user1} className={"w-24 h-24 pointer"} alt={"user1"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}
         />

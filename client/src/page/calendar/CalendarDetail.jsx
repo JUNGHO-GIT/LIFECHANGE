@@ -201,7 +201,7 @@ export const CalendarDetail = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -235,7 +235,7 @@ export const CalendarDetail = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -243,6 +243,9 @@ export const CalendarDetail = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -281,7 +284,7 @@ export const CalendarDetail = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -289,6 +292,9 @@ export const CalendarDetail = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -312,7 +318,7 @@ export const CalendarDetail = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: false,
@@ -403,7 +409,7 @@ export const CalendarDetail = () => {
             size={"small"}
             label={"파트"}
             variant={"outlined"}
-            className={"w-25vw me-10"}
+            className={"w-40vw me-3vw"}
             value={OBJECT?.calendar_section[i]?.calendar_part_idx}
             InputProps={{
               readOnly: false,
@@ -440,7 +446,7 @@ export const CalendarDetail = () => {
             size={"small"}
             label={"색상"}
             variant={"outlined"}
-            className={"w-25vw ms-10"}
+            className={"w-40vw ms-3vw"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
               readOnly: false,
@@ -479,7 +485,7 @@ export const CalendarDetail = () => {
             size={"small"}
             label={"제목"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
               readOnly: false,
@@ -511,7 +517,7 @@ export const CalendarDetail = () => {
             size={"small"}
             label={"상세"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={OBJECT?.calendar_section[i]?.calendar_detail}
             InputProps={{
               readOnly: false,
@@ -540,7 +546,7 @@ export const CalendarDetail = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min68vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

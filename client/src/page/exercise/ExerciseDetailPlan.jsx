@@ -2,11 +2,12 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
+import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
@@ -122,7 +123,7 @@ export const ExerciseDetailPlan = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -156,7 +157,7 @@ export const ExerciseDetailPlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -164,6 +165,9 @@ export const ExerciseDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -202,7 +206,7 @@ export const ExerciseDetailPlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -210,6 +214,9 @@ export const ExerciseDetailPlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -232,7 +239,7 @@ export const ExerciseDetailPlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -321,7 +328,7 @@ export const ExerciseDetailPlan = () => {
             type={"text"}
             size={"small"}
             label={"목표 운동 횟수"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
             InputProps={{
               readOnly: true,
@@ -340,7 +347,7 @@ export const ExerciseDetailPlan = () => {
             type={"text"}
             size={"small"}
             label={"목표 볼륨"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
               readOnly: true,
@@ -354,23 +361,51 @@ export const ExerciseDetailPlan = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 유산소"}
-            className={"w-60vw"}
-            value={OBJECT?.exercise_plan_cardio}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
-              ),
-              endAdornment: (
-                "h:m"
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"timePicker"}
+            position={"top"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"목표 유산소 시간"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw"}
+                value={OBJECT?.exercise_plan_cardio}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField
@@ -378,7 +413,7 @@ export const ExerciseDetailPlan = () => {
             type={"text"}
             size={"small"}
             label={"목표 체중"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
             InputProps={{
               readOnly: true,
@@ -395,7 +430,7 @@ export const ExerciseDetailPlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -158,7 +158,7 @@ export const SleepDetail = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -190,7 +190,7 @@ export const SleepDetail = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -294,7 +294,7 @@ export const SleepDetail = () => {
                 label={"취침"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_section[i].sleep_night}
                 InputProps={{
                   readOnly: true,
@@ -331,7 +331,7 @@ export const SleepDetail = () => {
                 label={"기상"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.sleep_section[i].sleep_morning}
                 InputProps={{
                   readOnly: true,
@@ -352,7 +352,7 @@ export const SleepDetail = () => {
             size={"small"}
             label={"수면"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={OBJECT?.sleep_section[i].sleep_time}
             InputProps={{
               readOnly: true,
@@ -369,7 +369,7 @@ export const SleepDetail = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

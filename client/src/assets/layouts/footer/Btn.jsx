@@ -42,7 +42,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      Save
+      저장
     </Button>
   );
   const btnGoToUpdate = () => (
@@ -56,7 +56,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      Update
+      수정
     </Button>
   );
   const btnGoToList = () => (
@@ -70,7 +70,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      List
+      목록
     </Button>
   );
   const btnGoToFind = () => (
@@ -84,7 +84,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      Find
+      더찾기
     </Button>
   );
   const btnFlowLogin = () => (
@@ -92,7 +92,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      Log In
+      로그인
     </Button>
   );
   const btnFlowSignup = () => (
@@ -100,7 +100,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      SignUp
+      회원가입
     </Button>
   );
   const btnRefresh = () => (
@@ -108,7 +108,7 @@ export const Btn = ({
     className={"success-btn"} onClick={() => {
       handlers.navigate(0);
     }}>
-      Refresh
+      새로고침
     </Button>
   );
   const btnFlowFind = () => (
@@ -134,7 +134,7 @@ export const Btn = ({
       className={"secondary-btn"} onClick={() => {
         handlers.flowFind();
       }}>
-        Find
+        찾기
       </Button>
     </Div>
   );
@@ -149,13 +149,13 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      Done
+      저장
     </Button>
   );
   const btnResetDefault = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
     className={"danger-btn"} onClick={handlers?.handlerReset}>
-      Default
+      기본값
     </Button>
   );
   const btnOpenCalendar = () => (

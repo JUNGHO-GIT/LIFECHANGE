@@ -6,7 +6,8 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
@@ -167,7 +168,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -199,7 +200,7 @@ export const ExerciseDetail = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -219,7 +220,7 @@ export const ExerciseDetail = () => {
     );
     // 7-3. total
     const totalSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -227,7 +228,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -246,7 +247,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${OBJECT?.exercise_total_cardio}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -265,7 +266,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -277,7 +278,7 @@ export const ExerciseDetail = () => {
             }}
           />
         </Div>
-      </Card>
+      </Div>
     );
     // 7-4. badge
     const badgeSection = (index) => (
@@ -350,7 +351,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             label={"파트"}
             variant={"outlined"}
-            className={"w-25vw me-10"}
+            className={"w-40vw me-3vw"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
               readOnly: false,
@@ -375,7 +376,7 @@ export const ExerciseDetail = () => {
             label={"종목"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             variant={"outlined"}
-            className={"w-25vw ms-10"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -400,7 +401,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -411,15 +412,13 @@ export const ExerciseDetail = () => {
               )
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"횟수"}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -438,7 +437,7 @@ export const ExerciseDetail = () => {
             size={"small"}
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -449,31 +448,57 @@ export const ExerciseDetail = () => {
               )
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"유산소"}
-            size={"small"}
-            value={OBJECT?.exercise_section[i]?.exercise_cardio}
-            variant={"outlined"}
-            className={"w-60vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
-              ),
-              endAdornment: (
-                "h:m"
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"timePicker"}
+            position={"top"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.exercise_section[i]?.exercise_cardio, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"유산소"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-40vw ms-3vw"}
+                value={OBJECT?.exercise_section[i]?.exercise_cardio}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min68vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

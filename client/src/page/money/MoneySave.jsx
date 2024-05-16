@@ -248,7 +248,7 @@ export const MoneySave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -280,7 +280,7 @@ export const MoneySave = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: false,
@@ -303,7 +303,7 @@ export const MoneySave = () => {
     );
     // 7-3. total
     const totalSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -311,14 +311,14 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
           />
@@ -330,14 +330,14 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
           />
@@ -349,19 +349,19 @@ export const MoneySave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
           />
         </Div>
-      </Card>
+      </Div>
     );
     // 7-4. badge
     const badgeSection = (index) => (
@@ -383,6 +383,7 @@ export const MoneySave = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -414,7 +415,7 @@ export const MoneySave = () => {
             size={"small"}
             label={"파트"}
             variant={"outlined"}
-            className={"w-25vw me-10"}
+            className={"w-40vw me-3vw"}
             value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
               readOnly: false,
@@ -453,7 +454,7 @@ export const MoneySave = () => {
             size={"small"}
             label={"타이틀"}
             variant={"outlined"}
-            className={"w-25vw ms-10"}
+            className={"w-40vw ms-3vw"}
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
               readOnly: false,
@@ -494,7 +495,7 @@ export const MoneySave = () => {
             label={"금액"}
             size={"small"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
               readOnly: false,
@@ -502,7 +503,7 @@ export const MoneySave = () => {
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
             onChange={(e) => {
@@ -528,7 +529,7 @@ export const MoneySave = () => {
             label={"메모"}
             size={"small"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={OBJECT?.money_section[i]?.money_content}
             InputProps={{
               readOnly: false,
@@ -558,7 +559,7 @@ export const MoneySave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min68vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

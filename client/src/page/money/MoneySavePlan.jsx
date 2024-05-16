@@ -114,11 +114,23 @@ export const MoneySavePlan = () => {
     }
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      money_section: prev.money_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -152,7 +164,7 @@ export const MoneySavePlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -160,6 +172,9 @@ export const MoneySavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -198,7 +213,7 @@ export const MoneySavePlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -206,6 +221,9 @@ export const MoneySavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -228,7 +246,7 @@ export const MoneySavePlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -267,6 +285,7 @@ export const MoneySavePlan = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -298,7 +317,7 @@ export const MoneySavePlan = () => {
             size={"small"}
             label={"목표 수입"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -306,7 +325,7 @@ export const MoneySavePlan = () => {
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
             onChange={(e) => {
@@ -328,7 +347,7 @@ export const MoneySavePlan = () => {
             size={"small"}
             label={"목표 지출"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -336,7 +355,7 @@ export const MoneySavePlan = () => {
                 <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
             onChange={(e) => {
@@ -355,7 +374,7 @@ export const MoneySavePlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

@@ -280,9 +280,9 @@ export const ExerciseDashScatter = () => {
     const dashSection = () => (
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
-          <Div className={"ms-0"}>{dropdownSection1()}</Div>
-          <Div className={"m-auto fs-1-0rem"}>몸무게 목표/실제</Div>
-          <Div className={"ms-auto"}>&nbsp;</Div>
+          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
+          <Div className={"d-center m-auto fs-1-0rem"}>몸무게 목표/실제</Div>
+          <Div className={"d-center ms-auto me-10"}>&nbsp;</Div>
         </Div>
         <Div className={"d-column"}>
           {SECTION === "today" && (

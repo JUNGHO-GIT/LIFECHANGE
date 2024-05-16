@@ -201,7 +201,7 @@ export const FoodSave = () => {
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget);
             }}
@@ -233,7 +233,7 @@ export const FoodSave = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -253,7 +253,7 @@ export const FoodSave = () => {
     );
     // 7-3. total
     const totalSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
@@ -261,7 +261,7 @@ export const FoodSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_total_in).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -280,7 +280,7 @@ export const FoodSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_total_carb).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -299,7 +299,7 @@ export const FoodSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_total_protein).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -318,7 +318,7 @@ export const FoodSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_total_fat).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -330,7 +330,7 @@ export const FoodSave = () => {
             }}
           />
         </Div>
-      </Card>
+      </Div>
     );
     // 7-4. badge
     const badgeSection = (index) => (
@@ -352,6 +352,7 @@ export const FoodSave = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -383,7 +384,7 @@ export const FoodSave = () => {
             size={"small"}
             label={"분류"}
             variant={"outlined"}
-            className={"w-25vw me-10"}
+            className={"w-40vw me-3vw"}
             defaultValue={1}
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
@@ -427,7 +428,7 @@ export const FoodSave = () => {
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
               variant={"outlined"}
-              className={"w-25vw ms-10"}
+              className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -468,7 +469,7 @@ export const FoodSave = () => {
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
               variant={"outlined"}
-              className={"w-25vw ms-10"}
+              className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -510,7 +511,7 @@ export const FoodSave = () => {
             size={"small"}
             value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -529,7 +530,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -540,15 +541,13 @@ export const FoodSave = () => {
               )
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"carb"}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -567,7 +566,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -578,15 +577,13 @@ export const FoodSave = () => {
               )
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"fat"}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -602,7 +599,7 @@ export const FoodSave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min68vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

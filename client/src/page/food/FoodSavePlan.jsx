@@ -14,7 +14,6 @@ import {
   calendar1, calendar2, calendar3, calendar4,
   exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
   food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
   user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
   setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
@@ -116,11 +115,23 @@ export const FoodSavePlan = () => {
     }
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      food_section: prev.food_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -154,7 +165,7 @@ export const FoodSavePlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -162,6 +173,9 @@ export const FoodSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -200,7 +214,7 @@ export const FoodSavePlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -208,6 +222,9 @@ export const FoodSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -230,7 +247,7 @@ export const FoodSavePlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -269,6 +286,7 @@ export const FoodSavePlan = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -300,7 +318,7 @@ export const FoodSavePlan = () => {
             size={"small"}
             label={"목표 칼로리"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -330,7 +348,7 @@ export const FoodSavePlan = () => {
             size={"small"}
             label={"목표 탄수화물"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_carb).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -360,7 +378,7 @@ export const FoodSavePlan = () => {
             size={"small"}
             label={"목표 단백질"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_protein).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -390,7 +408,7 @@ export const FoodSavePlan = () => {
             size={"small"}
             label={"목표 지방"}
             variant={"outlined"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_fat).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -417,7 +435,7 @@ export const FoodSavePlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min80vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

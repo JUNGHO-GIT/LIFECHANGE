@@ -535,9 +535,9 @@ export const MoneyDashPie = () => {
     const dashSection = () => (
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
-          <Div className={"ms-0"}>{dropdownSection1()}</Div>
-          <Div className={"m-auto fs-1-0rem"}>수입/지출 비율</Div>
-          <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
+          <Div className={"d-center m-auto fs-1-0rem"}>수입/지출 비율</Div>
+          <Div className={"d-center ms-auto me-10"}>{dropdownSection2()}</Div>
         </Div>
         <Div className={"d-column"}>
           {SECTION === "today" && LINE === "in" && (

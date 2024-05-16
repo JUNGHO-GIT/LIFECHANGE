@@ -116,11 +116,23 @@ export const ExerciseSavePlan = () => {
     }
   };
 
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-column"}>
+      <Div className={"d-row"}>
         <PopUp
           type={"calendar"}
           position={"bottom"}
@@ -154,7 +166,7 @@ export const ExerciseSavePlan = () => {
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
-              className={"w-60vw mb-20"}
+              className={"w-40vw me-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -162,6 +174,9 @@ export const ExerciseSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -200,7 +215,7 @@ export const ExerciseSavePlan = () => {
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-40vw ms-3vw"}
               onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -208,6 +223,9 @@ export const ExerciseSavePlan = () => {
                 readOnly: true,
                 startAdornment: (
                   <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                ),
+                endAdornment: (
+                  null
                 )
               }}
             />
@@ -230,7 +248,7 @@ export const ExerciseSavePlan = () => {
             label={"항목수"}
             variant={"outlined"}
             size={"small"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: true,
@@ -269,6 +287,7 @@ export const ExerciseSavePlan = () => {
             <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
+                  handlerDelete(index);
                   closePopup();
                 }}
               />
@@ -298,8 +317,37 @@ export const ExerciseSavePlan = () => {
             select={false}
             type={"text"}
             size={"small"}
+            label={"목표 횟수"}
+            className={"w-86vw"}
+            value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <img src={exercise10} className={"w-16 h-16 me-10"} alt={"exercise10"}/>
+              ),
+              endAdornment: (
+                "회"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 999);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_plan_count: limitedValue
+              }));
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
             label={"목표 볼륨"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -336,8 +384,8 @@ export const ExerciseSavePlan = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
                   sx={{
-                    width: "60vw",
-                    height: "60vh"
+                    width: "40vw",
+                    height: "40vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -355,7 +403,7 @@ export const ExerciseSavePlan = () => {
                 label={"목표 유산소 시간"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-60vw"}
+                className={"w-86vw"}
                 value={OBJECT?.exercise_plan_cardio}
                 InputProps={{
                   readOnly: true,
@@ -378,37 +426,8 @@ export const ExerciseSavePlan = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 횟수"}
-            className={"w-60vw"}
-            value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <img src={exercise10} className={"w-16 h-16 me-10"} alt={"exercise10"}/>
-              ),
-              endAdornment: (
-                "회"
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_plan_count: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
             label={"목표 체중"}
-            className={"w-60vw"}
+            className={"w-86vw"}
             value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
             InputProps={{
               readOnly: false,
@@ -435,7 +454,7 @@ export const ExerciseSavePlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min80vh"}>
+      <Div className={"block-wrapper w-min90vw h-min60vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>

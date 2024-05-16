@@ -4,20 +4,10 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
+import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashBar = () => {
@@ -132,9 +122,9 @@ export const SleepDashBar = () => {
     const dashSection = () => (
       <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
         <Div className={"d-center"}>
-          <Div className={"ms-0"}>{dropdownSection1()}</Div>
-          <Div className={"m-auto fs-1-0rem"}>수면 목표</Div>
-          <Div className={"ms-auto"}>&nbsp;</Div>
+          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
+          <Div className={"d-center m-auto fs-1-0rem"}>수면 목표</Div>
+          <Div className={"d-center ms-auto me-10"}>&nbsp;</Div>
         </Div>
         <Div className={"d-column"}>
           {SECTION === "today" && (
