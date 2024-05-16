@@ -1,0 +1,21 @@
+.loader {
+	width: 80px;
+	height: 80px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	border-radius: 50%;
+	border-top: 4px solid #3e96fc;
+	border-right: 4px solid transparent;
+	animation: loaderAnimation 0.5s linear infinite;
+}
+@keyframes loaderAnimation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

@@ -122,8 +122,8 @@ export const CalendarList = () => {
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24 icon"} />}
-        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24 icon"} />}
+        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} />}
+        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} />}
         prev2Label={null}
         next2Label={null}
         formatDay={(locale, date) => (moment(date).format("D"))}

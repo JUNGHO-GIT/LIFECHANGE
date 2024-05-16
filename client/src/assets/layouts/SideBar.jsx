@@ -74,7 +74,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                 onClick={() => (toggleFirstOpen(item.title))}
               >
                 <ListItemIcon>
-                  <Icons name={item.icon} className={"w-24 h-24 icon"} />
+                  <Icons name={item.icon} className={"w-24 h-24"} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.title}

@@ -33,6 +33,10 @@
   min-width: 0px !important;
 }
 
+[class$="MuiToolbar-root-MuiTablePagination-toolbar"] {
+  padding: 0px 0px 0px 0px !important;
+}
+
 .MuiTab-root.Mui-selected {
   color: #006ab3 !important;
   font-weight: bold !important;

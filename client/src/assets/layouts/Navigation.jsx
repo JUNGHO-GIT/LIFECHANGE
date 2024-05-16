@@ -52,7 +52,7 @@ export const Navigation = () => {
           label={"운동"}
           value={"exercise"}
           className={"w-min20p"}
-          icon={<img src={exercise1} className={"w-16 h-16 icon"}/>}
+          icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
           onClick={() => {
             setValue("exercise");
             navigate("exercise/dash");
@@ -61,16 +61,16 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"식단"}
           value={"food"}
-          icon={<img src={food1} className={"w-16 h-16 icon"}/>}
+          icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
           onClick={() => {
             setValue("food");
             navigate("food/dash");
           }}
         />
         <BottomNavigationAction
-          label={"달력"}
+          label={"일정"}
           value={"calendar"}
-          icon={<img src={calendar1} className={"w-16 h-16 icon"}/>}
+          icon={<img src={calendar1} className={"w-16 h-16 icon"} alt={"calendar1"}/>}
           onClick={() => {
             setValue("calendar");
             navigate("calendar/list");
@@ -79,7 +79,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"재무"}
           value={"money"}
-          icon={<img src={money2} className={"w-16 h-16 icon"}/>}
+          icon={<img src={money2} className={"w-16 h-16 icon"} alt={"money2"}/>}
           onClick={() => {
             setValue("money");
             navigate("money/dash");
@@ -88,7 +88,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"수면"}
           value={"sleep"}
-          icon={<img src={sleep8} className={"w-16 h-16 icon"}/>}
+          icon={<img src={sleep8} className={"w-16 h-16 icon"} alt={"sleep8"}/>}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/dash");

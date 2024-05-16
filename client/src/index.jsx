@@ -9,6 +9,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./index.css";
 import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
+import "./assets/css/Loading.css";
 import "./assets/css/Calendar.css";
 import "./assets/css/SideBar.css";
 import "./assets/css/Table.css";

@@ -8,6 +8,15 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
+import {
+  calendar1, calendar2, calendar3,
+  exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise9, exercise10, exercise11, exercise12,
+  food1, food2, food3, food4, food5, food6, food7, food8,
+  money1, money2, money3, money4,
+  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
+  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
+  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
+} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
@@ -17,7 +26,7 @@ export const FoodDetail = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const session = sessionStorage.getItem("dataset") || "";
+  const session = sessionStorage.getItem("dataset") || "{}";
   const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -168,7 +177,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Adorn name={"TbCalendarEvent"} className={"w-16 h-16 icon"} position={"start"}/>
+              <img src={calendar3} className={"w-16 h-16 me-10"} alt={"calendar3"} />
               ),
               endAdornment: (
                 null
@@ -198,7 +207,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbTextPlus"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={setting5} className={"w-16 h-16 me-10"} alt={"setting5"}/>
               ),
               endAdornment: (
                 null
@@ -225,7 +234,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbCalculator"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
               ),
               endAdornment: (
                 "kcal"
@@ -244,7 +253,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"BiBowlRice"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
                 "g"
@@ -263,7 +272,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbMilk"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"
@@ -282,7 +291,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbMeat"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
               ),
               endAdornment: (
                 "g"
@@ -306,36 +315,41 @@ export const FoodDetail = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"center"}
+        direction={"left"}
         contents={({closePopup}) => (
           <>
-            <Icons name={"TbTrash"} className={"w-24 h-24 icon"} onClick={() => {
-              flowDelete(id, sectionId);
-              setTimeout(() => {
-                closePopup();
-              }, 1000);
-            }}>
+            <Div className={"d-row mb-10"}>
+              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+                onClick={() => {
+                  flowDelete(id);
+                  setTimeout(() => {
+                    closePopup();
+                  }, 1000);
+                }}
+              />
               <Div className={"fs-0-8rem"}>삭제</Div>
-            </Icons>
-            <Div className={"h-10"}/>
-            <Icons name={"TbEdit"} className={"w-24 h-24 icon"} onClick={() => {
-              Object.assign(SEND, {
-                startDt: DATE.startDt,
-                endDt: DATE.endDt
-              });
-              navigate(SEND.toUpdate, {
-                state: SEND
-              });
-              setTimeout(() => {
-                closePopup();
-              }, 1000);
-            }}>
+            </Div>
+            <Div className={"d-row"}>
+              <img src={setting1} className={"w-16 h-16 icon pointer"} alt={"setting1"}
+                onClick={() => {
+                  Object.assign(SEND, {
+                    startDt: DATE.startDt,
+                    endDt: DATE.endDt
+                  });
+                  navigate(SEND.toUpdate, {
+                    state: SEND
+                  });
+                  setTimeout(() => {
+                    closePopup();
+                  }, 1000);
+                }}
+              />
               <Div className={"fs-0-8rem"}>수정</Div>
-            </Icons>
+            </Div>
           </>
         )}>
         {(popTrigger={}) => (
-          <Icons name={"TbDots"} className={"w-24 h-24 icon mt-n10 me-n10"}
+          <img src={setting4} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"setting4"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -450,7 +464,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbCalculator"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
               ),
               endAdornment: (
                 "kcal"
@@ -469,7 +483,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"BiBowlRice"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
                 "g"
@@ -488,7 +502,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbMilk"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"
@@ -507,7 +521,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Adorn name={"TbMeat"} className={"w-16 h-16 icon"} position={"start"}/>
+                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
               ),
               endAdornment: (
                 "g"

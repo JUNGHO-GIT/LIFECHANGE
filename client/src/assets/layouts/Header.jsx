@@ -4,7 +4,7 @@ import {SideBar} from "./SideBar";
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {logo2, logo3} from "../../import/ImportImages.jsx";
+import {user1, logo2, logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -24,7 +24,7 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <>
-    <Icons name={"TbAlignLeft"} className={"w-24 h-24 icon pointer"} onClick={openSidebar}/>
+    <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
     <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
     </>
   );
@@ -41,24 +41,22 @@ export const Header = () => {
           navigate("/user/login");
           closePopup();
         }}>
-          <Icons name={"TbLogin"} className={"w-24 h-24 icon"}>
+          <Icons name={"TbLogin"} className={"w-24 h-24"}>
             <Div className={"fs-0-8rem"}>Login</Div>
           </Icons>
         </Div>
         <Div className={"d-center"} onClick={() => {
           navigate("/user/signup");
           closePopup();
-        }
-        }>
-          <Icons name={"TbLogin2"} className={"w-24 h-24 icon"}>
+        }}>
+          <Icons name={"TbLogin2"} className={"w-24 h-24"}>
             <Div className={"fs-0-8rem"}>SignUp</Div>
           </Icons>
         </Div>
         </>
       )}>
       {(popTrigger={}) => (
-        <Icons name={"TbUserSquareRounded"} className={"w-24 h-24 icon pointer mb-n5"}
-          onClick={(e) => {
+        <img src={user1} className={"w-24 h-24 pointer mb-n5"} alt={"user1"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}
         />

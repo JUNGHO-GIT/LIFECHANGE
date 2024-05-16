@@ -26,6 +26,7 @@ export const Paging = ({
       page={objects?.PAGING.page - 1}
       showFirstButton={true}
       showLastButton={true}
+      className={"over-x-hidden"}
       onPageChange={(event, newPage) => {
         functions.setPAGING((prev) => ({
           ...prev,
@@ -51,6 +52,7 @@ export const Paging = ({
       page={objects?.PAGING.page}
       showFirstButton={true}
       showLastButton={true}
+      className={"over-x-hidden"}
       onPageChange={(event, newPage) => {
         functions.setPAGING((prev) => ({
           ...prev,

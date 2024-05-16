@@ -2,7 +2,7 @@
 
 import {React} from "../../../import/ImportReacts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Filter = ({
