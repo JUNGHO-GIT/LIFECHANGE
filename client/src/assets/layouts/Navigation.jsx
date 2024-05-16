@@ -1,9 +1,10 @@
 // Navigation.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {Div, Icons} from "../../import/ImportComponents.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
+import {exercise1, food1, money2, sleep8, calendar1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Navigation = () => {
@@ -51,7 +52,7 @@ export const Navigation = () => {
           label={"운동"}
           value={"exercise"}
           className={"w-min20p"}
-          icon={<Icons name={"LuDumbbell"} className={"w-16 h-16 icon"}/>}
+          icon={<img src={exercise1} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("exercise");
             navigate("exercise/dash");
@@ -60,7 +61,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"식단"}
           value={"food"}
-          icon={<Icons name={"BiBowlHot"} className={"w-16 h-16 icon"}/>}
+          icon={<img src={food1} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("food");
             navigate("food/dash");
@@ -69,7 +70,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"달력"}
           value={"calendar"}
-          icon={<Icons name={"LuCalendarCheck"} className={"w-16 h-16 icon"}/>}
+          icon={<img src={calendar1} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("calendar");
             navigate("calendar/list");
@@ -78,7 +79,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"재무"}
           value={"money"}
-          icon={<Icons name={"TbPigMoney"} className={"w-16 h-16 icon"}/>}
+          icon={<img src={money2} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("money");
             navigate("money/dash");
@@ -87,7 +88,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"수면"}
           value={"sleep"}
-          icon={<Icons name={"TbMoon"} className={"w-16 h-16 icon"}/>}
+          icon={<img src={sleep8} className={"w-16 h-16 icon"}/>}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/dash");

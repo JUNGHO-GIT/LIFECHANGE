@@ -3,9 +3,8 @@
 import {SideBar} from "./SideBar";
 import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {logo2, logo3} from "../../import/ImportImages";
+import {logo2, logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {

@@ -4,7 +4,7 @@ import {React, useState, useLocation, useEffect} from "../../import/ImportReacts
 import {dataArray} from "../../import/ImportLogics";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {smile1, smile2, smile3, smile4} from "../../import/ImportImages";
+import {smile1, smile2, smile3, smile4} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {

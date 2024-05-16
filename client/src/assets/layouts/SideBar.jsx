@@ -6,7 +6,7 @@ import {dataArray} from "../../import/ImportLogics";
 import {Adorn, Icons, Div, Hr10} from "../../import/ImportComponents.jsx";
 import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
-import {logo3} from "../../import/ImportImages";
+import {logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
