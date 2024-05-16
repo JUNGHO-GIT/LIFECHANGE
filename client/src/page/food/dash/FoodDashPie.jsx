@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Icons, PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";

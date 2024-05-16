@@ -57,7 +57,12 @@ import {
 
 // t
 import {
-  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses
+  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses
+} from "@mui/material";
+
+// t
+import {
+  TextareaAutosize as TextArea
 } from "@mui/material";
 
 // u ~ z
@@ -80,9 +85,8 @@ import {DigitalClock} from '@mui/x-date-pickers/DigitalClock';
 // popupState
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 
-// grid2
-import Grid2 from '@mui/material/Unstable_Grid2';
 
+// ------------------------------------------------------------------------------------------------>
 export {
 
   // a
@@ -120,7 +124,10 @@ export {
   ScopedCssBaseline, Select, Skeleton, Slide, Slider, Snackbar, SnackbarContent, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, Step, StepButton, StepConnector, StepContent, StepIcon, StepLabel, Stepper, SvgIcon, SwipeableDrawer, Switch,
 
   // t
-  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses,
+  Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Tabs, Tab, tabsClasses,
+
+  // t
+  TextArea,
 
   // u ~ z
   useAutocomplete, GlobalStyles,
@@ -133,7 +140,4 @@ export {
 
   // popupState
   PopupState, bindTrigger, bindMenu, bindPopover,
-
-  // grid2
-  Grid2
 };

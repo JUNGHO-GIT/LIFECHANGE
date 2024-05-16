@@ -5,10 +5,9 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Adorn, Icons, PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
+import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, TextArea, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
@@ -524,36 +523,62 @@ export const MoneySave = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"메모"}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={OBJECT?.money_section[i]?.money_content}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <img src={money4} className={"w-16 h-16 me-10"} alt={"money4"}/>
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-            onChange={(e) => {
-              const rawValue = e.target.value;
-              const limitedContent = rawValue.slice(0, 100);
-              setOBJECT((prev) => ({
-                ...prev,
-                money_section: prev.money_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    money_content: limitedContent
-                  } : item
-                ))
-              }));
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"memo"}
+            position={"top"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <>
+                <Div className={"d-center"}>
+                  <TextField
+                    label={"메모"}
+                    variant={"outlined"}
+                    size={"small"}
+                    value={OBJECT?.money_section[i]?.money_content}
+                    onChange={(e) => {
+                      const rawValue = e.target.value;
+                      const limitedContent = rawValue.slice(0, 100);
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_section: prev.money_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            money_content: limitedContent
+                          } : item
+                        ))
+                      }));
+                    }}
+                  />
+                </Div>
+              </>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"메모"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw"}
+                multiline={true}
+                minRows={3}
+                maxRows={10}
+                value={OBJECT?.money_section[i]?.money_content}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: (
+                    <img src={money4} className={"w-16 h-16 me-10"} alt={"money4"}/>
+                  ),
+                  endAdornment: (
+                    null
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );
