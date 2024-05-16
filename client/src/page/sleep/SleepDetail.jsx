@@ -300,6 +300,9 @@ export const SleepDetail = () => {
                   readOnly: true,
                   startAdornment: (
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -337,6 +340,9 @@ export const SleepDetail = () => {
                   readOnly: true,
                   startAdornment: (
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
                   )
                 }}
                 onClick={(e) => {
@@ -347,23 +353,51 @@ export const SleepDetail = () => {
           </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            type={"text"}
-            size={"small"}
-            label={"수면"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={OBJECT?.sleep_section[i].sleep_time}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"timePicker"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_section[i]?.sleep_time, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"수면"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw"}
+                value={OBJECT?.sleep_section[i].sleep_time}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
+                  ),
+                  endAdornment: (
+                    "h:m"
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget)
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );
