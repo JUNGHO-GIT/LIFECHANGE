@@ -3,17 +3,15 @@
 import calendar1 from "../assets/images/calendar/calendar1.webp";
 import calendar2 from "../assets/images/calendar/calendar2.webp";
 import calendar3 from "../assets/images/calendar/calendar3.webp";
+import calendar4 from "../assets/images/calendar/calendar4.webp";
 
 import exercise1 from "../assets/images/exercise/exercise1.webp";
 import exercise2 from "../assets/images/exercise/exercise2.webp";
 import exercise3 from "../assets/images/exercise/exercise3.webp";
 import exercise4 from "../assets/images/exercise/exercise4.webp";
 import exercise5 from "../assets/images/exercise/exercise5.webp";
-import exercise6 from "../assets/images/exercise/exercise6.webp";
 import exercise9 from "../assets/images/exercise/exercise9.webp";
 import exercise10 from "../assets/images/exercise/exercise10.webp";
-import exercise11 from "../assets/images/exercise/exercise11.webp";
-import exercise12 from "../assets/images/exercise/exercise12.webp";
 
 import food1 from "../assets/images/food/food1.webp";
 import food2 from "../assets/images/food/food2.webp";
@@ -72,9 +70,9 @@ import smile4 from "../assets/images/smile/smile4.webp";
 
 // ------------------------------------------------------------------------------------------------>
 export {
-  calendar1, calendar2, calendar3,
+  calendar1, calendar2, calendar3, calendar4,
 
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise9, exercise10, exercise11, exercise12,
+  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
 
   food1, food2, food3, food4, food5, food6, food7, food8,
 

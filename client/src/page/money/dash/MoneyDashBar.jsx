@@ -11,8 +11,8 @@ import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.js
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {
-  calendar1, calendar2, calendar3,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise9, exercise10, exercise11, exercise12,
+  calendar1, calendar2, calendar3, calendar4,
+  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
   food1, food2, food3, food4, food5, food6, food7, food8,
   money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,

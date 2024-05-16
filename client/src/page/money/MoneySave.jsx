@@ -11,8 +11,8 @@ import {Badge, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {
-  calendar1, calendar2, calendar3,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise6, exercise9, exercise10, exercise11, exercise12,
+  calendar1, calendar2, calendar3, calendar4,
+  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
   food1, food2, food3, food4, food5, food6, food7, food8,
   money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
@@ -255,7 +255,7 @@ export const MoneySave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={calendar3} className={"w-16 h-16 me-10"} alt={"calendar3"} />
+                <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
               ),
               endAdornment: (
                 null
