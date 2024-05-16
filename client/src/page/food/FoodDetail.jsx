@@ -321,7 +321,7 @@ export const FoodDetail = () => {
             <Div className={"d-row mb-10"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
-                  flowDelete(id);
+                  flowDelete(id, sectionId);
                   setTimeout(() => {
                     closePopup();
                   }, 1000);

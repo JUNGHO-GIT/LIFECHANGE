@@ -22,7 +22,6 @@
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;
-  animation: fadeIn 0.5s !important;
   z-index: 1111;
 }
 .content-wrapper {
@@ -34,7 +33,6 @@
   background-color: #fff;
   overflow-x: auto;
   overflow-y: hidden;
-  animation: fadeIn 0.5s !important;
   z-index: 999;
 }
 .block-wrapper {
@@ -50,24 +48,18 @@
   background-color: #fff;
   overflow-x: hidden;
   overflow-y: hidden;
-  animation: fadeIn 0.5s !important;
   z-index: 999;
+  animation: fadeIn 0.7s ease-in-out;
 }
 
 /** 7. keyframes **/
 @keyframes fadeIn {
-  from {
+  0% {
     opacity: 0;
+    transform: translateY(20px);
   }
-  to {
+  100% {
     opacity: 1;
-  }
-}
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
+    transform: translateY(0);
   }
 }

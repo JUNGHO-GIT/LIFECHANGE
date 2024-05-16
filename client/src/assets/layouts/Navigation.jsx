@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {Div} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {exercise1, food1, money2, sleep8, calendar1} from "../../import/ImportImages.jsx";
+import {exercise1, food2, money2, sleep8, calendar1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Navigation = () => {
@@ -14,8 +14,6 @@ export const Navigation = () => {
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("calendar");
@@ -61,7 +59,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"식단"}
           value={"food"}
-          icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
+          icon={<img src={food2} className={"w-16 h-16 icon"} alt={"food2"}/>}
           onClick={() => {
             setValue("food");
             navigate("food/dash");

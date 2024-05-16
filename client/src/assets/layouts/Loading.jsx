@@ -12,6 +12,7 @@ export const Loading = ({
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
+  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const [height, setHeight] = useState("");
 
@@ -22,11 +23,16 @@ export const Loading = ({
       return;
     }
 
-    if (typeStr === "list") {
-      setHeight("h-min50vh");
+    if (partStr === "calendar") {
+      setHeight("h-min75vh");
     }
     else {
-      setHeight("h-min65vh");
+      if (typeStr === "list") {
+        setHeight("h-min50vh");
+      }
+      else {
+        setHeight("h-min65vh");
+      }
     }
   }, [typeStr]);
 

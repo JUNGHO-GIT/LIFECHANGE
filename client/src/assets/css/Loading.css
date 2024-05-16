@@ -1,16 +1,18 @@
 .loader {
-	width: 80px;
-	height: 80px;
-  position: relative;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 40px;
+	height: 40px;
+	position: relative;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-radius: 50%;
-	border-top: 4px solid #3e96fc;
-	border-right: 4px solid transparent;
-	animation: loaderAnimation 0.5s linear infinite;
+	border-top: 3px solid rgba(62, 150, 252, 0.8);
+	border-right: 3px solid transparent;
+  background-color: #ffffff !important;
+	animation: loaderAnimation 1s ease-in-out infinite;
 }
+
 @keyframes loaderAnimation {
 	0% {
 		transform: rotate(0deg);
