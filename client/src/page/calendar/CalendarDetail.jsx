@@ -6,6 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
+import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {
@@ -74,7 +75,7 @@ export const CalendarDetail = () => {
       calendar_part_val: "일정",
       calendar_title : "",
       calendar_color: "#000000",
-      calendar_detail: ""
+      calendar_content: ""
     }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -150,7 +151,7 @@ export const CalendarDetail = () => {
       calendar_part_val: "전체",
       calendar_title: "",
       calendar_color: "#000000",
-      calendar_detail: ""
+      calendar_content: ""
     };
     setCOUNT((prev) => ({
       ...prev,
@@ -511,36 +512,65 @@ export const CalendarDetail = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"상세"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={OBJECT?.calendar_section[i]?.calendar_detail}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <img src={calendar4} className={"w-16 h-16 me-10"} alt={"calendar4"}/>
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-            onChange={(e) => {
-              const newDetail = e.target.value;
-              setOBJECT((prev) => ({
-                ...prev,
-                calendar_section: prev.calendar_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    calendar_detail: newDetail
-                  } : item
-                ))
-              }));
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"memo"}
+            position={"top"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <Div className={"d-column"}>
+                <Div className={"d-center mb-20"}>
+                  <TextArea
+                    readOnly={false}
+                    className={"w-70vw h-55vh border p-10"}
+                    value={OBJECT?.calendar_section[i]?.calendar_content}
+                    onChange={(e) => {
+                      const newContent = e.target.value;
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        calendar_section: prev.calendar_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            calendar_content: newContent
+                          } : item
+                        ))
+                      }));
+                    }}
+                  />
+                </Div>
+                <Div className={"d-center"}>
+                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+                    className={"primary-btn me-5"} onClick={() => {
+                      closePopup();
+                    }}>
+                    저장
+                  </Button>
+                </Div>
+              </Div>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"메모"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw pointer"}
+                value={OBJECT?.calendar_section[i]?.calendar_content}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={calendar4} className={"w-16 h-16 me-10"} alt={"calendar4"}/>
+                  ),
+                  endAdornment: (
+                    null
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );

@@ -48,7 +48,7 @@ const schema = new mongoose.Schema({
       default: "",
       required : false
     },
-    calendar_detail: {
+    calendar_content: {
       type : String,
       default: "",
       required : false

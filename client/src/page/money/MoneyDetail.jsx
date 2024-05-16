@@ -5,7 +5,8 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Div, PopUp} from "../../import/ImportComponents.jsx";
+import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
 import {
@@ -412,24 +413,54 @@ export const MoneyDetail = () => {
           />
         </Div>
         <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={"메모"}
-            type={"text"}
-            variant={"outlined"}
-            size={"small"}
-            className={"w-86vw"}
-            value={OBJECT?.money_section[i]?.money_content}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={money4} className={"w-16 h-16 me-10"} alt={"money4"}/>
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-          />
+          <PopUp
+            key={i}
+            type={"memo"}
+            position={"top"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <Div className={"d-column"}>
+                <Div className={"d-center mb-20"}>
+                  <TextArea
+                    readOnly={true}
+                    className={"w-70vw h-55vh border p-10"}
+                    value={OBJECT?.money_section[i]?.money_content}
+                    onChange={(e) => {}}
+                  />
+                </Div>
+                <Div className={"d-center"}>
+                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+                    className={"primary-btn me-5"} onClick={() => {
+                      closePopup();
+                    }}>
+                    저장
+                  </Button>
+                </Div>
+              </Div>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={"메모"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-86vw pointer"}
+                value={OBJECT?.money_section[i]?.money_content}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <img src={money4} className={"w-16 h-16 me-10"} alt={"money4"}/>
+                  ),
+                  endAdornment: (
+                    null
+                  )
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
+                }}
+              />
+            )}
+          </PopUp>
         </Div>
       </Card>
     );

@@ -6,7 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Badge, MenuItem, Button} from "../../import/ImportMuis.jsx";
 import {TextField, TextArea, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {
@@ -529,29 +529,34 @@ export const MoneySave = () => {
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
-              <>
-                <Div className={"d-center"}>
-                  <TextField
-                    label={"메모"}
-                    variant={"outlined"}
-                    size={"small"}
+              <Div className={"d-column"}>
+                <Div className={"d-center mb-20"}>
+                  <TextArea
+                    readOnly={false}
+                    className={"w-70vw h-55vh border p-10"}
                     value={OBJECT?.money_section[i]?.money_content}
                     onChange={(e) => {
-                      const rawValue = e.target.value;
-                      const limitedContent = rawValue.slice(0, 100);
                       setOBJECT((prev) => ({
                         ...prev,
                         money_section: prev.money_section.map((item, idx) => (
                           idx === i ? {
                             ...item,
-                            money_content: limitedContent
+                            money_content: e.target.value
                           } : item
                         ))
                       }));
                     }}
                   />
                 </Div>
-              </>
+                <Div className={"d-center"}>
+                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+                    className={"primary-btn me-5"} onClick={() => {
+                      closePopup();
+                    }}>
+                    저장
+                  </Button>
+                </Div>
+              </Div>
             )}>
             {(popTrigger={}) => (
               <TextField
@@ -559,13 +564,10 @@ export const MoneySave = () => {
                 label={"메모"}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-86vw"}
-                multiline={true}
-                minRows={3}
-                maxRows={10}
+                className={"w-86vw pointer"}
                 value={OBJECT?.money_section[i]?.money_content}
                 InputProps={{
-                  readOnly: false,
+                  readOnly: true,
                   startAdornment: (
                     <img src={money4} className={"w-16 h-16 me-10"} alt={"money4"}/>
                   ),

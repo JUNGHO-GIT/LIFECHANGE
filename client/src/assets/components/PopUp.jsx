@@ -1,6 +1,6 @@
 // PopUp.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import {React, useEffect} from "../../import/ImportReacts.jsx";
 import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {usePopupState} from 'material-ui-popup-state/hooks';
 
@@ -9,21 +9,31 @@ export const PopUp = ({...props}) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
-  const popupStyle = props.type === "alert" ? ({
-    border: '1px solid red',
-    boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
-    padding: "6px 6px 6px 6px",
-  }) : props.type === "dash" ? ({
-    border: '0.2px solid rgba(0, 0, 0, 0.2)',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-    padding: "6px 6px 6px 15px",
-  }) : ({
-    border: '0.2px solid rgba(0, 0, 0, 0.2)',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-    padding: "6px 6px 6px 6px",
-  });
+  let popupStyle = {};
+  if (props.type === "alert") {
+    popupStyle = {
+      border: '1px solid red',
+      boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
+      padding: "6px 6px 6px 6px",
+    };
+  }
+  else if (props.type === "dash") {
+    popupStyle = {
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "6px 6px 6px 6px",
+    };
+  }
+  else if (props.type === "memo") {
+    popupStyle = {
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "6px 6px 6px 6px",
+    };
+  }
 
-  return (
+  // 1. 팝업 고정 --------------------------------------------------------------------------------->
+  const chainedPopUp = () => (
     <>
     {props.children({
       openPopup: (anchorEl) => {
@@ -55,7 +65,9 @@ export const PopUp = ({...props}) => {
       }}
       slotProps={{
         paper: {
-          style: popupStyle
+          style: {
+            ...popupStyle
+          }
         }
       }}
     >
@@ -64,6 +76,60 @@ export const PopUp = ({...props}) => {
         : props.contents
       }
     </Popover>
+    </>
+  );
+
+  // 2. 팝업 화면 정중앙 -------------------------------------------------------------------------->
+  const centeredPopUp = () => (
+    <>
+    {props.children({
+      openPopup: (anchorEl) => {
+        popupState.setAnchorEl(anchorEl);
+        popupState.open();
+      },
+      closePopup: () => {
+        popupState.close();
+      }
+    })}
+    <Popover
+      {...bindPopover(popupState)}
+      id={"popover"}
+      className={props.className}
+      open={popupState.isOpen}
+      anchorEl={null}
+      onClose={popupState.close}
+      anchorOrigin={{
+        vertical: "center",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "center",
+        horizontal: "center",
+      }}
+      anchorReference={"anchorPosition"}
+      anchorPosition={{
+        top: window.innerHeight / 2,
+        left: window.innerWidth / 2
+      }}
+      slotProps={{
+        paper: {
+          style: {
+            ...popupStyle
+          }
+        }
+      }}
+    >
+      {typeof props.contents === "function"
+        ? props.contents({ closePopup: popupState.close })
+        : props.contents
+      }
+    </Popover>
+    </>
+  );
+
+  return (
+    <>
+      {props.type === "memo" ? centeredPopUp() : chainedPopUp()}
     </>
   );
 };

@@ -53,7 +53,7 @@ export const CalendarList = () => {
       calendar_part_val: "일정",
       calendar_title : "",
       calendar_color: "#000000",
-      calendar_detail: ""
+      calendar_content: ""
     }]
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
