@@ -9,7 +9,7 @@ import {Div, PopUp} from "../../import/ImportComponents.jsx";
 import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
-import {common1, common2, common4, common5, money2, money3, setting2} from "../../import/ImportImages.jsx";
+import {common1, common2, common4, common3, money2, money3, setting2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -308,7 +308,7 @@ export const MoneyDetail = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

@@ -8,7 +8,7 @@ import {Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {common5} from "../../../import/ImportImages.jsx";
+import {common3} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashPie = () => {
@@ -466,7 +466,7 @@ export const FoodDashPie = () => {
         ))
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

@@ -117,6 +117,7 @@ export const CalendarList = () => {
     const tableFragment = (i) => (
       <Calendar
         key={i}
+        locale={"ko"}
         view={"month"}
         value={new Date()}
         showNavigation={true}

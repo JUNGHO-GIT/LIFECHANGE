@@ -76,14 +76,12 @@ export const FoodFindList = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  // 페이지 번호 변경 시 flowFind
+  // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
     if (FILTER?.query === "") {
       return;
     }
-    else {
-      flowFind();
-    }
+    flowFind();
   }, [PAGING.page]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -186,7 +184,6 @@ export const FoodFindList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>번호</TableCell>
               <TableCell>식품명</TableCell>
               <TableCell>브랜드</TableCell>
               <TableCell>제공량</TableCell>
@@ -198,7 +195,7 @@ export const FoodFindList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={7}>
+              <TableCell colSpan={6}>
                 데이터가 없습니다.
               </TableCell>
             </TableRow>
@@ -212,7 +209,6 @@ export const FoodFindList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>번호</TableCell>
               <TableCell className={"w-max30vw"}>식품명</TableCell>
               <TableCell className={"w-max20vw"}>브랜드</TableCell>
               <TableCell>제공량</TableCell>
@@ -220,16 +216,13 @@ export const FoodFindList = () => {
               <TableCell>Carb</TableCell>
               <TableCell>Protein</TableCell>
               <TableCell>Fat</TableCell>
-              <TableCell>v</TableCell>
+              <TableCell>선택</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
                 <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
-                  <TableCell>
-                    {item.food_perNumber}
-                  </TableCell>
                   <TableCell className={"w-max30vw"}>
                     {item.food_title}
                   </TableCell>

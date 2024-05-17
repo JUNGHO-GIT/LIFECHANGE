@@ -8,7 +8,7 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
-import {common1, common2, common4, common5, setting2, food2, food3, food4, food5} from "../../import/ImportImages.jsx";
+import {common1, common2, common4, common3, setting2, food2, food3, food4, food5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
@@ -243,9 +243,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
         </Div>
@@ -262,9 +260,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
         </Div>
@@ -281,9 +277,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
         </Div>
@@ -337,7 +331,7 @@ export const FoodDetail = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -457,9 +451,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
         </Div>
@@ -476,9 +468,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
           <TextField
@@ -493,9 +483,7 @@ export const FoodDetail = () => {
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: (
-                "g"
-              )
+              endAdornment: "g"
             }}
           />
         </Div>

@@ -10,7 +10,7 @@ import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common5} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3} from "../../../import/ImportImages.jsx";
 import {setting2, sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -283,7 +283,7 @@ export const SleepPlanSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

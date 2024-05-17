@@ -10,7 +10,8 @@ import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common5, exercise2, exercise4, exercise5, setting2} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3, setting2} from "../../../import/ImportImages.jsx";
+import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExercisePlanSave = () => {
@@ -283,7 +284,7 @@ export const ExercisePlanSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -312,9 +313,7 @@ export const ExercisePlanSave = () => {
               startAdornment: (
                 <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
               ),
-              endAdornment: (
-                "회"
-              )
+              endAdornment: "회"
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -339,11 +338,9 @@ export const ExercisePlanSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: (
-                "vol"
-              )
+              endAdornment: "vol"
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -419,9 +416,7 @@ export const ExercisePlanSave = () => {
               startAdornment: (
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
-              endAdornment: (
-                "kg"
-              )
+              endAdornment: "kg"
             }}
             onChange={(e) => {
               const regex = /,/g;

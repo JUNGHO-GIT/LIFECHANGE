@@ -9,7 +9,8 @@ import {PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1, common2, common5, exercise2, exercise4, exercise5, setting2} from "../../import/ImportImages.jsx";
+import {common1, common2, common3, setting2} from "../../import/ImportImages.jsx";
+import {exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {
@@ -328,11 +329,9 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: (
-                "vol"
-              )
+              endAdornment: "vol"
             }}
           />
         </Div>
@@ -349,9 +348,7 @@ export const ExerciseSave = () => {
               startAdornment: (
                 <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
               ),
-              endAdornment: (
-                "h:m"
-              )
+              endAdornment: "h:m"
             }}
           />
         </Div>
@@ -368,9 +365,7 @@ export const ExerciseSave = () => {
               startAdornment: (
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
-              endAdornment: (
-                "kg"
-              )
+              endAdornment: "kg"
             }}
           />
         </Div>
@@ -405,7 +400,7 @@ export const ExerciseSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -505,11 +500,9 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: (
-                "set"
-              )
+              endAdornment: "set"
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -537,7 +530,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
                 "per"
@@ -571,11 +564,9 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: (
-                "kg"
-              )
+              endAdornment: "kg"
             }}
             onChange={(e) => {
               const regex = /,/g;

@@ -67,10 +67,9 @@ export const Btn = ({
       수정
     </Button>
   );
-
   const btnGetToday = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-    className={"success-btn"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
+    className={"secondary-btn"} onClick={() => {
       (objects?.FILTER) && (
         functions?.setFILTER((prev) => ({
           ...prev,
@@ -188,7 +187,6 @@ export const Btn = ({
       새로고침
     </Button>
   );
-
   const btnFlowLogin = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
@@ -223,7 +221,9 @@ export const Btn = ({
         className={"w-150"}
         value={objects?.FILTER?.query}
         InputProps={{
-          readOnly: false
+          readOnly: false,
+          startAdornment: null,
+          endAdornment: null,
         }}
         onChange={(e) => {
           functions?.setFILTER((prev) => ({
@@ -233,8 +233,12 @@ export const Btn = ({
         }}
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      className={"secondary-btn"} onClick={() => {
+      className={"secondary-btn"} onClick={async () => {
         handlers.flowFind();
+        functions?.setPAGING((prev) => ({
+          ...prev,
+          page: 0
+        }));
       }}>
         찾기
       </Button>
