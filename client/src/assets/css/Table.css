@@ -8,10 +8,10 @@
 .table-tbody-tr th, .table-tbody-tr td {
   font-weight: normal !important;
   text-align: center !important;
-  padding: 10px !important;
+  padding: 7.5px !important;
 }
 .table-tfoot-tr th, .table-tfoot-tr td {
   font-weight: bold !important;
   text-align: center !important;
-  padding: 10px !important;
+  padding: 7.5px !important;
 }

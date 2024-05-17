@@ -27,7 +27,7 @@ import {
 
 // i ~ k
 import {
-  InputAdornment, InputBase, InputLabel
+  InputAdornment, InputBase, InputLabel, IconButton
 } from "@mui/material";
 
 // l
@@ -101,7 +101,7 @@ export {
   Fab, Fade, FilledInput, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel,
 
   // h ~ k
-  InputAdornment, InputBase, InputLabel,
+  InputAdornment, InputBase, InputLabel, IconButton,
 
   // l
   LinearProgress, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader,

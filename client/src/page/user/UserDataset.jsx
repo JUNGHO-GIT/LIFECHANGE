@@ -4,8 +4,8 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Button} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Button, IconButton} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -262,19 +262,14 @@ export const UserDataset = () => {
       <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
           <Card key={i} variant={"outlined"} className={"w-80vw h-55vh border d-row"}>
-            <TableContainer className={"border-right"}>
+            <TableContainer className={"border-right over-x-hidden"}>
               <Table>
                 <TableHead className={"table-thead"}>
                   <TableRow className={"table-thead-tr p-sticky top-0"}>
                     <TableCell>
                       <Div className={"d-center"}>
-                        <Div className={"fs-1-0rem ms-auto"}>
+                        <Div className={"fs-1-0rem m-auto"}>
                           Part
-                        </Div>
-                        <Div className={"fs-1-0rem ms-auto"}>
-                          <Icons name={"BiPlus"} className={"w-18 h-18 white"} onClick={() => {
-                            handlerAdd("part");
-                          }} />
                         </Div>
                       </Div>
                     </TableCell>
@@ -282,9 +277,8 @@ export const UserDataset = () => {
                 </TableHead>
                 <TableBody className={"table-tbody"}>
                   {OBJECT?.user_dataset[dataType]?.map((item, index) => (index > 0) && (
-                    <TableRow
-                      key={index}
-                      className={`${selectedIdx.partIdx === index ? "bg-secondary" : ""} pointer`} onClick={() => {
+                    <TableRow key={index} className={`table-tbody-tr`}
+                      onClick={() => {
                         setSelectedIdx((prev) => ({
                           ...prev,
                           partIdx: index
@@ -300,11 +294,11 @@ export const UserDataset = () => {
                           <Div className={"fs-0-7rem ms-auto"}>
                             {item[`${dataType}_part`]}
                           </Div>
-                          <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
-                            <Icons name={"BiEdit"} className={"w-14 h-14 me-5"} onClick={() => {
+                          <Div className={"fs-0-7rem ms-auto me-n10"}>
+                            <Icons name={"BiEdit"} className={"w-14 h-14"} onClick={() => {
                               handlerRename("part", index);
                             }} />
-                            <Icons name={"BiTrash"} className={"w-14 h-14 me-0"} onClick={() => {
+                            <Icons name={"BiTrash"} className={"w-14 h-14"} onClick={() => {
                               handlerRemove("part", index);
                             }} />
                           </Div>
@@ -313,21 +307,27 @@ export const UserDataset = () => {
                     </TableRow>
                   ))}
                 </TableBody>
+                <TableFooter className={"table-tfoot"}>
+                  <TableRow className={"table-tfoot-tr"}>
+                    <TableCell>
+                      <Div className={"d-center"} onClick={() => {
+                        handlerAdd("part");
+                      }}>
+                        <Icons name={"BiPlus"} className={"w-14 h-14"} />
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                </TableFooter>
               </Table>
             </TableContainer>
-            <TableContainer className={"border-left"}>
+            <TableContainer className={"border-left over-x-hidden"}>
               <Table>
                 <TableHead className={"table-thead"}>
                   <TableRow className={"table-thead-tr p-sticky top-0"}>
                     <TableCell>
                       <Div className={"d-center"}>
-                        <Div className={"fs-1-0rem ms-auto"}>
+                        <Div className={"fs-1-0rem m-auto"}>
                           Title
-                        </Div>
-                        <Div className={"fs-1-0rem ms-auto"}>
-                          <Icons name={"BiPlus"} className={"w-18 h-18 white"} onClick={() => {
-                            handlerAdd("title");
-                          }} />
                         </Div>
                       </Div>
                     </TableCell>
@@ -335,9 +335,8 @@ export const UserDataset = () => {
                 </TableHead>
                 <TableBody className={"table-tbody"}>
                   {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                    <TableRow
-                      key={index}
-                      className={`${selectedIdx.titleIdx === index ? "table-secondary" : ""} pointer`} onClick={() => {
+                    <TableRow key={index} className={`table-tbody-tr`}
+                      onClick={() => {
                         setSelectedIdx((prev) => ({
                           ...prev,
                           titleIdx: index
@@ -354,10 +353,10 @@ export const UserDataset = () => {
                             {item}
                           </Div>
                           <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
-                            <Icons name={"BiEdit"} className={"w-14 h-14 me-5"} onClick={() => {
+                            <Icons name={"BiEdit"} className={"w-14 h-14"} onClick={() => {
                               handlerRename("title", index);
                             }} />
-                            <Icons name={"BiTrash"} className={"w-14 h-14 me-0"} onClick={() => {
+                            <Icons name={"BiTrash"} className={"w-14 h-14"} onClick={() => {
                               handlerRemove("title", index);
                             }} />
                           </Div>
@@ -366,6 +365,17 @@ export const UserDataset = () => {
                     </TableRow>
                   ))}
                 </TableBody>
+                <TableFooter className={"table-tfoot"}>
+                  <TableRow className={"table-tfoot-tr"}>
+                    <TableCell>
+                      <Div className={"d-center"} onClick={() => {
+                        handlerAdd("title");
+                      }}>
+                        <Icons name={"BiPlus"} className={"w-14 h-14"} />
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                </TableFooter>
               </Table>
             </TableContainer>
           </Card>
@@ -420,7 +430,7 @@ export const UserDataset = () => {
                         )}>
                         {(popTrigger={}) => (
                           <Icons name={"BiEdit"} className={"w-18 h-18 pointer ms-auto"}
-                            onClick={(e) => {
+                            onClick={(e={}) => {
                               setDataType(item);
                               setSelectedIdx((prev) => ({
                                 ...prev,
@@ -437,7 +447,7 @@ export const UserDataset = () => {
                             }}
                           />
                         )}
-                      </PopUp>
+                        </PopUp>
                       </Div>
                     </Div>
                   </TableCell>

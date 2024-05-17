@@ -1,6 +1,7 @@
 // Icon.jsx
+
 import {React} from "../../import/ImportReacts.jsx";
-import {InputAdornment} from "../../import/ImportMuis.jsx";
+import {InputAdornment, IconButton} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const Icons = ({...props}) => {
@@ -42,10 +43,11 @@ export const Icons = ({...props}) => {
   }
 
   return (
-    <div className={"d-center"}>
-      <IconComponent {...props} />
-      {props.children}
-    </div>
+    <IconButton className={"p-5"}>
+      <IconComponent {...props}>
+        {props.children}
+      </IconComponent>
+    </IconButton>
   );
 };
 
