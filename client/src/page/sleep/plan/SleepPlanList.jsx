@@ -51,7 +51,7 @@ export const SleepPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/plan/detail"
+    toSave:"/sleep/plan/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -145,7 +145,7 @@ export const SleepPlanList = () => {
                     startDt: item.sleep_plan_startDt,
                     endDt: item.sleep_plan_endDt,
                   });
-                  navigate(SEND.toDetail, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>

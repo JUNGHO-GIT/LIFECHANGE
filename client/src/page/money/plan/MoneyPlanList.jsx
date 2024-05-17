@@ -51,7 +51,7 @@ export const MoneyPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/plan/detail",
+    toSave: "/money/plan/save",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -142,7 +142,7 @@ export const MoneyPlanList = () => {
                     startDt: item.money_plan_startDt,
                     endDt: item.money_plan_endDt
                   });
-                  navigate(SEND.toDetail, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>

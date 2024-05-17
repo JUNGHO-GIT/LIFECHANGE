@@ -51,7 +51,7 @@ export const FoodPlanList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/food/plan/detail"
+    toSave:"/food/plan/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -148,7 +148,7 @@ export const FoodPlanList = () => {
                     startDt: item.food_startDt,
                     endDt: item.food_endDt
                   });
-                  navigate(SEND.toDetail, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>

@@ -48,7 +48,8 @@ export const MoneySave = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 1
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -87,7 +88,8 @@ export const MoneySave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -132,10 +134,8 @@ export const MoneySave = () => {
       alert(res.data.msg);
     }
   };
-
-  // 4-1. handler --------------------------------------------------------------------------------->
-  const handlerCount = (e) => {
-    const newCount = Number(e);
+  
+  useEffect(() => {
     const defaultSection = {
       money_part_idx: 0,
       money_part_val: "전체",
@@ -144,50 +144,16 @@ export const MoneySave = () => {
       money_amount: 0,
       money_content: ""
     };
-    setCOUNT((prev) => ({
-      ...prev,
-      sectionCnt: newCount
-    }));
-    if (newCount > 0) {
-      let updatedSection = Array(newCount).fill(null).map((_, idx) =>
-        idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
-      );
-      setOBJECT((prev) => ({
-        ...prev,
-        money_section: updatedSection
-      }));
-    }
-    else {
-      setOBJECT((prev) => ({
-        ...prev,
-        money_section: []
-      }));
-    }
-  };
 
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerValidate = (e, popTrigger) => {
-    const newValInt = Number(e.target.value);
-    const newValStr = String(e.target.value);
-    if (newValInt < 0) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValInt > 10) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValStr === "") {
-      handlerCount("");
-    }
-    else if (isNaN(newValInt) || newValStr === "NaN") {
-      handlerCount("0");
-    }
-    else if (newValStr.startsWith("0")) {
-      handlerCount(newValStr.replace(/^0+/, ""));
-    }
-    else {
-      handlerCount(newValStr);
-    }
-  };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      money_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
 
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
@@ -197,7 +163,7 @@ export const MoneySave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      newSectionCnt: prev.newSectionCnt - 1
     }));
   };
 
@@ -269,19 +235,43 @@ export const MoneySave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              handlerValidate(e, popTrigger);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <div className={"d-center"}>
+                  <div onClick={(e) => {
+COUNT.newSectionCnt > COUNT.sectionCnt ? 
+              setCOUNT((prev) => ({
+                ...prev,
+                newSectionCnt: prev.newSectionCnt - 1
+              })) :
+popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'));
+                }
+          }
+                  >
+                    -1
+                  </div>
+                  <div className={"w-10"}></div>
+                  <div onClick={(e) => {
+                    if (COUNT.newSectionCnt >= 10) {
+                      alert("10이하의 숫자만 입력 가능합니다");
+                      } else {
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt:
+                          prev.newSectionCnt + 1
+                         }));
+                      }
+                    }}
+                  >
+                    +1
+                  </div>
+                </div>
+              )
             }}
           />
         )}

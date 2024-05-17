@@ -113,11 +113,13 @@ export const SleepPlanSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      sleep_section: prev.sleep_section.filter((_, idx) => (idx !== index))
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      sectionCnt: 0
     }));
   };
 

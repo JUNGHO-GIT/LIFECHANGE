@@ -113,11 +113,14 @@ export const FoodPlanSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      food_section: prev.food_section.filter((_, idx) => (idx !== index))
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      sectionCnt: 0
     }));
   };
 

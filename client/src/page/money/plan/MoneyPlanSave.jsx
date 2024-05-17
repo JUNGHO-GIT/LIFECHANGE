@@ -111,11 +111,12 @@ export const MoneyPlanSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      money_section: prev.money_section.filter((_, idx) => (idx !== index))
+    money_plan_in: 0,
+    money_plan_out: 0
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      sectionCnt: 0
     }));
   };
 

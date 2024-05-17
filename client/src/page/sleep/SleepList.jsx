@@ -49,7 +49,7 @@ export const SleepList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/detail"
+    toSave:"/sleep/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -148,7 +148,7 @@ export const SleepList = () => {
                     startDt: item.sleep_startDt,
                     endDt: item.sleep_endDt
                   });
-                  navigate(SEND.toDetail, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>

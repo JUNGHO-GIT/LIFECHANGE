@@ -114,11 +114,14 @@ export const ExercisePlanSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+      exercise_plan_count: 0,
+      exercise_plan_volume: 0,
+      exercise_plan_cardio: "00:00",
+      exercise_plan_weight: 0
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      sectionCnt: 0
     }));
   };
 

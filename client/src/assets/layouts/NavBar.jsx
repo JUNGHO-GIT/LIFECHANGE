@@ -22,29 +22,41 @@ export const NavBar = () => {
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className) => {
-    if (percent?.[`${part}`]?.score < 2) {
+    const totalIcon =
+    (parseFloat(percent.exercise.average.score) + parseFloat(percent.food.average.score) +
+      parseFloat(percent.money.average.score) +
+      parseFloat(percent.sleep.average.score)
+      )/4;
+    
+    if (
+      percent?.[`${part}`]?.average?.score === "N/A") {
       return (
-        <img src={smile1} className={className} alt="smile1" />
+        <img src={smile1} className={className} alt={"smile1"} />
       );
     }
-    else if (percent?.[`${part}`]?.score < 3) {
+    else if (percent?.[`${part}`]?.average?.score < 2) {
       return (
-        <img src={smile2} className={className} alt="smile2" />
+        <img src={smile1} className={className} alt={"smile1"} />
       );
     }
-    else if (percent?.[`${part}`]?.score < 4) {
+    else if (percent?.[`${part}`]?.average?.score < 3) {
       return (
-        <img src={smile3} className={className} alt="smile3" />
+        <img src={smile2} className={className} alt={"smile2"} />
       );
     }
-    else if (percent?.[`${part}`]?.score < 5) {
+    else if (percent?.[`${part}`]?.average?.score < 4) {
       return (
-        <img src={smile4} className={className} alt="smile4" />
+        <img src={smile3} className={className} alt={"smile3"} />
+      );
+    }
+    else if (percent?.[`${part}`]?.average?.score < 5) {
+      return (
+        <img src={smile4} className={className} alt={"smile4"} />
       );
     }
     else {
       return (
-        <img src={smile5} className={className} alt="smile5" />
+        <img src={smile5} className={className} alt={"smile5"} />
       );
     }
   };

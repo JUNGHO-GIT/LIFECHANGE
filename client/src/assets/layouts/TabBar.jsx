@@ -17,7 +17,7 @@ export const TabBar = () => {
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [value, setValue] = useState("dash/list");
+  const [value, setValue] = useState("diff/list");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

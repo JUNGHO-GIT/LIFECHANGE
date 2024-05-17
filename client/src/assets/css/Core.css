@@ -49,7 +49,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 999;
-  animation: fadeIn 0.7s ease-in-out;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 /** 7. keyframes **/

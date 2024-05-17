@@ -53,7 +53,7 @@ export const Navigation = () => {
           icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
           onClick={() => {
             setValue("exercise");
-            navigate("exercise/dash/list");
+            navigate("exercise/diff/list");
           }}
         />
         <BottomNavigationAction
@@ -62,7 +62,7 @@ export const Navigation = () => {
           icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
           onClick={() => {
             setValue("food");
-            navigate("food/dash/list");
+            navigate("food/diff/list");
           }}
         />
         <BottomNavigationAction
@@ -80,7 +80,7 @@ export const Navigation = () => {
           icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
           onClick={() => {
             setValue("money");
-            navigate("money/dash/list");
+            navigate("money/diff/list");
           }}
         />
         <BottomNavigationAction
@@ -89,7 +89,7 @@ export const Navigation = () => {
           icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
           onClick={() => {
             setValue("sleep");
-            navigate("sleep/dash/list");
+            navigate("sleep/diff/list");
           }}
         />
       </BottomNavigation>

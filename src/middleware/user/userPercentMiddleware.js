@@ -90,8 +90,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: score,
-      percent: Math.abs(percent).toFixed(3),
+      score: Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2),
     };
   };
 
@@ -126,8 +126,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: score,
-      percent: Math.abs(percent).toFixed(3),
+      score: Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2),
     };
   };
 
@@ -231,8 +231,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: score,
-      percent: Math.abs(percent).toFixed(3),
+      score: Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2),
     };
   };
 
@@ -310,8 +310,8 @@ export const percent = async (object) => {
     }
 
     return {
-      score: score,
-      percent: Math.abs(percent).toFixed(3),
+      score: Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2),
     };
   };
 
@@ -320,20 +320,20 @@ export const percent = async (object) => {
   if (!object?.exercisePlan) {
     exercise = {
       diff_count: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_volume: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_cardio: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_weight: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
     };
   }
@@ -367,20 +367,20 @@ export const percent = async (object) => {
   if (!object?.foodPlan) {
     food = {
       diff_kcal: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_carb: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_protein: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_fat: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
     };
   }
@@ -414,12 +414,12 @@ export const percent = async (object) => {
   if (!object?.moneyPlan) {
     money = {
       diff_in: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_out: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
     };
   }
@@ -443,16 +443,16 @@ export const percent = async (object) => {
   if (!object?.sleepPlan) {
     sleep = {
       diff_night: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_morning: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
       diff_time: {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       },
     };
   }
@@ -476,35 +476,24 @@ export const percent = async (object) => {
     };
   }
 
-  console.log("===================================");
-  console.log("exercise: ", JSON.stringify(exercise, null, 2));
-  console.log("===================================");
-  console.log("food: ", JSON.stringify(food, null, 2));
-  console.log("===================================");
-  console.log("money: ", JSON.stringify(money, null, 2));
-  console.log("===================================");
-  console.log("sleep: ", JSON.stringify(sleep, null, 2));
-
   const calcAverage = (object) => {
     let sumScore = 0;
     let sumPercent = 0;
     let count = 0;
     for (const key in object) {
-      if (object[key].score !== "N/A" && object[key].percent !== "N/A") {
-        sumScore += object[key].score;
+        sumScore += parseFloat(object[key].score);
         sumPercent += parseFloat(object[key].percent);
         count++;
-      }
     }
     if (count === 0) {
       return {
-        score: "N/A",
-        percent: "N/A",
+        score: "1.00",
+        percent: "1.00",
       };
     }
     return {
-      score: (sumScore / count).toFixed(3),
-      percent: (sumPercent / count).toFixed(3),
+      score: (sumScore / count).toFixed(2),
+      percent: (sumPercent / count).toFixed(2),
     };
   };
 
@@ -524,8 +513,20 @@ export const percent = async (object) => {
     sleep: {
       ...sleep,
       average: calcAverage(sleep),
-    },
+    }
   };
+  
+  console.log("===================================");
+  console.log("exercise: ", JSON.stringify(exercise, null, 2));
+  console.log("===================================");
+  console.log("food: ", JSON.stringify(food, null, 2));
+  console.log("===================================");
+  console.log("money: ", JSON.stringify(money, null, 2));
+  console.log("===================================");
+  console.log("sleep: ", JSON.stringify(sleep, null, 2));
+  console.log("===================================");
+  console.log("newObject: ", JSON.stringify(newObject, null, 2));
+
 
   return newObject;
 };

@@ -49,7 +49,7 @@ export const ExerciseList = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail",
+    toSave: "/exercise/save",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -157,7 +157,7 @@ export const ExerciseList = () => {
                     startDt: item.exercise_startDt,
                     endDt: item.exercise_endDt
                   });
-                  navigate(SEND.toDetail, {
+                  navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
