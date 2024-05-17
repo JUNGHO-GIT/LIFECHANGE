@@ -151,8 +151,23 @@ export const CalendarList = () => {
             state: SEND
           });
         }}
+        onActiveStartDateChange={({ activeStartDate, value, view }) => {
+          setDATE({
+            startDt: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
+            endDt: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
+          });
+        }}
         tileClassName={({date, view}) => {
-          return "calendar-tile-text";
+          // 3개 이상일 경우
+          const calendarForDates = OBJECT?.filter((calendar) => (
+            dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
+          ));
+          if (calendarForDates.length > 2) {
+            return `calendar-tile over-y-auto`;
+          }
+          else {
+            return `calendar-tile`;
+          }
         }}
         tileContent={({date, view}) => {
           const calendarForDates = OBJECT?.filter((calendar) => (
