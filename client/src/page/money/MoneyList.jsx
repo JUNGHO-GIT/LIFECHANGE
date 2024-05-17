@@ -156,6 +156,7 @@ export const MoneyList = () => {
                     state: SEND
                   });
                 }}>
+
                   {item.money_startDt?.substring(5, 10)}
                 </TableCell>
               </TableRow>
