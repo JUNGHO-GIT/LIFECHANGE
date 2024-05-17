@@ -154,7 +154,7 @@ export const Btn = ({
   );
   const btnResetDefault = () => (
     <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
-    className={"danger-btn"} onClick={handlers?.handlerReset}>
+    className={"danger-btn"} onClick={handlers?.handlerDefault}>
       기본값
     </Button>
   );

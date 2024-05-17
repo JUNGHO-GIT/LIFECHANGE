@@ -33,6 +33,10 @@
 [class$="MuiToolbar-root-MuiTablePagination-toolbar"] {
   padding: 0px 0px 0px 0px !important;
 }
+[class$="MuiTableCell-root"] {
+  padding: 14px 14px 14px 14px !important;
+}
+
 .MuiFormControlLabel-root {
   margin-left: 0px !important;
   margin-right: 0px !important;

@@ -184,7 +184,7 @@ export const FoodFindList = () => {
     const tableFragmentEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>번호</TableCell>
               <TableCell>식품명</TableCell>
@@ -196,7 +196,7 @@ export const FoodFindList = () => {
               <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={7}>
                 데이터가 없습니다.
@@ -210,7 +210,7 @@ export const FoodFindList = () => {
     const tableFragment = (i) => (
       <TableContainer key={`${PAGING.page}-${i}`} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>번호</TableCell>
               <TableCell className={"w-max30vw"}>식품명</TableCell>
@@ -223,7 +223,7 @@ export const FoodFindList = () => {
               <TableCell>v</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
                 <TableRow className={"table-tbody-tr"} key={`find-${index}`}>

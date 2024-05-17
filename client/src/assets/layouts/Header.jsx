@@ -37,7 +37,7 @@ export const Header = () => {
       direction={"right"}
       contents={({closePopup}) => (
         <>
-        <Div className={"d-center mb-10"} onClick={() => {
+        <Div className={"d-center pointer mb-10"} onClick={() => {
           navigate("/user/login");
           closePopup();
         }}>
@@ -45,12 +45,20 @@ export const Header = () => {
             <Div className={"fs-0-8rem"}>Login</Div>
           </Icons>
         </Div>
-        <Div className={"d-center"} onClick={() => {
+        <Div className={"d-center pointer mb-10"} onClick={() => {
           navigate("/user/signup");
           closePopup();
         }}>
           <Icons name={"TbLogin2"} className={"w-24 h-24"}>
             <Div className={"fs-0-8rem"}>SignUp</Div>
+          </Icons>
+        </Div>
+        <Div className={"d-center pointer"} onClick={() => {
+          navigate("/user/dataset");
+          closePopup();
+        }}>
+          <Icons name={"TbUser"} className={"w-24 h-24"}>
+            <Div className={"fs-0-8rem"}>Dataset</Div>
           </Icons>
         </Div>
         </>

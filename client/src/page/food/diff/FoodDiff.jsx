@@ -120,7 +120,7 @@ export const FoodDiff = () => {
     const tableFragmentEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
@@ -130,7 +130,7 @@ export const FoodDiff = () => {
               <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={6}>
                 데이터가 없습니다.
@@ -144,7 +144,7 @@ export const FoodDiff = () => {
     const tableFragment = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
@@ -154,7 +154,7 @@ export const FoodDiff = () => {
               <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>

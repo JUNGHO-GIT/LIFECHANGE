@@ -80,7 +80,7 @@ export const PopUp = ({...props}) => {
   );
 
   // 2. 팝업 화면 정중앙 -------------------------------------------------------------------------->
-  const centeredPopUp = () => (
+  const innerCenterPopUp = () => (
     <>
     {props.children({
       openPopup: (anchorEl) => {
@@ -129,7 +129,7 @@ export const PopUp = ({...props}) => {
 
   return (
     <>
-      {props.type === "memo" ? centeredPopUp() : chainedPopUp()}
+      {props.type === "innerCenter" ? innerCenterPopUp() : chainedPopUp()}
     </>
   );
 };

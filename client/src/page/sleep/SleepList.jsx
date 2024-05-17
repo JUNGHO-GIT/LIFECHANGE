@@ -108,7 +108,7 @@ export const SleepList = () => {
     const tableFragmentEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>취침</TableCell>
@@ -116,7 +116,7 @@ export const SleepList = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
                 데이터가 없습니다.
@@ -130,7 +130,7 @@ export const SleepList = () => {
     const tableFragment = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>취침</TableCell>
@@ -138,7 +138,7 @@ export const SleepList = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>

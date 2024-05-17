@@ -116,7 +116,7 @@ export const SleepDiff = () => {
     const tableFragmentEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
@@ -125,7 +125,7 @@ export const SleepDiff = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
                 데이터가 없습니다.
@@ -139,7 +139,7 @@ export const SleepDiff = () => {
     const tableFragment = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>

@@ -514,7 +514,7 @@ export const CalendarDetail = () => {
         <Div className={"d-center mb-20"}>
           <PopUp
             key={i}
-            type={"memo"}
+            type={"innerCenter"}
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (

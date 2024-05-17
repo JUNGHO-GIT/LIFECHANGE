@@ -235,7 +235,7 @@ export const UserList = () => {
     const tableFragment1 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>운동횟수</TableCell>
@@ -244,7 +244,7 @@ export const UserList = () => {
               <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE_PLAN?.map((item, index) => (
               <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.exercise_plan_startDt?.substring(5, 10)}</TableCell>
@@ -262,7 +262,7 @@ export const UserList = () => {
     const tableFragment2 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>부위</TableCell>
@@ -272,7 +272,7 @@ export const UserList = () => {
               <TableCell>중량</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE?.map((item, index) => (
               item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <TableRow key={sectionIndex} className={"table-tbody-tr"}>
@@ -314,7 +314,7 @@ export const UserList = () => {
     const tableFragment3 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>Kcal</TableCell>
@@ -323,7 +323,7 @@ export const UserList = () => {
               <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
               <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.food_plan_startDt?.substring(5, 10)}</TableCell>
@@ -341,7 +341,7 @@ export const UserList = () => {
     const tableFragment4 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
@@ -349,7 +349,7 @@ export const UserList = () => {
               <TableCell>칼로리</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_FOOD?.map((item, index) => (
               item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <TableRow key={sectionIndex} className={"table-tbody-tr"}>
@@ -373,14 +373,14 @@ export const UserList = () => {
     const tableFragment5 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>수입</TableCell>
               <TableCell>지출</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_MONEY_PLAN?.map((item, index) => (
               <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.money_plan_startDt?.substring(5, 10)}</TableCell>
@@ -396,7 +396,7 @@ export const UserList = () => {
     const tableFragment6 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
@@ -404,7 +404,7 @@ export const UserList = () => {
               <TableCell>금액</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_MONEY?.map((item, index) => (
               item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <TableRow key={sectionIndex} className={"table-tbody-tr"}>
@@ -428,7 +428,7 @@ export const UserList = () => {
     const tableFragment7 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>취침</TableCell>
@@ -436,7 +436,7 @@ export const UserList = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
               <TableRow key={index} className={"table-tbody-tr"}>
                 <TableCell>{item.sleep_plan_startDt?.substring(5, 10)}</TableCell>
@@ -453,7 +453,7 @@ export const UserList = () => {
     const tableFragment8 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
-          <TableHead>
+          <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>취침</TableCell>
@@ -461,7 +461,7 @@ export const UserList = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP?.map((item, index) => (
               item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
                 <TableRow key={sectionIndex} className={"table-tbody-tr"}>

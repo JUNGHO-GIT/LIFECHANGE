@@ -1,10 +1,10 @@
 // UserDataset.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
+import {axios, moment} from "../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Button} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -257,12 +257,142 @@ export const UserDataset = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6-1. table
-    const tableFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20"} key={i}>
-        <TableContainer className={"over-x-hidden"}>
+    // 7-6. popup
+    const popupSection = (i, closePopup) => (
+      <Div className={"d-column"}>
+        <Div className={"d-center mb-20"}>
+          <Card key={i} variant={"outlined"} className={"w-80vw h-55vh border d-row"}>
+            <TableContainer className={"border-right"}>
+              <Table>
+                <TableHead className={"table-thead"}>
+                  <TableRow className={"table-thead-tr p-sticky top-0"}>
+                    <TableCell>
+                      <Div className={"d-center"}>
+                        <Div className={"fs-1-0rem ms-auto"}>
+                          Part
+                        </Div>
+                        <Div className={"fs-1-0rem ms-auto"}>
+                          <Icons name={"BiPlus"} className={"w-18 h-18 white"} onClick={() => {
+                            handlerAdd("part");
+                          }} />
+                        </Div>
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody className={"table-tbody"}>
+                  {OBJECT?.user_dataset[dataType]?.map((item, index) => (index > 0) && (
+                    <TableRow
+                      key={index}
+                      className={`${selectedIdx.partIdx === index ? "bg-secondary" : ""} pointer`} onClick={() => {
+                        setSelectedIdx((prev) => ({
+                          ...prev,
+                          partIdx: index
+                        }));
+                      }}>
+                      <TableCell>
+                        <Div className={"d-center"} onClick={() => {
+                          setIdx((prev) => ({
+                            ...prev,
+                            partIdx: index
+                          }));
+                        }}>
+                          <Div className={"fs-0-7rem ms-auto"}>
+                            {item[`${dataType}_part`]}
+                          </Div>
+                          <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
+                            <Icons name={"BiEdit"} className={"w-14 h-14 me-5"} onClick={() => {
+                              handlerRename("part", index);
+                            }} />
+                            <Icons name={"BiTrash"} className={"w-14 h-14 me-0"} onClick={() => {
+                              handlerRemove("part", index);
+                            }} />
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TableContainer className={"border-left"}>
+              <Table>
+                <TableHead className={"table-thead"}>
+                  <TableRow className={"table-thead-tr p-sticky top-0"}>
+                    <TableCell>
+                      <Div className={"d-center"}>
+                        <Div className={"fs-1-0rem ms-auto"}>
+                          Title
+                        </Div>
+                        <Div className={"fs-1-0rem ms-auto"}>
+                          <Icons name={"BiPlus"} className={"w-18 h-18 white"} onClick={() => {
+                            handlerAdd("title");
+                          }} />
+                        </Div>
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody className={"table-tbody"}>
+                  {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                    <TableRow
+                      key={index}
+                      className={`${selectedIdx.titleIdx === index ? "table-secondary" : ""} pointer`} onClick={() => {
+                        setSelectedIdx((prev) => ({
+                          ...prev,
+                          titleIdx: index
+                        }));
+                      }}>
+                      <TableCell>
+                        <Div className={"d-center"} onClick={() => {
+                          setIdx((prev) => ({
+                            ...prev,
+                            titleIdx: index
+                          }));
+                        }}>
+                          <Div className={"fs-0-7rem ms-auto"}>
+                            {item}
+                          </Div>
+                          <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
+                            <Icons name={"BiEdit"} className={"w-14 h-14 me-5"} onClick={() => {
+                              handlerRename("title", index);
+                            }} />
+                            <Icons name={"BiTrash"} className={"w-14 h-14 me-0"} onClick={() => {
+                              handlerRemove("title", index);
+                            }} />
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+        </Div>
+        <Div className={"d-center"}>
+          <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"primary-btn me-5"} onClick={() => {
+            flowSave();
+            setTimeout(() => {
+              closePopup();
+            }, 1000);
+          }}>
+            저장
+          </Button>
+          <Button size={"small"} type={"button"} color={"error"} variant={"contained"} className={"danger-btn"} onClick={() => {
+            closePopup();
+          }}>
+            닫기
+          </Button>
+        </Div>
+      </Div>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <Card variant={"outlined"} className={"p-0"} key={i}>
+        <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
                   <Div className={"d-center"}>
@@ -271,137 +401,44 @@ export const UserDataset = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody className={"table-tbody"}>
               {datasetArray.map((item, index) => (
-                <TableRow
-                  key={index}
-                  className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setDataType(item);
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      sectionIdx: index,
-                      partIdx: 1,
-                      titleIdx: 1
-                    }));
-                    setIdx((prev) => ({
-                      ...prev,
-                      partIdx: 1,
-                      titleIdx: 1
-                    }));
-                  }}
-                >
+                <TableRow key={index} className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}>
                   <TableCell>
-                    <Div className={"dataset-title"}>
-                      <Div className={"fs-1-0rem ms-0"}>{item}</Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-6-2. table
-    const tableFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
-        <TableContainer className={"over-x-hidden"}>
-          <Table>
-            <TableHead>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>
-                  <Div className={"d-center"}>
-                    <Div className={"fs-1-0rem ms-auto"}>Part</Div>
-                    <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
-                      handlerAdd("part");
-                    }} />
-                  </Div>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {OBJECT?.user_dataset[dataType]?.map((item, index) => (index > 0) && (
-                <TableRow key={index}
-                  className={selectedIdx.partIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      partIdx: index
-                    }));
-                  }}
-                >
-                  <TableCell>
-                    <Div className={"dataset-title"} onClick={() => {
-                      setIdx((prev) => ({
-                        ...prev,
-                        partIdx: index
-                      }));
-                    }}>
-                      <Div className={"fs-1-0rem ms-auto"}>{item[`${dataType}_part`]}</Div>
-                      <Icons name={"BiEdit"} className={"w-18 h-18 icon ms-auto"} onClick={() => {
-                        handlerRename("part", index);
-                      }} />
-                      <Icons name={"BiTrash"} className={"w-18 h-18 icon ms-10"} onClick={() => {
-                        handlerRemove("part", index);
-                      }} />
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-6-3. table
-    const tableFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-0 mb-20 w-50p"} key={i}>
-        <TableContainer className={"over-x-hidden"}>
-          <Table>
-            <TableHead>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>
-                  <Div className={"d-center"}>
-                    <Div className={"fs-1-0rem ms-auto"}>Title</Div>
-                    <Icons name={"BiPlus"} className={"w-18 h-18 white ms-auto"} onClick={() => {
-                      handlerAdd("title");
-                    }} />
-                  </Div>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                <TableRow
-                  key={index}
-                  className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      titleIdx: index
-                    }));
-                  }}
-                >
-                  <TableCell>
-                    <Div className={"dataset-title"} onClick={() => {
-                      setIdx((prev) => ({
-                        ...prev,
-                        titleIdx: index
-                      }));
-                    }}>
-                      <Div className={"fs-1-0rem ms-auto"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem ms-0"}>
                         {item}
                       </Div>
-                      <Icons name={"BiEdit"} className={"w-18 h-18 icon ms-auto"} onClick={() => {
-                        handlerRename("title", index);
-                      }} />
-                      <Icons name={"BiTrash"} className={"w-18 h-18 icon ms-10"} onClick={() => {
-                        handlerRemove("title", index);
-                      }} />
+                      <Div className={"fs-1-0rem ms-auto"}>
+                      <PopUp
+                        key={i}
+                        type={"innerCenter"}
+                        position={"bottom"}
+                        direction={"center"}
+                        contents={({closePopup}) => (
+                          popupSection(i, closePopup)
+                        )}>
+                        {(popTrigger={}) => (
+                          <Icons name={"BiEdit"} className={"w-18 h-18 pointer ms-auto"}
+                            onClick={(e) => {
+                              setDataType(item);
+                              setSelectedIdx((prev) => ({
+                                ...prev,
+                                sectionIdx: index,
+                                partIdx: 1,
+                                titleIdx: 1
+                              }));
+                              setIdx((prev) => ({
+                                ...prev,
+                                partIdx: 1,
+                                titleIdx: 1
+                              }));
+                              popTrigger.openPopup(e.currentTarget)
+                            }}
+                          />
+                        )}
+                      </PopUp>
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -415,11 +452,7 @@ export const UserDataset = () => {
     const tableSection = () => (
       <Div className={"block-wrapper w-min90vw h-min68vh"}>
         <Div className={"d-column"}>
-          {tableFragment1(0)}
-        </Div>
-        <Div className={"d-row align-start"}>
-          {tableFragment2(0)}
-          {tableFragment3(0)}
+          {tableFragment(0)}
         </Div>
       </Div>
     );
@@ -454,7 +487,7 @@ export const UserDataset = () => {
         setDATE, setSEND
       }}
       handlers={{
-        navigate, flowSave
+        navigate, flowSave, handlerDefault
       }}
     />
   );
