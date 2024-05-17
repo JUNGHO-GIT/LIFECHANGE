@@ -14,7 +14,7 @@
   "github.copilot.editor.enableCodeActions": true,
   "github.copilot.editor.iterativeFixing": true,
   "files.exclude": {
-    "**/.git": true,
+    "**/.git**": true,
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
