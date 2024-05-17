@@ -17,11 +17,11 @@ export const list = async (object) => {
   }
 
   const makeColor = (plan, real, extra) => {
-    let percent = (Math.abs(plan - real) / plan) * 100;
     if (plan === undefined || real === undefined) {
       return "danger";
     }
     else if (extra === "in") {
+      const percent = (Math.abs(plan - real) / plan) * 100;
       if (plan > real) {
         if (percent > 0 && percent <= 1) {
           return "danger";
@@ -67,6 +67,7 @@ export const list = async (object) => {
       }
     }
     if (extra === "out") {
+      const percent = (Math.abs(plan - real) / plan) * 100;
       if (plan > real) {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {

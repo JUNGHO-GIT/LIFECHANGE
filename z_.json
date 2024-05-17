@@ -1,142 +1,66 @@
-===================================
+=================================== exercisePlan
 [
   {
-    "_id": "66372d3496c6eab56fd013b0",
-    "exercise_startDt": "2024-05-05",
-    "exercise_endDt": "2024-05-05",
-    "exercise_total_volume": 1,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6641480037db550d6c079257",
-    "exercise_startDt": "2024-05-13",
-    "exercise_endDt": "2024-05-13",
-    "exercise_total_volume": 1,
-    "exercise_total_cardio": "06:50"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde79",
-    "exercise_startDt": "2024-05-18",
-    "exercise_endDt": "2024-05-18",
-    "exercise_total_volume": 394,
-    "exercise_total_cardio": "60:04"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde7f",
-    "exercise_startDt": "2024-05-17",
-    "exercise_endDt": "2024-05-17",
-    "exercise_total_volume": 2920,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde82",
-    "exercise_startDt": "2024-05-16",
-    "exercise_endDt": "2024-05-16",
-    "exercise_total_volume": 812,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde84",
-    "exercise_startDt": "2024-05-15",
-    "exercise_endDt": "2024-05-15",
-    "exercise_total_volume": 0,
-    "exercise_total_cardio": "20:22"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde86",
-    "exercise_startDt": "2024-05-14",
-    "exercise_endDt": "2024-05-14",
-    "exercise_total_volume": 632,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde88",
-    "exercise_startDt": "2024-05-13",
-    "exercise_endDt": "2024-05-13",
-    "exercise_total_volume": 165,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde8a",
-    "exercise_startDt": "2024-05-12",
-    "exercise_endDt": "2024-05-12",
-    "exercise_total_volume": 638,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde8e",
-    "exercise_startDt": "2024-05-11",
-    "exercise_endDt": "2024-05-11",
-    "exercise_total_volume": 1037,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde92",
-    "exercise_startDt": "2024-05-10",
-    "exercise_endDt": "2024-05-10",
-    "exercise_total_volume": 1328,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde98",
-    "exercise_startDt": "2024-05-09",
-    "exercise_endDt": "2024-05-09",
-    "exercise_total_volume": 1888,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bde9b",
-    "exercise_startDt": "2024-05-08",
-    "exercise_endDt": "2024-05-08",
-    "exercise_total_volume": 184,
-    "exercise_total_cardio": "15:25"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdea0",
-    "exercise_startDt": "2024-05-07",
-    "exercise_endDt": "2024-05-07",
-    "exercise_total_volume": 1227,
-    "exercise_total_cardio": "13:12"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdea4",
-    "exercise_startDt": "2024-05-06",
-    "exercise_endDt": "2024-05-06",
-    "exercise_total_volume": 1711,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdea8",
-    "exercise_startDt": "2024-05-05",
-    "exercise_endDt": "2024-05-05",
-    "exercise_total_volume": 1303,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdeaa",
-    "exercise_startDt": "2024-05-04",
-    "exercise_endDt": "2024-05-04",
-    "exercise_total_volume": 571,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdeac",
-    "exercise_startDt": "2024-05-03",
-    "exercise_endDt": "2024-05-03",
-    "exercise_total_volume": 544,
-    "exercise_total_cardio": "00:00"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdeb1",
-    "exercise_startDt": "2024-05-02",
-    "exercise_endDt": "2024-05-02",
-    "exercise_total_volume": 1103,
-    "exercise_total_cardio": "06:08"
-  },
-  {
-    "_id": "6647753d5f59fb8d7e8bdeb6",
-    "exercise_startDt": "2024-05-01",
-    "exercise_endDt": "2024-05-01",
-    "exercise_total_volume": 1563,
-    "exercise_total_cardio": "00:00"
+    "exercise_plan_count": 0,
+    "exercise_plan_volume": 0,
+    "exercise_plan_cardio": "00:00",
+    "exercise_plan_weight": 0
   }
+]
+=================================== exerciseReal
+[
+  {
+    "exercise_total_count": 1,
+    "exercise_total_volume": 0,
+    "exercise_total_cardio": "00:00",
+    "exercise_body_weight": 0
+  }
+]
+=================================== foodPlan
+[
+  {
+    "food_plan_kcal": 2222,
+    "food_plan_carb": 112,
+    "food_plan_protein": 222,
+    "food_plan_fat": 11
+  }
+]
+=================================== foodReal
+[
+  {
+    "food_total_kcal": 0,
+    "food_total_carb": 0,
+    "food_total_protein": 0,
+    "food_total_fat": 0
+  }
+]
+=================================== moneyPlan
+[
+  {
+    "money_plan_in": 0,
+    "money_plan_out": 0
+  }
+]
+=================================== moneyReal
+[
+  {
+    "money_total_in": 0,
+    "money_total_out": 0
+  }
+]
+=================================== sleepPlan
+[
+  {
+    "sleep_plan_night": "22:20",
+    "sleep_plan_morning": "08:10",
+    "sleep_plan_time": "09:50"
+  }
+]
+=================================== sleepReal
+[
+  {
+    "sleep_night": "00:00",
+    "sleep_morning": "00:00",
+    "sleep_time": "00:00"
+  }
+]

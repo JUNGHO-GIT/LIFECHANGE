@@ -24,7 +24,7 @@ export const UserLogin = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
-  const [user_id, setUserId] = useState("");
+  const [user_id, setUserId] =  useState(localStorage.getItem("user_id") || "");
   const [user_pw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -64,7 +64,7 @@ export const UserLogin = () => {
             }}
           />
         </Div>
-        <Div className={"d-center"}>
+        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             type={"text"}
@@ -73,6 +73,19 @@ export const UserLogin = () => {
             value={user_pw}
             onChange={(e) => {
               setUserPw(e.target.value);
+            }}
+          />
+        </Div>
+        <Div className={"d-center"}>
+          <Div className={"fs-0-7rem"}>아이디 저장</Div>
+          <input type="checkbox" id="idSave"
+            onChange={(e) => {
+              if (e.target.checked) {
+                localStorage.setItem("user_id", user_id);
+              }
+              else {
+                localStorage.setItem("user_id", "");
+              }
             }}
           />
         </Div>

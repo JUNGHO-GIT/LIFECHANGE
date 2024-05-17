@@ -14,15 +14,13 @@ export const Header = () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  // 4. toggle ------------------------------------------------------------------------------------>
-  /* const openSidebar = () => {
+  /* const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // 4. toggle
+  const openSidebar = () => {
     setIsSidebarOpen((prev) => (!prev));
-  }; */
-
-  // 6-1. button ---------------------------------------------------------------------------------->
-  /* const btnSideBar = () => (
+  };
+  // 6-1. button
+  const btnSideBar = () => (
     <>
       <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
       <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>

@@ -55,13 +55,17 @@ export const PopUp = ({...props}) => {
         anchorEl={popupState.anchorEl}
         onClose={popupState.close}
         anchorOrigin={{
-          vertical: props.position === "top" ? "top" : "bottom",
+          vertical: props.position === "center" ? "center" : (
+            props.position === "top" ? "top" : "bottom"
+          ),
           horizontal: props.direction === "center" ? "center" : (
-            props.direction === "right" ? "left" : "right"
+            props.direction === "right" ? "right" : "left"
           )
         }}
         transformOrigin={{
-          vertical: props.position === "top" ? "bottom" : "top",
+          vertical: props.position === "center" ? "center" : (
+            props.position === "top" ? "bottom" : "top"
+          ),
           horizontal: props.direction === "center" ? "center" : (
             props.direction === "right" ? "left" : "right"
           )

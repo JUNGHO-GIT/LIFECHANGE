@@ -1,10 +1,10 @@
 // NavBar.jsx
 
 import {React, useState, useLocation, useEffect} from "../../import/ImportReacts.jsx";
-import {dataArray} from "../../import/ImportLogics";
-import {Div} from "../../import/ImportComponents.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {smile1, smile2, smile3, smile4} from "../../import/ImportImages.jsx";
+import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
@@ -20,43 +20,36 @@ export const NavBar = () => {
   const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [isActive, setIsActive] = useState(PATH);
-
-  // 3-1. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setIsActive(location.pathname);
-  }, [location.pathname]);
-
-  let preFix = "";
-  let subFix = isActive.split("/").pop();
-
-  dataArray.forEach((menu) => {
-    if (isActive.includes(menu.title.toLowerCase())) {
-      preFix = menu.title;
-    }
-  });
-
   // 3. logic ------------------------------------------------------------------------------------->
-  const makeIcon = (label) => {
-    if (percent?.[`${label}`] < 2) {
+  const makeIcon = (part, className) => {
+    if (percent?.[`${part}`] === "N") {
       return (
-        <img src={smile1} className={"w-max5vw h-max5vh"} alt="smile1" />
+        "N"
       );
     }
-    else if (percent?.[`${label}`] < 3) {
+    else if (percent?.[`${part}`]?.score < 2) {
       return (
-        <img src={smile2} className={"w-max5vw h-max5vh"} alt="smile2" />
+        <img src={smile1} className={className} alt="smile1" />
       );
     }
-    else if (percent?.[`${label}`] < 4) {
+    else if (percent?.[`${part}`]?.score < 3) {
       return (
-        <img src={smile3} className={"w-max5vw h-max5vh"} alt="smile3" />
+        <img src={smile2} className={className} alt="smile2" />
+      );
+    }
+    else if (percent?.[`${part}`]?.score < 4) {
+      return (
+        <img src={smile3} className={className} alt="smile3" />
+      );
+    }
+    else if (percent?.[`${part}`]?.score < 5) {
+      return (
+        <img src={smile4} className={className} alt="smile4" />
       );
     }
     else {
       return (
-        <img src={smile4} className={"w-max5vw h-max5vh"} alt="smile4" />
+        <img src={smile5} className={className} alt="smile5" />
       );
     }
   };
@@ -66,15 +59,50 @@ export const NavBar = () => {
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
       <Div className={"d-center"}>
         <Div className={"fs-1-0rem fw-bold navy"}>
-          {part}
-          {type ? ` / ${type}` : ""}
-          {plan ? ` / ${plan}` : ""}
+          {part} {type ? ` / ${type}` : ""} {plan ? ` / ${plan}` : ""}
         </Div>
       </Div>
       <Div className={"d-center ms-auto"}>
-        <Div className={"d-center"}>{makeIcon("total")}</Div>
-        <Div className={"w-5"}></Div>
-        <Div className={"d-center"}>{makeIcon("sub")}</Div>
+        <Div className={"d-center"}>
+          <PopUp
+            type={"dropdown"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <Div className={"d-column p-10"}>
+                <Div className={"fs-1-0rem fw-normal mb-10"}>
+                  {moment().format("YYYY-MM-DD (ddd)")}
+                </Div>
+                <Div className={"d-center mb-10"}>
+                  총합 : {makeIcon("total", "w-max3vw h-max3vh ms-5")}
+                </Div>
+                <Div className={"d-center mb-10"}>
+                  운동 : {makeIcon("exercise", "w-max3vw h-max3vh ms-5")}
+                </Div>
+                <Div className={"d-center mb-10"}>
+                  식단 : {makeIcon("food", "w-max3vw h-max3vh ms-5")}
+                </Div>
+                <Div className={"d-center mb-10"}>
+                  재무 : {makeIcon("money", "w-max3vw h-max3vh ms-5")}
+                </Div>
+                <Div className={"d-center"}>
+                  수면 : {makeIcon("sleep", "w-max3vw h-max3vh ms-5")}
+                </Div>
+              </Div>
+            )}>
+            {(popTrigger={}) => (
+              <Div className={"d-center pointer"} onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}>
+                {!part || part === "Calendar" ? (
+                  makeIcon("total", "w-max5vw h-max5vh")
+                ) : (
+                  makeIcon(part.toLowerCase(), "w-max5vw h-max5vh")
+                )}
+              </Div>
+            )}
+          </PopUp>
+        </Div>
       </Div>
     </Div>
   );
