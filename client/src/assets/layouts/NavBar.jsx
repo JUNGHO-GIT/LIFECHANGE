@@ -2,7 +2,7 @@
 
 import {React, useState, useLocation, useEffect} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 
@@ -22,12 +22,7 @@ export const NavBar = () => {
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className) => {
-    if (percent?.[`${part}`] === "N") {
-      return (
-        "N"
-      );
-    }
-    else if (percent?.[`${part}`]?.score < 2) {
+    if (percent?.[`${part}`]?.score < 2) {
       return (
         <img src={smile1} className={className} alt="smile1" />
       );

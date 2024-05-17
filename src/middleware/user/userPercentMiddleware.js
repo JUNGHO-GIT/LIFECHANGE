@@ -485,11 +485,46 @@ export const percent = async (object) => {
   console.log("===================================");
   console.log("sleep: ", JSON.stringify(sleep, null, 2));
 
+  const calcAverage = (object) => {
+    let sumScore = 0;
+    let sumPercent = 0;
+    let count = 0;
+    for (const key in object) {
+      if (object[key].score !== "N/A" && object[key].percent !== "N/A") {
+        sumScore += object[key].score;
+        sumPercent += parseFloat(object[key].percent);
+        count++;
+      }
+    }
+    if (count === 0) {
+      return {
+        score: "N/A",
+        percent: "N/A",
+      };
+    }
+    return {
+      score: (sumScore / count).toFixed(3),
+      percent: (sumPercent / count).toFixed(3),
+    };
+  };
+
   const newObject = {
-    exercise: exercise,
-    food: food,
-    money: money,
-    sleep: sleep,
+    exercise: {
+      ...exercise,
+      average: calcAverage(exercise),
+    },
+    food: {
+      ...food,
+      average: calcAverage(food),
+    },
+    money: {
+      ...money,
+      average: calcAverage(money),
+    },
+    sleep: {
+      ...sleep,
+      average: calcAverage(sleep),
+    },
   };
 
   return newObject;
