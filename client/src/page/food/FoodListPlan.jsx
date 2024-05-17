@@ -178,7 +178,7 @@ export const FoodListPlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min68vh w-min110vw"}>
+      <Div className={"block-wrapper h-min67vh w-min110vw"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>

@@ -41,25 +41,22 @@ export const Header = () => {
           navigate("/user/login");
           closePopup();
         }}>
-          <Icons name={"TbLogin"} className={"w-24 h-24"}>
-            <Div className={"fs-0-8rem"}>Login</Div>
-          </Icons>
+          <Icons name={"TbLogin"} className={"w-24 h-24"} />
+          <Div className={"fs-0-8rem"}>Login</Div>
         </Div>
         <Div className={"d-center pointer mb-10"} onClick={() => {
           navigate("/user/signup");
           closePopup();
         }}>
-          <Icons name={"TbLogin2"} className={"w-24 h-24"}>
-            <Div className={"fs-0-8rem"}>SignUp</Div>
-          </Icons>
+          <Icons name={"TbLogin2"} className={"w-24 h-24"} />
+          <Div className={"fs-0-8rem"}>SignUp</Div>
         </Div>
         <Div className={"d-center pointer"} onClick={() => {
           navigate("/user/dataset");
           closePopup();
         }}>
-          <Icons name={"TbUser"} className={"w-24 h-24"}>
-            <Div className={"fs-0-8rem"}>Dataset</Div>
-          </Icons>
+          <Icons name={"TbUser"} className={"w-24 h-24"} />
+          <Div className={"fs-0-8rem"}>Dataset</Div>
         </Div>
         </>
       )}>

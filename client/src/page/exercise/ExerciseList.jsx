@@ -183,7 +183,7 @@ export const ExerciseList = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>

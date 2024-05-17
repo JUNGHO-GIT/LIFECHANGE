@@ -483,7 +483,7 @@ export const UserList = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
           {PART === "exercisePlan" && tableFragment1(0)}
           {PART === "exercise" && tableFragment2(0)}

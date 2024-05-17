@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Button, IconButton} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Button} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -30,7 +30,7 @@ export const UserDataset = () => {
   const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
-  const datasetArray = ["calendar", "exercise", "food", "money", "sleep"];
+  const datasetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -54,7 +54,8 @@ export const UserDataset = () => {
     partIdx: 1,
     titleIdx: 1
   });
-  const [dataType, setDataType] = useState("calendar");
+  const [dataType, setDataType] = useState("exercise");
+  const [dataTypeKo, setDataTypeKo] = useState("운동");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -261,7 +262,7 @@ export const UserDataset = () => {
     const popupSection = (i, closePopup) => (
       <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
-          <Card key={i} variant={"outlined"} className={"w-80vw h-55vh border d-row"}>
+          <Card key={i} variant={"outlined"} className={"w-85vw h-60vh border d-row"}>
             <TableContainer className={"border-right over-x-hidden"}>
               <Table>
                 <TableHead className={"table-thead"}>
@@ -284,7 +285,7 @@ export const UserDataset = () => {
                           partIdx: index
                         }));
                       }}>
-                      <TableCell>
+                      <TableCell className={selectedIdx.partIdx === index ? "bg-light" : ""}>
                         <Div className={"d-center"} onClick={() => {
                           setIdx((prev) => ({
                             ...prev,
@@ -295,10 +296,10 @@ export const UserDataset = () => {
                             {item[`${dataType}_part`]}
                           </Div>
                           <Div className={"fs-0-7rem ms-auto me-n10"}>
-                            <Icons name={"BiEdit"} className={"w-14 h-14"} onClick={() => {
+                            <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
                               handlerRename("part", index);
                             }} />
-                            <Icons name={"BiTrash"} className={"w-14 h-14"} onClick={() => {
+                            <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
                               handlerRemove("part", index);
                             }} />
                           </Div>
@@ -320,64 +321,66 @@ export const UserDataset = () => {
                 </TableFooter>
               </Table>
             </TableContainer>
-            <TableContainer className={"border-left over-x-hidden"}>
-              <Table>
-                <TableHead className={"table-thead"}>
-                  <TableRow className={"table-thead-tr p-sticky top-0"}>
-                    <TableCell>
-                      <Div className={"d-center"}>
-                        <Div className={"fs-1-0rem m-auto"}>
-                          Title
-                        </Div>
-                      </Div>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className={"table-tbody"}>
-                  {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                    <TableRow key={index} className={`table-tbody-tr`}
-                      onClick={() => {
-                        setSelectedIdx((prev) => ({
-                          ...prev,
-                          titleIdx: index
-                        }));
-                      }}>
+            {(dataType === "exercise" || dataType === "money") && (
+              <TableContainer className={"border-left over-x-hidden"}>
+                <Table>
+                  <TableHead className={"table-thead"}>
+                    <TableRow className={"table-thead-tr p-sticky top-0"}>
                       <TableCell>
-                        <Div className={"d-center"} onClick={() => {
-                          setIdx((prev) => ({
-                            ...prev,
-                            titleIdx: index
-                          }));
-                        }}>
-                          <Div className={"fs-0-7rem ms-auto"}>
-                            {item}
-                          </Div>
-                          <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
-                            <Icons name={"BiEdit"} className={"w-14 h-14"} onClick={() => {
-                              handlerRename("title", index);
-                            }} />
-                            <Icons name={"BiTrash"} className={"w-14 h-14"} onClick={() => {
-                              handlerRemove("title", index);
-                            }} />
+                        <Div className={"d-center"}>
+                          <Div className={"fs-1-0rem m-auto"}>
+                            Title
                           </Div>
                         </Div>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-                <TableFooter className={"table-tfoot"}>
-                  <TableRow className={"table-tfoot-tr"}>
-                    <TableCell>
-                      <Div className={"d-center"} onClick={() => {
-                        handlerAdd("title");
-                      }}>
-                        <Icons name={"BiPlus"} className={"w-14 h-14"} />
-                      </Div>
-                    </TableCell>
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody className={"table-tbody"}>
+                    {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                      <TableRow key={index} className={`table-tbody-tr`}
+                        onClick={() => {
+                          setSelectedIdx((prev) => ({
+                            ...prev,
+                            titleIdx: index
+                          }));
+                        }}>
+                        <TableCell>
+                          <Div className={"d-center"} onClick={() => {
+                            setIdx((prev) => ({
+                              ...prev,
+                              titleIdx: index
+                            }));
+                          }}>
+                            <Div className={"fs-0-7rem ms-auto"}>
+                              {item}
+                            </Div>
+                            <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
+                              <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
+                                handlerRename("title", index);
+                              }} />
+                              <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
+                                handlerRemove("title", index);
+                              }} />
+                            </Div>
+                          </Div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                  <TableFooter className={"table-tfoot"}>
+                    <TableRow className={"table-tfoot-tr"}>
+                      <TableCell>
+                        <Div className={"d-center"} onClick={() => {
+                          handlerAdd("title");
+                        }}>
+                          <Icons name={"BiPlus"} className={"w-14 h-14"} />
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </TableContainer>
+            )}
           </Card>
         </Div>
         <Div className={"d-center"}>
@@ -413,8 +416,8 @@ export const UserDataset = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {datasetArray.map((item, index) => (
-                <TableRow key={index} className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}>
-                  <TableCell>
+                <TableRow key={index} className={"table-tbody-tr"}>
+                  <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem ms-0"}>
                         {item}
@@ -429,7 +432,7 @@ export const UserDataset = () => {
                           popupSection(i, closePopup)
                         )}>
                         {(popTrigger={}) => (
-                          <Icons name={"BiEdit"} className={"w-18 h-18 pointer ms-auto"}
+                          <Icons name={"BiEdit"} className={"w-18 h-18 navy ms-auto"}
                             onClick={(e={}) => {
                               setDataType(item);
                               setSelectedIdx((prev) => ({
@@ -460,7 +463,7 @@ export const UserDataset = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min68vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
           {tableFragment(0)}
         </Div>

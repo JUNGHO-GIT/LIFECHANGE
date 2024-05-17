@@ -1,0 +1,358 @@
+/** scrollbar *************************************************************************************/
+/* 스크롤바 전체의 너비 설정 */
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+  z-index: 100000;
+}
+
+/* 스크롤바 썸(움직이는 부분)의 기본 스타일 */
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #ccc !important;
+}
+
+/* 스크롤바 썸에 마우스를 올렸을 때의 스타일 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa !important;
+}
+
+/* 스크롤바 썸이 활성화(클릭) 상태일 때의 스타일 */
+::-webkit-scrollbar-thumb:active {
+  background-color: #999;
+}
+
+/* 스크롤바 트랙(바탕 부분)의 기본 스타일 */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1 !important;
+}
+
+/* 스크롤바가 비활성화 상태일 때 썸의 스타일 */
+::-webkit-scrollbar-thumb:disabled {
+  background-color: #eee !important;
+}
+
+/* 스크롤바가 비활성화 상태일 때 트랙의 스타일 */
+::-webkit-scrollbar-track:disabled {
+  background-color: #f9f9f9 !important;
+}
+
+/* 스크롤바 버튼(위/아래 버튼)의 스타일. 사용하지 않음으로 설정 */
+::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+/* 스크롤바의 모서리 부분. 투명하게 설정 */
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+/* 스크롤바 트랙의 시작 부분 스타일 */
+::-webkit-scrollbar-track-piece:start {
+  background: transparent !important;
+}
+
+/* 스크롤바 트랙의 끝 부분 스타일 */
+::-webkit-scrollbar-track-piece:end {
+  background: transparent !important;
+}
+
+/* 윈도우가 비활성화 상태일 때 스크롤바 썸의 스타일 */
+::-webkit-scrollbar-thumb:window-inactive {
+  background-color: #ccc !important;
+}
+
+/* 윈도우가 비활성화 상태일 때 스크롤바 트랙의 스타일 */
+::-webkit-scrollbar-track:window-inactive {
+  background-color: #f1f1f1 !important;
+}
+
+/* 스크롤바 리사이저 스타일 */
+::-webkit-resizer {
+  background-color: #ccc !important;
+}
+
+/** sidebar ***************************************************************************************/
+.sidebar {
+  z-index: 10000;
+}
+.highlight {
+  transition: background-color 0.5s ease !important;
+  background-color: #eae8e8 !important;
+}
+.sidebar-ul-text span {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 1.0rem;
+  line-height: 1.0rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  text-align: left;
+  color: #000b15;
+  cursor: pointer;
+}
+.sidebar-li-text span {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 1.0rem;
+  line-height: 1.0rem;
+  font-weight: 500;
+  text-align: left;
+  color: #000b15;
+  cursor: pointer;
+}
+.sidebar-ul2-text span {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  color: #0b2730;
+  cursor: pointer;
+}
+.sidebar-li2-text span {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  color: #0b2730;
+  cursor: pointer;
+}
+.sidebar-image-logo {
+  max-width: 200px;
+  max-height: 30px;
+  margin: 10px 0px 10px 0px;
+  padding: 0px 0px 0px 0px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+/** table *****************************************************************************************/
+.table-thead-tr th, .table-thead-tr td {
+  font-weight: bold !important;
+  text-align: center !important;
+  background-color: #006ab3 !important;
+  color: #ffffff !important;
+  padding: 5px !important;
+}
+.table-tbody-tr th, .table-tbody-tr td {
+  font-weight: normal !important;
+  text-align: center !important;
+  padding: 7.5px !important;
+}
+.table-tfoot-tr th, .table-tfoot-tr td {
+  font-weight: bold !important;
+  text-align: center !important;
+  padding: 7.5px !important;
+}
+
+/** btn *******************************************************************************************/
+/** del **/
+.del-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #dc3545 !important;
+  background-color: #f8d7da !important;
+  border: 1px solid #f8d7da !important;
+}
+.del-btn:hover, .del-btn:active, .del-btn:disabled {
+  color: #f8d7da !important;
+  background-color:#8b202b !important;
+  border: 1px solid #8b202b !important;
+}
+
+/** dark **/
+.dark-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff !important;
+  background-color: #0b2730 !important;
+  border: 1px solid #0b2730 !important;
+}
+.dark-btn:hover, .dark-btn:active, .dark-btn:disabled {
+  color: #ffffff !important;
+  background-color: #000b15 !important;
+  border: 1px solid #000b15 !important;
+}
+
+/** primary **/
+.primary-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff !important;
+  background-color: #006ab3 !important;
+  border: 1px solid #006ab3 !important;
+}
+.primary-btn:hover, .primary-btn:active, .primary-btn:disabled {
+  color: #ffffff !important;
+  background-color: #23486f !important;
+  border: 1px solid #23486f !important;
+}
+
+/** success **/
+.success-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff;
+  background-color: #3fc820;
+  border: 1px solid #3fc820;
+}
+.success-btn:hover, .success-btn:active, .success-btn:disabled {
+  color: #ffffff !important;
+  background-color: #2e7b18 !important;
+  border: 1px solid #2e7b18 !important;
+}
+
+/** warning **/
+.warning-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff !important;
+  background-color: #ffc107 !important;
+  border: 1px solid #ffc107 !important;
+}
+.warning-btn:hover, .warning-btn:active, .warning-btn:disabled {
+  color: #ffffff !important;
+  background-color: #d39e00 !important;
+  border: 1px solid #d39e00 !important;
+}
+
+/** danger **/
+.danger-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff !important;
+  background-color: #dc3545 !important;
+  border: 1px solid #dc3545 !important;
+}
+.danger-btn:hover, .danger-btn:active, .danger-btn:disabled {
+  color: #ffffff !important;
+  background-color: #bd2130 !important;
+  border: 1px solid #bd2130 !important;
+}
+
+/** secondary **/
+.secondary-btn {
+  min-width: min-content !important;
+  width: auto;
+  max-width: 100%;
+  min-height: min-content !important;
+  height: 100%;
+  max-height: 25px;
+  cursor: pointer!important;
+  font-weight: 500 !important;
+  font-size: 0.800rem !important;
+  margin: 0rem 0.15rem 0rem 0.15rem !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem !important;
+  color: #ffffff !important;
+  background-color: #6c757d !important;
+  border: 1px solid #6c757d !important;
+}
+.secondary-btn:hover, .secondary-btn:active, .secondary-btn:disabled {
+  color: #ffffff !important;
+  background-color: #4b5156 !important;
+  border: 1px solid #4b5156 !important;
+}
+
+/** loading ***************************************************************************************/
+.loader {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	border-top: 3px solid rgba(62, 150, 252, 0.8);
+	border-right: 3px solid transparent;
+  background-color: #ffffff !important;
+	animation: loaderAnimation 1s ease-in-out infinite;
+}
+
+@keyframes loaderAnimation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
