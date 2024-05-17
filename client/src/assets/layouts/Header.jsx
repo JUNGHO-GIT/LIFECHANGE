@@ -51,7 +51,7 @@ export const Header = () => {
             <Icons name={"TbLogin2"} className={"w-24 h-24"} />
             <Div className={"fs-0-8rem"}>SignUp</Div>
           </Div>
-          <Div className={"d-center pointer"} onClick={() => {
+          <Div className={"d-center pointer mb-10"} onClick={() => {
             navigate("/user/data/set");
             closePopup();
           }}>

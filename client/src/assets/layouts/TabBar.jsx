@@ -26,15 +26,14 @@ export const TabBar = () => {
     // ex. /food/diff/save
     // ex. /food/plan/list
     // ex. /food/plan/save
+    // ex. /food/list
+    // ex. /food/save
 
-    if (secondStr === "find" && thirdStr === "list") {
-      setValue("find/list");
-    }
-    else if (secondStr === "find" && thirdStr === "save") {
-      setValue("find/list");
+    if (thirdStr !== "") {
+      setValue(`${secondStr}/${thirdStr}`);
     }
     else {
-      setValue(`${secondStr}/${thirdStr}`);
+      setValue(secondStr);
     }
 
   }, [secondStr, thirdStr]);

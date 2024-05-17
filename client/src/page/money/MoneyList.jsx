@@ -5,7 +5,7 @@ import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Link} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -156,7 +156,9 @@ export const MoneyList = () => {
                     state: SEND
                   });
                 }}>
-                  {item.money_startDt?.substring(5, 10)}
+                  <Link>
+                    {item.money_startDt?.substring(5, 10)}
+                  </Link>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>

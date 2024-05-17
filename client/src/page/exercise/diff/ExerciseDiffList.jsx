@@ -6,7 +6,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -158,9 +158,11 @@ export const ExerciseDiff = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.exercise_plan_startDt?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.exercise_plan_endDt?.substring(5, 10)}</Div>
+                  <Link>
+                    <Div>{item.exercise_plan_startDt?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.exercise_plan_endDt?.substring(5, 10)}</Div>
+                  </Link>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

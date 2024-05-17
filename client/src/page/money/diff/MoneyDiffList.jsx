@@ -7,7 +7,7 @@ import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -147,9 +147,11 @@ export const MoneyDiff = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
+                  <Link>
+                    <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
+                  </Link>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

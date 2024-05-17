@@ -7,7 +7,7 @@ import {useStorage, useDate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -153,9 +153,11 @@ export const SleepDiff = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
+                  <Link>
+                    <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
+                  </Link>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

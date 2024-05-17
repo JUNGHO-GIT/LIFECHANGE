@@ -63,3 +63,22 @@
   font-weight: bold !important;
   scale: 1.2 !important;
 }
+
+/** 일반 **/
+[class$="MuiTypography-root-MuiLink-root"] {
+  color: unset !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+}
+
+/** 호버 **/
+[class$="MuiTypography-root-MuiLink-root"]:hover {
+  color: #006ab3 !important;
+  scale: 1.1 !important;
+}
+
+/** 셀렉트, 엑티브 **/
+[class$="MuiTypography-root-MuiLink-root"]:active {
+  color: #006ab3 !important;
+  scale: 1.1 !important;
+}
