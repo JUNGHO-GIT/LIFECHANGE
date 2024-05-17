@@ -3,8 +3,8 @@
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = {
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = {
 
   cnt: async (
     user_id_param, startDt_param, endDt_param

@@ -5,16 +5,16 @@ import * as service from "../../service/exercise/exerciseDiffService.js";
 import * as middleware from "../../middleware/exercise/exerciseDiffMiddleware.js";
 export const router = express.Router();
 
-// 1 .diff ---------------------------------------------------------------------------------------->
-router.get("/diff", async (req, res) => {
+// 1. list ---------------------------------------------------------------------------------------->
+router.get("/list", async (req, res) => {
   try {
-    let result = await service.diff(
+    let result = await service.list(
       req.query.user_id,
       req.query.FILTER,
       req.query.PAGING,
       req.query.duration
     );
-    result = await middleware.diff(result);
+    result = await middleware.list(result);
     if (result && result.result) {
       res.json({
         status: "success",

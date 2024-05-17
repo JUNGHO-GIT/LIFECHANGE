@@ -62,7 +62,7 @@ const schema = new mongoose.Schema({
     required : false
   },
 
-  user_dataset: {
+  dataSet: {
     calendar: {
       type: Array,
       default: calendarArray,

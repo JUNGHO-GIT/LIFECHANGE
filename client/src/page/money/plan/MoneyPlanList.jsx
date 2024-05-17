@@ -1,20 +1,20 @@
-// ExerciseDiff.jsx
+// MoneyPlanList.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {Paper} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseDiff = () => {
+export const MoneyPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ export const ExerciseDiff = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -50,7 +50,7 @@ export const ExerciseDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail/plan",
+    toDetail: "/money/plan/detail",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -63,26 +63,10 @@ export const ExerciseDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    exercise_startDt: "0000-00-00",
-    exercise_endDt: "0000-00-00",
-    exercise_total_count: 0,
-    exercise_total_volume: 0,
-    exercise_body_weight: 0,
-    exercise_total_cardio: "00:00",
-    exercise_plan_startDt: "0000-00-00",
-    exercise_plan_endDt: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00",
-    exercise_diff_count: 0,
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: 0,
-    exercise_diff_weight: 0,
-    exercise_diff_count_color: "",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight_color: "",
+    money_plan_startDt: "0000-00-00",
+    money_plan_endDt: "0000-00-00",
+    money_plan_in: 0,
+    money_plan_out: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -91,7 +75,7 @@ export const ExerciseDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/diff`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -122,16 +106,13 @@ export const ExerciseDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={3}>
                 데이터가 없습니다.
               </TableCell>
             </TableRow>
@@ -144,74 +125,37 @@ export const ExerciseDiff = () => {
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
+            <TableRow className="table-thead-tr">
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.exercise_plan_startDt?.substring(5, 10)}</Div>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.money_plan_startDt,
+                    endDt: item.money_plan_endDt
+                  });
+                  navigate(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.exercise_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_total_cardio}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.exercise_diff_count_color}>
-                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_volume_color}>
-                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
-                </TableCell>
-                <TableCell className={item.exercise_diff_cardio_color}>
-                  {item.exercise_diff_cardio}
-                </TableCell>
-                <TableCell className={item.exercise_diff_weight_color}>
-                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
+                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
                 </TableCell>
               </TableRow>
               </>
@@ -222,7 +166,7 @@ export const ExerciseDiff = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min100vw h-min67vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>
@@ -248,8 +192,8 @@ export const ExerciseDiff = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

@@ -1,21 +1,21 @@
-// FoodDiff.jsx
+// SleepDiff.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {useStorage, useDate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDiff = () => {
+export const SleepDiff = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ export const FoodDiff = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -51,7 +51,7 @@ export const FoodDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/food/detail/plan"
+    toDetail:"/sleep/plan/detail"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -64,26 +64,22 @@ export const FoodDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
-    food_diff_kcal: 0,
-    food_diff_carb: 0,
-    food_diff_protein: 0,
-    food_diff_fat: 0,
-    food_diff_kcal_color: "",
-    food_diff_carb_color: "",
-    food_diff_protein_color: "",
-    food_diff_fat_color: "",
+    sleep_startDt: "0000-00-00",
+    sleep_endDt: "0000-00-00",
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
+    sleep_diff_night: "00:00",
+    sleep_diff_morning: "00:00",
+    sleep_diff_time: "00:00",
+    sleep_diff_night_color: "",
+    sleep_diff_morning_color: "",
+    sleep_diff_time_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -92,7 +88,7 @@ export const FoodDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/diff`, {
+    const res = await axios.get(`${URL_OBJECT}/diff/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -104,7 +100,7 @@ export const FoodDiff = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [
@@ -124,15 +120,14 @@ export const FoodDiff = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={5}>
                 데이터가 없습니다.
               </TableCell>
             </TableRow>
@@ -148,20 +143,19 @@ export const FoodDiff = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
               <TableCell>분류</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody"}>
+          <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.food_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.food_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -169,16 +163,13 @@ export const FoodDiff = () => {
                   목표
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                  {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                  {item.sleep_plan_morning}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                  {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -186,33 +177,27 @@ export const FoodDiff = () => {
                   실제
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                  {item.sleep_night}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_carb).format('0,0')} g`}
+                  {item.sleep_morning}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell>
-                  {`${numeral(item.food_total_fat).format('0,0')} g`}
+                  {item.sleep_time}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
                   비교
                 </TableCell>
-                <TableCell className={item.food_diff_kcal_color}>
-                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                <TableCell className={item.sleep_diff_night_color}>
+                  {item.sleep_diff_night}
                 </TableCell>
-                <TableCell className={item.food_diff_carb_color}>
-                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                <TableCell className={item.sleep_diff_morning_color}>
+                  {item.sleep_diff_morning}
                 </TableCell>
-                <TableCell className={item.food_diff_protein_color}>
-                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
-                </TableCell>
-                <TableCell className={item.food_diff_fat_color}>
-                  {`${numeral(item.food_diff_fat).format('0,0')} g`}
+                <TableCell className={item.sleep_diff_time_color}>
+                  {item.sleep_diff_time}
                 </TableCell>
               </TableRow>
               </>
@@ -223,7 +208,7 @@ export const FoodDiff = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min150vw h-min67vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>
@@ -249,8 +234,8 @@ export const FoodDiff = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

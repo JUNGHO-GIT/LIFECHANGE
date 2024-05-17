@@ -5,7 +5,7 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Adorn, Icons, PopUp} from "../../import/ImportComponents.jsx";
+import {Div, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -33,8 +33,8 @@ export const SleepDetail = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -403,7 +403,7 @@ export const SleepDetail = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -435,8 +435,8 @@ export const SleepDetail = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

@@ -3,8 +3,8 @@
 import * as repository from "../../repository/user/userPercentRepository.js";
 import {strToDecimal, decimalToStr} from "../../assets/js/date.js";
 
-// 1-1. percent ----------------------------------------------------------------------------------->
-export const percent = async (
+// 1-1. list -------------------------------------------------------------------------------------->
+export const list = async (
   user_id_param, duration_param
 ) => {
 

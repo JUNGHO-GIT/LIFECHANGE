@@ -2,8 +2,8 @@
 
 import * as repository from "../../repository/money/moneyDiffRepository.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = async (
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = async (
   user_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
@@ -13,11 +13,11 @@ export const diff = async (
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.diff.cnt(
+  const totalCnt = await repository.list.cnt(
     user_id_param, startDt_param, endDt_param
   );
 
-  const listPlan = await repository.diff.listPlan(
+  const listPlan = await repository.list.listPlan(
     user_id_param, sort, limit, page, startDt_param, endDt_param
   );
 
@@ -25,7 +25,7 @@ export const diff = async (
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
-    const listReal = await repository.diff.list (
+    const listReal = await repository.list.list (
       user_id_param, startDt, endDt
     );
 

@@ -27,15 +27,15 @@ export const SleepSave = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const session = sessionStorage.getItem("dataset") || "{}";
+  const session = sessionStorage.getItem("dataSet") || "{}";
   const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -431,7 +431,7 @@ export const SleepSave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -463,8 +463,8 @@ export const SleepSave = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

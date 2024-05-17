@@ -1,15 +1,15 @@
-// ExerciseListPlan.jsx
+// ExercisePlanList.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
+import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseListPlan = () => {
+export const ExercisePlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -21,8 +21,8 @@ export const ExerciseListPlan = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -49,7 +49,7 @@ export const ExerciseListPlan = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/detail/plan",
+    toDetail: "/exercise/plan/detail",
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -76,7 +76,7 @@ export const ExerciseListPlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/list/plan`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -203,8 +203,8 @@ export const ExerciseListPlan = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

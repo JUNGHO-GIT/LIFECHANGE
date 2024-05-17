@@ -10,7 +10,7 @@ export const Filter = ({
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const session = sessionStorage.getItem("dataset") || "{}";
+  const session = sessionStorage.getItem("dataSet") || "{}";
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
@@ -234,27 +234,33 @@ export const Filter = ({
   const filterNode = () => {
 
     // 1. calendar
-    if (strings?.part === "calendar") {
-      if (strings?.type === "list" || strings?.type === "diff") {
-        return (
-          null
-        );
+    if (strings?.first === "calendar") {
+      if (strings?.second === "diff" && strings?.third === "list") {
+        return null
       }
-      else if (strings?.type === "detail") {
-        return (
-          null
-        );
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return null
       }
-      else if (strings?.type === "save") {
-        return (
-          null
-        );
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
       }
     }
 
     // 2. exercise
-    else if (strings?.part === "exercise") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "exercise") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
@@ -262,21 +268,38 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+            {exerciseNode()}
+          </Div>
         );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
       }
     }
 
     // 3. food
-    else if (strings?.part === "food") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "food") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
@@ -284,26 +307,44 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "find" && strings?.third === "list") {
+      else if (strings?.second === "find" && strings?.third === "list") {
+        return null
+      }
+      else if (strings?.second === "find" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+            {foodNode()}
+          </Div>
         );
       }
-      else if (strings?.type === "save") {
-        return (
-          null
-        );
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
       }
     }
 
     // 4. money
-    else if (strings?.part === "money") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "money") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
@@ -311,62 +352,109 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
-        return (
-          null
-        );
-      }
-      else if (strings?.type === "save") {
-        return (
-          null
-        );
-      }
-    }
-
-    // 5. sleep
-    else if (strings?.part === "sleep") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+            {moneyNode()}
+          </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
+      }
+    }
+
+    // 5. sleep
+    else if (strings?.first === "sleep") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
         );
+      }
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
       }
     }
 
     // 6. user
-    else if (strings?.part === "user") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "user") {
+      if (strings?.second === "diff" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "data" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {demoNode()}
           </Div>
         );
       }
-      else if (strings?.type === "dataset") {
+      else if (strings?.second === "data" && strings?.third === "set") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
         );
       }
-      else if (strings?.type === "login") {
-        return (
-          null
-        );
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return null
       }
-      else if (strings?.type === "signup") {
-        return (
-          null
-        );
+      else if (strings?.third === "" && strings?.second === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "login") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "signup") {
+        return null
       }
     }
   };

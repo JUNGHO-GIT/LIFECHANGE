@@ -6,7 +6,7 @@ import * as middleware from "../../middleware/exercise/exercisePlanMiddleware.js
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-router.get("/list/plan", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
@@ -40,7 +40,7 @@ router.get("/list/plan", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-router.get("/detail/plan", async (req, res) => {
+router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
       req.query.user_id,
@@ -73,7 +73,7 @@ router.get("/detail/plan", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-router.post("/save/plan", async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
       req.body.user_id,
@@ -105,7 +105,7 @@ router.post("/save/plan", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-router.delete("/deletes/plan", async (req, res) => {
+router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query.user_id,

@@ -13,29 +13,29 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("calendar");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (partStr === "calendar") {
+    if (firstStr === "calendar") {
       setValue("calendar");
     }
-    else if (partStr === "exercise") {
+    else if (firstStr === "exercise") {
       setValue("exercise");
     }
-    else if (partStr === "food") {
+    else if (firstStr === "food") {
       setValue("food");
     }
-    else if (partStr === "money") {
+    else if (firstStr === "money") {
       setValue("money");
     }
-    else if (partStr === "sleep") {
+    else if (firstStr === "sleep") {
       setValue("sleep");
     }
-  }, [partStr]);
+  }, [firstStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -53,7 +53,7 @@ export const Navigation = () => {
           icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
           onClick={() => {
             setValue("exercise");
-            navigate("exercise/dash");
+            navigate("exercise/dash/list");
           }}
         />
         <BottomNavigationAction
@@ -62,7 +62,7 @@ export const Navigation = () => {
           icon={<img src={food2} className={"w-16 h-16 icon"} alt={"food2"}/>}
           onClick={() => {
             setValue("food");
-            navigate("food/dash");
+            navigate("food/dash/list");
           }}
         />
         <BottomNavigationAction
@@ -80,7 +80,7 @@ export const Navigation = () => {
           icon={<img src={money2} className={"w-16 h-16 icon"} alt={"money2"}/>}
           onClick={() => {
             setValue("money");
-            navigate("money/dash");
+            navigate("money/dash/list");
           }}
         />
         <BottomNavigationAction
@@ -89,7 +89,7 @@ export const Navigation = () => {
           icon={<img src={sleep8} className={"w-16 h-16 icon"} alt={"sleep8"}/>}
           onClick={() => {
             setValue("sleep");
-            navigate("sleep/dash");
+            navigate("sleep/dash/list");
           }}
         />
       </BottomNavigation>

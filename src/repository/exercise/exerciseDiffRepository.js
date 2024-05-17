@@ -3,8 +3,8 @@
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = {
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = {
 
   cnt: async (
     user_id_param, startDt_param, endDt_param

@@ -1,15 +1,15 @@
-// UserList.jsx
+// UserDataList.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Paper} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserList = () => {
+export const UserDataList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -19,8 +19,8 @@ export const UserList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -147,7 +147,7 @@ export const UserList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/list`, {
+    const res = await axios.get(`${URL_OBJECT}/data/list`, {
       params: {
         user_id: user_id,
         PAGING: PAGING,
@@ -187,8 +187,8 @@ export const UserList = () => {
   })()}, [user_id, PAGING, PART]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowAdd = async (type_param) => {
-    const res = await axios.post(`${URL_OBJECT}/add`, {
+  const flowSave = async (type_param) => {
+    const res = await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: user_id,
       PART: type_param,
       count: COUNT?.inputCnt
@@ -209,7 +209,7 @@ export const UserList = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (type_param) => {
-    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
+    const res = await axios.delete(`${URL_OBJECT}/data/deletes`, {
       params: {
         user_id: user_id,
         PART: type_param
@@ -516,8 +516,8 @@ export const UserList = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{
@@ -527,7 +527,7 @@ export const UserList = () => {
         setPAGING, setCOUNT, setPART,
       }}
       handlers={{
-        navigate, flowAdd, flowDelete
+        navigate, flowSave, flowDelete
       }}
     />
   );

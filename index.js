@@ -33,7 +33,7 @@ import {router as sleepRouter} from "./src/router/sleep/sleepRouter.js";
 import {router as sleepPlanRouter} from "./src/router/sleep/sleepPlanRouter.js";
 
 import {router as userPercentRouter} from "./src/router/user/userPercentRouter.js";
-import {router as userPlanRouter} from "./src/router/user/userPlanRouter.js";
+import {router as userDataRouter} from "./src/router/user/userDataRouter.js";
 import {router as userRouter} from "./src/router/user/userRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
@@ -95,29 +95,29 @@ app.use(express.static(path.join(__dirname, "client/build")));
 // ------------------------------------------------------------------------------------------------>
 app.use("/calendar", calendarRouter);
 
-app.use("/exercise", exerciseDashRouter);
-app.use("/exercise", exerciseDiffRouter);
+app.use("/exercise/dash", exerciseDashRouter);
+app.use("/exercise/diff", exerciseDiffRouter);
+app.use("/exercise/plan", exercisePlanRouter);
 app.use("/exercise", exerciseRouter);
-app.use("/exercise", exercisePlanRouter);
 
-app.use("/food", foodDashRouter);
-app.use("/food", foodDiffRouter);
-app.use("/food", foodFindRouter);
+app.use("/food/dash", foodDashRouter);
+app.use("/food/diff", foodDiffRouter);
+app.use("/food/find", foodFindRouter);
+app.use("/food/plan", foodPlanRouter);
 app.use("/food", foodRouter);
-app.use("/food", foodPlanRouter);
 
-app.use("/money", moneyDashRouter);
-app.use("/money", moneyDiffRouter);
+app.use("/money/dash", moneyDashRouter);
+app.use("/money/diff", moneyDiffRouter);
+app.use("/money/plan", moneyPlanRouter);
 app.use("/money", moneyRouter);
-app.use("/money", moneyPlanRouter);
 
-app.use("/sleep", sleepDashRouter);
-app.use("/sleep", sleepDiffRouter);
+app.use("/sleep/dash", sleepDashRouter);
+app.use("/sleep/diff", sleepDiffRouter);
+app.use("/sleep/plan", sleepPlanRouter);
 app.use("/sleep", sleepRouter);
-app.use("/sleep", sleepPlanRouter);
 
-app.use("/user", userPercentRouter);
-app.use("/user", userPlanRouter);
+app.use("/user/percent", userPercentRouter);
+app.use("/user/data", userDataRouter);
 app.use("/user", userRouter);
 
 // ------------------------------------------------------------------------------------------------>

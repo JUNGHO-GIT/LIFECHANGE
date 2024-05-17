@@ -12,47 +12,32 @@ export const TabBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [value, setValue] = useState("dash");
+  const [value, setValue] = useState("dash/list");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (thirdStr !== "plan") {
-      if (typeStr === "dash") {
-        setValue("dash");
-      }
-      else if (typeStr === "diff") {
-        setValue("diff");
-      }
-      else if (typeStr === "find" && thirdStr === "list") {
-        setValue("find/list");
-      }
-      else if (typeStr === "find" && thirdStr === "save") {
-        setValue("find/list");
-      }
-      else if (typeStr === "list") {
-        setValue("list");
-      }
-      else if (typeStr === "save") {
-        setValue("save");
-      }
-      else if (typeStr === "detail") {
-        setValue("detail");
-      }
+
+    // ex. /food/diff/list
+    // ex. /food/diff/save
+    // ex. /food/plan/list
+    // ex. /food/plan/save
+
+    if (secondStr === "find" && thirdStr === "list") {
+      setValue("find/list");
     }
-    else if (thirdStr === "plan") {
-      if (typeStr === "list") {
-        setValue("list/plan");
-      }
-      else if (typeStr === "save") {
-        setValue("save/plan");
-      }
+    else if (secondStr === "find" && thirdStr === "save") {
+      setValue("find/list");
     }
-  }, [typeStr, thirdStr]);
+    else {
+      setValue(`${secondStr}/${thirdStr}`);
+    }
+
+  }, [secondStr, thirdStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -70,20 +55,34 @@ export const TabBar = () => {
         }}
         onChange={(event, newValue) => {
           setValue(newValue);
-          navigate(`${partStr}/${newValue}`);
+          navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
           label={"통계"}
-          value={"dash"}
+          value={"dash/list"}
           onClick={() => {
-            setValue("dash");
+            setValue("dash/list");
           }}
         />
         <Tab
           label={"비교"}
-          value={"diff"}
+          value={"diff/list"}
           onClick={() => {
-            setValue("diff");
+            setValue("diff/list");
+          }}
+        />
+        <Tab
+          label={"리스트(계획)"}
+          value={"plan/list"}
+          onClick={() => {
+            setValue("plan/list");
+          }}
+        />
+        <Tab
+          label={"저장(계획)"}
+          value={"plan/save"}
+          onClick={() => {
+            setValue("plan/save");
           }}
         />
         <Tab
@@ -98,20 +97,6 @@ export const TabBar = () => {
           value={"save"}
           onClick={() => {
             setValue("save");
-          }}
-        />
-        <Tab
-          label={"리스트(계획)"}
-          value={"list/plan"}
-          onClick={() => {
-            setValue("list/plan");
-          }}
-        />
-        <Tab
-          label={"저장(계획)"}
-          value={"save/plan"}
-          onClick={() => {
-            setValue("save/plan");
           }}
         />
       </Tabs>
@@ -134,20 +119,20 @@ export const TabBar = () => {
         }}
         onChange={(event, newValue) => {
           setValue(newValue);
-          navigate(`${partStr}/${newValue}`);
+          navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
           label={"통계"}
-          value={"dash"}
+          value={"dash/list"}
           onClick={() => {
-            setValue("dash");
+            setValue("dash/list");
           }}
         />
         <Tab
           label={"비교"}
-          value={"diff"}
+          value={"diff/list"}
           onClick={() => {
-            setValue("diff");
+            setValue("diff/list");
           }}
         />
         <Tab
@@ -155,6 +140,20 @@ export const TabBar = () => {
           value={"find/list"}
           onClick={() => {
             setValue("find/list");
+          }}
+        />
+        <Tab
+          label={"리스트(계획)"}
+          value={"plan/list"}
+          onClick={() => {
+            setValue("plan/list");
+          }}
+        />
+        <Tab
+          label={"저장(계획)"}
+          value={"plan/save"}
+          onClick={() => {
+            setValue("plan/save");
           }}
         />
         <Tab
@@ -171,20 +170,6 @@ export const TabBar = () => {
             setValue("save");
           }}
         />
-        <Tab
-          label={"리스트(계획)"}
-          value={"list/plan"}
-          onClick={() => {
-            setValue("list/plan");
-          }}
-        />
-        <Tab
-          label={"저장(계획)"}
-          value={"save/plan"}
-          onClick={() => {
-            setValue("save/plan");
-          }}
-        />
       </Tabs>
     </Div>
   );
@@ -192,9 +177,9 @@ export const TabBar = () => {
   // 7. tabBar ------------------------------------------------------------------------------------>
   const tabBarNode = () => (
     <Paper className={"flex-wrapper p-sticky top-14vh border-top border-bottom"}>
-      {partStr === "exercise" || partStr === "money" || partStr === "sleep" ? (
+      {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
         defaultNode()
-      ) : partStr === "food" ? (
+      ) : firstStr === "food" ? (
         foodNode()
       ) : (
         null

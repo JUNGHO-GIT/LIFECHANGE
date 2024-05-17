@@ -27,7 +27,7 @@ export const CalendarDetail = () => {
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const session = sessionStorage.getItem("dataset") || "{}";
+  const session = sessionStorage.getItem("dataSet") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,8 +36,8 @@ export const CalendarDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
   const colors = [
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
@@ -608,8 +608,8 @@ export const CalendarDetail = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

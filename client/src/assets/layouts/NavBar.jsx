@@ -13,11 +13,11 @@ export const NavBar = () => {
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
   const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
-  const part = partStr.charAt(0).toUpperCase() + partStr.slice(1);
-  const type = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
+  const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
+  const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->

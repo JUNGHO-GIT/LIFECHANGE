@@ -1,22 +1,22 @@
-// UserDataset.jsx
+// UserDataSet.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Button} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {PopUp, Div, Icons} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Button} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserDataset = () => {
+export const UserDataSet = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
-  const session = sessionStorage.getItem("dataset") || "{}";
+  const session = sessionStorage.getItem("dataSet") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const foodArray = JSON.parse(session)?.food || [];
@@ -27,10 +27,10 @@ export const UserDataset = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
-  const datasetArray = ["exercise", "food", "calendar", "money", "sleep"];
+  const dataSetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -38,7 +38,7 @@ export const UserDataset = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDataset: "/user/dataset",
+    toDataSet: "/user/data/set",
   });
   const [DATE, setDATE] = useState({
     startDt: location_startDt || moment().format("YYYY-MM-DD"),
@@ -55,13 +55,12 @@ export const UserDataset = () => {
     titleIdx: 1
   });
   const [dataType, setDataType] = useState("exercise");
-  const [dataTypeKo, setDataTypeKo] = useState("운동");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     user_id: user_id,
     user_number: 0,
-    user_dataset: {
+    dataSet: {
       calendar: [{
         calendar_part: ""
       }],
@@ -85,7 +84,7 @@ export const UserDataset = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/dataset`, {
+    const res = await axios.get(`${URL_OBJECT}/data/set`, {
       params: {
         user_id: user_id
       }
@@ -102,12 +101,12 @@ export const UserDataset = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
-      navigate(SEND.toDataset);
+      sessionStorage.setItem("dataSet", JSON.stringify(res.data.result.dataSet));
+      navigate(SEND.toDataSet);
     }
     else {
       alert(res.data.msg);
-      sessionStorage.setItem("dataset", JSON.stringify(OBJECT_DEF.user_dataset));
+      sessionStorage.setItem("dataSet", JSON.stringify(OBJECT_DEF.dataSet));
     }
   };
 
@@ -116,10 +115,10 @@ export const UserDataset = () => {
     if (type === "part") {
       setOBJECT((prev) => ({
         ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
+        dataSet: {
+          ...prev.dataSet,
           [dataType]: [
-            ...prev.user_dataset[dataType], {
+            ...prev.dataSet[dataType], {
               [`${dataType}_part`]: "",
               [`${dataType}_title`]: [""]
             }
@@ -130,17 +129,17 @@ export const UserDataset = () => {
     else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
+        dataSet: {
+          ...prev.dataSet,
           [dataType]: [
-            ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
-              ...prev.user_dataset[dataType]?.[idx.partIdx],
+            ...prev.dataSet[dataType]?.slice(0, idx.partIdx), {
+              ...prev.dataSet[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
+                ...prev.dataSet[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
                 ""
               ]
             },
-            ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
+            ...prev.dataSet[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }))
@@ -154,14 +153,14 @@ export const UserDataset = () => {
       if (newPart) {
         setOBJECT((prev) => ({
           ...prev,
-          user_dataset: {
-            ...prev.user_dataset,
+          dataSet: {
+            ...prev.dataSet,
             [dataType]: [
-              ...prev.user_dataset[dataType]?.slice(0, index), {
-                ...prev.user_dataset[dataType]?.[index],
+              ...prev.dataSet[dataType]?.slice(0, index), {
+                ...prev.dataSet[dataType]?.[index],
                 [`${dataType}_part`]: newPart
               },
-              ...prev.user_dataset[dataType]?.slice(index + 1)
+              ...prev.dataSet[dataType]?.slice(index + 1)
             ]
           }
         }));
@@ -172,18 +171,18 @@ export const UserDataset = () => {
       if (newTitle) {
         setOBJECT((prev) => ({
           ...prev,
-          user_dataset: {
-            ...prev.user_dataset,
+          dataSet: {
+            ...prev.dataSet,
             [dataType]: [
-              ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
-                ...prev.user_dataset[dataType]?.[idx.partIdx],
+              ...prev.dataSet[dataType]?.slice(0, idx.partIdx), {
+                ...prev.dataSet[dataType]?.[idx.partIdx],
                 [`${dataType}_title`]: [
-                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                  ...prev.dataSet[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
                   newTitle,
-                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                  ...prev.dataSet[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                 ]
               },
-              ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
+              ...prev.dataSet[dataType]?.slice(idx.partIdx + 1)
             ]
           }
         }));
@@ -196,11 +195,11 @@ export const UserDataset = () => {
     if (type === "part") {
       setOBJECT((prev) => ({
         ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
+        dataSet: {
+          ...prev.dataSet,
           [dataType]: [
-            ...prev.user_dataset[dataType]?.slice(0, index),
-            ...prev.user_dataset[dataType]?.slice(index + 1)
+            ...prev.dataSet[dataType]?.slice(0, index),
+            ...prev.dataSet[dataType]?.slice(index + 1)
           ]
         }
       }));
@@ -208,17 +207,17 @@ export const UserDataset = () => {
     else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
+        dataSet: {
+          ...prev.dataSet,
           [dataType]: [
-            ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
-              ...prev.user_dataset[dataType]?.[idx.partIdx],
+            ...prev.dataSet[dataType]?.slice(0, idx.partIdx), {
+              ...prev.dataSet[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                ...prev.dataSet[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                ...prev.dataSet[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
               ]
             },
-            ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
+            ...prev.dataSet[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }));
@@ -248,8 +247,8 @@ export const UserDataset = () => {
     if (confirm) {
       setOBJECT((prev) => ({
         ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
+        dataSet: {
+          ...prev.dataSet,
           [dataType]: defaultArray
         }
       }));
@@ -277,7 +276,7 @@ export const UserDataset = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody className={"table-tbody"}>
-                  {OBJECT?.user_dataset[dataType]?.map((item, index) => (index > 0) && (
+                  {OBJECT?.dataSet[dataType]?.map((item, index) => (index > 0) && (
                     <TableRow key={index} className={`table-tbody-tr`}
                       onClick={() => {
                         setSelectedIdx((prev) => ({
@@ -336,7 +335,7 @@ export const UserDataset = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody className={"table-tbody"}>
-                    {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                    {OBJECT?.dataSet[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
                       <TableRow key={index} className={`table-tbody-tr`}
                         onClick={() => {
                           setSelectedIdx((prev) => ({
@@ -415,7 +414,7 @@ export const UserDataset = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {datasetArray.map((item, index) => (
+              {dataSetArray.map((item, index) => (
                 <TableRow key={index} className={"table-tbody-tr"}>
                   <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                     <Div className={"d-center"}>
@@ -489,8 +488,8 @@ export const UserDataset = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

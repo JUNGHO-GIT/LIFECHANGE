@@ -2,8 +2,8 @@
 
 import {compareTime} from "../../assets/js/date.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = async (object) => {
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = async (object) => {
 
   if (!object) {
     return [];

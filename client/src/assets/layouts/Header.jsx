@@ -17,17 +17,17 @@ export const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 4. toggle ------------------------------------------------------------------------------------>
-  const openSidebar = () => {
+  /* const openSidebar = () => {
     setIsSidebarOpen((prev) => (!prev));
-  };
+  }; */
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const btnSideBar = () => (
+  /* const btnSideBar = () => (
     <>
       <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
       <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
     </>
-  );
+  ); */
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
@@ -37,27 +37,27 @@ export const Header = () => {
       direction={"right"}
       contents={({closePopup}) => (
         <>
-        <Div className={"d-center pointer mb-10"} onClick={() => {
-          navigate("/user/login");
-          closePopup();
-        }}>
-          <Icons name={"TbLogin"} className={"w-24 h-24"} />
-          <Div className={"fs-0-8rem"}>Login</Div>
-        </Div>
-        <Div className={"d-center pointer mb-10"} onClick={() => {
-          navigate("/user/signup");
-          closePopup();
-        }}>
-          <Icons name={"TbLogin2"} className={"w-24 h-24"} />
-          <Div className={"fs-0-8rem"}>SignUp</Div>
-        </Div>
-        <Div className={"d-center pointer"} onClick={() => {
-          navigate("/user/dataset");
-          closePopup();
-        }}>
-          <Icons name={"TbUser"} className={"w-24 h-24"} />
-          <Div className={"fs-0-8rem"}>Dataset</Div>
-        </Div>
+          <Div className={"d-center pointer mb-10"} onClick={() => {
+            navigate("/user/login");
+            closePopup();
+          }}>
+            <Icons name={"TbLogin"} className={"w-24 h-24"} />
+            <Div className={"fs-0-8rem"}>Login</Div>
+          </Div>
+          <Div className={"d-center pointer mb-10"} onClick={() => {
+            navigate("/user/signup");
+            closePopup();
+          }}>
+            <Icons name={"TbLogin2"} className={"w-24 h-24"} />
+            <Div className={"fs-0-8rem"}>SignUp</Div>
+          </Div>
+          <Div className={"d-center pointer"} onClick={() => {
+            navigate("/user/data/set");
+            closePopup();
+          }}>
+            <Icons name={"TbUser"} className={"w-24 h-24"} />
+            <Div className={"fs-0-8rem"}>DataSet</Div>
+          </Div>
         </>
       )}>
       {(popTrigger={}) => (

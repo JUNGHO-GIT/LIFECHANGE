@@ -12,8 +12,8 @@ export const Loading = ({
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const [height, setHeight] = useState("");
 
   // 2. useEffect --------------------------------------------------------------------------------->
@@ -23,18 +23,18 @@ export const Loading = ({
       return;
     }
 
-    if (partStr === "calendar") {
+    if (firstStr === "calendar") {
       setHeight("h-min75vh");
     }
     else {
-      if (typeStr === "list") {
+      if (secondStr === "list") {
         setHeight("h-min50vh");
       }
       else {
         setHeight("h-min65vh");
       }
     }
-  }, [typeStr]);
+  }, [secondStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (

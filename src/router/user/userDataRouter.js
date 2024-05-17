@@ -1,18 +1,45 @@
-// router.js
+// userRouter.js
 
 import express from "express";
-import * as service from "../../service/food/foodPlanService.js";
-import * as middleware from "../../middleware/food/foodPlanMiddleware.js";
+import * as service from "../../service/user/userDataService.js";
 export const router = express.Router();
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. set -------------------------------------------------------------------------------------->
+router.get("/set", async (req, res) => {
+  try {
+    let result = await service.set (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "데이터셋 조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "데이터셋 조회 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 1-2. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
-      req.query.FILTER,
       req.query.PAGING,
-      req.query.duration
+      req.query.PART,
     );
     if (result && result.result) {
       res.json({
@@ -43,16 +70,14 @@ router.get("/list", async (req, res) => {
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
-      req.query.user_id,
       req.query._id,
-      req.query.duration
+      req.query.user_id
     );
     if (result) {
       res.json({
         status: "success",
         msg: "조회 성공",
-        sectionCnt: result.sectionCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -72,25 +97,25 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3-1. save -------------------------------------------------------------------------------------->
 router.post("/save", async (req, res) => {
   try {
-    let result = await service.save(
+    let result = await service.save (
       req.body.user_id,
-      req.body.OBJECT,
-      req.body.duration
+      req.body.PART,
+      req.body.count
     );
     if (result) {
       res.json({
         status: "success",
-        msg: "저장 성공",
+        msg: "추가 성공",
         result: result
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패",
+        msg: "추가 실패",
         result: null
       });
     }
@@ -108,22 +133,19 @@ router.post("/save", async (req, res) => {
 router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.deletes(
-      req.query.user_id,
       req.query._id,
-      req.query.duration
+      req.query.user_id
     );
     if (result) {
       res.json({
         status: "success",
-        msg: "삭제 성공",
-        result: result
+        msg: "삭제 성공"
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "삭제 실패",
-        result: null
+        msg: "삭제 실패"
       });
     }
   }

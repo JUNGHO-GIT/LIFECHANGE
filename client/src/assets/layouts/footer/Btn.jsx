@@ -11,54 +11,6 @@ export const Btn = ({
   strings, objects, functions, handlers
 }) => {
 
-  const btnGetToday = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-    className={"success-btn"} onClick={() => {
-      (objects?.FILTER) && (
-        functions?.setFILTER((prev) => ({
-          ...prev,
-          type: "day",
-        }))
-      );
-      (objects?.PAGING) && (
-        functions?.setPAGING((prev) => ({
-          ...prev,
-          page: 1,
-        }))
-      );
-      (objects?.DATE) && (
-        functions?.setDATE((prev) => ({
-          ...prev,
-          startDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-          endDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
-        }))
-      );
-    }}>
-      Today
-    </Button>
-  );
-  const btnFlowSave = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      handlers.flowSave();
-    }}>
-      저장
-    </Button>
-  );
-  const btnGoToUpdate = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        startDt: objects?.DATE.startDt,
-        endDt: objects?.DATE.endDt
-      });
-      handlers.navigate(objects?.SEND.toUpdate, {
-        state: objects?.SEND,
-      });
-    }}>
-      수정
-    </Button>
-  );
   const btnGoToList = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
@@ -87,57 +39,6 @@ export const Btn = ({
       더찾기
     </Button>
   );
-  const btnFlowLogin = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      handlers.flowSave();
-    }}>
-      로그인
-    </Button>
-  );
-  const btnFlowSignup = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      handlers.flowSave();
-    }}>
-      회원가입
-    </Button>
-  );
-  const btnRefresh = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-    className={"success-btn"} onClick={() => {
-      handlers.navigate(0);
-    }}>
-      새로고침
-    </Button>
-  );
-  const btnFlowFind = () => (
-    <Div className={"d-center"}>
-      <TextField
-        select={false}
-        label={"검색"}
-        size={"small"}
-        variant={"outlined"}
-        className={"w-150"}
-        value={objects?.FILTER?.query}
-        InputProps={{
-          readOnly: false
-        }}
-        onChange={(e) => {
-          functions?.setFILTER((prev) => ({
-            ...prev,
-            query: e.target.value
-          }));
-        }}
-      />
-      <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      className={"secondary-btn"} onClick={() => {
-        handlers.flowFind();
-      }}>
-        찾기
-      </Button>
-    </Div>
-  );
   const btnGoToFindSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
@@ -152,13 +53,48 @@ export const Btn = ({
       저장
     </Button>
   );
-  const btnResetDefault = () => (
-    <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
-    className={"danger-btn"} onClick={handlers?.handlerDefault}>
-      기본값
+  const btnGoToUpdate = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      Object.assign(objects?.SEND, {
+        startDt: objects?.DATE.startDt,
+        endDt: objects?.DATE.endDt
+      });
+      handlers.navigate(objects?.SEND.toUpdate, {
+        state: objects?.SEND,
+      });
+    }}>
+      수정
     </Button>
   );
-  const btnOpenCalendar = () => (
+
+  const btnGetToday = () => (
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
+    className={"success-btn"} onClick={() => {
+      (objects?.FILTER) && (
+        functions?.setFILTER((prev) => ({
+          ...prev,
+          type: "day",
+        }))
+      );
+      (objects?.PAGING) && (
+        functions?.setPAGING((prev) => ({
+          ...prev,
+          page: 1,
+        }))
+      );
+      (objects?.DATE) && (
+        functions?.setDATE((prev) => ({
+          ...prev,
+          startDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+          endDt: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+        }))
+      );
+    }}>
+      Today
+    </Button>
+  );
+  const btnGetCalendar = () => (
     <PopUp
       type={"calendar"}
       position={"top"}
@@ -244,7 +180,73 @@ export const Btn = ({
       )}
     </PopUp>
   );
-  const btnInsertDemo = () => (
+  const btnGetRefresh = () => (
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
+    className={"success-btn"} onClick={() => {
+      handlers.navigate(0);
+    }}>
+      새로고침
+    </Button>
+  );
+
+  const btnFlowLogin = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      handlers.flowSave();
+    }}>
+      로그인
+    </Button>
+  );
+  const btnFlowSignup = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      handlers.flowSave();
+    }}>
+      회원가입
+    </Button>
+  );
+  const btnFlowSave = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      handlers.flowSave();
+    }}>
+      저장
+    </Button>
+  );
+  const btnFlowFind = () => (
+    <Div className={"d-center"}>
+      <TextField
+        select={false}
+        label={"검색"}
+        size={"small"}
+        variant={"outlined"}
+        className={"w-150"}
+        value={objects?.FILTER?.query}
+        InputProps={{
+          readOnly: false
+        }}
+        onChange={(e) => {
+          functions?.setFILTER((prev) => ({
+            ...prev,
+            query: e.target.value
+          }));
+        }}
+      />
+      <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+      className={"secondary-btn"} onClick={() => {
+        handlers.flowFind();
+      }}>
+        찾기
+      </Button>
+    </Div>
+  );
+  const btnFlowDefault = () => (
+    <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
+    className={"danger-btn"} onClick={handlers?.handlerDefault}>
+      기본값
+    </Button>
+  );
+  const btnFlowDemo = () => (
     <Div className={"d-center"}>
       <TextField
         select={false}
@@ -275,71 +277,127 @@ export const Btn = ({
   const btnNode = () => {
 
     // 1. calendar
-    if (strings?.part === "calendar") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    if (strings?.first === "calendar") {
+      if (strings?.second === "diff" && strings?.third === "list") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
+        return null
+      }
+      else if (strings?.second === "plan" && strings?.third === "save") {
+        return null
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
         return (
-          null
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
-        );
-      }
-      else if (strings?.type === "save") {
-        return (
-          null
         );
       }
     }
 
     // 2. exercise
-    else if (strings?.part === "exercise") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "exercise") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnOpenCalendar()}
+            {btnGetCalendar()}
             {btnGetToday()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGoToUpdate()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnFlowSave()}
+            {btnGoToList()}
+            {btnGetRefresh()}
           </Div>
         );
       }
     }
 
     // 3. food
-    else if (strings?.part === "food") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "food") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnOpenCalendar()}
+            {btnGetCalendar()}
             {btnGetToday()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "find" && strings?.third === "list") {
+      else if (strings?.second === "find" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowFind()}
@@ -347,125 +405,265 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.type === "find" && strings?.third === "save") {
+      else if (strings?.second === "find" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGoToUpdate()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToFind()}
-            {btnRefresh()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnFlowSave()}
+            {btnGoToList()}
+            {btnGetRefresh()}
           </Div>
         );
       }
     }
 
     // 4. money
-    else if (strings?.part === "money") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "money") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnOpenCalendar()}
+            {btnGetCalendar()}
             {btnGetToday()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGoToUpdate()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnFlowSave()}
+            {btnGoToList()}
+            {btnGetRefresh()}
           </Div>
         );
       }
     }
 
     // 5. sleep
-    else if (strings?.part === "sleep") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "sleep") {
+      if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnOpenCalendar()}
+            {btnGetCalendar()}
             {btnGetToday()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "detail") {
+      else if (strings?.second === "plan" && strings?.third === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.second === "plan" && strings?.third === "detail") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGoToUpdate()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "save") {
+      else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnRefresh()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnFlowSave()}
+            {btnGoToList()}
+            {btnGetRefresh()}
           </Div>
         );
       }
     }
 
     // 6. user
-    else if (strings?.part === "user") {
-      if (strings?.type === "list" || strings?.type === "diff") {
+    else if (strings?.first === "user") {
+      if (strings?.second === "diff" && strings?.third === "list") {
+        return null
+      }
+      else if (strings?.second === "data" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnInsertDemo()}
+            {btnFlowDemo()}
           </Div>
         );
       }
-      else if (strings?.type === "dataset") {
+      else if (strings?.second === "data" && strings?.third === "set") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnResetDefault()}
-            {btnRefresh()}
+            {btnFlowDefault()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "login") {
+      else if (strings?.third === "" && strings?.second === "list") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGetCalendar()}
+            {btnGetToday()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "detail") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnGoToUpdate()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "save") {
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {btnFlowSave()}
+            {btnGoToList()}
+            {btnGetRefresh()}
+          </Div>
+        );
+      }
+      else if (strings?.third === "" && strings?.second === "login") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowLogin()}
+            {btnGetRefresh()}
           </Div>
         );
       }
-      else if (strings?.type === "signup") {
+      else if (strings?.third === "" && strings?.second === "signup") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSignup()}
+            {btnGetRefresh()}
           </Div>
         );
       }

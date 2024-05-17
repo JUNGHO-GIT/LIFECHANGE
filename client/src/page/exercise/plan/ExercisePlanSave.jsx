@@ -1,14 +1,14 @@
-// SleepDetailPlan.jsx
+// ExercisePlanSave.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge, TextField, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../../import/ImportHooks.jsx";
+import {percent} from "../../../import/ImportLogics.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
+import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
   exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
@@ -17,24 +17,23 @@ import {
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
   user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
   setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDetailPlan = () => {
+export const ExercisePlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
+  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -51,8 +50,7 @@ export const SleepDetailPlan = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/sleep/list/plan",
-    toUpdate:"/sleep/save/plan"
+    toList:"/exercise/plan/list"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -62,25 +60,27 @@ export const SleepDetailPlan = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    sleep_plan_number: 0,
-    sleep_plan_demo: false,
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
+    exercise_plan_number: 0,
+    exercise_plan_demo: false,
+    exercise_plan_startDt: "0000-00-00",
+    exercise_plan_endDt: "0000-00-00",
+    exercise_plan_count: 0,
+    exercise_plan_cardio: "00:00",
+    exercise_plan_volume: 0,
+    exercise_plan_weight: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
+  useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,
-        _id: location_id,
+        _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -91,30 +91,41 @@ export const SleepDetailPlan = () => {
       sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const res = await axios.delete(`${URL_OBJECT}/plan/deletes`, {
-      params: {
-        user_id: user_id,
-        _id: id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      },
+  const flowSave = async () => {
+    const res = await axios.post(`${URL_OBJECT}/plan/save`, {
+      user_id: user_id,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navigate(SEND.toList);
-      }
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
+      navigate(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(res.data.msg);
     }
+  };
+
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -273,33 +284,14 @@ export const SleepDetailPlan = () => {
         direction={"left"}
         contents={({closePopup}) => (
           <>
-            <Div className={"d-row mb-10"}>
+            <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
-                  flowDelete(id);
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
+                  handlerDelete(index);
+                  closePopup();
                 }}
               />
               <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-            <Div className={"d-row"}>
-              <img src={setting1} className={"w-16 h-16 icon pointer"} alt={"setting1"}
-                onClick={() => {
-                  Object.assign(SEND, {
-                    startDt: DATE.startDt,
-                    endDt: DATE.endDt
-                  });
-                  navigate(SEND.toUpdate, {
-                    state: SEND
-                  });
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
-                }}
-              />
-              <Div className={"fs-0-8rem"}>수정</Div>
             </Div>
           </>
         )}>
@@ -321,51 +313,62 @@ export const SleepDetailPlan = () => {
           {dropdownSection(OBJECT?._id, "", 0)}
         </Div>
         <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"timePicker"}
-            position={"top"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={"취침 목표"}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.sleep_plan_night}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
-                  ),
-                  endAdornment: (
-                    "h:m"
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 횟수"}
+            className={"w-86vw"}
+            value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <img src={exercise10} className={"w-16 h-16 me-10"} alt={"exercise10"}/>
+              ),
+              endAdornment: (
+                "회"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 999);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_plan_count: limitedValue
+              }));
+            }}
+          />
+        </Div>
+        <Div className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 볼륨"}
+            className={"w-86vw"}
+            value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+              ),
+              endAdornment: (
+                "vol"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 999);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_plan_volume: limitedValue
+              }));
+            }}
+          />
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
@@ -379,12 +382,16 @@ export const SleepDetailPlan = () => {
                   timeStep={10}
                   ampm={false}
                   timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                  value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
                   sx={{
                     width: "40vw",
                     height: "40vh"
                   }}
                   onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_plan_cardio: moment(e).format("HH:mm")
+                    }));
                     closePopup();
                   }}
                 />
@@ -393,15 +400,15 @@ export const SleepDetailPlan = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"기상 목표"}
+                label={"목표 유산소 시간"}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw"}
-                value={OBJECT?.sleep_plan_morning}
+                value={OBJECT?.exercise_plan_cardio}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
+                    <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
                   endAdornment: (
                     "h:m"
@@ -415,57 +422,39 @@ export const SleepDetailPlan = () => {
           </PopUp>
         </Div>
         <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"timePicker"}
-            position={"bottom"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_plan_time, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={"수면 목표"}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.sleep_plan_time}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
-                  ),
-                  endAdornment: (
-                    "h:m"
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={"목표 체중"}
+            className={"w-86vw"}
+            value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
+            InputProps={{
+              readOnly: false,
+              startAdornment: (
+                <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
+              ),
+              endAdornment: (
+                "kg"
+              )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 999);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_plan_weight: limitedValue
+              }));
+            }}
+          />
         </Div>
       </Card>
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -497,8 +486,8 @@ export const SleepDetailPlan = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{
@@ -508,7 +497,7 @@ export const SleepDetailPlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowSave
       }}
     />
   );

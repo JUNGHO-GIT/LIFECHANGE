@@ -1,13 +1,13 @@
-// MoneyDetailPlan.jsx
+// MoneyPlanDetail.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage, useTime} from "../../../import/ImportHooks.jsx";
+import {percent} from "../../../import/ImportLogics.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
   exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
@@ -16,10 +16,10 @@ import {
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
   user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
   setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDetailPlan = () => {
+export const MoneyPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -32,8 +32,8 @@ export const MoneyDetailPlan = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -50,9 +50,9 @@ export const MoneyDetailPlan = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/detail/plan",
-    toList: "/money/list/plan",
-    toUpdate: "/money/save/plan"
+    toDetail: "/money/plan/detail",
+    toList: "/money/plan/list",
+    toUpdate: "/money/plan/save"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -76,7 +76,7 @@ export const MoneyDetailPlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,
         _id: location_id,
@@ -383,7 +383,7 @@ export const MoneyDetailPlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -415,8 +415,8 @@ export const MoneyDetailPlan = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

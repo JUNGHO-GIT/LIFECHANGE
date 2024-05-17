@@ -3,8 +3,8 @@
 import {Food} from "../../schema/food/Food.js";
 import {FoodPlan} from "../../schema/food/FoodPlan.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = {
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = {
 
   cnt: async (
     user_id_param, startDt_param, endDt_param

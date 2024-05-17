@@ -1,4 +1,5 @@
 // importImages.jsx
+// @ts-nocheck
 
 import calendar1 from "../assets/images/calendar/calendar1.webp";
 import calendar2 from "../assets/images/calendar/calendar2.webp";

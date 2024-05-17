@@ -1,21 +1,20 @@
-// MoneyDiff.jsx
+// SleepPlanList.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
+
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDiff = () => {
+export const SleepPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_MONEY || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
@@ -23,8 +22,8 @@ export const MoneyDiff = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -51,7 +50,7 @@ export const MoneyDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/money/detail/plan",
+    toDetail:"/sleep/plan/detail"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -64,18 +63,11 @@ export const MoneyDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    money_startDt: "0000-00-00",
-    money_endDt: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
-    money_plan_startDt: "0000-00-00",
-    money_plan_endDt: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0,
-    money_diff_in: 0,
-    money_diff_out: 0,
-    money_diff_in_color: "",
-    money_diff_out_color: "",
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -84,7 +76,7 @@ export const MoneyDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/diff`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -96,7 +88,7 @@ export const MoneyDiff = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [
@@ -115,9 +107,9 @@ export const MoneyDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -135,54 +127,41 @@ export const MoneyDiff = () => {
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
-            <TableRow className="table-thead-tr">
+            <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody"}>
+          <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
-                <TableCell rowSpan={4} className={"pointer"}>
-                  <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                  Object.assign(SEND, {
+                    id: item._id,
+                    startDt: item.sleep_plan_startDt,
+                    endDt: item.sleep_plan_endDt,
+                  });
+                  navigate(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {item.sleep_plan_night}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                  {item.sleep_plan_morning}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  실제
-                </TableCell>
-                <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format("0,0")}`}
-                </TableCell>
-                <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format("0,0")}`}
-                </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
-                <TableCell>
-                  비교
-                </TableCell>
-                <TableCell className={item.money_diff_in_color}>
-                  {`₩ ${numeral(item.money_diff_in).format("0,0")}`}
-                </TableCell>
-                <TableCell className={item.money_diff_out_color}>
-                  {`₩ ${numeral(item.money_diff_out).format("0,0")}`}
+                  {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
               </>
@@ -219,8 +198,8 @@ export const MoneyDiff = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{

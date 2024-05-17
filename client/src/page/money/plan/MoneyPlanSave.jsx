@@ -1,15 +1,15 @@
-// FoodDetailPlan.jsx
+// MoneyPlanSave.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {Badge} from "../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {percent} from "../../../import/ImportLogics.jsx";
+import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../../import/ImportMuis.jsx";
+import {Badge, Menu, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TextField, Button, DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {
   calendar1, calendar2, calendar3, calendar4,
   exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
@@ -18,24 +18,23 @@ import {
   sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
   user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
   setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDetailPlan = () => {
+export const MoneyPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
+  const user_id = sessionStorage.getItem("user_id");
   const navigate = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -52,8 +51,7 @@ export const FoodDetailPlan = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList:"/food/list/plan",
-    toUpdate:"/food/save/plan"
+    toList:"/money/plan/list"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -63,14 +61,12 @@ export const FoodDetailPlan = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
-    food_plan_number: 0,
-    food_plan_demo: false,
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
+    money_plan_number: 0,
+    money_plan_demo: false,
+    money_plan_startDt: "0000-00-00",
+    money_plan_endDt: "0000-00-00",
+    money_plan_in: 0,
+    money_plan_out: 0
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -79,44 +75,55 @@ export const FoodDetailPlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const res = await axios.get(`${URL_OBJECT}/detail/plan`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,
-        _id: location_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        _id: "",
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const res = await axios.delete(`${URL_OBJECT}/plan/deletes`, {
-      params: {
-        user_id: user_id,
-        _id: id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
-      },
+  const flowSave = async () => {
+    const res = await axios.post(`${URL_OBJECT}/plan/save`, {
+      user_id: user_id,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navigate(SEND.toList);
-      }
+      Object.assign(SEND, {
+        startDt: DATE.startDt,
+        endDt: DATE.endDt
+      });
+      navigate(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(res.data.msg);
     }
+  };
+
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      money_section: prev.money_section.filter((_, idx) => (idx !== index))
+    }));
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: prev.sectionCnt - 1
+    }));
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -275,33 +282,14 @@ export const FoodDetailPlan = () => {
         direction={"left"}
         contents={({closePopup}) => (
           <>
-            <Div className={"d-row mb-10"}>
+            <Div className={"d-row"}>
               <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
                 onClick={() => {
-                  flowDelete(id);
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
+                  handlerDelete(index);
+                  closePopup();
                 }}
               />
               <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-            <Div className={"d-row"}>
-              <img src={setting1} className={"w-16 h-16 icon pointer"} alt={"setting1"}
-                onClick={() => {
-                  Object.assign(SEND, {
-                    startDt: DATE.startDt,
-                    endDt: DATE.endDt
-                  });
-                  navigate(SEND.toUpdate, {
-                    state: SEND
-                  });
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
-                }}
-              />
-              <Div className={"fs-0-8rem"}>수정</Div>
             </Div>
           </>
         )}>
@@ -327,18 +315,28 @@ export const FoodDetailPlan = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 칼로리"}
+            label={"목표 수입"}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")} Kcal`}
+            value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
-                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
+                <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
+            }}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 9999999999);
+              setOBJECT((prev) => ({
+                ...prev,
+                money_plan_in: limitedValue
+              }));
             }}
           />
         </Div>
@@ -347,58 +345,28 @@ export const FoodDetailPlan = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 탄수화물"}
+            label={"목표 지출"}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}
+            value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
-                <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
+                <img src={money1} className={"w-16 h-16 me-10"} alt={"money1"}/>
               ),
               endAdornment: (
-                null
+                "원"
               )
             }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 단백질"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
-              ),
-              endAdornment: (
-                null
-              )
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"목표 지방"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")} g`}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
-              ),
-              endAdornment: (
-                null
-              )
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 9999999999);
+              setOBJECT((prev) => ({
+                ...prev,
+                money_plan_out: limitedValue
+              }));
             }}
           />
         </Div>
@@ -406,7 +374,7 @@ export const FoodDetailPlan = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min60vh"}>
+      <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -438,8 +406,8 @@ export const FoodDetailPlan = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{
@@ -449,7 +417,7 @@ export const FoodDetailPlan = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate
+        navigate, flowSave
       }}
     />
   );

@@ -3,8 +3,8 @@
 import {Money} from "../../schema/money/Money.js";
 import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
 
-// 1. diff ---------------------------------------------------------------------------------------->
-export const diff = {
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = {
 
   cnt: async (
     user_id_param, startDt_param, endDt_param

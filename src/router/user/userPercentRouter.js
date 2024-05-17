@@ -5,10 +5,10 @@ import * as service from "../../service/user/userPercentService.js";
 import * as middleware from "../../middleware/user/userPercentMiddleware.js";
 export const router = express.Router();
 
-// 1-1. percent ----------------------------------------------------------------------------------->
-router.get("/percent", async (req, res) => {
+// 1-1. list -------------------------------------------------------------------------------------->
+router.get("/list", async (req, res) => {
   try {
-    let result = await service.percent (
+    let result = await service.list (
       req.query.user_id,
       req.query.duration
     );

@@ -6,7 +6,7 @@ import * as middleware from "../../middleware/food/foodFindMiddleware.js";
 export const router = express.Router();
 
 // 1. list ---------------------------------------------------------------------------------------->
-router.get("/find/list", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
@@ -41,7 +41,7 @@ router.get("/find/list", async (req, res) => {
 
 
 // 3. save ---------------------------------------------------------------------------------------->
-router.post("/find/save", async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
       req.body.user_id,

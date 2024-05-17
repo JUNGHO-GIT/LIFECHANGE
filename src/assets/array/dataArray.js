@@ -9,7 +9,7 @@ export const dataArray = [
   {
     label: "User",
     items: [
-      {to: "/user/list", label: "UserList"},
+      {to: "/user/list", label: "UserDataList"},
     ]
   },
   {
@@ -19,8 +19,8 @@ export const dataArray = [
       {to: "/food/find", label: "FoodFindList"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
-      {to: "/food/list", label: "FoodListPlan"},
-      {to: "/food/save", label: "FoodSavePlan"},
+      {to: "/food/list", label: "FoodPlanList"},
+      {to: "/food/save", label: "FoodPlanSave"},
     ]
   },
   {
@@ -29,8 +29,8 @@ export const dataArray = [
       {to: "/money/dash", label: "MoneyDash"},
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/save", label: "MoneySave"},
-      {to: "/money/list", label: "MoneyListPlan"},
-      {to: "/money/save", label: "MoneySavePlan"},
+      {to: "/money/list", label: "MoneyPlanList"},
+      {to: "/money/save", label: "MoneyPlanSave"},
     ]
   },
   {
@@ -39,8 +39,8 @@ export const dataArray = [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/save", label: "SleepSave"},
-      {to: "/sleep/list", label: "SleepListPlan"},
-      {to: "/sleep/save", label: "SleepSavePlan"},
+      {to: "/sleep/list", label: "SleepPlanList"},
+      {to: "/sleep/save", label: "SleepPlanSave"},
     ]
   },
   {
@@ -49,8 +49,8 @@ export const dataArray = [
       {to: "/exercise/dash", label: "ExerciseDash"},
       {to: "/exercise/list", label: "ExerciseList"},
       {to: "/exercise/save", label: "ExerciseSave"},
-      {to: "/exercise/list", label: "ExerciseListPlan"},
-      {to: "/exercise/save", label: "ExerciseSavePlan"},
+      {to: "/exercise/list", label: "ExercisePlanList"},
+      {to: "/exercise/save", label: "ExercisePlanSave"},
     ]
   }
 ];

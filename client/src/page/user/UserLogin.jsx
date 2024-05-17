@@ -1,7 +1,7 @@
 // UserLogin.jsx
 
 import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
@@ -18,8 +18,8 @@ export const UserLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const partStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const typeStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
+  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -36,7 +36,7 @@ export const UserLogin = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       sessionStorage.setItem("user_id", user_id);
-      sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
+      sessionStorage.setItem("dataSet", JSON.stringify(res.data.result.dataSet));
       percent();
       navigate("/calendar/list");
     }
@@ -109,8 +109,8 @@ export const UserLogin = () => {
   const footerNode = () => (
     <Footer
       strings={{
-        part: partStr,
-        type: typeStr,
+        first: firstStr,
+        second: secondStr,
         third: thirdStr,
       }}
       objects={{
