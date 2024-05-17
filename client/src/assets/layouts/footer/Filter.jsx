@@ -206,8 +206,8 @@ export const Filter = ({
     </Div>
   );
 
-  // 6. demo -------------------------------------------------------------------------------------->
-  const demoNode = () => (
+  // 5. user -------------------------------------------------------------------------------------->
+  const userNode = () => (
     <TextField
       select={true}
       type={"text"}
@@ -218,6 +218,11 @@ export const Filter = ({
       onChange={(e) => {
         const newPartVal = e.target.value;
         functions?.setPART(newPartVal);
+        functions?.setPAGING((prev) => ({
+          ...prev,
+          page: 1,
+          limit: 10
+        }));
       }}>
       <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
       <MenuItem value={"exercise"}>운동</MenuItem>
@@ -430,7 +435,7 @@ export const Filter = ({
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {demoNode()}
+            {userNode()}
           </Div>
         );
       }

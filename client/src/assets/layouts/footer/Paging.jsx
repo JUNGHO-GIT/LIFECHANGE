@@ -36,6 +36,7 @@ export const Paging = ({
       onRowsPerPageChange={(event) => {
         functions.setPAGING((prev) => ({
           ...prev,
+          page: 1,
           limit: parseInt(event.target.value, 10)
         }));
       }}
@@ -264,7 +265,11 @@ export const Paging = ({
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
-        return null
+        return (
+          <Div className={"block-wrapper d-row h-7vh"}>
+            {defaultNode()}
+          </Div>
+        );
       }
       else if (strings?.second === "data" && strings?.third === "set") {
         return null

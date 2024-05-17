@@ -38,8 +38,9 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
+      req.query.FILTER,
       req.query.PAGING,
-      req.query.PART,
+      req.query.PART
     );
     if (result && result.result) {
       res.json({

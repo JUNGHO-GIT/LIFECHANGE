@@ -58,6 +58,13 @@ export const Header = () => {
             <Icons name={"TbUser"} className={"w-24 h-24"} />
             <Div className={"fs-0-8rem"}>DataSet</Div>
           </Div>
+          <Div className={"d-center pointer"} onClick={() => {
+            navigate("/user/data/list");
+            closePopup();
+          }}>
+            <Icons name={"TbUser"} className={"w-24 h-24"} />
+            <Div className={"fs-0-8rem"}>DataList</Div>
+          </Div>
         </>
       )}>
       {(popTrigger={}) => (

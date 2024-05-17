@@ -1,9 +1,11 @@
 // UserDataList.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {useStorage} from "../../../import/ImportHooks.jsx";
+import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -22,6 +24,14 @@ export const UserDataList = () => {
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day"
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -150,6 +160,7 @@ export const UserDataList = () => {
     const res = await axios.get(`${URL_OBJECT}/data/list`, {
       params: {
         user_id: user_id,
+        FILTER: FILTER,
         PAGING: PAGING,
         PART: PART
       }
@@ -157,25 +168,25 @@ export const UserDataList = () => {
     if (PART === "exercisePlan") {
       setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
     }
-    if (PART === "exercise") {
+    else if (PART === "exercise") {
       setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
     }
-    if (PART === "foodPlan") {
+    else if (PART === "foodPlan") {
       setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
     }
-    if (PART === "food") {
+    else if (PART === "food") {
       setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
     }
-    if (PART === "moneyPlan") {
+    else if (PART === "moneyPlan") {
       setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
     }
-    if (PART === "money") {
+    else if (PART === "money") {
       setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
     }
-    if (PART === "sleepPlan") {
+    else if (PART === "sleepPlan") {
       setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
     }
-    if (PART === "sleep") {
+    else if (PART === "sleep") {
       setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
     }
     setCOUNT((prev) => ({
@@ -184,7 +195,12 @@ export const UserDataList = () => {
       sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, PAGING, PART]);
+  })()}, [
+    user_id,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    PAGING.page, PAGING.limit,
+    PART
+  ]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
@@ -231,86 +247,155 @@ export const UserDataList = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6-1. table
+    // 7-6-1-1. table
+    const tableFragment1Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={5}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-1-2. table
     const tableFragment1 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>운동횟수</TableCell>
-              <TableCell>운동시간</TableCell>
-              <TableCell>운동볼륨</TableCell>
+              <TableCell>횟수</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
               <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell>{item.exercise_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.exercise_plan_count}</TableCell>
-                <TableCell>{item.exercise_plan_cardio}</TableCell>
-                <TableCell>{item.exercise_plan_volume}</TableCell>
-                <TableCell>{item.exercise_plan_weight}</TableCell>
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  <Div>{item.exercise_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.exercise_plan_endDt?.substring(5, 10)}</Div>
+                </TableCell>
               </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell>
+                  {item.exercise_plan_cardio}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-2. table
+    // 7-6-2-1. table
+    const tableFragment2Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={4}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-2-2. table
     const tableFragment2 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>부위</TableCell>
-              <TableCell>종목</TableCell>
-              <TableCell>세트</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>중량</TableCell>
+              <TableCell>볼륨</TableCell>
+              <TableCell>유산소</TableCell>
+              <TableCell>체중</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE?.map((item, index) => (
-              item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}>
-                      {item.exercise_startDt?.substring(5, 10)}
-                      {item.exercise_section.length > 3 && (<Div>더보기</Div>)}
-                    </TableCell>
-                  )}
-                  <TableCell>{section.exercise_part_val.substring(0, 6)}</TableCell>
-                  <TableCell>{section.exercise_title_val.substring(0, 6)}</TableCell>
-                  {section.exercise_part_val !== "유산소" ? (
-                    <>
-                    <TableCell>
-                      {`${numeral(section.exercise_set).format('0,0')}`}
-                    </TableCell>
-                    <TableCell>
-                      {`${numeral(section.exercise_rep).format('0,0')}`}
-                    </TableCell>
-                    <TableCell>
-                      {`${numeral(section.exercise_kg).format('0,0')}`}
-                    </TableCell>
-                    </>
-                  ) : (
-                    <>
-                    <TableCell colSpan={3}>
-                      {section.exercise_cardio}
-                    </TableCell>
-                    </>
-                  )}
-                </TableRow>
-              ))
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  {item.exercise_startDt?.substring(5, 10)}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell>
+                  {item.exercise_total_cardio}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-3. table
+    // 7-6-3-1. table
+    const tableFragment3Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={5}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-3-2. table
     const tableFragment3 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
@@ -325,52 +410,177 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell>{item.food_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.food_plan_kcal}</TableCell>
-                <TableCell>{item.food_plan_carb}</TableCell>
-                <TableCell>{item.food_plan_protein}</TableCell>
-                <TableCell>{item.food_plan_fat}</TableCell>
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  <Div>{item.food_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.food_plan_endDt?.substring(5, 10)}</Div>
+                </TableCell>
               </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-4. table
+    // 7-6-4-1. table
+    const tableFragment4Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={5}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-4-2. table
     const tableFragment4 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>식품명</TableCell>
-              <TableCell>칼로리</TableCell>
+              <TableCell>Kcal</TableCell>
+              <TableCell>Carb</TableCell>
+              <TableCell>Protein</TableCell>
+              <TableCell>Fat</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD?.map((item, index) => (
-              item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.food_section.length, 3)}>
-                      {item.food_startDt?.substring(5, 10)}
-                      {item.food_section.length > 3 && (<Div>더보기</Div>)}
-                    </TableCell>
-                  )}
-                  <TableCell>{section.food_part_val.substring(0, 6)}</TableCell>
-                  <TableCell>{section.food_title.substring(0, 6)}</TableCell>
-                  <TableCell>{`${numeral(section.food_kcal).format('0,0')} kcal`}</TableCell>
-                </TableRow>
-              ))
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  {item.food_startDt?.substring(5, 10)}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_carb).format("0,0")} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_protein).format("0,0")} g`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.food_total_fat).format("0,0")} g`}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-5. table
+    // 7-6-5-1. table
+    const tableFragment5Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={3}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-5-2. table
     const tableFragment5 = (i) => (
+      <TableContainer key={i} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className="table-thead-tr">
+              <TableCell>날짜</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            {OBJECT_MONEY_PLAN?.map((item, index) => (
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
+                </TableCell>
+              </TableRow>
+              </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-6-1. table
+    const tableFragment6Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>수입</TableCell>
+              <TableCell>지출</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={3}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-6-2. table
+    const tableFragment6 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -381,50 +591,50 @@ export const UserDataList = () => {
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
-            {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell>{item.money_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.money_plan_in}</TableCell>
-                <TableCell>{item.money_plan_out}</TableCell>
+            {OBJECT_MONEY?.map((item, index) => (
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  {item.money_startDt?.substring(5, 10)}
+                </TableCell>
               </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_in).format('0,0')}`}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_out).format('0,0')}`}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-6. table
-    const tableFragment6 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
+    // 7-6-7-1. table
+    const tableFragment7Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>항목</TableCell>
-              <TableCell>금액</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
-            {OBJECT_MONEY?.map((item, index) => (
-              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.money_section.length, 3)}>
-                      {item.money_startDt?.substring(5, 10)}
-                      {item.money_section.length > 3 && (<Div>더보기</Div>)}
-                    </TableCell>
-                  )}
-                  <TableCell>{section.money_part_val}</TableCell>
-                  <TableCell>{section.money_title_val}</TableCell>
-                  <TableCell>{`₩ ${numeral(section.money_amount).format('0,0')}`}</TableCell>
-                </TableRow>
-              ))
-            ))}
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={4}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-7. table
+    // 7-6-7-2. table
     const tableFragment7 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
@@ -436,20 +646,56 @@ export const UserDataList = () => {
               <TableCell>수면</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody"}>
+          <TableBody className={"table-tbody-tr"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <TableRow key={index} className={"table-tbody-tr"}>
-                <TableCell>{item.sleep_plan_startDt?.substring(5, 10)}</TableCell>
-                <TableCell>{item.sleep_plan_night}</TableCell>
-                <TableCell>{item.sleep_plan_morning}</TableCell>
-                <TableCell>{item.sleep_plan_time}</TableCell>
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
+                </TableCell>
               </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {item.sleep_plan_night}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_plan_morning}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_plan_time}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     );
-    // 7-6-8. table
+    // 7-6-8-1. table
+    const tableFragment8Empty = () => (
+      <TableContainer key={"empty"} className={"border radius"}>
+        <Table>
+          <TableHead className={"table-thead"}>
+            <TableRow className={"table-thead-tr"}>
+              <TableCell>날짜</TableCell>
+              <TableCell>취침</TableCell>
+              <TableCell>기상</TableCell>
+              <TableCell>수면</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className={"table-tbody"}>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={4}>
+                데이터가 없습니다.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    // 7-6-8-2. table
     const tableFragment8 = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
@@ -463,19 +709,24 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP?.map((item, index) => (
-              item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                  {sectionIndex === 0 && (
-                    <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}>
-                      {item.sleep_startDt?.substring(5, 10)}
-                      {item.sleep_section.length > 3 && (<Div>더보기</Div>)}
-                    </TableCell>
-                  )}
-                  <TableCell>{section.sleep_night}</TableCell>
-                  <TableCell>{section.sleep_morning}</TableCell>
-                  <TableCell>{section.sleep_time}</TableCell>
-                </TableRow>
-              ))
+              <>
+              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+                <TableCell rowSpan={2}>
+                  {item.sleep_startDt?.substring(5, 10)}
+                </TableCell>
+              </TableRow>
+              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_night}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_morning}
+                </TableCell>
+                <TableCell>
+                  {item.sleep_section[0]?.sleep_time}
+                </TableCell>
+              </TableRow>
+              </>
             ))}
           </TableBody>
         </Table>
@@ -485,14 +736,30 @@ export const UserDataList = () => {
     const tableSection = () => (
       <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-column"}>
-          {PART === "exercisePlan" && tableFragment1(0)}
-          {PART === "exercise" && tableFragment2(0)}
-          {PART === "foodPlan" && tableFragment3(0)}
-          {PART === "food" && tableFragment4(0)}
-          {PART === "moneyPlan" && tableFragment5(0)}
-          {PART === "money" && tableFragment6(0)}
-          {PART === "sleepPlan" && tableFragment7(0)}
-          {PART === "sleep" && tableFragment8(0)}
+          {PART === "exercisePlan" && (
+            COUNT.totalCnt === 0 ? tableFragment1Empty() : tableFragment1(0)
+          )}
+          {PART === "exercise" && (
+            COUNT.totalCnt === 0 ? tableFragment2Empty() : tableFragment2(0)
+          )}
+          {PART === "foodPlan" && (
+            COUNT.totalCnt === 0 ? tableFragment3Empty() : tableFragment3(0)
+          )}
+          {PART === "food" && (
+            COUNT.totalCnt === 0 ? tableFragment4Empty() : tableFragment4(0)
+          )}
+          {PART === "moneyPlan" && (
+            COUNT.totalCnt === 0 ? tableFragment5Empty() : tableFragment5(0)
+          )}
+          {PART === "money" && (
+            COUNT.totalCnt === 0 ? tableFragment6Empty() : tableFragment6(0)
+          )}
+          {PART === "sleepPlan" && (
+            COUNT.totalCnt === 0 ? tableFragment7Empty() : tableFragment7(0)
+          )}
+          {PART === "sleep" && (
+            COUNT.totalCnt === 0 ? tableFragment8Empty() : tableFragment8(0)
+          )}
         </Div>
       </Div>
     );
@@ -521,10 +788,10 @@ export const UserDataList = () => {
         third: thirdStr,
       }}
       objects={{
-        PAGING, COUNT, PART,
+        FILTER, PAGING, COUNT, PART
       }}
       functions={{
-        setPAGING, setCOUNT, setPART,
+        setFILTER, setPAGING, setCOUNT, setPART
       }}
       handlers={{
         navigate, flowSave, flowDelete
