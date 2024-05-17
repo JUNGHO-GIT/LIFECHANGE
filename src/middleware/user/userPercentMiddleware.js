@@ -9,29 +9,40 @@ export const percent = async (object) => {
 
   // 1. exercise
   const diffExercise = (plan, real, extra) => {
-    const percent = ((real - plan) / plan) * 100;
+    const diffVal = ((real - plan) / plan) * 100;
+    const diffPercent = (real / plan) * 100;
+    const diffTime = (real / plan) * 100;
+
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
 
+    let returnScore = 0;
+    let returnPercent = 0;
+    let returnTime = 0;
+
     if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
-      return 1;
+      returnScore = 1;
+      returnPercent = 0;
+      returnTime = 0;
     }
     else if (extra === "count" || extra === "volume" || extra === "weight") {
+      returnPercent = diffPercent;
+      returnTime = diffTime;
       // 1. ~ 1%
-      if (percent <= 1) {
-        return 4;
+      if (diffVal <= 1) {
+        returnScore = 4;
       }
       // 2. 1% ~ 10%
-      else if (percent > 1 && percent <= 10) {
-        return 3;
+      else if (diffVal > 1 && diffVal <= 10) {
+        returnScore = 3;
       }
       // 3. 10% ~ 50%
-      else if (percent > 10 && percent <= 30) {
-        return 2;
+      else if (diffVal > 10 && diffVal <= 30) {
+        returnScore = 2;
       }
       // 4. 50% ~
       else {
-        return 1;
+        returnScore = 1;
       }
     }
     else if (extra === "time") {
@@ -44,39 +55,45 @@ export const percent = async (object) => {
       }
       // 1. 10분이내
       if (0 <= diffVal && diffVal <= 600000) {
-        return 4;
+        returnScore = 4;
       }
       // 2. 10분 ~ 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
-        return 3;
+        returnScore = 3;
       }
       // 3. 20분 ~ 30분
       else if (1200000 < diffVal && diffVal <= 1800000) {
-        return 2;
+        returnScore = 2;
       }
       // 4. 30분 ~
       else {
-        return 1;
+        returnScore = 1;
       }
     }
+
+    return {
+      score: returnScore,
+      percent: returnPercent,
+      time: returnTime,
+    };
   };
 
   // 2. food
   const diffFood = (plan, real, extra) => {
-    const percent = ((real - plan) / plan) * 100;
+    const diffVal = ((real - plan) / plan) * 100;
     if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
       return 1;
     }
     // 1. ~ 1%
-    else if (percent <= 1) {
+    else if (diffVal <= 1) {
       return 4;
     }
     // 2. 1% ~ 10%
-    else if (percent > 1 && percent <= 10) {
+    else if (diffVal > 1 && diffVal <= 10) {
       return 3;
     }
     // 3. 10% ~ 50%
-    else if (percent > 10 && percent <= 30) {
+    else if (diffVal > 10 && diffVal <= 30) {
       return 2;
     }
     // 4. 50% ~
@@ -91,17 +108,17 @@ export const percent = async (object) => {
       return 1;
     }
     else if (extra === "in") {
-      let percent = (Math.abs(real - plan) / plan) * 100;
+      let diffVal = (Math.abs(real - plan) / plan) * 100;
       if (plan > real) {
-        if (percent > 0 && percent <= 1) {
+        if (diffVal > 0 && diffVal <= 1) {
           return 4;
         }
         // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
+        else if (diffVal > 1 && diffVal <= 10) {
           return 3;
         }
         // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
+        else if (diffVal > 10 && diffVal <= 50) {
           return 2;
         }
         // 4. 50% ~
@@ -111,15 +128,15 @@ export const percent = async (object) => {
       }
       else {
         // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
+        if (diffVal > 0 && diffVal <= 1) {
           return 1;
         }
         // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
+        else if (diffVal > 1 && diffVal <= 10) {
           return 2;
         }
         // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
+        else if (diffVal > 10 && diffVal <= 50) {
           return 3;
         }
         // 4. 50% ~
@@ -129,18 +146,18 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "out") {
-      let percent = (Math.abs(real - plan) / plan) * 100;
+      let diffVal = (Math.abs(real - plan) / plan) * 100;
       if (plan > real) {
         // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
+        if (diffVal > 0 && diffVal <= 1) {
           return 1;
         }
         // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
+        else if (diffVal > 1 && diffVal <= 10) {
           return 2;
         }
         // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
+        else if (diffVal > 10 && diffVal <= 50) {
           return 3;
         }
         // 4. 50% ~
@@ -150,15 +167,15 @@ export const percent = async (object) => {
       }
       else {
         // 1. 0% ~ 1%
-        if (percent > 0 && percent <= 1) {
+        if (diffVal > 0 && diffVal <= 1) {
           return 4;
         }
         // 2. 1% ~ 10%
-        else if (percent > 1 && percent <= 10) {
+        else if (diffVal > 1 && diffVal <= 10) {
           return 3;
         }
         // 3. 10% ~ 50%
-        else if (percent > 10 && percent <= 50) {
+        else if (diffVal > 10 && diffVal <= 50) {
           return 2;
         }
         // 4. 50% ~
@@ -280,6 +297,10 @@ export const percent = async (object) => {
       "time"
     ),
   };
+
+  console.log("===================================");
+  console.log(JSON.stringify(exercise, null, 2));
+  console.log("===================================");
 
   const newObject = {
     exercise: calcAvg(exercise),

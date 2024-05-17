@@ -41,7 +41,7 @@ export const list = {
         exercise_total_count: "$exercise_total_count",
         exercise_total_volume: "$exercise_total_volume",
         exercise_total_cardio: "$exercise_total_cardio",
-        exercise_body_weight: "$exercise_body_weight",
+        exercise_body_weight: "$exercise_body_weight"
       }}
     ]);
     return finalResult;

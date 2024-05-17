@@ -90,7 +90,7 @@ export const Btn = ({
         }))
       );
     }}>
-      Today
+     오늘
     </Button>
   );
   const btnGetCalendar = () => (
@@ -258,12 +258,12 @@ export const Btn = ({
         type={"text"}
         variant={"outlined"}
         size={"small"}
-        value={Math.min(objects?.COUNT?.inputCnt, 10)}
+        value={Math.min(objects?.COUNT?.inputCnt, 100)}
         InputProps={{
           readOnly: false
         }}
         onChange={(e) => {
-          const limitedValue = Math.min(Number(e.target.value), 10);
+          const limitedValue = Math.min(Number(e.target.value), 100);
           functions.setCOUNT((prev) => ({
             ...prev,
             inputCnt: limitedValue
@@ -271,7 +271,7 @@ export const Btn = ({
         }}
       />
       <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-      onClick={() => (handlers.flowAdd(objects.PART))}>
+      onClick={() => (handlers.flowSave(objects.PART))}>
         추가
       </Button>
     </Div>

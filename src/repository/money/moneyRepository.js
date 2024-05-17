@@ -74,22 +74,6 @@ export const list = {
       {$limit: Number(limit_param)}
     ]);
     return finalResult;
-  },
-
-  property: async (
-    user_id_param
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param
-      }},
-      {$group: {
-        _id: null,
-        money_total_in: {$sum: "$money_total_in"},
-        money_total_out: {$sum: "$money_total_out"}
-      }}
-    ]);
-    return finalResult;
   }
 };
 

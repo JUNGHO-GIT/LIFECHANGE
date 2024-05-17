@@ -60,7 +60,6 @@ export const MoneySave = () => {
     money_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
-    money_property: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -314,23 +313,6 @@ export const MoneySave = () => {
             label={"총 지출"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
-              ),
-              endAdornment: "원"
-            }}
-          />
-        </Div>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={"총 자산"}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{

@@ -39,11 +39,14 @@ export const list = async (
     const exerciseTotalCardio = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
     ), 0);
-    const exerciseLessWeight = listReal.reduce((acc, curr) => (
-      (curr.exercise_body_weight !== null && (
-        acc === null || curr.exercise_body_weight < acc
-      )) ? curr.exercise_body_weight : acc
-    ), null);
+
+    // 기간중 가장 작은 값을 찾는다.
+    const exerciseLessWeight = Math.min(...listReal.map((real) => (
+      real?.exercise_body_weight ?? 0
+    ))
+    .filter((weight) => (
+      weight >= 10
+    )));
 
     return {
       ...plan,

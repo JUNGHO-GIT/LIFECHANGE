@@ -13,13 +13,20 @@ export const percent = async () => {
   const user_id = sessionStorage.getItem("user_id") || "{}";
 
   try {
-    const res = await axios.get(`${URL_OBJECT}/percent/list`, {
+    const resList = await axios.get(`${URL_OBJECT}/percent/list`, {
       params: {
         user_id: user_id,
         duration: `${today} ~ ${today}`,
       },
     });
-    sessionStorage.setItem("percent", JSON.stringify(res.data.result));
+    const resProperty = await axios.get(`${URL_OBJECT}/percent/property`, {
+      params: {
+        user_id: user_id
+      },
+    });
+
+    sessionStorage.setItem("percent", JSON.stringify(resList.data.result));
+    sessionStorage.setItem("property", JSON.stringify(resProperty.data.result));
   }
   catch (error) {
     console.error(`percent error: ${error}`);

@@ -143,3 +143,23 @@ export const list = async (
 
   return finalResult;
 };
+
+// 2. property ------------------------------------------------------------------------------------>
+// 현재 재산 상태
+export const property = async (
+  user_id_param
+) => {
+
+  // money
+  const findResult = await repository.property.listMoney(
+    user_id_param
+  );
+
+  const finalResult = {
+    totalIn: findResult[0].money_total_in,
+    totalOut: findResult[0].money_total_out,
+    totalProperty: findResult[0].money_total_in - findResult[0].money_total_out
+  };
+
+  return finalResult;
+};

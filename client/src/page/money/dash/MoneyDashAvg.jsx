@@ -261,8 +261,7 @@ export const MoneyDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"지출"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"지출"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={10} />
           <Tooltip
             formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -318,19 +317,19 @@ export const MoneyDashAvg = () => {
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
-        ["in", "out"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))
+          ["in", "out"]?.map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+                if (LINE === key) {
+                  setLINE("");
+                }
+                else {
+                  setLINE(key);
+                }
+              }}/>} label={key} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 pointer"} alt={"common3"}

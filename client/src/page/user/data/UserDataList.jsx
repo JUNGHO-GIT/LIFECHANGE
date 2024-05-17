@@ -118,7 +118,6 @@ export const UserDataList = () => {
     money_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
-    money_property: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -219,7 +218,7 @@ export const UserDataList = () => {
         ...prev,
         page: 1
       }));
-      navigate("/user/list");
+      navigate("/user/data/list");
     }
   };
 

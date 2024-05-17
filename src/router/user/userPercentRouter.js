@@ -35,3 +35,32 @@ router.get("/list", async (req, res) => {
     });
   }
 });
+
+// 2. property ------------------------------------------------------------------------------------>
+router.get("/property", async (req, res) => {
+  try {
+    let result = await service.property (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});

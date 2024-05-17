@@ -9,7 +9,7 @@ import {Div, PopUp} from "../../import/ImportComponents.jsx";
 import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
-import {common1, common2, common4, common5, money2, money3, setting2} from "../../import/ImportImages.jsx";
+import {common1, common2, common4, common3, money2, money3, setting2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -63,7 +63,6 @@ export const MoneyDetail = () => {
     money_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
-    money_property: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -241,23 +240,6 @@ export const MoneyDetail = () => {
             }}
           />
         </Div>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={"총 자산"}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_property).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
-              ),
-              endAdornment: "원"
-            }}
-          />
-        </Div>
       </Div>
     );
     // 7-4. badge
@@ -308,7 +290,7 @@ export const MoneyDetail = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
+          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

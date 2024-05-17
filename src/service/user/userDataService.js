@@ -183,6 +183,16 @@ export const save = async (
           exercise_cardio: randomTime(),
         };
       });
+
+      const totalVolume = sections
+        .filter((section) => (section.exercise_part_val !== "유산소"))
+        .reduce((sum, section) => (sum + section.exercise_volume), 0);
+
+      const totalCardio = sections
+        .filter((section) => (section.exercise_part_val === "유산소"))
+        .reduce((sum, section) => (sum + moment.duration(section.exercise_cardio).asMinutes()), 0);
+
+
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
@@ -190,8 +200,8 @@ export const save = async (
         exercise_demo: true,
         exercise_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        exercise_total_volume: randomNumber(10000),
-        exercise_total_cardio: randomTime(),
+        exercise_total_volume: totalVolume,
+        exercise_total_cardio: moment.utc(totalCardio * 60000).format("HH:mm"),
         exercise_body_weight: randomNumber(100),
         exercise_section: sections,
         exercise_regDt: Date.now(),
@@ -250,6 +260,19 @@ export const save = async (
           food_protein: randomNumber(100),
         };
       });
+
+      const totalKcal = sections
+        .reduce((sum, section) => (sum + section.food_kcal), 0);
+
+      const totalCarb = sections
+        .reduce((sum, section) => (sum + section.food_carb), 0);
+
+      const totalProtein = sections
+        .reduce((sum, section) => (sum + section.food_protein), 0);
+
+      const totalFat = sections
+        .reduce((sum, section) => (sum + section.food_fat), 0);
+
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
@@ -257,10 +280,10 @@ export const save = async (
         food_demo: true,
         food_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        food_total_kcal: randomNumber(10000),
-        food_total_carb: randomNumber(1000),
-        food_total_protein: randomNumber(1000),
-        food_total_fat: randomNumber(1000),
+        food_total_kcal: totalKcal,
+        food_total_carb: totalCarb,
+        food_total_protein: totalProtein,
+        food_total_fat: totalFat,
         food_section: sections,
         food_regDt: Date.now(),
         food_updateDt: Date.now(),
@@ -309,9 +332,18 @@ export const save = async (
           money_title_idx: titleIndex,
           money_title_val: part.money_title[titleIndex],
           money_amount: randomNumber(100000),
-          money_content: "content",
+          money_content: "bbbbbbbb"
         };
       });
+
+      const totalIn = sections
+        .filter((section) => (section.money_part_val === "수입"))
+        .reduce((sum, section) => (sum + section.money_amount), 0);
+
+      const totalOut = sections
+        .filter((section) => (section.money_part_val === "지출"))
+        .reduce((sum, section) => (sum + section.money_amount), 0);
+
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
@@ -319,8 +351,8 @@ export const save = async (
         money_demo: true,
         money_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_total_in: randomNumber(10000),
-        money_total_out: randomNumber(10000),
+        money_total_in: totalIn,
+        money_total_out: totalOut,
         money_section: sections,
         money_regDt: Date.now(),
         money_updateDt: Date.now(),

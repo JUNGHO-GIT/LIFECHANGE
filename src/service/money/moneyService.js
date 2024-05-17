@@ -19,20 +19,9 @@ export const list = async (
     user_id_param, part, title, startDt_param, endDt_param
   );
 
-  const findResult1 = await repository.list.list(
+  const finalResult = await repository.list.list(
     user_id_param, part, title, sort, limit, page, startDt_param, endDt_param
   );
-
-  const findResult2 = await repository.list.property(
-    user_id_param
-  );
-
-  const finalResult = findResult1.map((item) => {
-    return {
-      ...item,
-      money_property: findResult2[0]?.money_total_in - findResult2[0]?.money_total_out,
-    };
-  });
 
   return {
     totalCnt: totalCnt,
