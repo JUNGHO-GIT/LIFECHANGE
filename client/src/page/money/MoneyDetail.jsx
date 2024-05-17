@@ -70,7 +70,7 @@ export const MoneyDetail = () => {
       money_title_idx: 0,
       money_title_val: "전체",
       money_amount: 0,
-      money_content: "",
+      money_content: ""
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
