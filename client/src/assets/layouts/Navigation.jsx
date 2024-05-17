@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {Div} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {exercise1, food2, money2, sleep8, calendar1} from "../../import/ImportImages.jsx";
+import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Navigation = () => {
@@ -59,7 +59,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"식단"}
           value={"food"}
-          icon={<img src={food2} className={"w-16 h-16 icon"} alt={"food2"}/>}
+          icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
           onClick={() => {
             setValue("food");
             navigate("food/dash/list");
@@ -77,7 +77,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"재무"}
           value={"money"}
-          icon={<img src={money2} className={"w-16 h-16 icon"} alt={"money2"}/>}
+          icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
           onClick={() => {
             setValue("money");
             navigate("money/dash/list");
@@ -86,7 +86,7 @@ export const Navigation = () => {
         <BottomNavigationAction
           label={"수면"}
           value={"sleep"}
-          icon={<img src={sleep8} className={"w-16 h-16 icon"} alt={"sleep8"}/>}
+          icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/dash/list");

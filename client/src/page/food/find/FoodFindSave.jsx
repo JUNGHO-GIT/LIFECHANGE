@@ -11,7 +11,8 @@ import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {calendar2, food1, food3,food5, food8, setting2, setting4, setting5} from "../../../import/ImportImages.jsx";
+import {common1, common2, common5, setting2} from "../../../import/ImportImages.jsx";
+import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodFindSave = () => {
@@ -232,11 +233,9 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
           />
         )}
@@ -262,11 +261,9 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={setting5} className={"w-16 h-16 me-10"} alt={"setting5"}/>
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -289,11 +286,9 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
+                <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: (
-                "Kcal"
-              )
+              endAdornment: "Kcal"
             }}
           />
         </Div>
@@ -327,7 +322,7 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
+                <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
                 "g"
@@ -346,7 +341,7 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"
@@ -385,7 +380,7 @@ export const FoodFindSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={setting4} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"setting4"}
+          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -413,12 +408,8 @@ export const FoodFindSave = () => {
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -455,12 +446,8 @@ export const FoodFindSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
-                startAdornment: (
-                  null
-                ),
-                endAdornment: (
-                  "회"
-                )
+                startAdornment: null,
+                endAdornment: "회"
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -496,9 +483,7 @@ export const FoodFindSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
-                startAdornment: (
-                  null
-                ),
+                startAdornment: null,
                 endAdornment: (
                   "g"
                 )
@@ -538,12 +523,8 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
           />
         </Div>
@@ -558,11 +539,9 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
+                <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: (
-                "Kcal"
-              )
+              endAdornment: "Kcal"
             }}
           />
         </Div>
@@ -596,7 +575,7 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
+                <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
                 "g"
@@ -615,7 +594,7 @@ export const FoodFindSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"

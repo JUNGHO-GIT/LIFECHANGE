@@ -1,23 +1,15 @@
 // SleepSave.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+import {common1, common2, common5, setting2, sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -180,11 +172,9 @@ export const SleepSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
           />
         )}
@@ -210,11 +200,9 @@ export const SleepSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={setting5} className={"w-16 h-16 me-10"} alt={"setting5"}/>
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -252,7 +240,7 @@ export const SleepSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={setting4} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"setting4"}
+          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -311,11 +299,9 @@ export const SleepSave = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
+                    <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
-                  endAdornment: (
-                    "h:m"
-                  )
+                  endAdornment: "h:m"
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -367,11 +353,9 @@ export const SleepSave = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
+                    <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
-                  endAdornment: (
-                    "h:m"
-                  )
+                  endAdornment: "h:m"
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -414,11 +398,9 @@ export const SleepSave = () => {
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={sleep9} className={"w-16 h-16 me-10"} alt={"sleep9"}/>
+                    <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
-                  endAdornment: (
-                    "h:m"
-                  )
+                  endAdornment: "h:m"
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)

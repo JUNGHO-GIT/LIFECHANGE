@@ -10,7 +10,7 @@ import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {setting4} from "../../../import/ImportImages.jsx";
+import {common5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDashLine = () => {
@@ -333,7 +333,7 @@ export const MoneyDashLine = () => {
         ))
         )}>
         {(popTrigger={}) => (
-          <img src={setting4} className={"w-24 h-24 pointer"} alt={"setting4"}
+          <img src={common5} className={"w-24 h-24 pointer"} alt={"common5"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

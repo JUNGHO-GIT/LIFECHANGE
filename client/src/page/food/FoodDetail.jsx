@@ -8,15 +8,7 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, PopUp} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, MenuItem} from "../../import/ImportMuis.jsx";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+import {common1, common2, common4, common5, setting2, food2, food3, food4, food5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
@@ -177,11 +169,9 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+              <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
           />
         )}
@@ -207,11 +197,9 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={setting5} className={"w-16 h-16 me-10"} alt={"setting5"}/>
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -234,7 +222,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
+                <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
                 "kcal"
@@ -272,7 +260,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
+                <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
                 "g"
@@ -291,7 +279,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"
@@ -330,7 +318,7 @@ export const FoodDetail = () => {
               <Div className={"fs-0-8rem"}>삭제</Div>
             </Div>
             <Div className={"d-row"}>
-              <img src={setting1} className={"w-16 h-16 icon pointer"} alt={"setting1"}
+              <img src={common4} className={"w-16 h-16 icon pointer"} alt={"common4"}
                 onClick={() => {
                   Object.assign(SEND, {
                     startDt: DATE.startDt,
@@ -349,7 +337,7 @@ export const FoodDetail = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={setting4} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"setting4"}
+          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -376,12 +364,8 @@ export const FoodDetail = () => {
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
           >
             {foodArray.map((item, idx) => (
@@ -405,12 +389,8 @@ export const FoodDetail = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: true,
-                startAdornment: (
-                  null
-                ),
-                endAdornment: (
-                  "회"
-                )
+                startAdornment: null,
+                endAdornment: "회"
               }}
             />
           ) : (
@@ -424,9 +404,7 @@ export const FoodDetail = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: true,
-                startAdornment: (
-                  null
-                ),
+                startAdornment: null,
                 endAdornment: (
                   "g"
                 )
@@ -444,12 +422,8 @@ export const FoodDetail = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
           />
         </Div>
@@ -464,7 +438,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food1} className={"w-16 h-16 me-10"} alt={"food1"}/>
+                <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
                 "kcal"
@@ -500,7 +474,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
+                <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
                 "g"
@@ -517,7 +491,7 @@ export const FoodDetail = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={food8} className={"w-16 h-16 me-10"} alt={"food7"}/>
+                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
                 "g"

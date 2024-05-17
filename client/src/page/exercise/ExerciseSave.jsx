@@ -9,15 +9,7 @@ import {PopUp, Div} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {
-  calendar1, calendar2, calendar3, calendar4,
-  exercise1, exercise2, exercise3, exercise4, exercise5, exercise9, exercise10,
-  food1, food2, food3, food4, food5, food6, food7, food8,
-  money1, money2, money3, money4,
-  sleep1, sleep2, sleep3, sleep5, sleep6, sleep7, sleep8, sleep9, sleep10,
-  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12,
-  setting1, setting2, setting3, setting4, setting5, setting6, setting7, setting8
-} from "../../import/ImportImages.jsx";
+import {common1, common2, common5, exercise2, exercise4, exercise5, setting2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {
@@ -280,11 +272,9 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"} />
+                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
           />
         )}
@@ -310,11 +300,9 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: false,
               startAdornment: (
-                <img src={setting5} className={"w-16 h-16 me-10"} alt={"setting5"}/>
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                null
-              )
+              endAdornment: null
             }}
             onChange={(e) => {
               handlerValidate(e, popTrigger);
@@ -417,7 +405,7 @@ export const ExerciseSave = () => {
           </>
         )}>
         {(popTrigger={}) => (
-          <img src={setting4} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"setting4"}
+          <img src={common5} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common5"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -444,12 +432,8 @@ export const ExerciseSave = () => {
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
             onChange={(e) => {
               const newIndex = Number(e.target.value);
@@ -483,12 +467,8 @@ export const ExerciseSave = () => {
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
             InputProps={{
               readOnly: false,
-              startAdornment: (
-                null
-              ),
-              endAdornment: (
-                null
-              )
+              startAdornment: null,
+              endAdornment: null
             }}
             onChange={(e) => {
               const newTitleIdx = Number(e.target.value);
@@ -657,9 +637,7 @@ export const ExerciseSave = () => {
                   startAdornment: (
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
-                  endAdornment: (
-                    "h:m"
-                  )
+                  endAdornment: "h:m"
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
