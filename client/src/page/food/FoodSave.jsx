@@ -474,9 +474,7 @@ export const FoodSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: (
-                  "g"
-                )
+                endAdornment: "g"
               }}
               onChange={(e) => {
                 const newGram = Number(e.target.value);

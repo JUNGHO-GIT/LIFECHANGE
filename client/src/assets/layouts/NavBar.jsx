@@ -22,43 +22,61 @@ export const NavBar = () => {
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className) => {
-    /* const totalIcon =
-    (parseFloat(percent.exercise.average.score) + parseFloat(percent.food.average.score) +
-      parseFloat(percent.money.average.score) +
-      parseFloat(percent.sleep.average.score)
-      )/4;
-
     if (
-      percent?.[`${part}`]?.average?.score === "N/A") {
+      parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
+      parseFloat(percent?.[`${part}`]?.average?.score) <= 1
+    ) {
       return (
-        <img src={smile1} className={className} alt={"smile1"} />
+        <Div className={"d-center"}>
+          <img src={smile1} className={className} alt={"smile1"} />
+          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
       );
     }
-    else if (percent?.[`${part}`]?.average?.score < 2) {
+    else if (
+      parseFloat(percent?.[`${part}`]?.average?.score) > 1 &&
+      parseFloat(percent?.[`${part}`]?.average?.score) <= 2
+    ) {
       return (
-        <img src={smile1} className={className} alt={"smile1"} />
+        <Div className={"d-center"}>
+          <img src={smile2} className={className} alt={"smile2"} />
+          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
       );
     }
-    else if (percent?.[`${part}`]?.average?.score < 3) {
+    else if (
+      parseFloat(percent?.[`${part}`]?.average?.score) > 2 &&
+      parseFloat(percent?.[`${part}`]?.average?.score) <= 3
+    ) {
       return (
-        <img src={smile2} className={className} alt={"smile2"} />
+        <Div className={"d-center"}>
+          <img src={smile3} className={className} alt={"smile3"} />
+          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
       );
     }
-    else if (percent?.[`${part}`]?.average?.score < 4) {
+    else if (
+      parseFloat(percent?.[`${part}`]?.average?.score) > 3 &&
+      parseFloat(percent?.[`${part}`]?.average?.score) <= 4
+    ) {
       return (
-        <img src={smile3} className={className} alt={"smile3"} />
+        <Div className={"d-center"}>
+          <img src={smile4} className={className} alt={"smile4"} />
+          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
       );
     }
-    else if (percent?.[`${part}`]?.average?.score < 5) {
+    else if (
+      parseFloat(percent?.[`${part}`]?.average?.score) > 4 &&
+      parseFloat(percent?.[`${part}`]?.average?.score) <= 5
+    ) {
       return (
-        <img src={smile4} className={className} alt={"smile4"} />
+        <Div className={"d-center"}>
+          <img src={smile5} className={className} alt={"smile5"} />
+          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
       );
     }
-    else {
-      return (
-        <img src={smile5} className={className} alt={"smile5"} />
-      );
-    } */
   };
 
   // 6. default ----------------------------------------------------------------------------------->
@@ -77,23 +95,28 @@ export const NavBar = () => {
             direction={"center"}
             contents={({closePopup}) => (
               <Div className={"d-column p-10"}>
-                <Div className={"fs-1-0rem fw-normal mb-10"}>
+                <Div className={"fs-0-8rem fw-bold mb-10"}>
                   {moment().format("YYYY-MM-DD (ddd)")}
                 </Div>
                 <Div className={"d-center mb-10"}>
-                  총합 : {makeIcon("total", "w-max3vw h-max3vh ms-5")}
+                  <Div className={"fs-0-8rem fw-bold me-5"}>총합</Div>
+                  {makeIcon("total", "w-max3vw h-max3vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
-                  운동 : {makeIcon("exercise", "w-max3vw h-max3vh ms-5")}
+                  <Div className={"fs-0-8rem fw-bold me-5"}>운동</Div>
+                  {makeIcon("exercise", "w-max3vw h-max3vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
-                  식단 : {makeIcon("food", "w-max3vw h-max3vh ms-5")}
+                  <Div className={"fs-0-8rem fw-bold me-5"}>식단</Div>
+                  {makeIcon("food", "w-max3vw h-max3vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
-                  재무 : {makeIcon("money", "w-max3vw h-max3vh ms-5")}
+                  <Div className={"fs-0-8rem fw-bold me-5"}>재무</Div>
+                  {makeIcon("money", "w-max3vw h-max3vh")}
                 </Div>
                 <Div className={"d-center"}>
-                  수면 : {makeIcon("sleep", "w-max3vw h-max3vh ms-5")}
+                  <Div className={"fs-0-8rem fw-bold me-5"}>수면</Div>
+                  {makeIcon("sleep", "w-max3vw h-max3vh")}
                 </Div>
               </Div>
             )}>

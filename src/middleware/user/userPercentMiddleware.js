@@ -481,9 +481,9 @@ export const percent = async (object) => {
     let sumPercent = 0;
     let count = 0;
     for (const key in object) {
-        sumScore += parseFloat(object[key].score);
-        sumPercent += parseFloat(object[key].percent);
-        count++;
+      sumScore += parseFloat(object[key].score);
+      sumPercent += parseFloat(object[key].percent);
+      count++;
     }
     if (count === 0) {
       return {
@@ -515,18 +515,26 @@ export const percent = async (object) => {
       average: calcAverage(sleep),
     }
   };
-  
-  console.log("===================================");
-  console.log("exercise: ", JSON.stringify(exercise, null, 2));
-  console.log("===================================");
-  console.log("food: ", JSON.stringify(food, null, 2));
-  console.log("===================================");
-  console.log("money: ", JSON.stringify(money, null, 2));
-  console.log("===================================");
-  console.log("sleep: ", JSON.stringify(sleep, null, 2));
-  console.log("===================================");
-  console.log("newObject: ", JSON.stringify(newObject, null, 2));
 
+  // 5. total
+  const total = {
+    score: 0,
+    percent: 0,
+    count: 0,
+  };
+  ["exercise", "food", "money", "sleep"].forEach(category => {
+    total.score += parseFloat(newObject[category].average.score);
+    total.percent += parseFloat(newObject[category].average.percent);
+    total.count++;
+  });
+  if (total.count > 0) {
+    newObject.total = {
+      average: {
+        score: (total.score / total.count).toFixed(2),
+        percent: (total.percent / total.count).toFixed(2),
+      }
+    };
+  }
 
   return newObject;
 };

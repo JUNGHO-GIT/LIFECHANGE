@@ -123,7 +123,12 @@ export const FoodFindSave = () => {
         totalCarb: acc.totalCarb + Number(current.food_carb),
         totalProtein: acc.totalProtein + Number(current.food_protein),
       };
-    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
+    }, {
+      totalKcal: 0,
+      totalFat: 0,
+      totalCarb: 0,
+      totalProtein: 0
+    });
 
     setOBJECT((prev) => ({
       ...prev,
@@ -249,7 +254,9 @@ export const FoodFindSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -258,16 +265,16 @@ export const FoodFindSave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                </Div>
+              )
             }}
           />
         )}
@@ -362,17 +369,15 @@ export const FoodFindSave = () => {
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -479,9 +484,7 @@ export const FoodFindSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: (
-                  "g"
-                )
+                endAdornment: "g"
               }}
               onChange={(e) => {
                 const newGram = Number(e.target.value);
@@ -530,7 +533,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -539,15 +542,13 @@ export const FoodFindSave = () => {
               endAdornment: "Kcal"
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"carb"}
             size={"small"}
             value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -564,7 +565,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -573,15 +574,13 @@ export const FoodFindSave = () => {
               endAdornment: "g"
             }}
           />
-        </Div>
-        <Div className={"d-center mb-20"}>
           <TextField
             select={false}
             label={"fat"}
             size={"small"}
             value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}`}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (

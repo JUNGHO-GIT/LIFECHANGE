@@ -1,5 +1,3 @@
-
-
 // 2-1. number ------------------------------------------------------------------------------------>
 export const randomNumber = (data) => {
   return Math.floor(Math.random() * data);
