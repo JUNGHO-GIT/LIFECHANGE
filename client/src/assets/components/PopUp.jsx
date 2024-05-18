@@ -107,7 +107,7 @@ export const PopUp = ({...props}) => {
         onClose={popupState.close}
         anchorReference={"anchorPosition"}
         anchorPosition={{
-          top: window.innerHeight / 2,
+          top: window.innerHeight / 2 - 50,
           left: window.innerWidth / 2
         }}
         anchorOrigin={{

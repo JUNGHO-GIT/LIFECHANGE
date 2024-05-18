@@ -10,7 +10,7 @@ import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../../import/ImportMuis.jsx";
 import {TextField, Button, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3, setting2} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3, common5} from "../../../import/ImportImages.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -244,7 +244,7 @@ export const FoodPlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();

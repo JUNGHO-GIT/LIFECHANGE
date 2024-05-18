@@ -11,7 +11,7 @@ import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {common1, common2, common3} from "../../../import/ImportImages.jsx";
-import {setting2, sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
+import {common5, sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
@@ -243,7 +243,7 @@ export const SleepPlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
         <Div className={"d-row"}>
-          <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+          <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
             onClick={() => {
               handlerDelete(index);
               closePopup();

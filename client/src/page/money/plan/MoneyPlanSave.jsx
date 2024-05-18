@@ -11,7 +11,7 @@ import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge} from "../../../import/ImportMuis.jsx";
 import {TextField, Button, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3, money2, setting2} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3, money2, common5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
@@ -240,7 +240,7 @@ export const MoneyPlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();

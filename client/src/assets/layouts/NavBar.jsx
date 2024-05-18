@@ -21,7 +21,11 @@ export const NavBar = () => {
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 3. logic ------------------------------------------------------------------------------------->
-  const makeIcon = (part, className) => {
+  const makeIcon = (part, className, text) => {
+    
+    const classType
+      = text === "N" ? "d-none" : "fs-0-7rem ms-5";
+    
     if (
       parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
       parseFloat(percent?.[`${part}`]?.average?.score) <= 1
@@ -29,7 +33,9 @@ export const NavBar = () => {
       return (
         <Div className={"d-center"}>
           <img src={smile1} className={className} alt={"smile1"} />
-          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+          <Div className={classType}>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -40,7 +46,8 @@ export const NavBar = () => {
       return (
         <Div className={"d-center"}>
           <img src={smile2} className={className} alt={"smile2"} />
-          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+          <Div className={classType}>
+          {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
       );
     }
@@ -51,7 +58,8 @@ export const NavBar = () => {
       return (
         <Div className={"d-center"}>
           <img src={smile3} className={className} alt={"smile3"} />
-          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+          <Div className={classType}>
+          {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
       );
     }
@@ -62,7 +70,8 @@ export const NavBar = () => {
       return (
         <Div className={"d-center"}>
           <img src={smile4} className={className} alt={"smile4"} />
-          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+          <Div className={classType}>
+          {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
       );
     }
@@ -73,7 +82,8 @@ export const NavBar = () => {
       return (
         <Div className={"d-center"}>
           <img src={smile5} className={className} alt={"smile5"} />
-          <Div className={"fs-0-7rem"}>{percent?.[`${part}`]?.average?.score}</Div>
+          <Div className={classType}>
+          {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
       );
     }
@@ -82,13 +92,12 @@ export const NavBar = () => {
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
-      <Div className={"d-center"}>
+      <Div className={"d-center ms-10"}>
         <Div className={"fs-1-0rem fw-bold navy"}>
           {part} {type ? ` / ${type}` : ""} {plan ? ` / ${plan}` : ""}
         </Div>
       </Div>
-      <Div className={"d-center ms-auto"}>
-        <Div className={"d-center"}>
+      <Div className={"d-center ms-auto me-10"}>
           <PopUp
             type={"dropdown"}
             position={"bottom"}
@@ -125,14 +134,13 @@ export const NavBar = () => {
                 popTrigger.openPopup(e.currentTarget)
               }}>
                 {!part || part === "Calendar" ? (
-                  makeIcon("total", "w-max5vw h-max5vh")
+                  makeIcon("total", "aura w-max8vw h-max8vh", "N")
                 ) : (
-                  makeIcon(part.toLowerCase(), "w-max5vw h-max5vh")
+                  makeIcon(part.toLowerCase(), "aura w-max8vw h-max8vh", "N")
                 )}
               </Div>
             )}
           </PopUp>
-        </Div>
       </Div>
     </Div>
   );

@@ -9,7 +9,7 @@ import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1, common2, common3, setting2} from "../../import/ImportImages.jsx";
+import {common1, common2, common3, common5} from "../../import/ImportImages.jsx";
 import {exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -386,7 +386,7 @@ export const ExerciseSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();

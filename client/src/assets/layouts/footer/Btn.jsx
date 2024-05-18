@@ -182,7 +182,7 @@ export const Btn = ({
         const startDt = property?.startDt;
         const endDt = property?.endDt;
         return (
-          <Div className={"w-70vw h-55vh border d-column p-10"}>
+          <Div className={"w-70vw h-50vh border d-column p-5"}>
             <Div className={"d-center mb-20"}>
               <Div className={"fs-1-7rem fw-bold"}>
                 재산 상태
@@ -223,7 +223,7 @@ export const Btn = ({
                 value={`${numeral(totalIn).format('0,0')}`}
                 InputProps={{
                   readOnly: true,
-                  className:  "h-8vh fs-1-0rem fw-normal",
+                  className:  "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
@@ -243,7 +243,7 @@ export const Btn = ({
                 value={`${numeral(totalOut).format('0,0')}`}
                 InputProps={{
                   readOnly: true,
-                  className:  "h-8vh fs-1-0rem fw-normal",
+                  className:  "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
@@ -614,7 +614,6 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowDefault()}
-            {btnGetProperty()}
           </Div>
         );
       }
@@ -623,7 +622,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetProperty()}
           </Div>
         );
       }
@@ -632,7 +630,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Div>
         );
       }
@@ -640,7 +637,6 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowLogin()}
-            {btnGetProperty()}
           </Div>
         );
       }
@@ -648,7 +644,6 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSignup()}
-            {btnGetProperty()}
           </Div>
         );
       }

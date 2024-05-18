@@ -76,11 +76,11 @@ export const Header = () => {
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
-      <Div className={"d-center ms-0"} onClick={() => navigate("/calendar/list")}>
+      <Div className={"d-center ms-10"} onClick={() => navigate("/calendar/list")}>
         <img src={logo2} className={"w-max170 h-max30"} alt="logo2" />
         <img src={logo3} className={"w-max170 h-max30"} alt="logo3" />
       </Div>
-      <Div className={"d-center ms-auto"}>
+      <Div className={"d-center ms-auto me-10"}>
         {btnUser()}
       </Div>
     </Div>
