@@ -292,10 +292,10 @@ export const UserDataSet = () => {
                             partIdx: index
                           }));
                         }}>
-                          <Div className={"fs-0-7rem ms-auto"}>
+                          <Div className={"fs-0-9rem ms-auto"}>
                             {item[`${dataType}_part`]}
                           </Div>
-                          <Div className={"fs-0-7rem ms-auto me-n10"}>
+                          <Div className={"fs-0-9rem ms-auto me-n10"}>
                             <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
                               handlerRename("part", index);
                             }} />
@@ -351,10 +351,10 @@ export const UserDataSet = () => {
                               titleIdx: index
                             }));
                           }}>
-                            <Div className={"fs-0-7rem ms-auto"}>
+                            <Div className={"fs-0-9rem ms-auto"}>
                               {item}
                             </Div>
-                            <Div className={"fs-0-7rem ms-auto d-row me-n10"}>
+                            <Div className={"fs-0-9rem ms-auto d-row me-n10"}>
                               <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
                                 handlerRename("title", index);
                               }} />
@@ -384,18 +384,10 @@ export const UserDataSet = () => {
           </Card>
         </Div>
         <Div className={"d-center"}>
-          <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"primary-btn me-5"} onClick={() => {
-            flowSave();
-            setTimeout(() => {
-              closePopup();
-            }, 1000);
-          }}>
-            저장
-          </Button>
-          <Button size={"small"} type={"button"} color={"error"} variant={"contained"} className={"danger-btn"} onClick={() => {
+          <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"primary-btn"} onClick={() => {
             closePopup();
           }}>
-            닫기
+            O
           </Button>
         </Div>
       </Div>

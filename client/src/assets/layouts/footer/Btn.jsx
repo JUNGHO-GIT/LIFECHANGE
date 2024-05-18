@@ -185,7 +185,7 @@ export const Btn = ({
           <Div className={"w-70vw h-50vh border d-column p-5"}>
             <Div className={"d-center mb-20"}>
               <Div className={"fs-1-7rem fw-bold"}>
-                재산 상태
+                재무 상태
               </Div>
             </Div>
             <Div className={"d-center mb-40"}>
@@ -261,7 +261,7 @@ export const Btn = ({
         className={"success-btn"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          재산
+          지갑
         </Button>
       )}
     </PopUp>
@@ -614,6 +614,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowDefault()}
+            {btnFlowSave()}
           </Div>
         );
       }

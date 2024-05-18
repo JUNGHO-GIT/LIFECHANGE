@@ -66,9 +66,11 @@ export const Header = () => {
         </>
       )}>
       {(popTrigger={}) => (
-        <img src={user1} className={"w-24 h-24 pointer"} alt={"user1"} onClick={(e) => {
+        <Icons name={"TbAlignRight"} className={"w-24 h-24 black"}
+          onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
-        }}/>
+          }}
+        />
       )}
     </PopUp>
   );
