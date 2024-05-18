@@ -98,6 +98,7 @@ export const MoneyDiff = () => {
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [

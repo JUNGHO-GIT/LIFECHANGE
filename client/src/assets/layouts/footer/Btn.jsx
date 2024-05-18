@@ -11,6 +11,7 @@ export const Btn = ({
   strings, objects, functions, handlers
 }) => {
 
+  // 1. go
   const btnGoToList = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
@@ -53,6 +54,8 @@ export const Btn = ({
       저장
     </Button>
   );
+
+  // 2. get
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
@@ -77,6 +80,14 @@ export const Btn = ({
       );
     }}>
      오늘
+    </Button>
+  );
+  const btnGetRefresh = () => (
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
+    className={"success-btn"} onClick={() => {
+      handlers.navigate(0);
+    }}>
+      새로고침
     </Button>
   );
   const btnGetCalendar = () => (
@@ -165,14 +176,33 @@ export const Btn = ({
       )}
     </PopUp>
   );
-  const btnGetRefresh = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-    className={"success-btn"} onClick={() => {
-      handlers.navigate(0);
-    }}>
-      새로고침
-    </Button>
+  const btnGetProperty = () => (
+    <PopUp
+      type={"innerCenter"}
+      position={"top"}
+      direction={"center"}
+      contents={({closePopup}) => {
+        const property = JSON.parse(sessionStorage.getItem("property") || "{}");
+        const totalIn = property?.totalIn || 0;
+        const totalOut = property?.totalOut || 0;
+        const totalProperty = property?.totalProperty || 0;
+        alert(`총 수입: ${totalIn}원\n총 지출: ${totalOut}원\n총 재산: ${totalProperty}원`);
+        <Div className={"d-center"}>
+          {totalIn}{totalOut}{totalProperty}
+        </Div>
+      }}>
+      {(popTrigger={}) => (
+        <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
+        className={"success-btn"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
+          재산
+        </Button>
+      )}
+    </PopUp>
   );
+
+  // 3. flow
   const btnFlowLogin = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
@@ -422,7 +452,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -440,7 +470,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
