@@ -291,10 +291,13 @@ export const MoneySave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
-              endAdornment: "원"
+              endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
             }}
           />
         </Div>
@@ -308,10 +311,13 @@ export const MoneySave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
-              endAdornment: "원"
+              endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
             }}
           />
         </Div>
@@ -331,19 +337,17 @@ export const MoneySave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -445,10 +449,13 @@ export const MoneySave = () => {
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
-              endAdornment: "원"
+              endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -474,34 +481,34 @@ export const MoneySave = () => {
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
-              <Div className={"d-column"}>
-                <Div className={"d-center mb-20"}>
-                  <TextArea
-                    readOnly={false}
-                    className={"w-70vw h-55vh border p-10"}
-                    value={OBJECT?.money_section[i]?.money_content}
-                    onChange={(e) => {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section.map((item, idx) => (
-                          idx === i ? {
-                            ...item,
-                            money_content: e.target.value
-                          } : item
-                        ))
-                      }));
-                    }}
-                  />
-                </Div>
-                <Div className={"d-center"}>
-                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-                    className={"primary-btn me-5"} onClick={() => {
-                      closePopup();
-                    }}>
-                    저장
-                  </Button>
-                </Div>
+            <Div className={"d-column"}>
+              <Div className={"d-center mb-20"}>
+                <TextArea
+                  readOnly={false}
+                  className={"w-70vw h-55vh border p-10"}
+                  value={OBJECT?.money_section[i]?.money_content}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_content: e.target.value
+                        } : item
+                      ))
+                    }));
+                  }}
+                />
               </Div>
+              <Div className={"d-center"}>
+                <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+                  className={"primary-btn me-5"} onClick={() => {
+                    closePopup();
+                  }}>
+                  저장
+                </Button>
+              </Div>
+            </Div>
             )}>
             {(popTrigger={}) => (
               <TextField

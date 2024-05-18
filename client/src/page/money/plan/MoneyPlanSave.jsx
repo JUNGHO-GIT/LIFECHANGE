@@ -136,7 +136,6 @@ export const MoneyPlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.startDt)}
                 sx={{
@@ -183,7 +182,6 @@ export const MoneyPlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.endDt)}
                 sx={{
@@ -239,19 +237,17 @@ export const MoneyPlanSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -281,10 +277,13 @@ export const MoneyPlanSave = () => {
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
-              endAdornment: "원"
+              endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -309,10 +308,13 @@ export const MoneyPlanSave = () => {
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
-              endAdornment: "원"
+              endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;

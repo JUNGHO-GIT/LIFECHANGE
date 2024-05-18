@@ -141,7 +141,6 @@ export const ExercisePlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.startDt)}
                 sx={{
@@ -188,7 +187,6 @@ export const ExercisePlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.endDt)}
                 sx={{
@@ -244,19 +242,17 @@ export const ExercisePlanSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -285,10 +281,13 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
               ),
-              endAdornment: "회"
+              endAdornment: (
+                <div className={"fw-normal"}>회</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -312,10 +311,13 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: "vol"
+              endAdornment: (
+                <div className={"fw-normal"}>vol</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -366,10 +368,13 @@ export const ExercisePlanSave = () => {
                 value={OBJECT?.exercise_plan_cardio}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -388,10 +393,13 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
-              endAdornment: "kg"
+              endAdornment: (
+                <div className={"fw-normal"}>kg</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;

@@ -100,23 +100,23 @@ export const NavBar = () => {
                 </Div>
                 <Div className={"d-center mb-10"}>
                   <Div className={"fs-0-8rem fw-bold me-5"}>총합</Div>
-                  {makeIcon("total", "w-max3vw h-max3vh")}
+                  {makeIcon("total", "w-max5vw h-max5vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
                   <Div className={"fs-0-8rem fw-bold me-5"}>운동</Div>
-                  {makeIcon("exercise", "w-max3vw h-max3vh")}
+                  {makeIcon("exercise", "w-max5vw h-max5vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
                   <Div className={"fs-0-8rem fw-bold me-5"}>식단</Div>
-                  {makeIcon("food", "w-max3vw h-max3vh")}
+                  {makeIcon("food", "w-max5vw h-max5vh")}
                 </Div>
                 <Div className={"d-center mb-10"}>
                   <Div className={"fs-0-8rem fw-bold me-5"}>재무</Div>
-                  {makeIcon("money", "w-max3vw h-max3vh")}
+                  {makeIcon("money", "w-max5vw h-max5vh")}
                 </Div>
                 <Div className={"d-center"}>
                   <Div className={"fs-0-8rem fw-bold me-5"}>수면</Div>
-                  {makeIcon("sleep", "w-max3vw h-max3vh")}
+                  {makeIcon("sleep", "w-max5vw h-max5vh")}
                 </Div>
               </Div>
             )}>

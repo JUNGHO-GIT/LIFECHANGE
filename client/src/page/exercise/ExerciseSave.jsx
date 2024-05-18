@@ -317,10 +317,13 @@ export const ExerciseSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: "vol"
+              endAdornment: (
+                <div className={"fw-normal"}>vol</div>
+              )
             }}
           />
         </Div>
@@ -334,10 +337,13 @@ export const ExerciseSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
               ),
-              endAdornment: "h:m"
+              endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
             }}
           />
         </Div>
@@ -351,10 +357,13 @@ export const ExerciseSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
-              endAdornment: "kg"
+              endAdornment: (
+                <div className={"fw-normal"}>kg</div>
+              )
             }}
           />
         </Div>
@@ -374,19 +383,17 @@ export const ExerciseSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -488,6 +495,7 @@ export const ExerciseSave = () => {
             value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
@@ -518,6 +526,7 @@ export const ExerciseSave = () => {
             value={OBJECT?.exercise_section[i]?.exercise_rep}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
@@ -552,10 +561,13 @@ export const ExerciseSave = () => {
             value={OBJECT?.exercise_section[i]?.exercise_kg}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: "kg"
+              endAdornment: (
+                <div className={"fw-normal"}>kg</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -614,10 +626,13 @@ export const ExerciseSave = () => {
                 value={OBJECT?.exercise_section[i]?.exercise_cardio}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)

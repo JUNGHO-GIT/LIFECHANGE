@@ -248,7 +248,7 @@ export const SleepSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
             <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
@@ -319,10 +319,13 @@ export const SleepSave = () => {
                 value={OBJECT?.sleep_section[i].sleep_night}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -373,10 +376,13 @@ export const SleepSave = () => {
                 value={OBJECT?.sleep_section[i].sleep_morning}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -418,10 +424,13 @@ export const SleepSave = () => {
                 value={OBJECT?.sleep_section[i].sleep_time}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)

@@ -139,7 +139,6 @@ export const SleepPlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.startDt)}
                 sx={{
@@ -186,7 +185,6 @@ export const SleepPlanSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.endDt)}
                 sx={{
@@ -242,19 +240,17 @@ export const SleepPlanSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+        <Div className={"d-row"}>
+          <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+            onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}
+          />
+          <Div className={"fs-0-8rem"}>삭제</Div>
+        </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -309,10 +305,13 @@ export const SleepPlanSave = () => {
                 value={OBJECT?.sleep_plan_night}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -358,10 +357,13 @@ export const SleepPlanSave = () => {
                 value={OBJECT?.sleep_plan_morning}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)
@@ -403,10 +405,13 @@ export const SleepPlanSave = () => {
                 value={OBJECT?.sleep_plan_time}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
-                  endAdornment: "h:m"
+                  endAdornment: (
+                    <div className={"fw-normal"}>h:m</div>
+                  )
                 }}
                 onClick={(e) => {
                   popTrigger.openPopup(e.currentTarget)

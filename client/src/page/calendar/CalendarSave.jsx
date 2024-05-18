@@ -206,7 +206,6 @@ export const CalendarSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.startDt)}
                 sx={{
@@ -236,7 +235,8 @@ export const CalendarSave = () => {
               }}
               InputProps={{
                 readOnly: true,
-                startAdornment: (
+              className: "fw-bold",
+              startAdornment: (
                   <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                 ),
                 endAdornment: null
@@ -253,7 +253,6 @@ export const CalendarSave = () => {
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["day"]}
-                className={""}
                 readOnly={false}
                 value={moment(DATE.endDt)}
                 sx={{
@@ -283,7 +282,8 @@ export const CalendarSave = () => {
               }}
               InputProps={{
                 readOnly: true,
-                startAdornment: (
+              className: "fw-bold",
+              startAdornment: (
                   <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                 ),
                 endAdornment: null
@@ -313,6 +313,7 @@ export const CalendarSave = () => {
             value={COUNT?.sectionCnt}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
@@ -342,7 +343,7 @@ export const CalendarSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <>
             <Div className={"d-row mb-10"}>
@@ -470,6 +471,7 @@ export const CalendarSave = () => {
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: (
                 <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"}/>
               ),
@@ -536,6 +538,7 @@ export const CalendarSave = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_content}
                 InputProps={{
                   readOnly: true,
+                  className: "fw-bold",
                   startAdornment: (
                     <img src={calendar3} className={"w-16 h-16 me-10"} alt={"calendar3"}/>
                   ),

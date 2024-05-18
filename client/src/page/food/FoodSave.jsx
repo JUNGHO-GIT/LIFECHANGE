@@ -281,10 +281,13 @@ export const FoodSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: "Kcal"
+              endAdornment: (
+                <div className={"fw-normal"}>Kcal</div>
+              )
             }}
           />
         </Div>
@@ -298,10 +301,13 @@ export const FoodSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -315,10 +321,13 @@ export const FoodSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -332,10 +341,13 @@ export const FoodSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -355,19 +367,17 @@ export const FoodSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+        <Div className={"d-row"}>
+          <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+            onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}
+          />
+          <Div className={"fs-0-8rem"}>삭제</Div>
+        </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
@@ -398,6 +408,7 @@ export const FoodSave = () => {
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -436,8 +447,11 @@ export const FoodSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
+                className: "fw-bold",
                 startAdornment: null,
-                endAdornment: "회"
+                endAdornment: (
+                <div className={"fw-normal"}>회</div>
+              )
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -473,8 +487,11 @@ export const FoodSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
+                className: "fw-bold",
                 startAdornment: null,
-                endAdornment: "g"
+                endAdornment: (
+                  <div className={"fw-normal"}>g</div>
+                )
               }}
               onChange={(e) => {
                 const newGram = Number(e.target.value);
@@ -511,6 +528,7 @@ export const FoodSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -526,10 +544,13 @@ export const FoodSave = () => {
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: "Kcal"
+              endAdornment: (
+                <div className={"fw-normal"}>Kcal</div>
+              )
             }}
           />
           <TextField
@@ -541,10 +562,13 @@ export const FoodSave = () => {
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -558,10 +582,13 @@ export const FoodSave = () => {
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
           <TextField
@@ -573,10 +600,13 @@ export const FoodSave = () => {
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>

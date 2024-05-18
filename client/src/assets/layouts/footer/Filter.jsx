@@ -23,9 +23,10 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.type}
+        className={"ms-2 me-2"}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
           functions?.setFILTER((prev) => ({
             ...prev,
@@ -46,9 +47,10 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.order}
+        className={"ms-2 me-2"}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
           functions?.setFILTER((prev) => ({
             ...prev,
@@ -74,6 +76,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = exerciseArray.findIndex((item) => (
@@ -102,6 +105,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = exerciseArray[objects?.FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
@@ -130,6 +134,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = foodArray.findIndex((item) => (
@@ -160,6 +165,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = moneyArray.findIndex((item) => (
@@ -188,6 +194,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
+        InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = moneyArray[objects?.FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
@@ -215,6 +222,7 @@ export const Filter = ({
       className={"ms-2 me-2"}
       variant={"outlined"}
       value={objects?.PART}
+      InputProps={{className: "h-4vh fs-0-7rem"}}
       onChange={(e) => {
         const newPartVal = e.target.value;
         functions?.setPART(newPartVal);

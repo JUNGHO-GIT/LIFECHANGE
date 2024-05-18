@@ -235,11 +235,15 @@ export const property = {
         _id: null,
         money_total_in: { $sum: "$money_total_in" },
         money_total_out: { $sum: "$money_total_out" },
+        property_startDt: { $min: "$money_startDt" },
+        property_endDt: { $max: "$money_endDt" },
       }},
       {$project: {
         _id: 0,
         money_total_in: "$money_total_in",
-        money_total_out: "$money_total_out"
+        money_total_out: "$money_total_out",
+        property_startDt: "$property_startDt",
+        property_endDt: "$property_endDt",
       }}
     ]);
     return finalResult[0];

@@ -1,10 +1,11 @@
 // Btn.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
-import {moment} from "../../../import/ImportLibs.jsx";
+import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
+import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Btn = ({
@@ -80,14 +81,6 @@ export const Btn = ({
       );
     }}>
      오늘
-    </Button>
-  );
-  const btnGetRefresh = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-    className={"success-btn"} onClick={() => {
-      handlers.navigate(0);
-    }}>
-      새로고침
     </Button>
   );
   const btnGetCalendar = () => (
@@ -186,10 +179,82 @@ export const Btn = ({
         const totalIn = property?.totalIn || 0;
         const totalOut = property?.totalOut || 0;
         const totalProperty = property?.totalProperty || 0;
-        alert(`총 수입: ${totalIn}원\n총 지출: ${totalOut}원\n총 재산: ${totalProperty}원`);
-        <Div className={"d-center"}>
-          {totalIn}{totalOut}{totalProperty}
-        </Div>
+        const startDt = property?.startDt;
+        const endDt = property?.endDt;
+        return (
+          <Div className={"w-70vw h-55vh border d-column p-10"}>
+            <Div className={"d-center mb-20"}>
+              <Div className={"fs-1-7rem fw-bold"}>
+                재산 상태
+              </Div>
+            </Div>
+            <Div className={"d-center mb-40"}>
+              <Div className={"fs-1-2rem fw-normal"}>
+                {startDt} ~ {endDt}
+              </Div>
+            </Div>
+            <Div className={"d-center mb-20"}>
+              <TextField
+                select={false}
+                label={"총 재산"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={`${numeral(totalProperty).format('0,0')}`}
+                InputProps={{
+                  readOnly: true,
+                  className: "h-8vh fs-1-0rem fw-bold",
+                  startAdornment: (
+                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                  ),
+                  endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
+                }}
+              />
+            </Div>
+            <Div className={"d-center mb-20"}>
+              <TextField
+                select={false}
+                label={"총 수입"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={`${numeral(totalIn).format('0,0')}`}
+                InputProps={{
+                  readOnly: true,
+                  className:  "h-8vh fs-1-0rem fw-normal",
+                  startAdornment: (
+                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                  ),
+                  endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
+                }}
+              />
+            </Div>
+            <Div className={"d-center"}>
+              <TextField
+                select={false}
+                label={"총 지출"}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={`${numeral(totalOut).format('0,0')}`}
+                InputProps={{
+                  readOnly: true,
+                  className:  "h-8vh fs-1-0rem fw-normal",
+                  startAdornment: (
+                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                  ),
+                  endAdornment: (
+                <div className={"fw-normal"}>원</div>
+              )
+                }}
+              />
+            </Div>
+          </Div>
+        );
       }}>
       {(popTrigger={}) => (
         <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
@@ -231,7 +296,6 @@ export const Btn = ({
     <Div className={"d-center"}>
       <TextField
         select={false}
-        label={"검색"}
         size={"small"}
         variant={"outlined"}
         className={"w-150"}
@@ -315,7 +379,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -328,7 +392,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -337,7 +401,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -346,7 +410,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -355,7 +419,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -364,7 +428,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -377,7 +441,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -394,7 +458,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -403,7 +467,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -412,7 +476,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -421,7 +485,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -430,7 +494,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -443,7 +507,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -461,7 +525,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -479,7 +543,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -492,7 +556,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -501,7 +565,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -510,7 +574,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -519,7 +583,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -528,7 +592,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -550,7 +614,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowDefault()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -559,7 +623,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -568,7 +632,7 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -576,7 +640,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowLogin()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }
@@ -584,7 +648,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSignup()}
-            {btnGetRefresh()}
+            {btnGetProperty()}
           </Div>
         );
       }

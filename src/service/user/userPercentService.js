@@ -76,15 +76,15 @@ export const property = async (
   user_id_param
 ) => {
 
-  // money
   const findResult = await repository.property.listMoney(
     user_id_param
   );
-
   const finalResult = {
     totalIn: findResult.money_total_in,
     totalOut: findResult.money_total_out,
-    totalProperty: findResult.money_total_in - findResult.money_total_out
+    totalProperty: findResult.money_total_in - findResult.money_total_out,
+    startDt: findResult.property_startDt,
+    endDt: findResult.property_endDt,
   };
 
   return finalResult;

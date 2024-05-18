@@ -296,7 +296,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: "Kcal"
+              endAdornment: (
+                <div className={"fw-normal"}>Kcal</div>
+              )
             }}
           />
         </Div>
@@ -313,7 +315,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -330,7 +334,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -347,7 +353,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -367,7 +375,7 @@ export const FoodFindSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
             <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
@@ -447,7 +455,9 @@ export const FoodFindSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: "회"
+                endAdornment: (
+                <div className={"fw-normal"}>회</div>
+              )
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -484,7 +494,9 @@ export const FoodFindSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: "g"
+                endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
               }}
               onChange={(e) => {
                 const newGram = Number(e.target.value);
@@ -539,7 +551,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
-              endAdornment: "Kcal"
+              endAdornment: (
+                <div className={"fw-normal"}>Kcal</div>
+              )
             }}
           />
           <TextField
@@ -554,7 +568,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>
@@ -571,7 +587,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
           <TextField
@@ -586,7 +604,9 @@ export const FoodFindSave = () => {
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
-              endAdornment: "g"
+              endAdornment: (
+                <div className={"fw-normal"}>g</div>
+              )
             }}
           />
         </Div>

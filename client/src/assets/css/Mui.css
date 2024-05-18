@@ -4,16 +4,15 @@
   box-shadow: none !important;
 }
 [class$="MuiInputBase-root-MuiOutlinedInput-root"] {
-  max-height: 30px !important;
-  font-size: 0.7rem !important;
+  font-size: 0.760rem !important;
 }
 [class$="MuiInputBase-root-MuiTablePagination-select"] {
   max-height: 30px !important;
-  font-size: 0.7rem !important;
+  font-size: 0.760rem !important;
 }
 [class$="MuiTablePagination-displayedRows"] {
   max-height: 30px !important;
-  font-size: 0.7rem !important;
+  font-size: 0.760rem !important;
 }
 [class$="-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;
@@ -43,7 +42,7 @@
   margin-right: 0px !important;
 }
 .MuiTableCell-root {
-  font-size: 0.7rem !important;
+  font-size: 0.760rem !important;
 }
 
 .MuiTab-root.Mui-selected {
