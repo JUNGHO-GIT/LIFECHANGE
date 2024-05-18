@@ -5,6 +5,7 @@ import {IconButton} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const Icons = ({...props }) => {
+
   if (!props.name) {
     return null;
   }
@@ -13,7 +14,8 @@ export const Icons = ({...props }) => {
   let preStr = "";
   if (props.name.startsWith("Li")) {
     preStr = "lia";
-  } else {
+  }
+  else {
     preStr = props.name.slice(0, 2).toLowerCase();
   }
 
@@ -37,7 +39,7 @@ export const Icons = ({...props }) => {
   }
 
   return (
-    <IconButton className={"p-5"} onClick={props?.onClick || (() => {})}>
+    <IconButton className={"p-5"}>
       <IconComponent {...props} />
     </IconButton>
   );

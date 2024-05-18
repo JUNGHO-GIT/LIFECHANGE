@@ -48,7 +48,8 @@ export const SleepPlanSave = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -81,7 +82,8 @@ export const SleepPlanSave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -113,13 +115,13 @@ export const SleepPlanSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
+      sleep_plan_night: "00:00",
+      sleep_plan_morning: "00:00",
+      sleep_plan_time: "00:00",
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: 0
+      sectionCnt: 1
     }));
   };
 
@@ -224,37 +226,7 @@ export const SleepPlanSave = () => {
         </PopUp>
       </Div>
     );
-    // 7-2. count
-    const countSection = () => (
-      <PopUp
-        type={"alert"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
-        )}>
-        {(popTrigger={}) => (
-          <TextField
-            type={"text"}
-            label={"항목수"}
-            variant={"outlined"}
-            size={"small"}
-            className={"w-86vw"}
-            value={COUNT?.sectionCnt}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
-              ),
-              endAdornment: null
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          />
-        )}
-      </PopUp>
-    );
+    // 7-2. count (plan 은 total x)
     // 7-3. total (plan 은 total x)
     // 7-4. badge
     const badgeSection = (index) => (
@@ -450,9 +422,6 @@ export const SleepPlanSave = () => {
       <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
-        </Div>
-        <Div className={"d-center mb-20"}>
-          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {tableFragment(0)}

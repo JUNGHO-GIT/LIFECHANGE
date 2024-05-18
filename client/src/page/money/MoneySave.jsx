@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, Button} from "../../import/ImportMuis.jsx";
 import {TextField, TextArea, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -49,7 +49,7 @@ export const MoneySave = () => {
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
-    newSectionCnt: 1
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -96,10 +96,12 @@ export const MoneySave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    // money_part_val 가 수입인경우, 지출인 경우
     const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
+        // money_part_val 가 수입인경우
         totalIn: acc.totalIn + (cur.money_part_val === "수입" ? cur.money_amount : 0),
+
+        // money_part_val 가 지출인경우
         totalOut: acc.totalOut + (cur.money_part_val === "지출" ? cur.money_amount : 0)
       };
     }, {totalIn: 0, totalOut: 0});
@@ -111,6 +113,26 @@ export const MoneySave = () => {
     }));
 
   }, [OBJECT?.money_section]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const defaultSection = {
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: ""
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      money_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -134,26 +156,6 @@ export const MoneySave = () => {
       alert(res.data.msg);
     }
   };
-  
-  useEffect(() => {
-    const defaultSection = {
-      money_part_idx: 0,
-      money_part_val: "전체",
-      money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
-      money_content: ""
-    };
-
-    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
-      idx < OBJECT?.money_section.length ? OBJECT?.money_section[idx] : defaultSection
-    );
-    setOBJECT((prev) => ({
-      ...prev,
-      money_section: updatedSection
-    }));
-
-  },[COUNT?.newSectionCnt]);
 
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
@@ -163,7 +165,7 @@ export const MoneySave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      newSectionCnt: prev.newSectionCnt - 1
+      sectionCnt: prev.sectionCnt - 1,
     }));
   };
 
@@ -226,7 +228,9 @@ export const MoneySave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -242,35 +246,32 @@ export const MoneySave = () => {
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
               endAdornment: (
-                <div className={"d-center"}>
-                  <div onClick={(e) => {
-COUNT.newSectionCnt > COUNT.sectionCnt ? 
-              setCOUNT((prev) => ({
-                ...prev,
-                newSectionCnt: prev.newSectionCnt - 1
-              })) :
-popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'));
-                }
-          }
-                  >
-                    -1
-                  </div>
-                  <div className={"w-10"}></div>
-                  <div onClick={(e) => {
-                    if (COUNT.newSectionCnt >= 10) {
-                      alert("10이하의 숫자만 입력 가능합니다");
-                      } else {
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
                         setCOUNT((prev) => ({
                           ...prev,
-                          newSectionCnt:
-                          prev.newSectionCnt + 1
-                         }));
-                      }
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
                     }}
-                  >
-                    +1
-                  </div>
-                </div>
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 10 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
               )
             }}
           />

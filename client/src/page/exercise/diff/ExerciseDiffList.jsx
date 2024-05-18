@@ -50,7 +50,7 @@ export const ExerciseDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail: "/exercise/plan/detail",
+    toSave: "/exercise/plan/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -58,7 +58,8 @@ export const ExerciseDiff = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

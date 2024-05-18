@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
@@ -52,7 +52,8 @@ export const FoodSave = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -97,7 +98,8 @@ export const FoodSave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -216,7 +218,9 @@ export const FoodSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -225,16 +229,40 @@ export const FoodSave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 10 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
             }}
           />
         )}

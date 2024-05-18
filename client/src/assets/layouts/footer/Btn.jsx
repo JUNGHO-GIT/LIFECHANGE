@@ -53,20 +53,6 @@ export const Btn = ({
       저장
     </Button>
   );
-  const btnGoToUpdate = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        startDt: objects?.DATE.startDt,
-        endDt: objects?.DATE.endDt
-      });
-      handlers.navigate(objects?.SEND.toUpdate, {
-        state: objects?.SEND,
-      });
-    }}>
-      수정
-    </Button>
-  );
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
@@ -288,29 +274,11 @@ export const Btn = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
-            {btnGetToday()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
@@ -343,15 +311,6 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
@@ -366,15 +325,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
             {btnGetRefresh()}
           </Div>
         );
@@ -427,15 +377,6 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
@@ -450,15 +391,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
             {btnGetRefresh()}
           </Div>
         );
@@ -494,15 +426,6 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
@@ -517,15 +440,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
             {btnGetRefresh()}
           </Div>
         );
@@ -561,15 +475,6 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
@@ -584,15 +489,6 @@ export const Btn = ({
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnGetCalendar()}
             {btnGetToday()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
             {btnGetRefresh()}
           </Div>
         );
@@ -637,15 +533,6 @@ export const Btn = ({
           </Div>
         );
       }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return (
-          <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGoToUpdate()}
-            {btnGoToList()}
-            {btnGetRefresh()}
-          </Div>
-        );
-      }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
@@ -677,7 +564,7 @@ export const Btn = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-    {btnNode()}
+      {btnNode()}
     </>
   );
 };

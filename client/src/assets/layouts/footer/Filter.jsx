@@ -246,16 +246,10 @@ export const Filter = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return null
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -280,9 +274,6 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -293,9 +284,6 @@ export const Filter = ({
             {exerciseNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -325,9 +313,6 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -338,9 +323,6 @@ export const Filter = ({
             {foodNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -364,9 +346,6 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -377,9 +356,6 @@ export const Filter = ({
             {moneyNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -402,9 +378,6 @@ export const Filter = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -414,9 +387,6 @@ export const Filter = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -448,9 +418,6 @@ export const Filter = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null

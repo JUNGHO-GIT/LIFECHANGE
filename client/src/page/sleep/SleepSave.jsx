@@ -5,7 +5,7 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -48,12 +48,8 @@ export const SleepSave = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
-  });
-  const [DAYPICKER, setDAYPICKER] = useState({
-    calStartOpen: false,
-    calEndOpen: false,
-    dayOpen: false,
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -88,7 +84,8 @@ export const SleepSave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -187,7 +184,9 @@ export const SleepSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -196,16 +195,40 @@ export const SleepSave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 10 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
             }}
           />
         )}
@@ -227,17 +250,15 @@ export const SleepSave = () => {
         position={"bottom"}
         direction={"left"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
-                onClick={() => {
-                  handlerDelete(index);
-                  closePopup();
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}

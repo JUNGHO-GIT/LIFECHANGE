@@ -39,7 +39,7 @@ export const CalendarList = () => {
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     category: "",
-    toDetail: "/calendar/detail"
+    toSave: "/calendar/save"
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -94,7 +94,7 @@ export const CalendarList = () => {
                 startDt: calendar.calendar_startDt,
                 endDt: calendar.calendar_endDt,
               });
-              navigate(SEND.toDetail, {
+              navigate(SEND.toSave, {
                 state: SEND
               });
             }}
@@ -141,13 +141,10 @@ export const CalendarList = () => {
         }}
         onClickDay={(date) => {
           Object.assign(SEND, {
-            id: "",
             startDt: formatDate(date),
-            endDt: formatDate(date),
-            category: "",
-            toDetail: "/calendar/detail"
+            endDt: formatDate(date)
           });
-          navigate(SEND.toDetail, {
+          navigate(SEND.toSave, {
             state: SEND
           });
         }}

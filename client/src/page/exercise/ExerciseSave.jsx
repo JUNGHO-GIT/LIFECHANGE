@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -49,7 +49,8 @@ export const ExerciseSave = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -93,7 +94,8 @@ export const ExerciseSave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -135,6 +137,29 @@ export const ExerciseSave = () => {
 
   }, [JSON.stringify(OBJECT?.exercise_section)]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const defaultSection = {
+      exercise_part_idx: 0,
+      exercise_part_val: "전체",
+      exercise_title_idx: 0,
+      exercise_title_val: "전체",
+      exercise_set: 0,
+      exercise_rep: 0,
+      exercise_kg: 0,
+      exercise_volume: 0,
+      exercise_cardio: "00:00",
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
@@ -155,65 +180,6 @@ export const ExerciseSave = () => {
     }
     else {
       alert(res.data.msg);
-    }
-  };
-
-  // 4-1. handler --------------------------------------------------------------------------------->
-  const handlerCount = (e) => {
-    const newCount = Number(e);
-    const defaultSection = {
-      exercise_part_idx: 0,
-      exercise_part_val: "전체",
-      exercise_title_idx: 0,
-      exercise_title_val: "전체",
-      exercise_set: 0,
-      exercise_rep: 0,
-      exercise_kg: 0,
-      exercise_volume: 0,
-      exercise_cardio: "00:00",
-    };
-    setCOUNT((prev) => ({
-      ...prev,
-      sectionCnt: newCount
-    }));
-    if (newCount > 0) {
-      let updatedSection = Array(newCount).fill(null).map((_, idx) =>
-        idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
-      );
-      setOBJECT((prev) => ({
-        ...prev,
-        exercise_section: updatedSection
-      }));
-    }
-    else {
-      setOBJECT((prev) => ({
-        ...prev,
-        exercise_section: []
-      }));
-    }
-  };
-
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerValidate = (e, popTrigger) => {
-    const newValInt = Number(e.target.value);
-    const newValStr = String(e.target.value);
-    if (newValInt < 0) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValInt > 10) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValStr === "") {
-      handlerCount("");
-    }
-    else if (isNaN(newValInt) || newValStr === "NaN") {
-      handlerCount("0");
-    }
-    else if (newValStr.startsWith("0")) {
-      handlerCount(newValStr.replace(/^0+/, ""));
-    }
-    else {
-      handlerCount(newValStr);
     }
   };
 
@@ -288,7 +254,9 @@ export const ExerciseSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -297,19 +265,40 @@ export const ExerciseSave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              handlerValidate(e, popTrigger);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 10 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
             }}
           />
         )}

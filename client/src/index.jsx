@@ -22,15 +22,13 @@ import {TabBar} from "./import/ImportLayouts.jsx";
 import {Navigation} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList";
-import {CalendarDetail} from "./page/calendar/CalendarDetail";
+import {CalendarSave} from "./page/calendar/CalendarSave";
 
 import {ExerciseDash} from "./page/exercise/dash/ExerciseDash";
 import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
 import {ExercisePlanList} from "./page/exercise/plan/ExercisePlanList";
-import {ExercisePlanDetail} from "./page/exercise/plan/ExercisePlanDetail";
 import {ExercisePlanSave} from "./page/exercise/plan/ExercisePlanSave";
 import {ExerciseList} from "./page/exercise/ExerciseList";
-import {ExerciseDetail} from "./page/exercise/ExerciseDetail";
 import {ExerciseSave} from "./page/exercise/ExerciseSave";
 
 import {FoodDash} from "./page/food/dash/FoodDash";
@@ -38,28 +36,22 @@ import {FoodDiff} from "./page/food/diff/FoodDiffList.jsx";
 import {FoodFindList} from "./page/food/find/FoodFindList";
 import {FoodFindSave} from "./page/food/find/FoodFindSave";
 import {FoodPlanList} from "./page/food/plan/FoodPlanList";
-import {FoodPlanDetail} from "./page/food/plan/FoodPlanDetail";
 import {FoodPlanSave} from "./page/food/plan/FoodPlanSave";
 import {FoodList} from "./page/food/FoodList";
-import {FoodDetail} from "./page/food/FoodDetail";
 import {FoodSave} from "./page/food/FoodSave";
 
 import {MoneyDash} from "./page/money/dash/MoneyDash";
 import {MoneyDiff} from "./page/money/diff/MoneyDiffList.jsx";
 import {MoneyPlanList} from "./page/money/plan/MoneyPlanList";
-import {MoneyPlanDetail} from "./page/money/plan/MoneyPlanDetail";
 import {MoneyPlanSave} from "./page/money/plan/MoneyPlanSave";
 import {MoneyList} from "./page/money/MoneyList";
-import {MoneyDetail} from "./page/money/MoneyDetail";
 import {MoneySave} from "./page/money/MoneySave";
 
 import {SleepDash} from "./page/sleep/dash/SleepDash";
 import {SleepDiff} from "./page/sleep/diff/SleepDiffList.jsx";
 import {SleepPlanList} from "./page/sleep/plan/SleepPlanList";
-import {SleepPlanDetail} from "./page/sleep/plan/SleepPlanDetail";
 import {SleepPlanSave} from "./page/sleep/plan/SleepPlanSave";
 import {SleepList} from "./page/sleep/SleepList";
-import {SleepDetail} from "./page/sleep/SleepDetail";
 import {SleepSave} from "./page/sleep/SleepSave";
 
 import {UserDataSet} from "./page/user/data/UserDataSet";
@@ -71,7 +63,7 @@ import {UserLogin} from "./page/user/UserLogin";
 const Calendar = () => (
   <Routes>
     <Route path="/list" element={<CalendarList />} />
-    <Route path="/detail" element={<CalendarDetail />} />
+    <Route path="/save" element={<CalendarSave />} />
   </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
@@ -80,10 +72,8 @@ const Exercise = () =>  (
     <Route path="/dash/list" element={<ExerciseDash />} />
     <Route path="/diff/list" element={<ExerciseDiff />} />
     <Route path="/plan/list" element={<ExercisePlanList />} />
-    <Route path="/plan/detail" element={<ExercisePlanDetail />} />
     <Route path="/plan/save" element={<ExercisePlanSave />} />
     <Route path="/list" element={<ExerciseList />} />
-    <Route path="/detail" element={<ExerciseDetail />} />
     <Route path="/save" element={<ExerciseSave />} />
   </Routes>
 );
@@ -95,10 +85,8 @@ const Food = () => (
     <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/find/save" element={<FoodFindSave />} />
     <Route path="/plan/list" element={<FoodPlanList />} />
-    <Route path="/plan/detail" element={<FoodPlanDetail />} />
     <Route path="/plan/save" element={<FoodPlanSave />} />
     <Route path="/list" element={<FoodList />} />
-    <Route path="/detail" element={<FoodDetail />} />
     <Route path="/save" element={<FoodSave />} />
   </Routes>
 );
@@ -107,12 +95,10 @@ const Money = () =>  (
   <Routes>
     <Route path="/dash/list" element={<MoneyDash />} />
     <Route path="/diff/list" element={<MoneyDiff />} />
-    <Route path="/list" element={<MoneyList />} />
     <Route path="/plan/list" element={<MoneyPlanList />} />
-    <Route path="/detail" element={<MoneyDetail />} />
-    <Route path="/plan/detail" element={<MoneyPlanDetail />} />
-    <Route path="/save" element={<MoneySave />} />
     <Route path="/plan/save" element={<MoneyPlanSave />} />
+    <Route path="/list" element={<MoneyList />} />
+    <Route path="/save" element={<MoneySave />} />
   </Routes>
 );
 // ------------------------------------------------------------------------------------------------>
@@ -121,10 +107,8 @@ const Sleep = () => (
     <Route path="/dash/list" element={<SleepDash />} />
     <Route path="/diff/list" element={<SleepDiff />} />
     <Route path="/plan/list" element={<SleepPlanList />} />
-    <Route path="/plan/detail" element={<SleepPlanDetail />} />
     <Route path="/plan/save" element={<SleepPlanSave />} />
     <Route path="/list" element={<SleepList />} />
-    <Route path="/detail" element={<SleepDetail />} />
     <Route path="/save" element={<SleepSave />} />
   </Routes>
 );

@@ -51,7 +51,7 @@ export const FoodDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/food/plan/detail"
+    toSave:"/food/plan/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -59,7 +59,8 @@ export const FoodDiff = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

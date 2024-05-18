@@ -22,12 +22,12 @@ export const NavBar = () => {
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className) => {
-    const totalIcon =
+    /* const totalIcon =
     (parseFloat(percent.exercise.average.score) + parseFloat(percent.food.average.score) +
       parseFloat(percent.money.average.score) +
       parseFloat(percent.sleep.average.score)
       )/4;
-    
+
     if (
       percent?.[`${part}`]?.average?.score === "N/A") {
       return (
@@ -58,7 +58,7 @@ export const NavBar = () => {
       return (
         <img src={smile5} className={className} alt={"smile5"} />
       );
-    }
+    } */
   };
 
   // 6. default ----------------------------------------------------------------------------------->

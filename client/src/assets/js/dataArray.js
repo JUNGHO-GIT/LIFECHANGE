@@ -6,7 +6,7 @@ export const dataArray = [
     title: "Calendar",
     items: [
       {to: "/calendar/list", label: "CalendarList"},
-      {to: "/calendar/detail", label: "CalendarDetail"},
+      {to: "/calendar/save", label: "CalendarSave"},
     ]
   },
   // exercise

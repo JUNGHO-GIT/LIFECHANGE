@@ -80,16 +80,10 @@ export const Paging = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return null
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -113,9 +107,6 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -125,9 +116,6 @@ export const Paging = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -160,9 +148,6 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -172,9 +157,6 @@ export const Paging = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -197,9 +179,6 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -209,9 +188,6 @@ export const Paging = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -234,9 +210,6 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "detail") {
-        return null
-      }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return null
       }
@@ -246,9 +219,6 @@ export const Paging = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null
@@ -280,9 +250,6 @@ export const Paging = ({
             {defaultNode()}
           </Div>
         );
-      }
-      else if (strings?.third === "" && strings?.second === "detail") {
-        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return null

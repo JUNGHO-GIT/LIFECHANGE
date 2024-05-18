@@ -51,7 +51,7 @@ export const SleepDiff = () => {
     id: "",
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDetail:"/sleep/plan/detail"
+    toSave:"/sleep/plan/save"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -59,7 +59,8 @@ export const SleepDiff = () => {
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
-    sectionCnt: 0
+    sectionCnt: 0,
+    newSectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -100,7 +101,8 @@ export const SleepDiff = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [
