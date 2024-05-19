@@ -4,12 +4,12 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
 import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1, common2, common4, common3, calendar2, calendar3, setting2} from "../../import/ImportImages.jsx";
+import {common1, common2, common4, common3, calendar2, calendar3, common5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarSave = () => {
@@ -297,11 +297,12 @@ export const CalendarSave = () => {
     const countSection = () => (
       <PopUp
         type={"alert"}
-        className={"ms-n6"}
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>0이상 10이하의 숫자만 입력하세요</Div>
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+          </Div>
         )}>
         {(popTrigger={}) => (
           <TextField
@@ -310,25 +311,47 @@ export const CalendarSave = () => {
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
-            value={COUNT?.sectionCnt}
+            value={COUNT.newSectionCnt}
             InputProps={{
-              readOnly: false,
+              readOnly: true,
               className: "fw-bold",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              handlerValidate(e, popTrigger);
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 10 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
             }}
           />
         )}
       </PopUp>
     );
+    // 7-3. total (x)
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge
@@ -347,7 +370,7 @@ export const CalendarSave = () => {
         contents={({closePopup}) => (
           <>
             <Div className={"d-row mb-10"}>
-              <img src={setting2} className={"w-16 h-16 icon pointer"} alt={"setting2"}
+              <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
                 onClick={() => {
                   flowDelete(id, sectionId);
                   setTimeout(() => {

@@ -157,7 +157,7 @@ export const save = async (
         exercise_plan_updateDt: Date.now(),
       };
     });
-    await repository.save.addExercisePlan(
+    await repository.save.saveExercisePlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -208,7 +208,7 @@ export const save = async (
         exercise_updateDt: Date.now(),
       };
     });
-    await repository.save.addExercise(
+    await repository.save.saveExercise(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -232,7 +232,7 @@ export const save = async (
         food_plan_updateDt: Date.now(),
       };
     });
-    await repository.save.addFoodPlan(
+    await repository.save.saveFoodPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -290,7 +290,7 @@ export const save = async (
       };
     }
     );
-    await repository.save.addFood(
+    await repository.save.saveFood(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -312,7 +312,7 @@ export const save = async (
         money_plan_updateDt: Date.now(),
       };
     });
-    await repository.save.addMoneyPlan(
+    await repository.save.saveMoneyPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -358,7 +358,7 @@ export const save = async (
         money_updateDt: Date.now(),
       };
     });
-    await repository.save.addMoney(
+    await repository.save.saveMoney(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -381,7 +381,7 @@ export const save = async (
         sleep_plan_updateDt: Date.now(),
       };
     });
-    await repository.save.addSleepPlan(
+    await repository.save.saveSleepPlan(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -410,7 +410,7 @@ export const save = async (
         sleep_updateDt: Date.now(),
       };
     });
-    await repository.save.addSleep(
+    await repository.save.saveSleep(
       user_id_param, OBJECT
     );
     finalResult = "success";

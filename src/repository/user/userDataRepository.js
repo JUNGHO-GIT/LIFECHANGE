@@ -252,7 +252,7 @@ export const detail = async (
 // 3-1. save -------------------------------------------------------------------------------------->
 export const save = {
 
-  addExercise: async (
+  saveExercise: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -271,7 +271,7 @@ export const save = {
     return insertResult;
   },
 
-  addExercisePlan: async (
+  saveExercisePlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -290,7 +290,7 @@ export const save = {
     return insertResult;
   },
 
-  addFood: async (
+  saveFood: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -309,7 +309,7 @@ export const save = {
     return insertResult;
   },
 
-  addFoodPlan: async (
+  saveFoodPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -328,7 +328,7 @@ export const save = {
     return insertResult;
   },
 
-  addMoney: async (
+  saveMoney: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -347,7 +347,7 @@ export const save = {
     return insertResult;
   },
 
-  addMoneyPlan: async (
+  saveMoneyPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -366,7 +366,7 @@ export const save = {
     return insertResult;
   },
 
-  addSleep: async (
+  saveSleep: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
@@ -385,7 +385,7 @@ export const save = {
     return insertResult;
   },
 
-  addSleepPlan: async (
+  saveSleepPlan: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제

@@ -168,6 +168,7 @@ export const SleepSave = () => {
             }}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
@@ -198,6 +199,7 @@ export const SleepSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
@@ -234,6 +236,7 @@ export const SleepSave = () => {
         )}
       </PopUp>
     );
+    // 7-3. total (x)
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge

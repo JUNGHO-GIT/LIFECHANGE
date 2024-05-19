@@ -238,6 +238,7 @@ export const ExerciseSave = () => {
             }}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
@@ -268,6 +269,7 @@ export const ExerciseSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
@@ -342,8 +344,8 @@ export const ExerciseSave = () => {
                 <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
               ),
               endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
-                  )
+                <div className={"fw-normal"}>h:m</div>
+              )
             }}
           />
         </Div>
@@ -499,7 +501,9 @@ export const ExerciseSave = () => {
               startAdornment: (
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
-              endAdornment: "set"
+              endAdornment: (
+                <div className={"fw-normal"}>set</div>
+              )
             }}
             onChange={(e) => {
               const regex = /,/g;
@@ -531,7 +535,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                "per"
+                <div className={"fw-normal"}>per</div>
               )
             }}
             onChange={(e) => {

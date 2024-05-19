@@ -17,7 +17,7 @@ export const list = async (
     user_id_param, startDt_param, endDt_param
   )
   .then((result) => {
-    if (result.exercise_total_volume <= 1 && result.exercise_total_cardio === "00:00") {
+    if (result?.exercise_total_volume <= 1 && result?.exercise_total_cardio === "00:00") {
       return {
         ...result,
         exercise_total_count: 0

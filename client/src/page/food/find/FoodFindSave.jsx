@@ -238,6 +238,7 @@ export const FoodFindSave = () => {
             }}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
               ),
@@ -361,6 +362,7 @@ export const FoodFindSave = () => {
         </Div>
       </Div>
     );
+    // 7-3. total (x)
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge

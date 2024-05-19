@@ -168,6 +168,7 @@ export const SleepPlanSave = () => {
               }}
               InputProps={{
                 readOnly: true,
+                className: "fw-bold",
                 startAdornment: (
                   <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                 ),
@@ -214,6 +215,7 @@ export const SleepPlanSave = () => {
               }}
               InputProps={{
                 readOnly: true,
+                className: "fw-bold",
                 startAdornment: (
                   <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                 ),
