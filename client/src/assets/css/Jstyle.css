@@ -10059,10 +10059,10 @@
 .align-center {
   align-items: center !important;
 }
-.align-start {
+.align-left {
   align-items: flex-start !important;
 }
-.align-end {
+.align-right {
   align-items: flex-end !important;
 }
 .d-row {

@@ -108,7 +108,7 @@ export const NavBar = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-            <Div className={"d-column p-5"}>
+            <Div className={"d-column align-left p-5"}>
               <Div className={`d-center pointer ${lang === "ko" ? "bg-light" : ""}`}
               onClick={() => {
                 setLang("ko");
@@ -180,7 +180,6 @@ export const NavBar = () => {
               <Div className={"d-center"}>
                 <Div className={"fs-0-6rem fw-normal"}>
                   {translate("navBar-score")}
-                  * 평균점수 : 1.00 ~ 5.00
                 </Div>
               </Div>
             </Div>

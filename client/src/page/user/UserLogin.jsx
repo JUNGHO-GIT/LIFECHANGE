@@ -1,6 +1,7 @@
 // UserLogin.jsx
 
 import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";

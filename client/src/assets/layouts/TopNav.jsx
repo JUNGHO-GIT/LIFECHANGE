@@ -1,4 +1,4 @@
-// TabBar.jsx
+// TopNav.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
@@ -6,7 +6,7 @@ import {Div, Br10} from "../../import/ImportComponents.jsx";
 import {Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const TabBar = () => {
+export const TopNav = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
@@ -49,42 +49,42 @@ export const TabBar = () => {
           navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
-          label={translate("tabBar-dashList")}
+          label={translate("topNav-dashList")}
           value={"dash/list"}
           onClick={() => {
             setValue("dash/list");
           }}
         />
         <Tab
-          label={translate("tabBar-diffList")}
+          label={translate("topNav-diffList")}
           value={"diff/list"}
           onClick={() => {
             setValue("diff/list");
           }}
         />
         <Tab
-          label={translate("tabBar-planList")}
+          label={translate("topNav-planList")}
           value={"plan/list"}
           onClick={() => {
             setValue("plan/list");
           }}
         />
         <Tab
-          label={translate("tabBar-planSave")}
+          label={translate("topNav-planSave")}
           value={"plan/save"}
           onClick={() => {
             setValue("plan/save");
           }}
         />
         <Tab
-          label={translate("tabBar-list")}
+          label={translate("topNav-list")}
           value={"list"}
           onClick={() => {
             setValue("list");
           }}
         />
         <Tab
-          label={translate("tabBar-save")}
+          label={translate("topNav-save")}
           value={"save"}
           onClick={() => {
             setValue("save");
@@ -113,49 +113,49 @@ export const TabBar = () => {
           navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
-          label={translate("tabBar-dashList")}
+          label={translate("topNav-dashList")}
           value={"dash/list"}
           onClick={() => {
             setValue("dash/list");
           }}
         />
         <Tab
-          label={translate("tabBar-diffList")}
+          label={translate("topNav-diffList")}
           value={"diff/list"}
           onClick={() => {
             setValue("diff/list");
           }}
         />
         <Tab
-          label={translate("tabBar-planList")}
+          label={translate("topNav-planList")}
           value={"find/list"}
           onClick={() => {
             setValue("find/list");
           }}
         />
         <Tab
-          label={translate("tabBar-planSave")}
+          label={translate("topNav-planSave")}
           value={"plan/list"}
           onClick={() => {
             setValue("plan/list");
           }}
         />
         <Tab
-          label={translate("tabBar-planSave")}
+          label={translate("topNav-planSave")}
           value={"plan/save"}
           onClick={() => {
             setValue("plan/save");
           }}
         />
         <Tab
-          label={translate("tabBar-list")}
+          label={translate("topNav-list")}
           value={"list"}
           onClick={() => {
             setValue("list");
           }}
         />
         <Tab
-          label={translate("tabBar-save")}
+          label={translate("topNav-save")}
           value={"save"}
           onClick={() => {
             setValue("save");
@@ -165,8 +165,8 @@ export const TabBar = () => {
     </Div>
   );
 
-  // 7. tabBar ------------------------------------------------------------------------------------>
-  const tabBarNode = () => (
+  // 7. topNav ------------------------------------------------------------------------------------>
+  const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-14vh border-top border-bottom"}>
       {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
         defaultNode()
@@ -181,7 +181,7 @@ export const TabBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tabBarNode()}
+      {topNavNode()}
     </>
   );
 };

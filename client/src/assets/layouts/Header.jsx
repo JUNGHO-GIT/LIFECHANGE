@@ -1,6 +1,7 @@
 // Header.jsx
 
 import {React, useNavigate} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {logo2, logo3} from "../../import/ImportImages.jsx";
@@ -10,59 +11,53 @@ export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /* const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // 4. toggle
-  const openSidebar = () => {
-    setIsSidebarOpen((prev) => (!prev));
-  };
-  // 6-1. button
-  const btnSideBar = () => (
-    <>
-      <Icons name={"TbAlignLeft"} className={"w-24 h-24 pointer"} onClick={openSidebar}/>
-      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen}/>
-    </>
-  ); */
+  const {translate} = useTranslate();
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
     <PopUp
       type={"dropdown"}
       position={"bottom"}
-      direction={"right"}
-      className={"d-center"}
+      direction={"center"}
       contents={({closePopup}) => (
-        <>
+        <Div className={"d-column align-left p-5"}>
           <Div className={"d-center pointer mb-10"} onClick={() => {
             navigate("/user/login");
             closePopup();
           }}>
             <Icons name={"TbLogin"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>Login</Div>
+            <Div className={"fs-0-8rem"}>
+              {translate("header-login")}
+            </Div>
           </Div>
           <Div className={"d-center pointer mb-10"} onClick={() => {
             navigate("/user/signup");
             closePopup();
           }}>
             <Icons name={"TbLogin2"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>SignUp</Div>
+            <Div className={"fs-0-8rem"}>
+              {translate("header-signup")}
+            </Div>
           </Div>
           <Div className={"d-center pointer mb-10"} onClick={() => {
             navigate("/user/data/set");
             closePopup();
           }}>
             <Icons name={"TbUser"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>DataSet</Div>
+            <Div className={"fs-0-8rem"}>
+              {translate("header-dataSet")}
+            </Div>
           </Div>
           <Div className={"d-center pointer"} onClick={() => {
             navigate("/user/data/list");
             closePopup();
           }}>
             <Icons name={"TbUser"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>DataList</Div>
+            <Div className={"fs-0-8rem"}>
+              {translate("header-dataList")}
+            </Div>
           </Div>
-        </>
+        </Div>
       )}>
       {(popTrigger={}) => (
         <Icons name={"TbAlignRight"} className={"w-24 h-24 black"}
@@ -78,8 +73,8 @@ export const Header = () => {
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
       <Div className={"d-center ms-10"} onClick={() => navigate("/calendar/list")}>
-        <img src={logo2} className={"w-max170 h-max30"} alt="logo2" />
-        <img src={logo3} className={"w-max170 h-max30"} alt="logo3" />
+        <img src={logo2} className={"w-max170 h-max30"} alt={"logo2"} />
+        <img src={logo3} className={"w-max170 h-max30"} alt={"logo3"} />
       </Div>
       <Div className={"d-center ms-auto me-10"}>
         {btnUser()}

@@ -19,8 +19,8 @@ import "./assets/css/Jstyle.css";
 
 import {Header} from "./import/ImportLayouts.jsx";
 import {NavBar} from "./import/ImportLayouts.jsx";
-import {TabBar} from "./import/ImportLayouts.jsx";
-import {Navigation} from "./import/ImportLayouts.jsx";
+import {TopNav} from "./import/ImportLayouts.jsx";
+import {BottomNav} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList";
 import {CalendarSave} from "./page/calendar/CalendarSave";
@@ -129,7 +129,7 @@ const App = () => {
     <div className={"App"}>
       <Header />
       <NavBar />
-      <TabBar />
+      <TopNav />
       <Routes>
         <Route path="/" element={<CalendarList />} />
         <Route path="/calendar/*" element={<Calendar />} />
@@ -139,7 +139,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      <Navigation />
+      <BottomNav />
     </div>
   );
 };

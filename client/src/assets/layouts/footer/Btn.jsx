@@ -1,6 +1,7 @@
 // Btn.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
@@ -11,6 +12,9 @@ import {money2} from "../../../import/ImportImages.jsx";
 export const Btn = ({
   strings, objects, functions, handlers
 }) => {
+
+  // 1. common ------------------------------------------------------------------------------------>
+  const {translate} = useTranslate();
 
   // 1. go
   const btnGoToList = () => (
@@ -24,7 +28,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      목록
+      {translate("btn-goToList")}
     </Button>
   );
   const btnGoToFind = () => (
@@ -38,7 +42,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      더찾기
+      {translate("btn-goToFind")}
     </Button>
   );
   const btnGoToFindSave = () => (
@@ -52,7 +56,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      저장
+      {translate("btn-goToFindSave")}
     </Button>
   );
 
@@ -80,7 +84,7 @@ export const Btn = ({
         }))
       );
     }}>
-     오늘
+      {translate("btn-getToday")}
     </Button>
   );
   const btnGetCalendar = () => (
@@ -164,7 +168,7 @@ export const Btn = ({
         className={"primary-btn"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          달력
+          {translate("btn-getCalendar")}
         </Button>
       )}
     </PopUp>
@@ -261,7 +265,7 @@ export const Btn = ({
         className={"success-btn"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          지갑
+          {translate("btn-getProperty")}
         </Button>
       )}
     </PopUp>
@@ -273,7 +277,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      로그인
+      {translate("btn-flowLogin")}
     </Button>
   );
   const btnFlowSignup = () => (
@@ -281,7 +285,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      회원가입
+      {translate("btn-flowSignup")}
     </Button>
   );
   const btnFlowSave = () => (
@@ -289,7 +293,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
     }}>
-      저장
+      {translate("btn-flowSave")}
     </Button>
   );
   const btnFlowFind = () => (
@@ -320,21 +324,21 @@ export const Btn = ({
           page: 0
         }));
       }}>
-        찾기
+        {translate("btn-flowFind")}
       </Button>
     </Div>
   );
   const btnFlowDefault = () => (
     <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
     className={"danger-btn"} onClick={handlers?.handlerDefault}>
-      기본값
+      {translate("btn-flowDefault")}
     </Button>
   );
   const btnFlowDemo = () => (
     <Div className={"d-center"}>
       <TextField
         select={false}
-        label={"추가"}
+        label={""}
         type={"text"}
         variant={"outlined"}
         size={"small"}
@@ -352,7 +356,7 @@ export const Btn = ({
       />
       <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
       onClick={() => (handlers.flowSave(objects.PART))}>
-        추가
+        {translate("btn-flowDemo")}
       </Button>
     </Div>
   );

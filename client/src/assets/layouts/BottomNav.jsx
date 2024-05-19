@@ -1,16 +1,18 @@
-// Navigation.jsx
+// BottomNav.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Navigation = () => {
+export const BottomNav = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
 
@@ -46,7 +48,7 @@ export const Navigation = () => {
           setValue(newValue);
         }}>
         <BottomNavigationAction
-          label={"운동"}
+          label={translate("bottomNav-exercise")}
           value={"exercise"}
           className={"w-min20p"}
           icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
@@ -56,7 +58,7 @@ export const Navigation = () => {
           }}
         />
         <BottomNavigationAction
-          label={"식단"}
+          label={translate("bottomNav-food")}
           value={"food"}
           icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
           onClick={() => {
@@ -65,7 +67,7 @@ export const Navigation = () => {
           }}
         />
         <BottomNavigationAction
-          label={"일정"}
+          label={translate("bottomNav-calendar")}
           value={"calendar"}
           icon={<img src={calendar1} className={"w-16 h-16 icon"} alt={"calendar1"}/>}
           onClick={() => {
@@ -74,7 +76,7 @@ export const Navigation = () => {
           }}
         />
         <BottomNavigationAction
-          label={"재무"}
+          label={translate("bottomNav-money")}
           value={"money"}
           icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
           onClick={() => {
@@ -83,7 +85,7 @@ export const Navigation = () => {
           }}
         />
         <BottomNavigationAction
-          label={"수면"}
+          label={translate("bottomNav-sleep")}
           value={"sleep"}
           icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
           onClick={() => {
