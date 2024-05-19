@@ -161,7 +161,7 @@ export const FoodPlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"시작일"}
+              label={translate("common-startDt")}
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
@@ -208,7 +208,7 @@ export const FoodPlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"종료일"}
+              label={translate("common-endDt")}
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
@@ -254,7 +254,7 @@ export const FoodPlanSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -279,7 +279,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 칼로리"}
+            label={translate("food-planKcal")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")}`}
@@ -290,7 +290,7 @@ export const FoodPlanSave = () => {
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>Kcal</Div>
+                <Div className={"fw-normal"}>{translate("food-endKcal")}</Div>
               )
             }}
             onChange={(e) => {
@@ -310,7 +310,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 탄수화물"}
+            label={translate("food-planCarb")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_carb).format("0,0")}`}
@@ -321,7 +321,7 @@ export const FoodPlanSave = () => {
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
             onChange={(e) => {
@@ -341,7 +341,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 단백질"}
+            label={translate("food-planProtein")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_protein).format("0,0")}`}
@@ -352,7 +352,7 @@ export const FoodPlanSave = () => {
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
             onChange={(e) => {
@@ -372,7 +372,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 지방"}
+            label={translate("food-planFat")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.food_plan_fat).format("0,0")}`}
@@ -383,7 +383,7 @@ export const FoodPlanSave = () => {
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
             onChange={(e) => {

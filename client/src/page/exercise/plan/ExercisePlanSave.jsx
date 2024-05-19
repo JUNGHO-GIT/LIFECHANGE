@@ -161,7 +161,7 @@ export const ExercisePlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"시작일"}
+              label={translate("common-startDt")}
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
@@ -208,7 +208,7 @@ export const ExercisePlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"종료일"}
+              label={translate("common-endDt")}
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
@@ -254,7 +254,7 @@ export const ExercisePlanSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -279,7 +279,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 횟수"}
+            label={translate("exercise-planCount")}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
             InputProps={{
@@ -289,7 +289,7 @@ export const ExercisePlanSave = () => {
                 <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>회</Div>
+                <Div className={"fw-normal"}>{translate("food-endCount")}</Div>
               )
             }}
             onChange={(e) => {
@@ -309,7 +309,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 볼륨"}
+            label={translate("exercise-planVolume")}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
             InputProps={{
@@ -364,7 +364,7 @@ export const ExercisePlanSave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"목표 유산소 시간"}
+                label={translate("exercise-planCardio")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw"}
@@ -391,7 +391,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 체중"}
+            label={translate("exercise-planWeight")}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
             InputProps={{

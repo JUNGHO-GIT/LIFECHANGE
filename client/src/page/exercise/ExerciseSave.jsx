@@ -229,7 +229,7 @@ export const ExerciseSave = () => {
         {(popTrigger={}) => (
           <TextField
             select={false}
-            label={"날짜"}
+            label={translate("common-date")}
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
@@ -263,7 +263,7 @@ export const ExerciseSave = () => {
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={"항목수"}
+            label={translate("common-count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
@@ -313,7 +313,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 볼륨"}
+            label={translate("exercise-totalVolume")}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
             variant={"outlined"}
@@ -333,7 +333,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 유산소 시간"}
+            label={translate("exercise-totalCardio")}
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
@@ -353,7 +353,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={"체중"}
+            label={translate("exercise-weight")}
             size={"small"}
             value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
             variant={"outlined"}
@@ -395,7 +395,7 @@ export const ExerciseSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -420,7 +420,7 @@ export const ExerciseSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"파트"}
+            label={translate("exercise-part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
@@ -455,7 +455,7 @@ export const ExerciseSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"타이틀"}
+            label={translate("exercise-title")}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
@@ -491,7 +491,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"세트"}
+            label={translate("exercise-set")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
@@ -524,7 +524,7 @@ export const ExerciseSave = () => {
           />
           <TextField
             select={false}
-            label={"횟수"}
+            label={translate("exercise-rep")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
@@ -536,7 +536,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>per</Div>
+                <Div className={"fw-normal"}>rep</Div>
               )
             }}
             onChange={(e) => {
@@ -559,7 +559,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"무게"}
+            label={translate("exercise-kg")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
@@ -624,7 +624,7 @@ export const ExerciseSave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"유산소"}
+                label={translate("exercise-cardio")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}

@@ -157,7 +157,7 @@ export const MoneyPlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"시작일"}
+              label={translate("common-startDt")}
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
@@ -204,7 +204,7 @@ export const MoneyPlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"종료일"}
+              label={translate("common-endDt")}
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
@@ -250,7 +250,7 @@ export const MoneyPlanSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -275,7 +275,7 @@ export const MoneyPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 수입"}
+            label={translate("money-planIn")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
@@ -286,7 +286,7 @@ export const MoneyPlanSave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>원</Div>
+                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
               )
             }}
             onChange={(e) => {
@@ -306,7 +306,7 @@ export const MoneyPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"목표 지출"}
+            label={translate("money-planOut")}
             variant={"outlined"}
             className={"w-86vw"}
             value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
@@ -317,7 +317,7 @@ export const MoneyPlanSave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>원</Div>
+                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
               )
             }}
             onChange={(e) => {

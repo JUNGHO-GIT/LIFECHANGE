@@ -159,7 +159,7 @@ export const SleepSave = () => {
         {(popTrigger={}) => (
           <TextField
             select={false}
-            label={"날짜"}
+            label={translate("common-date")}
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
@@ -193,7 +193,7 @@ export const SleepSave = () => {
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={"항목수"}
+            label={translate("common-count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
@@ -261,7 +261,7 @@ export const SleepSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -316,7 +316,7 @@ export const SleepSave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"취침"}
+                label={translate("sleep-night")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw"}
@@ -373,7 +373,7 @@ export const SleepSave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"기상"}
+                label={translate("sleep-morning")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw"}
@@ -421,7 +421,7 @@ export const SleepSave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"수면"}
+                label={translate("sleep-time")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw"}

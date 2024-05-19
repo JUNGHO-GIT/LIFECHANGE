@@ -193,7 +193,7 @@ export const FoodSave = () => {
         {(popTrigger={}) => (
           <TextField
             select={false}
-            label={"날짜"}
+            label={translate("common-date")}
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
@@ -227,7 +227,7 @@ export const FoodSave = () => {
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={"항목수"}
+            label={translate("common-count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
@@ -277,9 +277,9 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 칼로리"}
+            label={translate("food-totalKcal")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_in).format('0,0.00')}`}
+            value={`${numeral(OBJECT?.food_total_kcal).format('0,0.00')}`}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -289,7 +289,7 @@ export const FoodSave = () => {
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>Kcal</Div>
+                <Div className={"fw-normal"}>{translate("food-endKcal")}</Div>
               )
             }}
           />
@@ -297,7 +297,7 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 탄수화물"}
+            label={translate("food-totalCarb")}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_carb).format('0,0.00')}`}
             variant={"outlined"}
@@ -309,7 +309,7 @@ export const FoodSave = () => {
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />
@@ -317,7 +317,7 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 단백질"}
+            label={translate("food-totalProtein")}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_protein).format('0,0.00')}`}
             variant={"outlined"}
@@ -329,7 +329,7 @@ export const FoodSave = () => {
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />
@@ -337,7 +337,7 @@ export const FoodSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={"총 지방"}
+            label={translate("food-totalFat")}
             size={"small"}
             value={`${numeral(OBJECT?.food_total_fat).format('0,0.00')}`}
             variant={"outlined"}
@@ -349,7 +349,7 @@ export const FoodSave = () => {
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />
@@ -380,7 +380,7 @@ export const FoodSave = () => {
               closePopup();
             }}
           />
-          <Div className={"fs-0-8rem"}>삭제</Div>
+          <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
         </Div>
         )}>
         {(popTrigger={}) => (
@@ -405,7 +405,7 @@ export const FoodSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"분류"}
+            label={translate("food-part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             defaultValue={1}
@@ -439,7 +439,7 @@ export const FoodSave = () => {
           {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
-              label={"회"}
+              label={translate("food-count")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
@@ -450,8 +450,8 @@ export const FoodSave = () => {
                 className: "fw-bold",
                 startAdornment: null,
                 endAdornment: (
-                <Div className={"fw-normal"}>회</Div>
-              )
+                  <Div className={"fw-normal"}>{translate("food-endCount")}</Div>
+                )
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -479,7 +479,7 @@ export const FoodSave = () => {
           ) : (
             <TextField
               select={false}
-              label={"gram"}
+              label={translate("food-gram")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
@@ -490,7 +490,7 @@ export const FoodSave = () => {
                 className: "fw-bold",
                 startAdornment: null,
                 endAdornment: (
-                  <Div className={"fw-normal"}>g</Div>
+                  <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
                 )
               }}
               onChange={(e) => {
@@ -521,7 +521,7 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"식품명"}
+            label={translate("food-title")}
             size={"small"}
             value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
             variant={"outlined"}
@@ -537,7 +537,7 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"kcal"}
+            label={translate("food-kcal")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}
             variant={"outlined"}
@@ -549,13 +549,13 @@ export const FoodSave = () => {
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>Kcal</Div>
+                <Div className={"fw-normal"}>{translate("food-endKcal")}</Div>
               )
             }}
           />
           <TextField
             select={false}
-            label={"carb"}
+            label={translate("food-carb")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}
             variant={"outlined"}
@@ -567,7 +567,7 @@ export const FoodSave = () => {
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />
@@ -575,7 +575,7 @@ export const FoodSave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"protein"}
+            label={translate("food-protein")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}
             variant={"outlined"}
@@ -587,13 +587,13 @@ export const FoodSave = () => {
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />
           <TextField
             select={false}
-            label={"fat"}
+            label={translate("food-fat")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}
             variant={"outlined"}
@@ -605,7 +605,7 @@ export const FoodSave = () => {
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
+                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
               )
             }}
           />

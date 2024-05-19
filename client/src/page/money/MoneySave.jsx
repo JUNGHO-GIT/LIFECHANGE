@@ -203,7 +203,7 @@ export const MoneySave = () => {
         {(popTrigger={}) => (
           <TextField
             select={false}
-            label={"날짜"}
+            label={translate("common-date")}
             size={"small"}
             value={DATE.startDt}
             variant={"outlined"}
@@ -237,7 +237,7 @@ export const MoneySave = () => {
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={"항목수"}
+            label={translate("common-count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
@@ -287,7 +287,7 @@ export const MoneySave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 수입"}
+            label={translate("money-totalIn")}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
@@ -299,7 +299,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>원</Div>
+                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
               )
             }}
           />
@@ -307,7 +307,7 @@ export const MoneySave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"총 지출"}
+            label={translate("money-totalOut")}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
@@ -319,7 +319,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>원</Div>
+                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
               )
             }}
           />
@@ -350,7 +350,7 @@ export const MoneySave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
@@ -375,7 +375,7 @@ export const MoneySave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"파트"}
+            label={translate("money-part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             value={OBJECT?.money_section[i]?.money_part_idx}
@@ -410,7 +410,7 @@ export const MoneySave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"타이틀"}
+            label={translate("money-title")}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             value={OBJECT?.money_section[i]?.money_title_idx}
@@ -446,7 +446,7 @@ export const MoneySave = () => {
         <Div className={"d-center mb-20"}>
           <TextField
             select={false}
-            label={"금액"}
+            label={translate("money-amount")}
             size={"small"}
             variant={"outlined"}
             className={"w-86vw"}
@@ -458,7 +458,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>원</Div>
+                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
               )
             }}
             onChange={(e) => {
@@ -517,7 +517,7 @@ export const MoneySave = () => {
             {(popTrigger={}) => (
               <TextField
                 select={false}
-                label={"메모"}
+                label={translate("money-content")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-86vw pointer"}

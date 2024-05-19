@@ -212,7 +212,7 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>원</Div>
+                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
                   )
                 }}
               />
@@ -232,7 +232,7 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>원</Div>
+                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
                   )
                 }}
               />
@@ -252,7 +252,7 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>원</Div>
+                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
                   )
                 }}
               />

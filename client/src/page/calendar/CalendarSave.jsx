@@ -22,6 +22,7 @@ export const CalendarSave = () => {
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
@@ -201,7 +202,7 @@ export const CalendarSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"시작일"}
+              label={translate("common-startDt")}
               size={"small"}
               value={DATE.startDt}
               variant={"outlined"}
@@ -248,7 +249,7 @@ export const CalendarSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={"종료일"}
+              label={translate("common-endDt")}
               size={"small"}
               value={DATE.endDt}
               variant={"outlined"}
@@ -283,7 +284,7 @@ export const CalendarSave = () => {
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={"항목수"}
+            label={translate("common-count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}
@@ -351,7 +352,7 @@ export const CalendarSave = () => {
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>삭제</Div>
+            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
           </Div>
         )}>
         {(popTrigger={}) => (
