@@ -16,10 +16,10 @@ export const SleepDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
 
@@ -33,14 +33,14 @@ export const SleepDashBar = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_TODAY(
       resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartToday = () => {

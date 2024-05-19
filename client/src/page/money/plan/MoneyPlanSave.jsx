@@ -9,9 +9,9 @@ import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge} from "../../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar} from "../../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3, money2, common5} from "../../../import/ImportImages.jsx";
+import {common1, common3, money2, common5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
@@ -20,7 +20,6 @@ export const MoneyPlanSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id");
   const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -39,6 +38,7 @@ export const MoneyPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -71,7 +71,7 @@ export const MoneyPlanSave = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        user_id: user_id,
+        user_id: userId,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -84,12 +84,12 @@ export const MoneyPlanSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [userId, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/plan/save`, {
-      user_id: user_id,
+      user_id: userId,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

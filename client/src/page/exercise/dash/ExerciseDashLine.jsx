@@ -19,10 +19,10 @@ export const ExerciseDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["볼륨", "시간"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("volume");
@@ -49,12 +49,12 @@ export const ExerciseDashLine = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_VOLUME_WEEK(
@@ -70,7 +70,7 @@ export const ExerciseDashLine = () => {
       resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartVolumeWeek = () => {

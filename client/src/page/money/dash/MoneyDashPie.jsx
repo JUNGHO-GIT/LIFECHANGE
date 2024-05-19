@@ -17,9 +17,9 @@ export const MoneyDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("in");
@@ -55,17 +55,17 @@ export const MoneyDashPie = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_IN_TODAY(
@@ -87,7 +87,7 @@ export const MoneyDashPie = () => {
       resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

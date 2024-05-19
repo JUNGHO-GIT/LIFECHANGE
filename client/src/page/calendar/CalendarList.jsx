@@ -14,7 +14,6 @@ export const CalendarList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
@@ -31,6 +30,7 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -44,7 +44,7 @@ export const CalendarList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    user_id: user_id,
+    user_id: userId,
     calendar_number: 0,
     calendar_startDt: "0000-00-00",
     calendar_endDt: "0000-00-00",
@@ -62,13 +62,13 @@ export const CalendarList = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
-        user_id: user_id,
+        user_id: userId,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [userId, DATE.startDt, DATE.endDt]);
 
   // 7. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => {

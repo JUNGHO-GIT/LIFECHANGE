@@ -18,10 +18,10 @@ export const SleepDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["취침", "수면", "기상"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);
@@ -40,12 +40,12 @@ export const SleepDashLine = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_WEEK(
@@ -55,7 +55,7 @@ export const SleepDashLine = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartWeek = () => {

@@ -16,7 +16,6 @@ export const FoodFindList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -40,7 +39,8 @@ export const FoodFindList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [LOADING, setLOADING] = useState(true);
   const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
     id: "",
@@ -152,7 +152,7 @@ export const FoodFindList = () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/find/list`, {
       params: {
-        user_id: user_id,
+        user_id: userId,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`

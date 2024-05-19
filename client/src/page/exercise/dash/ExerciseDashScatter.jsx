@@ -17,10 +17,10 @@ export const ExerciseDashScatter = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const OBJECT_TODAY_DEF = [
@@ -40,17 +40,17 @@ export const ExerciseDashScatter = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_TODAY(
@@ -63,7 +63,7 @@ export const ExerciseDashScatter = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartToday = () => {

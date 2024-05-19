@@ -17,7 +17,6 @@ export const MoneyDiff = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -46,6 +45,7 @@ export const MoneyDiff = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -87,7 +87,7 @@ export const MoneyDiff = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/diff/list`, {
       params: {
-        user_id: user_id,
+        user_id: userId,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
@@ -102,7 +102,7 @@ export const MoneyDiff = () => {
     }));
     setLOADING(false);
   })()}, [
-    user_id,
+    userId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.startDt, DATE.endDt

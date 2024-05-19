@@ -1,8 +1,8 @@
 // NavBar.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useLocation, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Br5} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {smile1, smile2, smile3, smile4, smile5, flag1, flag2} from "../../import/ImportImages.jsx";
 
@@ -12,13 +12,26 @@ export const NavBar = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
-  const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
   const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [lang, setLang] = useState("ko");
+  const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    if (lang === "ko") {
+      sessionStorage.setItem("lang", "ko");
+    }
+    else if (lang === "en") {
+      sessionStorage.setItem("lang", "en");
+    }
+  }, [lang]);
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className, text) => {
@@ -103,12 +116,24 @@ export const NavBar = () => {
           direction={"center"}
           contents={({closePopup}) => (
             <Div className={"d-column p-5"}>
-              <Div className={"d-center"}>
+              <Div
+                className={`d-center pointer ${lang === "ko" ? "bg-light" : ""}`}
+                onClick={() => {
+                  setLang("ko");
+                  closePopup();
+                }}
+              >
                 <img src={flag1} className={"w-max5vw h-max5vh me-5"} alt={"flag1"} />
                 <Div className={"fs-0-8rem"}>한국어</Div>
               </Div>
-              <Br5 />
-              <Div className={"d-center"}>
+              <Br10 />
+              <Div
+                className={`d-center pointer ${lang === "en" ? "bg-light" : ""}`}
+                onClick={() => {
+                  setLang("en");
+                  closePopup();
+                }}
+              >
                 <img src={flag2} className={"w-max5vw h-max5vh me-5"} alt={"flag2"} />
                 <Div className={"fs-0-8rem"}>English</Div>
               </Div>

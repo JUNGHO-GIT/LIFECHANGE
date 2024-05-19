@@ -5,8 +5,7 @@ import {axios} from "../../import/ImportLibs.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
+import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -23,26 +22,29 @@ export const UserLogin = () => {
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [dataSet, setDataSet] = useState(sessionStorage.getItem("dataSet") || "{}");
+  const [userPw, setUserPw] = useState("");
   const [LOADING, setLOADING] = useState(false);
-  const [user_id, setUserId] =  useState(localStorage.getItem("user_id") || "");
-  const [user_pw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post (`${URL_OBJECT}/login`, {
-      user_id: user_id,
-      user_pw: user_pw,
+      user_id: userId,
+      user_pw: userPw,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      sessionStorage.setItem("user_id", user_id);
+      sessionStorage.setItem("userId", userId);
       sessionStorage.setItem("dataSet", JSON.stringify(res.data.result.dataSet));
+      setUserId(userId);
+      setDataSet(JSON.stringify(res.data.result.dataSet));
       percent();
       navigate("/calendar/list");
     }
     else {
       alert(res.data.msg);
-      sessionStorage.setItem("user_id", "false");
+      sessionStorage.setItem("userId", "false");
     }
   };
 
@@ -56,9 +58,8 @@ export const UserLogin = () => {
             select={false}
             type={"text"}
             size={"small"}
-            key={"user_id"}
             label={"ID"}
-            value={user_id}
+            value={userId}
             onChange={(e) => {
               setUserId(e.target.value);
             }}
@@ -70,7 +71,7 @@ export const UserLogin = () => {
             type={"text"}
             size={"small"}
             label={"Password"}
-            value={user_pw}
+            value={userPw}
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
@@ -78,16 +79,6 @@ export const UserLogin = () => {
         </Div>
         <Div className={"d-center"}>
           <Div className={"fs-0-7rem"}>아이디 저장</Div>
-          <input type="checkbox" id="idSave"
-            onChange={(e) => {
-              if (e.target.checked) {
-                localStorage.setItem("user_id", user_id);
-              }
-              else {
-                localStorage.setItem("user_id", "");
-              }
-            }}
-          />
         </Div>
       </Card>
     );

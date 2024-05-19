@@ -1,17 +1,16 @@
 // Header.jsx
 
 import {SideBar} from "./SideBar";
-import {React, useState, useNavigate} from "../../import/ImportReacts.jsx";
+import {React, useNavigate} from "../../import/ImportReacts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {user1, logo2, logo3} from "../../import/ImportImages.jsx";
+import {logo2, logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   /* const [isSidebarOpen, setIsSidebarOpen] = useState(false);

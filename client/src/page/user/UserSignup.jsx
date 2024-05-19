@@ -22,19 +22,15 @@ export const UserSignup = () => {
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
-  const [user_id, setUserId] = useState("");
-  const [user_pw, setUserPw] = useState("");
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [userPw, setUserPw] = useState("");
+  const [LOADING, setLOADING] = useState(true);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    if (user_id === "" || user_pw === "") {
-      alert("Please enter both Id and Pw");
-      return;
-    }
     const res = await axios.post (`${URL_OBJECT}/signup`, {
-      user_id: user_id,
-      user_pw: user_pw,
+      user_id: userId,
+      user_pw: userPw,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
@@ -66,7 +62,7 @@ export const UserSignup = () => {
             type={"text"}
             size={"small"}
             label={"ID"}
-            value={user_id}
+            value={userId}
             onChange={(e) => (
               setUserId(e.target.value)
             )}
@@ -78,7 +74,7 @@ export const UserSignup = () => {
             type={"password"}
             size={"small"}
             label={"Password"}
-            value={user_pw}
+            value={userPw}
             onChange={(e) => (
               setUserPw(e.target.value)
             )}

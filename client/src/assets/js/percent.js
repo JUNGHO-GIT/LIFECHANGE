@@ -10,7 +10,7 @@ export const percent = async () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const user_id = sessionStorage.getItem("user_id") || "{}";
+  const user_id = sessionStorage.getItem("userId") || "{}";
 
   try {
     const resList = await axios.get(`${URL_OBJECT}/percent/list`, {

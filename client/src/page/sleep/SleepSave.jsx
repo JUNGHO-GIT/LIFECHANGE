@@ -18,7 +18,6 @@ export const SleepSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataSet") || "{}";
   const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
@@ -39,6 +38,7 @@ export const SleepSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -75,7 +75,7 @@ export const SleepSave = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        user_id: user_id,
+        user_id: userId,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -88,12 +88,12 @@ export const SleepSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [userId, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: user_id,
+      user_id: userId,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

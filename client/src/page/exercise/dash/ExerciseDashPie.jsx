@@ -17,9 +17,9 @@ export const ExerciseDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("part");
@@ -47,12 +47,12 @@ export const ExerciseDashPie = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        user_id: user_id
+        user_id: userId
       },
     });
     setOBJECT_PART_WEEK(
@@ -68,7 +68,7 @@ export const ExerciseDashPie = () => {
       resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

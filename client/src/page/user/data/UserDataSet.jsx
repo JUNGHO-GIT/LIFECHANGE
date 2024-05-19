@@ -16,7 +16,6 @@ export const UserDataSet = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const user_id = sessionStorage.getItem("user_id") || "{}";
   const session = sessionStorage.getItem("dataSet") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const exerciseArray = JSON.parse(session)?.exercise || [];
@@ -34,6 +33,7 @@ export const UserDataSet = () => {
   const dataSetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -59,7 +59,7 @@ export const UserDataSet = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
-    user_id: user_id,
+    user_id: userId,
     user_number: 0,
     dataSet: {
       calendar: [{
@@ -87,17 +87,17 @@ export const UserDataSet = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/data/set`, {
       params: {
-        user_id: user_id
+        user_id: userId
       }
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
-  })()}, [user_id]);
+  })()}, [userId]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: user_id,
+      user_id: userId,
       OBJECT: OBJECT
     });
     if (res.data.status === "success") {
