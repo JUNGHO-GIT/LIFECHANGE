@@ -18,6 +18,7 @@ export const ExercisePlanList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -109,17 +110,17 @@ export const ExercisePlanList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -132,11 +133,11 @@ export const ExercisePlanList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

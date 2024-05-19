@@ -18,6 +18,7 @@ export const ExerciseDiff = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -123,18 +124,18 @@ export const ExerciseDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={6}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -147,12 +148,12 @@ export const ExerciseDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -169,7 +170,7 @@ export const ExerciseDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {translate("common-plan")}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
@@ -186,7 +187,7 @@ export const ExerciseDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  실제
+                  {translate("common-real")}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_total_count).format("0,0")} 회`}
@@ -203,7 +204,7 @@ export const ExerciseDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
-                  비교
+                  {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.exercise_diff_count_color}>
                   {`${numeral(item.exercise_diff_count).format("0,0")} 회`}

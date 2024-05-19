@@ -19,6 +19,7 @@ export const UserDataList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -253,17 +254,17 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -276,11 +277,11 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>횟수</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-count")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -319,16 +320,16 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -341,10 +342,10 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -378,17 +379,17 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -401,11 +402,11 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -444,17 +445,17 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -467,11 +468,11 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -508,15 +509,15 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={3}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -529,9 +530,9 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -564,15 +565,15 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={3}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -585,9 +586,9 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -618,16 +619,16 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -640,10 +641,10 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
@@ -679,16 +680,16 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -701,10 +702,10 @@ export const UserDataList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

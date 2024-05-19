@@ -18,6 +18,7 @@ export const FoodFindList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -40,7 +41,7 @@ export const FoodFindList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
-  const [LOADING, setLOADING] = useState(true);
+  const [LOADING, setLOADING] = useState(false);
   const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
     id: "",
@@ -89,7 +90,7 @@ export const FoodFindList = () => {
   // 페이지 로드 시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
-    let section = sessionStorage.getItem("food_section");
+    let section = sessionStorage.getItem("foodSection");
 
     // sectionArray 초기화
     if (section) {
@@ -99,9 +100,9 @@ export const FoodFindList = () => {
       sectionArray = [];
     }
     const queryKey = `${FILTER.query}_${PAGING.page}`;
-    const newChecked = OBJECT.map(item =>
+    const newChecked = OBJECT.map((item) => (
       sectionArray.some(sectionItem => sectionItem.food_title === item.food_title)
-    );
+    ));
     setCheckedQueries({
       ...checkedQueries,
       [queryKey]: newChecked
@@ -112,7 +113,7 @@ export const FoodFindList = () => {
   // 체크박스 상태 변경 시 sessionStorage에 저장
   useEffect(() => {
     let sectionArray = [];
-    let section = sessionStorage.getItem("food_section");
+    let section = sessionStorage.getItem("foodSection");
 
     // sectionArray 초기화
     if (section) {
@@ -144,7 +145,7 @@ export const FoodFindList = () => {
     });
 
     // sessionStorage에 저장
-    sessionStorage.setItem("food_section", JSON.stringify(sectionArray));
+    sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
   }, [checkedQueries, PAGING.page, FILTER.query, OBJECT]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -185,19 +186,19 @@ export const FoodFindList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>식품명</TableCell>
-              <TableCell>브랜드</TableCell>
-              <TableCell>제공량</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
+              <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
+              <TableCell>{translate("food-serv")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={6}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -210,14 +211,14 @@ export const FoodFindList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell className={"w-max30vw"}>식품명</TableCell>
-              <TableCell className={"w-max20vw"}>브랜드</TableCell>
-              <TableCell>제공량</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
-              <TableCell>선택</TableCell>
+              <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
+              <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
+              <TableCell>{translate("food-serv")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
+              <TableCell>o</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

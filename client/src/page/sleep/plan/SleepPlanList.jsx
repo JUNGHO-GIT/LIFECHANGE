@@ -3,13 +3,12 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
+import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
-
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanList = () => {
@@ -20,6 +19,7 @@ export const SleepPlanList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -110,16 +110,16 @@ export const SleepPlanList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -132,10 +132,10 @@ export const SleepPlanList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody-tr"}>

@@ -17,6 +17,7 @@ export const SleepList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -112,16 +113,16 @@ export const SleepList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -134,10 +135,10 @@ export const SleepList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

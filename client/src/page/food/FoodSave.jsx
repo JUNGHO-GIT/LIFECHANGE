@@ -24,6 +24,7 @@ export const FoodSave = () => {
   const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -435,11 +436,7 @@ export const FoodSave = () => {
               </MenuItem>
             ))}
           </TextField>
-          {(OBJECT?.food_section[i]?.food_gram === "-" ||
-            OBJECT?.food_section[i]?.food_gram === "0" ||
-            OBJECT?.food_section[i]?.food_gram === "00" ||
-            OBJECT?.food_section[i]?.food_gram === 0
-          ) ? (
+          {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
               label={"회"}

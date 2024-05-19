@@ -20,6 +20,7 @@ export const SleepDiff = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -121,17 +122,17 @@ export const SleepDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={5}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -144,11 +145,11 @@ export const SleepDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>취침</TableCell>
-              <TableCell>기상</TableCell>
-              <TableCell>수면</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("sleep-night")}</TableCell>
+              <TableCell>{translate("sleep-morning")}</TableCell>
+              <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
@@ -165,7 +166,7 @@ export const SleepDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {translate("common-plan")}
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_night}
@@ -179,7 +180,7 @@ export const SleepDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  실제
+                  {translate("common-real")}
                 </TableCell>
                 <TableCell>
                   {item.sleep_night}
@@ -193,7 +194,7 @@ export const SleepDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
-                  비교
+                  {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.sleep_diff_night_color}>
                   {item.sleep_diff_night}

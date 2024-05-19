@@ -77,7 +77,7 @@ export const list = async (
           const idx = matches[2]?.indexOf(el);
           const gramMatch = matches[2]?.slice(idx + el.length).trim().match(/(\d+)\s*g/);
           serv = matches[2]?.slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
-          gram  = gramMatch ? gramMatch[1] : "-";
+          gram  = gramMatch ? gramMatch[1] : 0;
           found = true;
         }
       });
@@ -92,18 +92,18 @@ export const list = async (
         else {
           const gramMatch = matches[2]?.trim().match(/(\d+)\s*g/);
           serv = matches ? matches[2]?.replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
-          gram = gramMatch ? gramMatch[1] : "-";
+          gram = gramMatch ? gramMatch[1] : 0;
         }
       }
     }
     return {
       count: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
       serv: (serv.match(/[^\d]+$/) || [""])[0],
-      gram: gram || "-",
-      kcal: matches ? matches[5] : "-",
-      fat: matches ? matches[9] : "-",
-      carb: matches ? matches[13] : "-",
-      protein: matches ? matches[17] : "-",
+      gram: gram || 0,
+      kcal: matches ? matches[5] : 0,
+      fat: matches ? matches[9] :0,
+      carb: matches ? matches[13] : 0,
+      protein: matches ? matches[17] :0,
     };
   };
 

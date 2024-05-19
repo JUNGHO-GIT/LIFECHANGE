@@ -20,6 +20,7 @@ export const FoodDiff = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -125,18 +126,18 @@ export const FoodDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={6}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -149,12 +150,12 @@ export const FoodDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>Kcal</TableCell>
-              <TableCell>Carb</TableCell>
-              <TableCell>Protein</TableCell>
-              <TableCell>Fat</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("food-kcal")}</TableCell>
+              <TableCell>{translate("food-carb")}</TableCell>
+              <TableCell>{translate("food-protein")}</TableCell>
+              <TableCell>{translate("food-fat")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -171,7 +172,7 @@ export const FoodDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {translate("common-plan")}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
@@ -188,7 +189,7 @@ export const FoodDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  실제
+                  {translate("common-real")}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
@@ -205,7 +206,7 @@ export const FoodDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
-                  비교
+                  {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.food_diff_kcal_color}>
                   {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}

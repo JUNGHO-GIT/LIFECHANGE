@@ -17,6 +17,7 @@ export const ExerciseList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -121,16 +122,16 @@ export const ExerciseList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -143,10 +144,10 @@ export const ExerciseList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>볼륨</TableCell>
-              <TableCell>유산소</TableCell>
-              <TableCell>체중</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("exercise-volume")}</TableCell>
+              <TableCell>{translate("exercise-cardio")}</TableCell>
+              <TableCell>{translate("exercise-weight")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

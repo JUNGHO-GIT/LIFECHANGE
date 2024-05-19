@@ -17,6 +17,7 @@ export const MoneyList = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -117,15 +118,15 @@ export const MoneyList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={3}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -138,9 +139,9 @@ export const MoneyList = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>

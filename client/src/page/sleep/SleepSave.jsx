@@ -22,6 +22,7 @@ export const SleepSave = () => {
   const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();

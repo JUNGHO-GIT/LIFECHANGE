@@ -25,6 +25,7 @@ export const FoodFindSave = () => {
   const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -90,7 +91,7 @@ export const FoodFindSave = () => {
   useEffect(() => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
-    let section = sessionStorage.getItem("food_section");
+    let section = sessionStorage.getItem("foodSection");
 
     // sectionArray 초기화
     if (section) {
@@ -107,7 +108,8 @@ export const FoodFindSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: sectionArray.length
+      sectionCnt: sectionArray.length,
+      newSectionCnt: sectionArray.length,
     }));
 
     setLOADING(false);
@@ -269,13 +271,11 @@ export const FoodFindSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                <Div className={"d-center me-n10"}>
-                </Div>
-              )
+              endAdornment: null
             }}
           />
         )}
@@ -294,6 +294,7 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
@@ -313,6 +314,7 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
@@ -332,6 +334,7 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
@@ -351,6 +354,7 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
@@ -418,6 +422,7 @@ export const FoodFindSave = () => {
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
+              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -441,11 +446,7 @@ export const FoodFindSave = () => {
               </MenuItem>
             ))}
           </TextField>
-          {(OBJECT?.food_section[i]?.food_gram === "-" ||
-            OBJECT?.food_section[i]?.food_gram === "0" ||
-            OBJECT?.food_section[i]?.food_gram === "00" ||
-            OBJECT?.food_section[i]?.food_gram === 0
-          ) ? (
+          {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
               label={"회"}
@@ -456,10 +457,11 @@ export const FoodFindSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
+                className: "fw-bold",
                 startAdornment: null,
                 endAdornment: (
-                <Div className={"fw-normal"}>회</Div>
-              )
+                  <Div className={"fw-normal"}>회</Div>
+                )
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -495,10 +497,11 @@ export const FoodFindSave = () => {
               className={"w-40vw ms-3vw"}
               InputProps={{
                 readOnly: false,
+                className: "fw-bold",
                 startAdornment: null,
                 endAdornment: (
-                <Div className={"fw-normal"}>g</Div>
-              )
+                  <Div className={"fw-normal"}>g</Div>
+                )
               }}
               onChange={(e) => {
                 const newGram = Number(e.target.value);
@@ -535,6 +538,7 @@ export const FoodFindSave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -550,6 +554,7 @@ export const FoodFindSave = () => {
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
@@ -567,6 +572,7 @@ export const FoodFindSave = () => {
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
@@ -603,6 +609,7 @@ export const FoodFindSave = () => {
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),

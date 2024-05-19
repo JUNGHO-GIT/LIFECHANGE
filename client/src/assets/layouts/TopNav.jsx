@@ -127,14 +127,14 @@ export const TopNav = () => {
           }}
         />
         <Tab
-          label={translate("topNav-planList")}
-          value={"find/list"}
+          label={translate("topNav-findList")}
+          value={"find/list" || "find/save"}
           onClick={() => {
             setValue("find/list");
           }}
         />
         <Tab
-          label={translate("topNav-planSave")}
+          label={translate("topNav-planList")}
           value={"plan/list"}
           onClick={() => {
             setValue("plan/list");

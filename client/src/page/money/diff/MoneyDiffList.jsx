@@ -20,6 +20,7 @@ export const MoneyDiff = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -117,16 +118,16 @@ export const MoneyDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
               <TableCell colSpan={4}>
-                데이터가 없습니다.
+                {translate("common-empty")}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -139,10 +140,10 @@ export const MoneyDiff = () => {
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
-              <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>수입</TableCell>
-              <TableCell>지출</TableCell>
+              <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-category")}</TableCell>
+              <TableCell>{translate("money-in")}</TableCell>
+              <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
@@ -159,7 +160,7 @@ export const MoneyDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  목표
+                  {translate("common-plan")}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
@@ -170,7 +171,7 @@ export const MoneyDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  실제
+                  {translate("common-real")}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format("0,0")}`}
@@ -181,7 +182,7 @@ export const MoneyDiff = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
-                  비교
+                  {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.money_diff_in_color}>
                   {`₩ ${numeral(item.money_diff_in).format("0,0")}`}
