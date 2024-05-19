@@ -288,7 +288,7 @@ export const ExercisePlanSave = () => {
                 <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>회</div>
+                <Div className={"fw-normal"}>회</Div>
               )
             }}
             onChange={(e) => {
@@ -318,7 +318,7 @@ export const ExercisePlanSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>vol</div>
+                <Div className={"fw-normal"}>vol</Div>
               )
             }}
             onChange={(e) => {
@@ -375,7 +375,7 @@ export const ExercisePlanSave = () => {
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
                   endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
+                    <Div className={"fw-normal"}>h:m</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -400,7 +400,7 @@ export const ExercisePlanSave = () => {
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>kg</div>
+                <Div className={"fw-normal"}>kg</Div>
               )
             }}
             onChange={(e) => {

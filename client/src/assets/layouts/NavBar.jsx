@@ -1,10 +1,10 @@
 // NavBar.jsx
 
-import {React, useState, useLocation, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Br5} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
-import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
+import {smile1, smile2, smile3, smile4, smile5, flag1, flag2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
@@ -22,10 +22,9 @@ export const NavBar = () => {
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className, text) => {
-    
-    const classType
-      = text === "N" ? "d-none" : "fs-0-7rem ms-5";
-    
+
+    const classType = text === "N" ? "d-none" : "fs-0-7rem ms-5";
+
     if (
       parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
       parseFloat(percent?.[`${part}`]?.average?.score) <= 1
@@ -97,50 +96,80 @@ export const NavBar = () => {
           {part} {type ? ` / ${type}` : ""} {plan ? ` / ${plan}` : ""}
         </Div>
       </Div>
+      <Div className={"d-center ms-auto"}>
+        <PopUp
+          type={"dropdown"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <Div className={"d-column p-5"}>
+              <Div className={"d-center"}>
+                <img src={flag1} className={"w-max5vw h-max5vh me-5"} alt={"flag1"} />
+                <Div className={"fs-0-8rem"}>한국어</Div>
+              </Div>
+              <Br5 />
+              <Div className={"d-center"}>
+                <img src={flag2} className={"w-max5vw h-max5vh me-5"} alt={"flag2"} />
+                <Div className={"fs-0-8rem"}>English</Div>
+              </Div>
+            </Div>
+          )}>
+          {(popTrigger={}) => (
+            <Div className={"d-center pointer"} onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}>
+              lang
+            </Div>
+          )}
+        </PopUp>
+      </Div>
       <Div className={"d-center ms-auto me-10"}>
-          <PopUp
-            type={"dropdown"}
-            position={"bottom"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <Div className={"d-column p-10"}>
-                <Div className={"fs-0-8rem fw-bold mb-10"}>
-                  {moment().format("YYYY-MM-DD (ddd)")}
-                </Div>
-                <Div className={"d-center mb-10"}>
-                  <Div className={"fs-0-8rem fw-bold me-5"}>총합</Div>
-                  {makeIcon("total", "w-max5vw h-max5vh")}
-                </Div>
-                <Div className={"d-center mb-10"}>
-                  <Div className={"fs-0-8rem fw-bold me-5"}>운동</Div>
-                  {makeIcon("exercise", "w-max5vw h-max5vh")}
-                </Div>
-                <Div className={"d-center mb-10"}>
-                  <Div className={"fs-0-8rem fw-bold me-5"}>식단</Div>
-                  {makeIcon("food", "w-max5vw h-max5vh")}
-                </Div>
-                <Div className={"d-center mb-10"}>
-                  <Div className={"fs-0-8rem fw-bold me-5"}>재무</Div>
-                  {makeIcon("money", "w-max5vw h-max5vh")}
-                </Div>
-                <Div className={"d-center"}>
-                  <Div className={"fs-0-8rem fw-bold me-5"}>수면</Div>
-                  {makeIcon("sleep", "w-max5vw h-max5vh")}
-                </Div>
+        <PopUp
+          type={"dropdown"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <Div className={"d-column p-10"}>
+              <Div className={"d-center mb-20"}>
+                <Div className={"fs-0-8rem fw-bold"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
               </Div>
-            )}>
-            {(popTrigger={}) => (
-              <Div className={"d-center pointer"} onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget)
-              }}>
-                {!part || part === "Calendar" ? (
-                  makeIcon("total", "aura w-max8vw h-max8vh", "N")
-                ) : (
-                  makeIcon(part.toLowerCase(), "aura w-max8vw h-max8vh", "N")
-                )}
+              <Div className={"d-center mb-10"}>
+                <Div className={"fs-0-8rem me-5"}>총합</Div>
+                {makeIcon("total", "w-max5vw h-max5vh")}
               </Div>
-            )}
-          </PopUp>
+              <Div className={"d-center mb-10"}>
+                <Div className={"fs-0-8rem me-5"}>운동</Div>
+                {makeIcon("exercise", "w-max5vw h-max5vh")}
+              </Div>
+              <Div className={"d-center mb-10"}>
+                <Div className={"fs-0-8rem me-5"}>식단</Div>
+                {makeIcon("food", "w-max5vw h-max5vh")}
+              </Div>
+              <Div className={"d-center mb-10"}>
+                <Div className={"fs-0-8rem me-5"}>재무</Div>
+                {makeIcon("money", "w-max5vw h-max5vh")}
+              </Div>
+              <Div className={"d-center mb-20"}>
+                <Div className={"fs-0-8rem me-5"}>수면</Div>
+                {makeIcon("sleep", "w-max5vw h-max5vh")}
+              </Div>
+              <Div className={"d-center"}>
+                <Div className={"fs-0-6rem fw-normal"}>* 평균점수 : 1.00 ~ 5.00</Div>
+              </Div>
+            </Div>
+          )}>
+          {(popTrigger={}) => (
+            <Div className={"d-center pointer"} onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}>
+              {!part || part === "Calendar" ? (
+                makeIcon("total", "aura w-max8vw h-max8vh", "N")
+              ) : (
+                makeIcon(part.toLowerCase(), "aura w-max8vw h-max8vh", "N")
+              )}
+            </Div>
+          )}
+        </PopUp>
       </Div>
     </Div>
   );

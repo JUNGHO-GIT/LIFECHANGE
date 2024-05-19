@@ -172,7 +172,7 @@ export const Btn = ({
   const btnGetProperty = () => (
     <PopUp
       type={"innerCenter"}
-      position={"top"}
+      position={"center"}
       direction={"center"}
       contents={({closePopup}) => {
         const property = JSON.parse(sessionStorage.getItem("property") || "{}");
@@ -182,7 +182,7 @@ export const Btn = ({
         const startDt = property?.startDt;
         const endDt = property?.endDt;
         return (
-          <Div className={"w-70vw h-50vh border d-column p-5"}>
+          <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center mb-20"}>
               <Div className={"fs-1-7rem fw-bold"}>
                 재무 상태
@@ -208,8 +208,8 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                <div className={"fw-normal"}>원</div>
-              )
+                    <Div className={"fw-normal"}>원</Div>
+                  )
                 }}
               />
             </Div>
@@ -228,8 +228,8 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                <div className={"fw-normal"}>원</div>
-              )
+                    <Div className={"fw-normal"}>원</Div>
+                  )
                 }}
               />
             </Div>
@@ -248,8 +248,8 @@ export const Btn = ({
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
                   endAdornment: (
-                <div className={"fw-normal"}>원</div>
-              )
+                    <Div className={"fw-normal"}>원</Div>
+                  )
                 }}
               />
             </Div>

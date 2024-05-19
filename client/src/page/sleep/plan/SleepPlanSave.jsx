@@ -312,7 +312,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
                   endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
+                    <Div className={"fw-normal"}>h:m</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -364,7 +364,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
                   endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
+                    <Div className={"fw-normal"}>h:m</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -412,7 +412,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
                   endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
+                    <Div className={"fw-normal"}>h:m</Div>
                   )
                 }}
                 onClick={(e) => {

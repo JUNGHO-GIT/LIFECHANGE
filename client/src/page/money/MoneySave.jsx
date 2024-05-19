@@ -298,7 +298,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>원</div>
+                <Div className={"fw-normal"}>원</Div>
               )
             }}
           />
@@ -318,7 +318,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>원</div>
+                <Div className={"fw-normal"}>원</Div>
               )
             }}
           />
@@ -457,7 +457,7 @@ export const MoneySave = () => {
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>원</div>
+                <Div className={"fw-normal"}>원</Div>
               )
             }}
             onChange={(e) => {

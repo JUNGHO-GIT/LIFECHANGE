@@ -298,7 +298,7 @@ export const FoodFindSave = () => {
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>Kcal</div>
+                <Div className={"fw-normal"}>Kcal</Div>
               )
             }}
           />
@@ -317,7 +317,7 @@ export const FoodFindSave = () => {
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />
@@ -336,7 +336,7 @@ export const FoodFindSave = () => {
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />
@@ -355,7 +355,7 @@ export const FoodFindSave = () => {
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />
@@ -458,7 +458,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                <div className={"fw-normal"}>회</div>
+                <Div className={"fw-normal"}>회</Div>
               )
               }}
               onChange={(e) => {
@@ -497,7 +497,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
               }}
               onChange={(e) => {
@@ -554,7 +554,7 @@ export const FoodFindSave = () => {
                 <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>Kcal</div>
+                <Div className={"fw-normal"}>Kcal</Div>
               )
             }}
           />
@@ -571,7 +571,7 @@ export const FoodFindSave = () => {
                 <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />
@@ -590,7 +590,7 @@ export const FoodFindSave = () => {
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />
@@ -607,7 +607,7 @@ export const FoodFindSave = () => {
                 <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>g</div>
+                <Div className={"fw-normal"}>g</Div>
               )
             }}
           />

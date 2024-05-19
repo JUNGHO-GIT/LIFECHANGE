@@ -33,6 +33,7 @@ export const Header = () => {
       type={"dropdown"}
       position={"bottom"}
       direction={"right"}
+      className={"d-center"}
       contents={({closePopup}) => (
         <>
           <Div className={"d-center pointer mb-10"} onClick={() => {
@@ -68,7 +69,7 @@ export const Header = () => {
       {(popTrigger={}) => (
         <Icons name={"TbAlignRight"} className={"w-24 h-24 black"}
           onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
+            popTrigger.openPopup(e.currentTarget)
           }}
         />
       )}

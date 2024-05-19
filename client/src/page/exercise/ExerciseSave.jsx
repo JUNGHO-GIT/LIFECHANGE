@@ -324,7 +324,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>vol</div>
+                <Div className={"fw-normal"}>vol</Div>
               )
             }}
           />
@@ -344,7 +344,7 @@ export const ExerciseSave = () => {
                 <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>h:m</div>
+                <Div className={"fw-normal"}>h:m</Div>
               )
             }}
           />
@@ -364,7 +364,7 @@ export const ExerciseSave = () => {
                 <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>kg</div>
+                <Div className={"fw-normal"}>kg</Div>
               )
             }}
           />
@@ -502,7 +502,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>set</div>
+                <Div className={"fw-normal"}>set</Div>
               )
             }}
             onChange={(e) => {
@@ -535,7 +535,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>per</div>
+                <Div className={"fw-normal"}>per</Div>
               )
             }}
             onChange={(e) => {
@@ -570,7 +570,7 @@ export const ExerciseSave = () => {
                 <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
               ),
               endAdornment: (
-                <div className={"fw-normal"}>kg</div>
+                <Div className={"fw-normal"}>kg</Div>
               )
             }}
             onChange={(e) => {
@@ -635,7 +635,7 @@ export const ExerciseSave = () => {
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
                   endAdornment: (
-                    <div className={"fw-normal"}>h:m</div>
+                    <Div className={"fw-normal"}>h:m</Div>
                   )
                 }}
                 onClick={(e) => {

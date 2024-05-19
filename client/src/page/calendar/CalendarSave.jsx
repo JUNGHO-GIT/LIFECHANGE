@@ -282,8 +282,8 @@ export const CalendarSave = () => {
               }}
               InputProps={{
                 readOnly: true,
-              className: "fw-bold",
-              startAdornment: (
+                className: "fw-bold",
+                startAdornment: (
                   <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                 ),
                 endAdornment: null

@@ -11,6 +11,9 @@ import smile3 from "../assets/images/smile/smile3.webp";
 import smile4 from "../assets/images/smile/smile4.webp";
 import smile5 from "../assets/images/smile/smile5.webp";
 
+import flag1 from "../assets/images/flag/flag1.webp";
+import flag2 from "../assets/images/flag/flag2.webp";
+
 import common1 from "../assets/images/common/common1.webp";
 import common2 from "../assets/images/common/common2.webp";
 import common3 from "../assets/images/common/common3.webp";
@@ -51,6 +54,7 @@ import setting2 from "../assets/images/setting/setting2.webp";
 export {
   logo1, logo2, logo3,
   smile1, smile2, smile3, smile4, smile5,
+  flag1, flag2,
   common1, common2, common3, common4, common5,
   calendar1, calendar2, calendar3,
   exercise1, exercise2, exercise3, exercise4, exercise5,
