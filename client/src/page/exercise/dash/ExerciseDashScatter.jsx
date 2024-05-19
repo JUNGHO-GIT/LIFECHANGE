@@ -40,17 +40,17 @@ export const ExerciseDashScatter = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_TODAY(
@@ -63,7 +63,7 @@ export const ExerciseDashScatter = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartToday = () => {

@@ -48,12 +48,12 @@ export const MoneyDashAvg = () => {
   useEffect(() => {(async () => {
     const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_IN_MONTH(
@@ -69,7 +69,7 @@ export const MoneyDashAvg = () => {
       resYear.data.result.out.length > 0 ? resYear.data.result.out : OBJECT_OUT_YEAR_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartInMonth = () => {

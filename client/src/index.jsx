@@ -4,6 +4,8 @@ import React from "react";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop";
+import {useTranslate} from "./assets/hooks/useTranslate";
+import {LanguageProvider} from "./assets/context/LanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import "./index.css";
@@ -124,6 +126,7 @@ const User = () => (
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   useScrollTop();
+  useTranslate();
   return (
     <div className={"App"}>
       <Header />
@@ -152,7 +155,9 @@ if (rootElement === null) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
-    <CssBaseline />
-    <App />
+    <LanguageProvider>
+      <CssBaseline />
+      <App />
+    </LanguageProvider>
   </BrowserRouter>
 );

@@ -10,18 +10,18 @@ export const percent = async () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const user_id = sessionStorage.getItem("userId") || "{}";
+  const sessionId = sessionStorage.getItem("sessionId");
 
   try {
     const resList = await axios.get(`${URL_OBJECT}/percent/list`, {
       params: {
-        user_id: user_id,
+        user_id: sessionId,
         duration: `${today} ~ ${today}`,
       },
     });
     const resProperty = await axios.get(`${URL_OBJECT}/percent/property`, {
       params: {
-        user_id: user_id
+        user_id: sessionId,
       },
     });
 

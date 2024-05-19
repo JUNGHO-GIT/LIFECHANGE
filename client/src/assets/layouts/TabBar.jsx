@@ -1,9 +1,9 @@
 // TabBar.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
-import {Tabs, Tab, tabsClasses} from "../../import/ImportMuis.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
+import {Div, Br10} from "../../import/ImportComponents.jsx";
+import {Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const TabBar = () => {
@@ -11,6 +11,7 @@ export const TabBar = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -21,21 +22,12 @@ export const TabBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-
-    // ex. /food/diff/list
-    // ex. /food/diff/save
-    // ex. /food/plan/list
-    // ex. /food/plan/save
-    // ex. /food/list
-    // ex. /food/save
-
     if (thirdStr !== "") {
       setValue(`${secondStr}/${thirdStr}`);
     }
     else {
       setValue(secondStr);
     }
-
   }, [secondStr, thirdStr]);
 
   // 6. default ----------------------------------------------------------------------------------->
@@ -57,42 +49,42 @@ export const TabBar = () => {
           navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
-          label={"통계"}
+          label={translate("tabBar-dashList")}
           value={"dash/list"}
           onClick={() => {
             setValue("dash/list");
           }}
         />
         <Tab
-          label={"비교"}
+          label={translate("tabBar-diffList")}
           value={"diff/list"}
           onClick={() => {
             setValue("diff/list");
           }}
         />
         <Tab
-          label={"리스트(계획)"}
+          label={translate("tabBar-planList")}
           value={"plan/list"}
           onClick={() => {
             setValue("plan/list");
           }}
         />
         <Tab
-          label={"저장(계획)"}
+          label={translate("tabBar-planSave")}
           value={"plan/save"}
           onClick={() => {
             setValue("plan/save");
           }}
         />
         <Tab
-          label={"리스트"}
+          label={translate("tabBar-list")}
           value={"list"}
           onClick={() => {
             setValue("list");
           }}
         />
         <Tab
-          label={"저장"}
+          label={translate("tabBar-save")}
           value={"save"}
           onClick={() => {
             setValue("save");
@@ -121,49 +113,49 @@ export const TabBar = () => {
           navigate(`${firstStr}/${newValue}`);
         }}>
         <Tab
-          label={"통계"}
+          label={translate("tabBar-dashList")}
           value={"dash/list"}
           onClick={() => {
             setValue("dash/list");
           }}
         />
         <Tab
-          label={"비교"}
+          label={translate("tabBar-diffList")}
           value={"diff/list"}
           onClick={() => {
             setValue("diff/list");
           }}
         />
         <Tab
-          label={"검색"}
+          label={translate("tabBar-planList")}
           value={"find/list"}
           onClick={() => {
             setValue("find/list");
           }}
         />
         <Tab
-          label={"리스트(계획)"}
+          label={translate("tabBar-planSave")}
           value={"plan/list"}
           onClick={() => {
             setValue("plan/list");
           }}
         />
         <Tab
-          label={"저장(계획)"}
+          label={translate("tabBar-planSave")}
           value={"plan/save"}
           onClick={() => {
             setValue("plan/save");
           }}
         />
         <Tab
-          label={"리스트"}
+          label={translate("tabBar-list")}
           value={"list"}
           onClick={() => {
             setValue("list");
           }}
         />
         <Tab
-          label={"저장"}
+          label={translate("tabBar-save")}
           value={"save"}
           onClick={() => {
             setValue("save");

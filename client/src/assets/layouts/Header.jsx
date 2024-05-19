@@ -1,6 +1,5 @@
 // Header.jsx
 
-import {SideBar} from "./SideBar";
 import {React, useNavigate} from "../../import/ImportReacts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";

@@ -49,12 +49,12 @@ export const ExerciseDashAvg = () => {
   useEffect(() => {(async () => {
     const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_VOLUME_MONTH(
@@ -70,7 +70,7 @@ export const ExerciseDashAvg = () => {
       resYear.data.result.cardio.length > 0 ? resYear.data.result.cardio : OBJECT_CARDIO_YEAR_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartVolumeMonth = () => {

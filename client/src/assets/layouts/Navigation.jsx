@@ -2,8 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
-import {BottomNavigation, BottomNavigationAction} from "../../import/ImportMuis.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
+import {BottomNavigation, BottomNavigationAction, Paper} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>

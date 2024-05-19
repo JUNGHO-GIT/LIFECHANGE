@@ -87,12 +87,12 @@ export const UserDataSet = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/data/set`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       }
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {

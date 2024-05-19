@@ -95,6 +95,25 @@ export const CalendarSave = () => {
     setLOADING(false);
   })()}, [sessionId, location_id, location_category, DATE.startDt, DATE.endDt]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const defaultSection = {
+      calendar_part_idx: 0,
+      calendar_part_val: "전체",
+      calendar_title: "",
+      calendar_color: "black",
+      calendar_content: ""
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      calendar_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
@@ -137,59 +156,16 @@ export const CalendarSave = () => {
     }
   };
 
-  // 4-1. handler --------------------------------------------------------------------------------->
-  const handlerCount = (e) => {
-    const newCount = Number(e);
-    const defaultSection = {
-      calendar_part_idx: 0,
-      calendar_part_val: "전체",
-      calendar_title: "",
-      calendar_color: "#000000",
-      calendar_content: ""
-    };
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerDelete = (index) => {
+    setOBJECT((prev) => ({
+      ...prev,
+      calendar_section: prev.calendar_section.filter((_, idx) => (idx !== index))
+    }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: newCount
+      sectionCnt: prev.sectionCnt - 1,
     }));
-    if (newCount > 0) {
-      let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-        idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : defaultSection
-      ));
-      setOBJECT((prev) => ({
-        ...prev,
-        calendar_section: updatedSection
-      }));
-    }
-    else {
-      setOBJECT((prev) => ({
-        ...prev,
-        calendar_section: []
-      }));
-    }
-  };
-
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerValidate = (e, popTrigger) => {
-    const newValInt = Number(e.target.value);
-    const newValStr = String(e.target.value);
-    if (newValInt < 0) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValInt > 10) {
-      popTrigger.openPopup(e.currentTarget);
-    }
-    else if (newValStr === "") {
-      handlerCount("");
-    }
-    else if (isNaN(newValInt) || newValStr === "NaN") {
-      handlerCount("0");
-    }
-    else if (newValStr.startsWith("0")) {
-      handlerCount(newValStr.replace(/^0+/, ""));
-    }
-    else {
-      handlerCount(newValStr);
-    }
   };
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -368,36 +344,15 @@ export const CalendarSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <>
-            <Div className={"d-row mb-10"}>
-              <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
-                onClick={() => {
-                  flowDelete(id, sectionId);
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
-                }}
-              />
-              <Div className={"fs-0-8rem"}>삭제</Div>
-            </Div>
-            <Div className={"d-row"}>
-              <img src={common4} className={"w-16 h-16 icon pointer"} alt={"common4"}
-                onClick={() => {
-                  Object.assign(SEND, {
-                    startDt: DATE.startDt,
-                    endDt: DATE.endDt
-                  });
-                  navigate(SEND.toUpdate, {
-                    state: SEND
-                  });
-                  setTimeout(() => {
-                    closePopup();
-                  }, 1000);
-                }}
-              />
-              <Div className={"fs-0-8rem"}>수정</Div>
-            </Div>
-          </>
+          <Div className={"d-row"}>
+            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
+              onClick={() => {
+                handlerDelete(index);
+                closePopup();
+              }}
+            />
+            <Div className={"fs-0-8rem"}>삭제</Div>
+          </Div>
         )}>
         {(popTrigger={}) => (
           <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}

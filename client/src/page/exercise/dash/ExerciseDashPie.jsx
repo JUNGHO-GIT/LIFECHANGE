@@ -47,12 +47,12 @@ export const ExerciseDashPie = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_PART_WEEK(
@@ -68,7 +68,7 @@ export const ExerciseDashPie = () => {
       resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

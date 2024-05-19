@@ -41,7 +41,7 @@ export const FoodDashBar = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_KCAL_TODAY(
@@ -51,7 +51,7 @@ export const FoodDashBar = () => {
       resToday.data.result.nut.length > 0 ? resToday.data.result.nut : OBJECT_NUT_TODAY_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartKcalToday = () => {

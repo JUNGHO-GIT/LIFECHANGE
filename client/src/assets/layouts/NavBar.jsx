@@ -1,6 +1,7 @@
 // NavBar.jsx
 
 import {React, useLocation, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useLanguage} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {PopUp, Div, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -20,18 +21,8 @@ export const NavBar = () => {
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [lang, setLang] = useState("ko");
+  const {lang, setLang} = useLanguage();
   const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    if (lang === "ko") {
-      sessionStorage.setItem("lang", "ko");
-    }
-    else if (lang === "en") {
-      sessionStorage.setItem("lang", "en");
-    }
-  }, [lang]);
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className, text) => {
@@ -116,24 +107,20 @@ export const NavBar = () => {
           direction={"center"}
           contents={({closePopup}) => (
             <Div className={"d-column p-5"}>
-              <Div
-                className={`d-center pointer ${lang === "ko" ? "bg-light" : ""}`}
-                onClick={() => {
-                  setLang("ko");
-                  closePopup();
-                }}
-              >
+              <Div className={`d-center pointer ${lang === "ko" ? "bg-light" : ""}`}
+              onClick={() => {
+                setLang("ko");
+                closePopup();
+              }}>
                 <img src={flag1} className={"w-max5vw h-max5vh me-5"} alt={"flag1"} />
                 <Div className={"fs-0-8rem"}>한국어</Div>
               </Div>
               <Br10 />
-              <Div
-                className={`d-center pointer ${lang === "en" ? "bg-light" : ""}`}
-                onClick={() => {
-                  setLang("en");
-                  closePopup();
-                }}
-              >
+              <Div className={`d-center pointer ${lang === "en" ? "bg-light" : ""}`}
+              onClick={() => {
+                setLang("en");
+                closePopup();
+              }}>
                 <img src={flag2} className={"w-max5vw h-max5vh me-5"} alt={"flag2"} />
                 <Div className={"fs-0-8rem"}>English</Div>
               </Div>
@@ -159,23 +146,33 @@ export const NavBar = () => {
                 <Div className={"fs-0-8rem fw-bold"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
               </Div>
               <Div className={"d-center mb-10"}>
-                <Div className={"fs-0-8rem me-5"}>총합</Div>
+                <Div className={"fs-0-8rem me-5"}>
+                  총합
+                </Div>
                 {makeIcon("total", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
-                <Div className={"fs-0-8rem me-5"}>운동</Div>
+                <Div className={"fs-0-8rem me-5"}>
+                  운동
+                </Div>
                 {makeIcon("exercise", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
-                <Div className={"fs-0-8rem me-5"}>식단</Div>
+                <Div className={"fs-0-8rem me-5"}>
+                  식단
+                </Div>
                 {makeIcon("food", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
-                <Div className={"fs-0-8rem me-5"}>재무</Div>
+                <Div className={"fs-0-8rem me-5"}>
+                  재무
+                </Div>
                 {makeIcon("money", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-20"}>
-                <Div className={"fs-0-8rem me-5"}>수면</Div>
+                <Div className={"fs-0-8rem me-5"}>
+                  수면
+                </Div>
                 {makeIcon("sleep", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center"}>
@@ -188,9 +185,9 @@ export const NavBar = () => {
               popTrigger.openPopup(e.currentTarget)
             }}>
               {!part || part === "Calendar" ? (
-                makeIcon("total", "aura w-max8vw h-max8vh", "N")
+                makeIcon("total", "w-max8vw h-max8vh", "N")
               ) : (
-                makeIcon(part.toLowerCase(), "aura w-max8vw h-max8vh", "N")
+                makeIcon(part.toLowerCase(), "w-max8vw h-max8vh", "N")
               )}
             </Div>
           )}

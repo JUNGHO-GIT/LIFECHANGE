@@ -33,14 +33,14 @@ export const SleepDashBar = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_TODAY(
       resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartToday = () => {

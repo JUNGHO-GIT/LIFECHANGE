@@ -40,12 +40,12 @@ export const SleepDashLine = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_WEEK(
@@ -55,7 +55,7 @@ export const SleepDashLine = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartWeek = () => {

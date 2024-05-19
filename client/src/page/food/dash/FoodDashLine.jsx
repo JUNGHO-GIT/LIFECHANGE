@@ -48,12 +48,12 @@ export const FoodDashLine = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_KCAL_WEEK(
@@ -69,7 +69,7 @@ export const FoodDashLine = () => {
       resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartKcalWeek = () => {

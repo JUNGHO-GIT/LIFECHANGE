@@ -49,12 +49,12 @@ export const ExerciseDashLine = () => {
   useEffect(() => {(async () => {
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_VOLUME_WEEK(
@@ -70,7 +70,7 @@ export const ExerciseDashLine = () => {
       resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartVolumeWeek = () => {

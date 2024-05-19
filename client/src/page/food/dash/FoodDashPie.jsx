@@ -55,17 +55,17 @@ export const FoodDashPie = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_KCAL_TODAY(
@@ -87,7 +87,7 @@ export const FoodDashPie = () => {
       resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

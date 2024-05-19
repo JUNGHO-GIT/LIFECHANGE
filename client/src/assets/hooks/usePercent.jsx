@@ -23,7 +23,7 @@ export const usePercent = () => {
         });
         const resProperty = await axios.get(`${URL_OBJECT}/percent/property`, {
           params: {
-            user_id: userId
+            user_id: sessionId
           },
         });
 
@@ -35,7 +35,7 @@ export const usePercent = () => {
     };
 
     fetchPercentData();
-  }, [userId]);
+  }, [sessionId]);
 
   return { percent, property };
 };

@@ -41,7 +41,7 @@ export const MoneyDashBar = () => {
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
-        user_id: userId
+        user_id: sessionId
       },
     });
     setOBJECT_IN_TODAY(
@@ -51,7 +51,7 @@ export const MoneyDashBar = () => {
       resToday.data.result.out.length > 0 ? resToday.data.result.out : OBJECT_OUT_TODAY_DEF
     );
     setLOADING(false);
-  })()}, [userId]);
+  })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartInToday = () => {
