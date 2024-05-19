@@ -3,9 +3,8 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useScrollTop} from "./assets/hooks/useScrollTop";
-import {useTranslate} from "./assets/hooks/useTranslate";
-import {LanguageProvider} from "./assets/context/LanguageProvider.jsx";
+import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
+import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import "./index.css";
@@ -126,7 +125,6 @@ const User = () => (
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   useScrollTop();
-  useTranslate();
   return (
     <div className={"App"}>
       <Header />

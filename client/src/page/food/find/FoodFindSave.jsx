@@ -112,7 +112,7 @@ export const FoodFindSave = () => {
 
     setLOADING(false);
 
-  }, [userId, DATE.startDt, DATE.endDt]);
+  }, [sessionId, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

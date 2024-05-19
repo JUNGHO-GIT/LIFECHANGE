@@ -2,6 +2,7 @@
 
 import {React, useLocation, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useLanguage} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {PopUp, Div, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -12,6 +13,8 @@ export const NavBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
+  const {lang, setLang} = useLanguage();
+  const {translate} = useTranslate();
   const PATH = location.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -21,7 +24,6 @@ export const NavBar = () => {
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {lang, setLang} = useLanguage();
   const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
 
   // 3. logic ------------------------------------------------------------------------------------->
@@ -147,36 +149,39 @@ export const NavBar = () => {
               </Div>
               <Div className={"d-center mb-10"}>
                 <Div className={"fs-0-8rem me-5"}>
-                  총합
+                  {translate("navBar-total")}
                 </Div>
                 {makeIcon("total", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
                 <Div className={"fs-0-8rem me-5"}>
-                  운동
+                  {translate("navBar-exercise")}
                 </Div>
                 {makeIcon("exercise", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
                 <Div className={"fs-0-8rem me-5"}>
-                  식단
+                  {translate("navBar-food")}
                 </Div>
                 {makeIcon("food", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-10"}>
                 <Div className={"fs-0-8rem me-5"}>
-                  재무
+                  {translate("navBar-money")}
                 </Div>
                 {makeIcon("money", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center mb-20"}>
                 <Div className={"fs-0-8rem me-5"}>
-                  수면
+                  {translate("navBar-sleep")}
                 </Div>
                 {makeIcon("sleep", "w-max5vw h-max5vh")}
               </Div>
               <Div className={"d-center"}>
-                <Div className={"fs-0-6rem fw-normal"}>* 평균점수 : 1.00 ~ 5.00</Div>
+                <Div className={"fs-0-6rem fw-normal"}>
+                  {translate("navBar-score")}
+                  * 평균점수 : 1.00 ~ 5.00
+                </Div>
               </Div>
             </Div>
           )}>
