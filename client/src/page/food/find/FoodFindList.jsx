@@ -39,7 +39,7 @@ export const FoodFindList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
@@ -152,7 +152,7 @@ export const FoodFindList = () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/find/list`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`

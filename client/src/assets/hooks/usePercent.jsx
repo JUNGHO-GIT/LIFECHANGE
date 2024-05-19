@@ -3,7 +3,7 @@ import moment from "moment-timezone";
 import axios from "axios";
 
 export const usePercent = () => {
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
   const [property, setProperty] = useState(JSON.parse(sessionStorage.getItem("property") || "{}"));
 
@@ -17,7 +17,7 @@ export const usePercent = () => {
       try {
         const resList = await axios.get(`${URL_OBJECT}/percent/list`, {
           params: {
-            user_id: userId,
+            user_id: sessionId,
             duration: `${today} ~ ${today}`,
           },
         });

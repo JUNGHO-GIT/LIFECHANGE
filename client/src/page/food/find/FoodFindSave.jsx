@@ -41,7 +41,7 @@ export const FoodFindSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -142,7 +142,7 @@ export const FoodFindSave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/find/save`, {
-      user_id: userId,
+      user_id: sessionId,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

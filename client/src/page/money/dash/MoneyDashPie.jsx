@@ -19,7 +19,7 @@ export const MoneyDashPie = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("in");

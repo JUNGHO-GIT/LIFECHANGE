@@ -22,10 +22,11 @@ export const UserLogin = () => {
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
-  const [dataSet, setDataSet] = useState(sessionStorage.getItem("dataSet") || "{}");
-  const [userPw, setUserPw] = useState("");
   const [LOADING, setLOADING] = useState(false);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState("");
+  const [userPw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -35,16 +36,14 @@ export const UserLogin = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      sessionStorage.setItem("userId", userId);
+      sessionStorage.setItem("sessionId", userId);
       sessionStorage.setItem("dataSet", JSON.stringify(res.data.result.dataSet));
-      setUserId(userId);
-      setDataSet(JSON.stringify(res.data.result.dataSet));
       percent();
       navigate("/calendar/list");
     }
     else {
       alert(res.data.msg);
-      sessionStorage.setItem("userId", "false");
+      sessionStorage.setItem("sessionId", "");
     }
   };
 
@@ -84,7 +83,7 @@ export const UserLogin = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper d-center h-min67vh"}>
+      <Div className={"block-wrapper d-center h-min68vh"}>
         <Div className={"d-center p-10"}>
           <Div className={"fs-2-0rem"}>Login</Div>
         </Div>

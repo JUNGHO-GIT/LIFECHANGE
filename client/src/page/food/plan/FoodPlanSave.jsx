@@ -38,7 +38,7 @@ export const FoodPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -73,7 +73,7 @@ export const FoodPlanSave = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -86,12 +86,12 @@ export const FoodPlanSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [userId, DATE.startDt, DATE.endDt]);
+  })()}, [sessionId, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/plan/save`, {
-      user_id: userId,
+      user_id: sessionId,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

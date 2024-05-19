@@ -40,7 +40,7 @@ export const FoodSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -89,7 +89,7 @@ export const FoodSave = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -102,7 +102,7 @@ export const FoodSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [userId, DATE.startDt, DATE.endDt]);
+  })()}, [sessionId, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -127,7 +127,7 @@ export const FoodSave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: userId,
+      user_id: sessionId,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

@@ -21,7 +21,7 @@ export const SleepDashLine = () => {
   const array = ["취침", "수면", "기상"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);

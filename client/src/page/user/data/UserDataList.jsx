@@ -33,7 +33,7 @@ export const UserDataList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
@@ -158,7 +158,7 @@ export const UserDataList = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/data/list`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
         PART: PART
@@ -196,7 +196,7 @@ export const UserDataList = () => {
     }));
     setLOADING(false);
   })()}, [
-    userId,
+    sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     PART
@@ -205,7 +205,7 @@ export const UserDataList = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
     const res = await axios.post(`${URL_OBJECT}/data/save`, {
-      user_id: userId,
+      user_id: sessionId,
       PART: type_param,
       count: COUNT?.inputCnt
     });
@@ -227,7 +227,7 @@ export const UserDataList = () => {
   const flowDelete = async (type_param) => {
     const res = await axios.delete(`${URL_OBJECT}/data/deletes`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         PART: type_param
       }
     });

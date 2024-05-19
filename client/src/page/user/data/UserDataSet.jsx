@@ -33,7 +33,7 @@ export const UserDataSet = () => {
   const dataSetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -59,7 +59,7 @@ export const UserDataSet = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
-    user_id: userId,
+    user_id: sessionId,
     user_number: 0,
     dataSet: {
       calendar: [{
@@ -97,7 +97,7 @@ export const UserDataSet = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: userId,
+      user_id: sessionId,
       OBJECT: OBJECT
     });
     if (res.data.status === "success") {

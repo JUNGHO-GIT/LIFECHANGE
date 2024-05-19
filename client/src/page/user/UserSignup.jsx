@@ -3,9 +3,8 @@
 import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -22,9 +21,11 @@ export const UserSignup = () => {
   const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [LOADING, setLOADING] = useState(false);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-  const [LOADING, setLOADING] = useState(true);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -84,7 +85,7 @@ export const UserSignup = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper d-center h-min67vh"}>
+      <Div className={"block-wrapper d-center h-min68vh"}>
         <Div className={"d-center p-10"}>
           <Div className={"fs-2-0rem"}>SignUp</Div>
         </Div>

@@ -43,7 +43,7 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [userId, setUserId] = useState(sessionStorage.getItem("userId") || "{}");
+  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -88,7 +88,7 @@ export const MoneyList = () => {
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
-        user_id: userId,
+        user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
@@ -103,7 +103,7 @@ export const MoneyList = () => {
     }));
     setLOADING(false);
   })()}, [
-    userId,
+    sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.startDt, DATE.endDt
