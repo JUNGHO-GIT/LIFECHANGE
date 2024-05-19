@@ -1,9 +1,18 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+// useTranslate.jsx
+// @ts-nocheck
 
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {createContext, useContext} from "../../import/ImportReacts.jsx";
+
+// ------------------------------------------------------------------------------------------------>
 const LanguageContext = createContext();
 
-export const useLanguage = () => useContext(LanguageContext);
+// ------------------------------------------------------------------------------------------------>
+export const useLanguage = () => (
+  useContext(LanguageContext)
+);
 
+// ------------------------------------------------------------------------------------------------>
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState(sessionStorage.getItem('lang') || 'ko');
 
@@ -12,10 +21,8 @@ export const LanguageProvider = ({ children }) => {
     console.log('Language changed : ', lang);
   }, [lang]);
 
-  const value = { lang, setLang };
-
   return (
-    <LanguageContext.Provider value={value}>
+    <LanguageContext.Provider value={{lang, setLang}}>
       {children}
     </LanguageContext.Provider>
   );
