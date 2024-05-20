@@ -77,8 +77,8 @@ export const SleepPlanSave = () => {
   useTime(OBJECT, setOBJECT, PATH, "plan");
 
   useEffect(() => {
-    console.log(JSON.stringify(location, null, 2));
-  }, [location]);
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -132,7 +132,7 @@ export const SleepPlanSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: 1
+      newSectionCnt: prev.newSectionCnt - 1
     }));
   };
 
@@ -274,7 +274,7 @@ export const SleepPlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-center"}>
-            {`계획등록은 1개만 가능합니다.`}
+            {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
           </Div>
         )}>
         {(popTrigger={}) => (

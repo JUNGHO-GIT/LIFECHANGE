@@ -695,7 +695,7 @@ export const ExerciseSave = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.exercise_section.map((_, i) => (tableFragment(i)))}
+          {COUNT?.newSectionCnt > 0 && (OBJECT?.exercise_section.map((_, i) => (tableFragment(i))))}
         </Div>
       </Div>
     );

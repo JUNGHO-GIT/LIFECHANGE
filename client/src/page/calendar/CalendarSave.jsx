@@ -528,7 +528,7 @@ export const CalendarSave = () => {
           {countSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))}
+          {COUNT?.newSectionCnt > 0 && (OBJECT?.calendar_section.map((_, i) => (tableFragment(i))))}
         </Div>
       </Div>
     );

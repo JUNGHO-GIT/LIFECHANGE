@@ -489,7 +489,7 @@ export const SleepSave = () => {
           {countSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.sleep_section.map((_, i) => (tableFragment(i)))}
+          {COUNT?.newSectionCnt > 0 && (OBJECT?.sleep_section.map((_, i) => (tableFragment(i))))}
         </Div>
       </Div>
     );

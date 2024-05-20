@@ -638,7 +638,7 @@ export const FoodFindSave = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.food_section.map((_, i) => (tableFragment(i)))}
+          {COUNT?.newSectionCnt > 0 && (OBJECT?.food_section.map((_, i) => (tableFragment(i))))}
         </Div>
       </Div>
     );

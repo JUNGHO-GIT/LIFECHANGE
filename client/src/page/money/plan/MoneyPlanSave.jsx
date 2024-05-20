@@ -7,12 +7,13 @@ import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons} from "../../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common3, money2, common5} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3} from "../../../import/ImportImages.jsx";
+import {money2, common5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
@@ -125,7 +126,7 @@ export const MoneyPlanSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: 1
+      newSectionCnt: prev.newSectionCnt - 1
     }));
   };
 
@@ -259,7 +260,65 @@ export const MoneyPlanSave = () => {
         </Div>
       </Div>
     );
-    // 7-2. count (plan 은 total x)
+
+    // 7-2. count
+    const countSection = () => (
+      <PopUp
+        type={"alert"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>
+            {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
+          </Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            label={translate("common-count")}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-86vw"}
+            value={COUNT.newSectionCnt}
+            InputProps={{
+              readOnly: true,
+              className: "fw-bold",
+              startAdornment: (
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+              ),
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 1 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
+            }}
+          />
+        )}
+      </PopUp>
+    );
     // 7-3. total (plan 은 total x)
     // 7-4. badge
     const badgeSection = (index) => (
@@ -373,6 +432,9 @@ export const MoneyPlanSave = () => {
       <Div className={"block-wrapper w-min90vw h-min67vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
+        </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
         </Div>
         <Div className={"d-column"}>
           {COUNT?.newSectionCnt > 0 && tableFragment(0)}

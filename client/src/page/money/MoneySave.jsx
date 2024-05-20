@@ -585,7 +585,7 @@ export const MoneySave = () => {
           {totalSection()}
         </Div>
         <Div className={"d-column"}>
-          {OBJECT?.money_section.map((_, i) => (tableFragment(i)))}
+          {COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))}
         </Div>
       </Div>
     );
