@@ -23,7 +23,6 @@ export const FoodFindSave = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const session = sessionStorage.getItem("dataSet") || "{}";
   const foodArray = JSON.parse(session)?.food || [];
-  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -226,8 +225,8 @@ export const FoodFindSave = () => {
                 dateType: e.target.value
               }));
             }}>
-            {dateType.map((item, idx) => (
-              <MenuItem key={idx} value={item}>
+            {["전체", "day", "week", "month", "year"].map((item) => (
+              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
                 {item}
               </MenuItem>
             ))}

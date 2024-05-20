@@ -14,12 +14,10 @@ export const Filter = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const session = sessionStorage.getItem("dataSet") || "{}";
-  const dateType = JSON.parse(session).dateType || [];
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
-  const orderType = ["asc", "desc"];
   const {translate} = useTranslate();
 
   // 1. default ----------------------------------------------------------------------------------->
@@ -31,7 +29,7 @@ export const Filter = ({
         size={"small"}
         label={"유형"}
         variant={"outlined"}
-        value={objects?.DATE?.dateType}
+        value={objects?.DATE?.dateType || "전체"}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
@@ -44,8 +42,8 @@ export const Filter = ({
             page: 1
           }))
         )}>
-        {dateType?.map((item, idx) => (
-          <MenuItem key={idx} value={item} selected={objects?.DATE?.dateType === item}>
+        {["전체", "day", "week", "month", "year"].map((item) => (
+          <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
             {item}
           </MenuItem>
         ))}
@@ -56,7 +54,7 @@ export const Filter = ({
         size={"small"}
         label={"정렬"}
         variant={"outlined"}
-        value={objects?.FILTER?.order}
+        value={objects?.FILTER?.order || "asc"}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
@@ -65,7 +63,7 @@ export const Filter = ({
             order: e.target.value
           }))
         )}>
-        {orderType?.map((item) => (
+        {["asc", "desc"].map((item) => (
           <MenuItem key={item} value={item} selected={objects?.FILTER?.order === item}>
             {item}
           </MenuItem>

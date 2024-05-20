@@ -20,7 +20,6 @@ export const SleepSave = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const session = sessionStorage.getItem("dataSet") || "{}";
   const sleepArray = JSON.parse(session)?.sleep || [];
-  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -95,6 +94,23 @@ export const SleepSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const defaultSection = {
+      sleep_night: "00:00",
+      sleep_morning: "00:00",
+      sleep_time: "00:00",
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.sleep_section.length ? OBJECT?.sleep_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      sleep_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
@@ -155,8 +171,8 @@ export const SleepSave = () => {
                 dateType: e.target.value
               }));
             }}>
-            {dateType.map((item, idx) => (
-              <MenuItem key={idx} value={item}>
+            {["전체", "day", "week", "month", "year"].map((item) => (
+              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
                 {item}
               </MenuItem>
             ))}

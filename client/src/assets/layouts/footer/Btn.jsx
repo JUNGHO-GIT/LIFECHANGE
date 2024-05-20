@@ -4,8 +4,7 @@ import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
+import {Button, TextField} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -232,7 +231,7 @@ export const Btn = ({
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
       Object.keys(sessionStorage).forEach((key) => {
-        if (key.includes("FILTER") || key.includes("DATE") || key.includes("foodSection")) {
+        if (key.includes("FILTER") || key.includes("foodSection")) {
           sessionStorage.removeItem(key);
         }
       });

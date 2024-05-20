@@ -23,7 +23,6 @@ export const MoneyPlanSave = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const session = sessionStorage.getItem("dataSet") || "{}";
-  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -155,8 +154,8 @@ export const MoneyPlanSave = () => {
                 dateType: e.target.value
               }));
             }}>
-            {dateType.map((item, idx) => (
-              <MenuItem key={idx} value={item}>
+            {["전체", "day", "week", "month", "year"].map((item) => (
+              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
                 {item}
               </MenuItem>
             ))}
