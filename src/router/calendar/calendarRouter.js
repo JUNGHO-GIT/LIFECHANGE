@@ -24,6 +24,7 @@ router.get("/list", async (req, res) => {
       res.json({
         status: "fail",
         msg: "조회 실패",
+        totalCnt: 0,
         result: null
       });
     }
@@ -57,6 +58,7 @@ router.get("/detail", async (req, res) => {
       res.json({
         status: "fail",
         msg: "조회 실패",
+        sectionCnt: 0,
         result: null
       });
     }
