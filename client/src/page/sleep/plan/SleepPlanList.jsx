@@ -31,7 +31,7 @@ export const SleepPlanList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: location_dateType,
+      dateType: location_dateType || "day",
       dateStart: location_dateStart,
       dateEnd: location_dateEnd,
     }

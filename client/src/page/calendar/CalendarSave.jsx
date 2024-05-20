@@ -39,7 +39,7 @@ export const CalendarSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: location_dateType,
+      dateType: location_dateType || "day",
       dateStart: location_dateStart,
       dateEnd: location_dateEnd,
     }
@@ -71,7 +71,7 @@ export const CalendarSave = () => {
       calendar_part_idx: 1,
       calendar_part_val: "일정",
       calendar_title : "",
-      calendar_color: "#000000",
+      calendar_color: "black",
       calendar_content: ""
     }]
   };
@@ -182,11 +182,11 @@ export const CalendarSave = () => {
             select={true}
             label={translate("common-dateType")}
             size={"small"}
-            value={DATE.dateType}
+            value={DATE.dateType || "day"}
             variant={"outlined"}
             className={"w-20vw me-3vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               className: "fw-bold",
               startAdornment: null,
               endAdornment: null
@@ -204,43 +204,97 @@ export const CalendarSave = () => {
             ))}
           </TextField>
         </Div>
-        <Div className={"d-row"}>
+        <Div className={"d-center"}>
           <PopUp
-            type={"calendar"}
-            position={"bottom"}
+            type={"innerCenter"}
+            position={"center"}
             direction={"center"}
             contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DateCalendar
-                  timezone={"Asia/Seoul"}
-                  views={["day"]}
-                  readOnly={false}
-                  value={moment(DATE.dateStart)}
-                  sx={{
-                    width: "80vw",
-                    height: "60vh"
-                  }}
-                  onChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).format("YYYY-MM-DD")
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
+              <Div className={"d-center w-max86vw"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                  <DateCalendar
+                    timezone={"Asia/Seoul"}
+                    views={["year", "day"]}
+                    readOnly={false}
+                    defaultValue={moment(DATE.dateStart)}
+                    className={"radius border h-max40vh me-2"}
+                    onChange={(date) => {
+                      setDATE((prev) => ({
+                        ...prev,
+                        dateStart: moment(date).format("YYYY-MM-DD")
+                      }));
+                    }}
+                    sx={{
+                      "& .MuiDateCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiYearCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiDayCalendar-slideTransition": {
+                        minHeight: "0px",
+                      },
+                      "& .MuiDayCalendar-weekDayLabel": {
+                        fontSize: "0.7rem",
+                        width: "3.5vh",
+                        height: "3.5vh",
+                      },
+                      '& .MuiPickersDay-root': {
+                        fontSize: "0.7rem",
+                        width: "3.5vh",
+                        height: "3.5vh",
+                      },
+                    }}
+                  />
+                  <DateCalendar
+                    timezone={"Asia/Seoul"}
+                    views={["year", "day"]}
+                    readOnly={false}
+                    defaultValue={moment(DATE.dateEnd)}
+                    className={"radius border h-max40vh ms-2"}
+                    onChange={(date) => {
+                      setDATE((prev) => ({
+                        ...prev,
+                        dateEnd: moment(date).format("YYYY-MM-DD")
+                      }));
+                    }}
+                    sx={{
+                      "& .MuiDateCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiYearCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiDayCalendar-slideTransition": {
+                        minHeight: "0px",
+                      },
+                      "& .MuiDayCalendar-weekDayLabel": {
+                        fontSize: "0.7rem",
+                        width: "3.5vh",
+                        height: "3.5vh",
+                      },
+                      '& .MuiPickersDay-root': {
+                        fontSize: "0.7rem",
+                        width: "3.5vh",
+                        height: "3.5vh",
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Div>
             )}>
             {(popTrigger={}) => (
               <TextField
-                select={false}
-                label={translate("common-date")}
+                type={"text"}
                 size={"small"}
-                value={DATE.dateStart}
+                label={"기간"}
                 variant={"outlined"}
+                value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
                 className={"w-63vw"}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
-                }}
                 InputProps={{
                   readOnly: true,
                   className: "fw-bold",
@@ -248,6 +302,9 @@ export const CalendarSave = () => {
                     <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                   ),
                   endAdornment: null
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
                 }}
               />
             )}

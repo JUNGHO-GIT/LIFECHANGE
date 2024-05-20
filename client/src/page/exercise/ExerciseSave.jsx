@@ -35,7 +35,7 @@ export const ExerciseSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: location_dateType,
+      dateType: location_dateType || "day",
       dateStart: location_dateStart,
       dateEnd: location_dateEnd,
     }
@@ -209,7 +209,7 @@ export const ExerciseSave = () => {
             select={true}
             label={translate("common-dateType")}
             size={"small"}
-            value={DATE.dateType}
+            value={DATE.dateType || "day"}
             variant={"outlined"}
             className={"w-20vw me-3vw"}
             InputProps={{
