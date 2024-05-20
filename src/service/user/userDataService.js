@@ -26,6 +26,7 @@ export const list = async (
 ) => {
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
+
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
 
@@ -147,6 +148,7 @@ export const save = async (
         user_id: user_id_param,
         exercise_plan_number: i + insertCount,
         exercise_plan_demo: true,
+        exercise_plan_date_type: "day",
         exercise_plan_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_plan_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_plan_count: randomNumber(100),
@@ -198,6 +200,7 @@ export const save = async (
         user_id: user_id_param,
         exercise_number: i + insertCount,
         exercise_demo: true,
+        exercise_date_type: "day",
         exercise_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_total_volume: totalVolume,
@@ -222,6 +225,7 @@ export const save = async (
         user_id: user_id_param,
         food_plan_number: i + insertCount,
         food_plan_demo: true,
+        food_plan_date_type: "day",
         food_plan_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_plan_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_plan_kcal: randomNumber(10000),
@@ -278,6 +282,7 @@ export const save = async (
         user_id: user_id_param,
         food_number: i + insertCount,
         food_demo: true,
+        food_date_type: "day",
         food_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_total_kcal: totalKcal,
@@ -304,6 +309,7 @@ export const save = async (
         user_id: user_id_param,
         money_plan_number: i + insertCount,
         money_plan_demo: true,
+        money_plan_date_type: "day",
         money_plan_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_plan_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_plan_in: randomNumber(10000),
@@ -349,6 +355,7 @@ export const save = async (
         user_id: user_id_param,
         money_number: i + insertCount,
         money_demo: true,
+        money_date_type: "day",
         money_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_total_in: totalIn,
@@ -372,6 +379,7 @@ export const save = async (
         user_id: user_id_param,
         sleep_plan_number: i + insertCount,
         sleep_plan_demo: true,
+        sleep_plan_date_type: "day",
         sleep_plan_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_plan_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_plan_night: randomTime(),
@@ -403,6 +411,7 @@ export const save = async (
         user_id: user_id_param,
         sleep_number: i + insertCount,
         sleep_demo: true,
+        sleep_date_type: "day",
         sleep_date_start: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_date_end: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_section: sections,

@@ -14,6 +14,6 @@ export const randomTime = () => {
 export const calcDate = (startTime, endTime) => {
   const start = new Date(`1970/01/01 ${startTime}`);
   const end = new Date(`1970/01/01 ${endTime}`);
-  const duration = new Date(end - start + 24 * 60 * 60 * 1000);
+  const duration = new Date(Number(end) - Number(start) + 24 * 60 * 60 * 1000);
   return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
 }
