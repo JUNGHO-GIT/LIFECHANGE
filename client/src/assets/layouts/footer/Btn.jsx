@@ -7,6 +7,7 @@ import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
+import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 
 // ------------------------------------------------------------------------------------------------>
 export const Btn = ({
@@ -80,23 +81,18 @@ export const Btn = ({
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
-      (objects?.FILTER) && (
-        functions?.setFILTER((prev) => ({
+      (objects?.DATE) && (
+        functions?.setDATE((prev) => ({
           ...prev,
-          type: "day",
+          dateType: "day",
+          dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+          dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
         }))
       );
       (objects?.PAGING) && (
         functions?.setPAGING((prev) => ({
           ...prev,
           page: 1,
-        }))
-      );
-      (objects?.DATE) && (
-        functions?.setDATE((prev) => ({
-          ...prev,
-          dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-          dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
         }))
       );
     }}>
@@ -119,63 +115,7 @@ export const Btn = ({
               width: "80vw",
               height: "60vh"
             }}
-            onChange={(date) => {
-              (objects?.FILTER) && (
-                functions?.setFILTER((prev) => ({
-                  ...prev,
-                  type: "day",
-                }))
-              );
-              (objects?.PAGING) && (
-                functions?.setPAGING((prev) => ({
-                  ...prev,
-                  page: 1,
-                }))
-              );
-              (objects?.DATE) && (
-                functions?.setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD")
-                }))
-              );
-            }}
-            onMonthChange={(date) => {
-              (objects?.FILTER) && (
-                functions?.setFILTER((prev) => ({
-                  ...prev,
-                  type: "month",
-                }))
-              );
-              (objects?.DATE) && (
-                functions?.setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                }))
-              );
-            }}
-            onYearChange={(date) => {
-              (objects?.FILTER) && (
-                functions?.setFILTER((prev) => ({
-                  ...prev,
-                  type: "year",
-                }))
-              );
-              (objects?.PAGING) && (
-                functions?.setPAGING((prev) => ({
-                  ...prev,
-                  page: 1,
-                }))
-              );
-              (objects?.DATE) && (
-                functions?.setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("year").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("year").format("YYYY-MM-DD")
-                }))
-              );
-            }}
+
           />
         </LocalizationProvider>
       )}>
