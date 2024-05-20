@@ -11,6 +11,9 @@ export const Footer = ({
   strings, objects, functions, handlers
 }) => {
 
+  const isLogin = strings.first === "user" && strings.second === "login";
+  const isSignup = strings.first === "user" && strings.second === "signup";
+
   // 6. pagingNode -------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging
@@ -43,11 +46,19 @@ export const Footer = ({
 
   // 7. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-7vh border-top"}>
-      {pagingNode()}
-      {filterNode()}
-      {btnNode()}
-    </Paper>
+    isLogin || isSignup ? (
+      <Paper className={"flex-wrapper p-sticky bottom-0vh border-top"}>
+        {pagingNode()}
+        {filterNode()}
+        {btnNode()}
+      </Paper>
+    ) : (
+      <Paper className={"flex-wrapper p-sticky bottom-7vh border-top"}>
+        {pagingNode()}
+        {filterNode()}
+        {btnNode()}
+      </Paper>
+    )
   );
 
   // 10. return ----------------------------------------------------------------------------------->

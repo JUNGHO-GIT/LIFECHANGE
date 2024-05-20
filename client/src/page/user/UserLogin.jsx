@@ -84,7 +84,7 @@ export const UserLogin = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper d-center h-min68vh"}>
+      <Div className={"block-wrapper d-center h-min90vh"}>
         <Div className={"d-center p-10"}>
           <Div className={"fs-2-0rem"}>Login</Div>
         </Div>

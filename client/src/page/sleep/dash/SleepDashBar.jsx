@@ -20,7 +20,7 @@ export const SleepDashBar = () => {
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
+  const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
 

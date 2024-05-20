@@ -34,7 +34,7 @@ export const UserDataList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
+  const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({

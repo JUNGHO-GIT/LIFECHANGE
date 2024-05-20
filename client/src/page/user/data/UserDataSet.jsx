@@ -35,7 +35,7 @@ export const UserDataSet = () => {
   const dataSetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
+  const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",

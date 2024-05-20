@@ -14,6 +14,7 @@ export const CalendarList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const sessionId = sessionStorage.getItem("sessionId");
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
@@ -30,7 +31,6 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -133,7 +133,7 @@ export const CalendarList = () => {
         formatYear={(locale, date) => (moment(date).format("YYYY"))}
         formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
         formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
-        // 월화수목금토일 한글로 표시
+        // (월 화 수 목 금 토 일) 한글로 표시
         formatShortWeekday={(locale, date) => {
           const day = moment(date).format("d");
           const week = ["일", "월", "화", "수", "목", "금", "토"];

@@ -12,6 +12,7 @@ export const Header = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const navigate = useNavigate();
   const {translate} = useTranslate();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
@@ -21,24 +22,41 @@ export const Header = () => {
       direction={"center"}
       contents={({closePopup}) => (
         <Div className={"d-column align-left p-5"}>
-          <Div className={"d-center pointer mb-10"} onClick={() => {
-            navigate("/user/login");
-            closePopup();
-          }}>
-            <Icons name={"TbLogin"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>
-              {translate("header-login")}
+          {!sessionId ? (
+            <>
+            <Div className={"d-center pointer mb-10"} onClick={() => {
+              navigate("/user/login");
+              closePopup();
+            }}>
+              <Icons name={"TbLogin"} className={"w-24 h-24"} />
+              <Div className={"fs-0-8rem"}>
+                {translate("header-login")}
+              </Div>
             </Div>
-          </Div>
-          <Div className={"d-center pointer mb-10"} onClick={() => {
-            navigate("/user/signup");
-            closePopup();
-          }}>
-            <Icons name={"TbLogin2"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>
-              {translate("header-signup")}
+            <Div className={"d-center pointer mb-10"} onClick={() => {
+              navigate("/user/signup");
+              closePopup();
+            }}>
+              <Icons name={"TbLogin2"} className={"w-24 h-24"} />
+              <Div className={"fs-0-8rem"}>
+                {translate("header-signup")}
+              </Div>
             </Div>
-          </Div>
+            </>
+          ) : (
+            <>
+            <Div className={"d-center pointer mb-10"} onClick={() => {
+              navigate("/");
+              sessionStorage.removeItem("sessionId");
+              closePopup();
+            }}>
+              <Icons name={"TbLogout"} className={"w-24 h-24"} />
+              <Div className={"fs-0-8rem"}>
+                {translate("header-logout")}
+              </Div>
+            </Div>
+            </>
+          )}
           <Div className={"d-center pointer mb-10"} onClick={() => {
             navigate("/user/data/set");
             closePopup();

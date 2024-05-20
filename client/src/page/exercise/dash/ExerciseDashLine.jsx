@@ -23,7 +23,7 @@ export const ExerciseDashLine = () => {
   const array = ["볼륨", "시간"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sessionId, setSessionId] = useState(sessionStorage.getItem("sessionId") || "{}");
+  const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("volume");

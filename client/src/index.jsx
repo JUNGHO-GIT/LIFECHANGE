@@ -1,9 +1,9 @@
 // App.jsx
 
-import React, {useState} from "react";
+import React from "react";
 import {useLocation} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -127,14 +127,16 @@ const User = () => (
 const App = () => {
   useScrollTop();
   const location = useLocation();
-  const isRoot = location.pathname.startsWith('/');
+  const isRoot = location.pathname === '/';
+  const isLogin = location.pathname === '/user/login';
+  const isSignup = location.pathname === '/user/signup';
   return (
     <div className={"App"}>
-      {!isRoot && <Header />}
-      {!isRoot && <NavBar />}
-      {!isRoot && <TopNav />}
+      {!isLogin && !isSignup && <Header />}
+      {!isLogin && !isSignup && <NavBar />}
+      {!isLogin && !isSignup && <TopNav />}
       <Routes>
-        <Route path="/*" element={<UserLogin />} />
+        {isRoot && <Route path="/" element={<Navigate to="/user/login" replace />} />}
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />
@@ -142,7 +144,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      {!isRoot && <BottomNav />}
+      {!isLogin && !isSignup && <BottomNav />}
     </div>
   );
 };

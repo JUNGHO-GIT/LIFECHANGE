@@ -15,6 +15,8 @@ export const NavBar = () => {
   const location = useLocation();
   const {lang, setLang} = useLanguage();
   const {translate} = useTranslate();
+  const sessionId = sessionStorage.getItem("sessionId");
+  const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
   const PATH = location.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -22,13 +24,6 @@ export const NavBar = () => {
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
   const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
   const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
-
-  useEffect(() => {
-    alert(JSON.stringify(part));
-  }, [part]);
 
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className, text) => {
@@ -192,7 +187,7 @@ export const NavBar = () => {
             <Div className={"d-center pointer"} onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}>
-              {!part || part === "" || part === "Calendar" ? (
+              {firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
                 makeIcon("total", "w-max8vw h-max8vh", "N")
               ) : (
                 makeIcon(part.toLowerCase(), "w-max8vw h-max8vh", "N")
