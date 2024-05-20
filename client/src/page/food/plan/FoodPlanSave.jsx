@@ -2,14 +2,13 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../../import/ImportMuis.jsx";
-import {TextField, Button, DateCalendar} from "../../../import/ImportMuis.jsx";
+import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {common1, common2, common3, common5} from "../../../import/ImportImages.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
@@ -25,6 +24,7 @@ export const FoodPlanSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -48,7 +48,7 @@ export const FoodPlanSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: location_dateType,
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -69,7 +69,7 @@ export const FoodPlanSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_dateStart, location_dateEnd, DATE, setDATE);
+  useDate(DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

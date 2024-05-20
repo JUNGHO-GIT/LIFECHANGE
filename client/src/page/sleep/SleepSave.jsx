@@ -23,6 +23,7 @@ export const SleepSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
@@ -46,7 +47,7 @@ export const SleepSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: location_dateType,
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -68,6 +69,7 @@ export const SleepSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->

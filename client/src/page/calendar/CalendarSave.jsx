@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
@@ -24,6 +24,7 @@ export const CalendarSave = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const location_id = location?.state?.id?.trim()?.toString();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
@@ -51,7 +52,7 @@ export const CalendarSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: location_dateType,
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -74,7 +75,7 @@ export const CalendarSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_dateStart, location_dateEnd, DATE, setDATE);
+  useDate(DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

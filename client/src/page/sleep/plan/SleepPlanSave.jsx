@@ -4,10 +4,10 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios} from "../../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime} from "../../../import/ImportHooks.jsx";
+import {useTime, useDate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br10, Br20} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Calendar} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
@@ -24,6 +24,7 @@ export const SleepPlanSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -47,7 +48,7 @@ export const SleepPlanSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: location_dateType,
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -67,7 +68,7 @@ export const SleepPlanSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_dateStart, location_dateEnd, DATE, setDATE);
+  useDate(DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -130,129 +131,10 @@ export const SleepPlanSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-row"}>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            label={translate("common-dateType")}
-            size={"small"}
-            value={DATE.dateType || "day"}
-            variant={"outlined"}
-            className={"w-20vw me-3vw"}
-            InputProps={{
-              readOnly: false,
-              className: "fw-bold",
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value
-              }));
-            }}>
-            {["전체", "day", "week", "month", "year"].map((item) => (
-              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Div>
-        <Div className={"d-center"}>
-          <PopUp
-            type={"innerCenter"}
-            position={"center"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <Div className={"d-center w-max86vw"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                  <DateCalendar
-                    timezone={"Asia/Seoul"}
-                    views={["year", "day"]}
-                    readOnly={true}
-                    defaultValue={moment(DATE.dateStart)}
-                    className={"radius border h-max40vh me-2"}
-                    sx={{
-                      "& .MuiDateCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiYearCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiDayCalendar-slideTransition": {
-                        minHeight: "0px",
-                      },
-                      "& .MuiDayCalendar-weekDayLabel": {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                      '& .MuiPickersDay-root': {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                    }}
-                  />
-                  <DateCalendar
-                    timezone={"Asia/Seoul"}
-                    views={["year", "day"]}
-                    readOnly={true}
-                    defaultValue={moment(DATE.dateEnd)}
-                    className={"radius border h-max40vh ms-2"}
-                    sx={{
-                      "& .MuiDateCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiYearCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiDayCalendar-slideTransition": {
-                        minHeight: "0px",
-                      },
-                      "& .MuiDayCalendar-weekDayLabel": {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                      '& .MuiPickersDay-root': {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              </Div>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                type={"text"}
-                size={"small"}
-                label={"기간"}
-                variant={"outlined"}
-                value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-                className={"w-63vw"}
-                InputProps={{
-                  readOnly: true,
-                  className: "fw-bold",
-                  startAdornment: (
-                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-                  ),
-                  endAdornment: null
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
-                }}
-              />
-            )}
-          </PopUp>
-        </Div>
-      </Div>
+      <Calendar
+        DATE={DATE}
+        setDATE={setDATE}
+      />
     );
     // 7-2. count
     const countSection = () => (

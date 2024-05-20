@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
@@ -23,6 +23,7 @@ export const MoneySave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
@@ -46,7 +47,7 @@ export const MoneySave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: location_dateType,
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -73,7 +74,7 @@ export const MoneySave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_dateStart, location_dateEnd, DATE, setDATE);
+  useDate(DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

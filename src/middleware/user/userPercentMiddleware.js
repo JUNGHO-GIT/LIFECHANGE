@@ -3,8 +3,6 @@
 // 1. percent ------------------------------------------------------------------------------------->
 export const percent = async (object) => {
 
-  console.log(JSON.stringify(object, null, 2));
-
   if (!object) {
     return [];
   }
