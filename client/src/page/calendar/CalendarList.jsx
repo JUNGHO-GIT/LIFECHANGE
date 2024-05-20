@@ -18,9 +18,9 @@ export const CalendarList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(

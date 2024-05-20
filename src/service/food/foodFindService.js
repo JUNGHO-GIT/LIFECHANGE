@@ -140,7 +140,7 @@ export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType;
+  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 

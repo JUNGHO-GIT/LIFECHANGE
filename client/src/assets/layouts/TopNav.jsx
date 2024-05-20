@@ -14,9 +14,9 @@ export const TopNav = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("diff/list");
@@ -49,7 +49,7 @@ export const TopNav = () => {
           setValue(newValue);
           navigate(`${firstStr}/${newValue}`, {
             state: {
-              dateType: "day",
+              dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
               dateEnd: moment().format("YYYY-MM-DD")
             }
@@ -119,7 +119,7 @@ export const TopNav = () => {
           setValue(newValue);
           navigate(`${firstStr}/${newValue}`, {
             state: {
-              dateType: "day",
+              dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
               dateEnd: moment().format("YYYY-MM-DD")
             }

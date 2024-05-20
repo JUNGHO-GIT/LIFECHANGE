@@ -57,7 +57,7 @@ export const BottomNav = () => {
             setValue("exercise");
             navigate("exercise/diff/list", {
               state: {
-                dateType: "day",
+                dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }
@@ -72,7 +72,7 @@ export const BottomNav = () => {
             setValue("food");
             navigate("food/diff/list", {
               state: {
-                dateType: "day",
+                dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }
@@ -87,7 +87,7 @@ export const BottomNav = () => {
             setValue("calendar");
             navigate("calendar/list", {
               state: {
-                dateType: "day",
+                dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }
@@ -102,7 +102,7 @@ export const BottomNav = () => {
             setValue("money");
             navigate("money/diff/list", {
               state: {
-                dateType: "day",
+                dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }
@@ -117,7 +117,7 @@ export const BottomNav = () => {
             setValue("sleep");
             navigate("sleep/diff/list", {
               state: {
-                dateType: "day",
+                dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }

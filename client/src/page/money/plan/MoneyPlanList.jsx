@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
+import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
@@ -21,20 +21,17 @@ export const MoneyPlanList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType?.trim()?.toString();
-  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
-  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: location_dateType || "전체",
-      dateStart: location_dateStart,
-      dateEnd: location_dateEnd,
+      dateType: "",
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -78,9 +75,6 @@ export const MoneyPlanList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_dateStart, location_dateEnd, DATE, setDATE, FILTER, setFILTER);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
@@ -102,7 +96,7 @@ export const MoneyPlanList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.dateStart, DATE.dateEnd
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->

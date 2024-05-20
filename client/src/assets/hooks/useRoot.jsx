@@ -18,5 +18,5 @@ export const useRoot = () => {
         navigate("/user/login");
       }
     }
-  }, [sessionId, location.pathname, navigate]);
+  }, [sessionId]);
 };

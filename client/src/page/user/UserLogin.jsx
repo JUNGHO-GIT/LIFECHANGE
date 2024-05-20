@@ -18,14 +18,15 @@ export const UserLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
+    dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toLogin:"/user/login",

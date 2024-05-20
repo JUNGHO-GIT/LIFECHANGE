@@ -20,9 +20,9 @@ export const UserDataList = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -47,7 +47,7 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
-    exercise_plan_dateType: "day",
+    exercise_plan_dateType: "",
     exercise_plan_dateStart: "0000-00-00",
     exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,
@@ -58,7 +58,7 @@ export const UserDataList = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
-    exercise_dateType: "day",
+    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
@@ -77,7 +77,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_FOOD_PLAN_DEF = [{
-    food_plan_dateType: "day",
+    food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
@@ -88,7 +88,7 @@ export const UserDataList = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
-    food_dateType: "day",
+    food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
@@ -109,7 +109,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_MONEY_PLAN_DEF = [{
-    money_plan_dateType: "day",
+    money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,
@@ -118,7 +118,7 @@ export const UserDataList = () => {
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
-    money_dateType: "day",
+    money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_in: 0,
@@ -133,7 +133,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_SLEEP_PLAN_DEF = [{
-    sleep_plan_dateType: "day",
+    sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
@@ -143,7 +143,7 @@ export const UserDataList = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
-    sleep_dateType: "day",
+    sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{

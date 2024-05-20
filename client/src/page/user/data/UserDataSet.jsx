@@ -26,13 +26,12 @@ export const UserDataSet = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
   const dataSetArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -40,7 +39,8 @@ export const UserDataSet = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateType: "",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toDataSet: "/user/data/set",
   });

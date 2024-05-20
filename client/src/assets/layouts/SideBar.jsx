@@ -19,6 +19,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const [SEND, setSEND] = useState({
     id: "",
+    dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     refresh: 0,

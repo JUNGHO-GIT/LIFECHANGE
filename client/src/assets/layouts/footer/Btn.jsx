@@ -96,7 +96,7 @@ export const Btn = ({
       (objects?.DATE) && (
         functions?.setDATE((prev) => ({
           ...prev,
-          dateType: "day",
+          dateType: "",
           dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
           dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
         }))

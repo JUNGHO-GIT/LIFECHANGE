@@ -1,4 +1,5 @@
 // useDate.jsx
+// 리스트 사용금지
 
 import {React, useEffect, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
@@ -12,9 +13,9 @@ export const useDate = (
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const location = useLocation();
   const PATH = location?.pathname?.trim()?.toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -29,7 +30,7 @@ export const useDate = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   /**
-  
+
   useEffect(() => {
     if (secondStr !== "list" && thirdStr !== "list"){
     if (DATE?.dateType === "day") {
@@ -62,6 +63,6 @@ export const useDate = (
     }
     }
   }, [DATE?.dateType]);
-  
+
   **/
 };

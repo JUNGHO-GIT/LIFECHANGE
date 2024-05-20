@@ -1,10 +1,10 @@
 // Filter.jsx
 
-import {React} from "../../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {moment, numeral} from "../../../import/ImportLibs.jsx";
+import {moment} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, DateCalendar, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TextField, DateCalendar, MenuItem} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -18,7 +18,9 @@ export const Filter = ({
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
-  const {translate} = useTranslate();
+  const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
+  const secondStr = PATH?.split("/")[2] || "";
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -42,11 +44,19 @@ export const Filter = ({
             page: 1
           }))
         )}>
-        {["전체", "day", "week", "month", "year"].map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
-            {item}
-          </MenuItem>
-        ))}
+        {secondStr === "plan" ? (
+          ["전체", "day", "week", "month", "year"].map((item) => (
+            <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
+              {item}
+            </MenuItem>
+          ))
+        ) : (
+          ["전체", "day"].map((item) => (
+            <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
+              {item}
+            </MenuItem>
+          ))
+        )}
       </TextField>
       <TextField
         select={true}

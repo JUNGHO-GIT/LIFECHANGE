@@ -24,29 +24,20 @@ export const ExercisePlanSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
-  const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
-  const thirdStr = PATH?.split("/")[3] ? PATH?.split("/")[3] : "";
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      dateType: location_dateType || "day",
-      dateStart: location_dateStart,
-      dateEnd: location_dateEnd,
-    }
-  );
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateType: "",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/exercise/plan/list"
   });
@@ -54,6 +45,11 @@ export const ExercisePlanSave = () => {
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
+  });
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
