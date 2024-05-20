@@ -25,6 +25,7 @@ export const ExerciseSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
@@ -35,9 +36,9 @@ export const ExerciseSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
 
@@ -378,7 +379,7 @@ export const ExerciseSave = () => {
                 <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>h:m</Div>
+                <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
               )
             }}
           />
@@ -669,7 +670,7 @@ export const ExerciseSave = () => {
                     <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {

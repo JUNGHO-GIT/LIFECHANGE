@@ -13,14 +13,8 @@ export const list = {
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param,
-      money_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      money_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       }),
@@ -43,14 +37,8 @@ export const list = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
         ...(dateType_param === "전체" ? {} : {
           money_dateType: dateType_param
         }),
@@ -98,14 +86,8 @@ export const detail = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      money_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -124,14 +106,8 @@ export const save = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      money_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -193,14 +169,8 @@ export const deletes = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      money_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      money_dateStart: dateStart_param,
+      money_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -216,14 +186,8 @@ export const deletes = {
     const updateResult = await Money.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
         ...(dateType_param === "전체" ? {} : {
           money_dateType: dateType_param
         }),

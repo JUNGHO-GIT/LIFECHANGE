@@ -1,6 +1,7 @@
 // TopNav.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div, Br10} from "../../import/ImportComponents.jsx";
 import {Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
@@ -46,7 +47,13 @@ export const TopNav = () => {
         }}
         onChange={(event, newValue) => {
           setValue(newValue);
-          navigate(`${firstStr}/${newValue}`);
+          navigate(`${firstStr}/${newValue}`, {
+            state: {
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }
+          });
         }}>
         <Tab
           label={translate("topNav-dashList")}
@@ -110,7 +117,13 @@ export const TopNav = () => {
         }}
         onChange={(event, newValue) => {
           setValue(newValue);
-          navigate(`${firstStr}/${newValue}`);
+          navigate(`${firstStr}/${newValue}`, {
+            state: {
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }
+          });
         }}>
         <Tab
           label={translate("topNav-dashList")}

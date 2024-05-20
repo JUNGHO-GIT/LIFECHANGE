@@ -35,14 +35,8 @@ export const barToday = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -64,14 +58,8 @@ export const pieToday = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -96,14 +84,8 @@ export const pieToday = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -131,14 +113,8 @@ export const pieWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -163,14 +139,8 @@ export const pieWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -198,14 +168,8 @@ export const pieMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -230,14 +194,8 @@ export const pieMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$unwind: "$money_section"
       },
@@ -265,14 +223,8 @@ export const lineWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -290,14 +242,8 @@ export const lineWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -318,14 +264,8 @@ export const lineMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -343,14 +283,8 @@ export const lineMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -371,14 +305,8 @@ export const avgMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -396,14 +324,8 @@ export const avgMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -424,14 +346,8 @@ export const avgYear = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,
@@ -449,14 +365,8 @@ export const avgYear = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        money_dateStart: dateStart_param,
+        money_dateEnd: dateEnd_param,
       }},
       {$project: {
         money_dateStart: 1,

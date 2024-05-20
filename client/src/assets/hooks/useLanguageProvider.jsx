@@ -95,6 +95,7 @@ export const useTranslate = () => {
       real: {ko: "실제", en: "Real"},
       diff: {ko: "차이", en: "Diff"},
       delete: {ko: "삭제", en: "Delete"},
+      endHour: {ko: "h:m", en: "h:m"},
     },
     exercise: {
       planCount: {ko: "횟수 목표", en: "Count Goals"},

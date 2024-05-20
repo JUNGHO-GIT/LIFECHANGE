@@ -13,14 +13,8 @@ export const list = {
   ) => {
     const finalResult = await Food.countDocuments({
       user_id: user_id_param,
-      food_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      food_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         food_dateType: dateType_param
       }),
@@ -43,14 +37,8 @@ export const list = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        food_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        food_dateStart: dateStart_param,
+        food_dateEnd: dateEnd_param,
         ...(dateType_param === "전체" ? {} : {
           food_dateType: dateType_param
         }),
@@ -100,14 +88,8 @@ export const detail = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      food_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         food_dateType: dateType_param
       }),
@@ -126,14 +108,8 @@ export const save = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      food_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         food_dateType: dateType_param
       }),
@@ -199,14 +175,8 @@ export const deletes = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      food_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
       ...(dateType_param === "전체" ? {} : {
         food_dateType: dateType_param
       }),
@@ -222,14 +192,8 @@ export const deletes = {
     const updateResult = await Food.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        food_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        food_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        food_dateStart: dateStart_param,
+        food_dateEnd: dateEnd_param,
         ...(dateType_param === "전체" ? {} : {
           food_dateType: dateType_param
         }),

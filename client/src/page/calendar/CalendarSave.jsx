@@ -25,6 +25,7 @@ export const CalendarSave = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const location_id = location?.state?.id?.trim()?.toString();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
@@ -39,9 +40,9 @@ export const CalendarSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
 

@@ -1,6 +1,7 @@
 // BottomNav.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper} from "../../import/ImportMuis.jsx";
@@ -54,7 +55,13 @@ export const BottomNav = () => {
           icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
           onClick={() => {
             setValue("exercise");
-            navigate("exercise/diff/list");
+            navigate("exercise/diff/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
           }}
         />
         <BottomNavigationAction
@@ -63,7 +70,13 @@ export const BottomNav = () => {
           icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
           onClick={() => {
             setValue("food");
-            navigate("food/diff/list");
+            navigate("food/diff/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
           }}
         />
         <BottomNavigationAction
@@ -72,7 +85,13 @@ export const BottomNav = () => {
           icon={<img src={calendar1} className={"w-16 h-16 icon"} alt={"calendar1"}/>}
           onClick={() => {
             setValue("calendar");
-            navigate("calendar/list");
+            navigate("calendar/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
           }}
         />
         <BottomNavigationAction
@@ -81,7 +100,13 @@ export const BottomNav = () => {
           icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
           onClick={() => {
             setValue("money");
-            navigate("money/diff/list");
+            navigate("money/diff/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
           }}
         />
         <BottomNavigationAction
@@ -90,7 +115,13 @@ export const BottomNav = () => {
           icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
           onClick={() => {
             setValue("sleep");
-            navigate("sleep/diff/list");
+            navigate("sleep/diff/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
           }}
         />
       </BottomNavigation>

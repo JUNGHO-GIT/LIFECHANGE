@@ -11,14 +11,8 @@ export const barToday = {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_plan_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_plan_dateStart: dateStart_param,
+        sleep_plan_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_plan_dateStart: 1,
@@ -38,14 +32,8 @@ export const barToday = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_dateStart: 1,
@@ -66,14 +54,8 @@ export const lineWeek = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_dateStart: 1,
@@ -95,14 +77,8 @@ export const lineMonth = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_dateStart: 1,
@@ -115,7 +91,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -123,14 +99,8 @@ export const avgMonth = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_dateStart: 1,
@@ -151,14 +121,8 @@ export const avgYear = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
       }},
       {$project: {
         sleep_dateStart: 1,

@@ -7,11 +7,11 @@ import {moment, axios} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Br10, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common3} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3} from "../../../import/ImportImages.jsx";
 import {common5, sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -26,6 +26,7 @@ export const SleepPlanSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -36,9 +37,9 @@ export const SleepPlanSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
 
@@ -47,7 +48,7 @@ export const SleepPlanSave = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/sleep/plan/list"
   });
@@ -74,6 +75,10 @@ export const SleepPlanSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_dateStart, location_dateEnd, DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
+
+  useEffect(() => {
+    console.log(JSON.stringify(location, null, 2));
+  }, [location]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -261,7 +266,64 @@ export const SleepPlanSave = () => {
         </Div>
       </Div>
     );
-    // 7-2. count (plan 은 total x)
+    // 7-2. count
+    const countSection = () => (
+      <PopUp
+        type={"alert"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center"}>
+            {`계획등록은 1개만 가능합니다.`}
+          </Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            label={translate("common-count")}
+            variant={"outlined"}
+            size={"small"}
+            className={"w-86vw"}
+            value={COUNT.newSectionCnt}
+            InputProps={{
+              readOnly: true,
+              className: "fw-bold",
+              startAdornment: (
+                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+              ),
+              endAdornment: (
+                <Div className={"d-center me-n10"}>
+                  <Icons
+                    name={"TbMinus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt - 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                  <Icons
+                    name={"TbPlus"}
+                    className={"w-14 h-14 black"}
+                    onClick={(e) => {
+                      COUNT.newSectionCnt < 1 ? (
+                        setCOUNT((prev) => ({
+                          ...prev,
+                          newSectionCnt: prev.newSectionCnt + 1
+                        }))
+                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    }}
+                  />
+                </Div>
+              )
+            }}
+          />
+        )}
+      </PopUp>
+    );
     // 7-3. total (plan 은 total x)
     // 7-4. badge
     const badgeSection = (index) => (
@@ -347,7 +409,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -399,7 +461,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -447,7 +509,7 @@ export const SleepPlanSave = () => {
                     <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -465,8 +527,11 @@ export const SleepPlanSave = () => {
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
+        <Div className={"d-center mb-20"}>
+          {countSection()}
+        </Div>
         <Div className={"d-column"}>
-          {tableFragment(0)}
+          {COUNT?.newSectionCnt > 0 && tableFragment(0)}
         </Div>
       </Div>
     );

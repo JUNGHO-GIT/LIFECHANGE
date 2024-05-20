@@ -50,14 +50,8 @@ export const detail = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      calendar_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      calendar_dateStart: dateStart_param,
+      calendar_dateEnd: dateEnd_param,
     })
     .lean();
     return finalResult;
@@ -73,14 +67,8 @@ export const save = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      calendar_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      calendar_dateStart: dateStart_param,
+      calendar_dateEnd: dateEnd_param,
     })
     .lean();
     return finalResult;
@@ -135,14 +123,8 @@ export const deletes = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      calendar_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      calendar_dateStart: dateStart_param,
+      calendar_dateEnd: dateEnd_param,
     })
     .lean();
     return finalResult;
@@ -155,14 +137,8 @@ export const deletes = {
     const updateResult = await Calendar.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        calendar_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        calendar_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        calendar_dateStart: dateStart_param,
+        calendar_dateEnd: dateEnd_param,
       },
       {$pull: {
         calendar_section: {

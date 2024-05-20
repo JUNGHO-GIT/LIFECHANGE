@@ -13,14 +13,11 @@ export const save = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_dateStart: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
-      food_dateEnd: {
-        $gte: dateStart_param,
-        $lte: dateEnd_param,
-      },
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
+      ...(dateType_param === "전체" ? {} : {
+        food_dateType: dateType_param
+      })
     })
     .lean();
     return finalResult;

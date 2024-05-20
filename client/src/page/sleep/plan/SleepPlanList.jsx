@@ -20,6 +20,7 @@ export const SleepPlanList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -30,9 +31,9 @@ export const SleepPlanList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -148,6 +149,7 @@ export const SleepPlanList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
+                    dateType: item.sleep_plan_dateType,
                     dateStart: item.sleep_plan_dateStart,
                     dateEnd: item.sleep_plan_dateEnd,
                   });

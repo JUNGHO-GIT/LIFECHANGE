@@ -21,6 +21,7 @@ export const SleepDiff = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -31,9 +32,9 @@ export const SleepDiff = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -51,7 +52,7 @@ export const SleepDiff = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave:"/sleep/plan/save"
   });

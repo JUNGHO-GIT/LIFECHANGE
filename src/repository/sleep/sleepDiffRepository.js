@@ -32,14 +32,8 @@ export const list = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        sleep_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
         ...(dateType_param === "전체" ? {} : {
           sleep_plan_dateType: dateType_param
         }),

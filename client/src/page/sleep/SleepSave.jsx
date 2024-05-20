@@ -24,6 +24,7 @@ export const SleepSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateType = location?.state?.dateType?.trim()?.toString();
   const location_dateStart = location?.state?.dateStart?.trim()?.toString();
   const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
@@ -34,9 +35,9 @@ export const SleepSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
+      dateType: location_dateType,
+      dateStart: location_dateStart,
+      dateEnd: location_dateEnd,
     }
   );
 
@@ -361,7 +362,7 @@ export const SleepSave = () => {
                     <img src={sleep2} className={"w-16 h-16 me-10"} alt={"sleep2"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -418,7 +419,7 @@ export const SleepSave = () => {
                     <img src={sleep3} className={"w-16 h-16 me-10"} alt={"sleep3"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
@@ -466,7 +467,7 @@ export const SleepSave = () => {
                     <img src={sleep4} className={"w-16 h-16 me-10"} alt={"sleep4"}/>
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>h:m</Div>
+                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
                   )
                 }}
                 onClick={(e) => {
