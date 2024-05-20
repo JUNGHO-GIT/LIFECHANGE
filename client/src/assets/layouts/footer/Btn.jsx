@@ -7,7 +7,6 @@ import {PopUp, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
-import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 
 // ------------------------------------------------------------------------------------------------>
 export const Btn = ({
@@ -44,6 +43,20 @@ export const Btn = ({
       });
     }}>
       {translate("btn-goToFind")}
+    </Button>
+  );
+  const btnGoToSave = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      Object.assign(objects?.SEND, {
+        dateStart: objects?.DATE.dateStart,
+        dateEnd: objects?.DATE.dateEnd
+      });
+      handlers.navigate(objects?.SEND.toSave, {
+        state: objects?.SEND,
+      });
+    }}>
+      {translate("btn-goToSave")}
     </Button>
   );
   const btnGoToFindSave = () => (
@@ -98,36 +111,6 @@ export const Btn = ({
     }}>
       {translate("btn-getToday")}
     </Button>
-  );
-  const btnGetCalendar = () => (
-    <PopUp
-      type={"calendar"}
-      position={"top"}
-      direction={"center"}
-      contents={({closePopup}) => (
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DateCalendar
-            timezone={"Asia/Seoul"}
-            views={["year", "day"]}
-            readOnly={false}
-            defaultValue={moment(objects?.DATE.dateStart)}
-            sx={{
-              width: "80vw",
-              height: "60vh"
-            }}
-
-          />
-        </LocalizationProvider>
-      )}>
-      {(popTrigger={}) => (
-        <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-        className={"primary-btn"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          {translate("btn-getCalendar")}
-        </Button>
-      )}
-    </PopUp>
   );
   const btnGetProperty = () => (
     <PopUp
@@ -355,7 +338,7 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -364,7 +347,7 @@ export const Btn = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -382,7 +365,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -404,7 +387,7 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -430,7 +413,7 @@ export const Btn = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -448,7 +431,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -470,7 +453,7 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -479,7 +462,7 @@ export const Btn = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -497,7 +480,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -519,7 +502,7 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -528,7 +511,7 @@ export const Btn = ({
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -546,7 +529,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
           </Div>
@@ -586,7 +569,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
-            {btnGetCalendar()}
+            {btnGoToSave()}
             {btnGetToday()}
           </Div>
         );

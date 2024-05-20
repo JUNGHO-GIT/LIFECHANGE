@@ -23,6 +23,7 @@ export const FoodFindSave = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const session = sessionStorage.getItem("dataSet") || "{}";
   const foodArray = JSON.parse(session)?.food || [];
+  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -204,54 +205,106 @@ export const FoodFindSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <PopUp
-        type={"calendar"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateStart)}
-              sx={{
-                width: "80vw",
-                height: "60vh"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD"),
-                }));
-                closePopup();
-              }}
-            />
-          </LocalizationProvider>
-        )}>
-        {(popTrigger={}) => (
+      <Div className={"d-row"}>
+        <Div className={"d-center"}>
           <TextField
-            select={false}
-            label={translate("common-date")}
+            select={true}
+            label={translate("common-dateType")}
             size={"small"}
-            value={DATE.dateStart}
+            value={DATE.dateType}
             variant={"outlined"}
-            className={"w-86vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            className={"w-20vw me-3vw"}
             InputProps={{
               readOnly: true,
               className: "fw-bold",
-              startAdornment: (
-                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-              ),
+              startAdornment: null,
               endAdornment: null
             }}
-          />
-        )}
-      </PopUp>
+            onChange={(e) => {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value
+              }));
+            }}>
+            {dateType.map((item, idx) => (
+              <MenuItem key={idx} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Div>
+        <Div className={"d-center"}>
+          <PopUp
+            type={"innerCenter"}
+            position={"center"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <Div className={"d-center w-max70vw"}>
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                  <DateCalendar
+                    timezone={"Asia/Seoul"}
+                    views={["year", "day"]}
+                    readOnly={false}
+                    defaultValue={moment(DATE.dateStart)}
+                    className={"radius border h-max50vh"}
+                    onChange={(date) => {
+                      setDATE((prev) => ({
+                        ...prev,
+                        dateStart: moment(date).format("YYYY-MM-DD"),
+                        dateEnd: moment(date).format("YYYY-MM-DD")
+                      }));
+                    }}
+                    sx={{
+                      "& .MuiDateCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiYearCalendar-root": {
+                        width: "100%",
+                        height: "100%",
+                      },
+                      "& .MuiDayCalendar-slideTransition": {
+                        minHeight: "0px",
+                      },
+                      "& .MuiDayCalendar-weekDayLabel": {
+                        fontSize: "0.7rem",
+                        width: "5vh",
+                        height: "5vh",
+                      },
+                      '& .MuiPickersDay-root': {
+                        fontSize: "0.7rem",
+                        width: "5vh",
+                        height: "5vh",
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Div>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                type={"text"}
+                size={"small"}
+                label={"날짜"}
+                variant={"outlined"}
+                value={`${DATE.dateStart}`}
+                className={"w-63vw"}
+                InputProps={{
+                  readOnly: true,
+                  className: "fw-bold",
+                  startAdornment: (
+                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                  ),
+                  endAdornment: null
+                }}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
+                }}
+              />
+            )}
+          </PopUp>
+        </Div>
+      </Div>
     );
     // 7-2. count
     const countSection = () => (

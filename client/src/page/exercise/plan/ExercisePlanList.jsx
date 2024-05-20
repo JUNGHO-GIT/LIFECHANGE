@@ -101,7 +101,7 @@ export const ExercisePlanList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.dateType, DATE.dateStart, DATE.dateEnd
+    DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->

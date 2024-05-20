@@ -72,7 +72,7 @@ export const useTranslate = () => {
       goToLogin: {ko: "로그인", en: "Login"},
       goToSignup: {ko: "회원가입", en: "Signup"},
       getToday: {ko: "오늘", en: "Today"},
-      getCalendar: {ko: "일정", en: "Calendar"},
+      getCalendar: {ko: "달력", en: "Calendar"},
       getProperty: {ko: "지갑", en: "Wallet"},
       flowLogin: {ko: "로그인", en: "Login"},
       flowLogout: {ko: "로그아웃", en: "Logout"},

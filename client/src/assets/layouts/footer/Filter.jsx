@@ -1,8 +1,11 @@
 // Filter.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {moment, numeral} from "../../../import/ImportLibs.jsx";
+import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {Button, TextField, DateCalendar, MenuItem} from "../../../import/ImportMuis.jsx";
+import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Filter = ({
@@ -17,6 +20,7 @@ export const Filter = ({
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
   const orderType = ["asc", "desc"];
+  const {translate} = useTranslate();
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -25,6 +29,7 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
+        label={"유형"}
         variant={"outlined"}
         value={objects?.DATE?.dateType}
         className={"ms-2 me-2"}
@@ -49,6 +54,7 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
+        label={"정렬"}
         variant={"outlined"}
         value={objects?.FILTER?.order}
         className={"ms-2 me-2"}
@@ -65,6 +71,122 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-center w-max86vw"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["year", "day"]}
+                readOnly={false}
+                defaultValue={moment(objects?.DATE.dateStart)}
+                className={"radius border h-max40vh me-2"}
+                onChange={(date) => {
+                  (objects?.DATE) && (
+                    functions?.setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD")
+                    }))
+                  );
+                  (objects?.PAGING) && (
+                    functions?.setPAGING((prev) => ({
+                      ...prev,
+                      page: 1,
+                    }))
+                  );
+                }}
+                sx={{
+                  "& .MuiDateCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiYearCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    minHeight: "0px",
+                  },
+                  "& .MuiDayCalendar-weekDayLabel": {
+                    fontSize: "0.7rem",
+                    width: "3.5vh",
+                    height: "3.5vh",
+                  },
+                  '& .MuiPickersDay-root': {
+                    fontSize: "0.7rem",
+                    width: "3.5vh",
+                    height: "3.5vh",
+                  },
+                }}
+              />
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["year", "day"]}
+                readOnly={false}
+                defaultValue={moment(objects?.DATE.dateEnd)}
+                className={"radius border h-max40vh ms-2"}
+                onChange={(date) => {
+                  (objects?.DATE) && (
+                    functions?.setDATE((prev) => ({
+                      ...prev,
+                      dateEnd: moment(date).format("YYYY-MM-DD")
+                    }))
+                  );
+                  (objects?.PAGING) && (
+                    functions?.setPAGING((prev) => ({
+                      ...prev,
+                      page: 1,
+                    }))
+                  );
+                }}
+                sx={{
+                  "& .MuiDateCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiYearCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    minHeight: "0px",
+                  },
+                  "& .MuiDayCalendar-weekDayLabel": {
+                    fontSize: "0.7rem",
+                    width: "3.5vh",
+                    height: "3.5vh",
+                  },
+                  '& .MuiPickersDay-root': {
+                    fontSize: "0.7rem",
+                    width: "3.5vh",
+                    height: "3.5vh",
+                  },
+                }}
+              />
+            </LocalizationProvider>
+          </Div>
+        )}>
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            size={"small"}
+            label={"기간"}
+            variant={"outlined"}
+            value={`${objects?.DATE?.dateStart} ~ ${objects?.DATE?.dateEnd}`}
+            className={"ms-2 me-2"}
+            InputProps={{
+              readOnly: true,
+              className: "w-40vw h-4vh fs-0-7rem"
+            }}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+          />
+        )}
+      </PopUp>
     </Div>
   );
 
