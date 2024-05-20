@@ -1,6 +1,7 @@
 // App.jsx
 
-import React from "react";
+import React, {useState} from "react";
+import {useLocation} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
@@ -125,13 +126,15 @@ const User = () => (
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   useScrollTop();
+  const location = useLocation();
+  const isRoot = location.pathname.startsWith('/');
   return (
     <div className={"App"}>
-      <Header />
-      <NavBar />
-      <TopNav />
+      {!isRoot && <Header />}
+      {!isRoot && <NavBar />}
+      {!isRoot && <TopNav />}
       <Routes>
-        <Route path="/" element={<CalendarList />} />
+        <Route path="/*" element={<UserLogin />} />
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />
@@ -139,7 +142,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      <BottomNav />
+      {!isRoot && <BottomNav />}
     </div>
   );
 };

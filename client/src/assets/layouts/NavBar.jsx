@@ -26,6 +26,10 @@ export const NavBar = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [percent, setPercent] = useState(JSON.parse(sessionStorage.getItem("percent") || "{}"));
 
+  useEffect(() => {
+    alert(JSON.stringify(part));
+  }, [part]);
+
   // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (part, className, text) => {
 
@@ -99,7 +103,7 @@ export const NavBar = () => {
     <Div className={"block-wrapper d-row h-7vh w-100vw"}>
       <Div className={"d-center ms-10"}>
         <Div className={"fs-1-0rem fw-bold navy"}>
-          {part} {type ? ` / ${type}` : ""} {plan ? ` / ${plan}` : ""}
+          {part ? part : "Home"} {type ? ` / ${type}` : ` / `} {plan ? ` / ${plan}` : ``}
         </Div>
       </Div>
       <Div className={"d-center ms-auto"}>
@@ -188,7 +192,7 @@ export const NavBar = () => {
             <Div className={"d-center pointer"} onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}>
-              {!part || part === "Calendar" ? (
+              {!part || part === "" || part === "Calendar" ? (
                 makeIcon("total", "w-max8vw h-max8vh", "N")
               ) : (
                 makeIcon(part.toLowerCase(), "w-max8vw h-max8vh", "N")
