@@ -3,6 +3,8 @@
 // 1. percent ------------------------------------------------------------------------------------->
 export const percent = async (object) => {
 
+  console.log(JSON.stringify(object, null, 2));
+
   if (!object) {
     return [];
   }
@@ -317,7 +319,7 @@ export const percent = async (object) => {
 
   // 1. exercise
   let exercise = {};
-  if (!object?.exercisePlan) {
+  if (!object?.exercisePlan || !object?.exercise) {
     exercise = {
       diff_count: {
         score: "1.00",
@@ -364,7 +366,7 @@ export const percent = async (object) => {
 
   // 2. food
   let food = {};
-  if (!object?.foodPlan) {
+  if (!object?.foodPlan || !object?.food) {
     food = {
       diff_kcal: {
         score: "1.00",
@@ -411,7 +413,7 @@ export const percent = async (object) => {
 
   // 3. money
   let money = {};
-  if (!object?.moneyPlan) {
+  if (!object?.moneyPlan || !object?.money) {
     money = {
       diff_in: {
         score: "1.00",
@@ -440,7 +442,7 @@ export const percent = async (object) => {
 
   // 4. sleep
   let sleep = {};
-  if (!object?.sleepPlan) {
+  if (!object?.sleepPlan || !object?.sleep) {
     sleep = {
       diff_night: {
         score: "1.00",
@@ -492,8 +494,8 @@ export const percent = async (object) => {
       };
     }
     return {
-      score: (sumScore / count).toFixed(2),
-      percent: (sumPercent / count).toFixed(2),
+      score: (sumScore / count).toFixed(2) || "1.00",
+      percent: (sumPercent / count).toFixed(2) || "1.00",
     };
   };
 
