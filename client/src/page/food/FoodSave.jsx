@@ -293,34 +293,7 @@ export const FoodSave = () => {
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
-              endAdornment: (
-                <Div className={"d-center me-n10"}>
-                  <Icons
-                    name={"TbMinus"}
-                    className={"w-14 h-14 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt - 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                  <Icons
-                    name={"TbPlus"}
-                    className={"w-14 h-14 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt < 10 ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt + 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                </Div>
-              )
+              endAdornment: null
             }}
           />
         )}
