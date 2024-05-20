@@ -29,7 +29,7 @@ export const MoneyList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: location_dateType || "day",
+      dateType: location_dateType || "전체",
       dateStart: location_dateStart,
       dateEnd: location_dateEnd,
     }
@@ -49,7 +49,8 @@ export const MoneyList = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateType: "전체",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/money/save",
   });

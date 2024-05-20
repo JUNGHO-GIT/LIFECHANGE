@@ -74,14 +74,14 @@ export const Filter = ({
         position={"center"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center w-max86vw"}>
+          <Div className={"d-center"}>
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["year", "day"]}
                 readOnly={false}
                 defaultValue={moment(objects?.DATE.dateStart)}
-                className={"radius border h-max40vh me-2"}
+                className={"radius border w-max42vw h-max30vh me-2"}
                 onChange={(date) => {
                   (objects?.DATE) && (
                     functions?.setDATE((prev) => ({
@@ -109,14 +109,12 @@ export const Filter = ({
                     minHeight: "0px",
                   },
                   "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.7rem",
-                    width: "3.5vh",
-                    height: "3.5vh",
+                    fontSize: "0.65rem",
+                    height: "3.0vh",
                   },
                   '& .MuiPickersDay-root': {
-                    fontSize: "0.7rem",
-                    width: "3.5vh",
-                    height: "3.5vh",
+                    fontSize: "0.65rem",
+                    height: "3.0vh",
                   },
                 }}
               />
@@ -125,7 +123,7 @@ export const Filter = ({
                 views={["year", "day"]}
                 readOnly={false}
                 defaultValue={moment(objects?.DATE.dateEnd)}
-                className={"radius border h-max40vh ms-2"}
+                className={"radius border w-max42vw h-max30vh ms-2"}
                 onChange={(date) => {
                   (objects?.DATE) && (
                     functions?.setDATE((prev) => ({
@@ -153,14 +151,12 @@ export const Filter = ({
                     minHeight: "0px",
                   },
                   "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.7rem",
-                    width: "3.5vh",
-                    height: "3.5vh",
+                    fontSize: "0.65rem",
+                    height: "3.0vh",
                   },
                   '& .MuiPickersDay-root': {
-                    fontSize: "0.7rem",
-                    width: "3.5vh",
-                    height: "3.5vh",
+                    fontSize: "0.65rem",
+                    height: "3.0vh",
                   },
                 }}
               />
