@@ -168,7 +168,7 @@ export const FoodFindSave = () => {
   const handlerDelete = (index) => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
-    let section = sessionStorage.getItem("food_section");
+    let section = sessionStorage.getItem("foodSection");
 
     // sectionArray 초기화
     if (section) {
@@ -182,7 +182,7 @@ export const FoodFindSave = () => {
     sectionArray.splice(index, 1);
 
     // 스토리지 데이터 설정
-    sessionStorage.setItem("food_section", JSON.stringify(sectionArray));
+    sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
 
     // OBJECT 설정
     setOBJECT((prev) => ({
@@ -592,6 +592,7 @@ export const FoodFindSave = () => {
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
+              className: "fw-bold",
               startAdornment: (
                 <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
               ),

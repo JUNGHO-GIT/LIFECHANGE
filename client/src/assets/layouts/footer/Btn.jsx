@@ -200,7 +200,7 @@ export const Btn = ({
             <Div className={"d-center mb-20"}>
               <TextField
                 select={false}
-                label={"총 재산"}
+                label={translate("money-property")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -220,7 +220,7 @@ export const Btn = ({
             <Div className={"d-center mb-20"}>
               <TextField
                 select={false}
-                label={"총 수입"}
+                label={translate("money-in")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -240,7 +240,7 @@ export const Btn = ({
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={"총 지출"}
+                label={translate("money-out")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -292,6 +292,11 @@ export const Btn = ({
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       handlers.flowSave();
+      Object.keys(sessionStorage).forEach((key) => {
+        if (key.includes("FILTER") || key.includes("DATE") || key.includes("foodSection")) {
+          sessionStorage.removeItem(key);
+        }
+      });
     }}>
       {translate("btn-flowSave")}
     </Button>

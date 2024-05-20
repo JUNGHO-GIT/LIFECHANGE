@@ -66,7 +66,7 @@ export const useTranslate = () => {
     },
     btn: {
       goToList: {ko: "리스트", en: "List"},
-      goToFind: {ko: "찾기", en: "Find"},
+      goToFind: {ko: "더 찾기", en: "Find More"},
       goToFindSave: {ko: "완료", en: "Finish"},
       getToday: {ko: "오늘", en: "Today"},
       getCalendar: {ko: "일정", en: "Calendar"},
@@ -145,6 +145,7 @@ export const useTranslate = () => {
       totalOut: {ko: "총 지출", en: "Total Expense"},
       in: {ko: "수입", en: "Income"},
       out: {ko: "지출", en: "Expense"},
+      property: {ko: "자산", en: "Property"},
       part: {ko: "대분류", en: "Category"},
       title: {ko: "소분류", en: "Detail"},
       amount: {ko: "금액", en: "Amount"},
