@@ -5,7 +5,7 @@ import * as service from "../../service/sleep/sleepDiffService.js";
 import * as middleware from "../../middleware/sleep/sleepDiffMiddleware.js";
 export const router = express.Router();
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list(

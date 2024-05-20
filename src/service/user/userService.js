@@ -44,7 +44,7 @@ export const login = async (
   return finalResult;
 };
 
-// 2. detail -------------------------------------------------------------------------------------->
+// 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = async (
   user_id_param, _id_param
 ) => {

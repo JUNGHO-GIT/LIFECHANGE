@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {Calendar} from "../../schema/calendar/Calendar.js";
 import {newDate} from "../../assets/js/date.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
   cnt: async (
     user_id_param,
@@ -41,7 +41,7 @@ export const list = {
   },
 };
 
-// 2. detail -------------------------------------------------------------------------------------->
+// 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = {
   detail: async (
     user_id_param, _id_param,

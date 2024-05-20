@@ -3,7 +3,7 @@
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 
   cnt: async (

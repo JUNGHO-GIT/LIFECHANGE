@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 import {newDate} from "../../assets/js/date.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 
   cnt: async (
@@ -56,7 +56,7 @@ export const list = {
   }
 };
 
-// 2. detail -------------------------------------------------------------------------------------->
+// 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = {
   detail: async (
     user_id_param, _id_param,

@@ -3,7 +3,7 @@
 import {Food} from "../../schema/food/Food.js";
 import {FoodPlan} from "../../schema/food/FoodPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 
   cnt: async (

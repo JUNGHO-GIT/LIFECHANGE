@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/money/moneyDiffRepository.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = async (
   user_id_param, FILTER_param, PAGING_param, DATE_param
 ) => {

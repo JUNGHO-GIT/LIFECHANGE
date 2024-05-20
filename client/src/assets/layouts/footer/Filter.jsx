@@ -393,7 +393,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {exerciseNode()}
+            {/* {exerciseNode()} */}
           </Div>
         );
       }
@@ -411,7 +411,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {exerciseNode()}
+            {/* {exerciseNode()} */}
           </Div>
         );
       }
@@ -426,7 +426,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {foodNode()}
+            {/* {foodNode()} */}
           </Div>
         );
       }
@@ -450,7 +450,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {foodNode()}
+            {/* {foodNode()} */}
           </Div>
         );
       }
@@ -465,7 +465,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {moneyNode()}
+            {/* {moneyNode()} */}
           </Div>
         );
       }
@@ -483,7 +483,7 @@ export const Filter = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {defaultNode()}
-            {moneyNode()}
+            {/* {moneyNode()} */}
           </Div>
         );
       }

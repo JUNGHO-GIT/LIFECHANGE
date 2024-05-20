@@ -3,7 +3,7 @@
 import {Money} from "../../schema/money/Money.js";
 import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 
   cnt: async (

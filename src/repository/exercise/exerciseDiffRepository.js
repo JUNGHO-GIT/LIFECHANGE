@@ -3,7 +3,7 @@
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 
   cnt: async (

@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {Money} from "../../schema/money/Money.js";
 import {newDate} from "../../assets/js/date.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
   cnt: async (
     user_id_param,
@@ -13,8 +13,14 @@ export const list = {
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
+      money_dateStart: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param
+      },
+      money_dateEnd: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param
+      },
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       }),
@@ -37,8 +43,14 @@ export const list = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateStart: dateStart_param,
-        money_dateEnd: dateEnd_param,
+        money_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        money_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
         ...(dateType_param === "전체" ? {} : {
           money_dateType: dateType_param
         }),
@@ -77,7 +89,7 @@ export const list = {
   }
 };
 
-// 2. detail -------------------------------------------------------------------------------------->
+// 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = {
   detail: async (
     user_id_param, _id_param,

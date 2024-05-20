@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/money/moneyRepository.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = async (
   user_id_param, FILTER_param, PAGING_param, DATE_param
 ) => {
@@ -32,7 +32,7 @@ export const list = async (
   };
 };
 
-// 2. detail -------------------------------------------------------------------------------------->
+// 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = async (
   user_id_param, _id_param, DATE_param
 ) => {
