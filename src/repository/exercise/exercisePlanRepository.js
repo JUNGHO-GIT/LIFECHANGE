@@ -72,6 +72,9 @@ export const detail = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        exercise_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   }
@@ -79,9 +82,9 @@ export const detail = {
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
-  list: async (
+  detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
       user_id: user_id_param,
@@ -94,6 +97,9 @@ export const save = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        exercise_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -162,6 +168,9 @@ export const deletes = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        exercise_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;

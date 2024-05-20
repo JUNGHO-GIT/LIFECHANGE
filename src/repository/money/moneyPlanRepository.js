@@ -72,6 +72,9 @@ export const detail = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        money_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -95,6 +98,9 @@ export const save = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        money_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -159,6 +165,9 @@ export const deletes = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        money_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;

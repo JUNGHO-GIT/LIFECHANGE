@@ -60,19 +60,19 @@ export const save = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  const listPlan = await repository.save.list(
-    user_id_param, "", dateStart, dateEnd
+  const findResult = await repository.save.detail(
+    user_id_param, "", dateType, dateStart, dateEnd
   );
 
   let finalResult = null;
-  if (!listPlan) {
+  if (!findResult) {
     finalResult = await repository.save.create(
       user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
     finalResult = await repository.save.update(
-      user_id_param, listPlan._id, OBJECT_param, dateType, dateStart, dateEnd
+      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
 
