@@ -122,7 +122,6 @@ export const MoneyList = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
               <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -145,7 +144,6 @@ export const MoneyList = () => {
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
               <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -173,9 +171,6 @@ export const MoneyList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
-                <TableCell>
-                  {item.money_date_type}
-                </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}
                 </TableCell>
