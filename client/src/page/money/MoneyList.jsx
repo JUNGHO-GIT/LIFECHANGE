@@ -18,8 +18,8 @@ export const MoneyList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -28,15 +28,15 @@ export const MoneyList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
-      dateType: "thisDay",
+      date_type: "thisDay",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -49,8 +49,8 @@ export const MoneyList = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toSave: "/money/save",
   });
   const [PAGING, setPAGING] = useState({
@@ -68,9 +68,9 @@ export const MoneyList = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
-    money_dateType: "",
-    money_startDt: "0000-00-00",
-    money_endDt: "0000-00-00",
+    money_date_type: "",
+    money_date_start: "0000-00-00",
+    money_date_end: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_section: [{
@@ -85,7 +85,7 @@ export const MoneyList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
+  useDate(location_date_start, location_date_end, DATE, setDATE, FILTER, setFILTER);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -94,7 +94,7 @@ export const MoneyList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -107,10 +107,10 @@ export const MoneyList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.dateType,
+    FILTER.date_type,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.startDt, DATE.endDt
+    DATE.date_start, DATE.date_end
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -122,7 +122,7 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
+              <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -144,7 +144,7 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
+              <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -156,21 +156,21 @@ export const MoneyList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
-                    startDt: item.money_startDt,
-                    endDt: item.money_endDt
+                    date_start: item.money_date_start,
+                    date_end: item.money_date_end
                   });
                   navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
                   <Link>
-                    {item.money_startDt?.substring(5, 10)}
+                    {item.money_date_start?.substring(5, 10)}
                   </Link>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {item.money_dateType}
+                  {item.money_date_type}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}

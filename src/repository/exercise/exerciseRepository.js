@@ -7,16 +7,18 @@ import {newDate} from "../../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    user_id_param, part_param, title_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param,
   ) => {
-
     const finalResult = await Exercise.countDocuments({
       user_id: user_id_param,
-      exercise_startDt: {
-        $gte: startDt_param,
+      exercise_date_type: !dateType_param ? {$exists:false} : dateType_param,
+      exercise_date_start: {
+        $gte: dateStart_param,
       },
-      exercise_endDt: {
-        $lte: endDt_param,
+      exercise_date_end: {
+        $lte: dateEnd_param,
       },
       ...(part_param !== "전체" && {
         "exercise_section.exercise_part_val": part_param
@@ -29,18 +31,22 @@ export const list = {
   },
 
   list: async (
-    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param, sort_param,
+    limit_param, page_param,
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_type: !dateType_param ? {$exists:false} : dateType_param,
+        exercise_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        exercise_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         ...(part_param !== "전체" && {
           "exercise_section.exercise_part_val": part_param
@@ -50,8 +56,9 @@ export const list = {
         }),
       }},
       {$project: {
-        exercise_startDt: 1,
-        exercise_endDt: 1,
+        exercise_date_type: 1,
+        exercise_date_start: 1,
+        exercise_date_end: 1,
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
         exercise_body_weight: 1,
@@ -72,7 +79,7 @@ export const list = {
           }
         }
       }},
-      {$sort: {exercise_startDt: sort_param}},
+      {$sort: {exercise_date_start: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -83,18 +90,19 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      exercise_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -105,18 +113,19 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      exercise_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -124,14 +133,16 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       exercise_demo: false,
-      exercise_startDt: startDt_param,
-      exercise_endDt: endDt_param,
+      exercise_date_type: OBJECT_param.exercise_date_type,
+      exercise_date_start: dateStart_param,
+      exercise_date_end: dateEnd_param,
       exercise_total_volume: OBJECT_param.exercise_total_volume,
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
       exercise_body_weight: OBJECT_param.exercise_body_weight,
@@ -143,21 +154,16 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await Exercise.findOneAndUpdate(
+   const finalResult = await Exercise.findOneAndUpdate(
       {user_id: user_id_param,
-        _id: !_id_param ? {$exists:true} : _id_param,
-        exercise_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        exercise_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
+        exercise_date_type: OBJECT_param.exercise_date_type,
+        exercise_date_start: dateStart_param,
+        exercise_date_end: dateEnd_param,
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_body_weight: OBJECT_param.exercise_body_weight,
@@ -173,18 +179,19 @@ export const save = {
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      exercise_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      exercise_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -192,18 +199,18 @@ export const deletes = {
   },
 
   update: async (
-    user_id_param, _id_param, section_id_param, startDt_param, endDt_param
+    user_id_param, _id_param, section_id_param, dateStart_param, dateEnd_param
   ) => {
     const updateResult = await Exercise.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        exercise_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        exercise_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       },
       {$pull: {

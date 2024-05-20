@@ -21,12 +21,17 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  food_plan_startDt: {
+  food_plan_date_type: {
+    type: String,
+    default: "",
+    required: false
+  },
+  food_plan_date_start: {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  food_plan_endDt: {
+  food_plan_date_end: {
     type: String,
     default: "0000-00-00",
     required: false

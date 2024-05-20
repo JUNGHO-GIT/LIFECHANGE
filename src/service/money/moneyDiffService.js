@@ -7,26 +7,28 @@ export const list = async (
   user_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
+  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = FILTER_param.dateType;
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
+
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.list.cnt(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateType, dateStart, dateEnd
   );
 
   const listPlan = await repository.list.listPlan(
-    user_id_param, sort, limit, page, startDt_param, endDt_param
+    user_id_param, dateType, dateStart, dateEnd, sort, limit, page
   );
 
   const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const startDt = plan.money_plan_startDt;
-    const endDt = plan.money_plan_endDt;
+    const dateStart = plan.money_plan_date_start;
+    const dateEnd = plan.money_plan_date_end;
 
     const listReal = await repository.list.list (
-      user_id_param, startDt, endDt
+      user_id_param, dateType, dateStart, dateEnd
     );
 
     const moneyTotalIn = listReal.reduce((acc, curr) => (

@@ -17,8 +17,8 @@ export const useTime = (
 
     // 1-1. exercise
     if (type === "plan" && strLow === "exercise") {
-      const startTime = OBJECT?.exercise_plan_startDt;
-      const endTime = OBJECT?.exercise_plan_endDt;
+      const startTime = OBJECT?.exercise_plan_date_start;
+      const endTime = OBJECT?.exercise_plan_date_end;
 
       if (startTime && endTime) {
         const startDate = new Date(`${startTime}T00:00`);
@@ -90,8 +90,8 @@ export const useTime = (
 
   }, [
     strLow,
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_startDt : "",
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_endDt : "",
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_date_start : "",
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_date_end : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",

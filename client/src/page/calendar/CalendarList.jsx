@@ -25,8 +25,8 @@ export const CalendarList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: moment().startOf("month").format("YYYY-MM-DD"),
-      endDt: moment().endOf("month").format("YYYY-MM-DD")
+      date_start: moment().startOf("month").format("YYYY-MM-DD"),
+      date_end: moment().endOf("month").format("YYYY-MM-DD")
     }
   );
 
@@ -36,8 +36,8 @@ export const CalendarList = () => {
     id: "",
     section_id: "",
     refresh: 0,
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     category: "",
     toSave: "/calendar/save"
   });
@@ -46,8 +46,9 @@ export const CalendarList = () => {
   const OBJECT_DEF = [{
     user_id: sessionId,
     calendar_number: 0,
-    calendar_startDt: "0000-00-00",
-    calendar_endDt: "0000-00-00",
+    calendar_date_type: "",
+    calendar_date_start: "0000-00-00",
+    calendar_date_end: "0000-00-00",
     calendar_section: [{
       calendar_part_idx: 0,
       calendar_part_val: "일정",
@@ -63,21 +64,21 @@ export const CalendarList = () => {
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
-  })()}, [sessionId, DATE.startDt, DATE.endDt]);
+  })()}, [sessionId, DATE.date_start, DATE.date_end]);
 
   // 7. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
     );
-    const dateInRange = (date, startDt, endDt) => {
+    const dateInRange = (date, date_start, date_end) => {
       const currDate = formatDate(date);
-      return currDate >= startDt && currDate <= endDt;
+      return currDate >= date_start && currDate <= date_end;
     };
     const activeLine = (calendarForDates) => (
       calendarForDates?.map((calendar) => (
@@ -91,8 +92,8 @@ export const CalendarList = () => {
               Object.assign(SEND, {
                 id: calendar._id,
                 section_id: section._id,
-                startDt: calendar.calendar_startDt,
-                endDt: calendar.calendar_endDt,
+                date_start: calendar.calendar_date_start,
+                date_end: calendar.calendar_date_end,
               });
               navigate(SEND.toSave, {
                 state: SEND
@@ -141,8 +142,8 @@ export const CalendarList = () => {
         }}
         onClickDay={(date) => {
           Object.assign(SEND, {
-            startDt: formatDate(date),
-            endDt: formatDate(date)
+            date_start: formatDate(date),
+            date_end: formatDate(date)
           });
           navigate(SEND.toSave, {
             state: SEND
@@ -150,14 +151,14 @@ export const CalendarList = () => {
         }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           setDATE({
-            startDt: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
-            endDt: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
+            date_start: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
+            date_end: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
           });
         }}
         tileClassName={({date, view}) => {
           // 3개 이상일 경우
           const calendarForDates = OBJECT?.filter((calendar) => (
-            dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
+            dateInRange(date, calendar.calendar_date_start, calendar.calendar_date_end)
           ));
           if (calendarForDates.length > 2) {
             return `calendar-tile over-y-auto`;
@@ -168,7 +169,7 @@ export const CalendarList = () => {
         }}
         tileContent={({date, view}) => {
           const calendarForDates = OBJECT?.filter((calendar) => (
-            dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
+            dateInRange(date, calendar.calendar_date_start, calendar.calendar_date_end)
           ));
           return (
             calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)

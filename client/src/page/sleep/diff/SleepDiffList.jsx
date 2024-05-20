@@ -21,8 +21,8 @@ export const SleepDiff = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -31,8 +31,8 @@ export const SleepDiff = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -51,8 +51,8 @@ export const SleepDiff = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toSave:"/sleep/plan/save"
   });
   const [PAGING, setPAGING] = useState({
@@ -67,13 +67,15 @@ export const SleepDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_startDt: "0000-00-00",
-    sleep_endDt: "0000-00-00",
+    sleep_date_type: "",
+    sleep_date_start: "0000-00-00",
+    sleep_date_end: "0000-00-00",
     sleep_night: "00:00",
     sleep_morning: "00:00",
     sleep_time: "00:00",
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_date_type: "",
+    sleep_plan_date_start: "0000-00-00",
+    sleep_plan_date_end: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
@@ -87,7 +89,7 @@ export const SleepDiff = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
+  useDate(location_date_start, location_date_end, DATE, setDATE, FILTER, setFILTER);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -96,7 +98,7 @@ export const SleepDiff = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -111,7 +113,7 @@ export const SleepDiff = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.startDt, DATE.endDt
+    DATE.date_start, DATE.date_end
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -158,9 +160,9 @@ export const SleepDiff = () => {
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
                   <Link>
-                    <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
+                    <Div>{item.sleep_plan_date_start?.substring(5, 10)}</Div>
                     <Div>~</Div>
-                    <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
+                    <Div>{item.sleep_plan_date_end?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
               </TableRow>

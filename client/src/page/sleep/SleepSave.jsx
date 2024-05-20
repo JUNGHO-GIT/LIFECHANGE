@@ -23,8 +23,8 @@ export const SleepSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -33,8 +33,8 @@ export const SleepSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
 
@@ -43,8 +43,8 @@ export const SleepSave = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toList:"/sleep/list"
   });
   const [COUNT, setCOUNT] = useState({
@@ -58,8 +58,9 @@ export const SleepSave = () => {
     _id: "",
     sleep_number: 0,
     sleep_demo: false,
-    sleep_startDt: "0000-00-00",
-    sleep_endDt: "0000-00-00",
+    sleep_date_type: "",
+    sleep_date_start: "0000-00-00",
+    sleep_date_end: "0000-00-00",
     sleep_section: [{
       sleep_night: "00:00",
       sleep_morning: "00:00",
@@ -69,7 +70,7 @@ export const SleepSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE);
+  useDate(location_date_start, location_date_end, DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -78,7 +79,7 @@ export const SleepSave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -89,21 +90,21 @@ export const SleepSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.startDt, DATE.endDt]);
+  })()}, [sessionId, DATE.date_start, DATE.date_end]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        startDt: DATE.startDt,
-        endDt: DATE.endDt
+        date_start: DATE.date_start,
+        date_end: DATE.date_end
       });
       navigate(SEND.toList, {
         state: SEND
@@ -140,7 +141,7 @@ export const SleepSave = () => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.startDt)}
+              value={moment(DATE.date_start)}
               sx={{
                 width: "80vw",
                 height: "60vh"
@@ -148,8 +149,8 @@ export const SleepSave = () => {
               onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  startDt: moment(date).format("YYYY-MM-DD"),
-                  endDt: moment(date).format("YYYY-MM-DD"),
+                  date_start: moment(date).format("YYYY-MM-DD"),
+                  date_end: moment(date).format("YYYY-MM-DD"),
                 }));
                 closePopup();
               }}
@@ -161,7 +162,7 @@ export const SleepSave = () => {
             select={false}
             label={translate("common-date")}
             size={"small"}
-            value={DATE.startDt}
+            value={DATE.date_start}
             variant={"outlined"}
             className={"w-86vw"}
             onClick={(e) => {

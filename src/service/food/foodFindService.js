@@ -140,21 +140,21 @@ export const save = async (
   user_id_param, OBJECT_param, duration_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
+  const [dateStart, dateEnd] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    user_id_param, "", startDt_param, endDt_param
+    user_id_param, "", dateStart, dateEnd
   );
 
   let finalResult = null;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, startDt_param, endDt_param
+      user_id_param, OBJECT_param, dateStart, dateEnd
     );
   }
   else {
     finalResult = await repository.save.update(
-      user_id_param, findResult._id, OBJECT_param, startDt_param, endDt_param
+      user_id_param, findResult._id, OBJECT_param, dateStart, dateEnd
     );
   }
 

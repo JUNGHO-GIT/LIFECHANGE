@@ -49,8 +49,8 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
-    exercise_plan_startDt: "0000-00-00",
-    exercise_plan_endDt: "0000-00-00",
+    exercise_plan_date_start: "0000-00-00",
+    exercise_plan_date_end: "0000-00-00",
     exercise_plan_count: 0,
     exercise_plan_cardio: "00:00",
     exercise_plan_volume: 0,
@@ -59,8 +59,8 @@ export const UserDataList = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
-    exercise_startDt: "0000-00-00",
-    exercise_endDt: "0000-00-00",
+    exercise_date_start: "0000-00-00",
+    exercise_date_end: "0000-00-00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -77,8 +77,8 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_FOOD_PLAN_DEF = [{
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
+    food_plan_date_start: "0000-00-00",
+    food_plan_date_end: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
@@ -87,8 +87,8 @@ export const UserDataList = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
+    food_date_start: "0000-00-00",
+    food_date_end: "0000-00-00",
     food_total_kcal: 0,
     food_total_fat: 0,
     food_total_carb: 0,
@@ -107,16 +107,16 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_MONEY_PLAN_DEF = [{
-    money_plan_startDt: "0000-00-00",
-    money_plan_endDt: "0000-00-00",
+    money_plan_date_start: "0000-00-00",
+    money_plan_date_end: "0000-00-00",
     money_plan_in: 0,
     money_plan_out: 0,
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
-    money_startDt: "0000-00-00",
-    money_endDt: "0000-00-00",
+    money_date_start: "0000-00-00",
+    money_date_end: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_section: [{
@@ -129,8 +129,8 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_SLEEP_PLAN_DEF = [{
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_date_start: "0000-00-00",
+    sleep_plan_date_end: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
@@ -138,8 +138,8 @@ export const UserDataList = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
-    sleep_startDt: "0000-00-00",
-    sleep_endDt: "0000-00-00",
+    sleep_date_start: "0000-00-00",
+    sleep_date_end: "0000-00-00",
     sleep_section: [{
       sleep_night: "00:00",
       sleep_morning: "00:00",
@@ -289,9 +289,9 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.exercise_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>{item.exercise_plan_date_start?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.exercise_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.exercise_plan_date_end?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -353,7 +353,7 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.exercise_startDt?.substring(5, 10)}
+                  {item.exercise_date_start?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -414,9 +414,9 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.food_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>{item.food_plan_date_start?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.food_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.food_plan_date_end?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -480,7 +480,7 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.food_startDt?.substring(5, 10)}
+                  {item.food_date_start?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -540,9 +540,9 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.money_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>{item.money_plan_date_start?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.money_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.money_plan_date_end?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -596,7 +596,7 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.money_startDt?.substring(5, 10)}
+                  {item.money_date_start?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -652,9 +652,9 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.sleep_plan_startDt?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_date_start?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.sleep_plan_endDt?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_date_end?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
@@ -713,7 +713,7 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.sleep_startDt?.substring(5, 10)}
+                  {item.sleep_date_start?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>

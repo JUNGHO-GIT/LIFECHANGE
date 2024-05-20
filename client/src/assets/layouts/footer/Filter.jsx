@@ -15,7 +15,7 @@ export const Filter = ({
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
-  const dateType = ["day", "week", "month", "year"];
+  const date_type = ["day", "week", "month", "year"];
   const orderType = ["asc", "desc"];
 
   // 1. default ----------------------------------------------------------------------------------->
@@ -26,21 +26,21 @@ export const Filter = ({
         type={"text"}
         size={"small"}
         variant={"outlined"}
-        value={objects?.FILTER?.dateType}
+        value={objects?.FILTER?.date_type}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
           functions?.setFILTER((prev) => ({
             ...prev,
-            dateType: e.target.value
+            date_type: e.target.value
           })),
           functions?.setPAGING((prev) => ({
             ...prev,
             page: 1
           }))
         )}>
-            {dateType.map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.FILTER?.dateType === item}>
+            {date_type.map((item) => (
+          <MenuItem key={item} value={item} selected={objects?.FILTER?.date_type === item}>
             {item}
           </MenuItem>
         ))}

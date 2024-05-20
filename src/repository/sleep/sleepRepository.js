@@ -7,43 +7,50 @@ import {newDate} from "../../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
   ) => {
     const finalResult = await Sleep.countDocuments({
       user_id: user_id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_type: !dateType_param ? {$exists:false} : dateType_param,
+      sleep_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     });
     return finalResult;
   },
 
   list: async (
-    user_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    sort_param,
+    limit_param, page_param,
   ) => {
 
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_type: !dateType_param ? {$exists:false} : dateType_param,
+        sleep_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$unwind: "$sleep_section"},
       {$project: {
         _id: 1,
-        sleep_startDt: 1,
-        sleep_endDt: 1,
+        sleep_date_type: 1,
+        sleep_date_start: 1,
+        sleep_date_end: 1,
         sleep_section: [{
           _id: "$sleep_section._id",
           sleep_night: "$sleep_section.sleep_night",
@@ -52,8 +59,8 @@ export const list = {
         }]
       }},
       {$sort: {
-        sleep_startDt: sort_param,
-        sleep_endDt: sort_param
+        sleep_date_start: sort_param,
+        sleep_date_end: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -66,18 +73,19 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -88,18 +96,19 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -107,14 +116,16 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Sleep.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       sleep_demo: false,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_date_type: OBJECT_param.sleep_date_type,
+      sleep_date_start: dateStart_param,
+      sleep_date_end: dateEnd_param,
       sleep_section: OBJECT_param.sleep_section,
       sleep_regDt: newDate,
       sleep_updateDt: "",
@@ -123,15 +134,16 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Sleep.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        sleep_startDt: startDt_param,
-        sleep_endDt: endDt_param,
+        sleep_date_type: OBJECT_param.sleep_date_type,
+        sleep_date_start: dateStart_param,
+        sleep_date_end: dateEnd_param,
         sleep_section: OBJECT_param.sleep_section,
         sleep_updateDt: newDate,
       }},
@@ -147,18 +159,19 @@ export const save = {
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      sleep_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -166,18 +179,18 @@ export const deletes = {
   },
 
   update: async (
-    user_id_param, _id_param, section_id_param, startDt_param, endDt_param,
+    user_id_param, _id_param, section_id_param, dateStart_param, dateEnd_param,
   ) => {
     const updateResult = await Sleep.updateOne(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       },
       {$pull: {

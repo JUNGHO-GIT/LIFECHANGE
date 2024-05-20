@@ -7,14 +7,14 @@ export const list = async (
   user_id_param, duration_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
+  const [dateStart, dateEnd] = duration_param.split(` ~ `);
 
   // 1. exercise
   const listExercisePlan = await repository.percent.listExercisePlan(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
   const listExercise = await repository.percent.listExercise(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   )
   .then((result) => {
     if (result?.exercise_total_volume <= 1 && result?.exercise_total_cardio === "00:00") {
@@ -33,26 +33,26 @@ export const list = async (
 
   // 2. food
   const listFoodPlan = await repository.percent.listFoodPlan(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
   const listFood = await repository.percent.listFood(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
 
   // 3. money
   const listMoneyPlan = await repository.percent.listMoneyPlan(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
   const listMoney = await repository.percent.listMoney(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
 
   // 4. sleep
   const listSleepPlan = await repository.percent.listSleepPlan(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
   const listSleep = await repository.percent.listSleep(
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart, dateEnd
   );
 
   const finalResult = {
@@ -83,8 +83,8 @@ export const property = async (
     totalIn: findResult?.money_total_in,
     totalOut: findResult?.money_total_out,
     totalProperty: findResult?.money_total_in - findResult?.money_total_out,
-    startDt: findResult?.property_startDt,
-    endDt: findResult?.property_endDt,
+    date_start: findResult?.property_date_start,
+    date_end: findResult?.property_date_end,
   };
 
   return finalResult;

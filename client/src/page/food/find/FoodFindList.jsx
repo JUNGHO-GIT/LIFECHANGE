@@ -19,8 +19,8 @@ export const FoodFindList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -29,8 +29,8 @@ export const FoodFindList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -45,8 +45,8 @@ export const FoodFindList = () => {
   const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toSave:"/food/find/save",
   });
   const [PAGING, setPAGING] = useState({
@@ -75,7 +75,7 @@ export const FoodFindList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE);
+  useDate(location_date_start, location_date_end, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   // 페이지 번호 변경 시 flowFind 호출
@@ -156,7 +156,7 @@ export const FoodFindList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);

@@ -8,8 +8,8 @@ export const barToday = async (
   user_id_param
 ) => {
 
-  const startDt = koreanDate;
-  const endDt = koreanDate;
+  const date_start = koreanDate;
+  const date_end = koreanDate;
 
   let findPlan = [];
   let findReal = [];
@@ -17,10 +17,10 @@ export const barToday = async (
   let finalResultOut = [];
 
   findPlan = await repository.barToday.listPlan(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   findReal = await repository.barToday.list(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
@@ -51,8 +51,8 @@ export const pieToday = async (
   user_id_param
 ) => {
 
-  const startDt = koreanDate;
-  const endDt = koreanDate;
+  const date_start = koreanDate;
+  const date_end = koreanDate;
 
   let findResultIn = [];
   let findResultOut = [];
@@ -61,11 +61,11 @@ export const pieToday = async (
 
   // in
   findResultIn = await repository.pieToday.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.pieToday.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
@@ -82,7 +82,7 @@ export const pieToday = async (
   return {
     in: finalResultIn,
     out: finalResultOut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -91,8 +91,8 @@ export const pieWeek = async (
   user_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const date_start = curWeekStart.format("YYYY-MM-DD");
+  const date_end = curWeekEnd.format("YYYY-MM-DD");
 
   let findResultIn = [];
   let findResultOut = [];
@@ -101,11 +101,11 @@ export const pieWeek = async (
 
   // in
   findResultIn = await repository.pieWeek.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.pieWeek.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
@@ -122,7 +122,7 @@ export const pieWeek = async (
   return {
     in: finalResultIn,
     out: finalResultOut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -131,8 +131,8 @@ export const pieMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   let findResultIn = [];
   let findResultOut = [];
@@ -141,11 +141,11 @@ export const pieMonth = async (
 
   // in
   findResultIn = await repository.pieMonth.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.pieMonth.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
@@ -162,7 +162,7 @@ export const pieMonth = async (
   return {
     in: finalResultIn,
     out: finalResultOut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -171,8 +171,8 @@ export const lineWeek = async (
   user_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const date_start = curWeekStart.format("YYYY-MM-DD");
+  const date_end = curWeekEnd.format("YYYY-MM-DD");
 
   // ex 월
   const name = [
@@ -191,19 +191,19 @@ export const lineWeek = async (
 
   // in
   findResultIn = await repository.lineWeek.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.lineWeek.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   name.forEach((data, index) => {
     const findIndexIn = findResultIn.findIndex((item) => (
-      new Date(item.money_startDt).getDay() === index
+      new Date(item.money_date_start).getDay() === index
     ));
     const findIndexOut = findResultOut.findIndex((item) => (
-      new Date(item.money_startDt).getDay() === index
+      new Date(item.money_date_start).getDay() === index
     ));
     finalResultIn.push({
       name: data,
@@ -228,8 +228,8 @@ export const lineMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   // ex. 00일
   const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
@@ -247,18 +247,18 @@ export const lineMonth = async (
   let finalResultOut = [];
 
   findResultIn = await repository.lineMonth.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   findResultOut = await repository.lineMonth.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   name.forEach((data, index) => {
     const findIndexIn = findResultIn.findIndex((item) => (
-      new Date(item.money_startDt).getDay() === index + 1
+      new Date(item.money_date_start).getDay() === index + 1
     ));
     const findIndexOut = findResultOut.findIndex((item) => (
-      new Date(item.money_startDt).getDay() === index + 1
+      new Date(item.money_date_start).getDay() === index + 1
     ));
 
     finalResultIn.push({
@@ -284,8 +284,8 @@ export const avgMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -308,16 +308,16 @@ export const avgMonth = async (
 
   // in
   findResultIn = await repository.avgMonth.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.avgMonth.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
   findResultIn.forEach((item) => {
-    const moneyDate = new Date(item.money_startDt);
+    const moneyDate = new Date(item.money_date_start);
     const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
@@ -328,7 +328,7 @@ export const avgMonth = async (
   });
   // out
   findResultOut.forEach((item) => {
-    const moneyDate = new Date(item.money_startDt);
+    const moneyDate = new Date(item.money_date_start);
     const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
@@ -362,8 +362,8 @@ export const avgYear = async (
   user_id_param
 ) => {
 
-  const startDt = curYearStart.format("YYYY-MM-DD");
-  const endDt = curYearEnd.format("YYYY-MM-DD");
+  const date_start = curYearStart.format("YYYY-MM-DD");
+  const date_end = curYearEnd.format("YYYY-MM-DD");
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
@@ -386,23 +386,23 @@ export const avgYear = async (
 
   // in
   findResultIn = await repository.avgYear.listIn(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // out
   findResultOut = await repository.avgYear.listOut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // in
   findResultIn.forEach((item) => {
-    const moneyDate = new Date(item.money_startDt);
+    const moneyDate = new Date(item.money_date_start);
     const monthNum = moneyDate.getMonth();
     sumIn[monthNum] += intFormat(item.money_total_in);
     countRecords[monthNum]++;
   });
   // out
   findResultOut.forEach((item) => {
-    const moneyDate = new Date(item.money_startDt);
+    const moneyDate = new Date(item.money_date_start);
     const monthNum = moneyDate.getMonth();
     sumOut[monthNum] += intFormat(item.money_total_out);
     countRecords[monthNum]++;

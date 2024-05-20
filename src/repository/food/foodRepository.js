@@ -7,17 +7,20 @@ import {newDate} from "../../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    user_id_param, part_param, title_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param,
   ) => {
     const finalResult = await Food.countDocuments({
       user_id: user_id_param,
-      food_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_type: !dateType_param ? {$exists:false} : dateType_param,
+      food_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      food_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
       ...(part_param !== "전체" && {
         "food_section.food_part_val": part_param
@@ -30,23 +33,28 @@ export const list = {
   },
 
   list: async (
-    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param, sort_param,
+    limit_param, page_param,
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_type: !dateType_param ? {$exists:false} : dateType_param,
+        food_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_startDt: 1,
-        food_endDt: 1,
+        food_date_type: 1,
+        food_date_start: 1,
+        food_date_end: 1,
         food_total_kcal: 1,
         food_total_carb: 1,
         food_total_protein: 1,
@@ -69,8 +77,8 @@ export const list = {
         }
       }},
       {$sort: {
-        food_startDt: sort_param,
-        food_endDt: sort_param
+        food_date_start: sort_param,
+        food_date_end: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -82,18 +90,19 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      food_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -104,18 +113,19 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      food_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -123,14 +133,16 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       food_demo: false,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_date_type: OBJECT_param.food_date_type,
+      food_date_start: dateStart_param,
+      food_date_end: dateEnd_param,
       food_total_kcal: OBJECT_param.food_total_kcal,
       food_total_carb: OBJECT_param.food_total_carb,
       food_total_protein: OBJECT_param.food_total_protein,
@@ -143,15 +155,17 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_date_type: OBJECT_param.food_date_type,
+        food_date_start: dateStart_param,
+        food_date_end: dateEnd_param,
         food_total_kcal: OBJECT_param.food_total_kcal,
         food_total_carb: OBJECT_param.food_total_carb,
         food_total_protein: OBJECT_param.food_total_protein,
@@ -171,18 +185,19 @@ export const save = {
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      food_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -190,18 +205,18 @@ export const deletes = {
   },
 
   update: async (
-    user_id_param, _id_param, section_id_param, startDt_param, endDt_param,
+    user_id_param, _id_param, section_id_param, dateStart_param, dateEnd_param,
   ) => {
     const updateResult = await Food.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       },
       {$pull: {

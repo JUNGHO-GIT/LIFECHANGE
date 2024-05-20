@@ -25,8 +25,8 @@ export const FoodSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -35,8 +35,8 @@ export const FoodSave = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
 
@@ -45,8 +45,8 @@ export const FoodSave = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toList:"/food/list",
     toSave:"/food/save",
     toFind:"/food/find/list",
@@ -62,8 +62,9 @@ export const FoodSave = () => {
     _id: "",
     food_number: 0,
     food_demo: false,
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
+    food_date_type: "",
+    food_date_start: "0000-00-00",
+    food_date_end: "0000-00-00",
     food_total_kcal: 0,
     food_total_fat: 0,
     food_total_carb: 0,
@@ -84,7 +85,7 @@ export const FoodSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE);
+  useDate(location_date_start, location_date_end, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -92,7 +93,7 @@ export const FoodSave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -103,7 +104,7 @@ export const FoodSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.startDt, DATE.endDt]);
+  })()}, [sessionId, DATE.date_start, DATE.date_end]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -130,14 +131,14 @@ export const FoodSave = () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        startDt: DATE.startDt,
-        endDt: DATE.endDt
+        date_start: DATE.date_start,
+        date_end: DATE.date_end
       });
       navigate(SEND.toList, {
         state: SEND
@@ -174,7 +175,7 @@ export const FoodSave = () => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.startDt)}
+              value={moment(DATE.date_start)}
               sx={{
                 width: "80vw",
                 height: "60vh"
@@ -182,8 +183,8 @@ export const FoodSave = () => {
               onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  startDt: moment(date).format("YYYY-MM-DD"),
-                  endDt: moment(date).format("YYYY-MM-DD"),
+                  date_start: moment(date).format("YYYY-MM-DD"),
+                  date_end: moment(date).format("YYYY-MM-DD"),
                 }));
                 closePopup();
               }}
@@ -195,7 +196,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("common-date")}
             size={"small"}
-            value={DATE.startDt}
+            value={DATE.date_start}
             variant={"outlined"}
             className={"w-86vw"}
             onClick={(e) => {

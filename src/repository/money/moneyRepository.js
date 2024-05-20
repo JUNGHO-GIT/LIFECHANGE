@@ -7,20 +7,20 @@ import {newDate} from "../../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    user_id_param, part_param, title_param,
-    dateType_param,
-    startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param,
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param,
-      money_dateType: !dateType_param ? {$exists:false} : dateType_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_type: !dateType_param ? {$exists:false} : dateType_param,
+      money_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
       ...(part_param === "전체" ? {} : {
         "money_section.money_part_val": part_param
@@ -33,28 +33,28 @@ export const list = {
   },
 
   list: async (
-    user_id_param, part_param, title_param,
-    dateType_param,
-    sort_param, limit_param, page_param,
-    startDt_param, endDt_param
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param,
+    part_param, title_param, sort_param,
+    limit_param, page_param,
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_dateType: !dateType_param ? {$exists:false} : dateType_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_type: !dateType_param ? {$exists:false} : dateType_param,
+        money_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
-        money_startDt: 1,
-        money_endDt: 1,
-        money_dateType: 1,
+        money_date_type: 1,
+        money_date_start: 1,
+        money_date_end: 1,
         money_total_in: 1,
         money_total_out: 1,
         money_section: {
@@ -75,8 +75,8 @@ export const list = {
         }
       }},
       {$sort: {
-        money_startDt: sort_param,
-        money_endDt: sort_param
+        money_date_start: sort_param,
+        money_date_end: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -88,18 +88,19 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -110,18 +111,19 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -129,15 +131,16 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       money_demo: false,
-      money_startDt: startDt_param,
-      money_endDt: endDt_param,
-      money_dateType: OBJECT_param.money_dateType,
+      money_date_type: OBJECT_param.money_date_type,
+      money_date_start: dateStart_param,
+      money_date_end: dateEnd_param,
       money_total_in: OBJECT_param.money_total_in,
       money_total_out: OBJECT_param.money_total_out,
       money_section: OBJECT_param.money_section,
@@ -148,16 +151,17 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        money_startDt: startDt_param,
-        money_endDt: endDt_param,
-        money_dateType: OBJECT_param.money_dateType,
+        money_date_type: OBJECT_param.money_date_type,
+        money_date_start: dateStart_param,
+        money_date_end: dateEnd_param,
         money_total_in: OBJECT_param.money_total_in,
         money_total_out: OBJECT_param.money_total_out,
         money_section: OBJECT_param.money_section,
@@ -175,18 +179,19 @@ export const save = {
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      money_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -194,18 +199,18 @@ export const deletes = {
   },
 
   update: async (
-    user_id_param, _id_param, section_id_param, startDt_param, endDt_param,
+    user_id_param, _id_param, section_id_param, dateStart_param, dateEnd_param,
   ) => {
     const updateResult = await Money.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       },
       {$pull: {

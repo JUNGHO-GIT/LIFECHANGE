@@ -18,8 +18,8 @@ export const FoodList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -28,8 +28,8 @@ export const FoodList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt || moment().format("YYYY-MM-DD"),
-      endDt: location_endDt || moment().format("YYYY-MM-DD"),
+      date_start: location_date_start || moment().format("YYYY-MM-DD"),
+      date_end: location_date_end || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -48,8 +48,8 @@ export const FoodList = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toSave:"/food/save"
   });
   const [PAGING, setPAGING] = useState({
@@ -67,8 +67,9 @@ export const FoodList = () => {
     _id: "",
     food_number: 0,
     food_demo: false,
-    food_startDt: "0000-00-00",
-    food_endDt: "0000-00-00",
+    food_date_type: "",
+    food_date_start: "0000-00-00",
+    food_date_end: "0000-00-00",
     food_total_kcal: 0,
     food_total_fat: 0,
     food_total_carb: 0,
@@ -95,7 +96,7 @@ export const FoodList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.date_start} ~ ${DATE.date_end}`
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -110,11 +111,11 @@ export const FoodList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.startDt, DATE.endDt
+    DATE.date_start, DATE.date_end
   ]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE, FILTER, setFILTER);
+  useDate(location_date_start, location_date_end, DATE, setDATE, FILTER, setFILTER);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -161,15 +162,15 @@ export const FoodList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
-                    startDt: item.food_startDt,
-                    endDt: item.food_endDt
+                    date_start: item.food_date_start,
+                    date_end: item.food_date_end
                   });
                   navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
                   <Link>
-                    {item.food_startDt?.substring(5, 10)}
+                    {item.food_date_start?.substring(5, 10)}
                   </Link>
                 </TableCell>
               </TableRow>

@@ -83,9 +83,9 @@ export const useTranslate = () => {
     common: {
       empty: {ko: "데이터가 없습니다", en: "No data"},
       date: {ko: "날짜", en: "Date"},
-      dateType: {ko: "날짜유형", en: "Date Type"},
-      startDt: {ko: "시작일", en: "Start Date"},
-      endDt: {ko: "종료일", en: "End Date"},
+      date_type: {ko: "날짜유형", en: "Date Type"},
+      date_start: {ko: "시작일", en: "Start Date"},
+      date_end: {ko: "종료일", en: "End Date"},
       count: {ko: "항목수", en: "Count"},
       category: {ko: "카테고리", en: "Category"},
       plan: {ko: "계획", en: "Plan"},

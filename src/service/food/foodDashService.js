@@ -8,8 +8,8 @@ export const barToday = async (
   user_id_param
 ) => {
 
-  const startDt = koreanDate;
-  const endDt = koreanDate;
+  const date_start = koreanDate;
+  const date_end = koreanDate;
 
   let findPlan = [];
   let findReal = [];
@@ -17,10 +17,10 @@ export const barToday = async (
   let finalResultNut = [];
 
   findPlan = await repository.barToday.listPlan(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   findReal = await repository.barToday.list(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
@@ -62,8 +62,8 @@ export const pieToday = async (
   user_id_param
 ) => {
 
-  const startDt = koreanDate;
-  const endDt = koreanDate;
+  const date_start = koreanDate;
+  const date_end = koreanDate;
 
   let findResultKcal = [];
   let findResultNut = [];
@@ -72,11 +72,11 @@ export const pieToday = async (
 
   // kcal
   findResultKcal = await repository.pieToday.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.pieToday.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
@@ -94,7 +94,7 @@ export const pieToday = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -103,8 +103,8 @@ export const pieWeek = async (
   user_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const date_start = curWeekStart.format("YYYY-MM-DD");
+  const date_end = curWeekEnd.format("YYYY-MM-DD");
 
   let findResultKcal = [];
   let findResultNut = [];
@@ -113,11 +113,11 @@ export const pieWeek = async (
 
   // kcal
   findResultKcal = await repository.pieWeek.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.pieWeek.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
@@ -135,7 +135,7 @@ export const pieWeek = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -144,8 +144,8 @@ export const pieMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   let findResultKcal = [];
   let findResultNut = [];
@@ -154,11 +154,11 @@ export const pieMonth = async (
 
   // kcal
   findResultKcal = await repository.pieMonth.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.pieMonth.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
@@ -176,7 +176,7 @@ export const pieMonth = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${startDt} ~ ${endDt}`
+    date: `${date_start} ~ ${date_end}`
   };
 };
 
@@ -185,8 +185,8 @@ export const lineWeek = async (
   user_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const date_start = curWeekStart.format("YYYY-MM-DD");
+  const date_end = curWeekEnd.format("YYYY-MM-DD");
 
   // ex 월
   const name = [
@@ -205,19 +205,19 @@ export const lineWeek = async (
 
   // kcal
   findResultKcal = await repository.lineWeek.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.lineWeek.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_startDt).getDate() === index
+      new Date(item.food_date_start).getDate() === index
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_startDt).getDate() === index
+      new Date(item.food_date_start).getDate() === index
     ));
 
     finalResultKcal.push({
@@ -245,8 +245,8 @@ export const lineMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   // ex. 00일
   const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
@@ -265,19 +265,19 @@ export const lineMonth = async (
 
   // kcal
   findResultKcal = await repository.lineMonth.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.lineMonth.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_startDt).getDate() === index + 1
+      new Date(item.food_date_start).getDate() === index + 1
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_startDt).getDate() === index + 1
+      new Date(item.food_date_start).getDate() === index + 1
     ));
 
     finalResultKcal.push({
@@ -305,8 +305,8 @@ export const avgMonth = async (
   user_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const date_start = curMonthStart.format("YYYY-MM-DD");
+  const date_end = curMonthEnd.format("YYYY-MM-DD");
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -331,16 +331,16 @@ export const avgMonth = async (
 
   // kcal
   findResultKcal = await repository.avgMonth.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.avgMonth.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
   findResultKcal.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
+    const foodDate = new Date(item.food_date_start);
     const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
@@ -352,7 +352,7 @@ export const avgMonth = async (
 
   // nut
   findResultNut.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
+    const foodDate = new Date(item.food_date_start);
     const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
@@ -390,8 +390,8 @@ export const avgYear = async (
   user_id_param
 ) => {
 
-  const startDt = curYearStart.format("YYYY-MM-DD");
-  const endDt = curYearEnd.format("YYYY-MM-DD");
+  const date_start = curYearStart.format("YYYY-MM-DD");
+  const date_end = curYearEnd.format("YYYY-MM-DD");
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
@@ -416,23 +416,23 @@ export const avgYear = async (
 
   // kcal
   findResultKcal = await repository.avgYear.listKcal(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
   // nut
   findResultNut = await repository.avgYear.listNut(
-    user_id_param, startDt, endDt
+    user_id_param, date_start, date_end
   );
 
   // kcal
   findResultKcal.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
+    const foodDate = new Date(item.food_date_start);
     const monthNum = foodDate.getMonth();
     sumKcal[monthNum] += intFormat(item.food_total_kcal);
     countRecords[monthNum]++;
   });
   // nut
   findResultNut.forEach((item) => {
-    const foodDate = new Date(item.food_startDt);
+    const foodDate = new Date(item.food_date_start);
     const monthNum = foodDate.getMonth();
     sumCarb[monthNum] += intFormat(item.food_total_carb);
     sumProtein[monthNum] += intFormat(item.food_total_protein);

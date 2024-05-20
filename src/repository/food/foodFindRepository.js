@@ -7,18 +7,19 @@ import {newDate} from "../../assets/js/date.js";
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    user_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_start: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
-      food_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
+      food_date_end: {
+        $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
     })
     .lean();
@@ -26,14 +27,15 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       food_demo: false,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_date_start: dateStart_param,
+      food_date_end: dateEnd_param,
       food_total_kcal: OBJECT_param.food_total_kcal,
       food_total_carb: OBJECT_param.food_total_carb,
       food_total_protein: OBJECT_param.food_total_protein,
@@ -46,15 +48,16 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,
+    dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_date_start: dateStart_param,
+        food_date_end: dateEnd_param,
         food_total_kcal: OBJECT_param.food_total_kcal,
         food_total_carb: OBJECT_param.food_total_carb,
         food_total_protein: OBJECT_param.food_total_protein,

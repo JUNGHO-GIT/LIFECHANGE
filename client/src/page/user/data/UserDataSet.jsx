@@ -26,8 +26,8 @@ export const UserDataSet = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_date_start = location?.state?.date_start?.trim()?.toString();
+  const location_date_end = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -39,13 +39,13 @@ export const UserDataSet = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    startDt: "0000-00-00",
-    endDt: "0000-00-00",
+    date_start: "0000-00-00",
+    date_end: "0000-00-00",
     toDataSet: "/user/data/set",
   });
   const [DATE, setDATE] = useState({
-    startDt: location_startDt || moment().format("YYYY-MM-DD"),
-    endDt: location_endDt || moment().format("YYYY-MM-DD"),
+    date_start: location_date_start || moment().format("YYYY-MM-DD"),
+    date_end: location_date_end || moment().format("YYYY-MM-DD"),
   });
   const [idx, setIdx] = useState({
     sectionIdx: 0,

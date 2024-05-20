@@ -14,18 +14,18 @@ export const percent = {
 
   // 1-1. exercise (plan)
   listExercisePlan: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_plan_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        exercise_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_plan_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -41,18 +41,18 @@ export const percent = {
 
   // 1-2. exercise
   listExercise: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        exercise_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        exercise_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -67,18 +67,18 @@ export const percent = {
 
   // 2-1. food (plan)
   listFoodPlan: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_plan_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        food_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_plan_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -94,18 +94,18 @@ export const percent = {
 
   // 2-2. food
   listFood: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        food_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -121,18 +121,18 @@ export const percent = {
 
   // 3-1. money (plan)
   listMoneyPlan: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_plan_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        money_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_plan_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -146,18 +146,18 @@ export const percent = {
 
   // 3-2. money
   listMoney: async (
-    user_id_param, startDt_param, endDt_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        money_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -171,18 +171,18 @@ export const percent = {
 
   // 4-1. sleep (plan)
   listSleepPlan: async (
-    user_id_param, startDt_param,  endDt_param,
+    user_id_param, dateStart_param,  dateEnd_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_plan_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        sleep_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_plan_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         }
       }},
       {$project: {
@@ -197,18 +197,18 @@ export const percent = {
 
   // 4-2. sleep
   listSleep: async (
-    user_id_param, startDt_param, endDt_param,
+    user_id_param, dateStart_param, dateEnd_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_start: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
-        sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        sleep_date_end: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -235,15 +235,15 @@ export const property = {
         _id: null,
         money_total_in: { $sum: "$money_total_in" },
         money_total_out: { $sum: "$money_total_out" },
-        property_startDt: { $min: "$money_startDt" },
-        property_endDt: { $max: "$money_endDt" },
+        property_date_start: { $min: "$money_date_start" },
+        property_date_end: { $max: "$money_date_end" },
       }},
       {$project: {
         _id: 0,
         money_total_in: "$money_total_in",
         money_total_out: "$money_total_out",
-        property_startDt: "$property_startDt",
-        property_endDt: "$property_endDt",
+        property_date_start: "$property_date_start",
+        property_date_end: "$property_date_end",
       }}
     ]);
     return finalResult[0];
