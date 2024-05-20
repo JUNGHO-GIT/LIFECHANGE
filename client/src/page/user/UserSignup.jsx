@@ -23,6 +23,13 @@ export const UserSignup = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
+  const [SEND, setSEND] = useState({
+    id: "",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
+    toLogin:"/user/login",
+    toSignup:"/user/signup"
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [userId, setUserId] = useState("");
@@ -120,8 +127,10 @@ export const UserSignup = () => {
         third: thirdStr,
       }}
       objects={{
+        SEND
       }}
       functions={{
+        setSEND
       }}
       handlers={{
         navigate, flowSave

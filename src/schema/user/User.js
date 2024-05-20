@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import {incrementSeq} from "../Counter.js";
+import {dateTypeArray} from "../../assets/array/dateTypeArray.js";
 import {calendarArray} from "../../assets/array/calendarArray.js";
 import {exerciseArray} from "../../assets/array/exerciseArray.js";
 import {moneyArray} from "../../assets/array/moneyArray.js";
@@ -68,6 +69,11 @@ const schema = new mongoose.Schema({
   },
 
   dataSet: {
+    dateType: {
+      type: Array,
+      default: dateTypeArray,
+      required: false
+    },
     calendar: {
       type: Array,
       default: calendarArray,

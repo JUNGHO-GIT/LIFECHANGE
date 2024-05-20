@@ -5,7 +5,7 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Br10, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -44,7 +44,7 @@ export const SleepSave = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-   dateStart: "0000-00-00",
+    dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/sleep/list"
   });
@@ -132,43 +132,32 @@ export const SleepSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <PopUp
-        type={"calendar"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateStart)}
-              sx={{
-                width: "80vw",
-                height: "60vh"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD"),
-                }));
-                closePopup();
-              }}
-            />
-          </LocalizationProvider>
-        )}>
-        {(popTrigger={}) => (
+      <Div className={"d-column"}>
+        <Div className={"d-center"}>
+          <TextField
+            select={true}
+            label={translate("common-dateType")}
+            size={"small"}
+            value={DATE.dateType}
+            variant={"outlined"}
+            className={"w-86vw"}
+            InputProps={{
+              readOnly: false,
+              className: "fw-bold",
+              startAdornment: null,
+              endAdornment: null
+            }}
+          />
+        </Div>
+        <Br20 />
+        <Div className={"d-row"}>
           <TextField
             select={false}
-            label={translate("common-date")}
+            label={translate("common-dateStart")}
             size={"small"}
             value={DATE.dateStart}
             variant={"outlined"}
-            className={"w-86vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               className: "fw-bold",
@@ -178,8 +167,24 @@ export const SleepSave = () => {
               endAdornment: null
             }}
           />
-        )}
-      </PopUp>
+          <TextField
+            select={false}
+            label={translate("common-dateEnd")}
+            size={"small"}
+            value={DATE.dateEnd}
+            variant={"outlined"}
+            className={"w-40vw ms-3vw"}
+            InputProps={{
+              readOnly: true,
+              className: "fw-bold",
+              startAdornment: (
+                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+              ),
+              endAdornment: null
+            }}
+          />
+        </Div>
+      </Div>
     );
     // 7-2. count
     const countSection = () => (

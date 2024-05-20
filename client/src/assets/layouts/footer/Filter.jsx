@@ -11,11 +11,11 @@ export const Filter = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const session = sessionStorage.getItem("dataSet") || "{}";
+  const dateType = JSON.parse(session).dateType || [];
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
-  const dateType = ["전체", "day", "week", "month", "year"];
   const orderType = ["asc", "desc"];
 
   // 1. default ----------------------------------------------------------------------------------->
@@ -39,8 +39,8 @@ export const Filter = ({
             page: 1
           }))
         )}>
-        {dateType?.map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
+        {dateType?.map((item, idx) => (
+          <MenuItem key={idx} value={item} selected={objects?.DATE?.dateType === item}>
             {item}
           </MenuItem>
         ))}

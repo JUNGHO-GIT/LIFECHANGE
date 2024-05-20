@@ -59,6 +59,22 @@ export const Btn = ({
       {translate("btn-goToFindSave")}
     </Button>
   );
+  const btnGoToLogin = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      handlers.navigate(objects?.SEND.toLogin);
+    }}>
+      {translate("btn-goToLogin")}
+    </Button>
+  );
+  const btnGoToSignup = () => (
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+    className={"primary-btn"} onClick={() => {
+      handlers.navigate(objects?.SEND.toSignup);
+    }}>
+      {translate("btn-goToSignup")}
+    </Button>
+  );
 
   // 2. get
   const btnGetToday = () => (
@@ -647,6 +663,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowLogin()}
+            {btnGoToSignup()}
           </Div>
         );
       }
@@ -654,6 +671,7 @@ export const Btn = ({
         return (
           <Div className={"block-wrapper d-row h-7vh"}>
             {btnFlowSignup()}
+            {btnGoToLogin()}
           </Div>
         );
       }

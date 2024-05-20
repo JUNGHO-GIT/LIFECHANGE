@@ -10,11 +10,13 @@ export const useRoot = () => {
   const sessionId = sessionStorage.getItem('sessionId');
 
   useEffect(() => {
-    if (!sessionId) {
-      navigate("/user/login");
-    }
-    else if (location.pathname === '/') {
-      navigate("/user/login");
+    if (location.pathname !== "/user/login" && location.pathname !== "/user/signup") {
+      if (!sessionId) {
+        navigate("/user/login");
+      }
+      else if (location.pathname === '/') {
+        navigate("/user/login");
+      }
     }
   }, [sessionId, location.pathname, navigate]);
 };
