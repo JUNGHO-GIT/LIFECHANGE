@@ -47,9 +47,9 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
-    exercise_plan_date_type: "day",
-    exercise_plan_date_start: "0000-00-00",
-    exercise_plan_date_end: "0000-00-00",
+    exercise_plan_dateType: "day",
+    exercise_plan_dateStart: "0000-00-00",
+    exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,
     exercise_plan_cardio: "00:00",
     exercise_plan_volume: 0,
@@ -58,9 +58,9 @@ export const UserDataList = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
-    exercise_date_type: "day",
-    exercise_date_start: "0000-00-00",
-    exercise_date_end: "0000-00-00",
+    exercise_dateType: "day",
+    exercise_dateStart: "0000-00-00",
+    exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -77,9 +77,9 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_FOOD_PLAN_DEF = [{
-    food_plan_date_type: "day",
-    food_plan_date_start: "0000-00-00",
-    food_plan_date_end: "0000-00-00",
+    food_plan_dateType: "day",
+    food_plan_dateStart: "0000-00-00",
+    food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
@@ -88,9 +88,9 @@ export const UserDataList = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
-    food_date_type: "day",
-    food_date_start: "0000-00-00",
-    food_date_end: "0000-00-00",
+    food_dateType: "day",
+    food_dateStart: "0000-00-00",
+    food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
     food_total_fat: 0,
     food_total_carb: 0,
@@ -109,18 +109,18 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_MONEY_PLAN_DEF = [{
-    money_plan_date_type: "day",
-    money_plan_date_start: "0000-00-00",
-    money_plan_date_end: "0000-00-00",
+    money_plan_dateType: "day",
+    money_plan_dateStart: "0000-00-00",
+    money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,
     money_plan_out: 0,
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
-    money_date_type: "day",
-    money_date_start: "0000-00-00",
-    money_date_end: "0000-00-00",
+    money_dateType: "day",
+    money_dateStart: "0000-00-00",
+    money_dateEnd: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_section: [{
@@ -133,9 +133,9 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_SLEEP_PLAN_DEF = [{
-    sleep_plan_date_type: "day",
-    sleep_plan_date_start: "0000-00-00",
-    sleep_plan_date_end: "0000-00-00",
+    sleep_plan_dateType: "day",
+    sleep_plan_dateStart: "0000-00-00",
+    sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
@@ -143,9 +143,9 @@ export const UserDataList = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
-    sleep_date_type: "day",
-    sleep_date_start: "0000-00-00",
-    sleep_date_end: "0000-00-00",
+    sleep_dateType: "day",
+    sleep_dateStart: "0000-00-00",
+    sleep_dateEnd: "0000-00-00",
     sleep_section: [{
       sleep_night: "00:00",
       sleep_morning: "00:00",
@@ -297,14 +297,14 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.exercise_plan_date_start?.substring(5, 10)}</Div>
+                  <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.exercise_plan_date_end?.substring(5, 10)}</Div>
+                  <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {item.exercise_plan_date_type}
+                  {item.exercise_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
@@ -366,12 +366,12 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.exercise_date_start?.substring(5, 10)}
+                  {item.exercise_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {item.exercise_date_type}
+                  {item.exercise_dateType}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
@@ -432,14 +432,14 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.food_plan_date_start?.substring(5, 10)}</Div>
+                  <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.food_plan_date_end?.substring(5, 10)}</Div>
+                  <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {item.food_plan_date_type}
+                  {item.food_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
@@ -503,12 +503,12 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.food_date_start?.substring(5, 10)}
+                  {item.food_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {item.food_date_type}
+                  {item.food_dateType}
                 </TableCell>
                 <TableCell>
                   {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
@@ -568,14 +568,14 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.money_plan_date_start?.substring(5, 10)}</Div>
+                  <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.money_plan_date_end?.substring(5, 10)}</Div>
+                  <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {item.money_plan_date_type}
+                  {item.money_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
@@ -629,12 +629,12 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.money_date_start?.substring(5, 10)}
+                  {item.money_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {item.money_date_type}
+                  {item.money_dateType}
                 </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}
@@ -690,14 +690,14 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  <Div>{item.sleep_plan_date_start?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
-                  <Div>{item.sleep_plan_date_end?.substring(5, 10)}</Div>
+                  <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {item.sleep_plan_date_type}
+                  {item.sleep_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_night}
@@ -756,12 +756,12 @@ export const UserDataList = () => {
               <>
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={2}>
-                  {item.sleep_date_start?.substring(5, 10)}
+                  {item.sleep_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {item.sleep_date_type}
+                  {item.sleep_dateType}
                 </TableCell>
                 <TableCell>
                   {item.sleep_section[0]?.sleep_night}

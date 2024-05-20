@@ -21,8 +21,8 @@ export const FoodPlanList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -67,9 +67,9 @@ export const FoodPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_plan_date_type: "",
-    food_plan_date_start: "0000-00-00",
-    food_plan_date_end: "0000-00-00",
+    food_plan_dateType: "",
+    food_plan_dateStart: "0000-00-00",
+    food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
@@ -87,7 +87,7 @@ export const FoodPlanList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`
+        DATE: DATE
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -102,7 +102,7 @@ export const FoodPlanList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.date_start, DATE.date_end
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -123,7 +123,7 @@ export const FoodPlanList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={6}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -152,21 +152,21 @@ export const FoodPlanList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
-                    date_start: item.food_date_start,
-                    date_end: item.food_date_end
+                    dateStart: item.food_dateStart,
+                    dateEnd: item.food_dateEnd
                   });
                   navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
                   <Link>
-                    <Div>{item.food_plan_date_start?.substring(5, 10)}</Div>
+                    <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
-                    <Div>{item.food_plan_date_end?.substring(5, 10)}</Div>
+                    <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
                 <TableCell rowSpan={2}>
-                  {item.food_plan_date_type}
+                  {item.food_plan_dateType}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

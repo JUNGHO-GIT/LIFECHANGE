@@ -19,8 +19,8 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const [SEND, setSEND] = useState({
     id: "",
-    date_start: "0000-00-00",
-    date_end: "0000-00-00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
     refresh: 0,
     toLogin: "/user/login",
     toSignup: "/user/signup"
@@ -88,8 +88,8 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                       className={`sidebar-li2-text ${isSecondOpen === to?"highlight":""}`}
                       onClick={() => {
                         Object.assign(SEND, {
-                          date_start: koreanDate,
-                          date_end: koreanDate
+                          dateStart: koreanDate,
+                          dateEnd: koreanDate
                         });
                         navigate(to, {
                           state: SEND

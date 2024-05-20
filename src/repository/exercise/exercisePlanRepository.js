@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await ExercisePlan.countDocuments({
       user_id: user_id_param,
-      exercise_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      exercise_plan_date_start: {
+      exercise_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      exercise_plan_date_end: {
+      exercise_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        exercise_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -32,17 +34,19 @@ export const list = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $gte: dateStart_param,
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          exercise_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        exercise_plan_date_start: sort_param,
-        exercise_plan_date_end: sort_param
+        exercise_plan_dateStart: sort_param,
+        exercise_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
@@ -60,11 +64,11 @@ export const detail = {
     const finalResult = await ExercisePlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_plan_date_start: {
+      exercise_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_plan_date_end: {
+      exercise_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -82,11 +86,11 @@ export const save = {
     const finalResult = await ExercisePlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_plan_date_start: {
+      exercise_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_plan_date_end: {
+      exercise_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -102,9 +106,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       exercise_plan_demo: false,
-      exercise_plan_date_type: OBJECT_param.exercise_plan_date_type,
-      exercise_plan_date_start: dateStart_param,
-      exercise_plan_date_end: dateEnd_param,
+      exercise_plan_dateType: OBJECT_param.exercise_plan_dateType,
+      exercise_plan_dateStart: dateStart_param,
+      exercise_plan_dateEnd: dateEnd_param,
       exercise_plan_count: OBJECT_param.exercise_plan_count,
       exercise_plan_volume: OBJECT_param.exercise_plan_volume,
       exercise_plan_cardio: OBJECT_param.exercise_plan_cardio,
@@ -124,18 +128,16 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        exercise_plan_date_type: OBJECT_param.exercise_plan_date_type,
-        exercise_plan_date_start: dateStart_param,
-        exercise_plan_date_end: dateEnd_param,
+        exercise_plan_dateType: OBJECT_param.exercise_plan_dateType,
+        exercise_plan_dateStart: dateStart_param,
+        exercise_plan_dateEnd: dateEnd_param,
         exercise_plan_count: OBJECT_param.exercise_plan_count,
         exercise_plan_volume: OBJECT_param.exercise_plan_volume,
         exercise_plan_cardio: OBJECT_param.exercise_plan_cardio,
         exercise_plan_weight: OBJECT_param.exercise_plan_weight,
         exercise_plan_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -152,11 +154,11 @@ export const deletes = {
     const finalResult = await ExercisePlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_plan_date_start: {
+      exercise_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_plan_date_end: {
+      exercise_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },

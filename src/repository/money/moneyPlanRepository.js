@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
       user_id: user_id_param,
-      money_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      money_plan_date_start: {
+      money_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      money_plan_date_end: {
+      money_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        money_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -32,17 +34,19 @@ export const list = {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        money_plan_date_start: {
+        money_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        money_plan_date_end: {
+        money_plan_dateEnd: {
           $gte: dateStart_param,
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          money_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        money_plan_date_start: sort_param,
-        money_plan_date_end: sort_param
+        money_plan_dateStart: sort_param,
+        money_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
@@ -60,11 +64,11 @@ export const detail = {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_plan_date_start: {
+      money_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      money_plan_date_end: {
+      money_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -83,11 +87,11 @@ export const save = {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_plan_date_start: {
+      money_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      money_plan_date_end: {
+      money_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -104,9 +108,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       money_plan_demo: false,
-      money_plan_date_type: OBJECT_param.money_plan_date_type,
-      money_plan_date_start: dateStart_param,
-      money_plan_date_end: dateEnd_param,
+      money_plan_dateType: OBJECT_param.money_plan_dateType,
+      money_plan_dateStart: dateStart_param,
+      money_plan_dateEnd: dateEnd_param,
       money_plan_in: OBJECT_param.money_plan_in,
       money_plan_out: OBJECT_param.money_plan_out,
       money_plan_regDt: newDate,
@@ -124,16 +128,14 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        money_plan_date_type: OBJECT_param.money_plan_date_type,
-        money_plan_date_start: dateStart_param,
-        money_plan_date_end: dateEnd_param,
+        money_plan_dateType: OBJECT_param.money_plan_dateType,
+        money_plan_dateStart: dateStart_param,
+        money_plan_dateEnd: dateEnd_param,
         money_plan_in: OBJECT_param.money_plan_in,
         money_plan_out: OBJECT_param.money_plan_out,
         money_plan_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -149,11 +151,11 @@ export const deletes = {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_plan_date_start: {
+      money_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      money_plan_date_end: {
+      money_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },

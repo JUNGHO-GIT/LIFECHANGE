@@ -23,8 +23,8 @@ export const MoneySave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -59,9 +59,9 @@ export const MoneySave = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
-    money_date_type: "",
-    money_date_start: "0000-00-00",
-    money_date_end: "0000-00-00",
+    money_dateType: "",
+    money_dateStart: "0000-00-00",
+    money_dateEnd: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_section: [{
@@ -84,7 +84,7 @@ export const MoneySave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+        DATE: DATE,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -95,7 +95,7 @@ export const MoneySave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.date_start, DATE.date_end]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -142,14 +142,14 @@ export const MoneySave = () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+      DATE: DATE,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        date_start: DATE.date_start,
-        date_end: DATE.date_end
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
       });
       navigate(SEND.toList, {
         state: SEND
@@ -184,7 +184,7 @@ export const MoneySave = () => {
             label={"날짜타입"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
-            value={OBJECT?.money_date_type}
+            value={OBJECT?.money_dateType}
             InputProps={{
               readOnly: false,
               startAdornment: null,
@@ -194,7 +194,7 @@ export const MoneySave = () => {
               const newVal = String(e.target.value);
               setOBJECT((prev) => ({
                 ...prev,
-                money_date_type: newVal
+                money_dateType: newVal
               }));
             }}
           >
@@ -214,7 +214,7 @@ export const MoneySave = () => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.date_start)}
+              value={moment(DATE.dateStart)}
               sx={{
                 width: "80vw",
                 height: "60vh"
@@ -222,8 +222,8 @@ export const MoneySave = () => {
               onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).format("YYYY-MM-DD"),
-                  date_end: moment(date).format("YYYY-MM-DD"),
+                  dateStart: moment(date).format("YYYY-MM-DD"),
+                  dateEnd: moment(date).format("YYYY-MM-DD"),
                 }));
                 closePopup();
               }}
@@ -235,7 +235,7 @@ export const MoneySave = () => {
             select={false}
             label={translate("common-date")}
             size={"small"}
-            value={DATE.date_start}
+            value={DATE.dateStart}
             variant={"outlined"}
             className={"w-86vw"}
             onClick={(e) => {

@@ -21,8 +21,8 @@ export const MoneyDiff = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -67,14 +67,14 @@ export const MoneyDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    money_date_type: "",
-    money_date_start: "0000-00-00",
-    money_date_end: "0000-00-00",
+    money_dateType: "",
+    money_dateStart: "0000-00-00",
+    money_dateEnd: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
-    money_plan_date_type: "",
-    money_plan_date_start: "0000-00-00",
-    money_plan_date_end: "0000-00-00",
+    money_plan_dateType: "",
+    money_plan_dateStart: "0000-00-00",
+    money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,
     money_plan_out: 0,
     money_diff_in: 0,
@@ -94,7 +94,7 @@ export const MoneyDiff = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`
+        DATE: DATE
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -109,7 +109,7 @@ export const MoneyDiff = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.date_start, DATE.date_end
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -129,7 +129,7 @@ export const MoneyDiff = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -156,13 +156,13 @@ export const MoneyDiff = () => {
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
                   <Link>
-                    <Div>{item.money_plan_date_start?.substring(5, 10)}</Div>
+                    <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
-                    <Div>{item.money_plan_date_end?.substring(5, 10)}</Div>
+                    <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
                 <TableCell rowSpan={4}>
-                  {item.money_plan_date_type}
+                  {item.money_plan_dateType}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

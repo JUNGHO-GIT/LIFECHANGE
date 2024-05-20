@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await FoodPlan.countDocuments({
       user_id: user_id_param,
-      food_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      food_plan_date_start: {
+      food_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      food_plan_date_end: {
+      food_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        food_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -32,17 +34,19 @@ export const list = {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        food_plan_date_start: {
+        food_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        food_plan_date_end: {
+        food_plan_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          food_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        food_plan_date_start: sort_param,
-        food_plan_date_end: sort_param
+        food_plan_dateStart: sort_param,
+        food_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
@@ -60,11 +64,11 @@ export const detail = {
     const finalResult = await FoodPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_plan_date_start: {
+      food_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_plan_date_end: {
+      food_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -82,11 +86,11 @@ export const save = {
     const finalResult = await FoodPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_plan_date_start: {
+      food_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_plan_date_end: {
+      food_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -103,9 +107,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       food_plan_demo: false,
-      food_plan_date_type: OBJECT_param.food_plan_date_type,
-      food_plan_date_start: dateStart_param,
-      food_plan_date_end: dateEnd_param,
+      food_plan_dateType: OBJECT_param.food_plan_dateType,
+      food_plan_dateStart: dateStart_param,
+      food_plan_dateEnd: dateEnd_param,
       food_plan_kcal: OBJECT_param.food_plan_kcal,
       food_plan_carb: OBJECT_param.food_plan_carb,
       food_plan_protein: OBJECT_param.food_plan_protein,
@@ -125,18 +129,16 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        food_plan_date_type: OBJECT_param.food_plan_date_type,
-        food_plan_date_start: dateStart_param,
-        food_plan_date_end: dateEnd_param,
+        food_plan_dateType: OBJECT_param.food_plan_dateType,
+        food_plan_dateStart: dateStart_param,
+        food_plan_dateEnd: dateEnd_param,
         food_plan_kcal: OBJECT_param.food_plan_kcal,
         food_plan_carb: OBJECT_param.food_plan_carb,
         food_plan_protein: OBJECT_param.food_plan_protein,
         food_plan_fat: OBJECT_param.food_plan_fat,
         food_plan_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -151,11 +153,11 @@ export const deletes = {
     const finalResult = await FoodPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_plan_date_start: {
+      food_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_plan_date_end: {
+      food_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },

@@ -12,7 +12,7 @@ router.get("/list", async (req, res) => {
       req.query.user_id,
       req.query.FILTER,
       req.query.PAGING,
-      req.query.duration
+      req.query.DATE
     );
     result = await middleware.list(result);
     if (result && result.result) {

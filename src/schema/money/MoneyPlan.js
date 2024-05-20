@@ -21,17 +21,17 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  money_plan_date_type: {
+  money_plan_dateType: {
     type: String,
     default: "",
     required: false
   },
-  money_plan_date_start: {
+  money_plan_dateStart: {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  money_plan_date_end: {
+  money_plan_dateEnd: {
     type: String,
     default: "0000-00-00",
     required: false

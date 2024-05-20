@@ -15,7 +15,7 @@ export const Filter = ({
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
-  const dateType = ["day", "week", "month", "year"];
+  const dateType = ["전체", "day", "week", "month", "year"];
   const orderType = ["asc", "desc"];
 
   // 1. default ----------------------------------------------------------------------------------->

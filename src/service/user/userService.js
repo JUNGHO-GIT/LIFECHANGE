@@ -58,7 +58,7 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param, duration_param
+  user_id_param, OBJECT_param, DATE_param
 ) => {
 
   const findResult = await repository.save.detail(

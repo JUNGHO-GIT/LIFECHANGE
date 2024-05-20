@@ -21,17 +21,17 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  exercise_date_type : {
+  exercise_dateType : {
     type: String,
     default: "",
     required: false
   },
-  exercise_date_start : {
+  exercise_dateStart : {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  exercise_date_end : {
+  exercise_dateEnd : {
     type: String,
     default: "0000-00-00",
     required: false

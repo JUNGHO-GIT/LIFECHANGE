@@ -5,11 +5,12 @@ import * as repository from "../../repository/sleep/sleepDiffRepository.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, FILTER_param, PAGING_param, duration_param
+  user_id_param, FILTER_param, PAGING_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
-  const dateType = FILTER_param.dateType;
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
 
@@ -25,8 +26,8 @@ export const list = async (
   );
 
   const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const dateStart = plan.sleep_plan_date_start;
-    const dateEnd = plan.sleep_plan_date_end;
+    const dateStart = plan.sleep_plan_dateStart;
+    const dateEnd = plan.sleep_plan_dateEnd;
 
     const listReal = await repository.list.list (
       user_id_param, dateType, dateStart, dateEnd

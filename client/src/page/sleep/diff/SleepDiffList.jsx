@@ -21,8 +21,8 @@ export const SleepDiff = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -67,15 +67,15 @@ export const SleepDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_date_type: "",
-    sleep_date_start: "0000-00-00",
-    sleep_date_end: "0000-00-00",
+    sleep_dateType: "",
+    sleep_dateStart: "0000-00-00",
+    sleep_dateEnd: "0000-00-00",
     sleep_night: "00:00",
     sleep_morning: "00:00",
     sleep_time: "00:00",
-    sleep_plan_date_type: "",
-    sleep_plan_date_start: "0000-00-00",
-    sleep_plan_date_end: "0000-00-00",
+    sleep_plan_dateType: "",
+    sleep_plan_dateStart: "0000-00-00",
+    sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
@@ -98,7 +98,7 @@ export const SleepDiff = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`
+        DATE: DATE
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -113,7 +113,7 @@ export const SleepDiff = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.date_start, DATE.date_end
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -134,7 +134,7 @@ export const SleepDiff = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={6}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -162,13 +162,13 @@ export const SleepDiff = () => {
               <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
                 <TableCell rowSpan={4} className={"pointer"}>
                   <Link>
-                    <Div>{item.sleep_plan_date_start?.substring(5, 10)}</Div>
+                    <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
-                    <Div>{item.sleep_plan_date_end?.substring(5, 10)}</Div>
+                    <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
                 <TableCell rowSpan={4}>
-                  {item.sleep_plan_date_type}
+                  {item.sleep_plan_dateType}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

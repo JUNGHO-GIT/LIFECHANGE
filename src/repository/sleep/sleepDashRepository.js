@@ -11,23 +11,23 @@ export const barToday = {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_date_start: {
+        sleep_plan_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_plan_date_end: {
+        sleep_plan_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_plan_date_start: 1,
-        sleep_plan_date_end: 1,
+        sleep_plan_dateStart: 1,
+        sleep_plan_dateEnd: 1,
         sleep_plan_night: 1,
         sleep_plan_morning: 1,
         sleep_plan_time: 1,
       }},
-      {$sort: {sleep_plan_date_start: 1}}
+      {$sort: {sleep_plan_dateStart: 1}}
     ])
     return finalResult;
   },
@@ -38,21 +38,21 @@ export const barToday = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: 1,
       }},
-      {$sort: {sleep_date_start: 1}}
+      {$sort: {sleep_dateStart: 1}}
     ])
     return finalResult;
   }
@@ -66,21 +66,21 @@ export const lineWeek = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: 1,
       }},
-      {$sort: {sleep_date_start: 1}}
+      {$sort: {sleep_dateStart: 1}}
     ])
 
     return finalResult;
@@ -95,21 +95,21 @@ export const lineMonth = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: 1,
       }},
-      {$sort: {sleep_date_start: 1}}
+      {$sort: {sleep_dateStart: 1}}
     ])
     return finalResult;
   }
@@ -123,21 +123,21 @@ export const avgMonth = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: 1,
       }},
-      {$sort: {sleep_date_start: 1}}
+      {$sort: {sleep_dateStart: 1}}
     ])
     return finalResult;
   }
@@ -151,21 +151,21 @@ export const avgYear = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: 1,
       }},
-      {$sort: {sleep_date_start: 1}}
+      {$sort: {sleep_dateStart: 1}}
     ])
     return finalResult;
   }

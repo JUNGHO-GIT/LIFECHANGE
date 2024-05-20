@@ -13,13 +13,15 @@ export const list = {
   ) => {
     const finalResult = await SleepPlan.countDocuments({
       user_id: user_id_param,
-      sleep_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      sleep_plan_date_start: {
+      sleep_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      sleep_plan_date_end: {
+      sleep_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -33,17 +35,19 @@ export const list = {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        sleep_plan_date_start: {
+        sleep_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        sleep_plan_date_end: {
+        sleep_plan_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          sleep_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        sleep_plan_date_start: sort_param,
-        sleep_plan_date_end: sort_param
+        sleep_plan_dateStart: sort_param,
+        sleep_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
@@ -61,11 +65,11 @@ export const detail = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_date_start: {
+      sleep_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_plan_date_end: {
+      sleep_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -84,11 +88,11 @@ export const save = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_date_start: {
+      sleep_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_plan_date_end: {
+      sleep_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -105,9 +109,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       sleep_plan_demo: false,
-      sleep_plan_date_type: OBJECT_param.sleep_plan_date_type,
-      sleep_plan_date_start: dateStart_param,
-      sleep_plan_date_end: dateEnd_param,
+      sleep_plan_dateType: OBJECT_param.sleep_plan_dateType,
+      sleep_plan_dateStart: dateStart_param,
+      sleep_plan_dateEnd: dateEnd_param,
       sleep_plan_night: OBJECT_param.sleep_plan_night,
       sleep_plan_morning: OBJECT_param.sleep_plan_morning,
       sleep_plan_time: OBJECT_param.sleep_plan_time,
@@ -125,17 +129,15 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        sleep_plan_date_type: OBJECT_param.sleep_plan_date_type,
-        sleep_plan_date_start: dateStart_param,
-        sleep_plan_date_end: dateEnd_param,
+        sleep_plan_dateType: OBJECT_param.sleep_plan_dateType,
+        sleep_plan_dateStart: dateStart_param,
+        sleep_plan_dateEnd: dateEnd_param,
         sleep_plan_night: OBJECT_param.sleep_plan_night,
         sleep_plan_morning: OBJECT_param.sleep_plan_morning,
         sleep_plan_time: OBJECT_param.sleep_plan_time,
         sleep_plan_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -151,11 +153,11 @@ export const deletes = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_date_start: {
+      sleep_plan_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_plan_date_end: {
+      sleep_plan_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },

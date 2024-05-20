@@ -23,8 +23,8 @@ export const SleepSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -59,9 +59,9 @@ export const SleepSave = () => {
     _id: "",
     sleep_number: 0,
     sleep_demo: false,
-    sleep_date_type: "",
-    sleep_date_start: "0000-00-00",
-    sleep_date_end: "0000-00-00",
+    sleep_dateType: "",
+    sleep_dateStart: "0000-00-00",
+    sleep_dateEnd: "0000-00-00",
     sleep_section: [{
       sleep_night: "00:00",
       sleep_morning: "00:00",
@@ -80,7 +80,7 @@ export const SleepSave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+        DATE: DATE,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -91,21 +91,21 @@ export const SleepSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.date_start, DATE.date_end]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+      DATE: DATE,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        date_start: DATE.date_start,
-        date_end: DATE.date_end
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
       });
       navigate(SEND.toList, {
         state: SEND
@@ -142,7 +142,7 @@ export const SleepSave = () => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.date_start)}
+              value={moment(DATE.dateStart)}
               sx={{
                 width: "80vw",
                 height: "60vh"
@@ -150,8 +150,8 @@ export const SleepSave = () => {
               onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).format("YYYY-MM-DD"),
-                  date_end: moment(date).format("YYYY-MM-DD"),
+                  dateStart: moment(date).format("YYYY-MM-DD"),
+                  dateEnd: moment(date).format("YYYY-MM-DD"),
                 }));
                 closePopup();
               }}
@@ -163,7 +163,7 @@ export const SleepSave = () => {
             select={false}
             label={translate("common-date")}
             size={"small"}
-            value={DATE.date_start}
+            value={DATE.dateStart}
             variant={"outlined"}
             className={"w-86vw"}
             onClick={(e) => {

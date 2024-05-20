@@ -23,8 +23,8 @@ export const ExercisePlanSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -59,9 +59,9 @@ export const ExercisePlanSave = () => {
     _id: "",
     exercise_plan_number: 0,
     exercise_plan_demo: false,
-    exercise_plan_date_type: "",
-    exercise_plan_date_start: "0000-00-00",
-    exercise_plan_date_end: "0000-00-00",
+    exercise_plan_dateType: "",
+    exercise_plan_dateStart: "0000-00-00",
+    exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,
     exercise_plan_cardio: "00:00",
     exercise_plan_volume: 0,
@@ -79,7 +79,7 @@ export const ExercisePlanSave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+        DATE: DATE,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -90,21 +90,21 @@ export const ExercisePlanSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.date_start, DATE.date_end]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+      DATE: DATE,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        date_start: DATE.date_start,
-        date_end: DATE.date_end
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
       });
       navigate(SEND.toList, {
         state: SEND
@@ -145,7 +145,7 @@ export const ExercisePlanSave = () => {
                 timezone={"Asia/Seoul"}
                 views={["day"]}
                 readOnly={false}
-                value={moment(DATE.date_start)}
+                value={moment(DATE.dateStart)}
                 sx={{
                   width: "80vw",
                   height: "60vh"
@@ -153,7 +153,7 @@ export const ExercisePlanSave = () => {
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
-                    date_start: moment(date).format("YYYY-MM-DD")
+                    dateStart: moment(date).format("YYYY-MM-DD")
                   }));
                   closePopup();
                 }}
@@ -163,9 +163,9 @@ export const ExercisePlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={translate("common-date_start")}
+              label={translate("common-dateStart")}
               size={"small"}
-              value={DATE.date_start}
+              value={DATE.dateStart}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               onClick={(e) => {
@@ -192,7 +192,7 @@ export const ExercisePlanSave = () => {
                 timezone={"Asia/Seoul"}
                 views={["day"]}
                 readOnly={false}
-                value={moment(DATE.date_end)}
+                value={moment(DATE.dateEnd)}
                 sx={{
                   width: "80vw",
                   height: "60vh"
@@ -200,7 +200,7 @@ export const ExercisePlanSave = () => {
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
-                    date_end: moment(date).format("YYYY-MM-DD")
+                    dateEnd: moment(date).format("YYYY-MM-DD")
                   }));
                   closePopup();
                 }}
@@ -210,9 +210,9 @@ export const ExercisePlanSave = () => {
           {(popTrigger={}) => (
             <TextField
               select={false}
-              label={translate("common-date_end")}
+              label={translate("common-dateEnd")}
               size={"small"}
-              value={DATE.date_end}
+              value={DATE.dateEnd}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               onClick={(e) => {

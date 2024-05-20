@@ -13,17 +13,19 @@ export const list = {
   ) => {
     const finalResult = await Exercise.countDocuments({
       user_id: user_id_param,
-      exercise_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      exercise_date_start: {
+      exercise_dateStart: {
         $gte: dateStart_param,
       },
-      exercise_date_end: {
+      exercise_dateEnd: {
         $lte: dateEnd_param,
       },
-      ...(part_param !== "전체" && {
+      ...(dateType_param === "전체" ? {} : {
+        exercise_dateType: dateType_param
+      }),
+      ...(part_param === "전체" ? {} : {
         "exercise_section.exercise_part_val": part_param
       }),
-      ...(title_param !== "전체" && {
+      ...(title_param === "전체" ? {} : {
         "exercise_section.exercise_title_val": title_param
       }),
     });
@@ -39,26 +41,28 @@ export const list = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...(part_param !== "전체" && {
+        ...(dateType_param === "전체" ? {} : {
+          exercise_dateType: dateType_param
+        }),
+        ...(part_param === "전체" ? {} : {
           "exercise_section.exercise_part_val": part_param
         }),
-        ...(title_param !== "전체" && {
+        ...(title_param === "전체" ? {} : {
           "exercise_section.exercise_title_val": title_param
         }),
       }},
       {$project: {
-        exercise_date_type: 1,
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateType: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
         exercise_body_weight: 1,
@@ -79,7 +83,7 @@ export const list = {
           }
         }
       }},
-      {$sort: {exercise_date_start: sort_param}},
+      {$sort: {exercise_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -96,11 +100,11 @@ export const detail = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_date_start: {
+      exercise_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_date_end: {
+      exercise_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -119,11 +123,11 @@ export const save = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_date_start: {
+      exercise_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_date_end: {
+      exercise_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -140,9 +144,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       exercise_demo: false,
-      exercise_date_type: OBJECT_param.exercise_date_type,
-      exercise_date_start: dateStart_param,
-      exercise_date_end: dateEnd_param,
+      exercise_dateType: OBJECT_param.exercise_dateType,
+      exercise_dateStart: dateStart_param,
+      exercise_dateEnd: dateEnd_param,
       exercise_total_volume: OBJECT_param.exercise_total_volume,
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
       exercise_body_weight: OBJECT_param.exercise_body_weight,
@@ -161,9 +165,9 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        exercise_date_type: OBJECT_param.exercise_date_type,
-        exercise_date_start: dateStart_param,
-        exercise_date_end: dateEnd_param,
+        exercise_dateType: OBJECT_param.exercise_dateType,
+        exercise_dateStart: dateStart_param,
+        exercise_dateEnd: dateEnd_param,
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
         exercise_body_weight: OBJECT_param.exercise_body_weight,
@@ -185,11 +189,11 @@ export const deletes = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_date_start: {
+      exercise_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      exercise_date_end: {
+      exercise_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -204,11 +208,11 @@ export const deletes = {
     const updateResult = await Exercise.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },

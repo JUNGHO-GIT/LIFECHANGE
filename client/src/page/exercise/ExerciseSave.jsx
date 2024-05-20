@@ -24,8 +24,8 @@ export const ExerciseSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -60,9 +60,9 @@ export const ExerciseSave = () => {
     _id: "",
     exercise_number: 0,
     exercise_demo: false,
-    exercise_date_type: "",
-    exercise_date_start: "0000-00-00",
-    exercise_date_end: "0000-00-00",
+    exercise_dateType: "",
+    exercise_dateStart: "0000-00-00",
+    exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -90,7 +90,7 @@ export const ExerciseSave = () => {
       params: {
         user_id: sessionId,
         _id: "",
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+        DATE: DATE,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -101,7 +101,7 @@ export const ExerciseSave = () => {
       newSectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [sessionId, DATE.date_start, DATE.date_end]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -168,14 +168,14 @@ export const ExerciseSave = () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
-      duration: `${DATE.date_start} ~ ${DATE.date_end}`,
+      DATE: DATE,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
       Object.assign(SEND, {
-        date_start: DATE.date_start,
-        date_end: DATE.date_end
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
       });
       navigate(SEND.toList, {
         state: SEND
@@ -212,7 +212,7 @@ export const ExerciseSave = () => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.date_start)}
+              value={moment(DATE.dateStart)}
               sx={{
                 width: "80vw",
                 height: "60vh"
@@ -220,8 +220,8 @@ export const ExerciseSave = () => {
               onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).format("YYYY-MM-DD"),
-                  date_end: moment(date).format("YYYY-MM-DD"),
+                  dateStart: moment(date).format("YYYY-MM-DD"),
+                  dateEnd: moment(date).format("YYYY-MM-DD"),
                 }));
                 closePopup();
               }}
@@ -233,7 +233,7 @@ export const ExerciseSave = () => {
             select={false}
             label={translate("common-date")}
             size={"small"}
-            value={DATE.date_start}
+            value={DATE.dateStart}
             variant={"outlined"}
             className={"w-86vw"}
             onClick={(e) => {

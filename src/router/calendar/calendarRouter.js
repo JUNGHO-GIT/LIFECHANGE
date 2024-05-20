@@ -10,7 +10,7 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
-      req.query.duration
+      req.query.DATE
     );
     if (result && result.result) {
       res.json({
@@ -43,7 +43,7 @@ router.get("/detail", async (req, res) => {
     let result = await service.detail (
       req.query.user_id,
       req.query._id,
-      req.query.duration
+      req.query.DATE
     );
     if (result && result.result) {
       res.json({
@@ -76,7 +76,7 @@ router.post("/save", async (req, res) => {
     let result = await service.save(
       req.body.user_id,
       req.body.OBJECT,
-      req.body.duration
+      req.body.DATE
     );
     result = await middleware.save(result);
     if (result) {
@@ -110,7 +110,7 @@ router.delete("/deletes", async (req, res) => {
       req.query.user_id,
       req.query._id,
       req.query.section_id,
-      req.query.duration
+      req.query.DATE
     );
     result = await middleware.deletes(result);
     if (result) {

@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await SleepPlan.countDocuments({
       user_id: user_id_param,
-      sleep_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      sleep_plan_date_start: {
+      sleep_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      sleep_plan_date_end: {
+      sleep_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -30,30 +32,32 @@ export const list = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          sleep_plan_dateType: dateType_param
+        }),
       }},
       {$unwind: "$sleep_section"
       },
       {$project: {
         _id: 1,
-        sleep_date_type: 1,
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateType: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_night: "$sleep_section.sleep_night",
         sleep_morning: "$sleep_section.sleep_morning",
         sleep_time: "$sleep_section.sleep_time",
       }},
       {$sort: {
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
       }},
       {$limit: 1},
     ]);
@@ -69,17 +73,19 @@ export const list = {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        sleep_plan_date_start: {
+        sleep_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        sleep_plan_date_end: {
+        sleep_plan_dateEnd: {
           $gte: dateStart_param,
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          sleep_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        sleep_plan_date_start: sort_param,
-        sleep_plan_date_end: sort_param
+        sleep_plan_dateStart: sort_param,
+        sleep_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

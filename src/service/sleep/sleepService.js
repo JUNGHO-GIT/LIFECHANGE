@@ -32,10 +32,12 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  user_id_param, _id_param, duration_param
+  user_id_param, _id_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   const finalResult = await repository.detail.detail(
     user_id_param, _id_param, dateStart, dateEnd
@@ -51,10 +53,12 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param, duration_param
+  user_id_param, OBJECT_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.save.detail(
     user_id_param, "", dateStart, dateEnd
@@ -77,10 +81,12 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  user_id_param, _id_param, section_id_param, duration_param
+  user_id_param, _id_param, section_id_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.deletes.detail(
     user_id_param, _id_param, dateStart, dateEnd

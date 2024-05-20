@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await FoodPlan.countDocuments({
       user_id: user_id_param,
-      food_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      food_plan_date_start: {
+      food_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      food_plan_date_end: {
+      food_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        food_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -30,19 +32,21 @@ export const list = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        food_date_start: {
+        food_dateStart: {
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          food_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
-        food_date_type: "$food_date_type",
-        food_date_start: "$food_date_start",
-        food_date_end: "$food_date_end",
+        food_dateType: "$food_dateType",
+        food_dateStart: "$food_dateStart",
+        food_dateEnd: "$food_dateEnd",
         food_total_kcal: "$food_total_kcal",
         food_total_carb: "$food_total_carb",
         food_total_protein: "$food_total_protein",
@@ -61,17 +65,19 @@ export const list = {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        food_plan_date_start: {
+        food_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        food_plan_date_end: {
+        food_plan_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          food_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        food_plan_date_start: sort_param,
-        food_plan_date_end: sort_param
+        food_plan_dateStart: sort_param,
+        food_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

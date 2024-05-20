@@ -18,8 +18,8 @@ export const ExerciseList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -67,9 +67,9 @@ export const ExerciseList = () => {
     _id: "",
     exercise_number: 0,
     exercise_demo: false,
-    exercise_date_type: "",
-    exercise_date_start: "0000-00-00",
-    exercise_date_end: "0000-00-00",
+    exercise_dateType: "",
+    exercise_dateStart: "0000-00-00",
+    exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -97,7 +97,7 @@ export const ExerciseList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`
+        DATE: DATE
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -112,7 +112,7 @@ export const ExerciseList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.date_start, DATE.date_end
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -132,7 +132,7 @@ export const ExerciseList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -160,19 +160,19 @@ export const ExerciseList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
-                    date_start: item.exercise_date_start,
-                    date_end: item.exercise_date_end
+                    dateStart: item.exercise_dateStart,
+                    dateEnd: item.exercise_dateEnd
                   });
                   navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
                   <Link>
-                    {item.exercise_date_start?.substring(5, 10)}
+                    {item.exercise_dateStart?.substring(5, 10)}
                   </Link>
                 </TableCell>
                 <TableCell rowSpan={2}>
-                  {item.exercise_date_type}
+                  {item.exercise_dateType}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>

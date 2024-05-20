@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await ExercisePlan.countDocuments({
       user_id: user_id_param,
-      exercise_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      exercise_plan_date_start: {
+      exercise_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      exercise_plan_date_end: {
+      exercise_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        exercise_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -30,19 +32,21 @@ export const list = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          exercise_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
-        exercise_date_type: "$exercise_date_type",
-        exercise_date_start: "$exercise_date_start",
-        exercise_date_end: "$exercise_date_end",
+        exercise_dateType: "$exercise_dateType",
+        exercise_dateStart: "$exercise_dateStart",
+        exercise_dateEnd: "$exercise_dateEnd",
         exercise_total_count: "$exercise_total_count",
         exercise_total_volume: "$exercise_total_volume",
         exercise_total_cardio: "$exercise_total_cardio",
@@ -61,17 +65,19 @@ export const list = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $gte: dateStart_param,
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          exercise_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        exercise_plan_date_start: sort_param,
-        exercise_plan_date_end: sort_param
+        exercise_plan_dateStart: sort_param,
+        exercise_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

@@ -13,19 +13,21 @@ export const list = {
   ) => {
     const finalResult = await Food.countDocuments({
       user_id: user_id_param,
-      food_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      food_date_start: {
+      food_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_date_end: {
+      food_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      ...(part_param !== "전체" && {
+      ...(dateType_param === "전체" ? {} : {
+        food_dateType: dateType_param
+      }),
+      ...(part_param === "전체" ? {} : {
         "food_section.food_part_val": part_param
       }),
-      ...(title_param !== "전체" && {
+      ...(title_param === "전체" ? {} : {
         "food_section.food_title": title_param
       }),
     });
@@ -41,20 +43,22 @@ export const list = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          food_dateType: dateType_param
+        }),
       }},
       {$project: {
-        food_date_type: 1,
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateType: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1,
         food_total_carb: 1,
         food_total_protein: 1,
@@ -77,8 +81,8 @@ export const list = {
         }
       }},
       {$sort: {
-        food_date_start: sort_param,
-        food_date_end: sort_param
+        food_dateStart: sort_param,
+        food_dateEnd: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -96,11 +100,11 @@ export const detail = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_date_start: {
+      food_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_date_end: {
+      food_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -119,11 +123,11 @@ export const save = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_date_start: {
+      food_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_date_end: {
+      food_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -140,9 +144,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       food_demo: false,
-      food_date_type: OBJECT_param.food_date_type,
-      food_date_start: dateStart_param,
-      food_date_end: dateEnd_param,
+      food_dateType: OBJECT_param.food_dateType,
+      food_dateStart: dateStart_param,
+      food_dateEnd: dateEnd_param,
       food_total_kcal: OBJECT_param.food_total_kcal,
       food_total_carb: OBJECT_param.food_total_carb,
       food_total_protein: OBJECT_param.food_total_protein,
@@ -163,9 +167,9 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        food_date_type: OBJECT_param.food_date_type,
-        food_date_start: dateStart_param,
-        food_date_end: dateEnd_param,
+        food_dateType: OBJECT_param.food_dateType,
+        food_dateStart: dateStart_param,
+        food_dateEnd: dateEnd_param,
         food_total_kcal: OBJECT_param.food_total_kcal,
         food_total_carb: OBJECT_param.food_total_carb,
         food_total_protein: OBJECT_param.food_total_protein,
@@ -173,9 +177,7 @@ export const save = {
         food_section: OBJECT_param.food_section,
         food_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -191,11 +193,11 @@ export const deletes = {
     const finalResult = await Food.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      food_date_start: {
+      food_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      food_date_end: {
+      food_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -210,11 +212,11 @@ export const deletes = {
     const updateResult = await Food.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },

@@ -21,8 +21,8 @@ export const Btn = ({
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
-        date_start: objects?.DATE.date_start,
-        date_end: objects?.DATE.date_end
+        dateStart: objects?.DATE.dateStart,
+        dateEnd: objects?.DATE.dateEnd
       });
       handlers.navigate(objects?.SEND.toList, {
         state: objects?.SEND,
@@ -35,8 +35,8 @@ export const Btn = ({
     <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
     className={"secondary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
-        date_start: objects?.DATE.date_start,
-        date_end: objects?.DATE.date_end
+        dateStart: objects?.DATE.dateStart,
+        dateEnd: objects?.DATE.dateEnd
       });
       handlers.navigate(objects?.SEND.toFind, {
         state: objects?.SEND,
@@ -49,8 +49,8 @@ export const Btn = ({
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
     className={"primary-btn"} onClick={() => {
       Object.assign(objects?.SEND, {
-        date_start: objects?.DATE.date_start,
-        date_end: objects?.DATE.date_end
+        dateStart: objects?.DATE.dateStart,
+        dateEnd: objects?.DATE.dateEnd
       });
       handlers.navigate(objects?.SEND.toSave, {
         state: objects?.SEND,
@@ -79,8 +79,8 @@ export const Btn = ({
       (objects?.DATE) && (
         functions?.setDATE((prev) => ({
           ...prev,
-          date_start: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-          date_end: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+          dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+          dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
         }))
       );
     }}>
@@ -98,7 +98,7 @@ export const Btn = ({
             timezone={"Asia/Seoul"}
             views={["year", "day"]}
             readOnly={false}
-            defaultValue={moment(objects?.DATE.date_start)}
+            defaultValue={moment(objects?.DATE.dateStart)}
             sx={{
               width: "80vw",
               height: "60vh"
@@ -119,8 +119,8 @@ export const Btn = ({
               (objects?.DATE) && (
                 functions?.setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).format("YYYY-MM-DD"),
-                  date_end: moment(date).format("YYYY-MM-DD")
+                  dateStart: moment(date).format("YYYY-MM-DD"),
+                  dateEnd: moment(date).format("YYYY-MM-DD")
                 }))
               );
             }}
@@ -134,8 +134,8 @@ export const Btn = ({
               (objects?.DATE) && (
                 functions?.setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  date_end: moment(date).endOf("month").format("YYYY-MM-DD")
+                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
+                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
                 }))
               );
             }}
@@ -155,8 +155,8 @@ export const Btn = ({
               (objects?.DATE) && (
                 functions?.setDATE((prev) => ({
                   ...prev,
-                  date_start: moment(date).startOf("year").format("YYYY-MM-DD"),
-                  date_end: moment(date).endOf("year").format("YYYY-MM-DD")
+                  dateStart: moment(date).startOf("year").format("YYYY-MM-DD"),
+                  dateEnd: moment(date).endOf("year").format("YYYY-MM-DD")
                 }))
               );
             }}
@@ -183,8 +183,8 @@ export const Btn = ({
         const totalIn = property?.totalIn || 0;
         const totalOut = property?.totalOut || 0;
         const totalProperty = property?.totalProperty || 0;
-        const date_start = property?.date_start;
-        const date_end = property?.date_end;
+        const dateStart = property?.dateStart;
+        const dateEnd = property?.dateEnd;
         return (
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center mb-20"}>
@@ -194,7 +194,7 @@ export const Btn = ({
             </Div>
             <Div className={"d-center mb-40"}>
               <Div className={"fs-1-2rem fw-normal"}>
-                {date_start} ~ {date_end}
+                {dateStart} ~ {dateEnd}
               </Div>
             </Div>
             <Div className={"d-center mb-20"}>

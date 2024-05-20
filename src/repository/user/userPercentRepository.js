@@ -19,11 +19,11 @@ export const percent = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -46,11 +46,11 @@ export const percent = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -72,11 +72,11 @@ export const percent = {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_date_start: {
+        food_plan_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_plan_date_end: {
+        food_plan_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -99,11 +99,11 @@ export const percent = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -126,11 +126,11 @@ export const percent = {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_date_start: {
+        money_plan_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        money_plan_date_end: {
+        money_plan_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -151,11 +151,11 @@ export const percent = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_date_start: {
+        money_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        money_date_end: {
+        money_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -176,11 +176,11 @@ export const percent = {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_date_start: {
+        sleep_plan_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_plan_date_end: {
+        sleep_plan_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
@@ -202,11 +202,11 @@ export const percent = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -235,15 +235,15 @@ export const property = {
         _id: null,
         money_total_in: { $sum: "$money_total_in" },
         money_total_out: { $sum: "$money_total_out" },
-        property_date_start: { $min: "$money_date_start" },
-        property_date_end: { $max: "$money_date_end" },
+        property_dateStart: { $min: "$money_dateStart" },
+        property_dateEnd: { $max: "$money_dateEnd" },
       }},
       {$project: {
         _id: 0,
         money_total_in: "$money_total_in",
         money_total_out: "$money_total_out",
-        property_date_start: "$property_date_start",
-        property_date_end: "$property_date_end",
+        property_dateStart: "$property_dateStart",
+        property_dateEnd: "$property_dateEnd",
       }}
     ]);
     return finalResult[0];

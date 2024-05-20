@@ -18,8 +18,8 @@ export const SleepList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.date_start?.trim()?.toString();
-  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
+  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -67,9 +67,9 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_demo: false,
-    sleep_date_type: "",
-    sleep_date_start: "0000-00-00",
-    sleep_date_end: "0000-00-00",
+    sleep_dateType: "",
+    sleep_dateStart: "0000-00-00",
+    sleep_dateEnd: "0000-00-00",
     sleep_section: [{
       sleep_night: "00:00",
       sleep_morning: "00:00",
@@ -103,7 +103,7 @@ export const SleepList = () => {
     sessionId,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.date_start, DATE.date_end
+    DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
 
   // 7. table ------------------------------------------------------------------------------------->
@@ -123,7 +123,7 @@ export const SleepList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -151,19 +151,19 @@ export const SleepList = () => {
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
-                    date_start: item.sleep_date_start,
-                    date_end: item.sleep_date_end
+                    dateStart: item.sleep_dateStart,
+                    dateEnd: item.sleep_dateEnd
                   });
                   navigate(SEND.toSave, {
                     state: SEND
                   });
                 }}>
                   <Link>
-                    {item.sleep_date_start?.substring(5, 10)}
+                    {item.sleep_dateStart?.substring(5, 10)}
                   </Link>
                 </TableCell>
                 <TableCell rowSpan={2}>
-                  {item.sleep_date_type}
+                  {item.sleep_dateType}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>

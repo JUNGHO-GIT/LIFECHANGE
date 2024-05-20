@@ -6,7 +6,7 @@ import * as repository from "../../repository/food/foodFindRepository.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, FILTER_param, PAGING_param, duration_param
+  user_id_param, FILTER_param, PAGING_param, DATE_param
 ) => {
 
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
@@ -137,10 +137,12 @@ export const list = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param, duration_param
+  user_id_param, OBJECT_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.save.detail(
     user_id_param, "", dateStart, dateEnd

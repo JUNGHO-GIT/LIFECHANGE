@@ -101,9 +101,7 @@ export const save = {
         dataSet: OBJECT_param.dataSet,
         user_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;

@@ -11,22 +11,22 @@ export const barToday = {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_date_start: {
+        food_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        food_plan_date_end: {
+        food_plan_dateEnd: {
           $gte: dateStart_param
         },
       }},
       {$project: {
-        food_plan_date_start: 1,
-        food_plan_date_end: 1,
+        food_plan_dateStart: 1,
+        food_plan_dateEnd: 1,
         food_plan_kcal: 1,
         food_plan_carb: 1,
         food_plan_protein: 1,
         food_plan_fat: 1
       }},
-      {$sort: {food_plan_date_start: -1}},
+      {$sort: {food_plan_dateStart: -1}},
     ]);
     return finalResult;
   },
@@ -37,24 +37,24 @@ export const barToday = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1,
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -68,11 +68,11 @@ export const pieToday = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -99,11 +99,11 @@ export const pieToday = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -120,7 +120,7 @@ export const pieToday = {
         food_total_protein: "$total_protein",
         food_total_fat: "$total_fat"
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -134,11 +134,11 @@ export const pieWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -165,11 +165,11 @@ export const pieWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -186,7 +186,7 @@ export const pieWeek = {
         food_total_protein: "$total_protein",
         food_total_fat: "$total_fat"
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -200,11 +200,11 @@ export const pieMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -231,11 +231,11 @@ export const pieMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -252,7 +252,7 @@ export const pieMonth = {
         food_total_protein: "$total_protein",
         food_total_fat: "$total_fat"
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -266,21 +266,21 @@ export const lineWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   },
@@ -291,23 +291,23 @@ export const lineWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -321,21 +321,21 @@ export const lineMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   },
@@ -346,23 +346,23 @@ export const lineMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -376,21 +376,21 @@ export const avgMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   },
@@ -401,23 +401,23 @@ export const avgMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }
@@ -431,21 +431,21 @@ export const avgYear = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_kcal: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   },
@@ -456,23 +456,23 @@ export const avgYear = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_date_start: {
+        food_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_date_end: {
+        food_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_date_start: 1,
-        food_date_end: 1,
+        food_dateStart: 1,
+        food_dateEnd: 1,
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1
       }},
-      {$sort: {food_date_start: -1}},
+      {$sort: {food_dateStart: -1}},
     ]);
     return finalResult;
   }

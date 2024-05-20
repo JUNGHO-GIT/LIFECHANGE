@@ -12,15 +12,17 @@ export const list = {
   ) => {
     const finalResult = await Sleep.countDocuments({
       user_id: user_id_param,
-      sleep_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      sleep_date_start: {
+      sleep_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_date_end: {
+      sleep_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -31,26 +33,27 @@ export const list = {
     sort_param,
     limit_param, page_param,
   ) => {
-
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          sleep_dateType: dateType_param
+        }),
       }},
       {$unwind: "$sleep_section"},
       {$project: {
         _id: 1,
-        sleep_date_type: 1,
-        sleep_date_start: 1,
-        sleep_date_end: 1,
+        sleep_dateType: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
         sleep_section: [{
           _id: "$sleep_section._id",
           sleep_night: "$sleep_section.sleep_night",
@@ -59,8 +62,8 @@ export const list = {
         }]
       }},
       {$sort: {
-        sleep_date_start: sort_param,
-        sleep_date_end: sort_param
+        sleep_dateStart: sort_param,
+        sleep_dateEnd: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -79,11 +82,11 @@ export const detail = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_date_start: {
+      sleep_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_date_end: {
+      sleep_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -102,11 +105,11 @@ export const save = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_date_start: {
+      sleep_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_date_end: {
+      sleep_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -123,9 +126,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       sleep_demo: false,
-      sleep_date_type: OBJECT_param.sleep_date_type,
-      sleep_date_start: dateStart_param,
-      sleep_date_end: dateEnd_param,
+      sleep_dateType: OBJECT_param.sleep_dateType,
+      sleep_dateStart: dateStart_param,
+      sleep_dateEnd: dateEnd_param,
       sleep_section: OBJECT_param.sleep_section,
       sleep_regDt: newDate,
       sleep_updateDt: "",
@@ -141,15 +144,13 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        sleep_date_type: OBJECT_param.sleep_date_type,
-        sleep_date_start: dateStart_param,
-        sleep_date_end: dateEnd_param,
+        sleep_dateType: OBJECT_param.sleep_dateType,
+        sleep_dateStart: dateStart_param,
+        sleep_dateEnd: dateEnd_param,
         sleep_section: OBJECT_param.sleep_section,
         sleep_updateDt: newDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -165,11 +166,11 @@ export const deletes = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_date_start: {
+      sleep_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      sleep_date_end: {
+      sleep_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -184,11 +185,11 @@ export const deletes = {
     const updateResult = await Sleep.updateOne(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        sleep_date_start: {
+        sleep_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_date_end: {
+        sleep_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },

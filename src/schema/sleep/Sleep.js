@@ -21,17 +21,17 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  sleep_date_type: {
+  sleep_dateType: {
     type: String,
     default: "",
     required: false
   },
-  sleep_date_start: {
+  sleep_dateStart: {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  sleep_date_end: {
+  sleep_dateEnd: {
     type: String,
     default: "0000-00-00",
     required: false

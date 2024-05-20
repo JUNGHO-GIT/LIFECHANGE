@@ -11,10 +11,10 @@ export const scatterToday = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -22,7 +22,7 @@ export const scatterToday = {
         _id: 0,
         exercise_plan_weight: 1
       }},
-      {$sort: {exercise_plan_date_start: -1}}
+      {$sort: {exercise_plan_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -33,10 +33,10 @@ export const scatterToday = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -44,7 +44,7 @@ export const scatterToday = {
         _id: 0,
         exercise_body_weight: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -58,10 +58,10 @@ export const scatterWeek = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -69,7 +69,7 @@ export const scatterWeek = {
         _id: 0,
         exercise_plan_weight: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -80,10 +80,10 @@ export const scatterWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -91,7 +91,7 @@ export const scatterWeek = {
         _id: 0,
         exercise_body_weight: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -105,10 +105,10 @@ export const scatterMonth = {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_date_start: {
+        exercise_plan_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_plan_date_end: {
+        exercise_plan_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -116,7 +116,7 @@ export const scatterMonth = {
         _id: 0,
         exercise_plan_weight: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -127,10 +127,10 @@ export const scatterMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $lte: dateEnd_param
         },
       }},
@@ -138,7 +138,7 @@ export const scatterMonth = {
         _id: 0,
         exercise_body_weight: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -152,11 +152,11 @@ export const pieWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -183,11 +183,11 @@ export const pieWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -217,11 +217,11 @@ export const pieMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -248,11 +248,11 @@ export const pieMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
@@ -282,21 +282,21 @@ export const lineWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_volume: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -307,21 +307,21 @@ export const lineWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_cardio: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -335,21 +335,21 @@ export const lineMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_volume: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -360,21 +360,21 @@ export const lineMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_cardio: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -388,21 +388,21 @@ export const avgMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_volume: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -413,21 +413,21 @@ export const avgMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_cardio: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }
@@ -441,21 +441,21 @@ export const avgYear = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_volume: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -466,21 +466,21 @@ export const avgYear = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_date_start: {
+        exercise_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_date_end: {
+        exercise_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_date_start: 1,
-        exercise_date_end: 1,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_total_cardio: 1
       }},
-      {$sort: {exercise_date_start: -1}}
+      {$sort: {exercise_dateStart: -1}}
     ]);
     return finalResult;
   }

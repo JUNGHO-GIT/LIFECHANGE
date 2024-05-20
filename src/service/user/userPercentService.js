@@ -4,10 +4,12 @@ import * as repository from "../../repository/user/userPercentRepository.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, duration_param
+  user_id_param, DATE_param
 ) => {
 
-  const [dateStart, dateEnd] = duration_param.split(` ~ `);
+  const dateType = DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   // 1. exercise
   const listExercisePlan = await repository.percent.listExercisePlan(
@@ -83,8 +85,8 @@ export const property = async (
     totalIn: findResult?.money_total_in,
     totalOut: findResult?.money_total_out,
     totalProperty: findResult?.money_total_in - findResult?.money_total_out,
-    date_start: findResult?.property_date_start,
-    date_end: findResult?.property_date_end,
+    dateStart: findResult?.property_dateStart,
+    dateEnd: findResult?.property_dateEnd,
   };
 
   return finalResult;

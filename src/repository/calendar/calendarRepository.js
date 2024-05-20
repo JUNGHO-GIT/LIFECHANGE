@@ -12,10 +12,10 @@ export const list = {
   ) => {
     const finalResult = await Calendar.countDocuments({
       user_id: user_id_param,
-      calendar_date_start: {
+      calendar_dateStart: {
         $lte: dateEnd_param,
       },
-      calendar_date_end: {
+      calendar_dateEnd: {
         $gte: dateStart_param,
       },
     });
@@ -29,10 +29,10 @@ export const list = {
     const finalResult = await Calendar.aggregate([
       {$match: {
         user_id: user_id_param,
-        calendar_date_start: {
+        calendar_dateStart: {
           $lte: dateEnd_param,
         },
-        calendar_date_end: {
+        calendar_dateEnd: {
           $gte: dateStart_param,
         },
       }}
@@ -50,11 +50,11 @@ export const detail = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_date_start: {
+      calendar_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      calendar_date_end: {
+      calendar_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -73,11 +73,11 @@ export const save = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_date_start: {
+      calendar_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      calendar_date_end: {
+      calendar_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -94,9 +94,9 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       calendar_demo: false,
-      calendar_date_type: OBJECT_param.calendar_date_type,
-      calendar_date_start: dateStart_param,
-      calendar_date_end: dateEnd_param,
+      calendar_dateType: OBJECT_param.calendar_dateType,
+      calendar_dateStart: dateStart_param,
+      calendar_dateEnd: dateEnd_param,
       calendar_section: OBJECT_param.calendar_section,
       calendar_regDt: newDate,
       calendar_updateDt: "",
@@ -112,15 +112,13 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        calendar_date_type: OBJECT_param.calendar_date_type,
-        calendar_date_start: dateStart_param,
-        calendar_date_end: dateEnd_param,
+        calendar_dateType: OBJECT_param.calendar_dateType,
+        calendar_dateStart: dateStart_param,
+        calendar_dateEnd: dateEnd_param,
         calendar_section: OBJECT_param.calendar_section,
         calendar_updateDt: newDate
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
     return finalResult;
@@ -136,11 +134,11 @@ export const deletes = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_date_start: {
+      calendar_dateStart: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      calendar_date_end: {
+      calendar_dateEnd: {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
@@ -155,11 +153,11 @@ export const deletes = {
     const updateResult = await Calendar.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        calendar_date_start: {
+        calendar_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        calendar_date_end: {
+        calendar_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },

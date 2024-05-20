@@ -10,7 +10,7 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
-      req.query.duration
+      req.query.DATE
     );
     result = await middleware.percent(result);
     if (result) {

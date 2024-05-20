@@ -12,13 +12,15 @@ export const list = {
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
       user_id: user_id_param,
-      money_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-      money_plan_date_start: {
+      money_plan_dateStart: {
         $lte: dateEnd_param,
       },
-      money_plan_date_end: {
+      money_plan_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        money_plan_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -30,19 +32,21 @@ export const list = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        money_date_start: {
+        money_dateStart: {
           $lte: dateEnd_param,
         },
-        money_date_end: {
+        money_dateEnd: {
           $gte: dateStart_param
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          money_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
-        money_date_type: "$money_date_type",
-        money_date_start: "$money_date_start",
-        money_date_end: "$money_date_end",
+        money_dateType: "$money_dateType",
+        money_dateStart: "$money_dateStart",
+        money_dateEnd: "$money_dateEnd",
         money_total_in: "$money_total_in",
         money_total_out: "$money_total_out",
       }}
@@ -59,17 +63,19 @@ export const list = {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_date_type: !dateType_param ? {$exists:false} : dateType_param,
-        money_plan_date_start: {
+        money_plan_dateStart: {
           $lte: dateEnd_param,
         },
-        money_plan_date_end: {
+        money_plan_dateEnd: {
           $gte: dateStart_param,
-        }
+        },
+        ...(dateType_param === "전체" ? {} : {
+          money_plan_dateType: dateType_param
+        }),
       }},
       {$sort: {
-        money_plan_date_start: sort_param,
-        money_plan_date_end: sort_param
+        money_plan_dateStart: sort_param,
+        money_plan_dateEnd: sort_param
       }},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

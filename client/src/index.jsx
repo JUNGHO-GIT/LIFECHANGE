@@ -1,7 +1,7 @@
 // App.jsx
 
-import React from "react";
-import {useLocation} from "react-router-dom";
+import React, {useEffect} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
@@ -127,11 +127,11 @@ const User = () => (
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
+  const location = useLocation();
+  const isRequired = location.pathname === '/user/login' || location.pathname === '/user/signup';
+
   useRoot();
   useScrollTop();
-  const location = useLocation();
-  const isRoot = location.pathname === '/';
-  const isRequired = location.pathname === '/user/login' || location.pathname === '/user/signup';
 
   return (
     <div className={"App"}>
@@ -139,7 +139,6 @@ const App = () => {
       {!isRequired && <NavBar />}
       {!isRequired && <TopNav />}
       <Routes>
-        {isRoot && <Route path="/" element={<Navigate to="/user/login" replace />} />}
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />

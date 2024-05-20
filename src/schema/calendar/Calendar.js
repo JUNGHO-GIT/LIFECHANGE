@@ -16,17 +16,17 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  calendar_date_type : {
+  calendar_dateType : {
     type: String,
     default: "",
     required: false
   },
-  calendar_date_start : {
+  calendar_dateStart : {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  calendar_date_end : {
+  calendar_dateEnd : {
     type: String,
     default: "0000-00-00",
     required: false
