@@ -6,8 +6,7 @@ import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -29,7 +28,7 @@ export const UserDataList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day"
+      dateType: "day",
     }
   );
 
@@ -49,6 +48,7 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
+    exercise_plan_date_type: "day",
     exercise_plan_date_start: "0000-00-00",
     exercise_plan_date_end: "0000-00-00",
     exercise_plan_count: 0,
@@ -59,6 +59,7 @@ export const UserDataList = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
+    exercise_date_type: "day",
     exercise_date_start: "0000-00-00",
     exercise_date_end: "0000-00-00",
     exercise_total_volume: 0,
@@ -77,6 +78,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_FOOD_PLAN_DEF = [{
+    food_plan_date_type: "day",
     food_plan_date_start: "0000-00-00",
     food_plan_date_end: "0000-00-00",
     food_plan_kcal: 0,
@@ -87,6 +89,7 @@ export const UserDataList = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
+    food_date_type: "day",
     food_date_start: "0000-00-00",
     food_date_end: "0000-00-00",
     food_total_kcal: 0,
@@ -107,6 +110,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_MONEY_PLAN_DEF = [{
+    money_plan_date_type: "day",
     money_plan_date_start: "0000-00-00",
     money_plan_date_end: "0000-00-00",
     money_plan_in: 0,
@@ -115,6 +119,7 @@ export const UserDataList = () => {
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
+    money_date_type: "day",
     money_date_start: "0000-00-00",
     money_date_end: "0000-00-00",
     money_total_in: 0,
@@ -129,6 +134,7 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_SLEEP_PLAN_DEF = [{
+    sleep_plan_date_type: "day",
     sleep_plan_date_start: "0000-00-00",
     sleep_plan_date_end: "0000-00-00",
     sleep_plan_night: "00:00",
@@ -138,6 +144,7 @@ export const UserDataList = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
+    sleep_date_type: "day",
     sleep_date_start: "0000-00-00",
     sleep_date_end: "0000-00-00",
     sleep_section: [{
@@ -198,7 +205,7 @@ export const UserDataList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     PART
   ]);
@@ -255,6 +262,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -263,7 +271,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={6}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -278,6 +286,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -295,6 +304,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {item.exercise_plan_date_type}
+                </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
                 </TableCell>
@@ -321,6 +333,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
               <TableCell>{translate("exercise-weight")}</TableCell>
@@ -328,7 +341,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -343,6 +356,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
               <TableCell>{translate("exercise-weight")}</TableCell>
@@ -357,6 +371,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.exercise_date_type}
+                </TableCell>
                 <TableCell>
                   {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
                 </TableCell>
@@ -380,6 +397,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -388,7 +406,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={6}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -403,6 +421,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -420,6 +439,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {item.food_plan_date_type}
+                </TableCell>
                 <TableCell>
                   {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
                 </TableCell>
@@ -446,6 +468,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -454,7 +477,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={6}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -469,6 +492,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -484,6 +508,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.food_date_type}
+                </TableCell>
                 <TableCell>
                   {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
                 </TableCell>
@@ -510,13 +537,14 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={4}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -531,6 +559,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -546,6 +575,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {item.money_plan_date_type}
+                </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
                 </TableCell>
@@ -566,13 +598,14 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={4}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -587,6 +620,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -600,6 +634,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.money_date_type}
+                </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}
                 </TableCell>
@@ -620,6 +657,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -627,7 +665,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -642,6 +680,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -658,6 +697,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+                <TableCell>
+                  {item.sleep_plan_date_type}
+                </TableCell>
                 <TableCell>
                   {item.sleep_plan_night}
                 </TableCell>
@@ -681,6 +723,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -688,7 +731,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={5}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -703,6 +746,7 @@ export const UserDataList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -717,6 +761,9 @@ export const UserDataList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.sleep_date_type}
+                </TableCell>
                 <TableCell>
                   {item.sleep_section[0]?.sleep_night}
                 </TableCell>

@@ -38,7 +38,7 @@ export const MoneyPlanList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day",
+      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -98,7 +98,7 @@ export const MoneyPlanList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.date_start, DATE.date_end
   ]);
@@ -112,6 +112,7 @@ export const MoneyPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -133,6 +134,7 @@ export const MoneyPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -156,6 +158,9 @@ export const MoneyPlanList = () => {
                     <Div>~</Div>
                     <Div>{item.money_plan_date_end?.substring(5, 10)}</Div>
                   </Link>
+                </TableCell>
+                <TableCell rowSpan={2}>
+                  {item.money_plan_date_type}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

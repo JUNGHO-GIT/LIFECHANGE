@@ -38,7 +38,7 @@ export const MoneyDiff = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day",
+      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -107,7 +107,7 @@ export const MoneyDiff = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.date_start, DATE.date_end
   ]);
@@ -121,6 +121,7 @@ export const MoneyDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
@@ -143,6 +144,7 @@ export const MoneyDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
@@ -158,6 +160,9 @@ export const MoneyDiff = () => {
                     <Div>~</Div>
                     <Div>{item.money_plan_date_end?.substring(5, 10)}</Div>
                   </Link>
+                </TableCell>
+                <TableCell rowSpan={4}>
+                  {item.money_plan_date_type}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

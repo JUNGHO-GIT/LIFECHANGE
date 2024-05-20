@@ -5,6 +5,7 @@ import {useLocation} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
+import {useRoot} from "./assets/hooks/useRoot.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -123,18 +124,20 @@ const User = () => (
     <Route path="/login" element={<UserLogin />} />
   </Routes>
 );
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
+  useRoot();
   useScrollTop();
   const location = useLocation();
   const isRoot = location.pathname === '/';
-  const isLogin = location.pathname === '/user/login';
-  const isSignup = location.pathname === '/user/signup';
+  const isRequired = location.pathname === '/user/login' || location.pathname === '/user/signup';
+
   return (
     <div className={"App"}>
-      {!isLogin && !isSignup && <Header />}
-      {!isLogin && !isSignup && <NavBar />}
-      {!isLogin && !isSignup && <TopNav />}
+      {!isRequired && <Header />}
+      {!isRequired && <NavBar />}
+      {!isRequired && <TopNav />}
       <Routes>
         {isRoot && <Route path="/" element={<Navigate to="/user/login" replace />} />}
         <Route path="/calendar/*" element={<Calendar />} />
@@ -144,10 +147,11 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      {!isLogin && !isSignup && <BottomNav />}
+      {!isRequired && <BottomNav />}
     </div>
   );
 };
+
 // ------------------------------------------------------------------------------------------------>
 const rootElement = document.getElementById('root');
 

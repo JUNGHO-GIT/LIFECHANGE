@@ -35,8 +35,7 @@ export const MoneyList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day",
-      date_type: "thisDay",
+      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -122,6 +121,7 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
@@ -144,6 +144,7 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-date_type")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
@@ -166,6 +167,9 @@ export const MoneyList = () => {
                   <Link>
                     {item.money_date_start?.substring(5, 10)}
                   </Link>
+                </TableCell>
+                <TableCell rowSpan={2}>
+                  {item.money_date_type}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>

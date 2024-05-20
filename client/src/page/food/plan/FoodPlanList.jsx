@@ -38,7 +38,7 @@ export const FoodPlanList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day",
+      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -100,7 +100,7 @@ export const FoodPlanList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.date_start, DATE.date_end
   ]);
@@ -114,6 +114,7 @@ export const FoodPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -137,6 +138,7 @@ export const FoodPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -162,6 +164,9 @@ export const FoodPlanList = () => {
                     <Div>~</Div>
                     <Div>{item.food_plan_date_end?.substring(5, 10)}</Div>
                   </Link>
+                </TableCell>
+                <TableCell rowSpan={2}>
+                  {item.food_plan_date_type}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>

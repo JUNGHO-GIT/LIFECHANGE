@@ -36,7 +36,7 @@ export const ExercisePlanList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      type: "day",
+      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -98,7 +98,7 @@ export const ExercisePlanList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.date_start, DATE.date_end
   ]);
@@ -112,6 +112,7 @@ export const ExercisePlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -135,6 +136,7 @@ export const ExercisePlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -160,6 +162,9 @@ export const ExercisePlanList = () => {
                     <Div>~</Div>
                     <Div>{item.exercise_plan_date_end?.substring(5, 10)}</Div>
                   </Link>
+                </TableCell>
+                <TableCell rowSpan={2}>
+                  {item.exercise_plan_date_type}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
