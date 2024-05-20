@@ -20,7 +20,7 @@ const schema = new mongoose.Schema({
     default: 0,
     unique : true
   },
-
+  
   money_startDt: {
     type: String,
     default: "0000-00-00",
@@ -29,6 +29,11 @@ const schema = new mongoose.Schema({
   money_endDt: {
     type: String,
     default: "0000-00-00",
+    required: false
+  },
+  money_dateType: {
+    type: String,
+    default: "",
     required: false
   },
 

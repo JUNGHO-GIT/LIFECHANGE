@@ -15,6 +15,8 @@ export const Filter = ({
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
+  const dateType = ["day", "week", "month", "year"];
+  const orderType = ["asc", "desc"];
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -24,21 +26,21 @@ export const Filter = ({
         type={"text"}
         size={"small"}
         variant={"outlined"}
-        value={objects?.FILTER?.type}
+        value={objects?.FILTER?.dateType}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
           functions?.setFILTER((prev) => ({
             ...prev,
-            type: e.target.value
+            dateType: e.target.value
           })),
           functions?.setPAGING((prev) => ({
             ...prev,
             page: 1
           }))
         )}>
-        {["day", "week", "month", "year", "select"]?.map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.FILTER?.type === item}>
+            {dateType.map((item) => (
+          <MenuItem key={item} value={item} selected={objects?.FILTER?.dateType === item}>
             {item}
           </MenuItem>
         ))}
@@ -57,7 +59,7 @@ export const Filter = ({
             order: e.target.value
           }))
         )}>
-        {["asc", "desc"]?.map((item) => (
+        {orderType?.map((item) => (
           <MenuItem key={item} value={item} selected={objects?.FILTER?.order === item}>
             {item}
           </MenuItem>

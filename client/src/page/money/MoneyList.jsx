@@ -36,6 +36,7 @@ export const MoneyList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
+      dateType: "thisDay",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -67,6 +68,7 @@ export const MoneyList = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
+    money_dateType: "",
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
     money_total_in: 0,
@@ -105,6 +107,7 @@ export const MoneyList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
+    FILTER.dateType,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.startDt, DATE.endDt
@@ -119,13 +122,14 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>
+              <TableCell colSpan={4}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -140,6 +144,7 @@ export const MoneyList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
+              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("money-in")}</TableCell>
               <TableCell>{translate("money-out")}</TableCell>
             </TableRow>
@@ -164,6 +169,9 @@ export const MoneyList = () => {
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+                <TableCell>
+                  {item.money_dateType}
+                </TableCell>
                 <TableCell>
                   {`₩ ${numeral(item.money_total_in).format('0,0')}`}
                 </TableCell>

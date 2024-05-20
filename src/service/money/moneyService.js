@@ -14,13 +14,14 @@ export const list = async (
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
   const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
+  const dateType = FILTER_param.dateType;
 
   const totalCnt = await repository.list.cnt(
-    user_id_param, part, title, startDt_param, endDt_param
+    user_id_param, part, title, dateType, startDt_param, endDt_param
   );
 
   const finalResult = await repository.list.list(
-    user_id_param, part, title, sort, limit, page, startDt_param, endDt_param
+    user_id_param, part, title, dateType, sort, limit, page, startDt_param, endDt_param
   );
 
   return {

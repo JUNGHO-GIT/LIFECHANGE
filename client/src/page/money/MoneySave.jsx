@@ -58,6 +58,7 @@ export const MoneySave = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
+    money_dateType: "thisDay",
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
     money_total_in: 0,
@@ -174,6 +175,34 @@ export const MoneySave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
+      <>
+      <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={"날짜타입"}
+            variant={"outlined"}
+            className={"w-40vw me-3vw"}
+            value={OBJECT?.money_dateType}
+            InputProps={{
+              readOnly: false,
+              startAdornment: null,
+              endAdornment: null
+            }}
+            onChange={(e) => {
+              const newVal = String(e.target.value);
+              setOBJECT((prev) => ({
+                ...prev,
+                money_dateType: newVal
+              }));
+            }}
+          >
+            {["thisDay", "thisWeek", "thisMonth", "thisYear"].map((item, idx) => (
+              <MenuItem key={idx} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
       <PopUp
         type={"calendar"}
         position={"bottom"}
@@ -222,6 +251,7 @@ export const MoneySave = () => {
           />
         )}
       </PopUp>
+      </>
     );
     // 7-2. count
     const countSection = () => (

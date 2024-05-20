@@ -7,10 +7,13 @@ import {newDate} from "../../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    user_id_param, part_param, title_param, startDt_param, endDt_param
+    user_id_param, part_param, title_param,
+    dateType_param,
+    startDt_param, endDt_param
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param,
+      money_dateType: !dateType_param ? {$exists:false} : dateType_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -24,17 +27,21 @@ export const list = {
       }),
       ...(title_param === "전체" ? {} : {
         "money_section.money_title_val": title_param
-      }),
+      })
     });
     return finalResult;
   },
 
   list: async (
-    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param, part_param, title_param,
+    dateType_param,
+    sort_param, limit_param, page_param,
+    startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
+        money_dateType: !dateType_param ? {$exists:false} : dateType_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -47,6 +54,7 @@ export const list = {
       {$project: {
         money_startDt: 1,
         money_endDt: 1,
+        money_dateType: 1,
         money_total_in: 1,
         money_total_out: 1,
         money_section: {
@@ -129,6 +137,7 @@ export const save = {
       money_demo: false,
       money_startDt: startDt_param,
       money_endDt: endDt_param,
+      money_dateType: OBJECT_param.money_dateType,
       money_total_in: OBJECT_param.money_total_in,
       money_total_out: OBJECT_param.money_total_out,
       money_section: OBJECT_param.money_section,
@@ -148,6 +157,7 @@ export const save = {
       {$set: {
         money_startDt: startDt_param,
         money_endDt: endDt_param,
+        money_dateType: OBJECT_param.money_dateType,
         money_total_in: OBJECT_param.money_total_in,
         money_total_out: OBJECT_param.money_total_out,
         money_section: OBJECT_param.money_section,
