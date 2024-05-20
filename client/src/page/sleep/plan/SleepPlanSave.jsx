@@ -21,7 +21,6 @@ export const SleepPlanSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const session = sessionStorage.getItem("dataSet") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -74,10 +73,6 @@ export const SleepPlanSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_dateStart, location_dateEnd, DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
-
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -178,15 +173,9 @@ export const SleepPlanSave = () => {
                   <DateCalendar
                     timezone={"Asia/Seoul"}
                     views={["year", "day"]}
-                    readOnly={false}
+                    readOnly={true}
                     defaultValue={moment(DATE.dateStart)}
                     className={"radius border h-max40vh me-2"}
-                    onChange={(date) => {
-                      setDATE((prev) => ({
-                        ...prev,
-                        dateStart: moment(date).format("YYYY-MM-DD")
-                      }));
-                    }}
                     sx={{
                       "& .MuiDateCalendar-root": {
                         width: "100%",
@@ -214,15 +203,9 @@ export const SleepPlanSave = () => {
                   <DateCalendar
                     timezone={"Asia/Seoul"}
                     views={["year", "day"]}
-                    readOnly={false}
+                    readOnly={true}
                     defaultValue={moment(DATE.dateEnd)}
                     className={"radius border h-max40vh ms-2"}
-                    onChange={(date) => {
-                      setDATE((prev) => ({
-                        ...prev,
-                        dateEnd: moment(date).format("YYYY-MM-DD")
-                      }));
-                    }}
                     sx={{
                       "& .MuiDateCalendar-root": {
                         width: "100%",
