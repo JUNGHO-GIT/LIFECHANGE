@@ -19,6 +19,9 @@ export const Calendar = ({DATE, setDATE}) => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
+    alert(DATE.dateStart + DATE.dateEnd);
+
     // setTimeout을 사용하여 DOM 업데이트를 기다림
     const timer = setTimeout(() => {
       const pickerRoot = document.querySelectorAll(".MuiPickersDay-root");
@@ -92,6 +95,7 @@ export const Calendar = ({DATE, setDATE}) => {
                   width: "6.5vh",
                   height: "6.5vh",
                   margin: "0px",
+                  borderRadius: "0px",
                 },
               }}
             />
@@ -135,13 +139,13 @@ export const Calendar = ({DATE, setDATE}) => {
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              defaultValue={moment(DATE.dateStart)}
+              value={moment(DATE.dateStart)}
               className={"radius border h-max60vh me-2"}
-              onChange={(e) => {
+              onChange={(date) => {
                 setDATE((prev) => ({
                   ...prev,
-                  dateStart: moment(e).format("YYYY-MM-DD"),
-                  dateEnd: moment(e).add(6, "days").format("YYYY-MM-DD"),
+                  dateStart: moment(date).startOf("isoWeek").format("YYYY-MM-DD"),
+                  dateEnd: moment(date).endOf("isoWeek").format("YYYY-MM-DD")
                 }));
               }}
               sx={{
@@ -167,6 +171,7 @@ export const Calendar = ({DATE, setDATE}) => {
                   width: "6.5vh",
                   height: "6.5vh",
                   margin: "0px",
+                  borderRadius: "0px",
                 },
               }}
             />
@@ -242,6 +247,7 @@ export const Calendar = ({DATE, setDATE}) => {
                   width: "6.5vh",
                   height: "6.5vh",
                   margin: "0px",
+                  borderRadius: "0px",
                 },
               }}
             />
@@ -317,6 +323,7 @@ export const Calendar = ({DATE, setDATE}) => {
                   width: "6.5vh",
                   height: "6.5vh",
                   margin: "0px",
+                  borderRadius: "0px",
                 },
               }}
             />
