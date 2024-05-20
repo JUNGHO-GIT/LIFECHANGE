@@ -40,7 +40,7 @@ export const detail = async (
   const dateEnd = DATE_param.dateEnd;
 
   const finalResult = await repository.detail.detail(
-    user_id_param, _id_param, dateStart, dateEnd
+    user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
   const sectionCnt = finalResult ? 1 : 0;
@@ -67,12 +67,12 @@ export const save = async (
   let finalResult = null;
   if (!listPlan) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, dateStart, dateEnd
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
     finalResult = await repository.save.update(
-      user_id_param, listPlan._id, OBJECT_param, dateStart, dateEnd
+      user_id_param, listPlan._id, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
 
@@ -89,7 +89,7 @@ export const deletes = async (
   const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.deletes.detail(
-    user_id_param, _id_param, dateStart, dateEnd
+    user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {

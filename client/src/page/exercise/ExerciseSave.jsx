@@ -21,6 +21,7 @@ export const ExerciseSave = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const session = sessionStorage.getItem("dataSet") || "{}";
   const exerciseArray = JSON.parse(session)?.exercise || [];
+  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -202,54 +203,84 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <PopUp
-        type={"calendar"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateStart)}
-              sx={{
-                width: "80vw",
-                height: "60vh"
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD"),
-                }));
-                closePopup();
-              }}
-            />
-          </LocalizationProvider>
-        )}>
-        {(popTrigger={}) => (
+      <Div className={"d-row"}>
+        <Div className={"d-center"}>
           <TextField
-            select={false}
-            label={translate("common-date")}
+            select={true}
+            label={translate("common-dateType")}
             size={"small"}
-            value={DATE.dateStart}
+            value={DATE.dateType}
             variant={"outlined"}
-            className={"w-86vw"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
+            className={"w-20vw me-3vw"}
             InputProps={{
               readOnly: true,
               className: "fw-bold",
-              startAdornment: (
-                <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-              ),
+              startAdornment: null,
               endAdornment: null
             }}
-          />
-        )}
-      </PopUp>
+            onChange={(e) => {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value
+              }));
+            }}>
+            {dateType.map((item, idx) => (
+              <MenuItem key={idx} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Div>
+        <Div className={"d-row"}>
+          <PopUp
+            type={"calendar"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateStart)}
+                  sx={{
+                    width: "80vw",
+                    height: "60vh"
+                  }}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD")
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={translate("common-date")}
+                size={"small"}
+                value={DATE.dateStart}
+                variant={"outlined"}
+                className={"w-63vw"}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
+                }}
+                InputProps={{
+                  readOnly: true,
+                  className: "fw-bold",
+                  startAdornment: (
+                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                  ),
+                  endAdornment: null
+                }}
+              />
+            )}
+          </PopUp>
+        </Div>
+      </Div>
     );
     // 7-2. count
     const countSection = () => (

@@ -93,7 +93,7 @@ export const list = {
 export const detail = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
@@ -116,7 +116,7 @@ export const detail = {
 export const save = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
@@ -136,13 +136,13 @@ export const save = {
 
   create: async (
     user_id_param, OBJECT_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       money_demo: false,
-      money_dateType: OBJECT_param.money_dateType,
+      money_dateType: dateType_param,
       money_dateStart: dateStart_param,
       money_dateEnd: dateEnd_param,
       money_total_in: OBJECT_param.money_total_in,
@@ -156,14 +156,14 @@ export const save = {
 
   update: async (
     user_id_param, _id_param, OBJECT_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        money_dateType: OBJECT_param.money_dateType,
+        money_dateType: dateType_param,
         money_dateStart: dateStart_param,
         money_dateEnd: dateEnd_param,
         money_total_in: OBJECT_param.money_total_in,
@@ -182,7 +182,7 @@ export const save = {
 export const deletes = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
@@ -201,7 +201,8 @@ export const deletes = {
   },
 
   update: async (
-    user_id_param, _id_param, section_id_param, dateStart_param, dateEnd_param,
+    user_id_param, _id_param, section_id_param,
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const updateResult = await Money.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,

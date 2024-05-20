@@ -8,7 +8,7 @@ import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Badge} from "../../../import/ImportMuis.jsx";
+import {Card, Paper, Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, Button, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
 import {common1, common2, common3, common5} from "../../../import/ImportImages.jsx";
@@ -21,6 +21,8 @@ export const FoodPlanSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const session = sessionStorage.getItem("dataSet") || "{}";
+  const dateType = JSON.parse(session)?.dateType || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -135,100 +137,129 @@ export const FoodPlanSave = () => {
     // 7-1. date
     const dateSection = () => (
       <Div className={"d-row"}>
-        <PopUp
-          type={"calendar"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["day"]}
-                readOnly={false}
-                value={moment(DATE.dateStart)}
-                sx={{
-                  width: "80vw",
-                  height: "60vh"
+        <Div className={"d-center"}>
+          <TextField
+            select={true}
+            label={translate("common-dateType")}
+            size={"small"}
+            value={DATE.dateType}
+            variant={"outlined"}
+            className={"w-20vw me-3vw"}
+            InputProps={{
+              readOnly: false,
+              className: "fw-bold",
+              startAdornment: null,
+              endAdornment: null
+            }}
+            onChange={(e) => {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value
+              }));
+            }}>
+            {dateType.map((item, idx) => (
+              <MenuItem key={idx} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Div>
+        <Div className={"d-row"}>
+          <PopUp
+            type={"calendar"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateStart)}
+                  sx={{
+                    width: "80vw",
+                    height: "60vh"
+                  }}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD")
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={translate("common-dateStart")}
+                size={"small"}
+                value={DATE.dateStart}
+                variant={"outlined"}
+                className={"w-30vw me-3vw"}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
                 }}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    dateStart: moment(date).format("YYYY-MM-DD")
-                  }));
-                  closePopup();
+                InputProps={{
+                  readOnly: true,
+                  className: "fw-bold",
+                  startAdornment: (
+                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                  ),
+                  endAdornment: null
                 }}
               />
-            </LocalizationProvider>
-          )}>
-          {(popTrigger={}) => (
-            <TextField
-              select={false}
-              label={translate("common-dateStart")}
-              size={"small"}
-              value={DATE.dateStart}
-              variant={"outlined"}
-              className={"w-40vw me-3vw"}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-              InputProps={{
-                readOnly: true,
-                className: "fw-bold",
-                startAdornment: (
-                  <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-                ),
-                endAdornment: null
-              }}
-            />
-          )}
-        </PopUp>
-        <PopUp
-          type={"calendar"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["day"]}
-                readOnly={false}
-                value={moment(DATE.dateEnd)}
-                sx={{
-                  width: "80vw",
-                  height: "60vh"
+            )}
+          </PopUp>
+          <PopUp
+            type={"calendar"}
+            position={"bottom"}
+            direction={"center"}
+            contents={({closePopup}) => (
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateEnd)}
+                  sx={{
+                    width: "80vw",
+                    height: "60vh"
+                  }}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateEnd: moment(date).format("YYYY-MM-DD")
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+            )}>
+            {(popTrigger={}) => (
+              <TextField
+                select={false}
+                label={translate("common-dateEnd")}
+                size={"small"}
+                value={DATE.dateEnd}
+                variant={"outlined"}
+                className={"w-30vw"}
+                onClick={(e) => {
+                  popTrigger.openPopup(e.currentTarget);
                 }}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    dateEnd: moment(date).format("YYYY-MM-DD")
-                  }));
-                  closePopup();
+                InputProps={{
+                  readOnly: true,
+                  className: "fw-bold",
+                  startAdornment: (
+                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                  ),
+                  endAdornment: null
                 }}
               />
-            </LocalizationProvider>
-          )}>
-          {(popTrigger={}) => (
-            <TextField
-              select={false}
-              label={translate("common-dateEnd")}
-              size={"small"}
-              value={DATE.dateEnd}
-              variant={"outlined"}
-              className={"w-40vw ms-3vw"}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-              InputProps={{
-                readOnly: true,
-                className: "fw-bold",
-                startAdornment: (
-                  <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-                ),
-                endAdornment: null
-              }}
-            />
-          )}
-        </PopUp>
+            )}
+          </PopUp>
+        </Div>
       </Div>
     );
     // 7-2. count (plan 은 total x)

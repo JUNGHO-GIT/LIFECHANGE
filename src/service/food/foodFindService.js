@@ -145,18 +145,18 @@ export const save = async (
   const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.save.detail(
-    user_id_param, "", dateStart, dateEnd
+    user_id_param, "", dateType, dateStart, dateEnd
   );
 
   let finalResult = null;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, dateStart, dateEnd
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
     finalResult = await repository.save.update(
-      user_id_param, findResult._id, OBJECT_param, dateStart, dateEnd
+      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
 

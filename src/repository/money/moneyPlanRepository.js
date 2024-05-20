@@ -59,7 +59,7 @@ export const list = {
 export const detail = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,
@@ -82,7 +82,7 @@ export const detail = {
 export const save = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,
@@ -102,13 +102,13 @@ export const save = {
 
   create: async (
     user_id_param, OBJECT_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       money_plan_demo: false,
-      money_plan_dateType: OBJECT_param.money_plan_dateType,
+      money_plan_dateType: dateType_param,
       money_plan_dateStart: dateStart_param,
       money_plan_dateEnd: dateEnd_param,
       money_plan_in: OBJECT_param.money_plan_in,
@@ -121,14 +121,14 @@ export const save = {
 
   update: async (
     user_id_param, _id_param, OBJECT_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        money_plan_dateType: OBJECT_param.money_plan_dateType,
+        money_plan_dateType: dateType_param,
         money_plan_dateStart: dateStart_param,
         money_plan_dateEnd: dateEnd_param,
         money_plan_in: OBJECT_param.money_plan_in,
@@ -146,7 +146,7 @@ export const save = {
 export const deletes = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       user_id: user_id_param,

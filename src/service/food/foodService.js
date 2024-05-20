@@ -42,7 +42,7 @@ export const detail = async (
   const dateEnd = DATE_param.dateEnd;
 
   const finalResult = await repository.detail.detail (
-    user_id_param, _id_param, dateStart, dateEnd
+    user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
   const sectionCnt = finalResult?.food_section.length || 0;
@@ -63,18 +63,18 @@ export const save = async (
   const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.save.detail(
-    user_id_param, "", dateStart, dateEnd
+    user_id_param, "", dateType, dateStart, dateEnd
   );
 
   let finalResult = null;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, dateStart, dateEnd
+      user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
   else {
     finalResult = await repository.save.update(
-      user_id_param, findResult._id, OBJECT_param, dateStart, dateEnd
+      user_id_param, findResult._id, OBJECT_param, dateType, dateStart, dateEnd
     );
   }
 
@@ -91,7 +91,7 @@ export const deletes = async (
   const dateEnd = DATE_param.dateEnd;
 
   const findResult = await repository.deletes.detail(
-    user_id_param, _id_param, dateStart, dateEnd
+    user_id_param, _id_param, dateType, dateStart, dateEnd
   );
 
   if (!findResult) {
@@ -99,14 +99,14 @@ export const deletes = async (
   }
   else {
     const updateResult = await repository.deletes.update(
-      user_id_param, _id_param, section_id_param, dateStart, dateEnd
+      user_id_param, _id_param, section_id_param, dateType, dateStart, dateEnd
     );
     if (!updateResult) {
       return null;
     }
     else {
       const findAgain = await repository.deletes.detail(
-        user_id_param, _id_param, dateStart, dateEnd
+        user_id_param, _id_param, dateType, dateStart, dateEnd
       );
       if (findAgain?.food_section.length === 0) {
         await repository.deletes.deletes(

@@ -60,7 +60,7 @@ export const list = {
 export const detail = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
@@ -73,6 +73,9 @@ export const detail = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -83,7 +86,7 @@ export const detail = {
 export const save = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
@@ -96,6 +99,9 @@ export const save = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -103,13 +109,13 @@ export const save = {
 
   create: async (
     user_id_param, OBJECT_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await SleepPlan.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       sleep_plan_demo: false,
-      sleep_plan_dateType: OBJECT_param.sleep_plan_dateType,
+      sleep_plan_dateType: dateType_param,
       sleep_plan_dateStart: dateStart_param,
       sleep_plan_dateEnd: dateEnd_param,
       sleep_plan_night: OBJECT_param.sleep_plan_night,
@@ -122,14 +128,15 @@ export const save = {
   },
 
   update: async (
-    user_id_param, _id_param, OBJECT_param, dateStart_param, dateEnd_param
+    user_id_param, _id_param, OBJECT_param,
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await SleepPlan.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        sleep_plan_dateType: OBJECT_param.sleep_plan_dateType,
+        sleep_plan_dateType: dateType_param,
         sleep_plan_dateStart: dateStart_param,
         sleep_plan_dateEnd: dateEnd_param,
         sleep_plan_night: OBJECT_param.sleep_plan_night,
@@ -148,7 +155,7 @@ export const save = {
 export const deletes = {
   detail: async (
     user_id_param, _id_param,
-    dateStart_param, dateEnd_param
+    dateType_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
@@ -161,6 +168,9 @@ export const deletes = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        sleep_plan_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
