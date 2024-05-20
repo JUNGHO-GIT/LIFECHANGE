@@ -6,7 +6,7 @@ import {moment} from "../../import/ImportLibs.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDate = (
-  location_date_start, location_date_end, DATE, setDATE, FILTER, setFILTER
+  location_dateStart, location_dateEnd, DATE, setDATE, FILTER, setFILTER
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -14,50 +14,82 @@ export const useDate = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (location_date_start && location_date_end) {
+    if (location_dateStart && location_dateEnd) {
       setDATE((prev) => ({
         ...prev,
-        date_start: location_date_start || moment().format("YYYY-MM-DD"),
-        date_end: location_date_end || moment().format("YYYY-MM-DD"),
+        dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
+        dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
       }));
     }
-  }, [location_date_start, location_date_end]);
+  }, [location_dateStart, location_dateEnd]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    if (DATE?.dateType === "day") {
+      setDATE((prev) => ({
+        ...prev,
+        dateStart: moment(koreanDate).format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).format("YYYY-MM-DD"),
+      }));
+    }
+    else if (DATE?.dateType === "week") {
+      setDATE((prev) => ({
+        ...prev,
+        dateStart: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
+      }));
+    }
+    else if (DATE?.dateType === "month") {
+      setDATE((prev) => ({
+        ...prev,
+        dateStart: moment(koreanDate).startOf("month").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("month").format("YYYY-MM-DD")
+      }));
+    }
+    else if (DATE?.dateType === "year") {
+      setDATE((prev) => ({
+        ...prev,
+        dateStart: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
+      }));
+    }
+  }, [DATE?.dateType]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (FILTER?.type === "day") {
       setDATE((prev) => ({
         ...prev,
-        date_start: moment(koreanDate).format("YYYY-MM-DD"),
-        date_end: moment(koreanDate).format("YYYY-MM-DD"),
+        dateStart: moment(koreanDate).format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).format("YYYY-MM-DD"),
       }));
     }
     else if (FILTER?.type === "week") {
       setDATE((prev) => ({
         ...prev,
-        date_start: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
-        date_end: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
+        dateStart: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
       }));
     }
     else if (FILTER?.type === "month") {
       setDATE((prev) => ({
         ...prev,
-        date_start: moment(koreanDate).startOf("month").format("YYYY-MM-DD"),
-        date_end: moment(koreanDate).endOf("month").format("YYYY-MM-DD")
+        dateStart: moment(koreanDate).startOf("month").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("month").format("YYYY-MM-DD")
       }));
     }
     else if (FILTER?.type === "year") {
       setDATE((prev) => ({
         ...prev,
-        date_start: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
-        date_end: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
+        dateStart: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
       }));
     }
     else if (FILTER?.type === "select") {
       setDATE((prev) => ({
         ...prev,
-        date_start: moment(koreanDate).format("YYYY-MM-DD"),
-        date_end: moment(koreanDate).format("YYYY-MM-DD"),
+        dateStart: moment(koreanDate).format("YYYY-MM-DD"),
+        dateEnd: moment(koreanDate).format("YYYY-MM-DD"),
       }));
     }
   }, [FILTER?.type]);

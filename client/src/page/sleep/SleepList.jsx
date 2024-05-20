@@ -18,8 +18,8 @@ export const SleepList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_date_start = location?.state?.date_start?.trim()?.toString();
-  const location_date_end = location?.state?.date_end?.trim()?.toString();
+  const location_dateStart = location?.state?.date_start?.trim()?.toString();
+  const location_dateEnd = location?.state?.date_end?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
@@ -28,14 +28,14 @@ export const SleepList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      date_start: location_date_start || moment().format("YYYY-MM-DD"),
-      date_end: location_date_end || moment().format("YYYY-MM-DD"),
+      dateType: "day",
+      dateStart: location_dateStart || moment().format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment().format("YYYY-MM-DD"),
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      dateType: "day",
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -48,8 +48,8 @@ export const SleepList = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    date_start: "0000-00-00",
-    date_end: "0000-00-00",
+    dateStart: "0000-00-00",
+    dateEnd: "0000-00-00",
     toSave:"/sleep/save"
   });
   const [PAGING, setPAGING] = useState({
@@ -79,7 +79,7 @@ export const SleepList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_date_start, location_date_end, DATE, setDATE, FILTER, setFILTER);
+  useDate(location_dateStart, location_dateEnd, DATE, setDATE, FILTER, setFILTER);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -88,7 +88,7 @@ export const SleepList = () => {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        duration: `${DATE.date_start} ~ ${DATE.date_end}`
+        DATE: DATE,
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
@@ -101,7 +101,7 @@ export const SleepList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.date_start, DATE.date_end
   ]);

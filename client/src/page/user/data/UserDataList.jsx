@@ -28,7 +28,6 @@ export const UserDataList = () => {
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
-      dateType: "day",
     }
   );
 
@@ -205,7 +204,7 @@ export const UserDataList = () => {
     setLOADING(false);
   })()}, [
     sessionId,
-    FILTER.dateType, FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     PART
   ]);

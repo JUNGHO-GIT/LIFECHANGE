@@ -26,13 +26,13 @@ export const Filter = ({
         type={"text"}
         size={"small"}
         variant={"outlined"}
-        value={objects?.FILTER?.date_type}
+        value={objects?.DATE?.dateType}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
-          functions?.setFILTER((prev) => ({
+          functions?.setDATE((prev) => ({
             ...prev,
-            date_type: e.target.value
+            dateType: e.target.value
           })),
           functions?.setPAGING((prev) => ({
             ...prev,
@@ -40,7 +40,7 @@ export const Filter = ({
           }))
         )}>
         {dateType?.map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.FILTER?.dateType === item}>
+          <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
             {item}
           </MenuItem>
         ))}
