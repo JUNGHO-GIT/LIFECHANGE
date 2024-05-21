@@ -17,8 +17,7 @@ export const Btn = ({
 
   // 1. go
   const btnGoToList = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
-    className={"secondary-btn"} onClick={() => {
+    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -31,8 +30,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToFind = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
-    className={"secondary-btn"} onClick={() => {
+    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -45,8 +43,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToSave = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -59,8 +56,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToFindSave = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -73,16 +69,14 @@ export const Btn = ({
     </Button>
   );
   const btnGoToLogin = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.navigate(objects?.SEND.toLogin);
     }}>
       {translate("btn-goToLogin")}
     </Button>
   );
   const btnGoToSignup = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.navigate(objects?.SEND.toSignup);
     }}>
       {translate("btn-goToSignup")}
@@ -91,8 +85,7 @@ export const Btn = ({
 
   // 2. get
   const btnGetToday = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
-    className={"secondary-btn"} onClick={() => {
+    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       (objects?.DATE) && (
         functions?.setDATE((prev) => ({
           ...prev,
@@ -139,7 +132,7 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-property")}
-                size={"small"}
+                size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={`${numeral(totalProperty).format('0,0')}`}
@@ -159,13 +152,12 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-in")}
-                size={"small"}
+                size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={`${numeral(totalIn).format('0,0')}`}
                 InputProps={{
                   readOnly: true,
-                  className:  "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
@@ -179,13 +171,12 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-out")}
-                size={"small"}
+                size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={`${numeral(totalOut).format('0,0')}`}
                 InputProps={{
                   readOnly: true,
-                  className:  "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
                     <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
                   ),
@@ -199,8 +190,7 @@ export const Btn = ({
         );
       }}>
       {(popTrigger={}) => (
-        <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-        className={"success-btn"} onClick={(e) => {
+        <Button type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
           {translate("btn-getProperty")}
@@ -211,24 +201,21 @@ export const Btn = ({
 
   // 3. flow
   const btnFlowLogin = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
     }}>
       {translate("btn-flowLogin")}
     </Button>
   );
   const btnFlowSignup = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
     }}>
       {translate("btn-flowSignup")}
     </Button>
   );
   const btnFlowSave = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-    className={"primary-btn"} onClick={() => {
+    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
       Object.keys(sessionStorage).forEach((key) => {
         if (key.includes("FILTER") || key.includes("foodSection")) {
@@ -243,7 +230,7 @@ export const Btn = ({
     <Div className={"d-center"}>
       <TextField
         select={false}
-        size={"small"}
+        size={"medium"}
         variant={"outlined"}
         className={"w-150"}
         value={objects?.FILTER?.query}
@@ -259,8 +246,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      className={"secondary-btn"} onClick={async () => {
+      <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
           ...prev,
@@ -272,8 +258,7 @@ export const Btn = ({
     </Div>
   );
   const btnFlowDefault = () => (
-    <Button size={"small"} type={"button"} color={"error"} variant={"contained"}
-    className={"danger-btn"} onClick={handlers?.handlerDefault}>
+    <Button type={"button"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
       {translate("btn-flowDefault")}
     </Button>
   );
@@ -284,7 +269,7 @@ export const Btn = ({
         label={""}
         type={"text"}
         variant={"outlined"}
-        size={"small"}
+        size={"medium"}
         value={Math.min(objects?.COUNT?.inputCnt, 100)}
         InputProps={{
           readOnly: false
@@ -297,8 +282,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
-      onClick={() => (handlers.flowSave(objects.PART))}>
+      <Button className={"me-5"} color={"secondary"} variant={"contained"} onClick={() => (handlers.flowSave(objects.PART))}>
         {translate("btn-flowDemo")}
       </Button>
     </Div>

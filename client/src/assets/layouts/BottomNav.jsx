@@ -51,8 +51,10 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-exercise")}
           value={"exercise"}
-          className={"w-min20p"}
           icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
+          sx={{
+            fontSize: "1rem"
+          }}
           onClick={() => {
             setValue("exercise");
             navigate("exercise/diff/list", {
@@ -68,6 +70,9 @@ export const BottomNav = () => {
           label={translate("bottomNav-food")}
           value={"food"}
           icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
+          sx={{
+            fontSize: "1rem"
+          }}
           onClick={() => {
             setValue("food");
             navigate("food/diff/list", {
@@ -83,6 +88,9 @@ export const BottomNav = () => {
           label={translate("bottomNav-calendar")}
           value={"calendar"}
           icon={<img src={calendar1} className={"w-16 h-16 icon"} alt={"calendar1"}/>}
+          sx={{
+            fontSize: "1rem"
+          }}
           onClick={() => {
             setValue("calendar");
             navigate("calendar/list", {
@@ -98,6 +106,9 @@ export const BottomNav = () => {
           label={translate("bottomNav-money")}
           value={"money"}
           icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
+          sx={{
+            fontSize: "1rem"
+          }}
           onClick={() => {
             setValue("money");
             navigate("money/diff/list", {
@@ -113,6 +124,9 @@ export const BottomNav = () => {
           label={translate("bottomNav-sleep")}
           value={"sleep"}
           icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
+          sx={{
+            fontSize: "1rem"
+          }}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/diff/list", {

@@ -136,7 +136,6 @@ const App = () => {
   return (
     <div className={"App"}>
       {!isRequired && <Header />}
-      {!isRequired && <NavBar />}
       {!isRequired && <TopNav />}
       <Routes>
         <Route path="/calendar/*" element={<Calendar />} />

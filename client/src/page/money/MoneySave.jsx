@@ -182,10 +182,10 @@ export const MoneySave = () => {
             size={"small"}
             value={DATE.dateType || "day"}
             variant={"outlined"}
-            className={"w-20vw me-3vw"}
+            className={"w-23vw me-3vw"}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
+              className: "h-50",
               startAdornment: null,
               endAdornment: null
             }}
@@ -257,10 +257,10 @@ export const MoneySave = () => {
                 label={"날짜"}
                 variant={"outlined"}
                 value={`${DATE.dateStart}`}
-                className={"w-63vw"}
+                className={"w-60vw"}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
+                  className: "h-50",
                   startAdornment: (
                     <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
                   ),
@@ -296,7 +296,7 @@ export const MoneySave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
+              className: "h-50",
               startAdornment: (
                 <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
               ),
@@ -346,7 +346,7 @@ export const MoneySave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
+              className: "h-50",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
@@ -366,7 +366,7 @@ export const MoneySave = () => {
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
+              className: "h-50",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
@@ -433,6 +433,7 @@ export const MoneySave = () => {
             value={OBJECT?.money_section[i]?.money_part_idx}
             InputProps={{
               readOnly: false,
+              className: "h-50",
               startAdornment: null,
               endAdornment: null
             }}
@@ -468,6 +469,7 @@ export const MoneySave = () => {
             value={OBJECT?.money_section[i]?.money_title_idx}
             InputProps={{
               readOnly: false,
+              className: "h-50",
               startAdornment: null,
               endAdornment: null
             }}
@@ -505,7 +507,7 @@ export const MoneySave = () => {
             value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
+              className: "h-50",
               startAdornment: (
                 <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
               ),
@@ -572,10 +574,11 @@ export const MoneySave = () => {
                 label={translate("money-content")}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-86vw pointer"}
+                className={"w-86vw"}
                 value={OBJECT?.money_section[i]?.money_content}
                 InputProps={{
                   readOnly: true,
+                  className: "h-50",
                   startAdornment: (
                     <img src={money3} className={"w-16 h-16 me-10"} alt={"money3"}/>
                   ),

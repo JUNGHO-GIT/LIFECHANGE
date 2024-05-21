@@ -29,7 +29,7 @@ export const list = {
       }),
       ...(title_param === "전체" ? {} : {
         "money_section.money_title_val": title_param
-      })
+      }),
     });
     return finalResult;
   },
@@ -78,12 +78,7 @@ export const list = {
           }
         }
       }},
-      {$sort: {
-        money_dateStart: sort_param,
-        money_dateEnd: sort_param
-      }},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$sort: {money_dateStart: 1}}
     ]);
     return finalResult;
   }
