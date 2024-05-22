@@ -18,6 +18,9 @@ export const list = {
       calendar_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -35,6 +38,9 @@ export const list = {
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === "전체" ? {} : {
+          calendar_dateType: dateType_param
+        }),
       }}
     ]);
     return finalResult;
@@ -52,6 +58,9 @@ export const detail = {
       _id: !_id_param ? {$exists:true} : _id_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -69,6 +78,9 @@ export const save = {
       _id: !_id_param ? {$exists:true} : _id_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -125,6 +137,9 @@ export const deletes = {
       _id: !_id_param ? {$exists:true} : _id_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -139,6 +154,9 @@ export const deletes = {
         _id: !_id_param ? {$exists:true} : _id_param,
         calendar_dateStart: dateStart_param,
         calendar_dateEnd: dateEnd_param,
+        ...(dateType_param === "전체" ? {} : {
+          calendar_dateType: dateType_param
+        }),
       },
       {$pull: {
         calendar_section: {

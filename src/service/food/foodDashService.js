@@ -315,7 +315,7 @@ export const avgMonth = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")}`;
+    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
   });
 
   let sumKcal = Array(5).fill(0);

@@ -4,7 +4,7 @@ import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Button, TextField} from "../../../import/ImportMuis.jsx";
+import {Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -264,13 +264,44 @@ export const Btn = ({
   const btnFlowDemo = () => (
     <Div className={"d-center"}>
       <TextField
-        select={false}
+        select={true}
+        type={"text"}
         size={"small"}
-        label={""}
+        className={"me-2"}
+        variant={"outlined"}
+        value={objects?.PART}
+        InputProps={{
+          readOnly: false,
+          className: "h-30",
+        }}
+        defaultValue={"exercisePlan"}
+        onChange={(e) => {
+          const newPartVal = e.target.value;
+          functions?.setPART(newPartVal);
+          functions?.setPAGING((prev) => ({
+            ...prev,
+            page: 1,
+            limit: 10
+          }));
+        }}>
+        <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
+        <MenuItem value={"exercise"}>운동</MenuItem>
+        <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
+        <MenuItem value={"food"}>식사</MenuItem>
+        <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
+        <MenuItem value={"money"}>지출</MenuItem>
+        <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
+        <MenuItem value={"sleep"}>수면</MenuItem>
+      </TextField>
+      <TextField
+        select={false}
+        type={"text"}
+        size={"small"}
         variant={"outlined"}
         value={Math.min(objects?.COUNT?.inputCnt, 100)}
         InputProps={{
-          readOnly: false
+          readOnly: false,
+          className: "h-30",
         }}
         onChange={(e) => {
           const limitedValue = Math.min(Number(e.target.value), 100);
@@ -289,7 +320,6 @@ export const Btn = ({
 
   // 7. btn --------------------------------------------------------------------------------------->
   const btnNode = () => {
-
     // 1. calendar
     if (strings?.first === "calendar") {
       if (strings?.second === "diff" && strings?.third === "list") {

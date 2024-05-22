@@ -54,9 +54,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        exercise_plan_dateStart: 1
-      }},
+      {$sort: {exercise_plan_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -79,9 +77,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        exercise_dateStart: 1
-      }},
+      {$sort: {exercise_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -104,9 +100,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        food_plan_dateStart: 1
-      }},
+      {$sort: {food_plan_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -129,9 +123,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        food_dateStart: 1
-      }},
+      {$sort: {food_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -154,9 +146,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        money_plan_dateStart: 1
-      }},
+      {$sort: {money_plan_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -179,9 +169,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        money_dateStart: 1
-      }},
+      {$sort: {money_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -204,9 +192,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        sleep_plan_dateStart: 1
-      }},
+      {$sort: {sleep_plan_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -229,9 +215,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {
-        sleep_dateStart: 1
-      }},
+      {$sort: {sleep_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);

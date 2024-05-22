@@ -45,10 +45,7 @@ export const list = {
           sleep_plan_dateType: dateType_param
         }),
       }},
-      {$sort: {
-        sleep_plan_dateStart: sort_param,
-        sleep_plan_dateEnd: sort_param
-      }},
+      {$sort: {sleep_plan_dateStart: sort_param}},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
     ]);
@@ -65,8 +62,12 @@ export const detail = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_dateStart: dateStart_param,
-      sleep_plan_dateEnd: dateEnd_param,
+      sleep_plan_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_plan_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_plan_dateType: dateType_param
       }),
@@ -85,8 +86,12 @@ export const save = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_dateStart: dateStart_param,
-      sleep_plan_dateEnd: dateEnd_param,
+      sleep_plan_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_plan_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_plan_dateType: dateType_param
       }),
@@ -148,8 +153,12 @@ export const deletes = {
     const finalResult = await SleepPlan.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_plan_dateStart: dateStart_param,
-      sleep_plan_dateEnd: dateEnd_param,
+      sleep_plan_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_plan_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_plan_dateType: dateType_param
       }),

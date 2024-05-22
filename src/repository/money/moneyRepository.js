@@ -78,7 +78,9 @@ export const list = {
           }
         }
       }},
-      {$sort: {money_dateStart: 1}}
+      {$sort: {money_dateStart: sort_param}},
+      {$skip: (Number(page_param) - 1) * Number(limit_param)},
+      {$limit: Number(limit_param)}
     ]);
     return finalResult;
   }
@@ -93,8 +95,12 @@ export const detail = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
+      money_dateStart: {
+        $eq: dateStart_param,
+      },
+      money_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -113,8 +119,12 @@ export const save = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
+      money_dateStart: {
+        $eq: dateStart_param,
+      },
+      money_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -176,8 +186,12 @@ export const deletes = {
     const finalResult = await Money.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      money_dateStart: dateStart_param,
-      money_dateEnd: dateEnd_param,
+      money_dateStart: {
+        $eq: dateStart_param,
+      },
+      money_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         money_dateType: dateType_param
       })
@@ -193,8 +207,12 @@ export const deletes = {
     const updateResult = await Money.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
         user_id: user_id_param,
-        money_dateStart: dateStart_param,
-        money_dateEnd: dateEnd_param,
+        money_dateStart: {
+          $eq: dateStart_param,
+        },
+        money_dateEnd: {
+          $eq: dateEnd_param,
+        },
         ...(dateType_param === "전체" ? {} : {
           money_dateType: dateType_param
         }),

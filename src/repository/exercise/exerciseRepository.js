@@ -102,8 +102,12 @@ export const detail = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_dateStart: dateStart_param,
-      exercise_dateEnd: dateEnd_param,
+      exercise_dateStart: {
+        $eq: dateStart_param,
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         exercise_dateType: dateType_param
       }),
@@ -122,8 +126,12 @@ export const save = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_dateStart: dateStart_param,
-      exercise_dateEnd: dateEnd_param,
+      exercise_dateStart: {
+        $eq: dateStart_param,
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         exercise_dateType: dateType_param
       }),
@@ -186,8 +194,12 @@ export const deletes = {
     const finalResult = await Exercise.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      exercise_dateStart: dateStart_param,
-      exercise_dateEnd: dateEnd_param,
+      exercise_dateStart: {
+        $eq: dateStart_param,
+      },
+      exercise_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         exercise_dateType: dateType_param
       }),
@@ -203,8 +215,12 @@ export const deletes = {
     const updateResult = await Exercise.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param,
+        exercise_dateStart: {
+          $eq: dateStart_param,
+        },
+        exercise_dateEnd: {
+          $eq: dateEnd_param,
+        },
         ...(dateType_param === "전체" ? {} : {
           exercise_dateType: dateType_param
         }),

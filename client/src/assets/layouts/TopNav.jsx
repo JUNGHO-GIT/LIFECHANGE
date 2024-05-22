@@ -178,8 +178,7 @@ export const TopNav = () => {
 
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
-    <Paper className={
-      "flex-wrapper p-sticky top-0vh radius border z-900"}>
+    <Paper className={"flex-wrapper p-sticky top-7vh radius border z-900"}>
       {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
         defaultNode()
       ) : firstStr === "food" ? (

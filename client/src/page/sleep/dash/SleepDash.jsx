@@ -11,8 +11,8 @@ export const SleepDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {SleepDashBar()}
-      {SleepDashLine()}
+      {/* {SleepDashBar()}
+      {SleepDashLine()} */}
       {SleepDashAvg()}
     </>
   );

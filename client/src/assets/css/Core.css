@@ -22,7 +22,6 @@
   background-color: #ffffff;
   overflow-x: hidden;
   overflow-y: hidden;
-  z-index: 2000;
 }
 .content-wrapper {
   width: 100%;

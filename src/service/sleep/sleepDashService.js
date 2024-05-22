@@ -26,9 +26,6 @@ export const barToday = async (
     user_id_param, dateStart, dateEnd
   );
 
-  log("findPlan", findPlan);
-  log("findReal", findReal);
-
   finalResult = [
     {
       name: "취침",
@@ -149,7 +146,7 @@ export const avgMonth = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")}`;
+    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
   });
 
   let sumStart = Array(5).fill(0);
@@ -218,12 +215,12 @@ export const avgYear = async (
   findResult = await repository.avgYear.list(
     user_id_param, dateStart, dateEnd
   );
-  findResult.forEach((element) => {
-    const sleepDate = new Date(element.sleep_dateStart);
+  findResult.forEach((item) => {
+    const sleepDate = new Date(item.sleep_dateStart);
     const monthNum = sleepDate.getMonth();
-    sumStart[monthNum] += timeFormat(element.sleep_section[0]?.sleep_night);
-    sumEnd[monthNum] += timeFormat(element.sleep_section[0]?.sleep_morning);
-    sumTime[monthNum] += timeFormat(element.sleep_section[0]?.sleep_time);
+    sumStart[monthNum] += timeFormat(item.sleep_section[0]?.sleep_night);
+    sumEnd[monthNum] += timeFormat(item.sleep_section[0]?.sleep_morning);
+    sumTime[monthNum] += timeFormat(item.sleep_section[0]?.sleep_time);
     countRecords[monthNum]++;
   });
 

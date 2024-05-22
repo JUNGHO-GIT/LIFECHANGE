@@ -188,8 +188,6 @@ export const CalendarList = () => {
     const tableSection = () => (
       tableFragment(0)
     );
-    // 7-9. first (x)
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()

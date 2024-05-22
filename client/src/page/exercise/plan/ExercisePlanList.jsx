@@ -240,8 +240,6 @@ export const ExercisePlanList = () => {
     const tableSection = () => (
       COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
     );
-    // 7-9. first (x)
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()

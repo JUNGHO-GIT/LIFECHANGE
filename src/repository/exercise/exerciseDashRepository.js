@@ -13,9 +13,11 @@ export const scatterToday = {
         user_id: user_id_param,
         exercise_plan_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         exercise_plan_dateEnd: {
-          $lte: dateEnd_param
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -35,9 +37,11 @@ export const scatterToday = {
         user_id: user_id_param,
         exercise_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         exercise_dateEnd: {
-          $lte: dateEnd_param
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -60,8 +64,10 @@ export const scatterWeek = {
         user_id: user_id_param,
         exercise_plan_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param
         },
         exercise_plan_dateEnd: {
+          $gte: dateStart_param,
           $lte: dateEnd_param
         },
       }},
@@ -82,9 +88,11 @@ export const scatterWeek = {
         user_id: user_id_param,
         exercise_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         exercise_dateEnd: {
-          $lte: dateEnd_param
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -107,8 +115,10 @@ export const scatterMonth = {
         user_id: user_id_param,
         exercise_plan_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param
         },
         exercise_plan_dateEnd: {
+          $gte: dateStart_param,
           $lte: dateEnd_param
         },
       }},
@@ -129,9 +139,11 @@ export const scatterMonth = {
         user_id: user_id_param,
         exercise_dateStart: {
           $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         exercise_dateEnd: {
-          $lte: dateEnd_param
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
@@ -152,8 +164,14 @@ export const pieWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$unwind: {
         path: "$exercise_section"
@@ -177,8 +195,14 @@ export const pieWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$unwind: {
         path: "$exercise_section"
@@ -205,8 +229,14 @@ export const pieMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$unwind: {
         path: "$exercise_section"
@@ -230,8 +260,14 @@ export const pieMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$unwind: {
         path: "$exercise_section"
@@ -258,8 +294,14 @@ export const lineWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -277,8 +319,14 @@ export const lineWeek = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -299,8 +347,14 @@ export const lineMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -318,8 +372,14 @@ export const lineMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -340,8 +400,14 @@ export const avgMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -359,8 +425,14 @@ export const avgMonth = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -381,8 +453,14 @@ export const avgYear = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,
@@ -400,8 +478,14 @@ export const avgYear = {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_dateStart: dateStart_param,
-        exercise_dateEnd: dateEnd_param
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
       }},
       {$project: {
         exercise_dateStart: 1,

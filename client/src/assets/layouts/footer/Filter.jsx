@@ -341,36 +341,6 @@ export const Filter = ({
     </Div>
   );
 
-  // 5. user -------------------------------------------------------------------------------------->
-  const userNode = () => (
-    <TextField
-      select={true}
-      type={"text"}
-      size={"small"}
-      className={"ms-2 me-2"}
-      variant={"outlined"}
-      value={objects?.PART}
-      InputProps={{className: "h-4vh fs-0-7rem"}}
-      onChange={(e) => {
-        const newPartVal = e.target.value;
-        functions?.setPART(newPartVal);
-        functions?.setPAGING((prev) => ({
-          ...prev,
-          page: 1,
-          limit: 10
-        }));
-      }}>
-      <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
-      <MenuItem value={"exercise"}>운동</MenuItem>
-      <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
-      <MenuItem value={"food"}>식사</MenuItem>
-      <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
-      <MenuItem value={"money"}>지출</MenuItem>
-      <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
-      <MenuItem value={"sleep"}>수면</MenuItem>
-    </TextField>
-  );
-
   // 7. filter ------------------------------------------------------------------------------------>
   const filterNode = () => {
 
@@ -539,11 +509,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
-        return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
-            {userNode()}
-          </Div>
-        );
+        return null
       }
       else if (strings?.second === "data" && strings?.third === "set") {
         return null

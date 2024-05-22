@@ -6,6 +6,7 @@ import {newDate} from "../../assets/js/date.js";
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
+
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
@@ -61,12 +62,9 @@ export const list = {
           sleep_time: "$sleep_section.sleep_time",
         }]
       }},
-      {$sort: {
-        sleep_dateStart: sort_param,
-        sleep_dateEnd: sort_param
-      }},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$sort: {sleep_dateStart: sort_param}},
+      {$skip: Number(page_param - 1) * Number(limit_param)},
+      {$limit: Number(limit_param)},
     ]);
 
     return finalResult;
@@ -82,8 +80,12 @@ export const detail = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_dateStart: dateStart_param,
-      sleep_dateEnd: dateEnd_param,
+      sleep_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_dateType: dateType_param
       }),
@@ -102,8 +104,12 @@ export const save = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_dateStart: dateStart_param,
-      sleep_dateEnd: dateEnd_param,
+      sleep_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_dateType: dateType_param
       }),
@@ -122,7 +128,7 @@ export const save = {
       sleep_demo: false,
       sleep_dateType: dateType_param,
       sleep_dateStart: dateStart_param,
-      sleep_dateEnd: dateEnd_param,
+      sleep_dateEnd:  dateEnd_param,
       sleep_section: OBJECT_param.sleep_section,
       sleep_regDt: newDate,
       sleep_updateDt: "",
@@ -161,8 +167,12 @@ export const deletes = {
     const finalResult = await Sleep.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      sleep_dateStart: dateStart_param,
-      sleep_dateEnd: dateEnd_param,
+      sleep_dateStart: {
+        $eq: dateStart_param,
+      },
+      sleep_dateEnd: {
+        $eq: dateEnd_param,
+      },
       ...(dateType_param === "전체" ? {} : {
         sleep_dateType: dateType_param
       }),
@@ -178,8 +188,12 @@ export const deletes = {
     const updateResult = await Sleep.updateOne(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        sleep_dateStart: dateStart_param,
-        sleep_dateEnd: dateEnd_param,
+        sleep_dateStart: {
+          $eq: dateStart_param,
+        },
+        sleep_dateEnd: {
+          $eq: dateEnd_param,
+        },
         ...(dateType_param === "전체" ? {} : {
           sleep_dateType: dateType_param
         }),

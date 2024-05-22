@@ -12,6 +12,7 @@ router.get("/list", async (req, res) => {
       req.query.user_id,
       req.query.DATE
     );
+    // @ts-ignore
     result = await middleware.percent(result);
     if (result) {
       res.json({

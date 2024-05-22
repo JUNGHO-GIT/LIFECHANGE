@@ -43,7 +43,7 @@ export const Footer = ({
 
   // 7. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
+    <Paper className={"flex-wrapper p-sticky bottom-7vh border radius"}>
       {filterNode()}
       {btnNode()}
     </Paper>
