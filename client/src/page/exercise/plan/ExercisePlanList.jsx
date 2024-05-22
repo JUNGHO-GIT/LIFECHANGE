@@ -166,16 +166,16 @@ export const ExercisePlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                  {numeral(item.exercise_plan_count).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_plan_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_plan_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

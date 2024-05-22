@@ -178,16 +178,16 @@ export const FoodList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
+                  {numeral(item.food_total_kcal).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_carb).format("0,0")} g`}
+                  {numeral(item.food_total_carb).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format("0,0")} g`}
+                  {numeral(item.food_total_protein).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_fat).format("0,0")} g`}
+                  {numeral(item.food_total_fat).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

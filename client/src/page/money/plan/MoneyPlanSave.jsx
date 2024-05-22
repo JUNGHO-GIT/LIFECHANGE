@@ -325,7 +325,7 @@ export const MoneyPlanSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -360,7 +360,7 @@ export const MoneyPlanSave = () => {
             label={translate("money-planIn")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.money_plan_in).format("0,0")}`}
+            value={numeral(OBJECT?.money_plan_in).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -390,7 +390,7 @@ export const MoneyPlanSave = () => {
             label={translate("money-planOut")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.money_plan_out).format("0,0")}`}
+            value={numeral(OBJECT?.money_plan_out).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (

@@ -119,7 +119,7 @@ export const Btn = ({
         return (
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center mb-20"}>
-              <Div className={"fs-1-7rem fw-bold"}>
+              <Div className={"fs-1-7rem"}>
                 재무 상태
               </Div>
             </Div>
@@ -135,10 +135,9 @@ export const Btn = ({
                 size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
-                value={`${numeral(totalProperty).format('0,0')}`}
+                value={numeral(totalProperty).format('0,0')}
                 InputProps={{
                   readOnly: true,
-                  className: "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
@@ -155,7 +154,7 @@ export const Btn = ({
                 size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
-                value={`${numeral(totalIn).format('0,0')}`}
+                value={numeral(totalIn).format('0,0')}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -174,7 +173,7 @@ export const Btn = ({
                 size={"medium"}
                 variant={"outlined"}
                 className={"w-60vw"}
-                value={`${numeral(totalOut).format('0,0')}`}
+                value={numeral(totalOut).format('0,0')}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (

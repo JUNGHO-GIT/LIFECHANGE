@@ -112,7 +112,6 @@ export const Calendar = ({DATE, setDATE}) => {
           className={"w-63vw"}
           InputProps={{
             readOnly: true,
-            className: "fw-bold",
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -188,7 +187,6 @@ export const Calendar = ({DATE, setDATE}) => {
           className={"w-63vw"}
           InputProps={{
             readOnly: true,
-            className: "fw-bold",
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -264,7 +262,6 @@ export const Calendar = ({DATE, setDATE}) => {
           className={"w-63vw"}
           InputProps={{
             readOnly: true,
-            className: "fw-bold",
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -340,7 +337,6 @@ export const Calendar = ({DATE, setDATE}) => {
           className={"w-63vw"}
           InputProps={{
             readOnly: true,
-            className: "fw-bold",
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -367,7 +363,6 @@ export const Calendar = ({DATE, setDATE}) => {
           className={"w-20vw me-3vw"}
           InputProps={{
             readOnly: false,
-            className: "fw-bold",
             startAdornment: null,
             endAdornment: null
           }}

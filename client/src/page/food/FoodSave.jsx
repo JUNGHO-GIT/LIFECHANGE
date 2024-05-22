@@ -245,7 +245,7 @@ export const FoodSave = () => {
                 size={"small"}
                 label={"날짜"}
                 variant={"outlined"}
-                value={`${DATE.dateStart}`}
+                value={DATE.dateStart}
                 className={"w-63vw"}
                 InputProps={{
                   readOnly: true,
@@ -301,7 +301,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("food-totalKcal")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_kcal).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -320,7 +320,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("food-totalCarb")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_carb).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -339,7 +339,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("food-totalProtein")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_protein).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -358,7 +358,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("food-totalFat")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_fat).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -389,7 +389,7 @@ export const FoodSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"center"}
+        direction={"left"}
         contents={({closePopup}) => (
         <Div className={"d-row"}>
           <Img src={common5} className={"w-16 h-16 pointer"}
@@ -538,7 +538,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("food-title")}
             size={"small"}
-            value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+            value={OBJECT?.food_section[i]?.food_title}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{

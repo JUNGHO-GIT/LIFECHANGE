@@ -166,10 +166,10 @@ export const MoneyDiff = () => {
                   {translate("common-plan")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                  {numeral(item.money_plan_in).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
+                  {numeral(item.money_plan_out).format("0,0")}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -177,10 +177,10 @@ export const MoneyDiff = () => {
                   {translate("common-real")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format("0,0")}`}
+                  {numeral(item.money_total_in).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format("0,0")}`}
+                  {numeral(item.money_total_out).format("0,0")}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
@@ -188,10 +188,10 @@ export const MoneyDiff = () => {
                   {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.money_diff_in_color}>
-                  {`₩ ${numeral(item.money_diff_in).format("0,0")}`}
+                  {numeral(item.money_diff_in).format("0,0")}
                 </TableCell>
                 <TableCell className={item.money_diff_out_color}>
-                  {`₩ ${numeral(item.money_diff_out).format("0,0")}`}
+                  {numeral(item.money_diff_out).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

@@ -320,7 +320,7 @@ export const SleepSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);

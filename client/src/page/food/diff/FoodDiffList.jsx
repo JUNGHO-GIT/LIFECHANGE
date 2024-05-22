@@ -178,16 +178,16 @@ export const FoodDiff = () => {
                   {translate("common-plan")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                  {numeral(item.food_plan_kcal).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                  {numeral(item.food_plan_carb).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                  {numeral(item.food_plan_protein).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                  {numeral(item.food_plan_fat).format('0,0')}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -195,16 +195,16 @@ export const FoodDiff = () => {
                   {translate("common-real")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                  {numeral(item.food_total_kcal).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_carb).format('0,0')} g`}
+                  {numeral(item.food_total_carb).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format('0,0')} g`}
+                  {numeral(item.food_total_protein).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_fat).format('0,0')} g`}
+                  {numeral(item.food_total_fat).format('0,0')}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
@@ -212,16 +212,16 @@ export const FoodDiff = () => {
                   {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.food_diff_kcal_color}>
-                  {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                  {numeral(item.food_diff_kcal).format('0,0')}
                 </TableCell>
                 <TableCell className={item.food_diff_carb_color}>
-                  {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                  {numeral(item.food_diff_carb).format('0,0')}
                 </TableCell>
                 <TableCell className={item.food_diff_protein_color}>
-                  {`${numeral(item.food_diff_protein).format('0,0')} g`}
+                  {numeral(item.food_diff_protein).format('0,0')}
                 </TableCell>
                 <TableCell className={item.food_diff_fat_color}>
-                  {`${numeral(item.food_diff_fat).format('0,0')} g`}
+                  {numeral(item.food_diff_fat).format('0,0')}
                 </TableCell>
               </TableRow>
               </>

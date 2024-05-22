@@ -229,19 +229,19 @@ export const FoodFindList = () => {
                     {item.food_brand}
                   </TableCell>
                   <TableCell>
-                    {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")} g)`}
+                    {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")})`}
                   </TableCell>
                   <TableCell>
-                    {`${numeral(item.food_kcal).format("0,0")} Kcal`}
+                    {numeral(item.food_kcal).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {`${numeral(item.food_carb).format("0,0")} g`}
+                    {numeral(item.food_carb).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {`${numeral(item.food_protein).format("0,0")} g`}
+                    {numeral(item.food_protein).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {`${numeral(item.food_fat).format("0,0")} g`}
+                    {numeral(item.food_fat).format("0,0")}
                   </TableCell>
                   <TableCell>
                     <Checkbox

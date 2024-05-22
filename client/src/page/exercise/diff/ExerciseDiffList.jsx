@@ -176,16 +176,16 @@ export const ExerciseDiff = () => {
                   {translate("common-plan")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                  {numeral(item.exercise_plan_count).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_plan_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_plan_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
@@ -193,16 +193,16 @@ export const ExerciseDiff = () => {
                   {translate("common-real")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
+                  {numeral(item.exercise_total_count).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_total_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_total_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_body_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
@@ -210,16 +210,16 @@ export const ExerciseDiff = () => {
                   {translate("common-diff")}
                 </TableCell>
                 <TableCell className={item.exercise_diff_count_color}>
-                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
+                  {numeral(item.exercise_diff_count).format("0,0")}
                 </TableCell>
                 <TableCell className={item.exercise_diff_volume_color}>
-                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_diff_volume).format("0,0")}
                 </TableCell>
                 <TableCell className={item.exercise_diff_cardio_color}>
                   {item.exercise_diff_cardio}
                 </TableCell>
                 <TableCell className={item.exercise_diff_weight_color}>
-                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_diff_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

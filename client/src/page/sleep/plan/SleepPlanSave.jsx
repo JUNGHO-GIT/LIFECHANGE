@@ -208,7 +208,7 @@ export const SleepPlanSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"center"}
+        direction={"left"}
         contents={({closePopup}) => (
         <Div className={"d-row"}>
           <Img src={common5} className={"w-16 h-16 pointer"}

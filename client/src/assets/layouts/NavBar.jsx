@@ -97,7 +97,7 @@ export const NavBar = () => {
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-max7vh w-100vw"}>
       <Div className={"d-center ms-10"}>
-        <Div className={"fs-1-0rem fw-bold navy"}>
+        <Div className={"fs-1-0rem navy"}>
           {part ? part : "Home"} {type ? ` / ${type}` : ` / `} {plan ? ` / ${plan}` : ``}
         </Div>
       </Div>
@@ -144,7 +144,7 @@ export const NavBar = () => {
           contents={({closePopup}) => (
             <Div className={"d-column p-10"}>
               <Div className={"d-center mb-20"}>
-                <Div className={"fs-0-8rem fw-bold"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+                <Div className={"fs-0-8rem"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
               </Div>
               <Div className={"d-center mb-10"}>
                 <Div className={"fs-0-8rem me-5"}>

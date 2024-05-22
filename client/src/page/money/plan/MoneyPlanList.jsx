@@ -162,10 +162,10 @@ export const MoneyPlanList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                  {numeral(item.money_plan_in).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
+                  {numeral(item.money_plan_out).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

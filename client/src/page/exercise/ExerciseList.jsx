@@ -174,13 +174,13 @@ export const ExerciseList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_total_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_total_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_body_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               </>

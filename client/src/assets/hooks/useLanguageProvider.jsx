@@ -114,6 +114,7 @@ export const useTranslate = () => {
       set: {ko: "세트", en: "Set"},
       rep: {ko: "횟수", en: "Rep"},
       kg: {ko: "kg", en: "kg"},
+      endVolume: {ko: "vol", en: "vol"},
       endWeight: {ko: "kg", en: "kg"},
       endSet: {ko: "set", en: "set"},
       endRep: {ko: "rep", en: "rep"},
@@ -142,6 +143,9 @@ export const useTranslate = () => {
       endCount: {ko: "회", en: "times"},
       endKcal: {ko: "kcal", en: "kcal"},
       endGram: {ko: "g", en: "g"},
+      endCarb: {ko: "g", en: "g"},
+      endProtein: {ko: "g", en: "g"},
+      endFat: {ko: "g", en: "g"},
     },
     money: {
       planIn: {ko: "수입 목표", en: "Income Goals"},
@@ -155,7 +159,7 @@ export const useTranslate = () => {
       title: {ko: "소분류", en: "Detail"},
       amount: {ko: "금액", en: "Amount"},
       content: {ko: "내용", en: "Content"},
-      endCurrency: {ko: "원", en: "USD"},
+      endCurrency: {ko: "₩", en: "$"},
     },
     sleep: {
       night: {ko: "취침", en: "Bed Time"},
@@ -178,13 +182,12 @@ export const useTranslate = () => {
         result = result[k];
       }
       else {
-        result = null;
+        return key;
       }
     }
-
     return (
       (end.indexOf("calendar") === -1 &&
-      end.indexOf("end") !== -1 
+      end.indexOf("end") !== -1
       ) ? (
         <div className={"fs-0-6rem"}>
           {result[lang]}
@@ -195,8 +198,6 @@ export const useTranslate = () => {
         </div>
       )
     );
-  
-    /** return result[lang]; **/
   }, [lang]);
 
   return {translate};

@@ -307,16 +307,16 @@ export const UserDataList = () => {
                   {item.exercise_plan_dateType}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                  {numeral(item.exercise_plan_count).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_plan_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_plan_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_plan_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               </>
@@ -374,13 +374,13 @@ export const UserDataList = () => {
                   {item.exercise_dateType}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                  {numeral(item.exercise_total_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
                   {item.exercise_total_cardio}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                  {numeral(item.exercise_body_weight).format("0,0")}
                 </TableCell>
               </TableRow>
               </>
@@ -442,16 +442,16 @@ export const UserDataList = () => {
                   {item.food_plan_dateType}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                  {numeral(item.food_plan_kcal).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                  {numeral(item.food_plan_carb).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                  {numeral(item.food_plan_protein).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                  {numeral(item.food_plan_fat).format('0,0')}
                 </TableCell>
               </TableRow>
               </>
@@ -511,16 +511,16 @@ export const UserDataList = () => {
                   {item.food_dateType}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_kcal).format("0,0")} kcal`}
+                  {numeral(item.food_total_kcal).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_carb).format("0,0")} g`}
+                  {numeral(item.food_total_carb).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_protein).format("0,0")} g`}
+                  {numeral(item.food_total_protein).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`${numeral(item.food_total_fat).format("0,0")} g`}
+                  {numeral(item.food_total_fat).format("0,0")}
                 </TableCell>
               </TableRow>
               </>
@@ -578,10 +578,10 @@ export const UserDataList = () => {
                   {item.money_plan_dateType}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_in).format("0,0")}`}
+                  {numeral(item.money_plan_in).format("0,0")}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_plan_out).format("0,0")}`}
+                  {numeral(item.money_plan_out).format("0,0")}
                 </TableCell>
               </TableRow>
               </>
@@ -637,10 +637,10 @@ export const UserDataList = () => {
                   {item.money_dateType}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format('0,0')}`}
+                  {numeral(item.money_total_in).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format('0,0')}`}
+                  {numeral(item.money_total_out).format('0,0')}
                 </TableCell>
               </TableRow>
               </>

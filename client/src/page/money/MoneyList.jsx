@@ -168,10 +168,10 @@ export const MoneyList = () => {
               </TableRow>
               <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_in).format('0,0')}`}
+                  {numeral(item.money_total_in).format('0,0')}
                 </TableCell>
                 <TableCell>
-                  {`₩ ${numeral(item.money_total_out).format('0,0')}`}
+                  {numeral(item.money_total_out).format('0,0')}
                 </TableCell>
               </TableRow>
               </>

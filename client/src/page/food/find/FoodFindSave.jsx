@@ -338,7 +338,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-totalKcal")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_kcal).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -357,7 +357,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-totalCarb")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_carb).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -376,7 +376,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-totalProtein")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_protein).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -395,7 +395,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-totalFat")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_total_fat).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -428,7 +428,7 @@ export const FoodFindSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -590,7 +590,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-kcal")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
@@ -607,7 +607,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-carb")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
@@ -626,7 +626,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-protein")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
@@ -643,7 +643,7 @@ export const FoodFindSave = () => {
             select={false}
             label={translate("food-fat")}
             size={"small"}
-            value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}`}
+            value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{

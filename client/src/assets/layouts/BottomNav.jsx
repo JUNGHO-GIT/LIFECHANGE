@@ -51,10 +51,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-exercise")}
           value={"exercise"}
-          icon={<Img src={exercise1} className={"w-16 h-16"} />}
-          sx={{
-            fontSize: "1rem"
-          }}
+          icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("exercise");
             navigate("exercise/diff/list", {
@@ -69,10 +66,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-food")}
           value={"food"}
-          icon={<Img src={food1} className={"w-16 h-16"} />}
-          sx={{
-            fontSize: "1rem"
-          }}
+          icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("food");
             navigate("food/diff/list", {
@@ -87,10 +81,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-calendar")}
           value={"calendar"}
-          icon={<Img src={calendar1} className={"w-16 h-16"} />}
-          sx={{
-            fontSize: "1rem"
-          }}
+          icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("calendar");
             navigate("calendar/list", {
@@ -105,10 +96,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-money")}
           value={"money"}
-          icon={<Img src={money1} className={"w-16 h-16"} />}
-          sx={{
-            fontSize: "1rem"
-          }}
+          icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("money");
             navigate("money/diff/list", {
@@ -123,10 +111,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-sleep")}
           value={"sleep"}
-          icon={<Img src={sleep1} className={"w-16 h-16"} />}
-          sx={{
-            fontSize: "1rem"
-          }}
+          icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("sleep");
             navigate("sleep/diff/list", {

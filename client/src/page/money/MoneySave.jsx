@@ -336,7 +336,7 @@ export const MoneySave = () => {
           select={false}
           label={translate("money-totalIn")}
           size={"small"}
-          value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
+          value={numeral(OBJECT?.money_total_in).format('0,0')}
           variant={"outlined"}
           className={"w-86vw"}
           InputProps={{
@@ -356,7 +356,7 @@ export const MoneySave = () => {
           select={false}
           label={translate("money-totalOut")}
           size={"small"}
-          value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
+          value={numeral(OBJECT?.money_total_out).format('0,0')}
           variant={"outlined"}
           className={"w-86vw"}
           InputProps={{
@@ -389,7 +389,7 @@ export const MoneySave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -500,7 +500,7 @@ export const MoneySave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-86vw"}
-              value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
+              value={numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}
               InputProps={{
                 readOnly: false,
                 startAdornment: (

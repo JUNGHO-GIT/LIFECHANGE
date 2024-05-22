@@ -329,7 +329,7 @@ export const ExercisePlanSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -363,7 +363,7 @@ export const ExercisePlanSave = () => {
             size={"small"}
             label={translate("exercise-planCount")}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
+            value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -392,7 +392,7 @@ export const ExercisePlanSave = () => {
             size={"small"}
             label={translate("exercise-planVolume")}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
+            value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -472,7 +472,7 @@ export const ExercisePlanSave = () => {
             size={"small"}
             label={translate("exercise-planWeight")}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
+            value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (

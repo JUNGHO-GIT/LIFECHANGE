@@ -328,7 +328,7 @@ export const FoodPlanSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -363,7 +363,7 @@ export const FoodPlanSave = () => {
             label={translate("food-planKcal")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")}`}
+            value={numeral(OBJECT?.food_plan_kcal).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -393,7 +393,7 @@ export const FoodPlanSave = () => {
             label={translate("food-planCarb")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_carb).format("0,0")}`}
+            value={numeral(OBJECT?.food_plan_carb).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -423,7 +423,7 @@ export const FoodPlanSave = () => {
             label={translate("food-planProtein")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_protein).format("0,0")}`}
+            value={numeral(OBJECT?.food_plan_protein).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -453,7 +453,7 @@ export const FoodPlanSave = () => {
             label={translate("food-planFat")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={`${numeral(OBJECT?.food_plan_fat).format("0,0")}`}
+            value={numeral(OBJECT?.food_plan_fat).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (

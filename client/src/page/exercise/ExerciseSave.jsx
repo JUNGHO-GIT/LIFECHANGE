@@ -364,7 +364,7 @@ export const ExerciseSave = () => {
             select={false}
             label={translate("exercise-totalVolume")}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')}`}
+            value={numeral(OBJECT?.exercise_total_volume).format('0,0')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -402,7 +402,7 @@ export const ExerciseSave = () => {
             select={false}
             label={translate("exercise-weight")}
             size={"small"}
-            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')}`}
+            value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -434,7 +434,7 @@ export const ExerciseSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-row"}>
+          <Div className={"d-center"}>
             <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
@@ -541,7 +541,7 @@ export const ExerciseSave = () => {
             size={"small"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
-            value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}`}
+            value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}
             InputProps={{
               readOnly: false,
               startAdornment: (
