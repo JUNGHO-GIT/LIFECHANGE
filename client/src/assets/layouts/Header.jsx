@@ -89,12 +89,12 @@ export const Header = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-7vh w-100vw"}>
-      <Div className={"d-center ms-10"} onClick={() => navigate("/calendar/list")}>
+    <Div className={"block-wrapper d-row h-7vh"}>
+      <Div className={"d-center"} onClick={() => navigate("/calendar/list")}>
         <img src={logo2} className={"w-max170 h-max30"} alt={"logo2"} />
         <img src={logo3} className={"w-max170 h-max30"} alt={"logo3"} />
       </Div>
-      <Div className={"d-center ms-auto me-10"}>
+      <Div className={"d-center ms-auto"}>
         {btnUser()}
       </Div>
     </Div>
@@ -102,7 +102,7 @@ export const Header = () => {
 
   // 7. header ------------------------------------------------------------------------------------>
   const navbarNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-0vh"}>
+    <Paper className={"flex-wrapper p-sticky top-0vh radius border z-1000"}>
       {defaultNode()}
     </Paper>
   );

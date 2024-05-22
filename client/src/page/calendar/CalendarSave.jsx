@@ -338,7 +338,7 @@ export const CalendarSave = () => {
                 <Div className={"d-center me-n10"}>
                   <Icons
                     name={"TbMinus"}
-                    className={"w-14 h-14 black"}
+                    className={"w-20 h-20 black"}
                     onClick={(e) => {
                       COUNT.newSectionCnt > COUNT.sectionCnt ? (
                         setCOUNT((prev) => ({
@@ -350,7 +350,7 @@ export const CalendarSave = () => {
                   />
                   <Icons
                     name={"TbPlus"}
-                    className={"w-14 h-14 black"}
+                    className={"w-20 h-20 black"}
                     onClick={(e) => {
                       COUNT.newSectionCnt < 10 ? (
                         setCOUNT((prev) => ({
@@ -573,7 +573,7 @@ export const CalendarSave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min67vh"}>
+      <Div className={"block-wrapper h-min80vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -587,7 +587,7 @@ export const CalendarSave = () => {
     );
     // 7-7. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         {tableSection()}
       </Paper>
     );

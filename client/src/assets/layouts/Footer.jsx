@@ -46,17 +46,10 @@ export const Footer = ({
 
   // 7. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
-    isLogin || isSignup ? (
-      <Paper className={"flex-wrapper p-sticky bottom-0vh border-top p-0"}>
-        {filterNode()}
-        {btnNode()}
-      </Paper>
-    ) : (
-      <Paper className={"flex-wrapper p-sticky bottom-7vh border-top p-0"}>
-        {filterNode()}
-        {btnNode()}
-      </Paper>
-    )
+    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
+      {filterNode()}
+      {btnNode()}
+    </Paper>
   );
 
   // 10. return ----------------------------------------------------------------------------------->

@@ -181,7 +181,7 @@ export const SleepPlanList = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min67vh"}>
+      <Div className={"block-wrapper h-min80vh"}>
         <Div className={"d-column"}>
           {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
         </Div>
@@ -189,7 +189,7 @@ export const SleepPlanList = () => {
     );
     // 7-7. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         {tableSection()}
       </Paper>
     );

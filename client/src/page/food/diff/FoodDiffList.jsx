@@ -240,7 +240,7 @@ export const FoodDiff = () => {
     );
     // 7-7. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         {tableSection()}
       </Paper>
     );

@@ -10065,12 +10065,6 @@
 .align-right {
   align-items: flex-end !important;
 }
-.d-row {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center !important;
-  text-align: center !important;
-}
 .d-none {
   display: none !important;
 }
@@ -10104,6 +10098,12 @@
   justify-content: flex-end !important;
   align-items: flex-end !important;
   text-align: right !important;
+}
+.d-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 .d-column {
   display: flex !important;

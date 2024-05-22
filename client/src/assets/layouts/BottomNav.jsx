@@ -41,7 +41,7 @@ export const BottomNav = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
+    <Div className={"block-wrapper d-row h-7vh"}>
       <BottomNavigation
         showLabels={true}
         value={value}
@@ -144,7 +144,7 @@ export const BottomNav = () => {
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh border-top"}>
+    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
       {defaultNode()}
     </Paper>
   );

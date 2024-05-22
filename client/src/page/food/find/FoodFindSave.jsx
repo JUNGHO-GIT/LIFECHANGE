@@ -676,7 +676,7 @@ export const FoodFindSave = () => {
     );
     // 7-6-3. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min67vh"}>
+      <Div className={"block-wrapper h-min80vh"}>
         <Div className={"d-center mb-20"}>
           {dateSection()}
         </Div>
@@ -693,7 +693,7 @@ export const FoodFindSave = () => {
     );
     // 7-7. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         {tableSection()}
       </Paper>
     );

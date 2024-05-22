@@ -47,7 +47,7 @@ export const Loading = ({
 
   // 7. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <Paper className={"content-wrapper"}>
+    <Paper className={"content-wrapper border radius"}>
       {defaultNode()}
     </Paper>
   );

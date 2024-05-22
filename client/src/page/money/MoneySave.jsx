@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, Button} from "../../import/ImportMuis.jsx";
 import {TextField, TextArea, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -174,207 +174,201 @@ export const MoneySave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-row"}>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            label={translate("common-dateType")}
-            size={"small"}
-            value={DATE.dateType || "day"}
-            variant={"outlined"}
-            className={"w-23vw me-3vw"}
-            InputProps={{
-              readOnly: true,
-              className: "h-50",
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value
-              }));
-            }}>
-            {["전체", "day", "week", "month", "year"].map((item) => (
-              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Div>
-        <Div className={"d-center"}>
-          <PopUp
-            type={"innerCenter"}
-            position={"center"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <Div className={"d-center w-max70vw"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                  <DateCalendar
-                    timezone={"Asia/Seoul"}
-                    views={["year", "day"]}
-                    readOnly={false}
-                    defaultValue={moment(DATE.dateStart)}
-                    className={"radius border h-max50vh"}
-                    onChange={(date) => {
-                      setDATE((prev) => ({
-                        ...prev,
-                        dateStart: moment(date).format("YYYY-MM-DD"),
-                        dateEnd: moment(date).format("YYYY-MM-DD")
-                      }));
-                    }}
-                    sx={{
-                      "& .MuiDateCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiYearCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiDayCalendar-slideTransition": {
-                        minHeight: "0px",
-                      },
-                      "& .MuiDayCalendar-weekDayLabel": {
-                        fontSize: "0.7rem",
-                        width: "5vh",
-                        height: "5vh",
-                      },
-                      '& .MuiPickersDay-root': {
-                        fontSize: "0.7rem",
-                        width: "5vh",
-                        height: "5vh",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              </Div>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                type={"text"}
-                size={"small"}
-                label={"날짜"}
-                variant={"outlined"}
-                value={`${DATE.dateStart}`}
-                className={"w-60vw"}
-                InputProps={{
-                  readOnly: true,
-                  className: "h-50",
-                  startAdornment: (
-                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
-                  ),
-                  endAdornment: null
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
-                }}
-              />
-            )}
-          </PopUp>
-        </Div>
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          label={translate("common-dateType")}
+          size={"small"}
+          value={DATE.dateType || "day"}
+          variant={"outlined"}
+          className={"w-23vw me-3vw"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: null,
+            endAdornment: null
+          }}
+          onChange={(e) => {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: e.target.value
+            }));
+          }}>
+          {["전체", "day", "week", "month", "year"].map((item) => (
+            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+              {item}
+            </MenuItem>
+          ))}
+        </TextField>
+        <PopUp
+          type={"innerCenter"}
+          position={"center"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <Div className={"d-center w-max70vw"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["year", "day"]}
+                  readOnly={false}
+                  defaultValue={moment(DATE.dateStart)}
+                  className={"radius border h-max50vh"}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD"),
+                      dateEnd: moment(date).format("YYYY-MM-DD")
+                    }));
+                  }}
+                  sx={{
+                    "& .MuiDateCalendar-root": {
+                      width: "100%",
+                      height: "100%",
+                    },
+                    "& .MuiYearCalendar-root": {
+                      width: "100%",
+                      height: "100%",
+                    },
+                    "& .MuiDayCalendar-slideTransition": {
+                      minHeight: "0px",
+                    },
+                    "& .MuiDayCalendar-weekDayLabel": {
+                      fontSize: "0.7rem",
+                      width: "5vh",
+                      height: "5vh",
+                    },
+                    '& .MuiPickersDay-root': {
+                      fontSize: "0.7rem",
+                      width: "5vh",
+                      height: "5vh",
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Div>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              type={"text"}
+              size={"small"}
+              label={"날짜"}
+              variant={"outlined"}
+              value={`${DATE.dateStart}`}
+              className={"w-60vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                ),
+                endAdornment: null
+              }}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+            />
+          )}
+        </PopUp>
       </Div>
     );
     // 7-2. count
     const countSection = () => (
-      <PopUp
-        type={"alert"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          <TextField
-            type={"text"}
-            label={translate("common-count")}
-            variant={"outlined"}
-            size={"small"}
-            className={"w-86vw"}
-            value={COUNT.newSectionCnt}
-            InputProps={{
-              readOnly: true,
-              className: "h-50",
-              startAdornment: (
-                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
-              ),
-              endAdornment: (
-                <Div className={"d-center me-n10"}>
-                  <Icons
-                    name={"TbMinus"}
-                    className={"w-14 h-14 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt - 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                  <Icons
-                    name={"TbPlus"}
-                    className={"w-14 h-14 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt < 10 ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt + 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                </Div>
-              )
-            }}
-          />
-        )}
-      </PopUp>
+      <Div className={"d-center"}>
+        <PopUp
+          type={"alert"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <Div className={"d-center"}>
+              {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+            </Div>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              type={"text"}
+              label={translate("common-count")}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-86vw"}
+              value={COUNT.newSectionCnt}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+                ),
+                endAdornment: (
+                  <Div className={"d-center me-n10"}>
+                    <Icons
+                      name={"TbMinus"}
+                      className={"w-20 h-20 black"}
+                      onClick={(e) => {
+                        COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                          setCOUNT((prev) => ({
+                            ...prev,
+                            newSectionCnt: prev.newSectionCnt - 1
+                          }))
+                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      }}
+                    />
+                    <Icons
+                      name={"TbPlus"}
+                      className={"w-20 h-20 black"}
+                      onClick={(e) => {
+                        COUNT.newSectionCnt < 10 ? (
+                          setCOUNT((prev) => ({
+                            ...prev,
+                            newSectionCnt: prev.newSectionCnt + 1
+                          }))
+                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      }}
+                    />
+                  </Div>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
     );
     // 7-3. total
     const totalSection = () => (
       <Div className={"d-column"}>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={translate("money-totalIn")}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              className: "h-50",
-              startAdornment: (
-                <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
-              ),
-              endAdornment: (
-                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
-              )
-            }}
-          />
+        <Div className={"d-center"}>
+        <TextField
+          select={false}
+          label={translate("money-totalIn")}
+          size={"small"}
+          value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
+          variant={"outlined"}
+          className={"w-86vw"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+            ),
+            endAdornment: (
+              translate("money-endCurrency")
+            )
+          }}
+        />
         </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={translate("money-totalOut")}
-            size={"small"}
-            value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              className: "h-50",
-              startAdornment: (
-                <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
-              ),
-              endAdornment: (
-                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
-              )
-            }}
-          />
+        <Br20/>
+        <Div className={"d-center"}>
+        <TextField
+          select={false}
+          label={translate("money-totalOut")}
+          size={"small"}
+          value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
+          variant={"outlined"}
+          className={"w-86vw"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+            ),
+            endAdornment: (
+              translate("money-endCurrency")
+            )
+          }}
+        />
         </Div>
       </Div>
     );
@@ -417,203 +411,208 @@ export const MoneySave = () => {
     // 7-6-1. table (detail, save 는 empty x)
     // 7-6-2. table
     const tableFragment = (i) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mb-40"}>
-          {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("money-part")}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={OBJECT?.money_section[i]?.money_part_idx}
-            InputProps={{
-              readOnly: false,
-              className: "h-50",
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newIndex = Number(e.target.value);
-              setOBJECT((prev) => ({
-                ...prev,
-                money_section: prev.money_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    money_part_idx: newIndex,
-                    money_part_val: moneyArray[newIndex]?.money_part,
-                    money_title_idx: 0,
-                    money_title_val: moneyArray[newIndex]?.money_title[0],
-                  } : item
-                ))
-              }));
-            }}
-          >
-            {moneyArray.map((item, idx) => (
-              <MenuItem key={idx} value={idx}>
-                {item.money_part}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("money-title")}
-            variant={"outlined"}
-            className={"w-40vw ms-3vw"}
-            value={OBJECT?.money_section[i]?.money_title_idx}
-            InputProps={{
-              readOnly: false,
-              className: "h-50",
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newTitleIdx = Number(e.target.value);
-              const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
-              if (newTitleIdx >= 0 && newTitleVal) {
+      <Card variant={"outlined"} className={"p-20"}  key={i}>
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
+          </Div>
+          <Br20/>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={translate("money-part")}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              value={OBJECT?.money_section[i]?.money_part_idx}
+              InputProps={{
+                readOnly: false,
+                startAdornment: null,
+                endAdornment: null
+              }}
+              onChange={(e) => {
+                const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
                   money_section: prev.money_section.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      money_title_idx: newTitleIdx,
-                      money_title_val: newTitleVal,
+                      money_part_idx: newIndex,
+                      money_part_val: moneyArray[newIndex]?.money_part,
+                      money_title_idx: 0,
+                      money_title_val: moneyArray[newIndex]?.money_title[0],
                     } : item
                   ))
                 }));
-              }
-            }}
-          >
-            {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
-              <MenuItem key={idx} value={idx}>
-                {title}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <TextField
-            select={false}
-            label={translate("money-amount")}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
-            InputProps={{
-              readOnly: false,
-              className: "h-50",
-              startAdornment: (
-                <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
-              ),
-              endAdornment: (
-                <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 9999999999);
-              setOBJECT((prev) => ({
-                ...prev,
-                money_section: prev.money_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    money_amount: limitedValue
-                  } : item
-                ))
-              }));
-            }}
-          />
-        </Div>
-        <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"innerCenter"}
-            position={"top"}
-            direction={"center"}
-            contents={({closePopup}) => (
-            <Div className={"d-column"}>
-              <Div className={"d-center mb-20"}>
-                <TextArea
-                  readOnly={false}
-                  className={"w-70vw h-55vh border p-10"}
+              }}
+            >
+              {moneyArray.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  {item.money_part}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={translate("money-title")}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              value={OBJECT?.money_section[i]?.money_title_idx}
+              InputProps={{
+                readOnly: false,
+                startAdornment: null,
+                endAdornment: null
+              }}
+              onChange={(e) => {
+                const newTitleIdx = Number(e.target.value);
+                const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                if (newTitleIdx >= 0 && newTitleVal) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    money_section: prev.money_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        money_title_idx: newTitleIdx,
+                        money_title_val: newTitleVal,
+                      } : item
+                    ))
+                  }));
+                }
+              }}
+            >
+              {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  {title}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("money-amount")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                ),
+                endAdornment: (
+                  <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_section: prev.money_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      money_amount: limitedValue
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <PopUp
+              key={i}
+              type={"innerCenter"}
+              position={"top"}
+              direction={"center"}
+              contents={({closePopup}) => (
+              <Div className={"d-column"}>
+                <Div className={"d-center"}>
+                  <TextArea
+                    readOnly={false}
+                    className={"w-70vw h-55vh border p-10"}
+                    value={OBJECT?.money_section[i]?.money_content}
+                    onChange={(e) => {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_section: prev.money_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            money_content: e.target.value
+                          } : item
+                        ))
+                      }));
+                    }}
+                  />
+                </Div>
+                <Br20/>
+                <Div className={"d-center"}>
+                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+                    className={"primary-btn me-5"} onClick={() => {
+                      closePopup();
+                    }}>
+                    저장
+                  </Button>
+                </Div>
+              </Div>
+              )}>
+              {(popTrigger={}) => (
+                <TextField
+                  select={false}
+                  label={translate("money-content")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-86vw"}
                   value={OBJECT?.money_section[i]?.money_content}
-                  onChange={(e) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_content: e.target.value
-                        } : item
-                      ))
-                    }));
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <img src={money3} className={"w-16 h-16 me-10"} alt={"money3"}/>
+                    ),
+                    endAdornment: null
+                  }}
+                  onClick={(e) => {
+                    popTrigger.openPopup(e.currentTarget);
                   }}
                 />
-              </Div>
-              <Div className={"d-center"}>
-                <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-                  className={"primary-btn me-5"} onClick={() => {
-                    closePopup();
-                  }}>
-                  저장
-                </Button>
-              </Div>
-            </Div>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={translate("money-content")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.money_section[i]?.money_content}
-                InputProps={{
-                  readOnly: true,
-                  className: "h-50",
-                  startAdornment: (
-                    <img src={money3} className={"w-16 h-16 me-10"} alt={"money3"}/>
-                  ),
-                  endAdornment: null
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
-                }}
-              />
-            )}
-          </PopUp>
+              )}
+            </PopUp>
+          </Div>
         </Div>
       </Card>
     );
-    // 7-6-3. table
-    const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min67vh"}>
-        <Div className={"d-center mb-20"}>
-          {dateSection()}
-        </Div>
-        <Div className={"d-center mb-20"}>
-          {countSection()}
-        </Div>
-        <Div className={"d-column mb-20"}>
-          {totalSection()}
-        </Div>
-        <Div className={"d-column"}>
-          {COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))}
-        </Div>
-      </Div>
+    const firstSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        {dateSection()}
+        <Br20/>
+        {countSection()}
+      </Card>
+    );
+    const secondSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        {totalSection()}
+      </Card>
+    );
+    const thirdSection = () => (
+      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))
     );
     // 7-7. return
     return (
-      <Paper className={"content-wrapper"}>
-        {tableSection()}
+      <Paper className={"content-wrapper border radius"}>
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {secondSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

@@ -33,12 +33,10 @@ export const TopNav = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
+    <Div className={"block-wrapper d-row h-7vh"}>
       <Tabs
         value={value}
         variant={"scrollable"}
-        scrollButtons={"auto"}
-        allowScrollButtonsMobile={true}
         selectionFollowsFocus={true}
         sx={{
           [`& .${tabsClasses.scrollButtons}`]: {
@@ -103,12 +101,10 @@ export const TopNav = () => {
 
   // 6. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
-    <Div className={"block-wrapper d-row w-100vw h-7vh"}>
+    <Div className={"block-wrapper d-row h-7vh"}>
       <Tabs
         value={value}
         variant={"scrollable"}
-        scrollButtons={"auto"}
-        allowScrollButtonsMobile={true}
         selectionFollowsFocus={true}
         sx={{
           [`& .${tabsClasses.scrollButtons}`]: {
@@ -180,7 +176,8 @@ export const TopNav = () => {
 
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-7vh border-top border-bottom"}>
+    <Paper className={
+      "flex-wrapper p-sticky top-0vh radius border z-900"}>
       {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
         defaultNode()
       ) : firstStr === "food" ? (
