@@ -95,7 +95,7 @@ export const NavBar = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-7vh w-100vw"}>
+    <Div className={"block-wrapper d-row h-max7vh w-100vw"}>
       <Div className={"d-center ms-10"}>
         <Div className={"fs-1-0rem fw-bold navy"}>
           {part ? part : "Home"} {type ? ` / ${type}` : ` / `} {plan ? ` / ${plan}` : ``}

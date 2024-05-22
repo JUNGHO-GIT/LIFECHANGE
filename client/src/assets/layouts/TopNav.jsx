@@ -33,7 +33,7 @@ export const TopNav = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-7vh"}>
+    <Div className={"block-wrapper d-row h-max7vh"}>
       <Tabs
         value={value}
         variant={"scrollable"}
@@ -101,7 +101,7 @@ export const TopNav = () => {
 
   // 6. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
-    <Div className={"block-wrapper d-row h-7vh"}>
+    <Div className={"block-wrapper d-row h-max7vh"}>
       <Tabs
         value={value}
         variant={"scrollable"}

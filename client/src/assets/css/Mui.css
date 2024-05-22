@@ -10,11 +10,14 @@
   padding: 14px 14px 14px 14px !important;
   z-index: 10 !important;
 }
+[class$="MuiToolbar-root"] {
+  padding: 0px 0px 0px 0px !important;
+}
 [class$="MuiTab-root"] {
   min-width: 0px !important;
 }
-[class$="MuiToolbar-root"] {
-  padding: 0px 0px 0px 0px !important;
+[class$="MuiBottomNavigationAction-root"] {
+  min-width: 70px !important;
 }
 [class$="MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;
@@ -43,13 +46,11 @@
   font-weight: bold !important;
   text-decoration: none !important;
 }
-
 /** 호버 **/
 [class$="MuiTypography-root-MuiLink-root"]:hover {
   color: #006ab3 !important;
   scale: 1.1 !important;
 }
-
 /** 셀렉트, 엑티브 **/
 [class$="MuiTypography-root-MuiLink-root"]:active {
   color: #006ab3 !important;

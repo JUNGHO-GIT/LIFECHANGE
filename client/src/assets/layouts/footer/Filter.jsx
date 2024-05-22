@@ -397,7 +397,7 @@ export const Filter = ({
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {exerciseNode()} */}
           </Div>
@@ -405,7 +405,7 @@ export const Filter = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -415,7 +415,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {exerciseNode()} */}
           </Div>
@@ -430,7 +430,7 @@ export const Filter = ({
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {foodNode()} */}
           </Div>
@@ -444,7 +444,7 @@ export const Filter = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -454,7 +454,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {foodNode()} */}
           </Div>
@@ -469,7 +469,7 @@ export const Filter = ({
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {moneyNode()} */}
           </Div>
@@ -477,7 +477,7 @@ export const Filter = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -487,7 +487,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
             {/* {moneyNode()} */}
           </Div>
@@ -502,14 +502,14 @@ export const Filter = ({
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -519,7 +519,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
@@ -533,14 +533,14 @@ export const Filter = ({
     else if (strings?.first === "user") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {userNode()}
           </Div>
         );
@@ -550,7 +550,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {defaultNode()}
           </Div>
         );

@@ -41,7 +41,7 @@ export const BottomNav = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-7vh"}>
+    <Div className={"block-wrapper d-row h-max7vh"}>
       <BottomNavigation
         showLabels={true}
         value={value}

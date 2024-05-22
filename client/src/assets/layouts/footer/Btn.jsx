@@ -17,7 +17,7 @@ export const Btn = ({
 
   // 1. go
   const btnGoToList = () => (
-    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -30,7 +30,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToFind = () => (
-    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -43,7 +43,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToSave = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -56,7 +56,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToFindSave = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -69,14 +69,14 @@ export const Btn = ({
     </Button>
   );
   const btnGoToLogin = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.navigate(objects?.SEND.toLogin);
     }}>
       {translate("btn-goToLogin")}
     </Button>
   );
   const btnGoToSignup = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.navigate(objects?.SEND.toSignup);
     }}>
       {translate("btn-goToSignup")}
@@ -85,7 +85,7 @@ export const Btn = ({
 
   // 2. get
   const btnGetToday = () => (
-    <Button type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
       (objects?.DATE) && (
         functions?.setDATE((prev) => ({
           ...prev,
@@ -190,7 +190,7 @@ export const Btn = ({
         );
       }}>
       {(popTrigger={}) => (
-        <Button type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={(e) => {
+        <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
           {translate("btn-getProperty")}
@@ -201,21 +201,21 @@ export const Btn = ({
 
   // 3. flow
   const btnFlowLogin = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
     }}>
       {translate("btn-flowLogin")}
     </Button>
   );
   const btnFlowSignup = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
     }}>
       {translate("btn-flowSignup")}
     </Button>
   );
   const btnFlowSave = () => (
-    <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
       Object.keys(sessionStorage).forEach((key) => {
         if (key.includes("FILTER") || key.includes("foodSection")) {
@@ -246,7 +246,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
+      <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
           ...prev,
@@ -258,7 +258,7 @@ export const Btn = ({
     </Div>
   );
   const btnFlowDefault = () => (
-    <Button type={"button"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
+    <Button size={"small"} type={"button"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
       {translate("btn-flowDefault")}
     </Button>
   );
@@ -307,7 +307,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -320,7 +320,7 @@ export const Btn = ({
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -329,7 +329,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -338,7 +338,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -347,7 +347,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -356,7 +356,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -369,7 +369,7 @@ export const Btn = ({
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -378,7 +378,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowFind()}
             {btnGoToFindSave()}
           </Div>
@@ -386,7 +386,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
             {btnGetProperty()}
@@ -395,7 +395,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -404,7 +404,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -413,7 +413,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -422,7 +422,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -435,7 +435,7 @@ export const Btn = ({
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -444,7 +444,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -453,7 +453,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -462,7 +462,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -471,7 +471,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -484,7 +484,7 @@ export const Btn = ({
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -493,7 +493,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -502,7 +502,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -511,7 +511,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
@@ -520,7 +520,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
@@ -536,14 +536,14 @@ export const Btn = ({
       }
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowDemo()}
           </Div>
         );
       }
       else if (strings?.second === "data" && strings?.third === "set") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowDefault()}
             {btnFlowSave()}
           </Div>
@@ -551,7 +551,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
           </Div>
@@ -559,7 +559,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
           </Div>
@@ -567,7 +567,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "login") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowLogin()}
             {btnGoToSignup()}
           </Div>
@@ -575,7 +575,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "signup") {
         return (
-          <Div className={"block-wrapper d-row h-7vh"}>
+          <Div className={"block-wrapper d-row h-max7vh"}>
             {btnFlowSignup()}
             {btnGoToLogin()}
           </Div>
