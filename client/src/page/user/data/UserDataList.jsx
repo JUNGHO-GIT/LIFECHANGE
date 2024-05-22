@@ -781,30 +781,30 @@ export const UserDataList = () => {
     );
     // 7-8. table
     const tableSection = () => {
-      {PART === "exercisePlan" && (
-        COUNT.totalCnt === 0 ? tableFragment1Empty() : tableFragment1(0)
-      )}
-      {PART === "exercise" && (
-        COUNT.totalCnt === 0 ? tableFragment2Empty() : tableFragment2(0)
-      )}
-      {PART === "foodPlan" && (
-        COUNT.totalCnt === 0 ? tableFragment3Empty() : tableFragment3(0)
-      )}
-      {PART === "food" && (
-        COUNT.totalCnt === 0 ? tableFragment4Empty() : tableFragment4(0)
-      )}
-      {PART === "moneyPlan" && (
-        COUNT.totalCnt === 0 ? tableFragment5Empty() : tableFragment5(0)
-      )}
-      {PART === "money" && (
-        COUNT.totalCnt === 0 ? tableFragment6Empty() : tableFragment6(0)
-      )}
-      {PART === "sleepPlan" && (
-        COUNT.totalCnt === 0 ? tableFragment7Empty() : tableFragment7(0)
-      )}
-      {PART === "sleep" && (
-        COUNT.totalCnt === 0 ? tableFragment8Empty() : tableFragment8(0)
-      )}
+      if (PART === "exercisePlan") {
+        return COUNT.totalCnt === 0 ? tableFragment1Empty() : tableFragment1(0);
+      }
+      else if (PART === "exercise") {
+        return COUNT.totalCnt === 0 ? tableFragment2Empty() : tableFragment2(0);
+      }
+      else if (PART === "foodPlan") {
+        return COUNT.totalCnt === 0 ? tableFragment3Empty() : tableFragment3(0);
+      }
+      else if (PART === "food") {
+        return COUNT.totalCnt === 0 ? tableFragment4Empty() : tableFragment4(0);
+      }
+      else if (PART === "moneyPlan") {
+        return COUNT.totalCnt === 0 ? tableFragment5Empty() : tableFragment5(0);
+      }
+      else if (PART === "money") {
+        return COUNT.totalCnt === 0 ? tableFragment6Empty() : tableFragment6(0);
+      }
+      else if (PART === "sleepPlan") {
+        return COUNT.totalCnt === 0 ? tableFragment7Empty() : tableFragment7(0);
+      }
+      else if (PART === "sleep") {
+        return COUNT.totalCnt === 0 ? tableFragment8Empty() : tableFragment8(0);
+      }
     };
     // 7-9. first (x)
     // 7-10. second (x)

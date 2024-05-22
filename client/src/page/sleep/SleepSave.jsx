@@ -18,8 +18,6 @@ export const SleepSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const session = sessionStorage.getItem("dataSet") || "{}";
-  const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();

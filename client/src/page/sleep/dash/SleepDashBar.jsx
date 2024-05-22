@@ -103,7 +103,11 @@ export const SleepDashBar = () => {
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
-    // 7-5-1. dropdown
+    // 7-5. title
+    const titleSection = () => (
+      <Div className={"fs-1-5rem"}>수면 목표</Div>
+    );
+    // 7-5. dropdown
     const dropdownSection1 = () => (
       <TextField
         select={true}
@@ -119,25 +123,35 @@ export const SleepDashBar = () => {
         <MenuItem value={"today"}>오늘</MenuItem>
       </TextField>
     );
-    // 7-6. dash
-    const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
-        <Div className={"d-center"}>
-          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
-          <Div className={"d-center m-auto fs-1-0rem"}>수면 목표</Div>
-          <Div className={"d-center ms-auto me-10"}>&nbsp;</Div>
-        </Div>
-        <Div className={"d-column"}>
-          {SECTION === "today" && (
-            LOADING ? loadingNode() : chartToday()
-          )}
-        </Div>
+    // 7-7. fragment
+    const dashFragment1 = (i) => (
+      chartToday()
+    );
+    // 7-8. dash
+    const dashSection = () => {
+      if (SECTION === "today") {
+        return LOADING ? loadingNode() : dashFragment1();
+      }
+    }
+    // 7-9. first
+    const firstSection = () => (
+      <Div className={"d-center"}>
+        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
+        <Div className={"d-center ms-auto me-10"}></Div>
       </Div>
     );
-    // 7-7 return
+    // 7-11. third
+    const thirdSection = () => (
+      dashSection()
+    );
+    // 7-12. return
     return (
-      <Paper className={"content-wrapper border-bottom"}>
-        {dashSection()}
+      <Paper className={"content-wrapper border radius"}>
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

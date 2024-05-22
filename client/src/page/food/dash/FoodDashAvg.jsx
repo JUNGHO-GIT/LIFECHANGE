@@ -302,7 +302,11 @@ export const FoodDashAvg = () => {
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
-    // 7-5-1. dropdown
+    // 7-5. title
+    const titleSection = () => (
+      <Div className={"fs-1-5rem"}>칼로리/영양소 평균</Div>
+    );
+    // 7-5. dropdown
     const dropdownSection1 = () => (
       <TextField
         select={true}
@@ -319,7 +323,7 @@ export const FoodDashAvg = () => {
         <MenuItem value={"year"}>연간</MenuItem>
       </TextField>
     );
-    // 7-5-2. dropdown
+    // 7-5. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}
@@ -349,34 +353,56 @@ export const FoodDashAvg = () => {
         )}
       </PopUp>
     );
-    // 7-6. dash
-    const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
-        <Div className={"d-center"}>
-          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
-          <Div className={"d-center m-auto fs-1-0rem"}>칼로리/영양소 평균</Div>
-          <Div className={"d-center ms-auto me-10"}>{dropdownSection2()}</Div>
-        </Div>
-        <Div className={"d-column"}>
-          {SECTION === "month" && LINE === "kcal" && (
-            LOADING ? loadingNode() : chartKcalMonth()
-          )}
-          {SECTION === "month" && LINE === "nut" && (
-            LOADING ? loadingNode() : chartNutMonth()
-          )}
-          {SECTION === "year" && LINE === "kcal" && (
-            LOADING ? loadingNode() : chartKcalYear()
-          )}
-          {SECTION === "year" && LINE === "nut" && (
-            LOADING ? loadingNode() : chartNutYear()
-          )}
-        </Div>
+    // 7-7. fragment
+    const dashFragment1 = (i) => (
+      chartKcalMonth()
+    );
+    // 7-7. fragment
+    const dashFragment2 = (i) => (
+      chartNutMonth()
+    );
+    // 7-7. fragment
+    const dashFragment3 = (i) => (
+      chartKcalYear()
+    );
+    // 7-7. fragment
+    const dashFragment4 = (i) => (
+      chartNutYear()
+    );
+    // 7-8. dash
+    const dashSection = () => {
+      if (SECTION === "month" && LINE === "kcal") {
+        return LOADING ? loadingNode() : dashFragment1();
+      }
+      else if (SECTION === "month" && LINE === "nut") {
+        return LOADING ? loadingNode() : dashFragment2();
+      }
+      else if (SECTION === "year" && LINE === "kcal") {
+        return LOADING ? loadingNode() : dashFragment3();
+      }
+      else if (SECTION === "year" && LINE === "nut") {
+        return LOADING ? loadingNode() : dashFragment4();
+      }
+    }
+    // 7-9. first
+    const firstSection = () => (
+      <Div className={"d-center"}>
+        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
       </Div>
     );
-    // 7-7 return
+    // 7-11. third
+    const thirdSection = () => (
+      dashSection()
+    );
+    // 7-12. return
     return (
-      <Paper className={"content-wrapper border-bottom"}>
-        {dashSection()}
+      <Paper className={"content-wrapper border radius"}>
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

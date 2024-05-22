@@ -132,7 +132,7 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-property")}
-                size={"medium"}
+                size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={numeral(totalProperty).format('0,0')}
@@ -151,7 +151,7 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-in")}
-                size={"medium"}
+                size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={numeral(totalIn).format('0,0')}
@@ -170,7 +170,7 @@ export const Btn = ({
               <TextField
                 select={false}
                 label={translate("money-out")}
-                size={"medium"}
+                size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
                 value={numeral(totalOut).format('0,0')}
@@ -229,7 +229,7 @@ export const Btn = ({
     <Div className={"d-center"}>
       <TextField
         select={false}
-        size={"medium"}
+        size={"small"}
         variant={"outlined"}
         className={"w-150"}
         value={objects?.FILTER?.query}
@@ -265,10 +265,9 @@ export const Btn = ({
     <Div className={"d-center"}>
       <TextField
         select={false}
+        size={"small"}
         label={""}
-        type={"text"}
         variant={"outlined"}
-        size={"medium"}
         value={Math.min(objects?.COUNT?.inputCnt, 100)}
         InputProps={{
           readOnly: false
@@ -281,7 +280,8 @@ export const Btn = ({
           }));
         }}
       />
-      <Button className={"me-5"} color={"secondary"} variant={"contained"} onClick={() => (handlers.flowSave(objects.PART))}>
+      <Button size={"small"} className={"ms-5"} color={"secondary"} variant={"contained"}
+      onClick={() => (handlers.flowSave(objects.PART))}>
         {translate("btn-flowDemo")}
       </Button>
     </Div>

@@ -111,7 +111,7 @@ export const MoneyDiff = () => {
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. empty
-    const tableFragmentEmpty = () => (
+    const tableEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -202,7 +202,7 @@ export const MoneyDiff = () => {
     );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
     );
     // 7-9. first (x)
     // 7-10. second (x)

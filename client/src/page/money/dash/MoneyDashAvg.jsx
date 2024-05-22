@@ -293,7 +293,11 @@ export const MoneyDashAvg = () => {
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
-    // 7-5-1. dropdown
+    // 7-5. title
+    const titleSection = () => (
+      <Div className={"fs-1-5rem"}>수입/지출 평균</Div>
+    );
+    // 7-5. dropdown
     const dropdownSection1 = () => (
       <TextField
         select={true}
@@ -310,7 +314,7 @@ export const MoneyDashAvg = () => {
         <MenuItem value={"year"}>연간</MenuItem>
       </TextField>
     );
-    // 7-5-2. dropdown
+    // 7-5. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}
@@ -340,34 +344,59 @@ export const MoneyDashAvg = () => {
         )}
       </PopUp>
     );
-    // 7-6. dash
-    const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
-        <Div className={"d-center"}>
-          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
-          <Div className={"d-center m-auto fs-1-0rem"}>수입/지출 평균</Div>
-          <Div className={"d-center ms-auto me-10"}>{dropdownSection2()}</Div>
-        </Div>
-        <Div className={"d-column"}>
-          {SECTION === "month" && LINE === "in" && (
-            LOADING ? loadingNode() : chartInMonth()
-          )}
-          {SECTION === "month" && LINE === "out" && (
-            LOADING ? loadingNode() : chartOutMonth()
-          )}
-          {SECTION === "year" && LINE === "in" && (
-            LOADING ? loadingNode() : chartInYear()
-          )}
-          {SECTION === "year" && LINE === "out" && (
-            LOADING ? loadingNode() : chartOutYear()
-          )}
-        </Div>
+    // 7-7. fragment
+    const dashFragment1 = (i) => (
+      chartInMonth()
+    );
+    // 7-7. fragment
+    const dashFragment2 = (i) => (
+      chartOutMonth()
+    );
+    // 7-7. fragment
+    const dashFragment3 = (i) => (
+      chartInYear()
+    );
+    // 7-7. fragment
+    const dashFragment4 = (i) => (
+      chartOutYear()
+    );
+    // 7-8. dash
+    const dashSection = () => {
+      if (SECTION === "month" && LINE === "in") {
+        return dashFragment1();
+      }
+      else if (SECTION === "month" && LINE === "out") {
+        return dashFragment2();
+      }
+      else if (SECTION === "year" && LINE === "in") {
+        return dashFragment3();
+      }
+      else if (SECTION === "year" && LINE === "out") {
+        return dashFragment4();
+      }
+      else {
+        return dashFragment1();
+      }
+    };
+    // 7-9. first
+    const firstSection = () => (
+      <Div className={"d-center"}>
+        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
       </Div>
     );
-    // 7-7 return
+    // 7-11. third
+    const thirdSection = () => (
+      dashSection()
+    );
+    // 7-12. return
     return (
-      <Paper className={"content-wrapper border-bottom"}>
-        {dashSection()}
+      <Paper className={"content-wrapper border radius"}>
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

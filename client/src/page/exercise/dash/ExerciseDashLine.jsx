@@ -295,7 +295,11 @@ export const ExerciseDashLine = () => {
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
-    // 7-5-1. dropdown
+    // 7-5. title
+    const titleSection = () => (
+      <Div className={"fs-1-5rem"}>볼륨 / 유산소 추이</Div>
+    );
+    // 7-5. dropdown
     const dropdownSection1 = () => (
       <TextField
         select={true}
@@ -312,7 +316,7 @@ export const ExerciseDashLine = () => {
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
     );
-    // 7-5-2. dropdown
+    // 7-5. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}
@@ -342,34 +346,56 @@ export const ExerciseDashLine = () => {
         )}
       </PopUp>
     );
-    // 7-6. dash
-    const dashSection = () => (
-      <Div className={"block-wrapper h-min40vh h-max-60vh p-0"}>
-        <Div className={"d-center"}>
-          <Div className={"d-center ms-10"}>{dropdownSection1()}</Div>
-          <Div className={"d-center m-auto fs-1-0rem"}>볼륨 / 유산소 추이</Div>
-          <Div className={"d-center ms-auto me-10"}>{dropdownSection2()}</Div>
-        </Div>
-        <Div className={"d-column"}>
-          {SECTION === "week" && LINE === "volume" && (
-            LOADING ? loadingNode() : chartVolumeWeek()
-          )}
-          {SECTION === "week" && LINE === "cardio" && (
-            LOADING ? loadingNode() : chartCardioWeek()
-          )}
-          {SECTION === "month" && LINE === "volume" && (
-            LOADING ? loadingNode() : chartVolumeMonth()
-          )}
-          {SECTION === "month" && LINE === "cardio" && (
-            LOADING ? loadingNode() : chartCardioMonth()
-          )}
-        </Div>
+    // 7-7. fragment
+    const dashFragment1 = (i) => (
+      chartVolumeWeek()
+    );
+    // 7-7. fragment
+    const dashFragment2 = (i) => (
+      chartVolumeMonth()
+    );
+    // 7-7. fragment
+    const dashFragment3 = (i) => (
+      chartCardioWeek()
+    );
+    // 7-7. fragment
+    const dashFragment4 = (i) => (
+      chartCardioMonth()
+    );
+    // 7-8. dash
+    const dashSection = () => {
+      if (SECTION === "week" && LINE === "volume") {
+        return LOADING ? loadingNode() : dashFragment1();
+      }
+      else if (SECTION === "month" && LINE === "volume") {
+        return LOADING ? loadingNode() : dashFragment2();
+      }
+      else if (SECTION === "week" && LINE === "cardio") {
+        return LOADING ? loadingNode() : dashFragment3();
+      }
+      else if (SECTION === "month" && LINE === "cardio") {
+        return LOADING ? loadingNode() : dashFragment4();
+      }
+    }
+    // 7-9. first
+    const firstSection = () => (
+      <Div className={"d-center"}>
+        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
       </Div>
     );
-    // 7-7 return
+    // 7-11. third
+    const thirdSection = () => (
+      dashSection()
+    );
+    // 7-12. return
     return (
-      <Paper className={"content-wrapper border-bottom"}>
-        {dashSection()}
+      <Paper className={"content-wrapper border radius"}>
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };
