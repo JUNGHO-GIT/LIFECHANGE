@@ -4,9 +4,8 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 import {common3} from "../../../import/ImportImages.jsx";
@@ -429,11 +428,12 @@ export const FoodDashPie = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>칼로리/영양소 비율</Div>
+      <Div className={"d-center"}>칼로리/영양소 비율</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -448,10 +448,12 @@ export const FoodDashPie = () => {
         <MenuItem value={"week"}>주간</MenuItem>
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
+      <Div className={"d-center"}>
+        <PopUp
         type={"dash"}
         position={"bottom"}
         direction={"left"}
@@ -478,30 +480,43 @@ export const FoodDashPie = () => {
           />
         )}
       </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartKcalToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalToday()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartNutToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutToday()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartKcalWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartNutWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment5 = (i) => (
-      chartKcalMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment6 = (i) => (
-      chartNutMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutMonth()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -541,6 +556,7 @@ export const FoodDashPie = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

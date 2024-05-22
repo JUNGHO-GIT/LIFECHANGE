@@ -5,8 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -295,11 +295,12 @@ export const MoneyDashAvg = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>수입/지출 평균</Div>
+      <Div className={"d-center"}>수입/지출 평균</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -313,10 +314,12 @@ export const MoneyDashAvg = () => {
         <MenuItem value={"month"}>월간</MenuItem>
         <MenuItem value={"year"}>연간</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
+      <Div className={"d-center"}>
+        <PopUp
         type={"dash"}
         position={"bottom"}
         direction={"left"}
@@ -343,22 +346,31 @@ export const MoneyDashAvg = () => {
           />
         )}
       </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartInMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartInMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartOutMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartOutMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartInYear()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartInYear()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartOutYear()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartOutYear()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -395,6 +407,7 @@ export const MoneyDashAvg = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

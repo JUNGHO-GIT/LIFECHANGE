@@ -5,8 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper,MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -301,70 +301,82 @@ export const FoodDashLine = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>칼로리/영양소 추이</Div>
+      <Div className={"d-center"}>칼로리/영양소 추이</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"w-20vw"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
-      </TextField>
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          type={"text"}
+          size={"small"}
+          className={"w-20vw"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"week"}>주간</MenuItem>
+          <MenuItem value={"month"}>월간</MenuItem>
+        </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"left"}
-        contents={({closePopup}) => (
-        ["kcal", "nut"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
-        )}
-      </PopUp>
+      <Div className={"d-center"}>
+        <PopUp
+          type={"dash"}
+          position={"bottom"}
+          direction={"left"}
+          contents={({closePopup}) => (
+          ["kcal", "nut"]?.map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+                if (LINE === key) {
+                  setLINE("");
+                }
+                else {
+                  setLINE(key);
+                }
+              }}/>} label={key} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))
+          )}>
+          {(popTrigger={}) => (
+            <Img src={common3} className={"w-24 h-24 pointer"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartKcalWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartKcalMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartNutWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartNutMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutMonth()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -398,6 +410,7 @@ export const FoodDashLine = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

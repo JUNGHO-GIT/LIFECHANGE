@@ -5,7 +5,7 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
@@ -193,62 +193,68 @@ export const SleepDashAvg = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>수면 평균</Div>
+      <Div className={"d-center"}>수면 평균</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"w-20vw"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"month"}>월간</MenuItem>
-        <MenuItem value={"year"}>연간</MenuItem>
-      </TextField>
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          type={"text"}
+          size={"small"}
+          className={"w-20vw"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"month"}>월간</MenuItem>
+          <MenuItem value={"year"}>연간</MenuItem>
+        </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"left"}
-        contents={({closePopup}) => (
-        ["취침", "기상", "수면"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-              if (PART.includes(key)) {
-                setPART(PART?.filter((item) => (item !== key)));
-              }
-              else {
-                setPART([...PART, key]);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"}
-            onClick={(e) => {
+      <Div className={"d-center"}>
+        <PopUp
+          type={"dash"}
+          position={"bottom"}
+          direction={"left"}
+          contents={({closePopup}) => (
+          ["취침", "기상", "수면"]?.map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+                if (PART.includes(key)) {
+                  setPART(PART?.filter((item) => (item !== key)));
+                }
+                else {
+                  setPART([...PART, key]);
+                }
+              }}/>} label={key} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))
+          )}>
+          {(popTrigger={}) => (
+            <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
-            }}
-          />
-        )}
-      </PopUp>
+            }}/>
+          )}
+        </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartYear()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartYear()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -276,6 +282,7 @@ export const SleepDashAvg = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

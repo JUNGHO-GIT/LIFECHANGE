@@ -5,8 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -304,11 +304,12 @@ export const FoodDashAvg = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>칼로리/영양소 평균</Div>
+      <Div className={"d-center"}>칼로리/영양소 평균</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -322,10 +323,12 @@ export const FoodDashAvg = () => {
         <MenuItem value={"month"}>월간</MenuItem>
         <MenuItem value={"year"}>연간</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
+      <Div className={"d-center"}>
+        <PopUp
         type={"dash"}
         position={"bottom"}
         direction={"left"}
@@ -352,22 +355,31 @@ export const FoodDashAvg = () => {
           />
         )}
       </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartKcalMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartNutMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartKcalYear()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalYear()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartNutYear()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutYear()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -401,6 +413,7 @@ export const FoodDashAvg = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

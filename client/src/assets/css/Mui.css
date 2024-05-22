@@ -24,6 +24,7 @@
 }
 [class$="MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;
+  font-size: 0.8rem !important;
 }
 
 .MuiFormControlLabel-root {

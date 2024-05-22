@@ -5,9 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -174,11 +173,12 @@ export const FoodDashBar = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>칼로리/영양소 목표</Div>
+      <Div className={"d-center"}>칼로리/영양소 목표</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -191,10 +191,12 @@ export const FoodDashBar = () => {
       >
         <MenuItem value={"today"}>오늘</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
+      <Div className={"d-center"}>
+        <PopUp
         type={"dash"}
         position={"bottom"}
         direction={"center"}
@@ -221,14 +223,19 @@ export const FoodDashBar = () => {
           />
         )}
       </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartKcalToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartKcalToday()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartNutToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartNutToday()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -256,6 +263,7 @@ export const FoodDashBar = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

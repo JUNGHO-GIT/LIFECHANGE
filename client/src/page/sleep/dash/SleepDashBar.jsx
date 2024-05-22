@@ -5,8 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {Div, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -105,27 +105,31 @@ export const SleepDashBar = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>수면 목표</Div>
+      <Div className={"d-center"}>수면 목표</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"w-20vw"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"today"}>오늘</MenuItem>
-      </TextField>
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          type={"text"}
+          size={"small"}
+          className={"w-20vw"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"today"}>오늘</MenuItem>
+        </TextField>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartToday()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -150,6 +154,7 @@ export const SleepDashBar = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

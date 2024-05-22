@@ -5,9 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -297,11 +296,12 @@ export const ExerciseDashLine = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>볼륨 / 유산소 추이</Div>
+      <Div className={"d-center"}>볼륨 / 유산소 추이</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -315,10 +315,12 @@ export const ExerciseDashLine = () => {
         <MenuItem value={"week"}>주간</MenuItem>
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
+      <Div className={"d-center"}>
+        <PopUp
         type={"dash"}
         position={"bottom"}
         direction={"left"}
@@ -345,22 +347,31 @@ export const ExerciseDashLine = () => {
           />
         )}
       </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartVolumeWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartVolumeWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartVolumeMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartVolumeMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartCardioWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartCardioWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartCardioMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartCardioMonth()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -394,6 +405,7 @@ export const ExerciseDashLine = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

@@ -5,9 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {Div, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -255,11 +254,12 @@ export const ExerciseDashScatter = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>체중 목표</Div>
+      <Div className={"d-center"}>체중 목표</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
+      <Div className={"d-center"}>
+        <TextField
         select={true}
         type={"text"}
         size={"small"}
@@ -274,18 +274,25 @@ export const ExerciseDashScatter = () => {
         <MenuItem value={"week"}>주간</MenuItem>
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartToday()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartToday()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartMonth()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -316,6 +323,7 @@ export const ExerciseDashScatter = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>

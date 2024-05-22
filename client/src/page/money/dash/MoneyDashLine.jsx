@@ -5,9 +5,8 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
-import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -297,70 +296,82 @@ export const MoneyDashLine = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"fs-1-5rem"}>수입/지출 추이</Div>
+      <Div className={"d-center"}>수입/지출 추이</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"w-20vw"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
-      </TextField>
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          type={"text"}
+          size={"small"}
+          className={"w-20vw"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"week"}>주간</MenuItem>
+          <MenuItem value={"month"}>월간</MenuItem>
+        </TextField>
+      </Div>
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"left"}
-        contents={({closePopup}) => (
-        ["in", "out"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
-        )}
-      </PopUp>
+      <Div className={"d-center"}>
+        <PopUp
+          type={"dash"}
+          position={"bottom"}
+          direction={"left"}
+          contents={({closePopup}) => (
+          ["in", "out"]?.map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
+                if (LINE === key) {
+                  setLINE("");
+                }
+                else {
+                  setLINE(key);
+                }
+              }}/>} label={key} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))
+          )}>
+          {(popTrigger={}) => (
+            <Img src={common3} className={"w-24 h-24 pointer"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      chartInWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartInWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      chartOutWeek()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartOutWeek()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      chartInMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartInMonth()}
+      </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      chartOutMonth()
+      <Card variant={"outlined"} className={"p-20"}>
+        {chartOutMonth()}
+      </Card>
     );
     // 7-8. dash
     const dashSection = () => {
@@ -394,6 +405,7 @@ export const MoneyDashLine = () => {
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
+          <Br20/>
           {thirdSection()}
         </Div>
       </Paper>
