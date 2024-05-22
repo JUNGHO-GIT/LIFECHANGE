@@ -41,9 +41,13 @@ export const CalendarList = () => {
     category: "",
     toSave: "/calendar/save"
   });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0,
+    newSectionCnt: 0
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -65,7 +69,6 @@ export const CalendarList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -73,7 +76,12 @@ export const CalendarList = () => {
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
-    setLOADING(false);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
+      newSectionCnt: res.data.sectionCnt || 0
+    }));
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. calendar ---------------------------------------------------------------------------------->
