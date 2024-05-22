@@ -11,9 +11,6 @@ export const Footer = ({
   strings, objects, functions, handlers
 }) => {
 
-  const isLogin = strings.first === "user" && strings.second === "login";
-  const isSignup = strings.first === "user" && strings.second === "signup";
-
   // 6. pagingNode -------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging

@@ -7,7 +7,7 @@ import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Checkbox, Skeleton} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Card, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -319,7 +319,8 @@ export const UserDataList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty1 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -338,13 +339,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment1 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -392,12 +395,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty2 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -415,13 +420,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment2 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -463,12 +470,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty3 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -487,13 +496,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment3 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -541,12 +552,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty4 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -565,13 +578,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment4 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -615,12 +630,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty5 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -637,13 +654,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment5 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className="table-thead-tr">
               <TableCell>{translate("common-date")}</TableCell>
@@ -683,12 +702,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty6 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -705,13 +726,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment6 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -749,12 +772,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty7 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -772,13 +797,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment7 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -822,12 +849,14 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-6. empty
     const tableEmpty8 = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -845,13 +874,15 @@ export const UserDataList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment8 = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -893,8 +924,9 @@ export const UserDataList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-8. table
     const tableSection = () => {

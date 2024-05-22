@@ -7,7 +7,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Checkbox, Skeleton} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, TableContainer, Table, Checkbox, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -185,97 +185,101 @@ export const FoodFindList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
-              <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
-              <TableCell>{translate("food-serv")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
+                <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
+                <TableCell>{translate("food-serv")}</TableCell>
+                <TableCell>{translate("food-kcal")}</TableCell>
+                <TableCell>{translate("food-carb")}</TableCell>
+                <TableCell>{translate("food-protein")}</TableCell>
+                <TableCell>{translate("food-fat")}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  {translate("common-empty")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <TableContainer key={`${PAGING.page}-${i}`} className={"border radius"}>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
-              <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
-              <TableCell>{translate("food-serv")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow className={"table-tbody-tr"} key={`data-${index}`}>
-                <TableCell className={"w-max30vw"}>
-                  {item.food_title}
-                </TableCell>
-                <TableCell className={"w-max20vw"}>
-                  {item.food_brand}
-                </TableCell>
-                <TableCell>
-                  {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")})`}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_kcal).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_carb).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_protein).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_fat).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    key={`check-${index}`}
-                    color={"primary"}
-                    size={"small"}
-                    checked={
-                      !! (
-                        checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
-                        checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
-                      )
-                    }
-                    onChange={() => {
-                      handlerCheckboxChange(index);
-                    }}
-                  />
-                </TableCell>
+      <Card variant={"outlined"} className={"border radius p-0"} key={`${PAGING.page}-${i}`}>
+        <TableContainer>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell className={"w-max30vw"}>{translate("food-title")}</TableCell>
+                <TableCell className={"w-max20vw"}>{translate("food-brand")}</TableCell>
+                <TableCell>{translate("food-serv")}</TableCell>
+                <TableCell>{translate("food-kcal")}</TableCell>
+                <TableCell>{translate("food-carb")}</TableCell>
+                <TableCell>{translate("food-protein")}</TableCell>
+                <TableCell>{translate("food-fat")}</TableCell>
+                <TableCell></TableCell>
               </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton variant="text" />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT?.map((item, index) => (
+                <TableRow className={"table-tbody-tr"} key={`data-${index}`}>
+                  <TableCell className={"w-max30vw"}>
+                    {item.food_title}
+                  </TableCell>
+                  <TableCell className={"w-max20vw"}>
+                    {item.food_brand}
+                  </TableCell>
+                  <TableCell>
+                    {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")})`}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_kcal).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_carb).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_protein).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_fat).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      key={`check-${index}`}
+                      color={"primary"}
+                      size={"small"}
+                      checked={
+                        !! (
+                          checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
+                          checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
+                        )
+                      }
+                      onChange={() => {
+                        handlerCheckboxChange(index);
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+              {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+                <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                  <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                    <Skeleton variant="text" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-8. table
     const tableSection = () => (

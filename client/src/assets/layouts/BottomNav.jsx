@@ -17,7 +17,7 @@ export const BottomNav = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
+  const firstStr = PATH?.split("/")[1] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("calendar");
@@ -56,7 +56,7 @@ export const BottomNav = () => {
           icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("exercise");
-            navigate("exercise/diff/list", {
+            navigate("exercise/dash/list", {
               state: {
                 dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
@@ -71,7 +71,7 @@ export const BottomNav = () => {
           icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("food");
-            navigate("food/diff/list", {
+            navigate("food/dash/list", {
               state: {
                 dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
@@ -101,7 +101,7 @@ export const BottomNav = () => {
           icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("money");
-            navigate("money/diff/list", {
+            navigate("money/dash/list", {
               state: {
                 dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),
@@ -116,7 +116,7 @@ export const BottomNav = () => {
           icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
           onClick={() => {
             setValue("sleep");
-            navigate("sleep/diff/list", {
+            navigate("sleep/dash/list", {
               state: {
                 dateType: "",
                 dateStart: moment().format("YYYY-MM-DD"),

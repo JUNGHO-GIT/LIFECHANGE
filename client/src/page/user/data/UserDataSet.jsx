@@ -271,17 +271,13 @@ export const UserDataSet = () => {
     const popupSection = (i, closePopup) => (
       <Div className={"d-column"}>
         <Div className={"d-center mb-20"}>
-          <Card key={i} variant={"outlined"} className={"w-85vw h-60vh border d-row"}>
+          <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-20"}>
             <TableContainer className={"border-right over-x-hidden"}>
               <Table>
                 <TableHead className={"table-thead"}>
                   <TableRow className={"table-thead-tr p-sticky top-0"}>
                     <TableCell>
-                      <Div className={"d-center"}>
-                        <Div className={"fs-1-0rem m-auto"}>
-                          Part
-                        </Div>
-                      </Div>
+                      Part
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -336,11 +332,7 @@ export const UserDataSet = () => {
                   <TableHead className={"table-thead"}>
                     <TableRow className={"table-thead-tr p-sticky top-0"}>
                       <TableCell>
-                        <Div className={"d-center"}>
-                          <Div className={"fs-1-0rem m-auto"}>
-                            Title
-                          </Div>
-                        </Div>
+                        Title
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -403,15 +395,13 @@ export const UserDataSet = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card variant={"outlined"} className={"p-0"} key={i}>
+      <Card variant={"outlined"} className={"p-0 radius"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  <Div className={"d-center"}>
-                    <Div className={"fs-1-0rem"}>Section</Div>
-                  </Div>
+                  Section
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -466,8 +456,6 @@ export const UserDataSet = () => {
     const tableSection = () => (
       tableFragment(0)
     );
-    // 7-9. first (x)
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()
@@ -475,7 +463,7 @@ export const UserDataSet = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min65vh"}>
+        <Div className={"block-wrapper h-min70vh"}>
           {thirdSection()}
         </Div>
       </Paper>

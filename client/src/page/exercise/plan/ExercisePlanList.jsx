@@ -7,7 +7,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -146,7 +146,8 @@ export const ExercisePlanList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
@@ -165,13 +166,15 @@ export const ExercisePlanList = () => {
               </TableCell>
             </TableRow>
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
@@ -229,8 +232,9 @@ export const ExercisePlanList = () => {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-8. table
     const tableSection = () => (

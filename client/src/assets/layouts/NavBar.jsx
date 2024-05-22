@@ -15,7 +15,6 @@ export const NavBar = () => {
   const location = useLocation();
   const {lang, setLang} = useLanguage();
   const {translate} = useTranslate();
-  const sessionId = sessionStorage.getItem("sessionId");
   const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
   const PATH = location.pathname;
   const firstStr = PATH?.split("/")[1] || "";

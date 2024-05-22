@@ -8,7 +8,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper} from "../../../import/ImportMuis.jsx";
+import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
@@ -146,81 +146,85 @@ export const MoneyPlanList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <TableContainer key={"empty"} className={"border radius"}>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+        <TableContainer>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("common-dateType")}</TableCell>
+                <TableCell>{translate("money-in")}</TableCell>
+                <TableCell>{translate("money-out")}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  {translate("common-empty")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <TableContainer key={i} className={"border radius"}>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className="table-thead-tr">
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              key={`data-${index}`}
-              className={"table-tbody-tr"}>
-                <TableCell>
-                  <Link onClick={() => {
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.money_plan_dateType,
-                      dateStart: item.money_plan_dateStart,
-                      dateEnd: item.money_plan_dateEnd
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }}>
-                    <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                    <Div>~</Div>
-                    <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {item.money_plan_dateType}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_in).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_out).format("0,0")}
-                </TableCell>
+      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+        <TableContainer>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className="table-thead-tr">
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("common-dateType")}</TableCell>
+                <TableCell>{translate("money-in")}</TableCell>
+                <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton variant="text" />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT?.map((item, index) => (
+                <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
+                key={`data-${index}`}
+                className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Link onClick={() => {
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.money_plan_dateType,
+                        dateStart: item.money_plan_dateStart,
+                        dateEnd: item.money_plan_dateEnd
+                      });
+                      navigate(SEND.toSave, {
+                        state: SEND
+                      });
+                    }}>
+                      <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {item.money_plan_dateType}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_plan_in).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_plan_out).format("0,0")}
+                  </TableCell>
+                </TableRow>
+              ))}
+              {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+                <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                  <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                    <Skeleton variant="text" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     );
     // 7-8. table
     const tableSection = () => (
