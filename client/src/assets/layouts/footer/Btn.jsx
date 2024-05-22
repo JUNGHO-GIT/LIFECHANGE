@@ -3,7 +3,7 @@
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
- import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {Button, TextField} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 

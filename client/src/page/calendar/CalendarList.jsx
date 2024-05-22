@@ -177,18 +177,22 @@ export const CalendarList = () => {
         }}
       />
     );
-    // 7-6-3. table
+    // 7-8. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min80vh"}>
-        <Div className={"d-column"}>
-          {tableFragment(0)}
-        </Div>
-      </Div>
+      tableFragment(0)
     );
-    // 7-7. return
+    // 7-9. first (x)
+    // 7-10. second (x)
+    // 7-11. third
+    const thirdSection = () => (
+      tableSection()
+    );
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        {tableSection()}
+        <Div className={"block-wrapper h-min65vh"}>
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

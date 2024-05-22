@@ -115,7 +115,7 @@ export const FoodList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6-1. table
+    // 7-6. empty
     const tableFragmentEmpty = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
@@ -139,7 +139,7 @@ export const FoodList = () => {
         </Table>
       </TableContainer>
     );
-    // 7-6-2. table
+    // 7-7. fragment
     const tableFragment = (i) => (
       <TableContainer key={i} className={"border radius"}>
         <Table>
@@ -196,18 +196,22 @@ export const FoodList = () => {
         </Table>
       </TableContainer>
     );
-    // 7-6-3. table
+    // 7-8. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min67vh w-min110vw"}>
-        <Div className={"d-column"}>
-          {COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)}
-        </Div>
-      </Div>
+      COUNT.totalCnt === 0 ? tableFragmentEmpty() : tableFragment(0)
     );
-    // 7-7. return
+    // 7-9. first (x)
+    // 7-10. second (x)
+    // 7-11. third
+    const thirdSection = () => (
+      tableSection()
+    );
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        {tableSection()}
+        <Div className={"block-wrapper h-min65vh"}>
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

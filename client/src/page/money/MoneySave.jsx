@@ -372,7 +372,6 @@ export const MoneySave = () => {
         </Div>
       </Div>
     );
-    // 7-3. total (x)
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge
@@ -408,8 +407,8 @@ export const MoneySave = () => {
         )}
       </PopUp>
     );
-    // 7-6-1. table (detail, save 는 empty x)
-    // 7-6-2. table
+    // 7-6. empty (detail, save = empty x)
+    // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"}  key={i}>
         <Div className={"d-column"}>
@@ -590,6 +589,11 @@ export const MoneySave = () => {
         </Div>
       </Card>
     );
+    // 7-8. table
+    const tableSection = () => (
+      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))
+    );
+    // 7-9. first
     const firstSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
         {dateSection()}
@@ -597,15 +601,17 @@ export const MoneySave = () => {
         {countSection()}
       </Card>
     );
+    // 7-10. second
     const secondSection = () => (
       <Card variant={"outlined"} className={"p-20"}>
         {totalSection()}
       </Card>
     );
+    // 7-11. third
     const thirdSection = () => (
-      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))
+      tableSection()
     );
-    // 7-7. return
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>

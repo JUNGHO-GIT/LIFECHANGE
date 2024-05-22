@@ -58,7 +58,7 @@ export const UserLogin = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-6-2. table
+    // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-center mb-20"}>
@@ -90,21 +90,28 @@ export const UserLogin = () => {
         </Div>
       </Card>
     );
-    // 7-6-3. table
+    // 7-8. table
     const tableSection = () => (
-      <Div className={"block-wrapper d-center h-min90vh"}>
-        <Div className={"d-center p-10"}>
-          <Div className={"fs-2-0rem"}>Login</Div>
-        </Div>
-        <Div className={"d-column"}>
-          {tableFragment(0)}
-        </Div>
-      </Div>
+      tableFragment(0)
     );
-    // 7-7. return
+    // 7-9. first
+    const firstSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        <Div className={"fs-2-0rem"}>Login</Div>
+      </Card>
+    );
+    // 7-10. second (x)
+    // 7-11. third
+    const thirdSection = () => (
+      tableSection()
+    );
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        {tableSection()}
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

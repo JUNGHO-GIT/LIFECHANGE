@@ -6,7 +6,7 @@ import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
@@ -308,7 +308,7 @@ export const MoneyPlanSave = () => {
         )}
       </PopUp>
     );
-    // 7-3. total (plan 은 total x)
+    // 7-3. total (plan = total x)
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge
@@ -344,8 +344,8 @@ export const MoneyPlanSave = () => {
         )}
       </PopUp>
     );
-    // 7-6-1. table (detail, save 는 empty x)
-    // 7-6-2. table
+    // 7-6. empty (detail, save = empty x)
+    // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between mb-40"}>
@@ -414,24 +414,30 @@ export const MoneyPlanSave = () => {
         </Div>
       </Card>
     );
-    // 7-6-3. table
+    // 7-8. table
     const tableSection = () => (
-      <Div className={"block-wrapper w-min90vw h-min67vh"}>
-        <Div className={"d-center mb-20"}>
-          {dateSection()}
-        </Div>
-        <Div className={"d-center mb-20"}>
-          {countSection()}
-        </Div>
-        <Div className={"d-column"}>
-          {COUNT?.newSectionCnt > 0 && tableFragment(0)}
-        </Div>
-      </Div>
+      COUNT?.newSectionCnt > 0 && tableFragment(0)
     );
-    // 7-7. return
+    // 7-9. first
+    const firstSection = () => (
+      <Card variant={"outlined"} className={"p-20"}>
+        {dateSection()}
+        <Br20/>
+        {countSection()}
+      </Card>
+    );
+    // 7-10. second (plan = total x)
+    // 7-11. third
+    const thirdSection = () => (
+      tableSection()
+    );
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        {tableSection()}
+        <Div className={"block-wrapper h-min65vh"}>
+          {firstSection()}
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };

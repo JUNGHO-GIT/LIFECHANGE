@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Button} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -395,7 +395,7 @@ export const UserDataSet = () => {
         </Div>
       </Div>
     );
-    // 7-6. table
+    // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-0"} key={i}>
         <TableContainer>
@@ -456,18 +456,22 @@ export const UserDataSet = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6-3. table
+    // 7-8. table
     const tableSection = () => (
-      <Div className={"block-wrapper h-min80vh"}>
-        <Div className={"d-column"}>
-          {tableFragment(0)}
-        </Div>
-      </Div>
+      tableFragment(0)
     );
-    // 7-7. return
+    // 7-9. first (x)
+    // 7-10. second (x)
+    // 7-11. third
+    const thirdSection = () => (
+      tableSection()
+    );
+    // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        {tableSection()}
+        <Div className={"block-wrapper h-min65vh"}>
+          {thirdSection()}
+        </Div>
       </Paper>
     );
   };
