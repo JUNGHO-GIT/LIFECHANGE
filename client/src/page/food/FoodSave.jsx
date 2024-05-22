@@ -57,10 +57,11 @@ export const FoodSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {

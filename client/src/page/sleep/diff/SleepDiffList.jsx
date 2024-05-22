@@ -9,7 +9,7 @@ import {useStorage, useDate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -64,10 +64,11 @@ export const SleepDiff = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -196,27 +197,19 @@ export const SleepDiff = () => {
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
-              <>
-              <TableRow
-                key={`date-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              >
-                <TableCell rowSpan={4} className={"pointer"}>
+              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
+              key={`data-${index}`}
+              className={"table-tbody-tr"}>
+                <TableCell>
                   <Link>
                     <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
                     <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
-                <TableCell rowSpan={4}>
+                <TableCell>
                   {item.sleep_plan_dateType}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {translate("common-plan")}
                 </TableCell>
@@ -229,11 +222,6 @@ export const SleepDiff = () => {
                 <TableCell>
                   {item.sleep_plan_time}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {translate("common-real")}
                 </TableCell>
@@ -246,8 +234,6 @@ export const SleepDiff = () => {
                 <TableCell>
                   {item.sleep_time}
                 </TableCell>
-              </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`diff-${index}`}>
                 <TableCell>
                   {translate("common-diff")}
                 </TableCell>
@@ -261,7 +247,13 @@ export const SleepDiff = () => {
                   {item.sleep_diff_time}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

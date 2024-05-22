@@ -62,10 +62,11 @@ export const SleepList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -185,35 +186,27 @@ export const SleepList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
-              <>
-              <TableRow
-                key={`date-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              >
-                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  Object.assign(SEND, {
-                    id: item._id,
-                    dateType: item.sleep_dateType,
-                    dateStart: item.sleep_dateStart,
-                    dateEnd: item.sleep_dateEnd
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}>
-                  <Link>
+              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
+              key={`data-${index}`}
+              className={"table-tbody-tr"}>
+                <TableCell>
+                  <Link onClick={() => {
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_dateType,
+                      dateStart: item.sleep_dateStart,
+                      dateEnd: item.sleep_dateEnd
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}>
                     {item.sleep_dateStart?.substring(5, 10)}
                   </Link>
                 </TableCell>
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.sleep_dateType}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.sleep_section[0]?.sleep_night}
                 </TableCell>
@@ -224,13 +217,16 @@ export const SleepList = () => {
                   {item.sleep_section[0]?.sleep_time}
                 </TableCell>
               </TableRow>
-              </>
             ))}
-            {LOADING && Array.from({length: 5}).map((_, index) => (
-              <TableRow
-                key={`skeleton-${index}`}
-                className={"table-tbody-tr"}
-              >
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
                   <Skeleton variant="text" />
                 </TableCell>

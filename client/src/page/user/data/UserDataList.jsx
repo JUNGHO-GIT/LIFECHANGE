@@ -7,7 +7,7 @@ import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Checkbox, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -45,10 +45,11 @@ export const UserDataList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
@@ -356,22 +357,16 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_EXERCISE_PLAN.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.exercise_plan_dateType}
                 </TableCell>
@@ -388,7 +383,13 @@ export const UserDataList = () => {
                   {numeral(item.exercise_plan_weight).format("0,0")}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -432,20 +433,14 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_EXERCISE.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.exercise_dateStart?.substring(5, 10)}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.exercise_dateType}
                 </TableCell>
@@ -459,7 +454,13 @@ export const UserDataList = () => {
                   {numeral(item.exercise_body_weight).format("0,0")}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_EXERCISE_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -505,22 +506,16 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_FOOD_PLAN.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.food_plan_dateType}
                 </TableCell>
@@ -537,7 +532,13 @@ export const UserDataList = () => {
                   {numeral(item.food_plan_fat).format('0,0')}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -583,20 +584,12 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD?.map((item, index) => (
-              <>
-              <TableRow
-                key={`date-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_FOOD.length - 1 ? lastRowRef : null}
-              >
-                <TableCell rowSpan={2}>
+              <TableRow ref={index === OBJECT_FOOD.length - 1 ? lastRowRef : null}
+              key={`data-${index}`}
+              className={"table-tbody-tr"}>
+                <TableCell>
                   {item.food_dateStart?.substring(5, 10)}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.food_dateType}
                 </TableCell>
@@ -613,7 +606,13 @@ export const UserDataList = () => {
                   {numeral(item.food_total_fat).format("0,0")}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_FOOD_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_FOOD_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -655,22 +654,16 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_MONEY_PLAN.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.money_plan_dateType}
                 </TableCell>
@@ -681,7 +674,13 @@ export const UserDataList = () => {
                   {numeral(item.money_plan_out).format("0,0")}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -723,20 +722,14 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_MONEY.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.money_dateStart?.substring(5, 10)}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.money_dateType}
                 </TableCell>
@@ -747,7 +740,13 @@ export const UserDataList = () => {
                   {numeral(item.money_total_out).format('0,0')}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_MONEY_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_MONEY_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -791,22 +790,16 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_SLEEP_PLAN.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.sleep_plan_dateType}
                 </TableCell>
@@ -820,7 +813,13 @@ export const UserDataList = () => {
                   {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -864,20 +863,14 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP?.map((item, index) => (
-              <>
               <TableRow
-                key={`date-${index}`}
+                key={`data-${index}`}
                 className={"table-tbody-tr"}
                 ref={index === OBJECT_SLEEP.length - 1 ? lastRowRef : null}
               >
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.sleep_dateStart?.substring(5, 10)}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`real-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.sleep_dateType}
                 </TableCell>
@@ -891,7 +884,13 @@ export const UserDataList = () => {
                   {item.sleep_section[0]?.sleep_time}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

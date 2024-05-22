@@ -9,7 +9,7 @@ import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -64,10 +64,11 @@ export const FoodPlanList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -185,37 +186,29 @@ export const FoodPlanList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
-              <>
-              <TableRow
-                key={`date-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              >
-                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  Object.assign(SEND, {
-                    id: item._id,
-                    dateType: item.food_plan_dateType,
-                    dateStart: item.food_plan_dateStart,
-                    dateEnd: item.food_plan_dateEnd
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}>
-                  <Link>
+              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
+              key={`data-${index}`}
+              className={"table-tbody-tr"}>
+                <TableCell>
+                  <Link onClick={() => {
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.food_plan_dateType,
+                      dateStart: item.food_plan_dateStart,
+                      dateEnd: item.food_plan_dateEnd
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}>
                     <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
                     <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.food_plan_dateType}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {numeral(item.food_plan_kcal).format('0,0')}
                 </TableCell>
@@ -229,7 +222,13 @@ export const FoodPlanList = () => {
                   {numeral(item.food_plan_fat).format('0,0')}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

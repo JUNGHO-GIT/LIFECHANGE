@@ -8,7 +8,7 @@ import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -63,10 +63,11 @@ export const SleepPlanList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -136,6 +137,7 @@ export const SleepPlanList = () => {
         loadMoreData();
       }
     });
+
     if (node) {
       observer.current.observe(node);
     }
@@ -181,37 +183,29 @@ export const SleepPlanList = () => {
           </TableHead>
           <TableBody className={"table-tbody-tr"}>
             {OBJECT?.map((item, index) => (
-              <>
-              <TableRow
-                key={`date-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              >
-                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                  Object.assign(SEND, {
-                    id: item._id,
-                    dateType: item.sleep_plan_dateType,
-                    dateStart: item.sleep_plan_dateStart,
-                    dateEnd: item.sleep_plan_dateEnd,
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}>
-                  <Link>
+              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
+              key={`data-${index}`}
+              className={"table-tbody-tr"}>
+                <TableCell>
+                  <Link onClick={() => {
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_plan_dateType,
+                      dateStart: item.sleep_plan_dateStart,
+                      dateEnd: item.sleep_plan_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}>
                     <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
                     <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
-                <TableCell rowSpan={2}>
+                <TableCell>
                   {item.sleep_plan_dateType}
                 </TableCell>
-              </TableRow>
-              <TableRow
-                key={`plan-${index}`}
-                className={"table-tbody-tr"}
-              >
                 <TableCell>
                   {item.sleep_plan_night}
                 </TableCell>
@@ -222,7 +216,13 @@ export const SleepPlanList = () => {
                   {item.sleep_plan_time}
                 </TableCell>
               </TableRow>
-              </>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

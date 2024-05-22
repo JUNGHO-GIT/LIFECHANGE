@@ -7,7 +7,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Checkbox} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Checkbox, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -58,10 +58,11 @@ export const FoodFindList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
   const [MORE, setMORE] = useState(true);
-  const observer = useRef();
+  const sessionId = sessionStorage.getItem("sessionId");
   const [checkedQueries, setCheckedQueries] = useState({});
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -220,52 +221,57 @@ export const FoodFindList = () => {
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
               <TableCell>{translate("food-fat")}</TableCell>
-              <TableCell>o</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
-              <>
-                <TableRow className={"table-tbody-tr"} key={`find-${index}`}>
-                  <TableCell className={"w-max30vw"}>
-                    {item.food_title}
-                  </TableCell>
-                  <TableCell className={"w-max20vw"}>
-                    {item.food_brand}
-                  </TableCell>
-                  <TableCell>
-                    {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")})`}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_kcal).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_carb).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_protein).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_fat).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox
-                      key={`check-${index}`}
-                      color={"primary"}
-                      size={"small"}
-                      checked={
-                        !! (
-                          checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
-                          checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
-                        )
-                      }
-                      onChange={() => {
-                        handlerCheckboxChange(index);
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-              </>
+              <TableRow className={"table-tbody-tr"} key={`data-${index}`}>
+                <TableCell className={"w-max30vw"}>
+                  {item.food_title}
+                </TableCell>
+                <TableCell className={"w-max20vw"}>
+                  {item.food_brand}
+                </TableCell>
+                <TableCell>
+                  {`${item.food_count} ${item.food_serv} (${numeral(item.food_gram).format("0,0")})`}
+                </TableCell>
+                <TableCell>
+                  {numeral(item.food_kcal).format("0,0")}
+                </TableCell>
+                <TableCell>
+                  {numeral(item.food_carb).format("0,0")}
+                </TableCell>
+                <TableCell>
+                  {numeral(item.food_protein).format("0,0")}
+                </TableCell>
+                <TableCell>
+                  {numeral(item.food_fat).format("0,0")}
+                </TableCell>
+                <TableCell>
+                  <Checkbox
+                    key={`check-${index}`}
+                    color={"primary"}
+                    size={"small"}
+                    checked={
+                      !! (
+                        checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
+                        checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
+                      )
+                    }
+                    onChange={() => {
+                      handlerCheckboxChange(index);
+                    }}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
+              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  <Skeleton variant="text" />
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
