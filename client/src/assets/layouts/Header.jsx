@@ -2,7 +2,7 @@
 
 import {React, useNavigate} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {logo2, logo3} from "../../import/ImportImages.jsx";
 
@@ -91,8 +91,8 @@ export const Header = () => {
   const defaultNode = () => (
     <Div className={"block-wrapper d-row h-max7vh"}>
       <Div className={"d-center"} onClick={() => navigate("/calendar/list")}>
-        <img src={logo2} className={"w-max170 h-max30"} alt={"logo2"} />
-        <img src={logo3} className={"w-max170 h-max30"} alt={"logo3"} />
+        <Img src={logo2} className={"w-max170 h-max30"} />
+        <Img src={logo3} className={"w-max170 h-max30"} />
       </Div>
       <Div className={"d-center ms-auto"}>
         {btnUser()}

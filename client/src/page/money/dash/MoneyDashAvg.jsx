@@ -5,7 +5,7 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+ import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {ComposedChart, Bar} from "recharts";
@@ -332,7 +332,7 @@ export const MoneyDashAvg = () => {
           ))
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

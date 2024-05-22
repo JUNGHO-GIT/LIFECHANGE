@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Div, Br10} from "../../import/ImportComponents.jsx";
+import {Div, Img, Br10} from "../../import/ImportComponents.jsx";
 import {Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>

@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+ import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
@@ -345,7 +345,7 @@ export const ExerciseDashPie = () => {
           ))
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}

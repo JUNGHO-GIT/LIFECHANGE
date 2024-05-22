@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
 import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
@@ -184,7 +184,6 @@ export const CalendarSave = () => {
             className={"w-20vw me-3vw"}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -294,9 +293,8 @@ export const CalendarSave = () => {
                 className={"w-63vw"}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
                   startAdornment: (
-                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                    <Img src={common1} className={"w-16 h-16"} />
                   ),
                   endAdornment: null
                 }}
@@ -330,9 +328,8 @@ export const CalendarSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
               startAdornment: (
-                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+                <Img src={common2} className={"w-16 h-16"} />
               ),
               endAdornment: (
                 <Div className={"d-center me-n10"}>
@@ -385,17 +382,17 @@ export const CalendarSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
+            <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
+            {translate("common-delete")}
           </Div>
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -489,9 +486,8 @@ export const CalendarSave = () => {
             value={OBJECT?.calendar_section[i]?.calendar_title}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={calendar2} className={"w-16 h-16 me-10"} alt={"calendar2"}/>
+                <Img src={calendar2} className={"w-16 h-16"} />
               ),
               endAdornment: null
             }}
@@ -556,9 +552,8 @@ export const CalendarSave = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_content}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
                   startAdornment: (
-                    <img src={calendar3} className={"w-16 h-16 me-10"} alt={"calendar3"}/>
+                    <Img src={calendar3} className={"w-16 h-16"} />
                   ),
                   endAdornment: null
                 }}

@@ -13,6 +13,9 @@
 [class$="MuiToolbar-root"] {
   padding: 0px 0px 0px 0px !important;
 }
+[class$="MuiButton-root"] {
+  min-width: 50px !important;
+}
 [class$="MuiTab-root"] {
   min-width: 0px !important;
 }

@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Icons} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1} from "../../import/ImportImages.jsx";
@@ -114,7 +114,7 @@ export const Calendar = ({DATE, setDATE}) => {
             readOnly: true,
             className: "fw-bold",
             startAdornment: (
-              <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+              <Img src={common1} className={"w-16 h-16"} />
             ),
             endAdornment: null
           }}
@@ -190,7 +190,7 @@ export const Calendar = ({DATE, setDATE}) => {
             readOnly: true,
             className: "fw-bold",
             startAdornment: (
-              <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+              <Img src={common1} className={"w-16 h-16"} />
             ),
             endAdornment: null
           }}
@@ -266,7 +266,7 @@ export const Calendar = ({DATE, setDATE}) => {
             readOnly: true,
             className: "fw-bold",
             startAdornment: (
-              <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+              <Img src={common1} className={"w-16 h-16"} />
             ),
             endAdornment: null
           }}
@@ -342,7 +342,7 @@ export const Calendar = ({DATE, setDATE}) => {
             readOnly: true,
             className: "fw-bold",
             startAdornment: (
-              <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+              <Img src={common1} className={"w-16 h-16"} />
             ),
             endAdornment: null
           }}

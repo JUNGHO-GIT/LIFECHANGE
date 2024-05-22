@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Div, Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
@@ -51,7 +51,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-exercise")}
           value={"exercise"}
-          icon={<img src={exercise1} className={"w-16 h-16 icon"} alt={"exercise1"}/>}
+          icon={<Img src={exercise1} className={"w-16 h-16"} />}
           sx={{
             fontSize: "1rem"
           }}
@@ -69,7 +69,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-food")}
           value={"food"}
-          icon={<img src={food1} className={"w-16 h-16 icon"} alt={"food1"}/>}
+          icon={<Img src={food1} className={"w-16 h-16"} />}
           sx={{
             fontSize: "1rem"
           }}
@@ -87,7 +87,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-calendar")}
           value={"calendar"}
-          icon={<img src={calendar1} className={"w-16 h-16 icon"} alt={"calendar1"}/>}
+          icon={<Img src={calendar1} className={"w-16 h-16"} />}
           sx={{
             fontSize: "1rem"
           }}
@@ -105,7 +105,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-money")}
           value={"money"}
-          icon={<img src={money1} className={"w-16 h-16 icon"} alt={"money1"}/>}
+          icon={<Img src={money1} className={"w-16 h-16"} />}
           sx={{
             fontSize: "1rem"
           }}
@@ -123,7 +123,7 @@ export const BottomNav = () => {
         <BottomNavigationAction
           label={translate("bottomNav-sleep")}
           value={"sleep"}
-          icon={<img src={sleep1} className={"w-16 h-16 icon"} alt={"sleep1"}/>}
+          icon={<Img src={sleep1} className={"w-16 h-16"} />}
           sx={{
             fontSize: "1rem"
           }}

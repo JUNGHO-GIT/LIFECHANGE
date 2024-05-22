@@ -6,7 +6,7 @@ import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock, MenuItem} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
@@ -144,7 +144,6 @@ export const ExercisePlanSave = () => {
             className={"w-20vw me-3vw"}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -242,9 +241,8 @@ export const ExercisePlanSave = () => {
                 className={"w-63vw"}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
                   startAdornment: (
-                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                    <Img src={common1} className={"w-16 h-16"} />
                   ),
                   endAdornment: null
                 }}
@@ -278,9 +276,8 @@ export const ExercisePlanSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
               startAdornment: (
-                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+                <Img src={common2} className={"w-16 h-16"} />
               ),
               endAdornment: (
                 <Div className={"d-center me-n10"}>
@@ -333,17 +330,17 @@ export const ExercisePlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
+            <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
+            {translate("common-delete")}
           </Div>
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -369,12 +366,11 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_count).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={exercise2} className={"w-16 h-16 me-10"} alt={"exercise2"}/>
+                <Img src={exercise2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>{translate("food-endCount")}</Div>
+                translate("food-endCount")
               )
             }}
             onChange={(e) => {
@@ -399,12 +395,11 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_volume).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={exercise3} className={"w-16 h-16 me-10"} alt={"exercise3"}/>
+                <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>vol</Div>
+                translate("common-endVolume")
               )
             }}
             onChange={(e) => {
@@ -456,12 +451,11 @@ export const ExercisePlanSave = () => {
                 value={OBJECT?.exercise_plan_cardio}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
                   startAdornment: (
-                    <img src={exercise4} className={"w-16 h-16 me-10"} alt={"exercise4"}/>
+                    <Img src={exercise4} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>{translate("common-endHour")}</Div>
+                    translate("common-endHour")
                   )
                 }}
                 onClick={(e) => {
@@ -481,12 +475,11 @@ export const ExercisePlanSave = () => {
             value={`${numeral(OBJECT?.exercise_plan_weight).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={exercise5} className={"w-16 h-16 me-10"} alt={"exercise5"}/>
+                <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>kg</Div>
+                translate("common-endWeight")
               )
             }}
             onChange={(e) => {

@@ -6,7 +6,7 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useDate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+ import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, Link} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";

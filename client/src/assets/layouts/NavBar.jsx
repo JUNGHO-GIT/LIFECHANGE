@@ -4,7 +4,7 @@ import {React, useLocation, useState, useEffect} from "../../import/ImportReacts
 import {useLanguage} from "../../import/ImportHooks.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Br10} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br10} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {smile1, smile2, smile3, smile4, smile5, flag1, flag2} from "../../import/ImportImages.jsx";
 
@@ -36,7 +36,7 @@ export const NavBar = () => {
     ) {
       return (
         <Div className={"d-center"}>
-          <img src={smile1} className={className} alt={"smile1"} />
+          <Img src={smile1} className={className} />
           <Div className={classType}>
             {percent?.[`${part}`]?.average?.score}
           </Div>
@@ -49,7 +49,7 @@ export const NavBar = () => {
     ) {
       return (
         <Div className={"d-center"}>
-          <img src={smile2} className={className} alt={"smile2"} />
+          <Img src={smile2} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
@@ -61,7 +61,7 @@ export const NavBar = () => {
     ) {
       return (
         <Div className={"d-center"}>
-          <img src={smile3} className={className} alt={"smile3"} />
+          <Img src={smile3} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
@@ -73,7 +73,7 @@ export const NavBar = () => {
     ) {
       return (
         <Div className={"d-center"}>
-          <img src={smile4} className={className} alt={"smile4"} />
+          <Img src={smile4} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
@@ -85,7 +85,7 @@ export const NavBar = () => {
     ) {
       return (
         <Div className={"d-center"}>
-          <img src={smile5} className={className} alt={"smile5"} />
+          <Img src={smile5} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
         </Div>
@@ -113,7 +113,7 @@ export const NavBar = () => {
                 setLang("ko");
                 closePopup();
               }}>
-                <img src={flag1} className={"w-max5vw h-max5vh me-5"} alt={"flag1"} />
+                <Img src={flag1} className={"w-max5vw h-max5vh me-5"} />
                 <Div className={"fs-0-8rem"}>한국어</Div>
               </Div>
               <Br10 />
@@ -122,7 +122,7 @@ export const NavBar = () => {
                 setLang("en");
                 closePopup();
               }}>
-                <img src={flag2} className={"w-max5vw h-max5vh me-5"} alt={"flag2"} />
+                <Img src={flag2} className={"w-max5vw h-max5vh me-5"} />
                 <Div className={"fs-0-8rem"}>English</Div>
               </Div>
             </Div>

@@ -3,7 +3,7 @@
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {TextField, DateCalendar, MenuItem} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 

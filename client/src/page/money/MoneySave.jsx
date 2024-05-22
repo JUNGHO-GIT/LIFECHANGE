@@ -5,7 +5,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, Button} from "../../import/ImportMuis.jsx";
 import {TextField, TextArea, DateCalendar} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
@@ -257,7 +257,7 @@ export const MoneySave = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                  <Img src={common1} className={"w-16 h-16"} />
                 ),
                 endAdornment: null
               }}
@@ -292,7 +292,7 @@ export const MoneySave = () => {
               InputProps={{
                 readOnly: true,
                 startAdornment: (
-                  <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+                  <Img src={common2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
                   <Div className={"d-center me-n10"}>
@@ -342,7 +342,7 @@ export const MoneySave = () => {
           InputProps={{
             readOnly: true,
             startAdornment: (
-              <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+              <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
               translate("money-endCurrency")
@@ -362,7 +362,7 @@ export const MoneySave = () => {
           InputProps={{
             readOnly: true,
             startAdornment: (
-              <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+              <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
               translate("money-endCurrency")
@@ -390,17 +390,17 @@ export const MoneySave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
+            <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
+            {translate("common-delete")}
           </Div>
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -504,10 +504,10 @@ export const MoneySave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                  <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
+                  translate("money-endCurrency")
                 )
               }}
               onChange={(e) => {
@@ -576,7 +576,7 @@ export const MoneySave = () => {
                   InputProps={{
                     readOnly: true,
                     startAdornment: (
-                      <img src={money3} className={"w-16 h-16 me-10"} alt={"money3"}/>
+                      <Img src={money3} className={"w-16 h-16"} />
                     ),
                     endAdornment: null
                   }}

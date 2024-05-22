@@ -6,7 +6,7 @@ import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
@@ -143,7 +143,6 @@ export const FoodPlanSave = () => {
             className={"w-20vw me-3vw"}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: null,
               endAdornment: null
             }}
@@ -241,9 +240,8 @@ export const FoodPlanSave = () => {
                 className={"w-63vw"}
                 InputProps={{
                   readOnly: true,
-                  className: "fw-bold",
                   startAdornment: (
-                    <img src={common1} className={"w-16 h-16 me-10"} alt={"common1"} />
+                    <Img src={common1} className={"w-16 h-16"} />
                   ),
                   endAdornment: null
                 }}
@@ -277,9 +275,8 @@ export const FoodPlanSave = () => {
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,
-              className: "fw-bold",
               startAdornment: (
-                <img src={common2} className={"w-16 h-16 me-10"} alt={"common2"}/>
+                <Img src={common2} className={"w-16 h-16"} />
               ),
               endAdornment: (
                 <Div className={"d-center me-n10"}>
@@ -332,17 +329,17 @@ export const FoodPlanSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-row"}>
-            <img src={common5} className={"w-16 h-16 icon pointer"} alt={"common5"}
+            <Img src={common5} className={"w-16 h-16 pointer"}
               onClick={() => {
                 handlerDelete(index);
                 closePopup();
               }}
             />
-            <Div className={"fs-0-8rem"}>{translate("common-delete")}</Div>
+            {translate("common-delete")}
           </Div>
         )}>
         {(popTrigger={}) => (
-          <img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} alt={"common3"}
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
             onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
             }}
@@ -369,12 +366,11 @@ export const FoodPlanSave = () => {
             value={`${numeral(OBJECT?.food_plan_kcal).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={food2} className={"w-16 h-16 me-10"} alt={"food2"}/>
+                <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>{translate("food-endKcal")}</Div>
+                translate("food-endKcal")
               )
             }}
             onChange={(e) => {
@@ -400,12 +396,11 @@ export const FoodPlanSave = () => {
             value={`${numeral(OBJECT?.food_plan_carb).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={food3} className={"w-16 h-16 me-10"} alt={"food3"}/>
+                <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
+                translate("food-endGram")
               )
             }}
             onChange={(e) => {
@@ -431,12 +426,11 @@ export const FoodPlanSave = () => {
             value={`${numeral(OBJECT?.food_plan_protein).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={food4} className={"w-16 h-16 me-10"} alt={"food4"}/>
+                <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
+                translate("food-endGram")
               )
             }}
             onChange={(e) => {
@@ -462,12 +456,11 @@ export const FoodPlanSave = () => {
             value={`${numeral(OBJECT?.food_plan_fat).format("0,0")}`}
             InputProps={{
               readOnly: false,
-              className: "fw-bold",
               startAdornment: (
-                <img src={food5} className={"w-16 h-16 me-10"} alt={"food5"}/>
+                <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fw-normal"}>{translate("food-endGram")}</Div>
+                translate("food-endGram")
               )
             }}
             onChange={(e) => {

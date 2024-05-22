@@ -3,7 +3,7 @@
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
-import {PopUp, Div} from "../../../import/ImportComponents.jsx";
+ import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {Button, TextField} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
@@ -140,10 +140,10 @@ export const Btn = ({
                   readOnly: true,
                   className: "h-8vh fs-1-0rem fw-bold",
                   startAdornment: (
-                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                    <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
+                    translate("money-endCurrency")
                   )
                 }}
               />
@@ -159,10 +159,10 @@ export const Btn = ({
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                    <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
+                    translate("money-endCurrency")
                   )
                 }}
               />
@@ -178,10 +178,10 @@ export const Btn = ({
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
-                    <img src={money2} className={"w-16 h-16 me-10"} alt={"money2"}/>
+                    <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    <Div className={"fw-normal"}>{translate("money-endCurrency")}</Div>
+                    translate("money-endCurrency")
                   )
                 }}
               />

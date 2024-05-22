@@ -64,7 +64,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     >
       <Div className={"w-200 over-y-hidden"}>
         <Div className={"d-center"}>
-          <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
+          <Img src={logo3} />
         </Div>
         <List role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>
           {dataArray.map((item, index) => (
