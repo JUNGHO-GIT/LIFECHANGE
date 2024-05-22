@@ -184,7 +184,7 @@ router.get("/line/month", async (req, res) => {
   }
 });
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
 router.get("/avg/month", async (req, res) => {
   try {
     let result = await service.avgMonth (

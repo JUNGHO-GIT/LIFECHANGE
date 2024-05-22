@@ -2,6 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
@@ -15,11 +16,11 @@ export const FoodFindList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -28,8 +29,8 @@ export const FoodFindList = () => {
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -39,9 +40,6 @@ export const FoodFindList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(false);
-  const [checkedQueries, setCheckedQueries] = useState({});
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -58,6 +56,13 @@ export const FoodFindList = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(false);
+  const [MORE, setMORE] = useState(true);
+  const observer = useRef();
+  const [checkedQueries, setCheckedQueries] = useState({});
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -194,7 +199,7 @@ export const FoodFindList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={7}>
+              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -317,7 +322,7 @@ export const FoodFindList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

@@ -1,6 +1,8 @@
 // BottomNav.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div, Img} from "../../import/ImportComponents.jsx";
@@ -14,7 +16,7 @@ export const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
 
   // 2-2. useState -------------------------------------------------------------------------------->

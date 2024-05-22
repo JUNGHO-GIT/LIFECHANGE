@@ -1,6 +1,8 @@
 // CalendarList.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
@@ -13,11 +15,10 @@ export const CalendarList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const sessionId = sessionStorage.getItem("sessionId");
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -31,7 +32,6 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
@@ -41,6 +41,12 @@ export const CalendarList = () => {
     category: "",
     toSave: "/calendar/save"
   });
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(false);
+  const [MORE, setMORE] = useState(true);
+  const observer = useRef();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{

@@ -15,7 +15,7 @@ export const Calendar = ({DATE, setDATE}) => {
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

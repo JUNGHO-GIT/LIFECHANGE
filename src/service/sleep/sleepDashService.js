@@ -1,7 +1,11 @@
 // sleepDashService.js
 
 import * as repository from "../../repository/sleep/sleepDashRepository.js";
-import {timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../../assets/js/date.js";
+import {log} from "../../assets/js/utils.js";
+import {timeFormat, koreanDate} from "../../assets/js/date.js";
+import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
+import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
+import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -21,6 +25,9 @@ export const barToday = async (
   findReal = await repository.barToday.list(
     user_id_param, dateStart, dateEnd
   );
+
+  log("findPlan", findPlan);
+  log("findReal", findReal);
 
   finalResult = [
     {

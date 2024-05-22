@@ -11,7 +11,7 @@ export const Loading = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const [height, setHeight] = useState("");

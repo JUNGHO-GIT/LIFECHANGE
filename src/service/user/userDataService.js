@@ -25,8 +25,6 @@ export const list = async (
   user_id_param, FILTER_param, PAGING_param, PART_param
 ) => {
 
-  const sort = FILTER_param.order === "asc" ? 1 : -1;
-
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
   const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
 
@@ -36,80 +34,80 @@ export const list = async (
   // 1. exercisePlan
   if (PART_param === "exercisePlan") {
     totalCnt = await repository.list.countExercisePlan(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listExercisePlan(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 2. exercise
   else if (PART_param === "exercise") {
     totalCnt = await repository.list.countExercise(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listExercise(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 3. foodPlan
   else if (PART_param === "foodPlan") {
     totalCnt = await repository.list.countFoodPlan(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listFoodPlan(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 4. food
   else if (PART_param === "food") {
     totalCnt = await repository.list.countFood(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listFood(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 5. moneyPlan
   else if (PART_param === "moneyPlan") {
     totalCnt = await repository.list.countMoneyPlan(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listMoneyPlan(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 6. money
   else if (PART_param === "money") {
     totalCnt = await repository.list.countMoney(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listMoney(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 7. sleepPlan
   else if (PART_param === "sleepPlan") {
     totalCnt = await repository.list.countSleepPlan(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listSleepPlan(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 
   // 8. sleep
   else if (PART_param === "sleep") {
     totalCnt = await repository.list.countSleep(
-      user_id_param
+      user_id_param, page, limit
     );
     finalResult = await repository.list.listSleep(
-      user_id_param, sort, limit, page,
+      user_id_param, page, limit
     );
   }
 

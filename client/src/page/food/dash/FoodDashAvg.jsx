@@ -18,7 +18,7 @@ export const FoodDashAvg = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-2. useState -------------------------------------------------------------------------------->

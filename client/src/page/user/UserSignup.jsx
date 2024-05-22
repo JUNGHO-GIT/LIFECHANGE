@@ -13,16 +13,18 @@ export const UserSignup = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -149,7 +151,7 @@ export const UserSignup = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

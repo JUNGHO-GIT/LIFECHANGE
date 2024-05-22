@@ -8,7 +8,7 @@ export const percent = async () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>

@@ -16,7 +16,7 @@ export const ExerciseDashPie = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");

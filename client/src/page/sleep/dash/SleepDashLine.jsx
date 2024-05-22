@@ -18,7 +18,7 @@ export const SleepDashLine = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const array = ["취침", "수면", "기상"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -219,7 +219,7 @@ export const SleepDashLine = () => {
         <PopUp
           type={"dash"}
           position={"bottom"}
-          direction={"left"}
+          direction={"center"}
           contents={({closePopup}) => (
             ["취침", "기상", "수면"]?.map((key, index) => (
               <FormGroup key={index}>

@@ -19,7 +19,7 @@ export const Filter = ({
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const secondStr = PATH?.split("/")[2] || "";
 
   // 1. default ----------------------------------------------------------------------------------->

@@ -2,6 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
@@ -15,11 +16,11 @@ export const UserDataList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -32,8 +33,6 @@ export const UserDataList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
   const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -44,6 +43,12 @@ export const UserDataList = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(false);
+  const [MORE, setMORE] = useState(true);
+  const observer = useRef();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
@@ -162,38 +167,71 @@ export const UserDataList = () => {
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
+  useEffect(() => {
+    loadMoreData();
+  }, []);
+
+  // 2-4. useCallback ----------------------------------------------------------------------------->
+  const loadMoreData = useCallback(async () => {
+    if (LOADING || !MORE) {
+      return;
+    }
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/data/list`, {
       params: {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
         PART: PART
-      }
+      },
     });
     if (PART === "exercisePlan") {
-      setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
+      setOBJECT_EXERCISE_PLAN((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_EXERCISE_PLAN_DEF)
+      ]);
     }
     else if (PART === "exercise") {
-      setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
+      setOBJECT_EXERCISE((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_EXERCISE_DEF)
+      ]);
     }
     else if (PART === "foodPlan") {
-      setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
+      setOBJECT_FOOD_PLAN((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_FOOD_PLAN_DEF)
+      ]);
     }
     else if (PART === "food") {
-      setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
+      setOBJECT_FOOD((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_FOOD_DEF)
+      ]);
     }
     else if (PART === "moneyPlan") {
-      setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
+      setOBJECT_MONEY_PLAN((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_MONEY_PLAN_DEF)
+      ]);
     }
     else if (PART === "money") {
-      setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
+      setOBJECT_MONEY((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_MONEY_DEF)
+      ]);
     }
     else if (PART === "sleepPlan") {
-      setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
+      setOBJECT_SLEEP_PLAN((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_SLEEP_PLAN_DEF)
+      ]);
     }
     else if (PART === "sleep") {
-      setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
+      setOBJECT_SLEEP((prev) => [
+        ...prev,
+        ...(res.data.result || OBJECT_SLEEP_DEF)
+      ]);
     }
     setCOUNT((prev) => ({
       ...prev,
@@ -201,13 +239,37 @@ export const UserDataList = () => {
       sectionCnt: res.data.sectionCnt || 0,
       newSectionCnt: res.data.sectionCnt || 0
     }));
+    if (res.data.result.length < PAGING.limit) {
+      setMORE(false);
+    }
+    setPAGING((prev) => ({
+      ...prev,
+      page: prev.page + 1
+    }));
     setLOADING(false);
-  })()}, [
-    sessionId,
+  }, [
+    sessionId, MORE, PART,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
-    PAGING.page, PAGING.limit,
-    PART
+    PAGING.page, PAGING.limit
   ]);
+
+  // 2-4. useCallback ----------------------------------------------------------------------------->
+  const lastRowRef = useCallback((node) => {
+    if (LOADING || !MORE) {
+      return;
+    }
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && MORE) {
+        loadMoreData();
+      }
+    });
+    if (node) {
+      observer.current.observe(node);
+    }
+  }, [LOADING, MORE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
@@ -255,7 +317,7 @@ export const UserDataList = () => {
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. empty
-    const tableFragment1Empty = () => (
+    const tableEmpty1 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -270,7 +332,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -295,14 +357,21 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE_PLAN?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_EXERCISE_PLAN.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+              <TableRow
+                key={`plan-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.exercise_plan_dateType}
                 </TableCell>
@@ -326,7 +395,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment2Empty = () => (
+    const tableEmpty2 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -340,7 +409,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={Object.keys(OBJECT_EXERCISE_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -364,12 +433,19 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_EXERCISE.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   {item.exercise_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+              <TableRow
+                key={`real-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.exercise_dateType}
                 </TableCell>
@@ -390,7 +466,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment3Empty = () => (
+    const tableEmpty3 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -405,7 +481,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -430,14 +506,21 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_FOOD_PLAN.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+              <TableRow
+                key={`plan-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.food_plan_dateType}
                 </TableCell>
@@ -461,7 +544,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment4Empty = () => (
+    const tableEmpty4 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -476,7 +559,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={Object.keys(OBJECT_FOOD_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -501,12 +584,19 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_FOOD.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   {item.food_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+              <TableRow
+                key={`real-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.food_dateType}
                 </TableCell>
@@ -530,7 +620,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment5Empty = () => (
+    const tableEmpty5 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -543,7 +633,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -566,14 +656,21 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY_PLAN?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_MONEY_PLAN.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+              <TableRow
+                key={`plan-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.money_plan_dateType}
                 </TableCell>
@@ -591,7 +688,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment6Empty = () => (
+    const tableEmpty6 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -604,7 +701,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={4}>
+              <TableCell colSpan={Object.keys(OBJECT_MONEY_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -627,12 +724,19 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_MONEY.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   {item.money_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+              <TableRow
+                key={`real-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.money_dateType}
                 </TableCell>
@@ -650,7 +754,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment7Empty = () => (
+    const tableEmpty7 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -664,7 +768,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -688,14 +792,21 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody-tr"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_SLEEP_PLAN.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
                   <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`plan-${index}`}>
+              <TableRow
+                key={`plan-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.sleep_plan_dateType}
                 </TableCell>
@@ -716,7 +827,7 @@ export const UserDataList = () => {
       </TableContainer>
     );
     // 7-6. empty
-    const tableFragment8Empty = () => (
+    const tableEmpty8 = () => (
       <TableContainer key={"empty"} className={"border radius"}>
         <Table>
           <TableHead className={"table-thead"}>
@@ -730,7 +841,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -754,12 +865,19 @@ export const UserDataList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT_SLEEP.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2}>
                   {item.sleep_dateStart?.substring(5, 10)}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+              <TableRow
+                key={`real-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {item.sleep_dateType}
                 </TableCell>
@@ -782,32 +900,30 @@ export const UserDataList = () => {
     // 7-8. table
     const tableSection = () => {
       if (PART === "exercisePlan") {
-        return COUNT.totalCnt === 0 ? tableFragment1Empty() : tableFragment1(0);
+        return COUNT.totalCnt === 0 ? tableEmpty1() : tableFragment1(0);
       }
       else if (PART === "exercise") {
-        return COUNT.totalCnt === 0 ? tableFragment2Empty() : tableFragment2(0);
+        return COUNT.totalCnt === 0 ? tableEmpty2() : tableFragment2(0);
       }
       else if (PART === "foodPlan") {
-        return COUNT.totalCnt === 0 ? tableFragment3Empty() : tableFragment3(0);
+        return COUNT.totalCnt === 0 ? tableEmpty3() : tableFragment3(0);
       }
       else if (PART === "food") {
-        return COUNT.totalCnt === 0 ? tableFragment4Empty() : tableFragment4(0);
+        return COUNT.totalCnt === 0 ? tableEmpty4() : tableFragment4(0);
       }
       else if (PART === "moneyPlan") {
-        return COUNT.totalCnt === 0 ? tableFragment5Empty() : tableFragment5(0);
+        return COUNT.totalCnt === 0 ? tableEmpty5() : tableFragment5(0);
       }
       else if (PART === "money") {
-        return COUNT.totalCnt === 0 ? tableFragment6Empty() : tableFragment6(0);
+        return COUNT.totalCnt === 0 ? tableEmpty6() : tableFragment6(0);
       }
       else if (PART === "sleepPlan") {
-        return COUNT.totalCnt === 0 ? tableFragment7Empty() : tableFragment7(0);
+        return COUNT.totalCnt === 0 ? tableEmpty7() : tableFragment7(0);
       }
       else if (PART === "sleep") {
-        return COUNT.totalCnt === 0 ? tableFragment8Empty() : tableFragment8(0);
+        return COUNT.totalCnt === 0 ? tableEmpty8() : tableFragment8(0);
       }
     };
-    // 7-9. first (x)
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()
@@ -853,7 +969,7 @@ export const UserDataList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

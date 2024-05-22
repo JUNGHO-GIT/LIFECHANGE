@@ -1,6 +1,8 @@
 // SleepSave.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent} from "../../import/ImportLogics";
@@ -17,21 +19,19 @@ export const SleepSave = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType?.trim()?.toString();
-  const location_dateStart = location?.state?.dateStart?.trim()?.toString();
-  const location_dateEnd = location?.state?.dateEnd?.trim()?.toString();
-  const PATH = location?.pathname?.trim()?.toString();
+  const location_dateType = location?.state?.dateType;
+  const location_dateStart = location?.state?.dateStart;
+  const location_dateEnd = location?.state?.dateEnd;
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -49,6 +49,12 @@ export const SleepSave = () => {
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(false);
+  const [MORE, setMORE] = useState(true);
+  const observer = useRef();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -563,7 +569,7 @@ export const SleepSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

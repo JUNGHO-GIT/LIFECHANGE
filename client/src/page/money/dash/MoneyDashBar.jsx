@@ -18,7 +18,7 @@ export const MoneyDashBar = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -199,7 +199,7 @@ export const MoneyDashBar = () => {
         <PopUp
           type={"dash"}
           position={"bottom"}
-          direction={"left"}
+          direction={"center"}
           contents={({closePopup}) => (
           ["in", "out"]?.map((key, index) => (
             <FormGroup key={index}>

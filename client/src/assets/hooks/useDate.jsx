@@ -12,7 +12,7 @@ export const useDate = (
   // 1. common ------------------------------------------------------------------------------------>
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const secondStr = PATH?.split("/")[2] || "";
 
   // 2-3. useEffect ------------------------------------------------------------------------------->

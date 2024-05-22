@@ -18,7 +18,7 @@ export const MoneyDashAvg = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const array = ["수입", "지출"];
 
   // 2-2. useState -------------------------------------------------------------------------------->

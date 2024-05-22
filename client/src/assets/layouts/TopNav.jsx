@@ -1,6 +1,8 @@
 // TopNav.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div, Img, Br10} from "../../import/ImportComponents.jsx";
@@ -13,7 +15,7 @@ export const TopNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";

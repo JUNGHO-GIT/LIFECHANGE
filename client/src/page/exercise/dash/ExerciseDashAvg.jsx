@@ -18,7 +18,7 @@ export const ExerciseDashAvg = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const array = ["횟수", "볼륨", "시간"];
 
   // 2-2. useState -------------------------------------------------------------------------------->

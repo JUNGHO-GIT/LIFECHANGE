@@ -1,6 +1,8 @@
 // MoneyList.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
@@ -14,11 +16,11 @@ export const MoneyList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -27,8 +29,8 @@ export const MoneyList = () => {
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -42,8 +44,6 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "전체",
@@ -53,13 +53,19 @@ export const MoneyList = () => {
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
-    limit: 5
+    limit: 10
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
   });
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(false);
+  const [MORE, setMORE] = useState(true);
+  const observer = useRef();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -83,29 +89,66 @@ export const MoneyList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
+  useEffect(() => {
+    loadMoreData();
+  }, []);
+
+  // 2-4. useCallback ----------------------------------------------------------------------------->
+  const loadMoreData = useCallback(async () => {
+    if (LOADING || !MORE) {
+      return;
+    }
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
-        DATE: DATE
+        DATE: DATE,
       },
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
+    setOBJECT((prev) => [
+      ...prev,
+      ...(res.data.result || OBJECT_DEF)
+    ]);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
       newSectionCnt: res.data.sectionCnt || 0
     }));
+    if (res.data.result.length < PAGING.limit) {
+      setMORE(false);
+    }
+    setPAGING((prev) => ({
+      ...prev,
+      page: prev.page + 1
+    }));
     setLOADING(false);
-  })()}, [
-    sessionId,
+  }, [
+    sessionId, MORE,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.dateType, DATE.dateStart, DATE.dateEnd
   ]);
+
+  // 2-4. useCallback ----------------------------------------------------------------------------->
+  const lastRowRef = useCallback((node) => {
+    if (LOADING || !MORE) {
+      return;
+    }
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && MORE) {
+        loadMoreData();
+      }
+    });
+    if (node) {
+      observer.current.observe(node);
+    }
+  }, [LOADING, MORE]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -123,7 +166,7 @@ export const MoneyList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={5}>
+              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
                 {translate("common-empty")}
               </TableCell>
             </TableRow>
@@ -146,7 +189,11 @@ export const MoneyList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <>
-              <TableRow className={"table-tbody-tr"} key={`date-${index}`}>
+              <TableRow
+                key={`date-${index}`}
+                className={"table-tbody-tr"}
+                ref={index === OBJECT.length - 1 ? lastRowRef : null}
+              >
                 <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                   Object.assign(SEND, {
                     id: item._id,
@@ -166,7 +213,10 @@ export const MoneyList = () => {
                   {item.money_dateType}
                 </TableCell>
               </TableRow>
-              <TableRow className={"table-tbody-tr"} key={`real-${index}`}>
+              <TableRow
+                key={`real-${index}`}
+                className={"table-tbody-tr"}
+              >
                 <TableCell>
                   {numeral(item.money_total_in).format('0,0')}
                 </TableCell>
@@ -231,7 +281,7 @@ export const MoneyList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

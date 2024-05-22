@@ -14,7 +14,7 @@ import {User} from "../../schema/user/User.js";
 // 1-1. set --------------------------------------------------------------------------------------->
 export const set = {
   list: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await User.aggregate([
       {$match: {
@@ -38,8 +38,9 @@ export const set = {
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = {
 
+  // 1. exercisePlan
   countExercisePlan: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await ExercisePlan.countDocuments({
       user_id: user_id_param
@@ -47,23 +48,24 @@ export const list = {
     return finalResult;
   },
   listExercisePlan: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        exercise_plan_dateStart: sort_param,
-        exercise_plan_dateEnd: sort_param
+        exercise_plan_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
     return finalResult;
   },
+
+  // 2. exercise
   countExercise: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Exercise.countDocuments({
       user_id: user_id_param
@@ -71,15 +73,14 @@ export const list = {
     return finalResult;
   },
   listExercise: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        exercise_dateStart: sort_param,
-        exercise_dateEnd: sort_param
+        exercise_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -87,8 +88,9 @@ export const list = {
     return finalResult;
   },
 
+  // 3. foodPlan
   countFoodPlan: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await FoodPlan.countDocuments({
       user_id: user_id_param
@@ -96,23 +98,24 @@ export const list = {
     return finalResult;
   },
   listFoodPlan: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        food_plan_dateStart: sort_param,
-        food_plan_dateEnd: sort_param
+        food_plan_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
     return finalResult;
   },
+
+  // 4. food
   countFood: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Food.countDocuments({
       user_id: user_id_param
@@ -120,15 +123,14 @@ export const list = {
     return finalResult;
   },
   listFood: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        food_dateStart: sort_param,
-        food_dateEnd: sort_param
+        food_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -136,8 +138,9 @@ export const list = {
     return finalResult;
   },
 
+  // 5. moneyPlan
   countMoneyPlan: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
       user_id: user_id_param
@@ -145,39 +148,14 @@ export const list = {
     return finalResult;
   },
   listMoneyPlan: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        money_plan_dateStart: sort_param,
-        money_plan_dateEnd: sort_param
-      }},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
-    ]);
-    return finalResult;
-  },
-  countMoney: async (
-    user_id_param
-  ) => {
-    const finalResult = await Money.countDocuments({
-      user_id: user_id_param
-    });
-    return finalResult;
-  },
-  listMoney: async (
-    user_id_param, sort_param, limit_param, page_param,
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param,
-      }},
-      {$sort: {
-        money_dateStart: sort_param,
-        money_dateEnd: sort_param
+        money_plan_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
@@ -185,8 +163,34 @@ export const list = {
     return finalResult;
   },
 
+  // 6. money
+  countMoney: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Money.countDocuments({
+      user_id: user_id_param
+    });
+    return finalResult;
+  },
+  listMoney: async (
+    user_id_param, page_param, limit_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        user_id: user_id_param,
+      }},
+      {$sort: {
+        money_dateStart: 1
+      }},
+      {$skip: (Number(page_param) - 1) * Number(limit_param)},
+      {$limit: Number(limit_param)}
+    ]);
+    return finalResult;
+  },
+
+  // 7. sleepPlan
   countSleepPlan: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await SleepPlan.countDocuments({
       user_id: user_id_param
@@ -194,23 +198,24 @@ export const list = {
     return finalResult;
   },
   listSleepPlan: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        sleep_plan_dateStart: sort_param,
-        sleep_plan_dateEnd: sort_param
+        sleep_plan_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
     return finalResult;
   },
+
+  // 8. sleep
   countSleep: async (
-    user_id_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Sleep.countDocuments({
       user_id: user_id_param
@@ -218,15 +223,14 @@ export const list = {
     return finalResult;
   },
   listSleep: async (
-    user_id_param, sort_param, limit_param, page_param,
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {
-        sleep_dateStart: sort_param,
-        sleep_dateEnd: sort_param
+        sleep_dateStart: 1
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
