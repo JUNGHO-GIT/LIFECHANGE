@@ -214,12 +214,11 @@ export const lineWeek = async (
 
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index
+      new Date(item.food_dateStart).getDay() === index
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index
+      new Date(item.food_dateStart).getDay() === index
     ));
-
     finalResultKcal.push({
       name: data,
       date: date[index],
@@ -274,12 +273,11 @@ export const lineMonth = async (
 
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index + 1
+      new Date(item.food_dateStart).getDay() === index + 1
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index + 1
+      new Date(item.food_dateStart).getDay() === index + 1
     ));
-
     finalResultKcal.push({
       name: data,
       date: date[index],

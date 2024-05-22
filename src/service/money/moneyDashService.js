@@ -246,9 +246,11 @@ export const lineMonth = async (
   let finalResultIn = [];
   let finalResultOut = [];
 
+  // in
   findResultIn = await repository.lineMonth.listIn(
     user_id_param, dateStart, dateEnd
   );
+  // out
   findResultOut = await repository.lineMonth.listOut(
     user_id_param, dateStart, dateEnd
   );
@@ -260,7 +262,6 @@ export const lineMonth = async (
     const findIndexOut = findResultOut.findIndex((item) => (
       new Date(item.money_dateStart).getDay() === index + 1
     ));
-
     finalResultIn.push({
       name: data,
       date: date[index],

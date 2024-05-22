@@ -6,6 +6,7 @@ import {newDate} from "../../assets/js/date.js";
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
+
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
@@ -13,10 +14,12 @@ export const list = {
     const finalResult = await Calendar.countDocuments({
       user_id: user_id_param,
       calendar_dateStart: {
+        $gte: dateStart_param,
         $lte: dateEnd_param,
       },
       calendar_dateEnd: {
         $gte: dateStart_param,
+        $lte: dateEnd_param,
       },
       ...(dateType_param === "전체" ? {} : {
         calendar_dateType: dateType_param
@@ -33,10 +36,12 @@ export const list = {
       {$match: {
         user_id: user_id_param,
         calendar_dateStart: {
+          $gte: dateStart_param,
           $lte: dateEnd_param,
         },
         calendar_dateEnd: {
           $gte: dateStart_param,
+          $lte: dateEnd_param,
         },
         ...(dateType_param === "전체" ? {} : {
           calendar_dateType: dateType_param
@@ -56,8 +61,12 @@ export const detail = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: dateStart_param,
-      calendar_dateEnd: dateEnd_param,
+      calendar_dateStart: {
+        $eq: dateStart_param
+      },
+      calendar_dateEnd: {
+        $eq: dateEnd_param
+      },
       ...(dateType_param === "전체" ? {} : {
         calendar_dateType: dateType_param
       }),
@@ -76,8 +85,12 @@ export const save = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: dateStart_param,
-      calendar_dateEnd: dateEnd_param,
+      calendar_dateStart: {
+        $eq: dateStart_param
+      },
+      calendar_dateEnd: {
+        $eq: dateEnd_param
+      },
       ...(dateType_param === "전체" ? {} : {
         calendar_dateType: dateType_param
       }),
@@ -94,7 +107,7 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       calendar_demo: false,
-      calendar_dateType: OBJECT_param.calendar_dateType,
+      calendar_dateType: dateType_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,
       calendar_section: OBJECT_param.calendar_section,
@@ -113,7 +126,7 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        calendar_dateType: OBJECT_param.calendar_dateType,
+        calendar_dateType: dateType_param,
         calendar_dateStart: dateStart_param,
         calendar_dateEnd: dateEnd_param,
         calendar_section: OBJECT_param.calendar_section,
@@ -135,8 +148,12 @@ export const deletes = {
     const finalResult = await Calendar.findOne({
       user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      calendar_dateStart: dateStart_param,
-      calendar_dateEnd: dateEnd_param,
+      calendar_dateStart: {
+        $eq: dateStart_param
+      },
+      calendar_dateEnd: {
+        $eq: dateEnd_param
+      },
       ...(dateType_param === "전체" ? {} : {
         calendar_dateType: dateType_param
       }),
@@ -152,8 +169,12 @@ export const deletes = {
     const updateResult = await Calendar.findOneAndUpdate(
       {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param,
-        calendar_dateStart: dateStart_param,
-        calendar_dateEnd: dateEnd_param,
+        calendar_dateStart: {
+          $eq: dateStart_param
+        },
+        calendar_dateEnd: {
+          $eq: dateEnd_param
+        },
         ...(dateType_param === "전체" ? {} : {
           calendar_dateType: dateType_param
         }),

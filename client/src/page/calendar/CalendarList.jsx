@@ -2,7 +2,6 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
@@ -26,6 +25,7 @@ export const CalendarList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
+      dateType: "",
       dateStart: moment().startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().endOf("month").format("YYYY-MM-DD")
     }
@@ -43,10 +43,7 @@ export const CalendarList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -68,6 +65,7 @@ export const CalendarList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -202,14 +200,6 @@ export const CalendarList = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
@@ -233,7 +223,7 @@ export const CalendarList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : calendarNode()}
+      {calendarNode()}
       {footerNode()}
     </>
   );

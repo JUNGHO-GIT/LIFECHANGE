@@ -207,10 +207,10 @@ export const lineWeek = async (
 
   name.forEach((data, index) => {
     const findIndexVolume = findResultVolume?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index
+      new Date(item.exercise_dateStart).getDay() === index
     ));
     const findIndexCardio = findResultCardio?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index
+      new Date(item.exercise_dateStart).getDay() === index
     ));
     finalResultVolume.push({
       name: data,
@@ -264,10 +264,10 @@ export const lineMonth = async (
 
   name.forEach((data, index) => {
     const findIndexVolume = findResultVolume.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index + 1
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
     const findIndexCardio = findResultCardio.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index + 1
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
 
     finalResultVolume.push({

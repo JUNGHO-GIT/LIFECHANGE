@@ -116,7 +116,7 @@ export const lineMonth = async (
 
   name.forEach((data, index) => {
     const findIndex = findResult.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDate() === index + 1
+      new Date(item.sleep_dateStart).getDay() === index + 1
     ));
 
     finalResult.push({
