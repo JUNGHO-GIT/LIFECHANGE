@@ -1,7 +1,11 @@
 // foodDashService.js
 
 import * as repository from "../../repository/food/foodDashRepository.js";
-import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../../assets/js/date.js";
+import {log} from "../../assets/js/utils.js";
+import {intFormat, koreanDate} from "../../assets/js/date.js";
+import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
+import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
+import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -27,6 +31,7 @@ export const barToday = async (
   finalResultKcal = [
     {
       name: "칼로리",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.food_plan_kcal),
       실제: intFormat(findReal?.[0]?.food_total_kcal)
     }

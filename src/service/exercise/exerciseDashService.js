@@ -1,7 +1,11 @@
 // exerciseDashService.js
 
 import * as repository from "../../repository/exercise/exerciseDashRepository.js";
-import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../../assets/js/date.js";
+import {log} from "../../assets/js/utils.js";
+import {intFormat, koreanDate} from "../../assets/js/date.js";
+import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
+import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
+import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
 // 1-1. dash (scatter - Today) -------------------------------------------------------------------->
 export const scatterToday = async (
@@ -42,6 +46,16 @@ export const scatterWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
+  // ex 월
+  const name = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  // ex. 00-00
+  const date = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("MM-DD");
+  });
+
   let findPlan = [];
   let findReal = [];
   let finalResult = [];
@@ -53,14 +67,20 @@ export const scatterWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  finalResult = [
-    {
-      name: "체중",
-      date: dateStart,
-      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
-      실제: intFormat(findReal?.[0]?.exercise_body_weight)
-    }
-  ];
+  name.forEach((data, index) => {
+    const findIndexPlan = findPlan?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDay() === index
+    ));
+    const findIndexReal = findReal?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDay() === index
+    ));
+    finalResult.push({
+      name: name[index],
+      date: date[index],
+      목표: findIndexPlan !== -1 ? intFormat(findPlan[findIndexPlan]?.exercise_plan_weight) : 0,
+      실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+    });
+  });
 
   return finalResult;
 };
@@ -73,6 +93,16 @@ export const scatterMonth = async (
   const dateStart = curMonthStart.format("YYYY-MM-DD");
   const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
+  // ex. 00일
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return `${i + 1}일`;
+  });
+
+  // ex. 00-00
+  const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return curMonthStart.clone().add(i, 'days').format("MM-DD");
+  });
+
   let findPlan = [];
   let findReal = [];
   let finalResult = [];
@@ -80,18 +110,25 @@ export const scatterMonth = async (
   findPlan = await repository.scatterMonth.listPlan(
     user_id_param, dateStart, dateEnd
   );
+
   findReal = await repository.scatterMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
-  finalResult = [
-    {
-      name: "체중",
-      date: dateStart,
-      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
-      실제: intFormat(findReal?.[0]?.exercise_body_weight)
-    }
-  ];
+  name.forEach((data, index) => {
+    const findIndexPlan = findPlan?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDate() === index + 1
+    ));
+    const findIndexReal = findReal?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDate() === index + 1
+    ));
+    finalResult.push({
+      name: data,
+      date: date[index],
+      목표: findIndexPlan !== -1 ? intFormat(findPlan[findIndexPlan]?.exercise_plan_weight) : 0,
+      실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+    });
+  });
 
   return finalResult;
 };

@@ -21,8 +21,9 @@ export const scatterToday = {
         },
       }},
       {$project: {
-        _id: 0,
-        exercise_plan_weight: 1
+        exercise_plan_dateStart: 1,
+        exercise_plan_dateEnd: 1,
+        exercise_plan_body_weight: 1
       }},
       {$sort: {exercise_plan_dateStart: -1}}
     ]);
@@ -64,18 +65,19 @@ export const scatterWeek = {
         user_id: user_id_param,
         exercise_plan_dateStart: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
         exercise_plan_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
-        _id: 0,
-        exercise_plan_weight: 1
+        exercise_plan_dateStart: 1,
+        exercise_plan_dateEnd: 1,
+        exercise_plan_body_weight: 1
       }},
-      {$sort: {exercise_dateStart: -1}}
+      {$sort: {exercise_plan_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -96,7 +98,8 @@ export const scatterWeek = {
         },
       }},
       {$project: {
-        _id: 0,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_body_weight: 1
       }},
       {$sort: {exercise_dateStart: -1}}
@@ -115,18 +118,19 @@ export const scatterMonth = {
         user_id: user_id_param,
         exercise_plan_dateStart: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
         exercise_plan_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
       }},
       {$project: {
-        _id: 0,
-        exercise_plan_weight: 1
+        exercise_plan_dateStart: 1,
+        exercise_plan_dateEnd: 1,
+        exercise_plan_body_weight: 1
       }},
-      {$sort: {exercise_dateStart: -1}}
+      {$sort: {exercise_plan_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -147,7 +151,8 @@ export const scatterMonth = {
         },
       }},
       {$project: {
-        _id: 0,
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
         exercise_body_weight: 1
       }},
       {$sort: {exercise_dateStart: -1}}
