@@ -138,184 +138,159 @@ export const ExercisePlanSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-row"}>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            label={translate("common-dateType")}
-            size={"small"}
-            value={DATE.dateType || "day"}
-            variant={"outlined"}
-            className={"w-20vw me-3vw"}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value
-              }));
-            }}>
-            {["전체", "day", "week", "month", "year"].map((item) => (
-              <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Div>
-        <Div className={"d-center"}>
-          <PopUp
-            type={"innerCenter"}
-            position={"center"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <Div className={"d-center w-max86vw"}>
-                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                  <DateCalendar
-                    timezone={"Asia/Seoul"}
-                    views={["year", "day"]}
-                    readOnly={true}
-                    defaultValue={moment(DATE.dateStart)}
-                    className={"radius border h-max40vh me-2"}
-                    sx={{
-                      "& .MuiDateCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiYearCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiDayCalendar-slideTransition": {
-                        minHeight: "0px",
-                      },
-                      "& .MuiDayCalendar-weekDayLabel": {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                      '& .MuiPickersDay-root': {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                    }}
-                  />
-                  <DateCalendar
-                    timezone={"Asia/Seoul"}
-                    views={["year", "day"]}
-                    readOnly={true}
-                    defaultValue={moment(DATE.dateEnd)}
-                    className={"radius border h-max40vh ms-2"}
-                    sx={{
-                      "& .MuiDateCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiYearCalendar-root": {
-                        width: "100%",
-                        height: "100%",
-                      },
-                      "& .MuiDayCalendar-slideTransition": {
-                        minHeight: "0px",
-                      },
-                      "& .MuiDayCalendar-weekDayLabel": {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                      '& .MuiPickersDay-root': {
-                        fontSize: "0.7rem",
-                        width: "3.5vh",
-                        height: "3.5vh",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-              </Div>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                type={"text"}
-                size={"small"}
-                label={"기간"}
-                variant={"outlined"}
-                value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-                className={"w-63vw"}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={common1} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: null
+      <Div className={"d-center"}>
+        <TextField
+          select={true}
+          label={translate("common-dateType")}
+          size={"small"}
+          value={DATE.dateType || "day"}
+          variant={"outlined"}
+          className={"w-20vw me-3vw"}
+          InputProps={{
+            readOnly: false,
+            startAdornment: null,
+            endAdornment: null
+          }}
+          onChange={(e) => {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: e.target.value
+            }));
+          }}>
+          {["전체", "day", "week", "month", "year"].map((item) => (
+            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+              {item}
+            </MenuItem>
+          ))}
+        </TextField>
+        <PopUp
+          type={"innerCenter"}
+          position={"center"}
+          direction={"center"}
+          contents={({closePopup}) => (
+          <Div className={"d-center w-max70vw"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["year", "day"]}
+                readOnly={false}
+                defaultValue={moment(DATE.dateStart)}
+                className={"radius border h-max50vh"}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    dateStart: moment(date).format("YYYY-MM-DD"),
+                    dateEnd: moment(date).format("YYYY-MM-DD")
+                  }));
                 }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
+                sx={{
+                  "& .MuiDateCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiYearCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    minHeight: "0px",
+                  },
+                  "& .MuiDayCalendar-weekDayLabel": {
+                    fontSize: "0.7rem",
+                    width: "5vh",
+                    height: "5vh",
+                  },
+                  '& .MuiPickersDay-root': {
+                    fontSize: "0.7rem",
+                    width: "5vh",
+                    height: "5vh",
+                  },
                 }}
               />
-            )}
-          </PopUp>
-        </Div>
+            </LocalizationProvider>
+          </Div>
+        )}>
+          {(popTrigger={}) => (
+            <TextField
+              type={"text"}
+              size={"small"}
+              label={"기간"}
+              variant={"outlined"}
+              value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+              className={"w-60vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={common1} className={"w-16 h-16"} />
+                ),
+                endAdornment: null
+              }}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+            />
+          )}
+        </PopUp>
       </Div>
     );
     // 7-2. count
     const countSection = () => (
-      <PopUp
-        type={"alert"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          <TextField
-            type={"text"}
-            label={translate("common-count")}
-            variant={"outlined"}
-            size={"small"}
-            className={"w-86vw"}
-            value={COUNT.newSectionCnt}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={common2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"d-center me-n10"}>
-                  <Icons
-                    name={"TbMinus"}
-                    className={"w-20 h-20 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt - 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                  <Icons
-                    name={"TbPlus"}
-                    className={"w-20 h-20 black"}
-                    onClick={(e) => {
-                      COUNT.newSectionCnt < 1 ? (
-                        setCOUNT((prev) => ({
-                          ...prev,
-                          newSectionCnt: prev.newSectionCnt + 1
-                        }))
-                      ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                    }}
-                  />
-                </Div>
-              )
-            }}
-          />
-        )}
-      </PopUp>
+      <Div className={"d-center"}>
+        <PopUp
+          type={"alert"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+            <Div className={"d-center"}>
+              {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+            </Div>
+          )}>
+          {(popTrigger={}) => (
+            <TextField
+              type={"text"}
+              label={translate("common-count")}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-86vw"}
+              value={COUNT.newSectionCnt}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={common2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"d-center me-n10"}>
+                    <Icons
+                      name={"TbMinus"}
+                      className={"w-20 h-20 black"}
+                      onClick={(e) => {
+                        COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                          setCOUNT((prev) => ({
+                            ...prev,
+                            newSectionCnt: prev.newSectionCnt - 1
+                          }))
+                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      }}
+                    />
+                    <Icons
+                      name={"TbPlus"}
+                      className={"w-20 h-20 black"}
+                      onClick={(e) => {
+                        COUNT.newSectionCnt < 10 ? (
+                          setCOUNT((prev) => ({
+                            ...prev,
+                            newSectionCnt: prev.newSectionCnt + 1
+                          }))
+                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                      }}
+                    />
+                  </Div>
+                )
+              }}
+            />
+          )}
+        </PopUp>
+      </Div>
     );
     // 7-3. total (plan = total x)
     // 7-4. badge
@@ -375,7 +350,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endCount")
+                translate("exercise-endCount")
               )
             }}
             onChange={(e) => {
@@ -404,7 +379,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("common-endVolume")
+                translate("exercise-endVolume")
               )
             }}
             onChange={(e) => {
@@ -484,7 +459,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("common-endWeight")
+                translate("exercise-endWeight")
               )
             }}
             onChange={(e) => {

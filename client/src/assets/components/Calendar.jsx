@@ -57,7 +57,7 @@ export const Calendar = ({DATE, setDATE}) => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-max86vw"}>
+        <Div className={"d-center w-max70vw"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -132,7 +132,7 @@ export const Calendar = ({DATE, setDATE}) => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-max86vw"}>
+        <Div className={"d-center w-max70vw"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -207,7 +207,7 @@ export const Calendar = ({DATE, setDATE}) => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-max86vw"}>
+        <Div className={"d-center w-max70vw"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -282,7 +282,7 @@ export const Calendar = ({DATE, setDATE}) => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-max86vw"}>
+        <Div className={"d-center w-max70vw"}>
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}

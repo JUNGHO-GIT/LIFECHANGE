@@ -214,9 +214,9 @@ export const FoodFindSave = () => {
           size={"small"}
           value={DATE.dateType || "day"}
           variant={"outlined"}
-          className={"w-23vw me-3vw"}
+          className={"w-20vw me-3vw"}
           InputProps={{
-            readOnly: true,
+            readOnly: false,
             startAdornment: null,
             endAdornment: null
           }}
@@ -237,55 +237,55 @@ export const FoodFindSave = () => {
           position={"center"}
           direction={"center"}
           contents={({closePopup}) => (
-            <Div className={"d-center w-max70vw"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DateCalendar
-                  timezone={"Asia/Seoul"}
-                  views={["year", "day"]}
-                  readOnly={false}
-                  defaultValue={moment(DATE.dateStart)}
-                  className={"radius border h-max50vh"}
-                  onChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).format("YYYY-MM-DD"),
-                      dateEnd: moment(date).format("YYYY-MM-DD")
-                    }));
-                  }}
-                  sx={{
-                    "& .MuiDateCalendar-root": {
-                      width: "100%",
-                      height: "100%",
-                    },
-                    "& .MuiYearCalendar-root": {
-                      width: "100%",
-                      height: "100%",
-                    },
-                    "& .MuiDayCalendar-slideTransition": {
-                      minHeight: "0px",
-                    },
-                    "& .MuiDayCalendar-weekDayLabel": {
-                      fontSize: "0.7rem",
-                      width: "5vh",
-                      height: "5vh",
-                    },
-                    '& .MuiPickersDay-root': {
-                      fontSize: "0.7rem",
-                      width: "5vh",
-                      height: "5vh",
-                    },
-                  }}
-                />
-              </LocalizationProvider>
-            </Div>
-          )}>
+          <Div className={"d-center w-max70vw"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DateCalendar
+                timezone={"Asia/Seoul"}
+                views={["year", "day"]}
+                readOnly={false}
+                defaultValue={moment(DATE.dateStart)}
+                className={"radius border h-max50vh"}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    dateStart: moment(date).format("YYYY-MM-DD"),
+                    dateEnd: moment(date).format("YYYY-MM-DD")
+                  }));
+                }}
+                sx={{
+                  "& .MuiDateCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiYearCalendar-root": {
+                    width: "100%",
+                    height: "100%",
+                  },
+                  "& .MuiDayCalendar-slideTransition": {
+                    minHeight: "0px",
+                  },
+                  "& .MuiDayCalendar-weekDayLabel": {
+                    fontSize: "0.7rem",
+                    width: "5vh",
+                    height: "5vh",
+                  },
+                  '& .MuiPickersDay-root': {
+                    fontSize: "0.7rem",
+                    width: "5vh",
+                    height: "5vh",
+                  },
+                }}
+              />
+            </LocalizationProvider>
+          </Div>
+        )}>
           {(popTrigger={}) => (
             <TextField
               type={"text"}
               size={"small"}
-              label={"날짜"}
+              label={"기간"}
               variant={"outlined"}
-              value={`${DATE.dateStart}`}
+              value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
               className={"w-60vw"}
               InputProps={{
                 readOnly: true,

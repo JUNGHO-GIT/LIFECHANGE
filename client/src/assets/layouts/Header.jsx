@@ -24,56 +24,46 @@ export const Header = () => {
         <Div className={"d-column align-left p-5"}>
           {!sessionId ? (
             <>
-            <Div className={"d-center pointer mb-10"} onClick={() => {
+            <Div className={"d-center pointer"} onClick={() => {
               navigate("/user/login");
               closePopup();
             }}>
               <Icons name={"TbLogin"} className={"w-24 h-24"} />
-              <Div className={"fs-0-8rem"}>
-                {translate("header-login")}
-              </Div>
+              {translate("header-login")}
             </Div>
-            <Div className={"d-center pointer mb-10"} onClick={() => {
+            <Div className={"d-center pointer"} onClick={() => {
               navigate("/user/signup");
               closePopup();
             }}>
               <Icons name={"TbLogin2"} className={"w-24 h-24"} />
-              <Div className={"fs-0-8rem"}>
-                {translate("header-signup")}
-              </Div>
+              {translate("header-signup")}
             </Div>
             </>
           ) : (
             <>
-            <Div className={"d-center pointer mb-10"} onClick={() => {
+            <Div className={"d-center pointer"} onClick={() => {
               navigate("/");
               sessionStorage.removeItem("sessionId");
               closePopup();
             }}>
               <Icons name={"TbLogout"} className={"w-24 h-24"} />
-              <Div className={"fs-0-8rem"}>
-                {translate("header-logout")}
-              </Div>
+              {translate("header-logout")}
             </Div>
             </>
           )}
-          <Div className={"d-center pointer mb-10"} onClick={() => {
+          <Div className={"d-center pointer"} onClick={() => {
             navigate("/user/data/set");
             closePopup();
           }}>
             <Icons name={"TbUser"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>
-              {translate("header-dataSet")}
-            </Div>
+            {translate("header-dataSet")}
           </Div>
           <Div className={"d-center pointer"} onClick={() => {
             navigate("/user/data/list");
             closePopup();
           }}>
             <Icons name={"TbUser"} className={"w-24 h-24"} />
-            <Div className={"fs-0-8rem"}>
-              {translate("header-dataList")}
-            </Div>
+            {translate("header-dataList")}
           </Div>
         </Div>
       )}>
@@ -89,12 +79,12 @@ export const Header = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"d-left"}>
-      <Div className={"d-left ms-0"}>
-        <Img src={logo2} className={"w-max170 h-max30"} />
-        <Img src={logo3} className={"w-max170 h-max30"} />
+    <Div className={"d-between w-100p"}>
+      <Div className={"d-center"}>
+        <Img src={logo2} className={"h-max30"} />
+        <Img src={logo3} className={"h-max30"} />
       </Div>
-      <Div className={"d-right ms-auto"}>
+      <Div className={"d-center ms-auto"}>
         {btnUser()}
       </Div>
     </Div>

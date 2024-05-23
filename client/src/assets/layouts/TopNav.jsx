@@ -39,6 +39,7 @@ export const TopNav = () => {
       value={value}
       variant={"scrollable"}
       selectionFollowsFocus={true}
+      scrollButtons={false}
       sx={{
         [`& .${tabsClasses.scrollButtons}`]: {
           '&.Mui-disabled': { opacity: 0.3 },
@@ -105,6 +106,7 @@ export const TopNav = () => {
       value={value}
       variant={"scrollable"}
       selectionFollowsFocus={true}
+      scrollButtons={false}
       sx={{
         [`& .${tabsClasses.scrollButtons}`]: {
           '&.Mui-disabled': { opacity: 0.3 },
