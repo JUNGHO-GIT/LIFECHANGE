@@ -19,13 +19,13 @@ export const ExerciseDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const array = ["횟수", "볼륨", "시간"];
+  const array = ["볼륨", "유산소"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("volume");
+  const [LINE, setLINE] = useState("볼륨");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_MONTH_DEF = [
@@ -98,6 +98,8 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
+            label={`날짜`}
+            isAnimationActive={true}
             formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
@@ -150,9 +152,9 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -207,7 +209,7 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -259,9 +261,9 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            formatter={(value) => (`${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -320,7 +322,7 @@ export const ExerciseDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["volume", "cardio"].map((key, index) => (
+        ["볼륨", "유산소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -332,7 +334,7 @@ export const ExerciseDashAvg = () => {
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
-          )))}>
+        )))}>
         {(popTrigger={}) => (
           <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
@@ -366,16 +368,16 @@ export const ExerciseDashAvg = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "month" && LINE === "volume") {
+      if (SECTION === "month" && LINE === "볼륨") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "month" && LINE === "cardio") {
-        return LOADING ? loadingNode() : dashFragment2();
-      }
-      else if (SECTION === "year" && LINE === "volume") {
+      else if (SECTION === "year" && LINE === "볼륨") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "year" && LINE === "cardio") {
+      else if (SECTION === "month" && LINE === "유산소") {
+        return LOADING ? loadingNode() : dashFragment2();
+      }
+      else if (SECTION === "year" && LINE === "유산소") {
         return LOADING ? loadingNode() : dashFragment4();
       }
     }

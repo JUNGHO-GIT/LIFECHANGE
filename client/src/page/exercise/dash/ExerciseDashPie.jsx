@@ -7,7 +7,7 @@ import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
 import {common3} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -22,8 +22,8 @@ export const ExerciseDashPie = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("part");
   const [radius, setRadius] = useState(120);
+  const [LINE, setLINE] = useState("부위");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_PART_WEEK_DEF = [
@@ -196,6 +196,14 @@ export const ExerciseDashPie = () => {
               borderRadius:"10px"
             }}
           />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -228,6 +236,14 @@ export const ExerciseDashPie = () => {
               backgroundColor:"rgba(255, 255, 255, 0.8)",
               border:"none",
               borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
             }}
           />
         </PieChart>
@@ -264,6 +280,14 @@ export const ExerciseDashPie = () => {
               borderRadius:"10px"
             }}
           />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -296,6 +320,14 @@ export const ExerciseDashPie = () => {
               backgroundColor:"rgba(255, 255, 255, 0.8)",
               border:"none",
               borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
             }}
           />
         </PieChart>
@@ -334,7 +366,7 @@ export const ExerciseDashPie = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["part", "title"]?.map((key, index) => (
+        ["부위", "운동"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -380,16 +412,16 @@ export const ExerciseDashPie = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "part") {
+      if (SECTION === "week" && LINE === "부위") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "month" && LINE === "part") {
+      else if (SECTION === "month" && LINE === "부위") {
         return LOADING ? loadingNode() : dashFragment2();
       }
-      else if (SECTION === "week" && LINE === "title") {
+      else if (SECTION === "week" && LINE === "운동") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "month" && LINE === "title") {
+      else if (SECTION === "month" && LINE === "운동") {
         return LOADING ? loadingNode() : dashFragment4();
       }
     }

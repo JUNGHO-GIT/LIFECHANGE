@@ -25,7 +25,7 @@ export const FoodDashBar = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState("kcal");
+  const [LINE, setLINE] = useState("칼로리");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_TODAY_DEF = [
@@ -199,7 +199,7 @@ export const FoodDashBar = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["kcal", "nut"]?.map((key, index) => (
+        ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -233,10 +233,10 @@ export const FoodDashBar = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "kcal") {
+      if (SECTION === "today" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "today" && LINE === "nut") {
+      else if (SECTION === "today" && LINE === "영양소") {
         return LOADING ? loadingNode() : dashFragment2();
       }
     }

@@ -23,7 +23,7 @@ export const MoneyDashPie = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("in");
+  const [LINE, setLINE] = useState("수입");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_IN_TODAY_DEF = [
@@ -504,7 +504,7 @@ export const MoneyDashPie = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["in", "out"].map((key, index) => (
+        ["수입", "지출"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
               if (LINE === key) {
@@ -562,22 +562,22 @@ export const MoneyDashPie = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "in") {
+      if (SECTION === "today" && LINE === "수입") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "today" && LINE === "out") {
+      else if (SECTION === "today" && LINE === "지출") {
         return LOADING ? loadingNode() : dashFragment2();
       }
-      else if (SECTION === "week" && LINE === "in") {
+      else if (SECTION === "week" && LINE === "수입") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "week" && LINE === "out") {
+      else if (SECTION === "week" && LINE === "지출") {
         return LOADING ? loadingNode() : dashFragment4();
       }
-      else if (SECTION === "month" && LINE === "in") {
+      else if (SECTION === "month" && LINE === "수입") {
         return LOADING ? loadingNode() : dashFragment5();
       }
-      else if (SECTION === "month" && LINE === "out") {
+      else if (SECTION === "month" && LINE === "지출") {
         return LOADING ? loadingNode() : dashFragment6();
       }
     }

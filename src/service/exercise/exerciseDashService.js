@@ -220,7 +220,7 @@ export const lineWeek = async (
     finalResultCardio.push({
       name: data,
       date: date[index],
-      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      유산소: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 
@@ -278,7 +278,7 @@ export const lineMonth = async (
     finalResultCardio.push({
       name: data,
       date: date[index],
-      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      유산소: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 
@@ -357,7 +357,7 @@ export const avgMonth = async (
     finalResultCardio.push({
       name: data,
       date: date[index],
-      시간: intFormat(sumCardio[index] / countRecords[index])
+      유산소: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 
@@ -427,7 +427,7 @@ export const avgYear = async (
     finalResultCardio.push({
       name: data,
       date: date[index],
-      시간: intFormat(sumCardio[index] / countRecords[index])
+      유산소: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 

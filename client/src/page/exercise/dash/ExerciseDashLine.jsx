@@ -19,13 +19,13 @@ export const ExerciseDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const array = ["볼륨", "시간"];
+  const array = ["볼륨", "유산소"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("volume");
+  const [LINE, setLINE] = useState("볼륨");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_WEEK_DEF = [
@@ -99,7 +99,7 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -151,7 +151,7 @@ export const ExerciseDashLine = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+          <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}`)}
@@ -209,7 +209,7 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -261,7 +261,7 @@ export const ExerciseDashLine = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+          <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}`)}
@@ -323,7 +323,7 @@ export const ExerciseDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["volume", "cardio"].map((key, index) => (
+        ["볼륨", "유산소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -369,16 +369,16 @@ export const ExerciseDashLine = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "volume") {
+      if (SECTION === "week" && LINE === "볼륨") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "month" && LINE === "volume") {
+      else if (SECTION === "month" && LINE === "볼륨") {
         return LOADING ? loadingNode() : dashFragment2();
       }
-      else if (SECTION === "week" && LINE === "cardio") {
+      else if (SECTION === "week" && LINE === "유산소") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "month" && LINE === "cardio") {
+      else if (SECTION === "month" && LINE === "유산소") {
         return LOADING ? loadingNode() : dashFragment4();
       }
     }

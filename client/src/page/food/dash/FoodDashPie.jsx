@@ -7,7 +7,7 @@ import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
 import {common3} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -22,8 +22,8 @@ export const FoodDashPie = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState("kcal");
   const [radius, setRadius] = useState(120);
+  const [LINE, setLINE] = useState("칼로리");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_TODAY_DEF = [
@@ -249,6 +249,14 @@ export const FoodDashPie = () => {
               borderRadius:"10px"
             }}
           />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -281,6 +289,14 @@ export const FoodDashPie = () => {
               backgroundColor:"rgba(255, 255, 255, 0.8)",
               border:"none",
               borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
             }}
           />
         </PieChart>
@@ -317,6 +333,14 @@ export const FoodDashPie = () => {
               borderRadius:"10px"
             }}
           />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -349,6 +373,14 @@ export const FoodDashPie = () => {
               backgroundColor:"rgba(255, 255, 255, 0.8)",
               border:"none",
               borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
             }}
           />
         </PieChart>
@@ -385,6 +417,14 @@ export const FoodDashPie = () => {
               borderRadius:"10px"
             }}
           />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -417,6 +457,14 @@ export const FoodDashPie = () => {
               backgroundColor:"rgba(255, 255, 255, 0.8)",
               border:"none",
               borderRadius:"10px"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            wrapperStyle={{
+              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
             }}
           />
         </PieChart>
@@ -456,7 +504,7 @@ export const FoodDashPie = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["kcal", "nut"]?.map((key, index) => (
+        ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -514,22 +562,22 @@ export const FoodDashPie = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "kcal") {
+      if (SECTION === "today" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "today" && LINE === "nut") {
-        return LOADING ? loadingNode() : dashFragment2();
-      }
-      else if (SECTION === "week" && LINE === "kcal") {
+      else if (SECTION === "week" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "week" && LINE === "nut") {
-        return LOADING ? loadingNode() : dashFragment4();
-      }
-      else if (SECTION === "month" && LINE === "kcal") {
+      else if (SECTION === "month" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment5();
       }
-      else if (SECTION === "month" && LINE === "nut") {
+      else if (SECTION === "today" && LINE === "영양소") {
+        return LOADING ? loadingNode() : dashFragment2();
+      }
+      else if (SECTION === "week" && LINE === "영양소") {
+        return LOADING ? loadingNode() : dashFragment4();
+      }
+      else if (SECTION === "month" && LINE === "영양소") {
         return LOADING ? loadingNode() : dashFragment6();
       }
     }

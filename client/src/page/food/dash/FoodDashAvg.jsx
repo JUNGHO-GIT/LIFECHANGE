@@ -25,7 +25,7 @@ export const FoodDashAvg = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("kcal");
+  const [LINE, setLINE] = useState("칼로리");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_MONTH_DEF = [
@@ -323,7 +323,7 @@ export const FoodDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["kcal", "nut"]?.map((key, index) => (
+        ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -369,16 +369,16 @@ export const FoodDashAvg = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "month" && LINE === "kcal") {
+      if (SECTION === "month" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "month" && LINE === "nut") {
-        return LOADING ? loadingNode() : dashFragment2();
-      }
-      else if (SECTION === "year" && LINE === "kcal") {
+      else if (SECTION === "year" && LINE === "칼로리") {
         return LOADING ? loadingNode() : dashFragment3();
       }
-      else if (SECTION === "year" && LINE === "nut") {
+      else if (SECTION === "month" && LINE === "영양소") {
+        return LOADING ? loadingNode() : dashFragment2();
+      }
+      else if (SECTION === "year" && LINE === "영양소") {
         return LOADING ? loadingNode() : dashFragment4();
       }
     }
