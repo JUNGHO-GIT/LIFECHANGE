@@ -1,7 +1,11 @@
 // moneyDashService.js
 
 import * as repository from "../../repository/money/moneyDashRepository.js";
-import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../../assets/js/date.js";
+import {log} from "../../assets/js/utils.js";
+import {intFormat, koreanDate} from "../../assets/js/date.js";
+import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
+import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
+import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -13,8 +17,7 @@ export const barToday = async (
 
   let findPlan = [];
   let findReal = [];
-  let finalResultIn = [];
-  let finalResultOut = [];
+  let finalResult = [];
 
   findPlan = await repository.barToday.listPlan(
     user_id_param, dateStart, dateEnd
@@ -23,16 +26,12 @@ export const barToday = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // in
-  finalResultIn = [
+  finalResult = [
     {
       name: "수입",
       목표: intFormat(findPlan?.[0]?.money_plan_in),
       실제: intFormat(findReal?.[0]?.money_total_in)
-    }
-  ];
-  // out
-  finalResultOut = [
+    },
     {
       name: "지출",
       목표: intFormat(findPlan?.[0]?.money_plan_out),
@@ -40,10 +39,7 @@ export const barToday = async (
     }
   ];
 
-  return {
-    in: finalResultIn,
-    out: finalResultOut
-  };
+  return finalResult;
 };
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
@@ -184,43 +180,26 @@ export const lineWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultIn = [];
-  let findResultOut = [];
-  let finalResultIn = [];
-  let finalResultOut = [];
+  let findResult = [];
+  let finalResult = [];
 
-  // in
-  findResultIn = await repository.lineWeek.listIn(
-    user_id_param, dateStart, dateEnd
-  );
-  // out
-  findResultOut = await repository.lineWeek.listOut(
+  findResult = await repository.lineWeek.list(
     user_id_param, dateStart, dateEnd
   );
 
   name.forEach((data, index) => {
-    const findIndexIn = findResultIn.findIndex((item) => (
+    const findIndex = findResult.findIndex((item) => (
       new Date(item.money_dateStart).getDay() === index
     ));
-    const findIndexOut = findResultOut.findIndex((item) => (
-      new Date(item.money_dateStart).getDay() === index
-    ));
-    finalResultIn.push({
+    finalResult.push({
       name: data,
       date: date[index],
-      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
-    });
-    finalResultOut.push({
-      name: data,
-      date: date[index],
-      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
+      수입: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_in) : 0,
+      지출: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_out) : 0
     });
   });
 
-  return {
-    in: finalResultIn,
-    out: finalResultOut
-  };
+  return finalResult;
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -241,43 +220,26 @@ export const lineMonth = async (
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultIn = [];
-  let findResultOut = [];
-  let finalResultIn = [];
-  let finalResultOut = [];
+  let findResult = [];
+  let finalResult = [];
 
-  // in
-  findResultIn = await repository.lineMonth.listIn(
-    user_id_param, dateStart, dateEnd
-  );
-  // out
-  findResultOut = await repository.lineMonth.listOut(
+  findResult = await repository.lineMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
   name.forEach((data, index) => {
-    const findIndexIn = findResultIn.findIndex((item) => (
+    const findIndex = findResult.findIndex((item) => (
       new Date(item.money_dateStart).getDay() === index + 1
     ));
-    const findIndexOut = findResultOut.findIndex((item) => (
-      new Date(item.money_dateStart).getDay() === index + 1
-    ));
-    finalResultIn.push({
+    finalResult.push({
       name: data,
       date: date[index],
-      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
-    });
-    finalResultOut.push({
-      name: data,
-      date: date[index],
-      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
+      수입: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_in) : 0,
+      지출: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_out) : 0
     });
   });
 
-  return {
-    in: finalResultIn,
-    out: finalResultOut
-  };
+  return finalResult;
 };
 
 // 4-1. dash (avg - month) ------------------------------------------------------------------------>
@@ -302,60 +264,35 @@ export const avgMonth = async (
   let sumOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  let findResultIn = [];
-  let findResultOut = [];
-  let finalResultIn = [];
-  let finalResultOut = [];
+  let findResult = [];
+  let finalResult = [];
 
-  // in
-  findResultIn = await repository.avgMonth.listIn(
-    user_id_param, dateStart, dateEnd
-  );
-  // out
-  findResultOut = await repository.avgMonth.listOut(
+  findResult = await repository.avgMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
-  // in
-  findResultIn.forEach((item) => {
+  findResult.forEach((item) => {
     const moneyDate = new Date(item.money_dateStart);
     const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
       sumIn[weekNum] += intFormat(item.money_total_in);
-      countRecords[weekNum]++;
-    }
-  });
-  // out
-  findResultOut.forEach((item) => {
-    const moneyDate = new Date(item.money_dateStart);
-    const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
       sumOut[weekNum] += intFormat(item.money_total_out);
       countRecords[weekNum]++;
     }
   });
 
   name.forEach((data, index) => {
-    finalResultIn.push({
+    finalResult.push({
       name: data,
       date: date[index],
-      수입: intFormat(sumIn[index] / countRecords[index])
-    });
-    finalResultOut.push({
-      name: data,
-      date: date[index],
+      수입: intFormat(sumIn[index] / countRecords[index]),
       지출: intFormat(sumOut[index] / countRecords[index])
     });
   });
 
-  return {
-    in: finalResultIn,
-    out: finalResultOut
-  }
+  return finalResult;
 };
 
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
@@ -380,50 +317,29 @@ export const avgYear = async (
   let sumOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  let findResultIn = [];
-  let findResultOut = [];
-  let finalResultIn = [];
-  let finalResultOut = [];
+  let findResult = [];
+  let finalResult = [];
 
-  // in
-  findResultIn = await repository.avgYear.listIn(
-    user_id_param, dateStart, dateEnd
-  );
-  // out
-  findResultOut = await repository.avgYear.listOut(
+  findResult = await repository.avgYear.list(
     user_id_param, dateStart, dateEnd
   );
 
-  // in
-  findResultIn.forEach((item) => {
+  findResult.forEach((item) => {
     const moneyDate = new Date(item.money_dateStart);
     const monthNum = moneyDate.getMonth();
     sumIn[monthNum] += intFormat(item.money_total_in);
-    countRecords[monthNum]++;
-  });
-  // out
-  findResultOut.forEach((item) => {
-    const moneyDate = new Date(item.money_dateStart);
-    const monthNum = moneyDate.getMonth();
     sumOut[monthNum] += intFormat(item.money_total_out);
     countRecords[monthNum]++;
   });
 
   name.forEach((data, index) => {
-    finalResultIn.push({
+    finalResult.push({
       name: data,
       date: date[index],
-      수입: intFormat(sumIn[index] / countRecords[index])
-    });
-    finalResultOut.push({
-      name: data,
-      date: date[index],
+      수입: intFormat(sumIn[index] / countRecords[index]),
       지출: intFormat(sumOut[index] / countRecords[index])
     });
   });
 
-  return {
-    in: finalResultIn,
-    out: finalResultOut
-  }
+  return finalResult;
 };

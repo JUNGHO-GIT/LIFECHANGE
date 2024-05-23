@@ -25,25 +25,17 @@ export const MoneyDashLine = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("in");
+  const [LINE, setLINE] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_WEEK_DEF = [
-    {name:"", day: "", 수입: 0},
+  const OBJECT_WEEK_DEF = [
+    {name:"", day: "", 수입: 0, 지출: 0},
   ];
-  const OBJECT_OUT_WEEK_DEF = [
-    {name:"", day: "", 지출: 0},
+  const OBJECT_MONTH_DEF = [
+    {name:"", day: "", 수입: 0, 지출: 0},
   ];
-  const OBJECT_IN_MONTH_DEF = [
-    {name:"", day: "", 수입: 0},
-  ];
-  const OBJECT_OUT_MONTH_DEF = [
-    {name:"", day: "", 지출: 0},
-  ];
-  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEF);
-  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEF);
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -57,27 +49,21 @@ export const MoneyDashLine = () => {
         user_id: sessionId
       },
     });
-    setOBJECT_IN_WEEK(
-      resWeek.data.result.in.length > 0 ? resWeek.data.result.in : OBJECT_IN_WEEK_DEF
+    setOBJECT_WEEK (
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
     );
-    setOBJECT_OUT_WEEK(
-      resWeek.data.result.out.length > 0 ? resWeek.data.result.out : OBJECT_OUT_WEEK_DEF
-    );
-    setOBJECT_IN_MONTH(
-      resMonth.data.result.in.length > 0 ? resMonth.data.result.in : OBJECT_IN_MONTH_DEF
-    );
-    setOBJECT_OUT_MONTH(
-      resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
+    setOBJECT_MONTH (
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartInWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_WEEK, array, "money");
+  const chartWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_IN_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -96,63 +82,14 @@ export const MoneyDashLine = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-          activeDot={{r:8}}/>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-             wrapperStyle={{
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              left: "none",
-              fontSize: "0.8rem",
-            }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartOutWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_WEEK, array, "money");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_OUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-        barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <YAxis
-            type={"number"}
-            domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
-          activeDot={{r:8}}/>
+          {LINE.includes("수입") && (
+            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
+            activeDot={{r:8}}/>
+          )}
+          {LINE.includes("지출") && (
+            <Line dataKey={"지출"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+            activeDot={{r:8}}/>
+          )}
           <Tooltip
             formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -183,11 +120,11 @@ export const MoneyDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartInMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array);
+  const chartMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_IN_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -206,63 +143,14 @@ export const MoneyDashLine = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-          activeDot={{r:8}}/>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-             wrapperStyle={{
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              left: "none",
-              fontSize: "0.8rem",
-            }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartOutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array);
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_OUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-        barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <YAxis
-            type={"number"}
-            domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <Line dataKey={"지출"} type={"monotone"} stroke={"#ff7300"} strokeWidth={2}
-          activeDot={{r:8}}/>
+          {LINE.includes("수입") && (
+            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
+            activeDot={{r:8}}/>
+          )}
+          {LINE.includes("지출") && (
+            <Line dataKey={"지출"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+            activeDot={{r:8}}/>
+          )}
           <Tooltip
             formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -323,14 +211,14 @@ export const MoneyDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["in", "out"]?.map((key, index) => (
+        ["수입", "지출"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
+              if (LINE.includes(key)) {
+                setLINE(LINE?.filter((item) => (item !== key)));
               }
               else {
-                setLINE(key);
+                setLINE([...LINE, key]);
               }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
@@ -346,40 +234,22 @@ export const MoneyDashLine = () => {
     // 7-7. fragment
     const dashFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-10"}>
-        {chartInWeek()}
+        {chartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
       <Card variant={"outlined"} className={"p-10"}>
-        {chartOutWeek()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
-        {chartInMonth()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
-        {chartOutMonth()}
+        {chartMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "in") {
+      if (SECTION === "week") {
         return LOADING ? loadingNode() : dashFragment1();
       }
-      else if (SECTION === "week" && LINE === "out") {
+      else if (SECTION === "month") {
         return LOADING ? loadingNode() : dashFragment2();
-      }
-      else if (SECTION === "month" && LINE === "in") {
-        return LOADING ? loadingNode() : dashFragment3();
-      }
-      else if (SECTION === "month" && LINE === "out") {
-        return LOADING ? loadingNode() : dashFragment4();
       }
     }
     // 7-9. first

@@ -124,6 +124,10 @@ export const SleepDashBar = () => {
         </TextField>
       </Div>
     );
+    // 7-5. dropdown
+    const dropdownSection2 = () => (
+      "\u00A0"
+    );
     // 7-7. fragment
     const dashFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-10"}>
@@ -141,7 +145,7 @@ export const SleepDashBar = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"d-center ms-auto"}></Div>
+        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

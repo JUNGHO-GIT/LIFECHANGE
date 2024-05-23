@@ -261,7 +261,7 @@ export const pieMonth = {
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
-  listIn: async (
+  list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -280,41 +280,17 @@ export const lineWeek = {
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_in: 1,
-      }},
-      {$sort: {money_dateStart: 1}}
-    ]);
-    return finalResult;
-  },
-
-  listOut: async (
-    user_id_param, dateStart_param, dateEnd_param
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }},
-      {$project: {
-        money_dateStart: 1,
-        money_dateEnd: 1,
         money_total_out: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
     return finalResult;
-  }
+  },
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
-  listIn: async (
+  list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -333,41 +309,17 @@ export const lineMonth = {
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_in: 1,
-      }},
-      {$sort: {money_dateStart: 1}}
-    ]);
-    return finalResult;
-  },
-
-  listOut: async (
-    user_id_param, dateStart_param, dateEnd_param
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }},
-      {$project: {
-        money_dateStart: 1,
-        money_dateEnd: 1,
         money_total_out: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
     return finalResult;
-  }
+  },
 };
 
 // 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
-  listIn: async (
+  list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -386,41 +338,17 @@ export const avgMonth = {
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_in: 1,
-      }},
-      {$sort: {money_dateStart: 1}}
-    ]);
-    return finalResult;
-  },
-
-  listOut: async (
-    user_id_param, dateStart_param, dateEnd_param
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }},
-      {$project: {
-        money_dateStart: 1,
-        money_dateEnd: 1,
         money_total_out: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
     return finalResult;
-  }
+  },
 };
 
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = {
-  listIn: async (
+  list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -439,34 +367,10 @@ export const avgYear = {
         money_dateStart: 1,
         money_dateEnd: 1,
         money_total_in: 1,
-      }},
-      {$sort: {money_dateStart: 1}}
-    ]);
-    return finalResult;
-  },
-
-  listOut: async (
-    user_id_param, dateStart_param, dateEnd_param
-  ) => {
-    const finalResult = await Money.aggregate([
-      {$match: {
-        user_id: user_id_param,
-        money_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-        money_dateEnd: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param,
-        },
-      }},
-      {$project: {
-        money_dateStart: 1,
-        money_dateEnd: 1,
         money_total_out: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
     return finalResult;
-  }
+  },
 };

@@ -96,8 +96,7 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -151,8 +150,7 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -207,8 +205,7 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -262,8 +259,7 @@ export const ExerciseDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"시간"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}

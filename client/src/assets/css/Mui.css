@@ -38,6 +38,10 @@
   text-overflow: clip !important;
   font-size: 0.9rem !important;
 }
+[class$="MuiTypography-root"] {
+  text-overflow: clip !important;
+  font-size: 0.9rem !important;
+}
 
 .MuiFormControlLabel-root {
   margin-left: 0px !important;

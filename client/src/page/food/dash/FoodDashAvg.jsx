@@ -96,8 +96,7 @@ export const FoodDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -151,12 +150,9 @@ export const FoodDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
-          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
-          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}g`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -210,8 +206,7 @@ export const FoodDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -265,12 +260,9 @@ export const FoodDashAvg = () => {
             axisLine={{stroke:"#e0e0e0"}}
             tick={{fill:"#666", fontSize:14}}
           />
-          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
-          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
-          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
-          </Bar>
+          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}g`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}

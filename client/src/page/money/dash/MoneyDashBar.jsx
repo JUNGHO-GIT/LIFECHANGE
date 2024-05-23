@@ -25,17 +25,13 @@ export const MoneyDashBar = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState("in");
+  const [LINE, setLINE] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_TODAY_DEF = [
+  const OBJECT_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const OBJECT_OUT_TODAY_DEF = [
-    {name:"", 목표: 0, 실제: 0},
-  ];
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -44,79 +40,18 @@ export const MoneyDashBar = () => {
         user_id: sessionId
       },
     });
-    setOBJECT_IN_TODAY(
-      resToday.data.result.in.length > 0 ? resToday.data.result.in : OBJECT_IN_TODAY_DEF
-    );
-    setOBJECT_OUT_TODAY(
-      resToday.data.result.out.length > 0 ? resToday.data.result.out : OBJECT_OUT_TODAY_DEF
+    setOBJECT_TODAY(
+      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartInToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_TODAY, array, "money");
+  const chartToday = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_IN_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-        barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <YAxis
-            type={"number"}
-            domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
-            tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
-            tick={{fill:"#666", fontSize:14}}
-          />
-          <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-            activeDot={{r: 6}}
-          />
-          <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}/>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-             wrapperStyle={{
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              left: "none",
-              fontSize: "0.8rem",
-            }}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartOutToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_TODAY, array, "money");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_OUT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -194,50 +129,18 @@ export const MoneyDashBar = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-        ["in", "out"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        )))}>
-        {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
+      "\u00A0"
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-10"}>
-        {chartInToday()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
-        {chartOutToday()}
+        {chartToday()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "in") {
+      if (SECTION === "today") {
         return LOADING ? loadingNode() : dashFragment1();
-      }
-      else if (SECTION === "today" && LINE === "out") {
-        return LOADING ? loadingNode() : dashFragment2();
       }
     };
     // 7-9. first
