@@ -233,7 +233,7 @@ export const ExerciseList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

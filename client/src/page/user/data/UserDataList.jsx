@@ -390,7 +390,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -465,7 +465,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_EXERCISE_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -547,7 +547,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -625,7 +625,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_FOOD_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_FOOD_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -697,7 +697,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -767,7 +767,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_MONEY_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_MONEY_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -844,7 +844,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -919,7 +919,7 @@ export const UserDataList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

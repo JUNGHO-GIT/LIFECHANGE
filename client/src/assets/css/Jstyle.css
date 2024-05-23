@@ -10513,3 +10513,23 @@
 .resize-none {
   resize: none !important;
 }
+
+.animation {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #eff1f3 8%, #f4f5f7 18%, #eff1f3 33%);
+  background-size: 800px 104px;
+  height: 100px;
+  position: relative;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
