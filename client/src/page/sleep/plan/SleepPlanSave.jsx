@@ -306,24 +306,20 @@ export const SleepPlanSave = () => {
         key={index}
         type={"dropdown"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
         <Div className={"d-row"}>
-          <Img src={common5} className={"w-16 h-16 pointer"}
-            onClick={() => {
-              handlerDelete(index);
-              closePopup();
-            }}
-          />
+          <Img src={common5} className={"w-16 h-16 pointer"} onClick={() => {
+            handlerDelete(index);
+            closePopup();
+          }}/>
           {translate("common-delete")}
         </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
     );
@@ -504,7 +500,7 @@ export const SleepPlanSave = () => {
     );
     // 7-12. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper border radius shadow"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
           {thirdSection()}

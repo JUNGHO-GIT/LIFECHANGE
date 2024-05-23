@@ -320,11 +320,9 @@ export const FoodPlanSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
     );

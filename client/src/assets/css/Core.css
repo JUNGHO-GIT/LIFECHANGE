@@ -19,7 +19,6 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: #ffffff;
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 1000;
@@ -34,7 +33,6 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: #ffffff;
   overflow-x: hidden;
   overflow-y: hidden;
 }
@@ -48,7 +46,6 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: #ffffff;
   overflow-x: hidden;
   overflow-y: hidden;
   animation: fadeIn 0.4s ease-in-out;

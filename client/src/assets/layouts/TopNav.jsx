@@ -176,7 +176,7 @@ export const TopNav = () => {
 
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-7vh border radius shadow-bottom"}>
+    <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
       <Card className={"block-wrapper d-row h-7vh"}>
         {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
           defaultNode()

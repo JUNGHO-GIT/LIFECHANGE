@@ -161,22 +161,11 @@ export const SleepSave = () => {
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
-            readOnly: false,
+            readOnly: true,
             startAdornment: null,
             endAdornment: null
           }}
-          onChange={(e) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: e.target.value
-            }));
-          }}>
-          {["전체", "day", "week", "month", "year"].map((item) => (
-            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
+        />
         <PopUp
           type={"innerCenter"}
           position={"center"}
@@ -334,11 +323,9 @@ export const SleepSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
     );
@@ -532,7 +519,7 @@ export const SleepSave = () => {
     );
     // 7-12. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper border radius shadow"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
           {thirdSection()}

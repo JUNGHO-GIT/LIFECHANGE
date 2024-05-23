@@ -131,7 +131,7 @@ export const BottomNav = () => {
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius shadow-top"}>
+    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
       <Card className={"block-wrapper d-row h-7vh"}>
         {defaultNode()}
       </Card>

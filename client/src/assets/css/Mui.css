@@ -19,9 +19,15 @@
   min-width: 50px !important;
 }
 [class$="MuiTab-root"] {
+  background-color: transparent !important;
+  min-width: 0px !important;
+}
+[class$="MuiBottomNavigation-root"] {
+  background-color: transparent !important;
   min-width: 0px !important;
 }
 [class$="MuiBottomNavigationAction-root"] {
+  background-color: transparent !important;
   min-width: 70px !important;
 }
 [class$="MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {

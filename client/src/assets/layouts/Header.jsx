@@ -92,7 +92,7 @@ export const Header = () => {
 
   // 7. header ------------------------------------------------------------------------------------>
   const navbarNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-0vh radius border shadow-bottom"}>
+    <Paper className={"flex-wrapper p-sticky top-0vh radius border"}>
       <Card className={"block-wrapper d-row h-7vh"}>
         {defaultNode()}
       </Card>

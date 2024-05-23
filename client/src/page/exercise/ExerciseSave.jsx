@@ -209,29 +209,18 @@ export const ExerciseSave = () => {
     const dateSection = () => (
       <Div className={"d-center"}>
         <TextField
-          select={true}
+          select={false}
           label={translate("common-dateType")}
           size={"small"}
           value={DATE.dateType || "day"}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
-            readOnly: false,
+            readOnly: true,
             startAdornment: null,
             endAdornment: null
           }}
-          onChange={(e) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: e.target.value
-            }));
-          }}>
-          {["전체", "day", "week", "month", "year"].map((item) => (
-            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
+        />
         <PopUp
           type={"innerCenter"}
           position={"center"}
@@ -450,11 +439,9 @@ export const ExerciseSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
     );

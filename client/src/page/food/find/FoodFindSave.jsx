@@ -216,7 +216,7 @@ export const FoodFindSave = () => {
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
-            readOnly: false,
+            readOnly: true,
             startAdornment: null,
             endAdornment: null
           }}
@@ -469,11 +469,9 @@ export const FoodFindSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
     );
