@@ -6,7 +6,7 @@ import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div, Img} from "../../import/ImportComponents.jsx";
-import {BottomNavigation, BottomNavigationAction, Paper} from "../../import/ImportMuis.jsx";
+import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -43,7 +43,7 @@ export const BottomNav = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-max7vh"}>
+    <Div className={"d-center"}>
       <BottomNavigation
         showLabels={true}
         value={value}
@@ -131,8 +131,10 @@ export const BottomNav = () => {
 
   // 7. navigation -------------------------------------------------------------------------------->
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
-      {defaultNode()}
+    <Paper className={"flex-wrapper p-sticky bottom-0vh border radius shadow-top"}>
+      <Card className={"block-wrapper d-row h-7vh"}>
+        {defaultNode()}
+      </Card>
     </Paper>
   );
 

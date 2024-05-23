@@ -4,7 +4,7 @@ import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {TextField, DateCalendar, MenuItem} from "../../../import/ImportMuis.jsx";
+import {TextField, DateCalendar, MenuItem, Card} from "../../../import/ImportMuis.jsx";
 import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -367,17 +367,17 @@ export const Filter = ({
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {exerciseNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
@@ -385,10 +385,10 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {exerciseNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -400,10 +400,10 @@ export const Filter = ({
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {foodNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "find" && strings?.third === "list") {
@@ -414,9 +414,9 @@ export const Filter = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
@@ -424,10 +424,10 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {foodNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -439,17 +439,17 @@ export const Filter = ({
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {moneyNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
@@ -457,10 +457,10 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
             {/* {moneyNode()} */}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -472,16 +472,16 @@ export const Filter = ({
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
@@ -489,9 +489,9 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
@@ -503,9 +503,9 @@ export const Filter = ({
     else if (strings?.first === "user") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
@@ -516,9 +516,9 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {

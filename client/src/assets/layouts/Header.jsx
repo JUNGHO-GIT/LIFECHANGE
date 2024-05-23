@@ -3,7 +3,7 @@
 import {React, useNavigate} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {PopUp, Div, Img, Icons} from "../../import/ImportComponents.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
+import {Paper, Card} from "../../import/ImportMuis.jsx";
 import {logo2, logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -89,12 +89,12 @@ export const Header = () => {
 
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
-    <Div className={"block-wrapper d-row h-max7vh"}>
-      <Div className={"d-center"} onClick={() => navigate("/calendar/list")}>
+    <Div className={"d-left"}>
+      <Div className={"d-left ms-0"}>
         <Img src={logo2} className={"w-max170 h-max30"} />
         <Img src={logo3} className={"w-max170 h-max30"} />
       </Div>
-      <Div className={"d-center ms-auto"}>
+      <Div className={"d-right ms-auto"}>
         {btnUser()}
       </Div>
     </Div>
@@ -102,8 +102,10 @@ export const Header = () => {
 
   // 7. header ------------------------------------------------------------------------------------>
   const navbarNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-0vh radius border z-1000"}>
-      {defaultNode()}
+    <Paper className={"flex-wrapper p-sticky top-0vh radius border shadow-bottom"}>
+      <Card className={"block-wrapper d-row h-7vh"}>
+        {defaultNode()}
+      </Card>
     </Paper>
   );
 

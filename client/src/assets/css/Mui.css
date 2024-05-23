@@ -4,7 +4,9 @@
   box-shadow: none !important;
 }
 [class$="MuiCard-root"] {
-  border: 0.5px solid #f0f0f0 !important
+  border: 0.5px solid #f0f0f0 !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
 }
 [class$="MuiTableCell-root"] {
   padding: 14px 14px 14px 14px !important;

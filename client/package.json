@@ -27,7 +27,7 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node --max-old-space-size=4096 ./node_modules/.bin/react-scripts start",
     "build": "react-scripts build",
     "cache": "npm cache clean -f"
   },

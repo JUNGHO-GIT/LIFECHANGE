@@ -4,7 +4,7 @@ import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
+import {Button, TextField, MenuItem, Card} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -336,11 +336,11 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
     }
@@ -349,47 +349,47 @@ export const Btn = ({
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
     }
@@ -398,64 +398,64 @@ export const Btn = ({
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "find" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowFind()}
             {btnGoToFindSave()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "find" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
     }
@@ -464,47 +464,47 @@ export const Btn = ({
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
     }
@@ -513,47 +513,47 @@ export const Btn = ({
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
             {btnGetProperty()}
-          </Div>
+          </Card>
         );
       }
     }
@@ -565,49 +565,49 @@ export const Btn = ({
       }
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowDemo()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.second === "data" && strings?.third === "set") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowDefault()}
             {btnFlowSave()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetToday()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "login") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowLogin()}
             {btnGoToSignup()}
-          </Div>
+          </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "signup") {
         return (
-          <Div className={"block-wrapper d-row h-max7vh"}>
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSignup()}
             {btnGoToLogin()}
-          </Div>
+          </Card>
         );
       }
     }

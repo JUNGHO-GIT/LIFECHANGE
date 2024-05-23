@@ -403,7 +403,7 @@ export const ExerciseDashLine = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min65vh"}>
+        <Div className={"block-wrapper h-min40vh"}>
           {firstSection()}
           <Br20/>
           {thirdSection()}
