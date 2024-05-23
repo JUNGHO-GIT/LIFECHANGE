@@ -48,7 +48,6 @@ const pw = "M7m7m7m7m7!";
 const host = "34.23.233.23";
 const port = "27017";
 const db = "LIFECHANGE";
-// mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
@@ -64,6 +63,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
+// mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
 // mongoose.set("debug", customLogger);
 
 // ------------------------------------------------------------------------------------------------>
@@ -76,7 +76,8 @@ catch (error) {
   if (error.code === "EADDRINUSE") {
     console.log(`${appPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
     app.set("port", appPort + 1);
-  } else {
+  }
+  else {
     console.error(`서버 실행 중 오류 발생: ${error}`);
   }
 }

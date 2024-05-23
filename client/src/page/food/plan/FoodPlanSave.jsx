@@ -242,7 +242,7 @@ export const FoodPlanSave = () => {
           direction={"center"}
           contents={({closePopup}) => (
             <Div className={"d-center"}>
-              {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+              {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
             </Div>
           )}>
           {(popTrigger={}) => (
@@ -276,7 +276,7 @@ export const FoodPlanSave = () => {
                       name={"TbPlus"}
                       className={"w-20 h-20 black"}
                       onClick={(e) => {
-                        COUNT.newSectionCnt < 10 ? (
+                        COUNT.newSectionCnt < 1 ? (
                           setCOUNT((prev) => ({
                             ...prev,
                             newSectionCnt: prev.newSectionCnt + 1
@@ -485,14 +485,6 @@ export const FoodPlanSave = () => {
       </Paper>
     );
   };
-
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
 
   // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (

@@ -244,14 +244,6 @@ export const MoneyPlanList = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
