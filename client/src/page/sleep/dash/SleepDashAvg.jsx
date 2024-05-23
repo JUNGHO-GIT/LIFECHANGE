@@ -96,7 +96,13 @@ export const SleepDashAvg = () => {
             </Bar>
           )}
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -161,7 +167,13 @@ export const SleepDashAvg = () => {
             </Bar>
           )}
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",

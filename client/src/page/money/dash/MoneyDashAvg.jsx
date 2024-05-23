@@ -89,7 +89,13 @@ export const MoneyDashAvg = () => {
             <Bar dataKey={"지출"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -148,7 +154,13 @@ export const MoneyDashAvg = () => {
             <Bar dataKey={"지출"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",

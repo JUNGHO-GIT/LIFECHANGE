@@ -83,7 +83,13 @@ export const FoodDashBar = () => {
             barSize={20}>
           </Bar>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kcal`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -141,7 +147,13 @@ export const FoodDashBar = () => {
           <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} g`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",

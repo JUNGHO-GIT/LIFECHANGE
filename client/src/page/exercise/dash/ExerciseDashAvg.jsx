@@ -98,9 +98,13 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            label={`날짜`}
-            isAnimationActive={true}
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} vol`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -154,7 +158,13 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -209,7 +219,13 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} vol`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -263,7 +279,13 @@ export const ExerciseDashAvg = () => {
           />
           <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -301,18 +323,18 @@ export const ExerciseDashAvg = () => {
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"month"}>월간</MenuItem>
-        <MenuItem value={"year"}>연간</MenuItem>
-      </TextField>
+          select={true}
+          type={"text"}
+          size={"small"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"month"}>월간</MenuItem>
+          <MenuItem value={"year"}>연간</MenuItem>
+        </TextField>
       </Div>
     );
     // 7-5. dropdown

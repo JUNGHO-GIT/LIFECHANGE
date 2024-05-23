@@ -96,7 +96,13 @@ export const ExerciseDashScatter = () => {
             barSize={20}
           />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kg`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -159,7 +165,13 @@ export const ExerciseDashScatter = () => {
             line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
           />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kg`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -222,7 +234,13 @@ export const ExerciseDashScatter = () => {
             line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
           />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kg`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",

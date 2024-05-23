@@ -98,7 +98,13 @@ export const FoodDashLine = () => {
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kcal`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -156,7 +162,13 @@ export const FoodDashLine = () => {
           <Line dataKey={"지방"} type={"monotone"} stroke={"#ffc658"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} g`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -211,7 +223,13 @@ export const FoodDashLine = () => {
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} kcal`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -269,7 +287,13 @@ export const FoodDashLine = () => {
           <Line dataKey={"지방"} type={"monotone"} stroke={"#ffc658"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} g`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",

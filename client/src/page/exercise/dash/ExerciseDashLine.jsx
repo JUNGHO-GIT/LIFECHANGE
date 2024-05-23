@@ -99,7 +99,13 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} vol`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -154,7 +160,13 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -209,7 +221,13 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()} vol`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
@@ -264,7 +282,13 @@ export const ExerciseDashLine = () => {
           <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
           <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}`)}
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0].payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
             contentStyle={{
               borderRadius:"10px",
