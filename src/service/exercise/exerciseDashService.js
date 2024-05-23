@@ -25,6 +25,7 @@ export const scatterToday = async (
   finalResult = [
     {
       name: "체중",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
       실제: intFormat(findReal?.[0]?.exercise_body_weight)
     }
@@ -55,6 +56,7 @@ export const scatterWeek = async (
   finalResult = [
     {
       name: "체중",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
       실제: intFormat(findReal?.[0]?.exercise_body_weight)
     }
@@ -85,6 +87,7 @@ export const scatterMonth = async (
   finalResult = [
     {
       name: "체중",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
       실제: intFormat(findReal?.[0]?.exercise_body_weight)
     }

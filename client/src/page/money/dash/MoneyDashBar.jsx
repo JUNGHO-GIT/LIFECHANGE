@@ -29,7 +29,7 @@ export const MoneyDashBar = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 

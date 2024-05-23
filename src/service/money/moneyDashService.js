@@ -29,11 +29,13 @@ export const barToday = async (
   finalResult = [
     {
       name: "수입",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.money_plan_in),
       실제: intFormat(findReal?.[0]?.money_total_in)
     },
     {
       name: "지출",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.money_plan_out),
       실제: intFormat(findReal?.[0]?.money_total_out)
     }

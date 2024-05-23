@@ -29,10 +29,10 @@ export const FoodDashBar = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_TODAY_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const OBJECT_NUT_TODAY_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState(OBJECT_KCAL_TODAY_DEF);
   const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEF);

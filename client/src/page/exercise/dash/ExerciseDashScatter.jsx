@@ -24,13 +24,13 @@ export const ExerciseDashScatter = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const OBJECT_TODAY_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const OBJECT_WEEK_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", 목표: 0, 실제: 0},
+    {name:"", date:"", 목표: 0, 실제: 0},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);

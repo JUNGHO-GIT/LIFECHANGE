@@ -29,16 +29,19 @@ export const barToday = async (
   finalResult = [
     {
       name: "취침",
+      date: dateStart,
       목표: timeFormat(findPlan?.[0]?.sleep_plan_night),
       실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_night)
     },
     {
       name: "수면",
+      date: dateStart,
       목표: timeFormat(findPlan?.[0]?.sleep_plan_time),
       실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_time)
     },
     {
       name: "기상",
+      date: dateStart,
       목표: timeFormat(findPlan?.[0]?.sleep_plan_morning),
       실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_morning)
     }

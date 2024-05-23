@@ -36,16 +36,19 @@ export const barToday = async (
   finalResultNut = [
     {
       name: "탄수화물",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.food_plan_carb),
       실제: intFormat(findReal?.[0]?.food_total_carb)
     },
     {
       name: "단백질",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.food_plan_protein),
       실제: intFormat(findReal?.[0]?.food_total_protein)
     },
     {
       name: "지방",
+      date: dateStart,
       목표: intFormat(findPlan?.[0]?.food_plan_fat),
       실제: intFormat(findReal?.[0]?.food_total_fat)
     }
