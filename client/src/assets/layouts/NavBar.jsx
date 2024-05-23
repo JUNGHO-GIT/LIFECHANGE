@@ -135,7 +135,7 @@ export const NavBar = () => {
           )}
         </PopUp>
       </Div>
-      <Div className={"d-center ms-auto me-10"}>
+      <Div className={"d-center ms-auto"}>
         <PopUp
           type={"dropdown"}
           position={"bottom"}

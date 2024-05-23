@@ -209,10 +209,10 @@ export const FoodFindSave = () => {
     const dateSection = () => (
       <Div className={"d-center"}>
         <TextField
-          select={true}
+          select={false}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType || "day"}
+          value={"day"}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
@@ -220,18 +220,7 @@ export const FoodFindSave = () => {
             startAdornment: null,
             endAdornment: null
           }}
-          onChange={(e) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: e.target.value
-            }));
-          }}>
-          {["전체", "day", "week", "month", "year"].map((item) => (
-            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
+        />
         <PopUp
           type={"innerCenter"}
           position={"center"}

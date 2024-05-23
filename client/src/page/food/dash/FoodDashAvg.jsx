@@ -313,7 +313,6 @@ export const FoodDashAvg = () => {
         select={true}
         type={"text"}
         size={"small"}
-        className={"w-20vw"}
         variant={"outlined"}
         value={SECTION}
         onChange={(e) => (
@@ -327,11 +326,10 @@ export const FoodDashAvg = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <Div className={"d-center"}>
-        <PopUp
+      <PopUp
         type={"dash"}
         position={"bottom"}
-        direction={"left"}
+        direction={"center"}
         contents={({closePopup}) => (
         ["kcal", "nut"]?.map((key, index) => (
           <FormGroup key={index}>
@@ -345,39 +343,35 @@ export const FoodDashAvg = () => {
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
-        ))
-        )}>
+        )))}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}
-          />
+          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
         )}
       </PopUp>
-      </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartKcalMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartNutMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartKcalYear()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartNutYear()}
       </Card>
     );
@@ -398,10 +392,10 @@ export const FoodDashAvg = () => {
     }
     // 7-9. first
     const firstSection = () => (
-      <Div className={"d-center"}>
-        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
+      <Div className={"d-center mt-n10"}>
+        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

@@ -201,7 +201,6 @@ export const SleepDashLine = () => {
         select={true}
         type={"text"}
         size={"small"}
-        className={"w-20vw"}
         variant={"outlined"}
         value={SECTION}
         onChange={(e) => (
@@ -215,46 +214,41 @@ export const SleepDashLine = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"dash"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            ["취침", "기상", "수면"]?.map((key, index) => (
-              <FormGroup key={index}>
-                <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-                  if (PART.includes(key)) {
-                    setPART(PART?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setPART([...PART, key]);
-                  }
-                }
-                }/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))
-          )}>
-          {(popTrigger={}) => (
-            <Img src={common3} className={"w-24 h-24 pointer"}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget)
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <PopUp
+        type={"dash"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+        ["취침", "기상", "수면"]?.map((key, index) => (
+          <FormGroup key={index}>
+            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+              if (PART.includes(key)) {
+                setPART(PART?.filter((item) => (item !== key)));
+              }
+              else {
+                setPART([...PART, key]);
+              }
+            }
+            }/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
+        )))}>
+        {(popTrigger={}) => (
+          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
+        )}
+      </PopUp>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartMonth()}
       </Card>
     );
@@ -269,10 +263,10 @@ export const SleepDashLine = () => {
     }
     // 7-9. first
     const firstSection = () => (
-      <Div className={"d-center"}>
-        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
+      <Div className={"d-center mt-n10"}>
+        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

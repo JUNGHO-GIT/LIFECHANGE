@@ -154,10 +154,10 @@ export const SleepSave = () => {
     const dateSection = () => (
       <Div className={"d-center"}>
         <TextField
-          select={true}
+          select={false}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType || "day"}
+          value={"day"}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{

@@ -310,7 +310,6 @@ export const FoodDashLine = () => {
           select={true}
           type={"text"}
           size={"small"}
-          className={"w-20vw"}
           variant={"outlined"}
           value={SECTION}
           onChange={(e) => (
@@ -324,57 +323,52 @@ export const FoodDashLine = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"dash"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            ["kcal", "nut"]?.map((key, index) => (
-              <FormGroup key={index}>
-                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    setLINE("");
-                  }
-                  else {
-                    setLINE(key);
-                  }
-                }}/>} label={key} labelPlacement={"start"}>
-                </FormControlLabel>
-              </FormGroup>
-            ))
-          )}>
-          {(popTrigger={}) => (
-            <Img src={common3} className={"w-24 h-24 pointer"}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget)
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <PopUp
+        type={"dash"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+        ["kcal", "nut"]?.map((key, index) => (
+          <FormGroup key={index}>
+            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+              if (LINE === key) {
+                setLINE("");
+              }
+              else {
+                setLINE(key);
+              }
+            }}/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
+        )))}>
+        {(popTrigger={}) => (
+          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}/>
+        )}
+      </PopUp>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartKcalWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartKcalMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartNutWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card variant={"outlined"} className={"p-10"}>
         {chartNutMonth()}
       </Card>
     );
@@ -395,10 +389,10 @@ export const FoodDashLine = () => {
     }
     // 7-9. first
     const firstSection = () => (
-      <Div className={"d-center"}>
-        <Div className={"ms-auto ms-10"}>{dropdownSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-10"}>{dropdownSection2()}</Div>
+      <Div className={"d-center mt-n10"}>
+        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third
