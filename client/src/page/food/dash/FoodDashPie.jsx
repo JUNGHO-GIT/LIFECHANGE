@@ -508,7 +508,7 @@ export const FoodDashPie = () => {
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
-                setLINE("");
+                return;
               }
               else {
                 setLINE(key);

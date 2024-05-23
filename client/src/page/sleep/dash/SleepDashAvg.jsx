@@ -64,14 +64,14 @@ export const SleepDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -80,8 +80,9 @@ export const SleepDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {PART.includes("취침") && (
             <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
@@ -121,7 +122,6 @@ export const SleepDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -135,14 +135,14 @@ export const SleepDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -151,8 +151,9 @@ export const SleepDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {PART.includes("취침") && (
             <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
@@ -192,7 +193,6 @@ export const SleepDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -227,6 +227,7 @@ export const SleepDashAvg = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
+      <Div className={"d-center"}>
       <PopUp
         type={"dash"}
         position={"bottom"}
@@ -234,13 +235,19 @@ export const SleepDashAvg = () => {
         contents={({closePopup}) => (
         ["취침", "기상", "수면"]?.map((key, index) => (
           <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-              if (PART.includes(key)) {
-                setPART(PART?.filter((item) => (item !== key)));
-              }
-              else {
-                setPART([...PART, key]);
-              }
+            <FormControlLabel
+              control={<Switch checked={PART.includes(key)} onChange={() => {
+                if (PART.includes(key)) {
+                  if(PART.length > 1) {
+                    setPART(PART?.filter((item) => (item !== key)));
+                  }
+                  else {
+                    return;
+                  }
+                }
+                else {
+                  setPART([...PART, key]);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
@@ -251,6 +258,7 @@ export const SleepDashAvg = () => {
           }}/>
         )}
       </PopUp>
+    </Div>
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (

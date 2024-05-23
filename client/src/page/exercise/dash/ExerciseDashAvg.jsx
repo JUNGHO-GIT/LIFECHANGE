@@ -78,13 +78,13 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -93,8 +93,9 @@ export const ExerciseDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -123,7 +124,6 @@ export const ExerciseDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -138,13 +138,13 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -153,8 +153,9 @@ export const ExerciseDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -183,7 +184,6 @@ export const ExerciseDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -198,14 +198,14 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_YEAR} barGap={8} barCategoryGap={"20%"}
-          margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
         >
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -214,8 +214,9 @@ export const ExerciseDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -244,7 +245,6 @@ export const ExerciseDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -259,13 +259,13 @@ export const ExerciseDashAvg = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_YEAR} barGap={8} barCategoryGap={"20%"}
-          margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -274,8 +274,9 @@ export const ExerciseDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"유산소"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -304,7 +305,6 @@ export const ExerciseDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -347,12 +347,12 @@ export const ExerciseDashAvg = () => {
         ["볼륨", "유산소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>

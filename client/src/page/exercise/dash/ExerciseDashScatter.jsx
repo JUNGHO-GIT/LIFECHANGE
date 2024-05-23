@@ -70,14 +70,14 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -86,8 +86,9 @@ export const ExerciseDashScatter = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"목표"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
@@ -121,7 +122,6 @@ export const ExerciseDashScatter = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -135,14 +135,14 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -151,8 +151,9 @@ export const ExerciseDashScatter = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Scatter
             dataKey={"목표"}
@@ -190,7 +191,6 @@ export const ExerciseDashScatter = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -204,14 +204,14 @@ export const ExerciseDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -220,8 +220,9 @@ export const ExerciseDashScatter = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Scatter
             dataKey={"목표"}
@@ -259,7 +260,6 @@ export const ExerciseDashScatter = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -274,7 +274,7 @@ export const ExerciseDashScatter = () => {
     const titleSection = () => (
       <Div className={"d-center"}>체중 목표</Div>
     );
-    // 7-5. dropdown
+    // 7-6. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -292,6 +292,10 @@ export const ExerciseDashScatter = () => {
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
       </Div>
+    );
+    // 7-6. dropdown
+    const dropdownSection2 = () => (
+      " "
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
@@ -328,7 +332,7 @@ export const ExerciseDashScatter = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}></Div>
+        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

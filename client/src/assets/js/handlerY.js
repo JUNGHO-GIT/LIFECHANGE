@@ -25,8 +25,8 @@ export const handlerY = (
   else if (topValue > 500) {
     tickInterval = 500;
   }
-  else if (topValue > 100) {
-    tickInterval = 100;
+  else if (topValue > 1000) {
+    tickInterval = 1000;
   }
   for (let i = 0; i <= topValue; i += tickInterval) {
     ticks.push(i);

@@ -63,14 +63,14 @@ export const MoneyDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -79,8 +79,9 @@ export const MoneyDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {LINE.includes("수입") && (
             <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -110,11 +111,10 @@ export const MoneyDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -128,14 +128,14 @@ export const MoneyDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_YEAR} margin={{top: 30, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -144,8 +144,9 @@ export const MoneyDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {LINE.includes("수입") && (
             <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -179,7 +180,6 @@ export const MoneyDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -222,12 +222,17 @@ export const MoneyDashAvg = () => {
         ["수입", "지출"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
-              if (LINE.includes(key)) {
-                setLINE(LINE?.filter((item) => (item !== key)));
-              }
-              else {
-                setLINE([...LINE, key]);
-              }
+                if (LINE.includes(key)) {
+                  if(LINE.length > 1) {
+                    setLINE(LINE?.filter((item) => (item !== key)));
+                  }
+                  else {
+                    return;
+                  }
+                }
+                else {
+                  setLINE([...LINE, key]);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>

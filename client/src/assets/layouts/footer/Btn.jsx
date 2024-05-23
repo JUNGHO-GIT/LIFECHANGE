@@ -339,7 +339,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -351,7 +350,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -360,7 +358,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -370,7 +367,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -378,7 +374,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -388,7 +383,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -400,7 +394,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -418,7 +411,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -426,7 +418,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -436,7 +427,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -444,7 +434,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -454,7 +443,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -466,7 +454,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -475,7 +462,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -485,7 +471,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -493,7 +478,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -503,7 +487,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -515,7 +498,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -524,7 +506,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -534,7 +515,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -542,7 +522,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
             {btnGetProperty()}
           </Card>
         );
@@ -552,7 +531,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
             {btnGoToList()}
-            {btnGetProperty()}
           </Card>
         );
       }
@@ -582,7 +560,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
-            {btnGetToday()}
           </Card>
         );
       }

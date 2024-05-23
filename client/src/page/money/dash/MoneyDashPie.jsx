@@ -508,7 +508,7 @@ export const MoneyDashPie = () => {
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
               if (LINE === key) {
-                setLINE("");
+                return;
               }
               else {
                 setLINE(key);

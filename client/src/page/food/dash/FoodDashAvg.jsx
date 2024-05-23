@@ -77,14 +77,14 @@ export const FoodDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -93,8 +93,9 @@ export const FoodDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -119,11 +120,10 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -137,14 +137,14 @@ export const FoodDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -153,8 +153,9 @@ export const FoodDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -181,11 +182,10 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -199,14 +199,14 @@ export const FoodDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -215,8 +215,9 @@ export const FoodDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -245,7 +246,7 @@ export const FoodDashAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
+               
               fontSize: "0.8rem",
             }}
           />
@@ -259,14 +260,14 @@ export const FoodDashAvg = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -275,8 +276,9 @@ export const FoodDashAvg = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
           <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -303,11 +305,10 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -349,13 +350,15 @@ export const FoodDashAvg = () => {
         contents={({closePopup}) => (
         ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
+            <FormControlLabel
+              control={<Switch checked={LINE === key}
+              onChange={() => {
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
@@ -374,15 +377,15 @@ export const FoodDashAvg = () => {
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
-        {chartNutMonth()}
-      </Card>
-    );
-    // 7-7. fragment
     const dashFragment3 = (i) => (
       <Card variant={"outlined"} className={"p-10"}>
         {chartKcalYear()}
+      </Card>
+    );
+    // 7-7. fragment
+    const dashFragment2 = (i) => (
+      <Card variant={"outlined"} className={"p-10"}>
+        {chartNutMonth()}
       </Card>
     );
     // 7-7. fragment

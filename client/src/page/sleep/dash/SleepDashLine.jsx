@@ -63,14 +63,14 @@ export const SleepDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -79,8 +79,9 @@ export const SleepDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {PART.includes("취침") && (
             <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
@@ -120,7 +121,6 @@ export const SleepDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -134,14 +134,14 @@ export const SleepDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -150,8 +150,9 @@ export const SleepDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           {PART.includes("취침") && (
             <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
@@ -191,7 +192,6 @@ export const SleepDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -233,15 +233,23 @@ export const SleepDashLine = () => {
         contents={({closePopup}) => (
         ["취침", "기상", "수면"]?.map((key, index) => (
           <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-              if (PART.includes(key)) {
-                setPART(PART?.filter((item) => (item !== key)));
-              }
-              else {
-                setPART([...PART, key]);
-              }
-            }
-            }/>} label={key} labelPlacement={"start"}>
+            <FormControlLabel
+              control={<Switch checked={PART.includes(key)}
+              onChange={() => {
+                if (PART.includes(key)) {
+                  if(PART.length > 1) {
+                    setPART(PART?.filter((item) => (item !== key)));
+                  }
+                  else {
+                    return;
+                  }
+                }
+                else {
+                  setPART([...PART, key]);
+                }
+              }}/>}
+              label={key}
+              labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>

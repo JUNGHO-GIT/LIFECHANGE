@@ -77,7 +77,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -94,6 +94,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
+            width={30}
           />
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}}/>
@@ -119,11 +120,10 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -137,7 +137,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_NUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <LineChart data={OBJECT_NUT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -154,6 +154,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
+            width={30}
           />
           <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
@@ -183,11 +184,10 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -201,7 +201,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -219,6 +219,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
+            width={30}
           />
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
@@ -244,11 +245,10 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -262,7 +262,7 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+        <LineChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
@@ -279,6 +279,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
+            width={30}
           />
           <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
@@ -308,11 +309,10 @@ export const FoodDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -355,12 +355,12 @@ export const FoodDashLine = () => {
         ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>

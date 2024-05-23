@@ -77,14 +77,14 @@ export const ExerciseDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -93,8 +93,9 @@ export const ExerciseDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
@@ -124,7 +125,6 @@ export const ExerciseDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -138,14 +138,14 @@ export const ExerciseDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -154,8 +154,9 @@ export const ExerciseDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
@@ -185,7 +186,6 @@ export const ExerciseDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -199,14 +199,14 @@ export const ExerciseDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -215,8 +215,9 @@ export const ExerciseDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
           strokeWidth={2}/>
@@ -246,7 +247,6 @@ export const ExerciseDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -260,14 +260,14 @@ export const ExerciseDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -276,8 +276,9 @@ export const ExerciseDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
           strokeWidth={2}/>
@@ -307,7 +308,6 @@ export const ExerciseDashLine = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -350,12 +350,12 @@ export const ExerciseDashLine = () => {
         ["볼륨", "유산소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>

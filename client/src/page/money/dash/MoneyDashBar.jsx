@@ -51,14 +51,14 @@ export const MoneyDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -67,8 +67,9 @@ export const MoneyDashBar = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
             activeDot={{r: 6}}
@@ -97,11 +98,10 @@ export const MoneyDashBar = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />

@@ -58,13 +58,13 @@ export const FoodDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}} barGap={80} barCategoryGap={"20%"}>
+        <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}} barGap={80} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -73,8 +73,9 @@ export const FoodDashBar = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Bar dataKey={"목표"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}>
@@ -108,7 +109,6 @@ export const FoodDashBar = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -122,14 +122,14 @@ export const FoodDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_TODAY, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+        <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
           />
           <YAxis
@@ -138,8 +138,9 @@ export const FoodDashBar = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
             tickLine={false}
-            axisLine={{stroke:"#e0e0e0"}}
+            axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            width={30}
           />
           <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
             activeDot={{r: 6}}
@@ -172,7 +173,6 @@ export const FoodDashBar = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              left: "none",
               fontSize: "0.8rem",
             }}
           />
@@ -214,12 +214,12 @@ export const FoodDashBar = () => {
         ["칼로리", "영양소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                setLINE("");
-              }
-              else {
-                setLINE(key);
-              }
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
