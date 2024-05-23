@@ -136,7 +136,7 @@ export const FoodPlanSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. date
+    // 7-1. date (plan = 유형 o)
     const dateSection = () => (
       <Div className={"d-center"}>
         <TextField

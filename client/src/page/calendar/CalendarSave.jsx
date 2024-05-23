@@ -181,19 +181,6 @@ export const CalendarSave = () => {
     // 7-1. date
     const dateSection = () => (
       <Div className={"d-center"}>
-        <TextField
-          select={true}
-          label={translate("common-dateType")}
-          size={"small"}
-          value={DATE.dateType || "day"}
-          variant={"outlined"}
-          className={"w-20vw me-3vw"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: null,
-            endAdornment: null
-          }}
-        />
         <PopUp
           type={"innerCenter"}
           position={"center"}
@@ -248,7 +235,7 @@ export const CalendarSave = () => {
               label={"기간"}
               variant={"outlined"}
               value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-              className={"w-60vw"}
+              className={"w-86vw"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (

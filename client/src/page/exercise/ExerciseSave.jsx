@@ -208,19 +208,6 @@ export const ExerciseSave = () => {
     // 7-1. date
     const dateSection = () => (
       <Div className={"d-center"}>
-        <TextField
-          select={false}
-          label={translate("common-dateType")}
-          size={"small"}
-          value={"day"}
-          variant={"outlined"}
-          className={"w-20vw me-3vw"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: null,
-            endAdornment: null
-          }}
-        />
         <PopUp
           type={"innerCenter"}
           position={"center"}
@@ -275,7 +262,7 @@ export const ExerciseSave = () => {
               label={"기간"}
               variant={"outlined"}
               value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-              className={"w-60vw"}
+              className={"w-86vw"}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -428,15 +415,15 @@ export const ExerciseSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            <Img src={common5} className={"w-16 h-16 pointer"}
-              onClick={() => {
-                handlerDelete(index);
-                closePopup();
-              }}
-            />
-            {translate("common-delete")}
-          </Div>
+        <Div className={"d-center"}>
+          <Img src={common5} className={"w-16 h-16 pointer"}
+            onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}
+          />
+          {translate("common-delete")}
+        </Div>
         )}>
         {(popTrigger={}) => (
           <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
