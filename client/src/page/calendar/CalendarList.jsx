@@ -138,14 +138,15 @@ export const CalendarList = () => {
     // 7-7. table
     const tableFragment = (i) => (
       <Calendar
-        key={`calendar-${i}-${DATE.dateStart}`}
+        key={`${i}-${DATE.dateStart}`}
         locale={"ko"}
         view={"month"}
         value={new Date()}
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} />}
+        prevLabel={<Icons name={"TbArrowLeft"}
+          className={"w-24 h-24"} />}
         nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} />}
         prev2Label={null}
         next2Label={null}
@@ -161,15 +162,14 @@ export const CalendarList = () => {
           const week = ["일", "월", "화", "수", "목", "금", "토"];
           return week[day];
         }}
+        onClickDay={null}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           setDATE((prev) => ({
             ...prev,
-            dateType: "전체",
-            dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
-            dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
+            dateStart: moment(value).startOf("month").format("YYYY-MM-DD"),
+            dateEnd: moment(value).endOf("month").format("YYYY-MM-DD")
           }));
         }}
-        onClickDay={(date) => {}}
         tileClassName={({date, view}) => {
           // 3개 이상일 경우
           const calendarForDates = OBJECT?.filter((calendar) => (
