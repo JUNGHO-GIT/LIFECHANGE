@@ -6,12 +6,12 @@ import {newDate} from "../../assets/js/date.js";
 
 // 0. exist --------------------------------------------------------------------------------------->
 export const exist = {
+
+  // sleep_section 의 length 가 0 이상인 경우
   exist: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param
   ) => {
-
-    // sleep_section 의 length 가 0 이상인 경우
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
@@ -35,7 +35,6 @@ export const exist = {
         existDate: {$addToSet: "$sleep_dateStart"}
       }}
     ]);
-
     return finalResult;
   }
 };

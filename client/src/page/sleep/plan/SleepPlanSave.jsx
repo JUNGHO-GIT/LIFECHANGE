@@ -8,10 +8,10 @@ import {moment, axios} from "../../../import/ImportLibs.jsx";
 import {useTime, useDate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Calendar, Br20} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
+import {AdapterMoment, LocalizationProvider, PickersDay} from "../../../import/ImportMuis.jsx";
 import {common1, common2, common3_1} from "../../../import/ImportImages.jsx";
 import {common5, sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
@@ -34,6 +34,14 @@ export const SleepPlanSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
+  const [LOADING, setLOADING] = useState(false);
+  const [isExist, setIsExist] = useState([""]);
+  const [MORE, setMORE] = useState(true);
+  const sessionId = sessionStorage.getItem("sessionId");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -53,13 +61,6 @@ export const SleepPlanSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
-
-  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     sleep_plan_number: 0,
@@ -76,6 +77,23 @@ export const SleepPlanSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    setLOADING(true);
+    const res = await axios.get(`${URL_OBJECT}/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
+          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+        },
+      },
+    });
+    setIsExist(res.data.result || []);
+    setLOADING(false);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -167,35 +185,76 @@ export const SleepPlanSave = () => {
           position={"center"}
           direction={"center"}
           contents={({closePopup}) => (
-          <Div className={"d-center w-80vw"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["year", "day"]}
-                readOnly={false}
-                defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-60vh"}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    dateStart: moment(date).format("YYYY-MM-DD"),
-                    dateEnd: moment(date).format("YYYY-MM-DD")
-                  }));
-                }}
-              />
-            </LocalizationProvider>
-          </Div>
-        )}>
+          LOADING ? (
+            <Div className={"d-column w-80vw h-55vh"}>
+              <Div className={"loader"} />
+            </Div>
+          ) : (
+            <Div className={"d-center w-80vw h-60vh"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["year", "day"]}
+                  readOnly={false}
+                  defaultValue={moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                      return (
+                        <Badge
+                          key={props.day.toString()}
+                          badgeContent={""}
+                          slotProps={{
+                            badge: {style: {
+                              width: 3,
+                              height: 3,
+                              padding: 0,
+                              top: 8,
+                              left: 30,
+                              backgroundColor: isSelected ? "#0088FE" : undefined,
+                            }}
+                          }}
+                        >
+                          <PickersDay
+                            {...other}
+                            day={day}
+                            outsideCurrentMonth={outsideCurrentMonth}
+                          />
+                        </Badge>
+                      )
+                    }
+                  }}
+                  onMonthChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
+                      dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
+                    }));
+                  }}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD"),
+                      dateEnd: moment(date).format("YYYY-MM-DD")
+                    }));
+                  }}
+                />
+              </LocalizationProvider>
+            </Div>
+          ))}>
           {(popTrigger={}) => (
             <TextField
               type={"text"}
               size={"small"}
               label={"기간"}
               variant={"outlined"}
-              value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+              value={`${DATE.dateStart}~${DATE.dateEnd}`}
               className={"w-60vw"}
               InputProps={{
                 readOnly: true,
+                className: "fs-0-8rem",
                 startAdornment: (
                   <Img src={common1} className={"w-16 h-16"} />
                 ),

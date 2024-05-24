@@ -4,6 +4,41 @@ import mongoose from "mongoose";
 import {Food} from "../../schema/food/Food.js";
 import {newDate} from "../../assets/js/date.js";
 
+// 0. exist --------------------------------------------------------------------------------------->
+export const exist = {
+
+  // food_section 의 length 가 0 이상인 경우
+  exist: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        food_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        food_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...(dateType_param === "전체" ? {} : {
+          food_dateType: dateType_param
+        }),
+      }},
+      {$match: {$expr: {
+        $gt: [{$size: "$food_section"}, 0]
+      }}},
+      {$group: {
+        _id: null,
+        existDate: {$addToSet: "$food_dateStart"}
+      }}
+    ]);
+    return finalResult;
+  }
+};
+
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (

@@ -4,6 +4,41 @@ import mongoose from "mongoose";
 import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 import {newDate} from "../../assets/js/date.js";
 
+// 0. exist --------------------------------------------------------------------------------------->
+export const exist = {
+
+  // sleep_dateType 이 존재하는 경우
+  exist: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await SleepPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_plan_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        sleep_plan_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...(dateType_param === "전체" ? {} : {
+          sleep_plan_dateType: dateType_param
+        }),
+      }},
+      {$match: {
+        sleep_plan_dateType: {$exists: true}
+      }},
+      {$group: {
+        _id: null,
+        existDate: {$addToSet: "$sleep_plan_dateStart"}
+      }}
+    ]);
+    return finalResult;
+  }
+};
+
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
 

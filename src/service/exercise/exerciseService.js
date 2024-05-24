@@ -1,6 +1,28 @@
 // exerciseService.js
 
 import * as repository from "../../repository/exercise/exerciseRepository.js";
+import {log} from "../../assets/js/utils.js";
+
+// 0. exist --------------------------------------------------------------------------------------->
+export const exist = async (
+  user_id_param, DATE_param
+) => {
+
+  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
+
+  const findResult = await repository.exist.exist(
+    user_id_param, dateType, dateStart, dateEnd
+  );
+
+  // sort by date 날짜 순으로 정렬
+  const finalResult = findResult[0]?.existDate?.sort((a, b) => {
+    return a > b ? 1 : a < b ? -1 : 0;
+  });
+
+  return finalResult;
+};
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = async (

@@ -32,6 +32,14 @@ export const SleepSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
+  const [LOADING, setLOADING] = useState(false);
+  const [isExist, setIsExist] = useState([""]);
+  const [MORE, setMORE] = useState(true);
+  const sessionId = sessionStorage.getItem("sessionId");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -49,14 +57,6 @@ export const SleepSave = () => {
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
-  const [isExist, setIsExist] = useState([""]);
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -169,25 +169,6 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
-    const serverDay = (props) => {
-      const {outsideCurrentMonth, day, ...other} = props;
-      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
-      return (
-        <Badge
-          key={props.day.toString()}
-          badgeContent={""}
-          color={isSelected ? "primary" : undefined}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right"
-          }}
-        >
-          <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day}
-        </Badge>
-      );
-    }
-
     // 7-1. date
     const dateSection = () => (
       <Div className={"d-center"}>
@@ -201,16 +182,41 @@ export const SleepSave = () => {
               <Div className={"loader"} />
             </Div>
           ) : (
-            <Div className={"d-center w-80vw"}>
+            <Div className={"d-center w-80vw h-60vh"}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DateCalendar
                   timezone={"Asia/Seoul"}
                   views={["year", "day"]}
                   readOnly={false}
                   defaultValue={moment(DATE.dateStart)}
-                  className={"radius border h-60vh"}
+                  className={"radius border"}
                   slots={{
-                    day: serverDay
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                      return (
+                        <Badge
+                          key={props.day.toString()}
+                          badgeContent={""}
+                          slotProps={{
+                            badge: {style: {
+                              width: 3,
+                              height: 3,
+                              padding: 0,
+                              top: 8,
+                              left: 30,
+                              backgroundColor: isSelected ? "#0088FE" : undefined,
+                            }}
+                          }}
+                        >
+                          <PickersDay
+                            {...other}
+                            day={day}
+                            outsideCurrentMonth={outsideCurrentMonth}
+                          />
+                        </Badge>
+                      )
+                    }
                   }}
                   onMonthChange={(date) => {
                     setDATE((prev) => ({
@@ -225,31 +231,32 @@ export const SleepSave = () => {
                       dateStart: moment(date).format("YYYY-MM-DD"),
                       dateEnd: moment(date).format("YYYY-MM-DD")
                     }));
+                    closePopup();
                   }}
                 />
               </LocalizationProvider>
             </Div>
           ))}>
-        {(popTrigger={}) => (
-          <TextField
-            type={"text"}
-            size={"small"}
-            label={"기간"}
-            variant={"outlined"}
-            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={common1} className={"w-16 h-16"} />
-              ),
-              endAdornment: null
-            }}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
-          />
-        )}
+          {(popTrigger={}) => (
+            <TextField
+              type={"text"}
+              size={"small"}
+              label={"날짜"}
+              variant={"outlined"}
+              value={`${DATE.dateStart}`}
+              className={"w-86vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={common1} className={"w-16 h-16"} />
+                ),
+                endAdornment: null
+              }}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget);
+              }}
+            />
+          )}
         </PopUp>
       </Div>
     );

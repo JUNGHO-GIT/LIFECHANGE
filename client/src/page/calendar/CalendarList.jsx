@@ -22,6 +22,14 @@ export const CalendarList = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
+  // 2-2. useState -------------------------------------------------------------------------------->
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
+  const [LOADING, setLOADING] = useState(false);
+  const [isExist, setIsExist] = useState([""]);
+  const [MORE, setMORE] = useState(true);
+  const sessionId = sessionStorage.getItem("sessionId");
+
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
@@ -46,10 +54,6 @@ export const CalendarList = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{

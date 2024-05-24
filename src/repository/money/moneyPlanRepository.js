@@ -4,6 +4,41 @@ import mongoose from "mongoose";
 import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
 import {newDate} from "../../assets/js/date.js";
 
+// 0. exist --------------------------------------------------------------------------------------->
+export const exist = {
+
+  // money_dateType 이 존재하는 경우
+  exist: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await MoneyPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        money_plan_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        money_plan_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...(dateType_param === "전체" ? {} : {
+          money_plan_dateType: dateType_param
+        }),
+      }},
+      {$match: {
+        money_plan_dateType: {$exists: true}
+      }},
+      {$group: {
+        _id: null,
+        existDate: {$addToSet: "$money_plan_dateStart"}
+      }}
+    ]);
+    return finalResult;
+  }
+};
+
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
   cnt: async (

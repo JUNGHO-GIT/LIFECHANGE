@@ -4,6 +4,41 @@ import mongoose from "mongoose";
 import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
 import {newDate} from "../../assets/js/date.js";
 
+// 0. exist --------------------------------------------------------------------------------------->
+export const exist = {
+
+  // exercise_dateType 이 존재하는 경우
+  exist: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await ExercisePlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        exercise_plan_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        exercise_plan_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...(dateType_param === "전체" ? {} : {
+          exercise_plan_dateType: dateType_param
+        }),
+      }},
+      {$match: {
+        exercise_plan_dateType: {$exists: true}
+      }},
+      {$group: {
+        _id: null,
+        existDate: {$addToSet: "$exercise_plan_dateStart"}
+      }}
+    ]);
+    return finalResult;
+  }
+};
+
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
   cnt: async (

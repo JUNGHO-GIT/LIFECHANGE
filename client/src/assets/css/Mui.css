@@ -18,6 +18,10 @@
 [class$="MuiButton-root"] {
   min-width: 50px !important;
 }
+[class$="MuiBadge-badge"] {
+  min-width: 0px !important;
+  min-height: 0px !important;
+}
 [class$="MuiTab-root"] {
   background-color: transparent !important;
   min-width: 0px !important;

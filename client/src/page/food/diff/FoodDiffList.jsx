@@ -27,6 +27,14 @@ export const FoodDiff = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
+  // 2-2. useState -------------------------------------------------------------------------------->
+  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
+  const observer = useRef(null);
+  const [LOADING, setLOADING] = useState(false);
+  const [isExist, setIsExist] = useState([""]);
+  const [MORE, setMORE] = useState(true);
+  const sessionId = sessionStorage.getItem("sessionId");
+
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
@@ -62,13 +70,6 @@ export const FoodDiff = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{

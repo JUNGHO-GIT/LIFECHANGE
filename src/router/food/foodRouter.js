@@ -5,6 +5,37 @@ import * as service from "../../service/food/foodService.js";
 import * as middleware from "../../middleware/food/foodMiddleware.js";
 export const router = express.Router();
 
+// 0. exist --------------------------------------------------------------------------------------->
+router.get("/exist", async (req, res) => {
+  try {
+    let result = await service.exist (
+      req.query.user_id,
+      req.query.DATE
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
 // 1-1. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
