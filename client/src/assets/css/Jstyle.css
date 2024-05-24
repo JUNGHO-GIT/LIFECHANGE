@@ -10515,21 +10515,20 @@
 }
 
 .animation {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: shimmer;
-  animation-timing-function: linear;
-  background: linear-gradient(to right, #eff1f3 8%, #f4f5f7 18%, #eff1f3 33%);
-  background-size: 800px 104px;
-  height: 100px;
-  position: relative;
+  animation-duration: 1s !important;
+  animation-fill-mode: forwards !important;
+  animation-iteration-count: infinite !important;
+  animation-name: shimmer !important;
+  animation-timing-function: linear !important;
+  background: linear-gradient(to right, #eff1f3 8%, #f4f5f7 18%, #eff1f3 33%) !important;
+  background-size: 800px 104px !important;
+  position: relative !important;
 }
 @keyframes shimmer {
   0% {
-    background-position: -468px 0;
+    background-position: -468px 0 !important;
   }
   100% {
-    background-position: 468px 0;
+    background-position: 468px 0 !important;
   }
 }

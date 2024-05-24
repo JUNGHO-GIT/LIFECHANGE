@@ -74,11 +74,14 @@ import {LocalizationProvider} from '@mui/x-date-pickers';
 // dateCalendar
 import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
 
+// digitalClock
+import {DigitalClock} from '@mui/x-date-pickers/DigitalClock';
+
 // PickersDay
 import {PickersDay} from '@mui/x-date-pickers/PickersDay';
 
-// digitalClock
-import {DigitalClock} from '@mui/x-date-pickers/DigitalClock';
+// DayCalendarSkeleton
+import {DayCalendarSkeleton} from '@mui/x-date-pickers/DayCalendarSkeleton';
 
 // popupState
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
@@ -128,7 +131,7 @@ export {
   useAutocomplete, GlobalStyles,
 
   // adopterMoment
-  AdapterMoment, DateCalendar, DigitalClock, PickersDay,
+  AdapterMoment, DateCalendar, DigitalClock, PickersDay, DayCalendarSkeleton,
 
   // datePickers
   LocalizationProvider,

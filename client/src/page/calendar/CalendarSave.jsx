@@ -193,7 +193,7 @@ export const CalendarSave = () => {
                 views={["year", "day"]}
                 readOnly={false}
                 defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-max60vh"}
+                className={"radius border h-60vh"}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,

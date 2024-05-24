@@ -7,8 +7,8 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br10, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Icons, Br20} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
 import {DigitalClock, DateCalendar, PickersDay} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1, common2, common3_1, common5, sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
@@ -49,6 +49,7 @@ export const SleepSave = () => {
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
+  const [isExist, setIsExist] = useState([""]);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
@@ -79,6 +80,24 @@ export const SleepSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
+    const res = await axios.get(`${URL_OBJECT}/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
+          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+        },
+      },
+    });
+    setIsExist(res.data.result || []);
+    setLOADING(false);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
@@ -150,6 +169,25 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+
+    const serverDay = (props) => {
+      const {outsideCurrentMonth, day, ...other} = props;
+      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+      return (
+        <Badge
+          key={props.day.toString()}
+          badgeContent={""}
+          color={isSelected ? "primary" : undefined}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+        >
+          <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day}
+        </Badge>
+      );
+    }
+
     // 7-1. date
     const dateSection = () => (
       <Div className={"d-center"}>
@@ -158,38 +196,40 @@ export const SleepSave = () => {
           position={"center"}
           direction={"center"}
           contents={({closePopup}) => (
-          <Div className={"d-center w-80vw"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["year", "day"]}
-                readOnly={false}
-                defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-max60vh"}
-                // OBJECT.sleep_dateStart가 일치하는 날짜중 sleep_section의 length가 0 이상인 경우 색상 하이라이트
-                slotProps={{
-                  day: (props) => {
-                    const currentDate = props.day.format("YYYY-MM-DD");
-                    console.log("Checking date: " + currentDate); // 날짜 검사 로그 추가
-                    const hasSleep = OBJECT?.sleep_section.some((item) => {
-                      const sleepDate = moment(item.sleep_dateStart).format("YYYY-MM-DD");
-                      console.log("Sleep section date: " + sleepDate); // sleep_dateStart 로그
-                      return sleepDate === currentDate;
-                    });
-                    return hasSleep ? { style: { backgroundColor: "red" } } : {};
-                  }
-                }}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    dateStart: moment(date).format("YYYY-MM-DD"),
-                    dateEnd: moment(date).format("YYYY-MM-DD")
-                  }));
-                }}
-              />
-            </LocalizationProvider>
-          </Div>
-        )}>
+          LOADING ? (
+            <Div className={"d-column w-80vw h-55vh"}>
+              <Div className={"loader"} />
+            </Div>
+          ) : (
+            <Div className={"d-center w-80vw"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["year", "day"]}
+                  readOnly={false}
+                  defaultValue={moment(DATE.dateStart)}
+                  className={"radius border h-60vh"}
+                  slots={{
+                    day: serverDay
+                  }}
+                  onMonthChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
+                      dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
+                    }));
+                  }}
+                  onChange={(date) => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(date).format("YYYY-MM-DD"),
+                      dateEnd: moment(date).format("YYYY-MM-DD")
+                    }));
+                  }}
+                />
+              </LocalizationProvider>
+            </Div>
+          ))}>
         {(popTrigger={}) => (
           <TextField
             type={"text"}

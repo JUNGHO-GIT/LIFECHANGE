@@ -202,18 +202,18 @@
 
 /** loading ***************************************************************************************/
 .loader {
-	width: 40px;
-	height: 40px;
-	position: relative;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 50%;
-	border-top: 3px solid rgba(62, 150, 252, 0.8);
-	border-right: 3px solid transparent;
+	width: 40px !important;
+	height: 40px !important;
+	position: relative !important;
+	margin: 0 auto !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	border-radius: 50% !important;
+	border-top: 3px solid rgba(62, 150, 252, 0.8) !important;
+	border-right: 3px solid transparent !important;
   background-color: #ffffff !important;
-	animation: loaderAnimation 1s ease-in-out infinite;
+	animation: loaderAnimation 1s ease-in-out infinite !important;
 }
 
 @keyframes loaderAnimation {
