@@ -91,7 +91,6 @@ export const MoneyDiff = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     loadMoreData();
   }, []);
@@ -110,10 +109,15 @@ export const MoneyDiff = () => {
         DATE: DATE,
       },
     });
-    setOBJECT((prev) => [
-      ...prev,
-      ...(res.data.result || OBJECT_DEF)
-    ]);
+    // 첫번째 객체를 제외하고 데이터 추가
+    setOBJECT((prev) => {
+      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+        return [...res.data.result];
+      }
+      else {
+        return [...prev, ...res.data.result];
+      }
+    });
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,

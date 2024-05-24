@@ -79,6 +79,23 @@ export const MoneyPlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
+    const res = await axios.get(`${URL_OBJECT}/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: DATE.dateType,
+          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
+          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+        },
+      },
+    });
+    setIsExist(res.data.result || []);
+    setLOADING(false);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: sessionId,
@@ -86,7 +103,15 @@ export const MoneyPlanSave = () => {
         DATE: DATE,
       },
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
+    // 첫번째 객체를 제외하고 데이터 추가
+    setOBJECT((prev) => {
+      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+        return res.data.result;
+      }
+      else {
+        return {...prev, ...res.data.result};
+      }
+    });
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,

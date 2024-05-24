@@ -110,7 +110,10 @@ export const MoneySave = () => {
         DATE: DATE,
       },
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
+    setOBJECT((prev) => ({
+      ...prev,
+      ...res.data.result || OBJECT_DEF
+    }));
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,

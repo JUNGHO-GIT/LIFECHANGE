@@ -94,7 +94,15 @@ export const CalendarSave = () => {
         DATE: DATE,
       },
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
+    // 첫번째 객체를 제외하고 데이터 추가
+    setOBJECT((prev) => {
+      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+        return res.data.result;
+      }
+      else {
+        return {...prev, ...res.data.result};
+      }
+    });
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
@@ -130,7 +138,15 @@ export const CalendarSave = () => {
       OBJECT: OBJECT,
       DATE: DATE,
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
+    // 첫번째 객체를 제외하고 데이터 추가
+    setOBJECT((prev) => {
+      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+        return res.data.result;
+      }
+      else {
+        return {...prev, ...res.data.result};
+      }
+    });
     if (res.data.status === "success") {
       alert(res.data.msg);
       navigate(SEND?.toList);
