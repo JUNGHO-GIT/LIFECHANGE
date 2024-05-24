@@ -9,7 +9,7 @@ export const handlerY = (
   let maxValue = 0;
   let topValue = 0;
   let tickInterval = 0;
-  
+
   if (type === "sleep") {
     maxValue = Math.max(...value?.map((item) => (
       Math.max(...array.map((key) => item[key]))
@@ -38,11 +38,15 @@ export const handlerY = (
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 100
   }
+  else {
+    console.error("handlerY: invalid type");
+    throw new Error("handlerY: invalid type");
+  }
 
   for (let i = 0; i <= topValue; i += tickInterval) {
     ticks.push(i);
   }
-  
+
   return {
     domain: [0, topValue],
     ticks: ticks,

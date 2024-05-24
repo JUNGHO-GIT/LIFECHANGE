@@ -82,7 +82,9 @@ export const SleepDashBar = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()}`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -137,14 +139,14 @@ export const SleepDashBar = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartToday()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "today") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
     }
     // 7-9. first

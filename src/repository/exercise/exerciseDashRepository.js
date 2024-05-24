@@ -23,7 +23,9 @@ export const scatterToday = {
       {$project: {
         exercise_plan_dateStart: 1,
         exercise_plan_dateEnd: 1,
-        exercise_plan_body_weight: 1
+        exercise_plan_weight: {
+          $ifNull: ["$exercise_plan_weight", 0]
+        }
       }},
       {$sort: {exercise_plan_dateStart: -1}}
     ]);
@@ -46,8 +48,11 @@ export const scatterToday = {
         },
       }},
       {$project: {
-        _id: 0,
-        exercise_body_weight: 1
+        exercise_dateStart: 1,
+        exercise_dateEnd: 1,
+        exercise_body_weight: {
+          $ifNull: ["$exercise_body_weight", 0]
+        }
       }},
       {$sort: {exercise_dateStart: -1}}
     ]);
@@ -75,7 +80,9 @@ export const scatterWeek = {
       {$project: {
         exercise_plan_dateStart: 1,
         exercise_plan_dateEnd: 1,
-        exercise_plan_body_weight: 1
+        exercise_plan_weight: {
+          $ifNull: ["$exercise_plan_weight", 0]
+        }
       }},
       {$sort: {exercise_plan_dateStart: -1}}
     ]);
@@ -100,7 +107,9 @@ export const scatterWeek = {
       {$project: {
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_body_weight: 1
+        exercise_body_weight: {
+          $ifNull: ["$exercise_body_weight", 0]
+        }
       }},
       {$sort: {exercise_dateStart: -1}}
     ]);
@@ -128,7 +137,9 @@ export const scatterMonth = {
       {$project: {
         exercise_plan_dateStart: 1,
         exercise_plan_dateEnd: 1,
-        exercise_plan_body_weight: 1
+        exercise_plan_weight: {
+          $ifNull: ["$exercise_plan_weight", 0]
+        }
       }},
       {$sort: {exercise_plan_dateStart: -1}}
     ]);
@@ -153,7 +164,9 @@ export const scatterMonth = {
       {$project: {
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_body_weight: 1
+        exercise_body_weight: {
+          $ifNull: ["$exercise_body_weight", 0]
+        }
       }},
       {$sort: {exercise_dateStart: -1}}
     ]);

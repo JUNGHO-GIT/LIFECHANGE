@@ -108,7 +108,9 @@ export const MoneyDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()}`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -184,7 +186,9 @@ export const MoneyDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()}`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -258,7 +262,7 @@ export const MoneyDashLine = () => {
                   setLINE([...LINE, key]);
                 }
                 }}/>}
-              label={key} 
+              label={key}
               labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
@@ -274,23 +278,23 @@ export const MoneyDashLine = () => {
 
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "week") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "month") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
     }
     // 7-9. first

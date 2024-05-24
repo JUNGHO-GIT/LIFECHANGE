@@ -107,7 +107,9 @@ export const ExerciseDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()} vol`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -168,7 +170,9 @@ export const ExerciseDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()}`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -229,7 +233,9 @@ export const ExerciseDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()} vol`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -290,7 +296,9 @@ export const ExerciseDashLine = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()}`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -369,41 +377,41 @@ export const ExerciseDashLine = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartVolumeWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartVolumeMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartCardioWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartCardioMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "week" && LINE === "볼륨") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "month" && LINE === "볼륨") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
       else if (SECTION === "week" && LINE === "유산소") {
-        return LOADING ? loadingNode() : dashFragment3();
+        return LOADING ? loadingNode() : dashFragment3(0);
       }
       else if (SECTION === "month" && LINE === "유산소") {
-        return LOADING ? loadingNode() : dashFragment4();
+        return LOADING ? loadingNode() : dashFragment4(0);
       }
     }
     // 7-9. first

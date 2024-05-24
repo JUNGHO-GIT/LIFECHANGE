@@ -25,6 +25,8 @@ export const intFormat = (data) => {
     return Math.round(data);
   }
 };
+
+// 1-2. format ------------------------------------------------------------------------------------>
 export const timeFormat = (data) => {
   if (!data) {
     return 0;

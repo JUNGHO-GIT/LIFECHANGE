@@ -34,7 +34,7 @@ router.get("/scatter/today", async (req, res) => {
   }
 });
 
-// 1-2. dash (scatter - week) -------------------------------------------------------------------->
+// 1-2. dash (scatter - week) --------------------------------------------------------------------->
 router.get("/scatter/week", async (req, res) => {
   try {
     let result = await service.scatterWeek (

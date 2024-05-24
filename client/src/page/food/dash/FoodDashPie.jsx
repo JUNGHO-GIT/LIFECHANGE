@@ -526,59 +526,59 @@ export const FoodDashPie = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartKcalToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartNutToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartKcalWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartNutWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment5 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartKcalMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment6 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartNutMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "today" && LINE === "칼로리") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "week" && LINE === "칼로리") {
-        return LOADING ? loadingNode() : dashFragment3();
+        return LOADING ? loadingNode() : dashFragment3(0);
       }
       else if (SECTION === "month" && LINE === "칼로리") {
-        return LOADING ? loadingNode() : dashFragment5();
+        return LOADING ? loadingNode() : dashFragment5(0);
       }
       else if (SECTION === "today" && LINE === "영양소") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
       else if (SECTION === "week" && LINE === "영양소") {
-        return LOADING ? loadingNode() : dashFragment4();
+        return LOADING ? loadingNode() : dashFragment4(0);
       }
       else if (SECTION === "month" && LINE === "영양소") {
-        return LOADING ? loadingNode() : dashFragment6();
+        return LOADING ? loadingNode() : dashFragment6(0);
       }
     }
     // 7-9. first

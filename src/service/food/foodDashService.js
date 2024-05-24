@@ -220,12 +220,14 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index
+      new Date(item.food_dateStart).getDay() === index + 1
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index
+      new Date(item.food_dateStart).getDay() === index + 1
     ));
     finalResultKcal.push({
       name: data,
@@ -279,12 +281,14 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index + 1
+      new Date(item.food_dateStart).getDate() === index
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index + 1
+      new Date(item.food_dateStart).getDate() === index
     ));
     finalResultKcal.push({
       name: data,
@@ -370,6 +374,8 @@ export const avgMonth = async (
     }
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,
@@ -446,6 +452,8 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,

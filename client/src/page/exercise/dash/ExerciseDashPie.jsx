@@ -388,41 +388,41 @@ export const ExerciseDashPie = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartPartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartPartMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartTitleWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartTitleMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "week" && LINE === "부위") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "month" && LINE === "부위") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
       else if (SECTION === "week" && LINE === "운동") {
-        return LOADING ? loadingNode() : dashFragment3();
+        return LOADING ? loadingNode() : dashFragment3(0);
       }
       else if (SECTION === "month" && LINE === "운동") {
-        return LOADING ? loadingNode() : dashFragment4();
+        return LOADING ? loadingNode() : dashFragment4(0);
       }
     }
     // 7-9. first

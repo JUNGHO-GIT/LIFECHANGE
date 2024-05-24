@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/exercise/exerciseDashRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {intFormat, koreanDate} from "../../assets/js/date.js";
+import {intFormat, newDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
@@ -12,8 +12,8 @@ export const scatterToday = async (
   user_id_param
 ) => {
 
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
+  const dateStart = newDate.format("YYYY-MM-DD");
+  const dateEnd = newDate.format("YYYY-MM-DD");
 
   let findPlan = [];
   let findReal = [];
@@ -67,15 +67,17 @@ export const scatterWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexPlan = findPlan?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index
+      new Date(item.exercise_plan_dateStart).getDay() === index + 1
     ));
     const findIndexReal = findReal?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
     finalResult.push({
-      name: name[index],
+      name: data,
       date: date[index],
       목표: findIndexPlan !== -1 ? intFormat(findPlan[findIndexPlan]?.exercise_plan_weight) : 0,
       실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
@@ -110,17 +112,18 @@ export const scatterMonth = async (
   findPlan = await repository.scatterMonth.listPlan(
     user_id_param, dateStart, dateEnd
   );
-
   findReal = await repository.scatterMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexPlan = findPlan?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index + 1
+      new Date(item.exercise_plan_dateStart).getDate() === index
     ));
     const findIndexReal = findReal?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index + 1
+      new Date(item.exercise_dateStart).getDate() === index
     ));
     finalResult.push({
       name: data,
@@ -129,6 +132,9 @@ export const scatterMonth = async (
       실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });
+
+  log("findPlan", findPlan);
+  log("findReal", findReal);
 
   return finalResult;
 };
@@ -245,12 +251,14 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexVolume = findResultVolume?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
     const findIndexCardio = findResultCardio?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
     finalResultVolume.push({
       name: data,
@@ -302,12 +310,14 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndexVolume = findResultVolume.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      new Date(item.exercise_dateStart).getDate() === index
     ));
     const findIndexCardio = findResultCardio.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      new Date(item.exercise_dateStart).getDate() === index
     ));
 
     finalResultVolume.push({
@@ -388,6 +398,8 @@ export const avgMonth = async (
     }
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
@@ -458,6 +470,8 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,

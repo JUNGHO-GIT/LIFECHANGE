@@ -75,9 +75,11 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndex = findResult?.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDay() === index
+      new Date(item.sleep_dateStart).getDay() === index + 1
     ));
 
     finalResult.push({
@@ -117,9 +119,11 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     const findIndex = findResult.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDay() === index + 1
+      new Date(item.sleep_dateStart).getDate() === index
     ));
 
     finalResult.push({
@@ -176,6 +180,8 @@ export const avgMonth = async (
     }
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,
@@ -227,6 +233,8 @@ export const avgYear = async (
     countRecords[monthNum]++;
   });
 
+  // week = getDay() + 1
+  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,

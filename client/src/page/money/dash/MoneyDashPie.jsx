@@ -526,59 +526,59 @@ export const MoneyDashPie = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartInToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartOutToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartInWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartOutWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment5 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartInMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment6 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartOutMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "today" && LINE === "수입") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "today" && LINE === "지출") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
       else if (SECTION === "week" && LINE === "수입") {
-        return LOADING ? loadingNode() : dashFragment3();
+        return LOADING ? loadingNode() : dashFragment3(0);
       }
       else if (SECTION === "week" && LINE === "지출") {
-        return LOADING ? loadingNode() : dashFragment4();
+        return LOADING ? loadingNode() : dashFragment4(0);
       }
       else if (SECTION === "month" && LINE === "수입") {
-        return LOADING ? loadingNode() : dashFragment5();
+        return LOADING ? loadingNode() : dashFragment5(0);
       }
       else if (SECTION === "month" && LINE === "지출") {
-        return LOADING ? loadingNode() : dashFragment6();
+        return LOADING ? loadingNode() : dashFragment6(0);
       }
     }
     // 7-9. first

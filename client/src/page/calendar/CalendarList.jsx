@@ -49,6 +49,7 @@ export const CalendarList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
+  const [LOADING, setLOADING] = useState(true);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
@@ -82,6 +83,7 @@ export const CalendarList = () => {
       sectionCnt: res.data.sectionCnt || 0,
       newSectionCnt: res.data.sectionCnt || 0
     }));
+    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. calendar ---------------------------------------------------------------------------------->
@@ -208,6 +210,11 @@ export const CalendarList = () => {
     );
   };
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING} />
+  );
+
   // 9. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
     <Footer
@@ -231,7 +238,7 @@ export const CalendarList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {calendarNode()}
+      {LOADING ? loadingNode() : calendarNode()}
       {footerNode()}
     </>
   );

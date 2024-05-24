@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportLogics";
+import {handlerY, log} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -23,6 +23,8 @@ export const ExerciseDashScatter = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEF = [
     {name:"", date:"", 목표: 0, 실제: 0},
   ];
@@ -63,6 +65,7 @@ export const ExerciseDashScatter = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
+    log("month", resMonth.data.result);
   })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -104,7 +107,9 @@ export const ExerciseDashScatter = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()} kg`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -132,7 +137,7 @@ export const ExerciseDashScatter = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -173,7 +178,9 @@ export const ExerciseDashScatter = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()} kg`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -201,7 +208,7 @@ export const ExerciseDashScatter = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -242,7 +249,9 @@ export const ExerciseDashScatter = () => {
             formatter={(value, name, props) => {
               return `${Number(value).toLocaleString()} kg`;
             }}
-            cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
             contentStyle={{
               borderRadius:"10px",
               boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
@@ -278,15 +287,15 @@ export const ExerciseDashScatter = () => {
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
+          select={true}
+          type={"text"}
+          size={"small"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
         <MenuItem value={"today"}>오늘</MenuItem>
         <MenuItem value={"week"}>주간</MenuItem>
         <MenuItem value={"month"}>월간</MenuItem>
@@ -299,32 +308,32 @@ export const ExerciseDashScatter = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
-      <Card variant={"outlined"} className={"p-10"}>
+      <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "today") {
-        return LOADING ? loadingNode() : dashFragment1();
+        return LOADING ? loadingNode() : dashFragment1(0);
       }
       else if (SECTION === "week") {
-        return LOADING ? loadingNode() : dashFragment2();
+        return LOADING ? loadingNode() : dashFragment2(0);
       }
       else if (SECTION === "month") {
-        return LOADING ? loadingNode() : dashFragment3();
+        return LOADING ? loadingNode() : dashFragment3(0);
       }
     }
     // 7-9. first
