@@ -26,6 +26,10 @@ export const FoodDashLine = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("칼로리");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_WEEK_DEF = [
@@ -96,7 +100,7 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+          <Line dataKey={"칼로리"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
           activeDot={{r: 6}}/>
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -159,12 +163,15 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-          activeDot={{r: 6}} />
-          <Line dataKey={"단백질"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-          activeDot={{r: 6}} />
-          <Line dataKey={"지방"} type={"monotone"} stroke={"#ffc658"} strokeWidth={2}
-          activeDot={{r: 6}} />
+          <Line dataKey={"탄수화물"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Line dataKey={"단백질"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Line dataKey={"지방"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -227,8 +234,9 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-          activeDot={{r: 6}} />
+          <Line dataKey={"칼로리"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -290,12 +298,15 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-          activeDot={{r: 6}} />
-          <Line dataKey={"단백질"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-          activeDot={{r: 6}} />
-          <Line dataKey={"지방"} type={"monotone"} stroke={"#ffc658"} strokeWidth={2}
-          activeDot={{r: 6}} />
+          <Line dataKey={"탄수화물"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Line dataKey={"단백질"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
+          <Line dataKey={"지방"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
+            activeDot={{r: 6}}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';

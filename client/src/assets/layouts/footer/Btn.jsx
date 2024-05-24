@@ -17,7 +17,7 @@ export const Btn = ({
 
   // 1. go
   const btnGoToList = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -30,7 +30,7 @@ export const Btn = ({
     </Button>
   );
   const btnGoToFind = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
@@ -85,7 +85,7 @@ export const Btn = ({
 
   // 2. get
   const btnGetToday = () => (
-    <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"} className={"me-5"} onClick={() => {
+    <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       (objects?.DATE) && (
         functions?.setDATE((prev) => ({
           ...prev,
@@ -311,7 +311,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} className={"ms-5"} color={"secondary"} variant={"contained"}
+      <Button size={"small"} className={"ms-5"} color={"success"} variant={"contained"}
       onClick={() => (handlers.flowSave(objects.PART))}>
         {translate("btn-flowDemo")}
       </Button>

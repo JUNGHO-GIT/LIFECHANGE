@@ -26,6 +26,10 @@ export const SleepDashLine = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [PART, setPART] = useState(array);
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEF = [
@@ -84,15 +88,15 @@ export const SleepDashLine = () => {
             width={30}
           />
           {PART.includes("취침") && (
-            <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+            <Line dataKey={"취침"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           {PART.includes("기상") && (
-            <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+            <Line dataKey={"기상"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           {PART.includes("수면") && (
-            <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+            <Line dataKey={"수면"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           <Tooltip
@@ -158,15 +162,15 @@ export const SleepDashLine = () => {
             width={30}
           />
           {PART.includes("취침") && (
-            <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+            <Line dataKey={"취침"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           {PART.includes("기상") && (
-            <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+            <Line dataKey={"기상"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           {PART.includes("수면") && (
-            <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+            <Line dataKey={"수면"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           <Tooltip

@@ -27,6 +27,10 @@ export const SleepDashAvg = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_MONTH_DEF = [
@@ -85,16 +89,16 @@ export const SleepDashAvg = () => {
             width={30}
           />
           {PART.includes("취침") && (
-            <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"취침"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           {PART.includes("기상") && (
-            <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"기상"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           {PART.includes("수면") && (
-            <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"수면"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -159,16 +163,16 @@ export const SleepDashAvg = () => {
             width={30}
           />
           {PART.includes("취침") && (
-            <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"취침"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           {PART.includes("기상") && (
-            <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"기상"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           {PART.includes("수면") && (
-            <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-            </Bar>
+            <Bar dataKey={"수면"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {

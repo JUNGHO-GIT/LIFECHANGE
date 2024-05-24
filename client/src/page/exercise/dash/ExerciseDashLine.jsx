@@ -26,6 +26,10 @@ export const ExerciseDashLine = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("볼륨");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_WEEK_DEF = [
@@ -97,8 +101,9 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-          strokeWidth={2}/>
+          <Line dataKey={"볼륨"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+            strokeWidth={2}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -161,8 +166,9 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-          strokeWidth={2}/>
+          <Line dataKey={"유산소"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
+            strokeWidth={2}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -225,8 +231,9 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-          strokeWidth={2}/>
+          <Line dataKey={"볼륨"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+            strokeWidth={2}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -289,8 +296,9 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"유산소"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-          strokeWidth={2}/>
+          <Line dataKey={"유산소"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
+            strokeWidth={2}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';

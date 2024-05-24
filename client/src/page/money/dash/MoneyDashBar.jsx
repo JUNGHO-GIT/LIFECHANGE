@@ -5,7 +5,7 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -25,6 +25,10 @@ export const MoneyDashBar = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState(array);
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEF = [
@@ -70,11 +74,11 @@ export const MoneyDashBar = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"목표"} stroke="#8884d8" strokeWidth={2} dot={false}
+          <Line dataKey={"목표"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
-          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke="#8884d8" strokeDasharray="3 3"
+          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
-          <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar dataKey={"실제"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip

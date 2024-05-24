@@ -26,6 +26,10 @@ export const MoneyDashLine = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState(array);
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEF = [
@@ -93,12 +97,14 @@ export const MoneyDashLine = () => {
             width={30}
           />
           {LINE.includes("수입") && (
-            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-            activeDot={{r:8}}/>
+            <Line dataKey={"수입"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+              activeDot={{r:8}}
+            />
           )}
           {LINE.includes("지출") && (
-            <Line dataKey={"지출"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-            activeDot={{r:8}}/>
+            <Line dataKey={"지출"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+              activeDot={{r:8}}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -139,7 +145,7 @@ export const MoneyDashLine = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -172,12 +178,14 @@ export const MoneyDashLine = () => {
             width={30}
           />
           {LINE.includes("수입") && (
-            <Line dataKey={"수입"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
-            activeDot={{r:8}}/>
+            <Line dataKey={"수입"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+              activeDot={{r:8}}
+            />
           )}
           {LINE.includes("지출") && (
-            <Line dataKey={"지출"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-            activeDot={{r:8}}/>
+            <Line dataKey={"지출"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+              activeDot={{r:8}}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {

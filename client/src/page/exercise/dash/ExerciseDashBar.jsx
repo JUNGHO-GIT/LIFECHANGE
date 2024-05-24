@@ -24,6 +24,10 @@ export const ExerciseDashBar = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEF = [
@@ -93,11 +97,11 @@ export const ExerciseDashBar = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"목표"} stroke="#007bff" strokeWidth={2} dot={false}
+          <Line dataKey={"목표"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
-          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke="#007bff" strokeDasharray="3 3"
+          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
-          <Bar dataKey={"실제"} fill="#ffc107" radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar dataKey={"실제"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
@@ -164,13 +168,13 @@ export const ExerciseDashBar = () => {
           />
           <Scatter
             dataKey={"목표"}
-            fill={"#8884d8"}
-            line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
+            fill={COLORS[0]}
+            line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Scatter
             dataKey={"실제"}
-            fill={"#82ca9d"}
-            line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
+            fill={COLORS[2]}
+            line={{stroke: COLORS[2], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -236,13 +240,13 @@ export const ExerciseDashBar = () => {
           />
           <Scatter
             dataKey={"목표"}
-            fill={"#8884d8"}
-            line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
+            fill={COLORS[0]}
+            line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Scatter
             dataKey={"실제"}
-            fill={"#82ca9d"}
-            line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
+            fill={COLORS[2]}
+            line={{stroke: COLORS[2], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label, payload) => {

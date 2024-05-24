@@ -22,21 +22,21 @@ export const handlerY = (
       Math.max(...array.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 1000;
+    tickInterval = 100;
   }
   else if (type === "food") {
     maxValue = Math.max(...value?.map((item) => (
       Math.max(...array.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 100
+    tickInterval = 10
   }
   else if (type === "exercise") {
     maxValue = Math.max(...value?.map((item) => (
       Math.max(...array.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
-    tickInterval = 100
+    tickInterval = 10
   }
   else {
     console.error("handlerY: invalid type");

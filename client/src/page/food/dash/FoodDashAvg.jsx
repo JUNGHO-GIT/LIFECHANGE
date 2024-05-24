@@ -26,6 +26,10 @@ export const FoodDashAvg = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("칼로리");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_MONTH_DEF = [
@@ -97,7 +101,7 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"칼로리"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -160,9 +164,9 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"탄수화물"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"단백질"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"지방"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -225,7 +229,7 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"칼로리"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -288,9 +292,9 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"탄수화물"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"단백질"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"지방"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';

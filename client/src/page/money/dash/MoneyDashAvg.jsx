@@ -26,6 +26,10 @@ export const MoneyDashAvg = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState(array);
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_MONTH_DEF = [
@@ -84,10 +88,10 @@ export const MoneyDashAvg = () => {
             width={30}
           />
           {LINE.includes("수입") && (
-            <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar dataKey={"수입"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           {LINE.includes("지출") && (
-            <Bar dataKey={"지출"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar dataKey={"지출"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -152,10 +156,10 @@ export const MoneyDashAvg = () => {
             width={30}
           />
           {LINE.includes("수입") && (
-            <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar dataKey={"수입"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           {LINE.includes("지출") && (
-            <Bar dataKey={"지출"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar dataKey={"지출"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
