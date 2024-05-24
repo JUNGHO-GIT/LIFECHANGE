@@ -9,7 +9,7 @@ import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {common3} from "../../../import/ImportImages.jsx";
+import {common3_2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDashBar = () => {
@@ -139,7 +139,7 @@ export const MoneyDashBar = () => {
     );
     // 7-6. dropdown
     const dropdownSection2 = () => (
-      <Img src={common3} className={"w-24 h-24"} />
+      <Img src={common3_2} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (

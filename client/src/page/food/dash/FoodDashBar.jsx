@@ -10,7 +10,7 @@ import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {common3} from "../../../import/ImportImages.jsx";
+import {common3_1} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashBar = () => {
@@ -234,7 +234,7 @@ export const FoodDashBar = () => {
           </FormGroup>
         )))}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
+          <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}/>
         )}

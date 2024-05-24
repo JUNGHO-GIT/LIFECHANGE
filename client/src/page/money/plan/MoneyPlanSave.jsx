@@ -12,7 +12,7 @@ import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3_1} from "../../../import/ImportImages.jsx";
 import {money2, common5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -317,7 +317,7 @@ export const MoneyPlanSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+          <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}/>
         )}

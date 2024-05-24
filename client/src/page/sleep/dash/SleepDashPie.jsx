@@ -8,7 +8,7 @@ import {log} from "../../../import/ImportLogics";
 import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
-import {common3} from "../../../import/ImportImages.jsx";
+import {common3_1} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashPie = () => {
@@ -304,7 +304,7 @@ export const SleepDashPie = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <Img src={common3} className={"w-24 h-24"} />
+      <Img src={common3_1} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (

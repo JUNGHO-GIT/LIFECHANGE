@@ -16,7 +16,8 @@ import flag2 from "../assets/images/flag/flag2.webp";
 
 import common1 from "../assets/images/common/common1.webp";
 import common2 from "../assets/images/common/common2.webp";
-import common3 from "../assets/images/common/common3.webp";
+import common3_1 from "../assets/images/common/common3_1.webp";
+import common3_2 from "../assets/images/common/common3_2.webp";
 import common4 from "../assets/images/common/common4.webp";
 import common5 from "../assets/images/common/common5.webp";
 
@@ -55,7 +56,7 @@ export {
   logo1, logo2, logo3,
   smile1, smile2, smile3, smile4, smile5,
   flag1, flag2,
-  common1, common2, common3, common4, common5,
+  common1, common2, common3_1, common3_2, common4, common5,
   calendar1, calendar2, calendar3,
   exercise1, exercise2, exercise3, exercise4, exercise5,
   food1, food2, food3, food4, food5,

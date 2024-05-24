@@ -11,7 +11,7 @@ import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock, MenuItem} from "../../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3, common5} from "../../../import/ImportImages.jsx";
+import {common1, common2, common3_1, common5} from "../../../import/ImportImages.jsx";
 import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -320,7 +320,7 @@ export const ExercisePlanSave = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
+          <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
           }}/>
         )}
