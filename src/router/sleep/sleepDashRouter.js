@@ -4,10 +4,100 @@ import express from "express";
 import * as service from "../../service/sleep/sleepDashService.js";
 export const router = express.Router();
 
-// 1-1. dash (bar - today) ----------------------------------------------------------------------->
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
 router.get("/bar/today", async (req, res) => {
   try {
     let result = await service.barToday (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+router.get("/pie/today", async (req, res) => {
+  try {
+    let result = await service.pieToday (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+router.get("/pie/week", async (req, res) => {
+  try {
+    let result = await service.pieWeek (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+router.get("/pie/month", async (req, res) => {
+  try {
+    let result = await service.pieMonth (
       req.query.user_id
     );
     if (result) {

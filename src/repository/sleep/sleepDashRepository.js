@@ -58,6 +58,90 @@ export const barToday = {
   }
 };
 
+// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+export const pieToday = {
+  list: async (
+    user_id_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        sleep_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+      }},
+      {$project: {
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_dateStart: 1}}
+    ]);
+    return finalResult;
+  }
+};
+
+// 2-2. dash (pie - week) ------------------------------------------------------------------------>
+export const pieWeek = {
+  list: async (
+    user_id_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        sleep_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        }
+      }},
+      {$project: {
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_dateStart: 1}}
+    ]);
+    return finalResult;
+  }
+};
+
+// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+export const pieMonth = {
+  list: async (
+    user_id_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        sleep_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        }
+      }},
+      {$project: {
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_dateStart: 1}}
+    ])
+    return finalResult;
+  }
+};
+
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
   list: async (

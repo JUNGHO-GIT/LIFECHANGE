@@ -122,7 +122,8 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -184,7 +185,8 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -247,7 +249,8 @@ export const ExerciseDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -310,6 +313,7 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",

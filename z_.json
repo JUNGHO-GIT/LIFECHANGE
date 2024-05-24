@@ -1,66 +1,67 @@
-=================================== exercisePlan
-[
+findResult : [
   {
-    "exercise_plan_count": 0,
-    "exercise_plan_volume": 0,
-    "exercise_plan_cardio": "00:00",
-    "exercise_plan_weight": 0
-  }
-]
-=================================== exerciseReal
-[
+    "_id": "664e466793aee10d3456f6b2",
+    "sleep_dateStart": "2024-05-20",
+    "sleep_dateEnd": "2024-05-20",
+    "sleep_section": [
+      {
+        "sleep_night": "04:23",
+        "sleep_morning": "09:36",
+        "sleep_time": "20:58",
+        "_id": "664e466793aee10d3456f6b1"
+      }
+    ]
+  },
   {
-    "exercise_total_count": 1,
-    "exercise_total_volume": 0,
-    "exercise_total_cardio": "00:00",
-    "exercise_body_weight": 0
-  }
-]
-=================================== foodPlan
-[
+    "_id": "664b8749eca3663c5331b50c",
+    "sleep_dateStart": "2024-05-21",
+    "sleep_dateEnd": "2024-05-21",
+    "sleep_section": [
+      {
+        "sleep_night": "01:30",
+        "sleep_morning": "02:00",
+        "sleep_time": "00:30",
+        "_id": "664b8749eca3663c5331b50e"
+      }
+    ]
+  },
   {
-    "food_plan_kcal": 2222,
-    "food_plan_carb": 112,
-    "food_plan_protein": 222,
-    "food_plan_fat": 11
-  }
-]
-=================================== foodReal
-[
+    "_id": "664e466793aee10d3456f6b0",
+    "sleep_dateStart": "2024-05-21",
+    "sleep_dateEnd": "2024-05-21",
+    "sleep_section": [
+      {
+        "sleep_night": "13:31",
+        "sleep_morning": "04:26",
+        "sleep_time": "15:33",
+        "_id": "664e466793aee10d3456f6af"
+      }
+    ]
+  },
   {
-    "food_total_kcal": 0,
-    "food_total_carb": 0,
-    "food_total_protein": 0,
-    "food_total_fat": 0
-  }
-]
-=================================== moneyPlan
-[
+    "_id": "664e466793aee10d3456f6ae",
+    "sleep_dateStart": "2024-05-22",
+    "sleep_dateEnd": "2024-05-22",
+    "sleep_section": [
+      {
+        "sleep_night": "13:35",
+        "sleep_morning": "01:40",
+        "sleep_time": "01:24",
+        "_id": "664e466793aee10d3456f6ad"
+      }
+    ]
+  },
   {
-    "money_plan_in": 0,
-    "money_plan_out": 0
-  }
-]
-=================================== moneyReal
-[
-  {
-    "money_total_in": 0,
-    "money_total_out": 0
-  }
-]
-=================================== sleepPlan
-[
-  {
-    "sleep_plan_night": "22:20",
-    "sleep_plan_morning": "08:10",
-    "sleep_plan_time": "09:50"
-  }
-]
-=================================== sleepReal
-[
-  {
-    "sleep_night": "00:00",
-    "sleep_morning": "00:00",
-    "sleep_time": "00:00"
+    "_id": "664e466793aee10d3456f6ac",
+    "sleep_dateStart": "2024-05-23",
+    "sleep_dateEnd": "2024-05-23",
+    "sleep_section": [
+      {
+        "sleep_night": "14:59",
+        "sleep_morning": "07:06",
+        "sleep_time": "08:37",
+        "_id": "664e466793aee10d3456f6ab"
+      }
+    ]
   }
 ]

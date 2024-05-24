@@ -382,12 +382,23 @@ export const ExerciseSave = () => {
           <TextField
             select={false}
             label={translate("exercise-weight")}
+            type={"text"}
             size={"small"}
             value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
             variant={"outlined"}
             className={"w-86vw"}
+            onChange={(e) => {
+              const regex = /,/g;
+              const match = e.target.value.match(regex);
+              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+              const limitedValue = Math.min(Number(rawValue), 999);
+              setOBJECT((prev) => ({
+                ...prev,
+                exercise_body_weight: limitedValue
+              }));
+            }}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),

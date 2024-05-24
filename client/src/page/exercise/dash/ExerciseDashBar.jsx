@@ -1,17 +1,18 @@
-// ExerciseDashScatter.jsx
+// ExerciseDashBar.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY, log} from "../../../import/ImportLogics";
+import {handlerY, log} from "../../../import/ImportLogics.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Div, Br20} from "../../../import/ImportComponents.jsx";
+import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {Bar, Scatter, ComposedChart} from "recharts";
+import {Bar, Scatter, ComposedChart, ReferenceLine, Line} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {common3} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseDashScatter = () => {
+export const ExerciseDashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -40,17 +41,17 @@ export const ExerciseDashScatter = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const resToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: sessionId
       },
     });
-    const resWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/bar/week`, {
       params: {
         user_id: sessionId
       },
     });
-    const resMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/bar/month`, {
       params: {
         user_id: sessionId
       },
@@ -65,7 +66,6 @@ export const ExerciseDashScatter = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-    log("month", resMonth.data.result);
   })()}, [sessionId]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -93,10 +93,11 @@ export const ExerciseDashScatter = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"목표"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}
+          <Line dataKey={"목표"} stroke="#007bff" strokeWidth={2} dot={false}
           />
-          <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke="#007bff" strokeDasharray="3 3"
+          />
+          <Bar dataKey={"실제"} fill="#ffc107" radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
@@ -123,7 +124,8 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -194,7 +196,8 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -265,7 +268,8 @@ export const ExerciseDashScatter = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -304,7 +308,7 @@ export const ExerciseDashScatter = () => {
     );
     // 7-6. dropdown
     const dropdownSection2 = () => (
-      " "
+      <Img src={common3} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
@@ -339,9 +343,9 @@ export const ExerciseDashScatter = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-0 me-auto"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0 ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

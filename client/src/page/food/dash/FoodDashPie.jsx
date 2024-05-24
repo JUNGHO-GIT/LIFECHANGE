@@ -24,6 +24,10 @@ export const FoodDashPie = () => {
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
   const [LINE, setLINE] = useState("칼로리");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_TODAY_DEF = [
@@ -221,256 +225,250 @@ export const FoodDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartKcalToday = () => {
-    const COLORS_KCAL_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_KCAL_TODAY}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderKcalToday}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_KCAL_TODAY?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_KCAL_TODAY[index % COLORS_KCAL_TODAY.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartKcalToday = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_KCAL_TODAY}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderKcalToday}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_KCAL_TODAY?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNutToday = () => {
-    const COLORS_NUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_NUT_TODAY}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderNutToday}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_NUT_TODAY?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_NUT_TODAY[index % COLORS_NUT_TODAY.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartNutToday = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_NUT_TODAY}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderNutToday}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_NUT_TODAY?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartKcalWeek = () => {
-    const COLORS_KCAL_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_KCAL_WEEK}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderKcalWeek}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_KCAL_WEEK?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_KCAL_WEEK[index % COLORS_KCAL_WEEK.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartKcalWeek = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_KCAL_WEEK}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderKcalWeek}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_KCAL_WEEK?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNutWeek = () => {
-    const COLORS_NUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_NUT_WEEK}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderNutWeek}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_NUT_WEEK?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_NUT_WEEK[index % COLORS_NUT_WEEK.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartNutWeek = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_NUT_WEEK}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderNutWeek}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_NUT_WEEK?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const chartKcalMonth = () => {
-    const COLORS_KCAL_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_KCAL_MONTH}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderKcalMonth}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_KCAL_MONTH?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_KCAL_MONTH[index % COLORS_KCAL_MONTH.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartKcalMonth = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_KCAL_MONTH}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderKcalMonth}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_KCAL_MONTH?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const chartNutMonth = () => {
-    const COLORS_NUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_NUT_MONTH}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderNutMonth}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_NUT_MONTH?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_NUT_MONTH[index % COLORS_NUT_MONTH.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`${Number(value).toLocaleString()}g`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartNutMonth = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_NUT_MONTH}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderNutMonth}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_NUT_MONTH?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
@@ -586,7 +584,7 @@ export const FoodDashPie = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

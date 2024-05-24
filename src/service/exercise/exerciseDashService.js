@@ -7,8 +7,8 @@ import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. dash (scatter - Today) -------------------------------------------------------------------->
-export const scatterToday = async (
+// 1-1. dash (bar - Today) -------------------------------------------------------------------->
+export const barToday = async (
   user_id_param
 ) => {
 
@@ -19,10 +19,10 @@ export const scatterToday = async (
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.scatterToday.listPlan(
+  findPlan = await repository.barToday.listPlan(
     user_id_param, dateStart, dateEnd
   );
-  findReal = await repository.scatterToday.list(
+  findReal = await repository.barToday.list(
     user_id_param, dateStart, dateEnd
   );
 
@@ -38,8 +38,8 @@ export const scatterToday = async (
   return finalResult;
 };
 
-// 1-2. dash (scatter - week) --------------------------------------------------------------------->
-export const scatterWeek = async (
+// 1-2. dash (bar - week) --------------------------------------------------------------------->
+export const barWeek = async (
   user_id_param
 ) => {
 
@@ -60,10 +60,10 @@ export const scatterWeek = async (
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.scatterWeek.listPlan(
+  findPlan = await repository.barWeek.listPlan(
     user_id_param, dateStart, dateEnd
   );
-  findReal = await repository.scatterWeek.list(
+  findReal = await repository.barWeek.list(
     user_id_param, dateStart, dateEnd
   );
 
@@ -87,8 +87,8 @@ export const scatterWeek = async (
   return finalResult;
 };
 
-// 1-3. dash (scatter - month) -------------------------------------------------------------------->
-export const scatterMonth = async (
+// 1-3. dash (bar - month) -------------------------------------------------------------------->
+export const barMonth = async (
   user_id_param
 ) => {
 
@@ -109,10 +109,10 @@ export const scatterMonth = async (
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.scatterMonth.listPlan(
+  findPlan = await repository.barMonth.listPlan(
     user_id_param, dateStart, dateEnd
   );
-  findReal = await repository.scatterMonth.list(
+  findReal = await repository.barMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
@@ -132,9 +132,6 @@ export const scatterMonth = async (
       실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });
-
-  log("findPlan", findPlan);
-  log("findReal", findReal);
 
   return finalResult;
 };

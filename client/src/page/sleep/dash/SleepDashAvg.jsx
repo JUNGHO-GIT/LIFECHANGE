@@ -120,7 +120,8 @@ export const SleepDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -194,6 +195,7 @@ export const SleepDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -290,7 +292,7 @@ export const SleepDashAvg = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

@@ -24,6 +24,10 @@ export const MoneyDashPie = () => {
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
   const [LINE, setLINE] = useState("수입");
+  const COLORS = [
+    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
+    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
+  ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_IN_TODAY_DEF = [
@@ -221,256 +225,250 @@ export const MoneyDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartInToday = () => {
-    const COLORS_IN_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_IN_TODAY}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderInToday}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_IN_TODAY?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_IN_TODAY[index % COLORS_IN_TODAY.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartInToday = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_IN_TODAY}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderInToday}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_IN_TODAY?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartOutToday = () => {
-    const COLORS_OUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_OUT_TODAY}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderOutToday}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#82ca9d"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_OUT_TODAY?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_OUT_TODAY[index % COLORS_OUT_TODAY.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartOutToday = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_OUT_TODAY}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderOutToday}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#82ca9d"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_OUT_TODAY?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartInWeek = () => {
-    const COLORS_IN_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_IN_WEEK}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderInWeek}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_IN_WEEK?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_IN_WEEK[index % COLORS_IN_WEEK.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartInWeek = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_IN_WEEK}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderInWeek}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_IN_WEEK?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartOutWeek = () => {
-    const COLORS_OUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_OUT_WEEK}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderOutWeek}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#82ca9d"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_OUT_WEEK?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_OUT_WEEK[index % COLORS_OUT_WEEK.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartOutWeek = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_OUT_WEEK}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderOutWeek}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#82ca9d"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_OUT_WEEK?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const chartInMonth = () => {
-    const COLORS_IN_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_IN_MONTH}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderInMonth}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_IN_MONTH?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_IN_MONTH[index % COLORS_IN_MONTH.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+  const chartInMonth = () =>  (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_IN_MONTH}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderInMonth}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#8884d8"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_IN_MONTH?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
   );
-  };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const chartOutMonth = () => {
-    const COLORS_OUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-          <Pie
-            data={OBJECT_OUT_MONTH}
-            cx={"50%"}
-            cy={"50%"}
-            label={renderOutMonth}
-            labelLine={false}
-            outerRadius={radius}
-            fill={"#82ca9d"}
-            dataKey={"value"}
-            minAngle={15}
-          >
-            {OBJECT_OUT_MONTH?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_OUT_MONTH[index % COLORS_OUT_MONTH.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
-            contentStyle={{
-              backgroundColor:"rgba(255, 255, 255, 0.8)",
-              border:"none",
-              borderRadius:"10px"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            wrapperStyle={{
-              lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  };
+  const chartOutMonth = () => (
+    <ResponsiveContainer width={"100%"} height={350}>
+      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <Pie
+          data={OBJECT_OUT_MONTH}
+          cx={"50%"}
+          cy={"50%"}
+          label={renderOutMonth}
+          labelLine={false}
+          outerRadius={radius}
+          fill={"#82ca9d"}
+          dataKey={"value"}
+          minAngle={15}
+        >
+          {OBJECT_OUT_MONTH?.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip
+          formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+          contentStyle={{
+            backgroundColor:"rgba(255, 255, 255, 0.8)",
+            border:"none",
+            borderRadius:"10px"
+          }}
+        />
+        <Legend
+          iconType={"circle"}
+          verticalAlign={"bottom"}
+          align={"center"}
+          wrapperStyle={{
+            lineHeight:"40px",
+            paddingTop:"10px",
+            fontSize:"12px"
+          }}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
 
   // 7. dash -------------------------------------------------------------------------------------->
   const dashNode = () => {
@@ -586,7 +584,7 @@ export const MoneyDashPie = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

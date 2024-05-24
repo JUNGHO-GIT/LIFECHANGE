@@ -24,7 +24,7 @@ export const ExerciseDashLine = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("month");
+  const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("볼륨");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -123,7 +123,8 @@ export const ExerciseDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -186,7 +187,8 @@ export const ExerciseDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -249,7 +251,8 @@ export const ExerciseDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -312,7 +315,8 @@ export const ExerciseDashLine = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -334,18 +338,18 @@ export const ExerciseDashLine = () => {
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        variant={"outlined"}
-        value={SECTION}
-        onChange={(e) => (
-          setSECTION(e.target.value)
-        )}
-      >
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
-      </TextField>
+          select={true}
+          type={"text"}
+          size={"small"}
+          variant={"outlined"}
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"week"}>주간</MenuItem>
+          <MenuItem value={"month"}>월간</MenuItem>
+        </TextField>
       </Div>
     );
     // 7-5. dropdown
@@ -358,12 +362,12 @@ export const ExerciseDashLine = () => {
         ["볼륨", "유산소"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                if (LINE === key) {
-                  return;
-                }
-                else {
-                  setLINE(key);
-                }
+              if (LINE === key) {
+                return;
+              }
+              else {
+                setLINE(key);
+              }
             }}/>} label={key} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
@@ -419,7 +423,7 @@ export const ExerciseDashLine = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

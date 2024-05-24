@@ -3,8 +3,8 @@
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
 
-// 1-1. dash (scatter - today) -------------------------------------------------------------------->
-export const scatterToday = {
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+export const barToday = {
   listPlan: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
@@ -60,8 +60,8 @@ export const scatterToday = {
   }
 };
 
-// 1-2. dash (scatter - week) --------------------------------------------------------------------->
-export const scatterWeek = {
+// 1-2. dash (bar - week) ------------------------------------------------------------------------->
+export const barWeek = {
   listPlan: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
@@ -117,8 +117,8 @@ export const scatterWeek = {
   }
 };
 
-// 1-3. dash (scatter - month) -------------------------------------------------------------------->
-export const scatterMonth = {
+// 1-3. dash (bar - month) ------------------------------------------------------------------------>
+export const barMonth = {
   listPlan: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {

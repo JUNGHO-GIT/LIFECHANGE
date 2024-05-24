@@ -7,8 +7,7 @@ import {handlerY} from "../../../import/ImportLogics";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {Bar, Line, ComposedChart} from "recharts";
+import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3} from "../../../import/ImportImages.jsx";
 
@@ -71,11 +70,13 @@ export const MoneyDashBar = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-            activeDot={{r: 6}}
+          <Line dataKey={"목표"} stroke="#8884d8" strokeWidth={2} dot={false}
+          />
+          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke="#8884d8" strokeDasharray="3 3"
           />
           <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}/>
+            barSize={20}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -101,6 +102,7 @@ export const MoneyDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -135,9 +137,9 @@ export const MoneyDashBar = () => {
         </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-6. dropdown
     const dropdownSection2 = () => (
-      "\u00A0"
+      <Img src={common3} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
@@ -156,7 +158,7 @@ export const MoneyDashBar = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

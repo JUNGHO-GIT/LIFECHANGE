@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/exercise/exerciseDashService.js";
 export const router = express.Router();
 
-// 1-1. dash (scatter - today) -------------------------------------------------------------------->
-router.get("/scatter/today", async (req, res) => {
+// 1-1. dash (bar - today) -------------------------------------------------------------------->
+router.get("/bar/today", async (req, res) => {
   try {
-    let result = await service.scatterToday (
+    let result = await service.barToday (
       req.query.user_id
     );
     if (result) {
@@ -34,10 +34,10 @@ router.get("/scatter/today", async (req, res) => {
   }
 });
 
-// 1-2. dash (scatter - week) --------------------------------------------------------------------->
-router.get("/scatter/week", async (req, res) => {
+// 1-2. dash (bar - week) --------------------------------------------------------------------->
+router.get("/bar/week", async (req, res) => {
   try {
-    let result = await service.scatterWeek (
+    let result = await service.barWeek (
       req.query.user_id
     );
     if (result) {
@@ -64,10 +64,10 @@ router.get("/scatter/week", async (req, res) => {
   }
 });
 
-// 1-3. dash (scatter - month) -------------------------------------------------------------------->
-router.get("/scatter/month", async (req, res) => {
+// 1-3. dash (bar - month) -------------------------------------------------------------------->
+router.get("/bar/month", async (req, res) => {
   try {
-    let result = await service.scatterMonth (
+    let result = await service.barMonth (
       req.query.user_id
     );
     if (result) {

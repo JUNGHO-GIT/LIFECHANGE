@@ -123,6 +123,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -187,6 +188,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -248,7 +250,7 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
-             wrapperStyle={{
+            wrapperStyle={{
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -314,6 +316,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",

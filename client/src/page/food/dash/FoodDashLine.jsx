@@ -24,7 +24,7 @@ export const FoodDashLine = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("month");
+  const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("칼로리");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -123,6 +123,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -136,7 +137,7 @@ export const FoodDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNutWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -189,6 +190,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -202,7 +204,7 @@ export const FoodDashLine = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartKcalMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -252,6 +254,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -265,7 +268,7 @@ export const FoodDashLine = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartNutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -318,6 +321,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
@@ -424,7 +428,7 @@ export const FoodDashLine = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third

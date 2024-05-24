@@ -1,54 +1,56 @@
-// ExerciseDashPie.jsx
+// SleepDashPie.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
+import {log} from "../../../import/ImportLogics";
+import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {common3} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseDashPie = () => {
+export const SleepDashPie = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
+  const array = ["취침", "수면", "기상"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("week");
+  const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("부위");
+  const [PART, setPART] = useState(array);
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PART_WEEK_DEF = [
+  const OBJECT_TODAY_DEF = [
     {name:"Empty", value: 100},
   ];
-  const OBJECT_TITLE_WEEK_DEF = [
-    {name:"Empty", value: 100},
+  const OBJECT_WEEK_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_PART_MONTH_DEF = [
-    {name:"Empty", value: 100},
+  const OBJECT_MONTH_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_TITLE_MONTH_DEF = [
-    {name:"Empty", value: 100},
-  ];
-  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState(OBJECT_PART_WEEK_DEF);
-  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState(OBJECT_TITLE_WEEK_DEF);
-  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEF);
-  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEF);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
+      params: {
+        user_id: sessionId
+      },
+    });
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
         user_id: sessionId
@@ -59,19 +61,17 @@ export const ExerciseDashPie = () => {
         user_id: sessionId
       },
     });
-    setOBJECT_PART_WEEK(
-      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : OBJECT_PART_WEEK_DEF
+    setOBJECT_TODAY(
+      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
-    setOBJECT_TITLE_WEEK(
-      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : OBJECT_TITLE_WEEK_DEF
+    setOBJECT_WEEK(
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
     );
-    setOBJECT_PART_MONTH(
-      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : OBJECT_PART_MONTH_DEF
-    );
-    setOBJECT_TITLE_MONTH(
-      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
+    setOBJECT_MONTH(
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
+    log("OBJECT_TODAY", OBJECT_TODAY);
   })()}, [sessionId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -104,7 +104,7 @@ export const ExerciseDashPie = () => {
   }, []);
 
   // 4-1. render ---------------------------------------------------------------------------------->
-  const renderPartWeek = ({
+  const renderToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -115,13 +115,13 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_PART_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${OBJECT_TODAY[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
 
   // 4-2. render ---------------------------------------------------------------------------------->
-  const renderTitleWeek = ({
+  const renderWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -132,13 +132,13 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_TITLE_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${OBJECT_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
-  }
+  };
 
   // 4-3. render ---------------------------------------------------------------------------------->
-  const renderPartMonth = ({
+  const renderMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -149,49 +149,32 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_PART_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
-      </text>
-    );
-  }
-
-  // 4-4. render ---------------------------------------------------------------------------------->
-  const renderTitleMonth = ({
-    cx, cy, midAngle, innerRadius, outerRadius, value, index
-  }) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) / 2;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
-      className={"fs-0-6rem"}>
-        {`${OBJECT_TITLE_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${OBJECT_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartPartWeek = () => (
+  const chartToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
-          data={OBJECT_PART_WEEK}
+          data={OBJECT_TODAY}
           cx={"50%"}
           cy={"50%"}
-          label={renderPartWeek}
+          label={renderToday}
           labelLine={false}
           outerRadius={radius}
           fill={"#8884d8"}
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_PART_WEEK?.map((entry, index) => (
+          {OBJECT_TODAY?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value) => (`${Number(value).toLocaleString()} %`)}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -213,26 +196,26 @@ export const ExerciseDashPie = () => {
   );
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartTitleWeek = () => (
+  const chartWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
-          data={OBJECT_TITLE_WEEK}
+          data={OBJECT_WEEK}
           cx={"50%"}
           cy={"50%"}
-          label={renderTitleWeek}
+          label={renderWeek}
           labelLine={false}
           outerRadius={radius}
           fill={"#8884d8"}
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_TITLE_WEEK?.map((entry, index) => (
+          {OBJECT_WEEK?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value) => (`${Number(value).toLocaleString()} %`)}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -254,67 +237,26 @@ export const ExerciseDashPie = () => {
   );
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartPartMonth = () => (
+  const chartMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
-          data={OBJECT_PART_MONTH}
+          data={OBJECT_MONTH}
           cx={"50%"}
           cy={"50%"}
-          label={renderPartMonth}
+          label={renderMonth}
           labelLine={false}
           outerRadius={radius}
           fill={"#8884d8"}
           dataKey={"value"}
           minAngle={15}
         >
-          {OBJECT_PART_MONTH?.map((entry, index) => (
+          {OBJECT_MONTH?.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
-          contentStyle={{
-            backgroundColor:"rgba(255, 255, 255, 0.8)",
-            border:"none",
-            borderRadius:"10px"
-          }}
-        />
-        <Legend
-          iconType={"circle"}
-          verticalAlign={"bottom"}
-          align={"center"}
-          wrapperStyle={{
-            lineHeight:"40px",
-            paddingTop:"10px",
-            fontSize:"12px"
-          }}
-        />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-
-  // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartTitleMonth = () => (
-    <ResponsiveContainer width={"100%"} height={350}>
-      <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-        <Pie
-          data={OBJECT_TITLE_MONTH}
-          cx={"50%"}
-          cy={"50%"}
-          label={renderTitleMonth}
-          labelLine={false}
-          outerRadius={radius}
-          fill={"#8884d8"}
-          dataKey={"value"}
-          minAngle={15}
-        >
-          {OBJECT_TITLE_MONTH?.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value) => (`${Number(value).toLocaleString()} %`)}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -339,7 +281,7 @@ export const ExerciseDashPie = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>부위/운동 비율</Div>
+      <Div className={"d-center"}>수면 비율</Div>
     );
     // 7-5. dropdown
     const dropdownSection1 = () => (
@@ -354,6 +296,7 @@ export const ExerciseDashPie = () => {
           setSECTION(e.target.value)
         )}
       >
+        <MenuItem value={"today"}>오늘</MenuItem>
         <MenuItem value={"week"}>주간</MenuItem>
         <MenuItem value={"month"}>월간</MenuItem>
       </TextField>
@@ -361,76 +304,44 @@ export const ExerciseDashPie = () => {
     );
     // 7-5. dropdown
     const dropdownSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-        ["부위", "운동"].map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                return;
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        )))}>
-        {(popTrigger={}) => (
-          <Img src={common3} className={"w-24 h-24 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
+      <Img src={common3} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
-        {chartPartWeek()}
+        {chartToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
-        {chartPartMonth()}
+        {chartWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
-        {chartTitleWeek()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment4 = (i) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
-        {chartTitleMonth()}
+        {chartMonth()}
       </Card>
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "부위") {
+      if (SECTION === "today") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "month" && LINE === "부위") {
+      else if (SECTION === "week") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "운동") {
+      else if (SECTION === "month") {
         return LOADING ? loadingNode() : dashFragment3(0);
-      }
-      else if (SECTION === "month" && LINE === "운동") {
-        return LOADING ? loadingNode() : dashFragment4(0);
       }
     }
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{dropdownSection1()}</Div>
-        <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{dropdownSection2()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
       </Div>
     );
     // 7-11. third
