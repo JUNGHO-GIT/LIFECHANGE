@@ -74,6 +74,9 @@ import {LocalizationProvider} from '@mui/x-date-pickers';
 // dateCalendar
 import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
 
+// PickersDay
+import {PickersDay} from '@mui/x-date-pickers/PickersDay';
+
 // digitalClock
 import {DigitalClock} from '@mui/x-date-pickers/DigitalClock';
 
@@ -125,7 +128,7 @@ export {
   useAutocomplete, GlobalStyles,
 
   // adopterMoment
-  AdapterMoment, DateCalendar, DigitalClock,
+  AdapterMoment, DateCalendar, DigitalClock, PickersDay,
 
   // datePickers
   LocalizationProvider,

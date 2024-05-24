@@ -5,13 +5,13 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
-import {percent} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Icons, Br10, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
-import {DigitalClock, DateCalendar} from "../../import/ImportMuis.jsx";
+import {DigitalClock, DateCalendar, PickersDay} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1, common2, common3_1, common5, sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";/*  */
+import {common1, common2, common3_1, common5, sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -158,14 +158,27 @@ export const SleepSave = () => {
           position={"center"}
           direction={"center"}
           contents={({closePopup}) => (
-          <Div className={"d-center w-max70vw"}>
+          <Div className={"d-center w-80vw"}>
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["year", "day"]}
                 readOnly={false}
                 defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-max50vh"}
+                className={"radius border h-max60vh"}
+                // OBJECT.sleep_dateStart가 일치하는 날짜중 sleep_section의 length가 0 이상인 경우 색상 하이라이트
+                slotProps={{
+                  day: (props) => {
+                    const currentDate = props.day.format("YYYY-MM-DD");
+                    console.log("Checking date: " + currentDate); // 날짜 검사 로그 추가
+                    const hasSleep = OBJECT?.sleep_section.some((item) => {
+                      const sleepDate = moment(item.sleep_dateStart).format("YYYY-MM-DD");
+                      console.log("Sleep section date: " + sleepDate); // sleep_dateStart 로그
+                      return sleepDate === currentDate;
+                    });
+                    return hasSleep ? { style: { backgroundColor: "red" } } : {};
+                  }
+                }}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
@@ -173,53 +186,30 @@ export const SleepSave = () => {
                     dateEnd: moment(date).format("YYYY-MM-DD")
                   }));
                 }}
-                sx={{
-                  "& .MuiDateCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiYearCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    minHeight: "0px",
-                  },
-                  "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.7rem",
-                    width: "5vh",
-                    height: "5vh",
-                  },
-                  '& .MuiPickersDay-root': {
-                    fontSize: "0.7rem",
-                    width: "5vh",
-                    height: "5vh",
-                  },
-                }}
               />
             </LocalizationProvider>
           </Div>
         )}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              size={"small"}
-              label={"기간"}
-              variant={"outlined"}
-              value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-              className={"w-86vw"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common1} className={"w-16 h-16"} />
-                ),
-                endAdornment: null
-              }}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-            />
-          )}
+        {(popTrigger={}) => (
+          <TextField
+            type={"text"}
+            size={"small"}
+            label={"기간"}
+            variant={"outlined"}
+            value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+            className={"w-86vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Img src={common1} className={"w-16 h-16"} />
+              ),
+              endAdornment: null
+            }}
+            onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget);
+            }}
+          />
+        )}
         </PopUp>
       </Div>
     );
@@ -232,7 +222,7 @@ export const SleepSave = () => {
           direction={"center"}
           contents={({closePopup}) => (
             <Div className={"d-center"}>
-              {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
+              {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
             </Div>
           )}>
           {(popTrigger={}) => (
@@ -266,7 +256,7 @@ export const SleepSave = () => {
                       name={"TbPlus"}
                       className={"w-20 h-20 black"}
                       onClick={(e) => {
-                        COUNT.newSectionCnt < 10 ? (
+                        COUNT.newSectionCnt < 1 ? (
                           setCOUNT((prev) => ({
                             ...prev,
                             newSectionCnt: prev.newSectionCnt + 1

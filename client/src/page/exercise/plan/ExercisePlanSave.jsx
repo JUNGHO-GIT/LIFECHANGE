@@ -168,43 +168,20 @@ export const ExercisePlanSave = () => {
           position={"center"}
           direction={"center"}
           contents={({closePopup}) => (
-          <Div className={"d-center w-max70vw"}>
+          <Div className={"d-center w-80vw"}>
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DateCalendar
                 timezone={"Asia/Seoul"}
                 views={["year", "day"]}
                 readOnly={false}
                 defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-max50vh"}
+                className={"radius border h-max60vh"}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
                     dateStart: moment(date).format("YYYY-MM-DD"),
                     dateEnd: moment(date).format("YYYY-MM-DD")
                   }));
-                }}
-                sx={{
-                  "& .MuiDateCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiYearCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    minHeight: "0px",
-                  },
-                  "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.7rem",
-                    width: "5vh",
-                    height: "5vh",
-                  },
-                  '& .MuiPickersDay-root': {
-                    fontSize: "0.7rem",
-                    width: "5vh",
-                    height: "5vh",
-                  },
                 }}
               />
             </LocalizationProvider>
