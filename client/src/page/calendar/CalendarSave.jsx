@@ -319,12 +319,10 @@ export const CalendarSave = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Div className={"d-center"}>
-            <Img src={common5} className={"w-16 h-16 pointer"}
-              onClick={() => {
-                handlerDelete(index);
-                closePopup();
-              }}
-            />
+            <Img src={common5} className={"w-16 h-16 pointer"} onClick={() => {
+              handlerDelete(index);
+              closePopup();
+            }}/>
             {translate("common-delete")}
           </Div>
         )}>
@@ -515,7 +513,6 @@ export const CalendarSave = () => {
         {countSection()}
       </Card>
     );
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()

@@ -82,7 +82,7 @@ export const save = async (
   );
 
   let finalResult = null;
-  if (!findResult) {
+  if (!findResult || findResult === null) {
     finalResult = await repository.save.create(
       user_id_param, OBJECT_param, dateType, dateStart, dateEnd
     );

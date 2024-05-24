@@ -101,32 +101,10 @@ export const CalendarList = () => {
       const currDate = formatDate(date);
       return currDate >= dateStart && currDate <= dateEnd;
     };
-    const addBtn = (calendarForDates) => (
-      calendarForDates?.map((calendar) => (
-        calendar.calendar_section?.map((section) => (
-          <Div key={calendar._id} className={"calendar-add"}
-            onClick={(e) => {
-              e.stopPropagation();
-              Object.assign(SEND, {
-                id: calendar._id,
-                section_id: section._id,
-                dateStart: calendar.calendar_dateStart,
-                dateEnd: calendar.calendar_dateEnd,
-              });
-              navigate(SEND.toSave, {
-                state: SEND
-              });
-            }}
-          >
-            <Icons name={"TbPlus"} className={"w-12 h-12"} />
-          </Div>
-        ))
-      ))
-    );
     const activeLine = (calendarForDates) => (
       calendarForDates?.map((calendar) => (
         calendar.calendar_section?.map((section) => (
-          <Div key={calendar._id} className={"calendar-filled"}
+          <Div key={`${calendar._id}-${section._id}`} className={"calendar-filled"}
             style={{
               backgroundColor: section.calendar_color
             }}
@@ -160,7 +138,7 @@ export const CalendarList = () => {
     // 7-7. table
     const tableFragment = (i) => (
       <Calendar
-        key={i}
+        key={`calendar-${i}-${DATE.dateStart}`}
         locale={"ko"}
         view={"month"}
         value={new Date()}
@@ -191,6 +169,7 @@ export const CalendarList = () => {
             dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
           }));
         }}
+        onClickDay={(date) => {}}
         tileClassName={({date, view}) => {
           // 3개 이상일 경우
           const calendarForDates = OBJECT?.filter((calendar) => (
@@ -208,10 +187,7 @@ export const CalendarList = () => {
             dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
           ));
           return (
-            <>
-              {addBtn(calendarForDates)}
-              {calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)}
-            </>
+            calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)
           );
         }}
       />

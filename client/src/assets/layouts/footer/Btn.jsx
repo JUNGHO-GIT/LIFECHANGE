@@ -332,7 +332,12 @@ export const Btn = ({
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return null
+        return (
+          <Card className={"block-wrapper border-none d-row h-7vh"}>
+            {btnGoToSave()}
+            {btnGetProperty()}
+          </Card>
+        );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (

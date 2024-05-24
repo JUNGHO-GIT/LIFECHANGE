@@ -1,6 +1,7 @@
 // App.jsx
 
-import React, {useEffect} from "react";
+import React from "react";
+import {StrictMode} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
@@ -159,10 +160,12 @@ if (rootElement === null) {
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <BrowserRouter>
-    <LanguageProvider>
-      <CssBaseline />
-      <App />
-    </LanguageProvider>
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <LanguageProvider>
+        <CssBaseline />
+        <App />
+      </LanguageProvider>
+    </BrowserRouter>
+  </StrictMode>
 );
