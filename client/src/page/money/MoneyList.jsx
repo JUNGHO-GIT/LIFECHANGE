@@ -110,7 +110,7 @@ export const MoneyList = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {

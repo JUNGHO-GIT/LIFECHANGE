@@ -73,18 +73,21 @@ export const SleepDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    sleep_dateType: "",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
+    _id: "",
+    sleep_plan_number: 0,
+    sleep_plan_demo: false,
     sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
+    sleep_dateType: "",
+    sleep_dateStart: "0000-00-00",
+    sleep_dateEnd: "0000-00-00",
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
     sleep_diff_night: "00:00",
     sleep_diff_morning: "00:00",
     sleep_diff_time: "00:00",
@@ -115,7 +118,7 @@ export const SleepDiff = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {

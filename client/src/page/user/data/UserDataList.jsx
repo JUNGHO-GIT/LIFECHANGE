@@ -53,6 +53,9 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
+    _id: "",
+    exercise_plan_number: 0,
+    exercise_plan_demo: false,
     exercise_plan_dateType: "",
     exercise_plan_dateStart: "0000-00-00",
     exercise_plan_dateEnd: "0000-00-00",
@@ -64,6 +67,7 @@ export const UserDataList = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
+    exercise_demo: false,
     exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
@@ -83,6 +87,9 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_FOOD_PLAN_DEF = [{
+    _id: "",
+    food_plan_number: 0,
+    food_plan_demo: false,
     food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
@@ -94,6 +101,7 @@ export const UserDataList = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
+    food_demo: false,
     food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
@@ -115,6 +123,9 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_MONEY_PLAN_DEF = [{
+    _id: "",
+    money_plan_number: 0,
+    money_plan_demo: false,
     money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
@@ -124,6 +135,7 @@ export const UserDataList = () => {
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
+    money_demo: false,
     money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
@@ -139,6 +151,9 @@ export const UserDataList = () => {
     }],
   }];
   const OBJECT_SLEEP_PLAN_DEF = [{
+    _id: "",
+    sleep_plan_number: 0,
+    sleep_plan_demo: false,
     sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
@@ -149,6 +164,7 @@ export const UserDataList = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
+    sleep_demo: false,
     sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
@@ -187,52 +203,85 @@ export const UserDataList = () => {
       },
     });
     if (PART === "exercisePlan") {
-      setOBJECT_EXERCISE_PLAN((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_EXERCISE_PLAN_DEF)
-      ]);
+      // 첫번째 객체를 제외하고 데이터 추가
+      setOBJECT_EXERCISE_PLAN((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "exercise") {
-      setOBJECT_EXERCISE((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_EXERCISE_DEF)
-      ]);
+      setOBJECT_EXERCISE((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "foodPlan") {
-      setOBJECT_FOOD_PLAN((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_FOOD_PLAN_DEF)
-      ]);
+      setOBJECT_FOOD_PLAN((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "food") {
-      setOBJECT_FOOD((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_FOOD_DEF)
-      ]);
+      setOBJECT_FOOD((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "moneyPlan") {
-      setOBJECT_MONEY_PLAN((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_MONEY_PLAN_DEF)
-      ]);
+      setOBJECT_MONEY_PLAN((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "money") {
-      setOBJECT_MONEY((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_MONEY_DEF)
-      ]);
+      setOBJECT_MONEY((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "sleepPlan") {
-      setOBJECT_SLEEP_PLAN((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_SLEEP_PLAN_DEF)
-      ]);
+      setOBJECT_SLEEP_PLAN((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     else if (PART === "sleep") {
-      setOBJECT_SLEEP((prev) => [
-        ...prev,
-        ...(res.data.result || OBJECT_SLEEP_DEF)
-      ]);
+      setOBJECT_SLEEP((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
     }
     setCOUNT((prev) => ({
       ...prev,
@@ -348,53 +397,53 @@ export const UserDataList = () => {
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("exercise-count")}</TableCell>
-              <TableCell>{translate("exercise-volume")}</TableCell>
-              <TableCell>{translate("exercise-cardio")}</TableCell>
-              <TableCell>{translate("exercise-weight")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_EXERCISE_PLAN.length - 1 ? lastRowRef : null}
-              >
-                <TableCell>
-                  <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_dateType}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_count).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_volume).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_cardio}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_weight).format("0,0")}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("common-dateType")}</TableCell>
+                <TableCell>{translate("exercise-count")}</TableCell>
+                <TableCell>{translate("exercise-volume")}</TableCell>
+                <TableCell>{translate("exercise-cardio")}</TableCell>
+                <TableCell>{translate("exercise-weight")}</TableCell>
               </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_EXERCISE_PLAN?.map((item, index) => (
+                <TableRow
+                  key={`data-${index}`}
+                  className={"table-tbody-tr"}
+                  ref={index === OBJECT_EXERCISE_PLAN.length - 1 ? lastRowRef : null}
+                >
+                  <TableCell>
+                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                  </TableCell>
+                  <TableCell>
+                    {item.exercise_plan_dateType}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.exercise_plan_count).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.exercise_plan_volume).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {item.exercise_plan_cardio}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.exercise_plan_weight).format("0,0")}
+                  </TableCell>
+                </TableRow>
+              ))}
+              {LOADING && Array.from({length: Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}, (_, index) => (
+                <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                  <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
+                    <Skeleton className={"animation"}/>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>

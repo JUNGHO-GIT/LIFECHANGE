@@ -67,8 +67,9 @@ export const CalendarSave = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
-    user_id: sessionId,
+    _id: "",
     calendar_number: 0,
+    calendar_demo: false,
     calendar_dateType: "",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
@@ -96,7 +97,7 @@ export const CalendarSave = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return res.data.result;
       }
       else {
@@ -140,7 +141,7 @@ export const CalendarSave = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return res.data.result;
       }
       else {

@@ -163,15 +163,7 @@ export const FoodFindList = () => {
         DATE: DATE
       },
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
-        return res.data.result;
-      }
-      else {
-        return {...prev, ...res.data.result};
-      }
-    });
+    setOBJECT(res.data.result || []);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,

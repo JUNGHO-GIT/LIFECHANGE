@@ -72,6 +72,9 @@ export const SleepPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
+    _id: "",
+    sleep_plan_number: 0,
+    sleep_plan_demo: false,
     sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
@@ -102,7 +105,7 @@ export const SleepPlanList = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {

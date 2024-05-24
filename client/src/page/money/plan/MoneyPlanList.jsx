@@ -73,6 +73,9 @@ export const MoneyPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
+    _id: "",
+    money_plan_number: 0,
+    money_plan_demo: false,
     money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
@@ -102,7 +105,7 @@ export const MoneyPlanList = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {

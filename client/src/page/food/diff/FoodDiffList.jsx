@@ -73,13 +73,9 @@ export const FoodDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    food_dateType: "",
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
+    _id: "",
+    food_plan_number: 0,
+    food_plan_demo: false,
     food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
@@ -87,6 +83,13 @@ export const FoodDiff = () => {
     food_plan_carb: 0,
     food_plan_protein: 0,
     food_plan_fat: 0,
+    food_dateType: "",
+    food_dateStart: "0000-00-00",
+    food_dateEnd: "0000-00-00",
+    food_total_kcal: 0,
+    food_total_carb: 0,
+    food_total_protein: 0,
+    food_total_fat: 0,
     food_diff_kcal: 0,
     food_diff_carb: 0,
     food_diff_protein: 0,
@@ -120,7 +123,7 @@ export const FoodDiff = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {

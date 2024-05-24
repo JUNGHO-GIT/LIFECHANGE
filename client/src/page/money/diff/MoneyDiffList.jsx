@@ -73,16 +73,19 @@ export const MoneyDiff = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
-    money_dateType: "",
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
+    _id: "",
+    money_plan_number: 0,
+    money_plan_demo: false,
     money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,
     money_plan_out: 0,
+    money_dateType: "",
+    money_dateStart: "0000-00-00",
+    money_dateEnd: "0000-00-00",
+    money_total_in: 0,
+    money_total_out: 0,
     money_diff_in: 0,
     money_diff_out: 0,
     money_diff_in_color: "",
@@ -111,7 +114,7 @@ export const MoneyDiff = () => {
     });
     // 첫번째 객체를 제외하고 데이터 추가
     setOBJECT((prev) => {
-      if (prev.length === 1 && Object.keys(prev[0]).length === 0) {
+      if (prev.length === 1 && prev[0]._id === "") {
         return [...res.data.result];
       }
       else {
