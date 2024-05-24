@@ -204,13 +204,13 @@ export const SleepList = () => {
                       id: item._id,
                       dateType: item.sleep_dateType,
                       dateStart: item.sleep_dateStart,
-                      dateEnd: item.sleep_dateEnd
+                      dateEnd: item.sleep_dateEnd,
                     });
                     navigate(SEND.toSave, {
                       state: SEND
                     });
                   }}>
-                    {item.sleep_dateStart?.substring(5, 10)}
+                    <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
                   </Link>
                 </TableCell>
                 <TableCell>

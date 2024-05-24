@@ -864,7 +864,7 @@ export const UserDataList = () => {
               <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody-tr"}>
+          <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
               <TableRow
                 key={`data-${index}`}

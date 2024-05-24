@@ -189,7 +189,7 @@ export const FoodSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
 

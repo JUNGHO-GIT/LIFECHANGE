@@ -44,6 +44,14 @@ export const list = {
           money_plan_dateType: dateType_param
         }),
       }},
+      {$project: {
+        _id: 1,
+        money_plan_dataType: 1,
+        money_plan_dateStart: 1,
+        money_plan_dateEnd: 1,
+        money_plan_in: 1,
+        money_plan_out: 1,
+      }},
       {$sort: {money_plan_dateStart: sort_param}},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

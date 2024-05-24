@@ -80,7 +80,7 @@ export const SleepPlanList = () => {
     sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00"
+    sleep_plan_time: "00:00",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -146,7 +146,6 @@ export const SleepPlanList = () => {
         loadMoreData();
       }
     });
-
     if (node) {
       observer.current.observe(node);
     }
@@ -193,7 +192,7 @@ export const SleepPlanList = () => {
               <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody-tr"}>
+          <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
               key={`data-${index}`}
@@ -232,7 +231,7 @@ export const SleepPlanList = () => {
             {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
               <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
                 <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton variant="text" />
+                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

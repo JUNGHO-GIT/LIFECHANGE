@@ -85,7 +85,7 @@ export const SleepPlanSave = () => {
       params: {
         user_id: sessionId,
         DATE: {
-          dateType: DATE.dateType,
+          dateType: "",
           dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
           dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
         },
@@ -97,6 +97,7 @@ export const SleepPlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: sessionId,
@@ -155,7 +156,7 @@ export const SleepPlanSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      newSectionCnt: prev.newSectionCnt - 1
+      newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
 
@@ -168,7 +169,7 @@ export const SleepPlanSave = () => {
           select={true}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType || "day"}
+          value={DATE.dateType}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
@@ -177,10 +178,46 @@ export const SleepPlanSave = () => {
             endAdornment: null
           }}
           onChange={(e) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: e.target.value
-            }));
+            if (e.target.value === "day") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "week") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "month") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("month").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("month").format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "year") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+              }));
+            }
+            else {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+              }));
+            }
           }}>
           {["전체", "day", "week", "month", "year"].map((item) => (
             <MenuItem key={item} value={item} selected={item === DATE.dateType}>
@@ -352,7 +389,7 @@ export const SleepPlanSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        <Div className={"d-row"}>
+        <Div className={"d-center"}>
           <Img src={common5} className={"w-16 h-16 pointer"} onClick={() => {
             handlerDelete(index);
             closePopup();
@@ -373,12 +410,13 @@ export const SleepPlanSave = () => {
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between mb-40"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, "", 0)}
+          {dropdownSection(OBJECT?._id, "", i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <PopUp
             key={i}
-            position={"bottom"}
+            type={"timePicker"}
+            position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -429,7 +467,7 @@ export const SleepPlanSave = () => {
           <PopUp
             key={i}
             type={"timePicker"}
-            position={"bottom"}
+            position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>

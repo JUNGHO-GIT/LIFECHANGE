@@ -30,10 +30,10 @@ export const CalendarList = () => {
   const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "",
+      dateType: "전체",
       dateStart: moment().startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().endOf("month").format("YYYY-MM-DD")
     }
@@ -64,6 +64,7 @@ export const CalendarList = () => {
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{
+      _id: "",
       calendar_part_idx: 0,
       calendar_part_val: "일정",
       calendar_title : "",
@@ -81,15 +82,7 @@ export const CalendarList = () => {
         DATE: DATE,
       },
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return res.data.result;
-      }
-      else {
-        return {...prev, ...res.data.result};
-      }
-    });
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
@@ -108,9 +101,31 @@ export const CalendarList = () => {
       const currDate = formatDate(date);
       return currDate >= dateStart && currDate <= dateEnd;
     };
+    const addBtn = (calendarForDates) => (
+      calendarForDates?.map((calendar) => (
+        calendar.calendar_section?.map((section) => (
+          <Div key={calendar._id} className={"calendar-add"}
+            onClick={(e) => {
+              e.stopPropagation();
+              Object.assign(SEND, {
+                id: calendar._id,
+                section_id: section._id,
+                dateStart: calendar.calendar_dateStart,
+                dateEnd: calendar.calendar_dateEnd,
+              });
+              navigate(SEND.toSave, {
+                state: SEND
+              });
+            }}
+          >
+            <Icons name={"TbPlus"} className={"w-12 h-12"} />
+          </Div>
+        ))
+      ))
+    );
     const activeLine = (calendarForDates) => (
       calendarForDates?.map((calendar) => (
-        calendar.calendar_section.map((section) => (
+        calendar.calendar_section?.map((section) => (
           <Div key={calendar._id} className={"calendar-filled"}
             style={{
               backgroundColor: section.calendar_color
@@ -168,20 +183,13 @@ export const CalendarList = () => {
           const week = ["일", "월", "화", "수", "목", "금", "토"];
           return week[day];
         }}
-        onClickDay={(date) => {
-          Object.assign(SEND, {
-            dateStart: formatDate(date),
-            dateEnd: formatDate(date)
-          });
-          navigate(SEND.toSave, {
-            state: SEND
-          });
-        }}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
-          setDATE({
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "전체",
             dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
             dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD")
-          });
+          }));
         }}
         tileClassName={({date, view}) => {
           // 3개 이상일 경우
@@ -200,7 +208,10 @@ export const CalendarList = () => {
             dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
           ));
           return (
-            calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)
+            <>
+              {addBtn(calendarForDates)}
+              {calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)}
+            </>
           );
         }}
       />

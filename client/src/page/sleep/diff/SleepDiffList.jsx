@@ -207,7 +207,7 @@ export const SleepDiff = () => {
               <TableCell>{translate("sleep-time")}</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className={"table-tbody-tr"}>
+          <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
               key={`data-${index}`}

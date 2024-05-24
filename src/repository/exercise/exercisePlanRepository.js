@@ -79,6 +79,16 @@ export const list = {
           exercise_plan_dateType: dateType_param
         }),
       }},
+      {$project: {
+        _id: 1,
+        exercise_plan_dateType: 1,
+        exercise_plan_dateStart: 1,
+        exercise_plan_dateEnd: 1,
+        exercise_plan_count: 1,
+        exercise_plan_volume: 1,
+        exercise_plan_cardio: 1,
+        exercise_plan_weight: 1,
+      }},
       {$sort: {exercise_plan_dateStart: sort_param}},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},

@@ -16,12 +16,10 @@ export const exist = {
       {$match: {
         user_id: user_id_param,
         calendar_dateStart: {
-          $gte: dateStart_param,
-          $lte: dateEnd_param
+          $lte: dateEnd_param,
         },
         calendar_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param
         },
         ...(dateType_param === "전체" ? {} : {
           calendar_dateType: dateType_param
@@ -49,13 +47,14 @@ export const list = {
     const finalResult = await Calendar.countDocuments({
       user_id: user_id_param,
       calendar_dateStart: {
-        $gte: dateStart_param,
         $lte: dateEnd_param,
       },
       calendar_dateEnd: {
         $gte: dateStart_param,
-        $lte: dateEnd_param,
       },
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -68,17 +67,18 @@ export const list = {
       {$match: {
         user_id: user_id_param,
         calendar_dateStart: {
-          $gte: dateStart_param,
           $lte: dateEnd_param,
         },
         calendar_dateEnd: {
           $gte: dateStart_param,
-          $lte: dateEnd_param,
         },
-      }}
+        ...(dateType_param === "전체" ? {} : {
+          calendar_dateType: dateType_param
+        }),
+      }},
     ]);
     return finalResult;
-  },
+  }
 };
 
 // 2. detail (상세는 eq) -------------------------------------------------------------------------->

@@ -16,7 +16,7 @@ export const useDate = (
   const secondStr = PATH?.split("/")[2] || "";
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+  /* useEffect(() => {
     if (secondStr === "plan") {
       if (DATE?.dateType === "day") {
         setDATE((prev) => ({
@@ -47,5 +47,5 @@ export const useDate = (
         }));
       }
     }
-  }, [DATE?.dateType]);
+  }, [DATE?.dateType]); */
 };

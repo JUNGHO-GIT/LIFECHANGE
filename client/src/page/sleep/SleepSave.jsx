@@ -255,6 +255,7 @@ export const SleepSave = () => {
               className={"w-86vw"}
               InputProps={{
                 readOnly: true,
+                className: "fs-0-8rem",
                 startAdornment: (
                   <Img src={common1} className={"w-16 h-16"} />
                 ),
@@ -344,15 +345,13 @@ export const SleepSave = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            <Img src={common5} className={"w-16 h-16 pointer"}
-              onClick={() => {
-                handlerDelete(index);
-                closePopup();
-              }}
-            />
-            {translate("common-delete")}
-          </Div>
+        <Div className={"d-center"}>
+          <Img src={common5} className={"w-16 h-16 pointer"} onClick={() => {
+            handlerDelete(index);
+            closePopup();
+          }}/>
+          {translate("common-delete")}
+        </Div>
         )}>
         {(popTrigger={}) => (
           <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {

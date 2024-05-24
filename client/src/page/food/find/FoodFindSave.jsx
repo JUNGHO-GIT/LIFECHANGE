@@ -217,7 +217,7 @@ export const FoodFindSave = () => {
     // COUNT 설정
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1
+      newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
 

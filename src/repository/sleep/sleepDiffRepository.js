@@ -44,6 +44,15 @@ export const list = {
           sleep_plan_dateType: dateType_param
         }),
       }},
+      {$project: {
+        _id: 1,
+        sleep_plan_dateType: 1,
+        sleep_plan_dateStart: 1,
+        sleep_plan_dateEnd: 1,
+        sleep_plan_night: 1,
+        sleep_plan_morning: 1,
+        sleep_plan_time: 1,
+      }},
       {$sort: {sleep_plan_dateStart: sort_param}},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
@@ -70,8 +79,7 @@ export const list = {
           sleep_plan_dateType: dateType_param
         }),
       }},
-      {$unwind: "$sleep_section"
-      },
+      {$unwind: "$sleep_section"},
       {$project: {
         _id: 1,
         sleep_dateType: 1,

@@ -139,22 +139,18 @@ export const CalendarSave = () => {
       OBJECT: OBJECT,
       DATE: DATE,
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return res.data.result;
-      }
-      else {
-        return {...prev, ...res.data.result};
-      }
-    });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      navigate(SEND?.toList);
+      Object.assign(SEND, {
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
+      });
+      navigate(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(res.data.msg);
-      navigate(SEND?.toList);
     }
   };
 
@@ -190,7 +186,7 @@ export const CalendarSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: prev.sectionCnt - 1,
+      newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
 

@@ -169,7 +169,7 @@ export const ExercisePlanSave = () => {
           select={true}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType || "day"}
+          value={DATE.dateType}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
@@ -178,10 +178,46 @@ export const ExercisePlanSave = () => {
             endAdornment: null
           }}
           onChange={(e) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: e.target.value
-            }));
+            if (e.target.value === "day") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "week") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "month") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("month").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("month").format("YYYY-MM-DD")
+              }));
+            }
+            else if (e.target.value === "year") {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+              }));
+            }
+            else {
+              setDATE((prev) => ({
+                ...prev,
+                dateType: e.target.value,
+                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+              }));
+            }
           }}>
           {["전체", "day", "week", "month", "year"].map((item) => (
             <MenuItem key={item} value={item} selected={item === DATE.dateType}>
@@ -376,7 +412,7 @@ export const ExercisePlanSave = () => {
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between mb-40"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, "", 0)}
+          {dropdownSection(OBJECT?._id, "", i)}
         </Div>
         <Div className={"d-center mb-20"}>
           <TextField

@@ -44,6 +44,16 @@ export const list = {
           food_plan_dateType: dateType_param
         }),
       }},
+      {$project: {
+        _id: 1,
+        food_plan_dateType: 1,
+        food_plan_dateStart: 1,
+        food_plan_dateEnd: 1,
+        food_plan_kcal: 1,
+        food_plan_carb: 1,
+        food_plan_protein: 1,
+        food_plan_fat: 1,
+      }},
       {$sort: {food_plan_dateStart: sort_param}},
       {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
