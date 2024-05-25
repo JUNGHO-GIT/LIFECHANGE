@@ -57,6 +57,7 @@ export const MoneyDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
         user_id: sessionId

@@ -56,7 +56,7 @@ export const MoneyPlanList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
-    dateType: "전체",
+    dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/money/plan/save",
@@ -130,7 +130,7 @@ export const MoneyPlanList = () => {
     sessionId, MORE,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.dateType, DATE.dateStart, DATE.dateEnd
+    DATE.dateStart, DATE.dateEnd
   ]);
 
   // 2-4. useCallback ----------------------------------------------------------------------------->

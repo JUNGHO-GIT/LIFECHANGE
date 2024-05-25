@@ -76,6 +76,7 @@ export const CalendarList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,

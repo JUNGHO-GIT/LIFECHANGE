@@ -81,7 +81,7 @@ export const list = {
       }},
       {$project: {
         _id: 1,
-        money_plan_dataType: 1,
+        money_plan_dateType: 1,
         money_plan_dateStart: 1,
         money_plan_dateEnd: 1,
         money_plan_in: 1,

@@ -94,6 +94,7 @@ export const UserDataSet = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/data/set`, {
       params: {
         user_id: sessionId

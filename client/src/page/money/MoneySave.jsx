@@ -103,6 +103,7 @@ export const MoneySave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,

@@ -51,6 +51,7 @@ export const FoodDashLine = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
         user_id: sessionId

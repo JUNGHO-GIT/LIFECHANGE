@@ -44,6 +44,7 @@ export const SleepDashAvg = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: sessionId

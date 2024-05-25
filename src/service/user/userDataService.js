@@ -192,7 +192,6 @@ export const save = async (
         .filter((section) => (section.exercise_part_val === "유산소"))
         .reduce((sum, section) => (sum + moment.duration(section.exercise_cardio).asMinutes()), 0);
 
-
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,

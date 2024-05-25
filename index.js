@@ -64,7 +64,7 @@ const customLogger = (collectionName, method, query, doc) => {
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 // mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
-// mongoose.set("debug", customLogger);
+mongoose.set("debug", customLogger);
 
 // ------------------------------------------------------------------------------------------------>
 const appPort = Number(process.env.PORT);

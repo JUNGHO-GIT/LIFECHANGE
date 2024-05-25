@@ -146,7 +146,7 @@ export const ExerciseDiff = () => {
     sessionId, MORE,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
-    DATE.dateType, DATE.dateStart, DATE.dateEnd
+    DATE.dateStart, DATE.dateEnd
   ]);
 
   // 2-4. useCallback ----------------------------------------------------------------------------->

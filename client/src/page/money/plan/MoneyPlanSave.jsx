@@ -7,7 +7,7 @@ import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
@@ -22,7 +22,6 @@ export const MoneyPlanSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataSet") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -96,6 +95,7 @@ export const MoneyPlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: sessionId,
@@ -157,158 +157,17 @@ export const MoneyPlanSave = () => {
     }));
   };
 
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. date (plan = 유형 o)
     const dateSection = () => (
-      <Div className={"d-center"}>
-        <TextField
-          select={true}
-          label={translate("common-dateType")}
-          size={"small"}
-          value={DATE.dateType || "day"}
-          variant={"outlined"}
-          className={"w-20vw me-3vw"}
-          InputProps={{
-            readOnly: false,
-            startAdornment: null,
-            endAdornment: null
-          }}
-          onChange={(e) => {
-            if (e.target.value === "day") {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value,
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "week") {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value,
-                dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "month") {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value,
-                dateStart: moment().startOf("month").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("month").format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "year") {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value,
-                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
-              }));
-            }
-            else {
-              setDATE((prev) => ({
-                ...prev,
-                dateType: e.target.value,
-                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
-              }));
-            }
-          }}>
-          {["전체", "day", "week", "month", "year"].map((item) => (
-            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
-        <PopUp
-          type={"innerCenter"}
-          position={"center"}
-          direction={"center"}
-          contents={({closePopup}) => (
-          LOADING ? (
-            <Div className={"d-column w-80vw h-55vh"}>
-              <Div className={"loader"} />
-            </Div>
-          ) : (
-            <Div className={"d-center w-80vw h-60vh"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DateCalendar
-                  timezone={"Asia/Seoul"}
-                  views={["year", "day"]}
-                  readOnly={false}
-                  defaultValue={moment(DATE.dateStart)}
-                  className={"radius border"}
-                  slots={{
-                    day: (props) => {
-                      const {outsideCurrentMonth, day, ...other} = props;
-                      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
-                      return (
-                        <Badge
-                          key={props.day.toString()}
-                          badgeContent={""}
-                          slotProps={{
-                            badge: {style: {
-                              width: 3,
-                              height: 3,
-                              padding: 0,
-                              top: 8,
-                              left: 30,
-                              backgroundColor: isSelected ? "#0088FE" : undefined,
-                            }}
-                          }}
-                        >
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                          />
-                        </Badge>
-                      )
-                    }
-                  }}
-                  onMonthChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                      dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                    }));
-                  }}
-                  onChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).format("YYYY-MM-DD"),
-                      dateEnd: moment(date).format("YYYY-MM-DD")
-                    }));
-                  }}
-                />
-              </LocalizationProvider>
-            </Div>
-          ))}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              size={"small"}
-              label={"기간"}
-              variant={"outlined"}
-              value={`${DATE.dateStart}~${DATE.dateEnd}`}
-              className={"w-60vw"}
-              InputProps={{
-                readOnly: true,
-                className: "fs-0-8rem",
-                startAdornment: (
-                  <Img src={common1} className={"w-16 h-16"} />
-                ),
-                endAdornment: null
-              }}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Calendar
+        DATE={DATE}
+        setDATE={setDATE}
+        isExist={isExist}
+        setIsExist={setIsExist}
+      />
     );
     // 7-2. count
     const countSection = () => (
