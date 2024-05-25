@@ -3,10 +3,10 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
-import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Button} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -328,7 +328,7 @@ export const UserDataSet = () => {
                       <Div className={"d-center"} onClick={() => {
                         handlerAdd("part");
                       }}>
-                        <Icons name={"BiPlus"} className={"w-14 h-14"} />
+                        <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
                       </Div>
                     </TableCell>
                   </TableRow>
@@ -383,7 +383,7 @@ export const UserDataSet = () => {
                         <Div className={"d-center"} onClick={() => {
                           handlerAdd("title");
                         }}>
-                          <Icons name={"BiPlus"} className={"w-14 h-14"} />
+                          <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
                         </Div>
                       </TableCell>
                     </TableRow>
@@ -404,7 +404,7 @@ export const UserDataSet = () => {
       </Div>
     );
     // 7-7. fragment
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"p-0 radius"} key={i}>
         <TableContainer>
           <Table>

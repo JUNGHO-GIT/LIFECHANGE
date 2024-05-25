@@ -87,7 +87,7 @@ export const Btn = ({
   const btnGetToday = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       (objects?.DATE) && (
-        functions?.setDATE((prev) => ({
+        functions?.setDATE((prev={}) => ({
           ...prev,
           dateType: "",
           dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
@@ -95,7 +95,7 @@ export const Btn = ({
         }))
       );
       (objects?.PAGING) && (
-        functions?.setPAGING((prev) => ({
+        functions?.setPAGING((prev={}) => ({
           ...prev,
           page: 1,
         }))
@@ -243,7 +243,7 @@ export const Btn = ({
           endAdornment: null,
         }}
         onChange={(e) => {
-          functions?.setFILTER((prev) => ({
+          functions?.setFILTER((prev={}) => ({
             ...prev,
             query: e.target.value
           }));
@@ -251,7 +251,7 @@ export const Btn = ({
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
         handlers.flowFind();
-        functions?.setPAGING((prev) => ({
+        functions?.setPAGING((prev={}) => ({
           ...prev,
           page: 0
         }));
@@ -282,7 +282,7 @@ export const Btn = ({
         onChange={(e) => {
           const newPartVal = e.target.value;
           functions?.setPART(newPartVal);
-          functions?.setPAGING((prev) => ({
+          functions?.setPAGING((prev={}) => ({
             ...prev,
             page: 1,
             limit: 10
@@ -309,7 +309,7 @@ export const Btn = ({
         }}
         onChange={(e) => {
           const limitedValue = Math.min(Number(e.target.value), 100);
-          functions.setCOUNT((prev) => ({
+          functions.setCOUNT((prev={}) => ({
             ...prev,
             inputCnt: limitedValue
           }));

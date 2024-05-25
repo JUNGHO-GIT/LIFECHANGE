@@ -283,7 +283,7 @@ export const UserDataList = () => {
         }
       });
     }
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -292,7 +292,7 @@ export const UserDataList = () => {
     if (res.data.result.length < PAGING.limit) {
       setMORE(false);
     }
-    setPAGING((prev) => ({
+    setPAGING((prev={}) => ({
       ...prev,
       page: prev.page + 1
     }));
@@ -330,11 +330,11 @@ export const UserDataList = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      setCOUNT((prev) => ({
+      setCOUNT((prev={}) => ({
         ...prev,
         [`${type_param}Cnt`]: prev[`${type_param}Cnt`] + 1
       }));
-      setPAGING((prev) => ({
+      setPAGING((prev={}) => ({
         ...prev,
         page: 1
       }));
@@ -352,11 +352,11 @@ export const UserDataList = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      setCOUNT((prev) => ({
+      setCOUNT((prev={}) => ({
         ...prev,
         [`${type_param}Cnt`]: 0
       }));
-      setPAGING((prev) => ({
+      setPAGING((prev={}) => ({
         ...prev,
         page: 1
       }));
@@ -393,7 +393,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment1 = (i) => (
+    const tableFragment1 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -474,7 +474,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment2 = (i) => (
+    const tableFragment2 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -550,7 +550,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment3 = (i) => (
+    const tableFragment3 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -632,7 +632,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment4 = (i) => (
+    const tableFragment4 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -708,7 +708,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment5 = (i) => (
+    const tableFragment5 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -780,7 +780,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment6 = (i) => (
+    const tableFragment6 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -851,7 +851,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment7 = (i) => (
+    const tableFragment7 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -928,7 +928,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment8 = (i) => (
+    const tableFragment8 = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>

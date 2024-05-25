@@ -307,19 +307,19 @@ export const SleepDashPie = () => {
       <Img src={common3_1} className={"w-24 h-24"} />
     );
     // 7-7. fragment
-    const dashFragment1 = (i) => (
+    const dashFragment1 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartToday()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i) => (
+    const dashFragment2 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment3 = (i) => (
+    const dashFragment3 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartMonth()}
       </Card>

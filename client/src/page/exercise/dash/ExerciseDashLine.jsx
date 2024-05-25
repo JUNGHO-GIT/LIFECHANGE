@@ -389,25 +389,25 @@ export const ExerciseDashLine = () => {
       </PopUp>
     );
     // 7-7. fragment
-    const dashFragment1 = (i) => (
+    const dashFragment1 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartVolumeWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i) => (
+    const dashFragment2 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartVolumeMonth()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment3 = (i) => (
+    const dashFragment3 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartCardioWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment4 = (i) => (
+    const dashFragment4 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartCardioMonth()}
       </Card>

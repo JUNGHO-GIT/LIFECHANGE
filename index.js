@@ -52,7 +52,7 @@ const db = "LIFECHANGE";
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
-    "\n======================= \n-schema: \"%s\" \n-method: \"%s\" \n-query: %s \n-doc: %s",
+    "\n==============================================\n1.schema: \"%s\" \n2.method: \"%s\" \n3.query: %s \n4.doc: %s",
     collectionName,
     method,
     JSON.stringify(query, null, 3),
@@ -62,8 +62,8 @@ const customLogger = (collectionName, method, query, doc) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 // mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
+mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 mongoose.set("debug", customLogger);
 
 // ------------------------------------------------------------------------------------------------>

@@ -246,13 +246,13 @@ export const FoodDashBar = () => {
       </PopUp>
     );
     // 7-7. fragment
-    const dashFragment1 = (i) => (
+    const dashFragment1 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartKcalToday()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i) => (
+    const dashFragment2 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartNutToday()}
       </Card>

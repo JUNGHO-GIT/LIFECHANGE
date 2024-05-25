@@ -164,7 +164,7 @@ export const FoodFindList = () => {
       },
     });
     setOBJECT(res.data.result || []);
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
     }));
@@ -212,7 +212,7 @@ export const FoodFindList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={`${PAGING.page}-${i}`}>
         <TableContainer>
           <Table>

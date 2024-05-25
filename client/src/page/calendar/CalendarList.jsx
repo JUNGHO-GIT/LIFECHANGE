@@ -84,7 +84,7 @@ export const CalendarList = () => {
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -137,7 +137,7 @@ export const CalendarList = () => {
       ))
     );
     // 7-7. table
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Calendar
         key={`${i}-${DATE.dateStart}`}
         locale={"ko"}
@@ -164,7 +164,7 @@ export const CalendarList = () => {
         }}
         onClickDay={undefined}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
-          setDATE((prev) => ({
+          setDATE((prev={}) => ({
             ...prev,
             dateStart: moment(value).startOf("month").format("YYYY-MM-DD"),
             dateEnd: moment(value).endOf("month").format("YYYY-MM-DD")

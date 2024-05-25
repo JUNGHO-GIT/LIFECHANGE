@@ -130,7 +130,7 @@ export const FoodDiff = () => {
         return [...prev, ...res.data.result];
       }
     });
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -139,7 +139,7 @@ export const FoodDiff = () => {
     if (res.data.result.length < PAGING.limit) {
       setMORE(false);
     }
-    setPAGING((prev) => ({
+    setPAGING((prev={}) => ({
       ...prev,
       page: prev.page + 1
     }));
@@ -199,7 +199,7 @@ export const FoodDiff = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>

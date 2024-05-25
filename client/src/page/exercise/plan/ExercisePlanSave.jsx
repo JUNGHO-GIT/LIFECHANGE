@@ -111,7 +111,7 @@ export const ExercisePlanSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -152,7 +152,7 @@ export const ExercisePlanSave = () => {
       exercise_plan_cardio: "00:00",
       exercise_plan_weight: 0
     }));
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));
@@ -197,7 +197,7 @@ export const ExercisePlanSave = () => {
     );
     // 7-6. empty
     // 7-7. fragment
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}

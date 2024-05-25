@@ -124,7 +124,7 @@ export const FoodFindSave = () => {
       ...prev,
       food_section: sectionArray,
     }));
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       sectionCnt: sectionArray.length,
       newSectionCnt: sectionArray.length,
@@ -209,7 +209,7 @@ export const FoodFindSave = () => {
     }));
 
     // COUNT 설정
-    setCOUNT((prev) => ({
+    setCOUNT((prev={}) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
@@ -338,7 +338,7 @@ export const FoodFindSave = () => {
     );
     // 7-6. empty
     // 7-7. fragment
-    const tableFragment = (i) => (
+    const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}

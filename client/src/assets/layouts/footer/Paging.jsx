@@ -28,13 +28,13 @@ export const Paging = ({
       showLastButton={true}
       className={"over-x-hidden"}
       onPageChange={(event, newPage) => {
-        functions.setPAGING((prev) => ({
+        functions.setPAGING((prev={}) => ({
           ...prev,
           page: newPage + 1
         }));
       }}
       onRowsPerPageChange={(event) => {
-        functions.setPAGING((prev) => ({
+        functions.setPAGING((prev={}) => ({
           ...prev,
           page: 1,
           limit: parseInt(event.target.value, 10)
@@ -55,13 +55,13 @@ export const Paging = ({
       showLastButton={true}
       className={"over-x-hidden"}
       onPageChange={(event, newPage) => {
-        functions.setPAGING((prev) => ({
+        functions.setPAGING((prev={}) => ({
           ...prev,
           page: newPage
         }));
       }}
       onRowsPerPageChange={(event) => {
-        functions.setPAGING((prev) => ({
+        functions.setPAGING((prev={}) => ({
           ...prev,
           limit: parseInt(event.target.value, 10)
         }));

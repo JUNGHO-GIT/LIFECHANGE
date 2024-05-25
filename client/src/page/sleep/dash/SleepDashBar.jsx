@@ -146,7 +146,7 @@ export const SleepDashBar = () => {
       <Img src={common3_2} className={"w-24 h-24"} />
     );
     // 7-7. fragment
-    const dashFragment1 = (i) => (
+    const dashFragment1 = (i=0) => (
       <Card variant={"outlined"} className={"p-10"} key={i}>
         {chartToday()}
       </Card>

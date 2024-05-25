@@ -27,73 +27,73 @@ export const Calendar = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-bold"}>
-            일별
-          </Div>
-          <Br20 />
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateStart)}
-              className={"radius border"}
-              slots={{
-                day: (props) => {
-                  const {outsideCurrentMonth, day, ...other} = props;
-                  const isBadged = isExist.includes(moment(day).format("YYYY-MM-DD"));
-                  const isSelected = DATE.dateStart === moment(day).format("YYYY-MM-DD");
-                  return (
-                    <Badge
-                      key={props.day.toString()}
-                      badgeContent={""}
-                      slotProps={{
-                        badge: {style: {
-                          width: 3, height: 3, padding: 0, top: 8, left: 30,
-                          backgroundColor: isBadged ? "#1976d2" : undefined,
-                        }}
-                      }}
-                    >
-                      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                        day={day} selected={isSelected}
-                        onDaySelect={(day) => {
-                          setDATE((prev) => ({
-                            ...prev,
-                            dateStart: moment(day).format("YYYY-MM-DD"),
-                            dateEnd: moment(day).format("YYYY-MM-DD")
-                          }));
-                        }}
-                      />
-                    </Badge>
-                  )
-                },
-                previousIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
-                    }));
-                  }}>
-                    {props.children}
-                  </Button>
-                ),
-                nextIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
-                    }));
-                  }}>
-                    {props.children}
-                  </Button>
-                )
-              }}
-            />
-          </LocalizationProvider>
+      <Div className={"d-column"}>
+        <Div className={"d-center fs-1-2rem fw-bold"}>
+          일별
         </Div>
+        <Br20 />
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DateCalendar
+            timezone={"Asia/Seoul"}
+            views={["day"]}
+            readOnly={false}
+            value={moment(DATE.dateStart)}
+            className={"radius border"}
+            slots={{
+              day: (props) => {
+                const {outsideCurrentMonth, day, ...other} = props;
+                const isBadged = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                const isSelected = DATE.dateStart === moment(day).format("YYYY-MM-DD");
+                return (
+                  <Badge
+                    key={props.day.toString()}
+                    badgeContent={""}
+                    slotProps={{
+                      badge: {style: {
+                        width: 3, height: 3, padding: 0, top: 8, left: 30,
+                        backgroundColor: isBadged ? "#1976d2" : undefined,
+                      }}
+                    }}
+                  >
+                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                      day={day} selected={isSelected}
+                      onDaySelect={(day) => {
+                        setDATE((prev={}) => ({
+                          ...prev,
+                          dateStart: moment(day).format("YYYY-MM-DD"),
+                          dateEnd: moment(day).format("YYYY-MM-DD")
+                        }));
+                      }}
+                    />
+                  </Badge>
+                )
+              },
+              previousIconButton: (props) => (
+                <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  setDATE((prev={}) => ({
+                    ...prev,
+                    dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
+                    dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
+                  }));
+                }}>
+                  {props.children}
+                </Button>
+              ),
+              nextIconButton: (props) => (
+                <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  setDATE((prev={}) => ({
+                    ...prev,
+                    dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
+                    dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
+                  }));
+                }}>
+                  {props.children}
+                </Button>
+              )
+            }}
+          />
+        </LocalizationProvider>
+      </Div>
       )}>
       {(popTrigger={}) => (
         <TextField
@@ -167,7 +167,7 @@ export const Calendar = ({
                         boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
                       }}
                       onDaySelect={(day) => {
-                        setDATE((prev) => ({
+                        setDATE((prev={}) => ({
                           ...prev,
                           dateStart: moment(day).startOf("isoWeek").format("YYYY-MM-DD"),
                           dateEnd: moment(day).endOf("isoWeek").format("YYYY-MM-DD")
@@ -177,8 +177,8 @@ export const Calendar = ({
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
@@ -188,8 +188,8 @@ export const Calendar = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
@@ -258,8 +258,8 @@ export const Calendar = ({
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
@@ -269,8 +269,8 @@ export const Calendar = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
@@ -339,8 +339,8 @@ export const Calendar = ({
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).subtract(1, "year").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).subtract(1, "year").format("YYYY-MM-DD")
@@ -350,8 +350,8 @@ export const Calendar = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} onClick={() => {
-                    setDATE((prev) => ({
+                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                    setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(prev.dateStart).add(1, "year").format("YYYY-MM-DD"),
                       dateEnd: moment(prev.dateEnd).add(1, "year").format("YYYY-MM-DD")
@@ -407,7 +407,7 @@ export const Calendar = ({
           }}
           onChange={(e) => {
             if (e.target.value === "day") {
-              setDATE((prev) => ({
+              setDATE((prev={}) => ({
                 ...prev,
                 dateType: e.target.value,
                 dateStart: moment().format("YYYY-MM-DD"),
@@ -415,7 +415,7 @@ export const Calendar = ({
               }));
             }
             else if (e.target.value === "week") {
-              setDATE((prev) => ({
+              setDATE((prev={}) => ({
                 ...prev,
                 dateType: e.target.value,
                 dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
@@ -423,7 +423,7 @@ export const Calendar = ({
               }));
             }
             else if (e.target.value === "month") {
-              setDATE((prev) => ({
+              setDATE((prev={}) => ({
                 ...prev,
                 dateType: e.target.value,
                 dateStart: moment().startOf("month").format("YYYY-MM-DD"),
@@ -431,7 +431,7 @@ export const Calendar = ({
               }));
             }
             else if (e.target.value === "year") {
-              setDATE((prev) => ({
+              setDATE((prev={}) => ({
                 ...prev,
                 dateType: e.target.value,
                 dateStart: moment().startOf("year").format("YYYY-MM-DD"),
@@ -439,7 +439,7 @@ export const Calendar = ({
               }));
             }
             else {
-              setDATE((prev) => ({
+              setDATE((prev={}) => ({
                 ...prev,
                 dateType: e.target.value,
                 dateStart: moment().startOf("year").format("YYYY-MM-DD"),

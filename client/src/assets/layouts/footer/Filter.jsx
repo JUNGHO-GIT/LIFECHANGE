@@ -35,11 +35,11 @@ export const Filter = ({
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
-          functions?.setDATE((prev) => ({
+          functions?.setDATE((prev={}) => ({
             ...prev,
             dateType: e.target.value
           })),
-          functions?.setPAGING((prev) => ({
+          functions?.setPAGING((prev={}) => ({
             ...prev,
             page: 1
           }))
@@ -68,7 +68,7 @@ export const Filter = ({
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
         onChange={(e) => (
-          functions?.setFILTER((prev) => ({
+          functions?.setFILTER((prev={}) => ({
             ...prev,
             order: e.target.value
           }))
@@ -94,13 +94,13 @@ export const Filter = ({
                 className={"radius border w-max42vw h-max30vh me-2"}
                 onChange={(date) => {
                   (objects?.DATE) && (
-                    functions?.setDATE((prev) => ({
+                    functions?.setDATE((prev={}) => ({
                       ...prev,
                       dateStart: moment(date).format("YYYY-MM-DD")
                     }))
                   );
                   (objects?.PAGING) && (
-                    functions?.setPAGING((prev) => ({
+                    functions?.setPAGING((prev={}) => ({
                       ...prev,
                       page: 1,
                     }))
@@ -136,13 +136,13 @@ export const Filter = ({
                 className={"radius border w-max42vw h-max30vh ms-2"}
                 onChange={(date) => {
                   (objects?.DATE) && (
-                    functions?.setDATE((prev) => ({
+                    functions?.setDATE((prev={}) => ({
                       ...prev,
                       dateEnd: moment(date).format("YYYY-MM-DD")
                     }))
                   );
                   (objects?.PAGING) && (
-                    functions?.setPAGING((prev) => ({
+                    functions?.setPAGING((prev={}) => ({
                       ...prev,
                       page: 1,
                     }))
