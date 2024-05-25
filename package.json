@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "cache": "npm cache clean -f",
-    "upgrade": "npm update --save"
+    "upgrade": "npm update --save",
+    "fetch": "git fetch --all && git reset --hard origin/master"
   },
   "dependencies": {
     "axios": "^1.7.2",
