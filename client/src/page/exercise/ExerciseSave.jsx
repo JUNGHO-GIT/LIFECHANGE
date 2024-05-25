@@ -7,7 +7,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useDate, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField, MenuItem} from "../../import/ImportMuis.jsx";
 import {DateCalendar, DigitalClock} from "../../import/ImportMuis.jsx";
 import {AdapterMoment, LocalizationProvider, PickersDay} from "../../import/ImportMuis.jsx";
@@ -234,94 +234,12 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"innerCenter"}
-          position={"center"}
-          direction={"center"}
-          contents={({closePopup}) => (
-          LOADING ? (
-            <Div className={"d-column w-80vw h-55vh"}>
-              <Div className={"loader"} />
-            </Div>
-          ) : (
-            <Div className={"d-center w-80vw h-60vh"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DateCalendar
-                  timezone={"Asia/Seoul"}
-                  views={["year", "day"]}
-                  readOnly={false}
-                  defaultValue={moment(DATE.dateStart)}
-                  className={"radius border"}
-                  slots={{
-                    day: (props) => {
-                      const {outsideCurrentMonth, day, ...other} = props;
-                      const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
-                      return (
-                        <Badge
-                          key={props.day.toString()}
-                          badgeContent={""}
-                          slotProps={{
-                            badge: {style: {
-                              width: 3,
-                              height: 3,
-                              padding: 0,
-                              top: 8,
-                              left: 30,
-                              backgroundColor: isSelected ? "#0088FE" : undefined,
-                            }}
-                          }}
-                        >
-                          <PickersDay
-                            {...other}
-                            day={day}
-                            outsideCurrentMonth={outsideCurrentMonth}
-                          />
-                        </Badge>
-                      )
-                    }
-                  }}
-                  onMonthChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                      dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                    }));
-                  }}
-                  onChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      dateStart: moment(date).format("YYYY-MM-DD"),
-                      dateEnd: moment(date).format("YYYY-MM-DD")
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            </Div>
-          ))}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              size={"small"}
-              label={"날짜"}
-              variant={"outlined"}
-              value={`${DATE.dateStart}`}
-              className={"w-86vw"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common1} className={"w-16 h-16"} />
-                ),
-                endAdornment: null
-              }}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Calendar
+        DATE={DATE}
+        setDATE={setDATE}
+        isExist={isExist}
+        setIsExist={setIsExist}
+      />
     );
     // 7-2. count
     const countSection = () => (

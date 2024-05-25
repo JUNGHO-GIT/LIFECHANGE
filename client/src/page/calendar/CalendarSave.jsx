@@ -6,7 +6,7 @@ import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem} from "../../import/ImportMuis.jsx";
 import {Button, TextArea} from "../../import/ImportMuis.jsx";
 import {TextField, DateCalendar} from "../../import/ImportMuis.jsx";
@@ -195,53 +195,12 @@ export const CalendarSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"innerCenter"}
-          position={"center"}
-          direction={"center"}
-          contents={({closePopup}) => (
-          <Div className={"d-center w-80vw"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["year", "day"]}
-                readOnly={false}
-                defaultValue={moment(DATE.dateStart)}
-                className={"radius border h-60vh"}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    dateStart: moment(date).format("YYYY-MM-DD"),
-                    dateEnd: moment(date).format("YYYY-MM-DD")
-                  }));
-                }}
-              />
-            </LocalizationProvider>
-          </Div>
-        )}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              size={"small"}
-              label={"기간"}
-              variant={"outlined"}
-              value={`${DATE.dateStart}~${DATE.dateEnd}`}
-              className={"w-86vw"}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common1} className={"w-16 h-16"} />
-                ),
-                endAdornment: null
-              }}
-              onClick={(e) => {
-                popTrigger.openPopup(e.currentTarget);
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Calendar
+        DATE={DATE}
+        setDATE={setDATE}
+        isExist={isExist}
+        setIsExist={setIsExist}
+      />
     );
     // 7-2. count
     const countSection = () => (

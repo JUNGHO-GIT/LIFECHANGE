@@ -160,7 +160,7 @@ export const MoneyPlanSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. date (plan = 유형 o)
+    // 7-1. date
     const dateSection = () => (
       <Calendar
         DATE={DATE}
