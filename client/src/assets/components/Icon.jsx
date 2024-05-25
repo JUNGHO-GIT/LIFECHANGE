@@ -4,19 +4,19 @@ import {React} from "../../import/ImportReacts.jsx";
 import {IconButton} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
-export const Icons = ({...props }) => {
+export const Icons = ({ name, onClick, ...props }) => {
 
-  if (!props.name) {
+  if (!name) {
     return null;
   }
 
   // ex. 'FaHome' => (preStr = fa)
   let preStr = "";
-  if (props.name.startsWith("Li")) {
+  if (name.startsWith("Li")) {
     preStr = "lia";
   }
   else {
-    preStr = props.name.slice(0, 2).toLowerCase();
+    preStr = name.slice(0, 2).toLowerCase();
   }
 
   let importCode = null;
@@ -25,12 +25,12 @@ export const Icons = ({...props }) => {
 
   try {
     importCode = require(`react-icons/${preStr}/index`);
-    importIcon = importCode[props.name];
+    importIcon = importCode[name];
     if (importIcon) {
-      IconComponent = importCode[props.name];
+      IconComponent = importCode[name];
     }
     else {
-      console.log(`Icon '${props.name}' not found!`);
+      console.log(`Icon '${name}' not found!`);
       return null;
     }
   }
@@ -39,7 +39,7 @@ export const Icons = ({...props }) => {
   }
 
   return (
-    <IconButton className={"p-5"}>
+    <IconButton className={"p-5"} onClick={onClick}>
       <IconComponent {...props} />
     </IconButton>
   );

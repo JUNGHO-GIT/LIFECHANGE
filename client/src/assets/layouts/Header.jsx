@@ -28,14 +28,14 @@ export const Header = () => {
               navigate("/user/login");
               closePopup();
             }}>
-              <Icons name={"TbLogin"} className={"w-24 h-24"} />
+              <Icons name={"TbLogin"} className={"w-24 h-24"} onClick={() => {}} />
               {translate("header-login")}
             </Div>
             <Div className={"d-center pointer"} onClick={() => {
               navigate("/user/signup");
               closePopup();
             }}>
-              <Icons name={"TbLogin2"} className={"w-24 h-24"} />
+              <Icons name={"TbLogin2"} className={"w-24 h-24"} onClick={() => {}} />
               {translate("header-signup")}
             </Div>
             </>
@@ -46,7 +46,7 @@ export const Header = () => {
               sessionStorage.removeItem("sessionId");
               closePopup();
             }}>
-              <Icons name={"TbLogout"} className={"w-24 h-24"} />
+              <Icons name={"TbLogout"} className={"w-24 h-24"} onClick={() => {}} />
               {translate("header-logout")}
             </Div>
             </>
@@ -55,14 +55,14 @@ export const Header = () => {
             navigate("/user/data/set");
             closePopup();
           }}>
-            <Icons name={"TbUser"} className={"w-24 h-24"} />
+            <Icons name={"TbUser"} className={"w-24 h-24"} onClick={() => {}} />
             {translate("header-dataSet")}
           </Div>
           <Div className={"d-center pointer"} onClick={() => {
             navigate("/user/data/list");
             closePopup();
           }}>
-            <Icons name={"TbUser"} className={"w-24 h-24"} />
+            <Icons name={"TbUser"} className={"w-24 h-24"} onClick={() => {}} />
             {translate("header-dataList")}
           </Div>
         </Div>

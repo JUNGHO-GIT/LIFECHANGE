@@ -7,11 +7,10 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br20, Br40} from "../../import/ImportComponents.jsx";
+import {Calendar, Time, Count} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
-import {DigitalClock, DateCalendar, PickersDay} from "../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1, common2, common3_1, common5, sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
+import {common2, common3_1, common5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -174,33 +173,6 @@ export const SleepSave = () => {
       newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
-  
-  const popupContent = (OBJECT, closePopup, i) => (
-                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_section[i]?.sleep_night, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_section: prev.sleep_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          sleep_night: moment(e).format("HH:mm")
-                        } : item
-                      ))
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-  );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -215,64 +187,13 @@ export const SleepSave = () => {
     );
     // 7-2. count
     const countSection = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"alert"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            <Div className={"d-center"}>
-              {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
-            </Div>
-          )}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              label={translate("common-count")}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-86vw"}
-              value={COUNT.newSectionCnt}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"d-center me-n10"}>
-                    <Icons
-                      name={"TbMinus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt - 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                    <Icons
-                      name={"TbPlus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt < 1 ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt + 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                  </Div>
-                )
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Count
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        limit={10}
+      />
     );
-    // 7-3. total (x)
+    // 7-3. total
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge
@@ -304,149 +225,40 @@ export const SleepSave = () => {
         )}
       </PopUp>
     );
-    // 7-6. empty (detail, save = empty x)
+    // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mb-40"}>
+        <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
         </Div>
-        <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"timePicker"}
-            position={"top"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              popupContent(OBJECT, closePopup, i)
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={translate("sleep-night")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.sleep_section[i].sleep_night}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={sleep2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("common-endHour")
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+        <Br40 />
+        <Div className={"d-center"}>
+          <Time
+            OBJECT={OBJECT}
+            setOBJECT={setOBJECT}
+            extra={"sleep_night"}
+            i={i}
+          />
         </Div>
-        <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"innerCenter"}
-            position={"center"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_section[i]?.sleep_morning, "HH:mm")}
-                  sx={{
-                    width: "60vw",
-                    height: "80vh"
-                  }}
-                  onChange={(e) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_section: prev.sleep_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          sleep_morning: moment(e).format("HH:mm")
-                        } : item
-                      ))
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={translate("sleep-morning")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw pointer"}
-                value={OBJECT?.sleep_section[i].sleep_morning}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={sleep3} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("common-endHour")
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+        <Br20 />
+        <Div className={"d-center"}>
+          <Time
+            OBJECT={OBJECT}
+            setOBJECT={setOBJECT}
+            extra={"sleep_morning"}
+            i={i}
+          />
         </Div>
-        <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"timePicker"}
-            position={"bottom"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_section[i]?.sleep_time, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={translate("sleep-time")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.sleep_section[i].sleep_time}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={sleep4} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("common-endHour")
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+        <Br20 />
+        <Div className={"d-center"}>
+          <Time
+            OBJECT={OBJECT}
+            setOBJECT={setOBJECT}
+            extra={"sleep_time"}
+            i={i}
+          />
         </Div>
       </Card>
     );

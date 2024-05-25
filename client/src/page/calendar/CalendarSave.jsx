@@ -261,7 +261,7 @@ export const CalendarSave = () => {
         </PopUp>
       </Div>
     );
-    // 7-3. total (x)
+    // 7-3. total
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge

@@ -72,7 +72,6 @@ export const SleepDashPie = () => {
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
-    log("OBJECT_TODAY", OBJECT_TODAY);
   })()}, [sessionId]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->

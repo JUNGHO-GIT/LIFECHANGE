@@ -173,7 +173,6 @@ export const useTranslate = () => {
 
   const translate = useCallback((key) => {
     const keys = key.split('-');
-    const start = key.split("-")[0];
     const end = key.split("-")[1];
     let result = resources;
 
@@ -186,8 +185,9 @@ export const useTranslate = () => {
       }
     }
     return (
-      (end.indexOf("calendar") === -1 &&
-      end.indexOf("end") !== -1
+      (
+        end.indexOf("calendar") === -1 &&
+        end.indexOf("end") !== -1
       ) ? (
         <div className={"fs-0-6rem"}>
           {result[lang]}

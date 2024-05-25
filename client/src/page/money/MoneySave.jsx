@@ -346,7 +346,7 @@ export const MoneySave = () => {
         )}
       </PopUp>
     );
-    // 7-6. empty (detail, save = empty x)
+    // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"}  key={i}>

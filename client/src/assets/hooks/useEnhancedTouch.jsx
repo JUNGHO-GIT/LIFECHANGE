@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+// useDeveloperMode.jsx
 
+import {React, useEffect} from "../../import/ImportReacts.jsx";
+
+// ------------------------------------------------------------------------------------------------>
 export const useEnhancedTouch = () => {
   useEffect(() => {
     const handleTouchStart = (event) => {
       window.requestAnimationFrame(() => {
         console.log('Touch start detected');
       });
-    };
+    }
 
     const handleTouchMove = (event) => {
       window.requestAnimationFrame(() => {

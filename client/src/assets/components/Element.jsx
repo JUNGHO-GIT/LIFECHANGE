@@ -5,7 +5,7 @@ import {React} from "../../import/ImportReacts.jsx";
 // ------------------------------------------------------------------------------------------------>
 export const Div = (props) => {
   return (
-    React.createElement("div", {...props})
+    <div {...props} />
   );
 };
 
@@ -17,29 +17,21 @@ export const Img = (props) => {
   const fileName = src.split("/").pop().split(".")[0];
 
   return (
-    React.createElement("img", {
-      style: {
-        margin: "0px 10px 0px 0px",
-      },
-      alt: fileName,
-      ...props
-    })
+    <img style={{margin: "0px 10px 0px 0px"}} alt={fileName} {...props} />
   );
 }
 
 // ------------------------------------------------------------------------------------------------>
 const createBrComponent = (height) => {
-  return () => React.createElement("div", {
-    style: {
-      height: `${height}px`
-    }
-  });
+  return () => <div style={{height: `${height}px`}} />;
 }
+
+// ------------------------------------------------------------------------------------------------>
 export const Br5 = createBrComponent(5);
 export const Br10 = createBrComponent(10);
 export const Br15 = createBrComponent(15);
 export const Br20 = createBrComponent(20);
 export const Br25 = createBrComponent(25);
 export const Br30 = createBrComponent(30);
-
-// ------------------------------------------------------------------------------------------------>
+export const Br35 = createBrComponent(35);
+export const Br40 = createBrComponent(40);

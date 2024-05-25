@@ -231,7 +231,7 @@ export const FoodPlanSave = () => {
         </PopUp>
       </Div>
     );
-    // 7-3. total (plan = total x)
+    // 7-3. total
     // 7-4. badge
     const badgeSection = (index) => (
       <Badge
@@ -265,7 +265,7 @@ export const FoodPlanSave = () => {
         )}
       </PopUp>
     );
-    // 7-6. empty (detail, save = empty x)
+    // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
