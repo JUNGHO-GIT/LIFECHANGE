@@ -247,11 +247,17 @@ export const SleepList = () => {
     const thirdSection = () => (
       tableSection()
     );
+    const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
-          {thirdSection()}
+          {LOADING ? loadingNode() : thirdSection()}
         </Div>
       </Paper>
     );

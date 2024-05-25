@@ -6,6 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
+import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
 import {useRoot} from "./assets/hooks/useRoot.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -133,6 +134,7 @@ const App = () => {
 
   useRoot();
   useScrollTop();
+  useEnhancedTouch();
 
   return (
     <div className={"App"}>
@@ -160,12 +162,10 @@ if (rootElement === null) {
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <StrictMode>
     <BrowserRouter>
       <LanguageProvider>
         <CssBaseline />
         <App />
       </LanguageProvider>
     </BrowserRouter>
-  </StrictMode>
 );

@@ -174,6 +174,33 @@ export const SleepSave = () => {
       newSectionCnt: prev.newSectionCnt - 1,
     }));
   };
+  
+  const popupContent = (OBJECT, closePopup, i) => (
+                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DigitalClock
+                  timeStep={10}
+                  ampm={false}
+                  timezone={"Asia/Seoul"}
+                  value={moment(OBJECT?.sleep_section[i]?.sleep_night, "HH:mm")}
+                  sx={{
+                    width: "40vw",
+                    height: "40vh"
+                  }}
+                  onChange={(e) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      sleep_section: prev.sleep_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          sleep_night: moment(e).format("HH:mm")
+                        } : item
+                      ))
+                    }));
+                    closePopup();
+                  }}
+                />
+              </LocalizationProvider>
+  );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -292,30 +319,7 @@ export const SleepSave = () => {
             position={"top"}
             direction={"center"}
             contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.sleep_section[i]?.sleep_night, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_section: prev.sleep_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          sleep_night: moment(e).format("HH:mm")
-                        } : item
-                      ))
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
+              popupContent(OBJECT, closePopup, i)
             )}>
             {(popTrigger={}) => (
               <TextField
@@ -344,8 +348,8 @@ export const SleepSave = () => {
         <Div className={"d-center mb-20"}>
           <PopUp
             key={i}
-            type={"timePicker"}
-            position={"top"}
+            type={"innerCenter"}
+            position={"center"}
             direction={"center"}
             contents={({closePopup}) => (
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -355,8 +359,8 @@ export const SleepSave = () => {
                   timezone={"Asia/Seoul"}
                   value={moment(OBJECT?.sleep_section[i]?.sleep_morning, "HH:mm")}
                   sx={{
-                    width: "40vw",
-                    height: "40vh"
+                    width: "60vw",
+                    height: "80vh"
                   }}
                   onChange={(e) => {
                     setOBJECT((prev) => ({
@@ -379,7 +383,7 @@ export const SleepSave = () => {
                 label={translate("sleep-morning")}
                 size={"small"}
                 variant={"outlined"}
-                className={"w-86vw"}
+                className={"w-86vw pointer"}
                 value={OBJECT?.sleep_section[i].sleep_morning}
                 InputProps={{
                   readOnly: true,
