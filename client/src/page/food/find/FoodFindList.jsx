@@ -164,7 +164,7 @@ export const FoodFindList = () => {
       },
     });
     setOBJECT(res.data.result || []);
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
     }));

@@ -106,7 +106,7 @@ export const MoneyPlanSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -145,7 +145,7 @@ export const MoneyPlanSave = () => {
       money_plan_in: 0,
       money_plan_out: 0
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));

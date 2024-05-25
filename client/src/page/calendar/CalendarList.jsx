@@ -84,7 +84,7 @@ export const CalendarList = () => {
       },
     });
     setOBJECT(res.data.result || OBJECT_DEF);
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -146,8 +146,8 @@ export const CalendarList = () => {
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} />}
-        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} />}
+        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
+        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
         prev2Label={null}
         next2Label={null}
         formatDay={(locale, date) => (moment(date).format("D"))}

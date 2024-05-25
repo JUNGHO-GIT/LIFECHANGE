@@ -111,7 +111,7 @@ export const ExercisePlanSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -152,7 +152,7 @@ export const ExercisePlanSave = () => {
       exercise_plan_cardio: "00:00",
       exercise_plan_weight: 0
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1
     }));

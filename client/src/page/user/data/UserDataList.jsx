@@ -283,7 +283,7 @@ export const UserDataList = () => {
         }
       });
     }
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -292,7 +292,7 @@ export const UserDataList = () => {
     if (res.data.result.length < PAGING.limit) {
       setMORE(false);
     }
-    setPAGING((prev={}) => ({
+    setPAGING((prev) => ({
       ...prev,
       page: prev.page + 1
     }));
@@ -330,11 +330,11 @@ export const UserDataList = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      setCOUNT((prev={}) => ({
+      setCOUNT((prev) => ({
         ...prev,
         [`${type_param}Cnt`]: prev[`${type_param}Cnt`] + 1
       }));
-      setPAGING((prev={}) => ({
+      setPAGING((prev) => ({
         ...prev,
         page: 1
       }));
@@ -352,11 +352,11 @@ export const UserDataList = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      setCOUNT((prev={}) => ({
+      setCOUNT((prev) => ({
         ...prev,
         [`${type_param}Cnt`]: 0
       }));
-      setPAGING((prev={}) => ({
+      setPAGING((prev) => ({
         ...prev,
         page: 1
       }));

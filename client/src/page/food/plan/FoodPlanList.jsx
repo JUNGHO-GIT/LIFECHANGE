@@ -114,7 +114,7 @@ export const FoodPlanList = () => {
         return [...prev, ...res.data.result];
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -123,7 +123,7 @@ export const FoodPlanList = () => {
     if (res.data.result.length < PAGING.limit) {
       setMORE(false);
     }
-    setPAGING((prev={}) => ({
+    setPAGING((prev) => ({
       ...prev,
       page: prev.page + 1
     }));

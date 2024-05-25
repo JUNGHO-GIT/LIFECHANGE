@@ -110,7 +110,7 @@ export const SleepPlanSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -150,7 +150,7 @@ export const SleepPlanSave = () => {
       sleep_plan_morning: "00:00",
       sleep_plan_time: "00:00",
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));

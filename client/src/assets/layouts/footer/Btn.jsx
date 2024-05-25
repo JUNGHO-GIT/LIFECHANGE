@@ -95,7 +95,7 @@ export const Btn = ({
         }))
       );
       (objects?.PAGING) && (
-        functions?.setPAGING((prev={}) => ({
+        functions?.setPAGING((prev) => ({
           ...prev,
           page: 1,
         }))
@@ -251,7 +251,7 @@ export const Btn = ({
       />
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
         handlers.flowFind();
-        functions?.setPAGING((prev={}) => ({
+        functions?.setPAGING((prev) => ({
           ...prev,
           page: 0
         }));
@@ -282,7 +282,7 @@ export const Btn = ({
         onChange={(e) => {
           const newPartVal = e.target.value;
           functions?.setPART(newPartVal);
-          functions?.setPAGING((prev={}) => ({
+          functions?.setPAGING((prev) => ({
             ...prev,
             page: 1,
             limit: 10
@@ -309,7 +309,7 @@ export const Btn = ({
         }}
         onChange={(e) => {
           const limitedValue = Math.min(Number(e.target.value), 100);
-          functions.setCOUNT((prev={}) => ({
+          functions.setCOUNT((prev) => ({
             ...prev,
             inputCnt: limitedValue
           }));

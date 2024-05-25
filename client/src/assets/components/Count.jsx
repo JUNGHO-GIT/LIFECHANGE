@@ -45,7 +45,7 @@ export const Count = ({
               <Div className={"d-center me-n10"}>
                 <Icons name={"TbMinus"} className={"w-20 h-20 black"} onClick={(e) => {
                   COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                    setCOUNT((prev={}) => ({
+                    setCOUNT((prev) => ({
                       ...prev,
                       newSectionCnt: prev.newSectionCnt - 1
                     }))
@@ -55,7 +55,7 @@ export const Count = ({
                 }}/>
                 <Icons name={"TbPlus"} className={"w-20 h-20 black"} onClick={(e) => {
                   COUNT.newSectionCnt < limit ? (
-                    setCOUNT((prev={}) => ({
+                    setCOUNT((prev) => ({
                       ...prev,
                       newSectionCnt: prev.newSectionCnt + 1
                     }))

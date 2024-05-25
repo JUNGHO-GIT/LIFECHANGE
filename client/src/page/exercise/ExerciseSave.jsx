@@ -123,7 +123,7 @@ export const ExerciseSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -221,7 +221,7 @@ export const ExerciseSave = () => {
       ...prev,
       exercise_section: prev.exercise_section.filter((_, idx) => (idx !== index))
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));

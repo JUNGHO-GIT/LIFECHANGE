@@ -124,7 +124,7 @@ export const FoodSave = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       totalCnt: res.data.totalCnt || 0,
       sectionCnt: res.data.sectionCnt || 0,
@@ -182,7 +182,7 @@ export const FoodSave = () => {
       ...prev,
       food_section: prev.food_section.filter((_, idx) => (idx !== index))
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));

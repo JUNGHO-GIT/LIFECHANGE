@@ -38,7 +38,7 @@ export const Filter = ({
             ...prev,
             dateType: e.target.value
           }))
-          functions?.setPAGING((prev={}) => ({
+          functions?.setPAGING((prev) => ({
             ...prev,
             page: 1
           }))
@@ -99,7 +99,7 @@ export const Filter = ({
                     }))
                   );
                   (objects?.PAGING) && (
-                    functions?.setPAGING((prev={}) => ({
+                    functions?.setPAGING((prev) => ({
                       ...prev,
                       page: 1,
                     }))
@@ -141,7 +141,7 @@ export const Filter = ({
                     }))
                   );
                   (objects?.PAGING) && (
-                    functions?.setPAGING((prev={}) => ({
+                    functions?.setPAGING((prev) => ({
                       ...prev,
                       page: 1,
                     }))

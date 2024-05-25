@@ -124,7 +124,7 @@ export const FoodFindSave = () => {
       ...prev,
       food_section: sectionArray,
     }));
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       sectionCnt: sectionArray.length,
       newSectionCnt: sectionArray.length,
@@ -209,7 +209,7 @@ export const FoodFindSave = () => {
     }));
 
     // COUNT 설정
-    setCOUNT((prev={}) => ({
+    setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
