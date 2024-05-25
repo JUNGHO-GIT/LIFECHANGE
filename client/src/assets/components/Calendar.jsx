@@ -1,11 +1,11 @@
 // Calendar.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Img, Icons} from "../../import/ImportComponents.jsx";
-import {Badge, TextField, MenuItem, PickersDay} from "../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Br20} from "../../import/ImportComponents.jsx";
+import {Badge, TextField, MenuItem, PickersDay, Button} from "../../import/ImportMuis.jsx";
 import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1} from "../../import/ImportImages.jsx";
 
@@ -20,36 +20,6 @@ export const Calendar = ({
   const PATH = location?.pathname;
   const secondStr = PATH?.split("/")[2] || "";
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    // setTimeout을 사용하여 DOM 업데이트를 기다림
-    const timer = setTimeout(() => {
-      const pickerRoot = document.querySelectorAll(".MuiPickersDay-root");
-
-      // 기존에 적용된 'Mui-selected' 클래스를 모두 제거
-      pickerRoot.forEach(item => {
-        item.classList.remove("Mui-selected");
-        item.setAttribute("aria-selected", "false");
-      });
-
-      // 새로운 범위에 'Mui-selected' 클래스를 추가
-      pickerRoot.forEach((item) => {
-        const timestamp = parseInt(item.getAttribute('data-timestamp'));
-
-        // dateStart와 dateEnd 사이의 날짜에 'Mui-selected' 클래스 추가
-        if (
-          timestamp >= moment(DATE.dateStart).startOf('day').valueOf() &&
-          timestamp <= moment(DATE.dateEnd).endOf('day').valueOf()
-        ) {
-          item.classList.add("Mui-selected");
-          item.setAttribute("aria-selected", "true");
-        }
-      });
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, [DATE.dateStart, DATE.dateEnd]);
-
   // 1. day --------------------------------------------------------------------------------------->
   const daySection = () => (
     <PopUp
@@ -57,55 +27,69 @@ export const Calendar = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-80vw h-60vh"}>
+        <Div className={"d-column"}>
+          <Div className={"d-center fs-1-2rem fw-bold"}>
+            일별
+          </Div>
+          <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
-              views={["year", "day"]}
+              views={["day"]}
               readOnly={false}
-              defaultValue={moment(DATE.dateStart)}
+              value={moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                  const isBadged = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                  const isSelected = DATE.dateStart === moment(day).format("YYYY-MM-DD");
                   return (
                     <Badge
                       key={props.day.toString()}
                       badgeContent={""}
                       slotProps={{
                         badge: {style: {
-                          width: 3,
-                          height: 3,
-                          padding: 0,
-                          top: 8,
-                          left: 30,
-                          backgroundColor: isSelected ? "#0088FE" : undefined,
+                          width: 3, height: 3, padding: 0, top: 8, left: 30,
+                          backgroundColor: isBadged ? "#1976d2" : undefined,
                         }}
                       }}
                     >
-                      <PickersDay
-                        {...other}
-                        day={day}
-                        outsideCurrentMonth={outsideCurrentMonth}
+                      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                        day={day} selected={isSelected}
+                        onDaySelect={(day) => {
+                          setDATE((prev) => ({
+                            ...prev,
+                            dateStart: moment(day).format("YYYY-MM-DD"),
+                            dateEnd: moment(day).format("YYYY-MM-DD")
+                          }));
+                        }}
                       />
                     </Badge>
                   )
-                }
-              }}
-              onMonthChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                }));
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD")
-                }));
+                },
+                previousIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                ),
+                nextIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                )
               }}
             />
           </LocalizationProvider>
@@ -115,10 +99,10 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"기간"}
+          label={"날짜"}
           variant={"outlined"}
-          value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw"}
+          value={`${DATE.dateStart}`}
+          className={"w-60vw pointer"}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -142,51 +126,78 @@ export const Calendar = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-80vw h-60vh"}>
+        <Div className={"d-column"}>
+          <Div className={"d-center fs-1-2rem fw-bold"}>
+            주별
+          </Div>
+          <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
-              views={["year", "day"]}
+              views={["day"]}
               readOnly={false}
-              defaultValue={moment(DATE.dateStart)}
+              value={moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
+                // 일주일에 해당하는 날짜를 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                  const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
+                  const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
+                  const isSelected =
+                  DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
+                  DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
+                  let borderRadius = "";
+                  if (isSelected) {
+                    if (isFirst) {
+                      borderRadius = "50% 0 0 50%";
+                    }
+                    else if (isLast) {
+                      borderRadius = "0 50% 50% 0";
+                    }
+                    else {
+                      borderRadius = "0";
+                    }
+                  }
                   return (
-                    <Badge
-                      key={props.day.toString()}
-                      badgeContent={""}
-                      slotProps={{
-                        badge: {style: {
-                          width: 3,
-                          height: 3,
-                          padding: 0,
-                          top: 8,
-                          left: 30,
-                          backgroundColor: isSelected ? "#0088FE" : undefined,
-                        }}
+                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                      day={day} selected={isSelected}
+                      style={{
+                        borderRadius: borderRadius,
+                        boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
                       }}
-                    >
-                      <PickersDay
-                        {...other}
-                        day={day}
-                        outsideCurrentMonth={outsideCurrentMonth}
-                      />
-                    </Badge>
+                      onDaySelect={(day) => {
+                        setDATE((prev) => ({
+                          ...prev,
+                          dateStart: moment(day).startOf("isoWeek").format("YYYY-MM-DD"),
+                          dateEnd: moment(day).endOf("isoWeek").format("YYYY-MM-DD")
+                        }));
+                      }}
+                    />
                   )
-                }
-              }}
-              onMonthChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                }));
-              }}
-              onChange={(date) => {
-
+                },
+                previousIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                ),
+                nextIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                )
               }}
             />
           </LocalizationProvider>
@@ -199,7 +210,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw"}
+          className={"w-60vw pointer"}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -223,55 +234,51 @@ export const Calendar = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-80vw h-60vh"}>
+        <Div className={"d-column"}>
+          <Div className={"d-center fs-1-2rem fw-bold"}>
+            월별
+          </Div>
+          <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
-              views={["year", "day"]}
+              views={["day"]}
               readOnly={false}
-              defaultValue={moment(DATE.dateStart)}
+              value={moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
+                // 월의 첫번째 날을 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                  const isSelected = moment(day).date() === 1;
                   return (
-                    <Badge
-                      key={props.day.toString()}
-                      badgeContent={""}
-                      slotProps={{
-                        badge: {style: {
-                          width: 3,
-                          height: 3,
-                          padding: 0,
-                          top: 8,
-                          left: 30,
-                          backgroundColor: isSelected ? "#0088FE" : undefined,
-                        }}
-                      }}
-                    >
-                      <PickersDay
-                        {...other}
-                        day={day}
-                        outsideCurrentMonth={outsideCurrentMonth}
-                      />
-                    </Badge>
+                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                      day={day} selected={isSelected}
+                    />
                   )
-                }
-              }}
-              onMonthChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                }));
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD")
-                }));
+                },
+                previousIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                ),
+                nextIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                )
               }}
             />
           </LocalizationProvider>
@@ -284,7 +291,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw"}
+          className={"w-60vw pointer"}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -308,55 +315,51 @@ export const Calendar = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center w-80vw h-60vh"}>
+        <Div className={"d-column"}>
+          <Div className={"d-center fs-1-2rem fw-bold"}>
+            년별
+          </Div>
+          <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
-              views={["year", "day"]}
+              views={["day"]}
               readOnly={false}
-              defaultValue={moment(DATE.dateStart)}
+              value={moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
+                // 매년 1월 1일 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                  const isSelected = moment(day).month() === 0 && moment(day).date() === 1;
                   return (
-                    <Badge
-                      key={props.day.toString()}
-                      badgeContent={""}
-                      slotProps={{
-                        badge: {style: {
-                          width: 3,
-                          height: 3,
-                          padding: 0,
-                          top: 8,
-                          left: 30,
-                          backgroundColor: isSelected ? "#0088FE" : undefined,
-                        }}
-                      }}
-                    >
-                      <PickersDay
-                        {...other}
-                        day={day}
-                        outsideCurrentMonth={outsideCurrentMonth}
-                      />
-                    </Badge>
+                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                      day={day} selected={isSelected}
+                    />
                   )
-                }
-              }}
-              onMonthChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).startOf("month").format("YYYY-MM-DD"),
-                  dateEnd: moment(date).endOf("month").format("YYYY-MM-DD")
-                }));
-              }}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  dateStart: moment(date).format("YYYY-MM-DD"),
-                  dateEnd: moment(date).format("YYYY-MM-DD")
-                }));
+                },
+                previousIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).subtract(1, "year").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).subtract(1, "year").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                ),
+                nextIconButton: (props) => (
+                  <Button {...props} onClick={() => {
+                    setDATE((prev) => ({
+                      ...prev,
+                      dateStart: moment(prev.dateStart).add(1, "year").format("YYYY-MM-DD"),
+                      dateEnd: moment(prev.dateEnd).add(1, "year").format("YYYY-MM-DD")
+                    }));
+                  }}>
+                    {props.children}
+                  </Button>
+                )
               }}
             />
           </LocalizationProvider>
@@ -369,7 +372,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw"}
+          className={"w-60vw pointer"}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -443,8 +446,9 @@ export const Calendar = ({
                 dateEnd: moment().endOf("year").format("YYYY-MM-DD")
               }));
             }
-          }}>
-          {["전체", "day", "week", "month", "year"].map((item) => (
+          }}
+        >
+          {["day", "week", "month", "year"].map((item) => (
             <MenuItem key={item} value={item} selected={item === DATE.dateType}>
               {item}
             </MenuItem>

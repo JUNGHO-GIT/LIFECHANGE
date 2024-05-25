@@ -32,6 +32,17 @@ export const PopUp = ({...props}) => {
       padding: "6px 6px 6px 15px",
     };
   }
+  else if (props.type === "innerCenter") {
+    popupStyle = {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "20px 20px 20px 20px",
+    };
+  }
   else {
     popupStyle = {
       display: "flex",
