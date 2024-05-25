@@ -225,7 +225,7 @@ export const CalendarSave = () => {
               size={"small"}
               label={"기간"}
               variant={"outlined"}
-              value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+              value={`${DATE.dateStart}~${DATE.dateEnd}`}
               className={"w-86vw"}
               InputProps={{
                 readOnly: true,

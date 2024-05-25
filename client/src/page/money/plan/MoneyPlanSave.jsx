@@ -166,7 +166,7 @@ export const MoneyPlanSave = () => {
           select={true}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType}
+          value={DATE.dateType || "day"}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{

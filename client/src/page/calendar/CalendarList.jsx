@@ -145,8 +145,7 @@ export const CalendarList = () => {
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"TbArrowLeft"}
-          className={"w-24 h-24"} />}
+        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} />}
         nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} />}
         prev2Label={null}
         next2Label={null}
@@ -162,7 +161,7 @@ export const CalendarList = () => {
           const week = ["일", "월", "화", "수", "목", "금", "토"];
           return week[day];
         }}
-        onClickDay={null}
+        onClickDay={undefined}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           setDATE((prev) => ({
             ...prev,
@@ -187,7 +186,9 @@ export const CalendarList = () => {
             dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
           ));
           return (
-            calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)
+            calendarForDates.length > 0
+            ? activeLine(calendarForDates)
+            : unActiveLine(calendarForDates)
           );
         }}
       />
