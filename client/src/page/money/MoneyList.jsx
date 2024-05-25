@@ -28,7 +28,7 @@ export const MoneyList = () => {
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "",
+      dateType: "전체",
       dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
@@ -46,7 +46,7 @@ export const MoneyList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
-    dateType: "전체",
+    dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/money/save",

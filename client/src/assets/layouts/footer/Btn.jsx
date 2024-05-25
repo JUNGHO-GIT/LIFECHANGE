@@ -19,6 +19,7 @@ export const Btn = ({
   const btnGoToList = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
+        dateType: objects?.DATE.dateType,
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
       });
@@ -32,6 +33,7 @@ export const Btn = ({
   const btnGoToFind = () => (
     <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
+        dateType: objects?.DATE.dateType,
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
       });
@@ -45,6 +47,7 @@ export const Btn = ({
   const btnGoToSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
+        dateType: objects?.DATE.dateType,
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
       });
@@ -58,6 +61,7 @@ export const Btn = ({
   const btnGoToFindSave = () => (
     <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
+        dateType: objects?.DATE.dateType,
         dateStart: objects?.DATE.dateStart,
         dateEnd: objects?.DATE.dateEnd
       });
@@ -89,7 +93,7 @@ export const Btn = ({
       (objects?.DATE) && (
         functions?.setDATE((prev={}) => ({
           ...prev,
-          dateType: "",
+          dateType: "day",
           dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
           dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
         }))
@@ -265,6 +269,11 @@ export const Btn = ({
       {translate("btn-flowDefault")}
     </Button>
   );
+  const btnFlowReset = () => (
+    <Button variant={"contained"} color={"error"} size={"small"} className={"m-20"} onClick={() => (sessionStorage.clear())}>
+      Clear
+    </Button>
+  );
   const btnFlowDemo = () => (
     <Div className={"d-center"}>
       <TextField
@@ -340,6 +349,7 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetProperty()}
+            {btnFlowReset()}
           </Card>
         );
       }

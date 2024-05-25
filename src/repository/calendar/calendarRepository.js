@@ -21,9 +21,6 @@ export const exist = {
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          calendar_dateType: dateType_param
-        }),
       }},
       {$match: {$expr: {
         $gt: [{$size: "$calendar_section"}, 0]
@@ -52,9 +49,6 @@ export const list = {
       calendar_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "전체" ? {} : {
-        calendar_dateType: dateType_param
-      }),
     });
     return finalResult;
   },
@@ -72,9 +66,6 @@ export const list = {
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          calendar_dateType: dateType_param
-        }),
       }},
     ]);
     return finalResult;

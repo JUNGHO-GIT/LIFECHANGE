@@ -44,6 +44,7 @@ export const CalendarList = () => {
     id: "",
     section_id: "",
     refresh: 0,
+    dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     category: "",

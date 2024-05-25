@@ -1,6 +1,6 @@
 // Calendar.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import {React, useEffect} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
@@ -18,6 +18,7 @@ export const Calendar = ({
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
+  const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
 
   // 1. day --------------------------------------------------------------------------------------->
@@ -420,16 +421,115 @@ export const Calendar = ({
       )}
     </PopUp>
   );
+  
+  // 4. select ------------------------------------------------------------------------------------>
+  const selectSection = () => (
+  <PopUp
+    type={"innerCenter"}
+    position={"center"}
+    direction={"center"}
+    contents={({ closePopup }) => (
+      <Div className={"d-column"}>
+        <Div className={"d-center fs-1-2rem fw-bold"}>
+          선택별
+        </Div>
+        <Br20 />
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DateCalendar
+            timezone={"Asia/Seoul"}
+            views={["day"]}
+            readOnly={false}
+            value={moment(DATE.dateStart)}
+            className={"radius border"}
+            slots={{
+              day: (props) => {
+                const {outsideCurrentMonth, day, ...other} = props;
+                const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
+                const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
+                const isSelected =
+                DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
+                DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
+                let borderRadius = "";
+                let backgroundColor = "";
+                if (isSelected) {
+                  if (isFirst) {
+                    borderRadius = "50% 0 0 50%";
+                    backgroundColor = "#1976d2";
+                  }
+                  else if (isLast) {
+                    borderRadius = "0 50% 50% 0";
+                    backgroundColor = "#1976d2";
+                  }
+                  else {
+                    borderRadius = "0";
+                  }
+                }
+                return (
+                  <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                    day={day} selected={isSelected}
+                    style={{
+                      borderRadius: borderRadius,
+                      backgroundColor: backgroundColor,
+                      boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                    }}
+                    onDaySelect={(day) => {
+                      if (!DATE.dateStart || DATE.dateEnd || moment(day).isBefore(DATE.dateStart)) {
+                        setDATE((prev) => ({
+                          ...prev,
+                          dateStart: moment(day).format("YYYY-MM-DD"),
+                          dateEnd: undefined
+                        }));
+                      }
+                      else {
+                        setDATE((prev) => ({
+                          ...prev,
+                          dateStart: prev.dateStart,
+                          dateEnd: moment(day).format("YYYY-MM-DD")
+                        }));
+                      }
+                    }}
+                  />
+                )
+              }
+            }}
+          />
+        </LocalizationProvider>
+      </Div>
+    )}>
+    {(popTrigger = {}) => (
+      <TextField
+        type={"text"}
+        size={"small"}
+        label={"기간"}
+        variant={"outlined"}
+        value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
+        className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+        InputProps={{
+          readOnly: true,
+          className: "fs-0-8rem",
+          startAdornment: (
+            <Img src={common1} className={"w-16 h-16"} />
+          ),
+          endAdornment: null
+        }}
+        onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget);
+        }}
+      />
+    )}
+  </PopUp>
+);
+
 
   // 5. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
     <Div className={"d-center"}>
-      {secondStr === "plan" ? (
+      {secondStr === "plan" || firstStr === "calendar" ? (
         <TextField
           select={true}
           label={translate("common-dateType")}
           size={"small"}
-          value={DATE.dateType || "day"}
+          value={DATE.dateType || ""}
           variant={"outlined"}
           className={"w-20vw me-3vw"}
           InputProps={{
@@ -441,7 +541,7 @@ export const Calendar = ({
             if (e.target.value === "day") {
               setDATE((prev={}) => ({
                 ...prev,
-                dateType: e.target.value,
+                dateType: "day",
                 dateStart: moment().format("YYYY-MM-DD"),
                 dateEnd: moment().format("YYYY-MM-DD")
               }));
@@ -449,7 +549,7 @@ export const Calendar = ({
             else if (e.target.value === "week") {
               setDATE((prev={}) => ({
                 ...prev,
-                dateType: e.target.value,
+                dateType: "week",
                 dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
                 dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
               }));
@@ -457,7 +557,7 @@ export const Calendar = ({
             else if (e.target.value === "month") {
               setDATE((prev={}) => ({
                 ...prev,
-                dateType: e.target.value,
+                dateType: "month",
                 dateStart: moment().startOf("month").format("YYYY-MM-DD"),
                 dateEnd: moment().endOf("month").format("YYYY-MM-DD")
               }));
@@ -465,22 +565,22 @@ export const Calendar = ({
             else if (e.target.value === "year") {
               setDATE((prev={}) => ({
                 ...prev,
-                dateType: e.target.value,
+                dateType: "year",
                 dateStart: moment().startOf("year").format("YYYY-MM-DD"),
                 dateEnd: moment().endOf("year").format("YYYY-MM-DD")
               }));
             }
-            else {
+            else if (e.target.value === "select") {
               setDATE((prev={}) => ({
                 ...prev,
-                dateType: e.target.value,
-                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+                dateType: "select",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
               }));
             }
           }}
         >
-          {["day", "week", "month", "year"].map((item) => (
+          {["day", "week", "month", "year", "select"].map((item) => (
             <MenuItem key={item} value={item} selected={item === DATE.dateType}>
               {item}
             </MenuItem>
@@ -497,9 +597,10 @@ export const Calendar = ({
         monthSection()
       ) : DATE.dateType === "year" ? (
         yearSection()
-      ) : (
-        daySection()
-      )}
+      ) : DATE.dateType === "select" ? (
+        selectSection()
+      ) : null 
+      }
     </Div>
   );
 

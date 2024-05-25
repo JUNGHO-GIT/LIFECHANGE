@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../import/ImportReacts.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
+import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {percent, log} from "../../import/ImportLogics";
@@ -85,6 +85,23 @@ export const CalendarSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true);
+    const res = await axios.get(`${URL_OBJECT}/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
+          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+        },
+      },
+    });
+    setIsExist(res.data.result || []);
+    setLOADING(false);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
@@ -151,30 +168,6 @@ export const CalendarSave = () => {
     }
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id, section_id) => {
-    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
-      params: {
-        user_id: sessionId,
-        _id: id,
-        section_id: section_id,
-        DATE: DATE,
-      },
-    });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      if (Object.keys(res.data.result).length > 0) {
-        setOBJECT(res.data.result);
-      }
-      else {
-        navigate(SEND.toList);
-      }
-    }
-    else {
-      alert(res.data.msg);
-    }
-  };
-
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
@@ -203,10 +196,9 @@ export const CalendarSave = () => {
       <Count
         COUNT={COUNT}
         setCOUNT={setCOUNT}
-        limit={1}
+        limit={10}
       />
     );
-    // 7-5. total
     // 7-3. badge
     const badgeSection = (index) => (
       <Badge
@@ -224,6 +216,7 @@ export const CalendarSave = () => {
         handlerDelete={handlerDelete}
       />
     );
+    // 7-5. total
     // 7-7. fragment
     const tableFragment = (i=0) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
@@ -387,7 +380,7 @@ export const CalendarSave = () => {
         setDATE, setSEND, setCOUNT
       }}
       handlers={{
-        navigate, flowSave, flowDelete
+        navigate, flowSave
       }}
     />
   );

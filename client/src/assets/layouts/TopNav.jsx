@@ -47,7 +47,7 @@ export const TopNav = () => {
         setValue(newValue);
         navigate(`${firstStr}/${newValue}`, {
           state: {
-            dateType: "",
+            dateType: "day",
             dateStart: moment().format("YYYY-MM-DD"),
             dateEnd: moment().format("YYYY-MM-DD")
           }
@@ -114,7 +114,7 @@ export const TopNav = () => {
         setValue(newValue);
         navigate(`${firstStr}/${newValue}`, {
           state: {
-            dateType: "",
+            dateType: "day",
             dateStart: moment().format("YYYY-MM-DD"),
             dateEnd: moment().format("YYYY-MM-DD")
           }
@@ -153,7 +153,7 @@ export const TopNav = () => {
         setValue(newValue);
         navigate(`${firstStr}/${newValue}`, {
           state: {
-            dateType: "",
+            dateType: "day",
             dateStart: moment().format("YYYY-MM-DD"),
             dateEnd: moment().format("YYYY-MM-DD")
           }
