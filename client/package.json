@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "JPAGE-client",
   "version": "1.0.0",
   "main": "index.jsx",
   "type": "module",
@@ -30,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "cache": "npm cache clean -f",
-    "upgrade": "npm update --save"
+    "upgrade": "npm update --save",
+    "fetch": "git fetch --all && git reset --hard origin/master"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
