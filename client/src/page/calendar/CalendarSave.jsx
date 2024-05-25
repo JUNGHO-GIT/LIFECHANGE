@@ -8,9 +8,9 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem, TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
-import {calendar2, calendar3} from "../../import/ImportImages.jsx";
+import {Img, Calendar, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
+import {calendar2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarSave = () => {
@@ -333,63 +333,12 @@ export const CalendarSave = () => {
         </Div>
         <Br20/>
         <Div className={"d-center"}>
-          <PopUp
-            key={i}
-            type={"innerCenter"}
-            position={"top"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <Div className={"d-column"}>
-                <Div className={"d-center"}>
-                  <TextArea
-                    readOnly={false}
-                    className={"w-70vw h-55vh border p-10"}
-                    value={OBJECT?.calendar_section[i]?.calendar_content}
-                    onChange={(e) => {
-                      const newContent = e.target.value;
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        calendar_section: prev.calendar_section.map((item, idx) => (
-                          idx === i ? {
-                            ...item,
-                            calendar_content: newContent
-                          } : item
-                        ))
-                      }));
-                    }}
-                  />
-                </Div>
-                <Div className={"d-center"}>
-                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-                    className={"primary-btn me-5"} onClick={() => {
-                      closePopup();
-                    }}>
-                    저장
-                  </Button>
-                </Div>
-              </Div>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={"메모"}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw pointer"}
-                value={OBJECT?.calendar_section[i]?.calendar_content}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={calendar3} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: null
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget);
-                }}
-              />
-            )}
-          </PopUp>
+          <Memo
+            OBJECT={OBJECT}
+            setOBJECT={setOBJECT}
+            extra={"calendar_content"}
+            i={i}
+          />
         </Div>
         <Br20/>
       </Card>

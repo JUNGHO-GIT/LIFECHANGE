@@ -8,10 +8,9 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem, Button} from "../../import/ImportMuis.jsx";
-import {TextField, TextArea} from "../../import/ImportMuis.jsx";
-import {money2, money3} from "../../import/ImportImages.jsx";
+import {PopUp, Img, Calendar, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
+import {money2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -397,70 +396,21 @@ export const MoneySave = () => {
           </Div>
           <Br20/>
           <Div className={"d-center"}>
-            <PopUp
-              key={i}
-              type={"innerCenter"}
-              position={"top"}
-              direction={"center"}
-              contents={({closePopup}) => (
-              <Div className={"d-column"}>
-                <Div className={"d-center"}>
-                  <TextArea
-                    readOnly={false}
-                    className={"w-70vw h-55vh border p-10"}
-                    value={OBJECT?.money_section[i]?.money_content}
-                    onChange={(e) => {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section.map((item, idx) => (
-                          idx === i ? {
-                            ...item,
-                            money_content: e.target.value
-                          } : item
-                        ))
-                      }));
-                    }}
-                  />
-                </Div>
-                <Br20/>
-                <Div className={"d-center"}>
-                  <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-                    className={"primary-btn me-5"} onClick={() => {
-                      closePopup();
-                    }}>
-                    저장
-                  </Button>
-                </Div>
-              </Div>
-              )}>
-              {(popTrigger={}) => (
-                <TextField
-                  select={false}
-                  label={translate("money-content")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-86vw"}
-                  value={OBJECT?.money_section[i]?.money_content}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={money3} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: null
-                  }}
-                  onClick={(e) => {
-                    popTrigger.openPopup(e.currentTarget);
-                  }}
-                />
-              )}
-            </PopUp>
+            <Memo
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"money_content"}
+              i={i}
+            />
           </Div>
         </Div>
       </Card>
     );
     // 7-8. table
     const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (tableFragment(i))))
+      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (
+        tableFragment(i)
+      )))
     );
     // 7-9. first
     const firstSection = () => (
