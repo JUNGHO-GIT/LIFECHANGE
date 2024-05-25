@@ -17,7 +17,6 @@ export const Filter = ({
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
-  const sleepArray = JSON.parse(session).sleep || [];
   const location = useLocation();
   const PATH = location?.pathname;
   const secondStr = PATH?.split("/")[2] || "";
@@ -34,16 +33,16 @@ export const Filter = ({
         value={objects?.DATE?.dateType || "전체"}
         className={"ms-2 me-2"}
         InputProps={{className: "h-4vh fs-0-7rem"}}
-        onChange={(e) => (
+        onChange={(e) => {
           functions?.setDATE((prev={}) => ({
             ...prev,
             dateType: e.target.value
-          })),
+          }))
           functions?.setPAGING((prev={}) => ({
             ...prev,
             page: 1
           }))
-        )}>
+        }}>
         {secondStr === "plan" ? (
           ["전체", "day", "week", "month", "year"].map((item) => (
             <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>

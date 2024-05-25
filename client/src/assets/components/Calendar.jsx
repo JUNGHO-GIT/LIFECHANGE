@@ -70,22 +70,30 @@ export const Calendar = ({
               },
               previousIconButton: (props) => (
                 <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                  setDATE((prev={}) => ({
-                    ...prev,
-                    dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
-                    dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
-                  }));
+                  setDATE((prev = {}) => {
+                    const newDateStart = moment(prev.dateStart).subtract(1, "month");
+                    const newDateEnd = newDateStart.clone().endOf('month');
+                    return {
+                      ...prev,
+                      dateStart: newDateStart.format("YYYY-MM-DD"),
+                      dateEnd: newDateEnd.format("YYYY-MM-DD")
+                    };
+                  });
                 }}>
                   {props.children}
                 </Button>
               ),
               nextIconButton: (props) => (
                 <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                  setDATE((prev={}) => ({
-                    ...prev,
-                    dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
-                    dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
-                  }));
+                  setDATE((prev = {}) => {
+                    const newDateStart = moment(prev.dateStart).add(1, "month");
+                    const newDateEnd = newDateStart.clone().endOf('month');
+                    return {
+                      ...prev,
+                      dateStart: newDateStart.format("YYYY-MM-DD"),
+                      dateEnd: newDateEnd.format("YYYY-MM-DD")
+                    };
+                  });
                 }}>
                   {props.children}
                 </Button>
@@ -178,26 +186,34 @@ export const Calendar = ({
                 },
                 previousIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).subtract(1, "week").startOf("isoWeek");
+                      const newDateEnd = newDateStart.clone().endOf("isoWeek");
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD"),
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
                 ),
                 nextIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).add(1, "week").startOf("isoWeek");
+                      const newDateEnd = newDateStart.clone().endOf("isoWeek");
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD"),
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
-                )
+                ),
               }}
             />
           </LocalizationProvider>
@@ -259,22 +275,30 @@ export const Calendar = ({
                 },
                 previousIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).subtract(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).subtract(1, "month").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).subtract(1, "month");
+                      const newDateEnd = newDateStart.clone().endOf('month');
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD")
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
                 ),
                 nextIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).add(1, "month").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).add(1, "month").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).add(1, "month");
+                      const newDateEnd = newDateStart.clone().endOf('month');
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD")
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
@@ -340,22 +364,30 @@ export const Calendar = ({
                 },
                 previousIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).subtract(1, "year").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).subtract(1, "year").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).subtract(1, "year");
+                      const newDateEnd = newDateStart.clone().endOf('year');
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD")
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
                 ),
                 nextIconButton: (props) => (
                   <Button {...props} className={"fs-1-4rem"} onClick={() => {
-                    setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(prev.dateStart).add(1, "year").format("YYYY-MM-DD"),
-                      dateEnd: moment(prev.dateEnd).add(1, "year").format("YYYY-MM-DD")
-                    }));
+                    setDATE((prev = {}) => {
+                      const newDateStart = moment(prev.dateStart).add(1, "year");
+                      const newDateEnd = newDateStart.clone().endOf('year');
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD")
+                      };
+                    });
                   }}>
                     {props.children}
                   </Button>
