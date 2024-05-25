@@ -343,7 +343,7 @@ export const ExerciseDashLine = () => {
     const titleSection = () => (
       <Div className={"d-center"}>볼륨 / 유산소 추이</Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -361,7 +361,7 @@ export const ExerciseDashLine = () => {
         </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}

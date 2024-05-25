@@ -7,12 +7,9 @@ import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../../import/ImportMuis.jsx";
-import {Badge, MenuItem} from "../../../import/ImportMuis.jsx";
-import {TextField, DateCalendar} from "../../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider, PickersDay} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3_1, common5} from "../../../import/ImportImages.jsx";
+import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
+import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -234,67 +231,33 @@ export const FoodFindSave = () => {
     );
     // 7-2. count
     const countSection = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"alert"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            <Div className={"d-center"}>
-              {`${COUNT.sectionCnt}개 이상 10개 이하로 입력해주세요.`}
-            </Div>
-          )}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              label={translate("common-count")}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-86vw"}
-              value={COUNT.newSectionCnt}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"d-center me-n10"}>
-                    <Icons
-                      name={"TbMinus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt - 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                    <Icons
-                      name={"TbPlus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt < 10 ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt + 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                  </Div>
-                )
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Count
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        limit={10}
+      />
     );
-    // 7-3. total
+    // 7-3. badge
+    const badgeSection = (index) => (
+      <Badge
+        badgeContent={index + 1}
+        color={"primary"}
+        showZero={true}
+      />
+    );
+    // 7-4. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <DropDown
+        id={id}
+        sectionId={sectionId}
+        index={index}
+        handlerDelete={handlerDelete}
+      />
+    );
+    // 7-5. total
     const totalSection = () => (
       <Div className={"d-column"}>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-totalKcal")}
@@ -313,7 +276,8 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-totalCarb")}
@@ -332,7 +296,8 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-totalProtein")}
@@ -351,6 +316,7 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
+        <Br20/>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -370,50 +336,19 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
+        <Br20/>
       </Div>
-    );
-    // 7-4. badge
-    const badgeSection = (index) => (
-      <Badge
-        badgeContent={index + 1}
-        color={"primary"}
-        showZero={true}
-      />
-    );
-    // 7-5. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <PopUp
-        key={index}
-        type={"dropdown"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            <Img src={common5} className={"w-16 h-16 pointer"}
-              onClick={() => {
-                handlerDelete(index);
-                closePopup();
-              }}
-            />
-            {translate("common-delete")}
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
     );
     // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mb-40"}>
+        <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br40/>
+        <Div className={"d-center"}>
           <TextField
             select={true}
             type={"text"}
@@ -528,7 +463,8 @@ export const FoodFindSave = () => {
             />
           )}
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-title")}
@@ -543,7 +479,8 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-kcal")}
@@ -579,7 +516,8 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("food-protein")}
@@ -615,6 +553,7 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
+        <Br20/>
       </Card>
     );
     // 7-8. table

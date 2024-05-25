@@ -7,11 +7,9 @@ import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useDate, useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Icons, Br20, Calendar} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
-import {DateCalendar, DigitalClock, MenuItem} from "../../../import/ImportMuis.jsx";
-import {AdapterMoment, LocalizationProvider, PickersDay} from "../../../import/ImportMuis.jsx";
-import {common1, common2, common3_1, common5} from "../../../import/ImportImages.jsx";
+import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
+import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -174,65 +172,14 @@ export const ExercisePlanSave = () => {
     );
     // 7-2. count
     const countSection = () => (
-      <Div className={"d-center"}>
-        <PopUp
-          type={"alert"}
-          position={"bottom"}
-          direction={"center"}
-          contents={({closePopup}) => (
-            <Div className={"d-center"}>
-              {`${COUNT.sectionCnt}개 이상 1개 이하로 입력해주세요.`}
-            </Div>
-          )}>
-          {(popTrigger={}) => (
-            <TextField
-              type={"text"}
-              label={translate("common-count")}
-              variant={"outlined"}
-              size={"small"}
-              className={"w-86vw"}
-              value={COUNT.newSectionCnt}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={common2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"d-center me-n10"}>
-                    <Icons
-                      name={"TbMinus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt - 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                    <Icons
-                      name={"TbPlus"}
-                      className={"w-20 h-20 black"}
-                      onClick={(e) => {
-                        COUNT.newSectionCnt < 1 ? (
-                          setCOUNT((prev) => ({
-                            ...prev,
-                            newSectionCnt: prev.newSectionCnt + 1
-                          }))
-                        ) : popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                      }}
-                    />
-                  </Div>
-                )
-              }}
-            />
-          )}
-        </PopUp>
-      </Div>
+      <Count
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        limit={1}
+      />
     );
-    // 7-3. total
-    // 7-4. badge
+    // 7-5. total
+    // 7-3. badge
     const badgeSection = (index) => (
       <Badge
         badgeContent={index + 1}
@@ -240,40 +187,25 @@ export const ExercisePlanSave = () => {
         showZero={true}
       />
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <PopUp
-        key={index}
-        type={"dropdown"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            <Img src={common5} className={"w-16 h-16 pointer"}
-              onClick={() => {
-                handlerDelete(index);
-                closePopup();
-              }}
-            />
-            {translate("common-delete")}
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
+      <DropDown
+        id={id}
+        sectionId={sectionId}
+        index={index}
+        handlerDelete={handlerDelete}
+      />
     );
     // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-between mb-40"}>
+        <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", i)}
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br40/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -302,7 +234,8 @@ export const ExercisePlanSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -331,58 +264,17 @@ export const ExercisePlanSave = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
-          <PopUp
-            key={i}
-            type={"timePicker"}
-            position={"top"}
-            direction={"center"}
-            contents={({closePopup}) => (
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DigitalClock
-                  timeStep={10}
-                  ampm={false}
-                  timezone={"Asia/Seoul"}
-                  value={moment(OBJECT?.exercise_plan_cardio, "HH:mm")}
-                  sx={{
-                    width: "40vw",
-                    height: "40vh"
-                  }}
-                  onChange={(e) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_plan_cardio: moment(e).format("HH:mm")
-                    }));
-                    closePopup();
-                  }}
-                />
-              </LocalizationProvider>
-            )}>
-            {(popTrigger={}) => (
-              <TextField
-                select={false}
-                label={translate("exercise-planCardio")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-86vw"}
-                value={OBJECT?.exercise_plan_cardio}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={exercise4} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("common-endHour")
-                  )
-                }}
-                onClick={(e) => {
-                  popTrigger.openPopup(e.currentTarget)
-                }}
-              />
-            )}
-          </PopUp>
+        <Br20/>
+        <Div className={"d-center"}>
+          <Time
+            OBJECT={OBJECT}
+            setOBJECT={setOBJECT}
+            extra={"exercise_plan_cardio"}
+            i={i}
+          />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20/>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -411,6 +303,7 @@ export const ExercisePlanSave = () => {
             }}
           />
         </Div>
+        <Br20/>
       </Card>
     );
     // 7-8. table
@@ -425,7 +318,6 @@ export const ExercisePlanSave = () => {
         {countSection()}
       </Card>
     );
-    // 7-10. second (plan = total x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()

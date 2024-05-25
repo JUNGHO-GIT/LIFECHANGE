@@ -4,13 +4,12 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useDate, useStorage, useTime, useTranslate} from "../../import/ImportHooks.jsx";
+import {useDate, useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Calendar, Time, Count} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField} from "../../import/ImportMuis.jsx";
-import {common2, common3_1, common5} from "../../import/ImportImages.jsx";
+import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
+import {Calendar, Time, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -193,8 +192,7 @@ export const SleepSave = () => {
         limit={10}
       />
     );
-    // 7-3. total
-    // 7-4. badge
+    // 7-3. badge
     const badgeSection = (index) => (
       <Badge
         badgeContent={index + 1}
@@ -202,29 +200,16 @@ export const SleepSave = () => {
         showZero={true}
       />
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <PopUp
-        key={index}
-        type={"dropdown"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-        <Div className={"d-center"}>
-          <Img src={common5} className={"w-16 h-16 pointer"} onClick={() => {
-            handlerDelete(index);
-            closePopup();
-          }}/>
-          {translate("common-delete")}
-        </Div>
-        )}>
-        {(popTrigger={}) => (
-          <Img src={common3_1} className={"w-24 h-24 mt-n10 me-n10 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
+      <DropDown
+        id={id}
+        sectionId={sectionId}
+        index={index}
+        handlerDelete={handlerDelete}
+      />
     );
+    // 7-5. total
     // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i) => (

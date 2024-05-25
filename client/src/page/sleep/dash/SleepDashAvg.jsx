@@ -218,7 +218,7 @@ export const SleepDashAvg = () => {
     const titleSection = () => (
       <Div className={"d-center"}>수면 평균</Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -236,7 +236,7 @@ export const SleepDashAvg = () => {
         </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection2 = () => (
       <Div className={"d-center"}>
       <PopUp

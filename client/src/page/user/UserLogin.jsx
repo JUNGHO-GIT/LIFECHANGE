@@ -5,7 +5,7 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Div, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -63,7 +63,7 @@ export const UserLogin = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -75,7 +75,8 @@ export const UserLogin = () => {
             }}
           />
         </Div>
-        <Div className={"d-center mb-20"}>
+        <Br20 />
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -87,6 +88,7 @@ export const UserLogin = () => {
             }}
           />
         </Div>
+        <Br20 />
         <Div className={"d-center"}>
           <Div className={"fs-0-7rem"}>아이디 저장</Div>
         </Div>

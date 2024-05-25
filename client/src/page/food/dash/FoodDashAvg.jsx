@@ -339,7 +339,7 @@ export const FoodDashAvg = () => {
     const titleSection = () => (
       <Div className={"d-center"}>칼로리/영양소 평균</Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -357,7 +357,7 @@ export const FoodDashAvg = () => {
       </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}

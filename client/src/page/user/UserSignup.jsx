@@ -68,7 +68,7 @@ export const UserSignup = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card variant={"outlined"} className={"p-20"} key={i}>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <TextField
             select={false}
             type={"text"}
@@ -80,6 +80,7 @@ export const UserSignup = () => {
             )}
           />
         </Div>
+        <Br20 />
         <Div className={"d-center"}>
           <TextField
             select={false}

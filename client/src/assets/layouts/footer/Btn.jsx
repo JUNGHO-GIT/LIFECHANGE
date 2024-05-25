@@ -3,7 +3,7 @@
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, MenuItem, Card} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
@@ -118,17 +118,19 @@ export const Btn = ({
         const dateEnd = property?.dateEnd;
         return (
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
-            <Div className={"d-center mb-20"}>
+            <Div className={"d-center"}>
               <Div className={"fs-1-7rem"}>
                 재무 상태
               </Div>
             </Div>
-            <Div className={"d-center mb-40"}>
+            <Br20/>
+            <Div className={"d-center"}>
               <Div className={"fs-1-2rem fw-normal"}>
                 {dateStart} ~ {dateEnd}
               </Div>
             </Div>
-            <Div className={"d-center mb-20"}>
+            <Br40/>
+            <Div className={"d-center"}>
               <TextField
                 select={false}
                 label={translate("money-property")}
@@ -147,7 +149,8 @@ export const Btn = ({
                 }}
               />
             </Div>
-            <Div className={"d-center mb-20"}>
+            <Br20/>
+            <Div className={"d-center"}>
               <TextField
                 select={false}
                 label={translate("money-in")}
@@ -166,6 +169,7 @@ export const Btn = ({
                 }}
               />
             </Div>
+            <Br20/>
             <Div className={"d-center"}>
               <TextField
                 select={false}

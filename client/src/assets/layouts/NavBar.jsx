@@ -1,10 +1,10 @@
 // NavBar.jsx
 
-import {React, useLocation, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {useLanguage} from "../../import/ImportHooks.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Img, Br10} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br10, Br20} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {smile1, smile2, smile3, smile4, smile5, flag1, flag2} from "../../import/ImportImages.jsx";
 
@@ -142,39 +142,45 @@ export const NavBar = () => {
           direction={"center"}
           contents={({closePopup}) => (
             <Div className={"d-column p-10"}>
-              <Div className={"d-center mb-20"}>
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
               </Div>
-              <Div className={"d-center mb-10"}>
+              <Br20 />
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem me-5"}>
                   {translate("navBar-total")}
                 </Div>
                 {makeIcon("total", "w-max5vw h-max5vh")}
               </Div>
-              <Div className={"d-center mb-10"}>
+              <Br10 />
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem me-5"}>
                   {translate("navBar-exercise")}
                 </Div>
                 {makeIcon("exercise", "w-max5vw h-max5vh")}
               </Div>
-              <Div className={"d-center mb-10"}>
+              <Br10 />
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem me-5"}>
                   {translate("navBar-food")}
                 </Div>
                 {makeIcon("food", "w-max5vw h-max5vh")}
               </Div>
-              <Div className={"d-center mb-10"}>
+              <Br10 />
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem me-5"}>
                   {translate("navBar-money")}
                 </Div>
                 {makeIcon("money", "w-max5vw h-max5vh")}
               </Div>
-              <Div className={"d-center mb-20"}>
+              <Br10 />
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem me-5"}>
                   {translate("navBar-sleep")}
                 </Div>
                 {makeIcon("sleep", "w-max5vw h-max5vh")}
               </Div>
+              <Br20 />
               <Div className={"d-center"}>
                 <Div className={"fs-0-6rem fw-normal"}>
                   {translate("navBar-score")}

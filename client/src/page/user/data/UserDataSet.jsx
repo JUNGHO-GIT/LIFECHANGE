@@ -279,7 +279,7 @@ export const UserDataSet = () => {
     // 7-6. popup
     const popupSection = (i, closePopup) => (
       <Div className={"d-column"}>
-        <Div className={"d-center mb-20"}>
+        <Div className={"d-center"}>
           <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-20"}>
             <TableContainer className={"border-right over-x-hidden"}>
               <Table>
@@ -393,6 +393,7 @@ export const UserDataSet = () => {
             )}
           </Card>
         </Div>
+        <Br20 />
         <Div className={"d-center"}>
           <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"primary-btn"} onClick={() => {
             closePopup();

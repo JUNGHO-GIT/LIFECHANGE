@@ -231,7 +231,7 @@ export const MoneyDashLine = () => {
     const titleSection = () => (
       <Div className={"d-center"}>수입/지출 추이</Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -249,7 +249,7 @@ export const MoneyDashLine = () => {
         </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection2 = () => (
       <PopUp
         type={"dash"}

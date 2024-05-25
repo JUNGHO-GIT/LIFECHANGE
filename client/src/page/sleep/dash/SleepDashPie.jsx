@@ -283,7 +283,7 @@ export const SleepDashPie = () => {
     const titleSection = () => (
       <Div className={"d-center"}>수면 비율</Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection1 = () => (
       <Div className={"d-center"}>
         <TextField
@@ -302,7 +302,7 @@ export const SleepDashPie = () => {
       </TextField>
       </Div>
     );
-    // 7-5. dropdown
+    // 7-4. dropdown
     const dropdownSection2 = () => (
       <Img src={common3_1} className={"w-24 h-24"} />
     );
