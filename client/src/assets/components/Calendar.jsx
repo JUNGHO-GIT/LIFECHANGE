@@ -102,7 +102,7 @@ export const Calendar = ({
           label={"날짜"}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
-          className={"w-60vw pointer"}
+          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -210,7 +210,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw pointer"}
+          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -291,7 +291,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw pointer"}
+          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -372,7 +372,7 @@ export const Calendar = ({
           label={"기간"}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={"w-60vw pointer"}
+          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
