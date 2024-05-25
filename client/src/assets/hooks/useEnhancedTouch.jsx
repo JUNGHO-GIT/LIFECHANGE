@@ -7,13 +7,11 @@ export const useEnhancedTouch = () => {
   useEffect(() => {
     const handleTouchStart = (event) => {
       window.requestAnimationFrame(() => {
-        console.log('Touch start detected');
       });
     }
 
     const handleTouchMove = (event) => {
       window.requestAnimationFrame(() => {
-        console.log('Touch move detected');
       });
     };
 

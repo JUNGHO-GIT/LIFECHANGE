@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios} from "../../../import/ImportLibs.jsx";
-import {useTime, useDate} from "../../../import/ImportHooks.jsx";
+import {useTime} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20, Br40} from "../../../import/ImportComponents.jsx";
@@ -73,7 +73,6 @@ export const SleepPlanSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->

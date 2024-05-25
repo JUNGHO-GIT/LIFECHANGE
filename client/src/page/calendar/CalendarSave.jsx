@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {useDate, useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
@@ -81,9 +81,6 @@ export const CalendarSave = () => {
     }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

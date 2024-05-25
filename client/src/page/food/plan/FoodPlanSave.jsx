@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
-import {useDate, useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
@@ -72,9 +72,6 @@ export const FoodPlanSave = () => {
     food_plan_fat: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

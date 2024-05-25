@@ -51,12 +51,16 @@ export const Time = ({
     }
   }
   else if (firstStr === "exercise" && secondStr === "plan") {
-    image = exercise4;
-    translateStr = "exercise-planTime";
+    if (extra.split("_")[2] === "cardio") {
+      image = exercise4;
+      translateStr =  "exercise-planCardio";
+    }
   }
   else if (firstStr === "exercise" && secondStr !== "plan") {
-    image = exercise4;
-    translateStr = "exercise-time";
+    if (extra.split("_")[1] === "cardio") {
+      image = exercise4;
+      translateStr =  "exercise-cardio";
+    }
   }
 
   // 2. planNode ---------------------------------------------------------------------------------->
@@ -145,7 +149,7 @@ export const Time = ({
           label={translate(translateStr)}
           size={"small"}
           variant={"outlined"}
-          className={"w-86vw"}
+          className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           InputProps={{
             readOnly: true,
