@@ -247,7 +247,7 @@ export const SleepPlanSave = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius shadow"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
           {secondSection()}

@@ -1,11 +1,11 @@
 [class$="MuiPaper-root"] {
-  border: 0px !important;
-  border-radius: 0px !important;
+  border: 0.5px solid #e7e7e7 !important;
+  border-radius: 10px !important;
   box-shadow: none !important;
 }
 [class$="MuiCard-root"] {
-  border: 0.5px solid #f0f0f0 !important;
-  border-radius: 0px !important;
+  border: 0.5px solid #ebebeb !important;
+  border-radius: 10px !important;
   box-shadow: none !important;
 }
 [class$="MuiTableCell-root"] {
@@ -41,6 +41,7 @@
 [class$="MuiInputBase-root-MuiOutlinedInput-root"] {
   text-overflow: clip !important;
   font-size: 0.9rem !important;
+  min-height: 40px !important;
 }
 [class$="MuiTypography-root"] {
   text-overflow: clip !important;

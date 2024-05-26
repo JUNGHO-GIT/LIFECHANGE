@@ -145,13 +145,14 @@ export const CalendarList = () => {
         locale={"ko"}
         view={"month"}
         value={new Date()}
+        onClickDay={undefined}
         showNavigation={true}
         showNeighboringMonth={true}
         showDoubleView={false}
-        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
-        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
         prev2Label={null}
         next2Label={null}
+        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
+        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
         formatDay={(locale, date) => (moment(date).format("D"))}
         formatWeekday={(locale, date) => (moment(date).format("D"))}
         formatMonth={(locale, date) => (moment(date).format("MM"))}
@@ -164,11 +165,12 @@ export const CalendarList = () => {
           const week = ["일", "월", "화", "수", "목", "금", "토"];
           return week[day];
         }}
-        onClickDay={undefined}
         onActiveStartDateChange={({ activeStartDate, value, view }) => {
           setDATE((prev={}) => ({
             ...prev,
+            // @ts-ignore
             dateStart: moment(value).startOf("month").format("YYYY-MM-DD"),
+            // @ts-ignore
             dateEnd: moment(value).endOf("month").format("YYYY-MM-DD")
           }));
         }}
@@ -206,7 +208,7 @@ export const CalendarList = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
         </Div>

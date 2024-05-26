@@ -113,10 +113,21 @@ export const TopNav = () => {
         </Div>
       );
     }
+    else {
+      return (
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
+          <Img src={smile3} className={className} />
+          <Div className={classType}>
+          {percent?.[`${part}`]?.average?.score}</Div>
+        </Div>
+      );
+    }
   };
 
-  // 5. scoreNode --------------------------------------------------------------------------------->
-  const scoreNode = () => (
+  // 5. smileNode --------------------------------------------------------------------------------->
+  const smileNode = () => (
     <PopUp
       type={"dropdown"}
       position={"bottom"}
@@ -363,7 +374,7 @@ export const TopNav = () => {
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
       <Card className={"block-wrapper d-row h-7vh w-100p"}>
-        {scoreNode()}
+        {smileNode()}
         {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
           defaultNode()
         ) : firstStr === "calendar" ? (

@@ -111,7 +111,7 @@ export const Calendar = ({
           label={"날짜"}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
-          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -421,110 +421,110 @@ export const Calendar = ({
       )}
     </PopUp>
   );
-  
+
   // 4. select ------------------------------------------------------------------------------------>
   const selectSection = () => (
-  <PopUp
-    type={"innerCenter"}
-    position={"center"}
-    direction={"center"}
-    contents={({ closePopup }) => (
-      <Div className={"d-column"}>
-        <Div className={"d-center fs-1-2rem fw-bold"}>
-          선택별
-        </Div>
-        <Br20 />
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DateCalendar
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            readOnly={false}
-            value={moment(DATE.dateStart)}
-            className={"radius border"}
-            slots={{
-              day: (props) => {
-                const {outsideCurrentMonth, day, ...other} = props;
-                const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
-                const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
-                const isSelected =
-                DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
-                DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
-                let borderRadius = "";
-                let backgroundColor = "";
-                if (isSelected) {
-                  if (isFirst) {
-                    borderRadius = "50% 0 0 50%";
-                    backgroundColor = "#1976d2";
+    <PopUp
+      type={"innerCenter"}
+      position={"center"}
+      direction={"center"}
+      contents={({ closePopup }) => (
+        <Div className={"d-column"}>
+          <Div className={"d-center fs-1-2rem fw-bold"}>
+            선택별
+          </Div>
+          <Br20 />
+          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+            <DateCalendar
+              timezone={"Asia/Seoul"}
+              views={["day"]}
+              readOnly={false}
+              value={moment(DATE.dateStart)}
+              className={"radius border"}
+              slots={{
+                day: (props) => {
+                  const {outsideCurrentMonth, day, ...other} = props;
+                  const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
+                  const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
+                  const isSelected =
+                  DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
+                  DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
+                  let borderRadius = "";
+                  let backgroundColor = "";
+                  if (isSelected) {
+                    if (isFirst) {
+                      borderRadius = "50% 0 0 50%";
+                      backgroundColor = "#1976d2";
+                    }
+                    else if (isLast) {
+                      borderRadius = "0 50% 50% 0";
+                      backgroundColor = "#1976d2";
+                    }
+                    else {
+                      borderRadius = "0";
+                    }
                   }
-                  else if (isLast) {
-                    borderRadius = "0 50% 50% 0";
-                    backgroundColor = "#1976d2";
-                  }
-                  else {
-                    borderRadius = "0";
-                  }
+                  return (
+                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
+                      day={day} selected={isSelected}
+                      style={{
+                        borderRadius: borderRadius,
+                        backgroundColor: backgroundColor,
+                        boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                      }}
+                      onDaySelect={(day) => {
+                        if (!DATE.dateStart || DATE.dateEnd || moment(day).isBefore(DATE.dateStart)) {
+                          setDATE((prev) => ({
+                            ...prev,
+                            dateStart: moment(day).format("YYYY-MM-DD"),
+                            dateEnd: undefined
+                          }));
+                        }
+                        else {
+                          setDATE((prev) => ({
+                            ...prev,
+                            dateStart: prev.dateStart,
+                            dateEnd: moment(day).format("YYYY-MM-DD")
+                          }));
+                        }
+                      }}
+                    />
+                  )
                 }
-                return (
-                  <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                    day={day} selected={isSelected}
-                    style={{
-                      borderRadius: borderRadius,
-                      backgroundColor: backgroundColor,
-                      boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
-                    }}
-                    onDaySelect={(day) => {
-                      if (!DATE.dateStart || DATE.dateEnd || moment(day).isBefore(DATE.dateStart)) {
-                        setDATE((prev) => ({
-                          ...prev,
-                          dateStart: moment(day).format("YYYY-MM-DD"),
-                          dateEnd: undefined
-                        }));
-                      }
-                      else {
-                        setDATE((prev) => ({
-                          ...prev,
-                          dateStart: prev.dateStart,
-                          dateEnd: moment(day).format("YYYY-MM-DD")
-                        }));
-                      }
-                    }}
-                  />
-                )
-              }
-            }}
-          />
-        </LocalizationProvider>
-      </Div>
-    )}>
-    {(popTrigger = {}) => (
-      <TextField
-        type={"text"}
-        size={"small"}
-        label={"기간"}
-        variant={"outlined"}
-        value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
-        className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
-        InputProps={{
-          readOnly: true,
-          className: "fs-0-8rem",
-          startAdornment: (
-            <Img src={common1} className={"w-16 h-16"} />
-          ),
-          endAdornment: null
-        }}
-        onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget);
-        }}
-      />
-    )}
-  </PopUp>
-);
-
+              }}
+            />
+          </LocalizationProvider>
+        </Div>
+      )}>
+      {(popTrigger = {}) => (
+        <TextField
+          type={"text"}
+          size={"small"}
+          label={"기간"}
+          variant={"outlined"}
+          value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
+          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          InputProps={{
+            readOnly: true,
+            className: "fs-0-8rem",
+            startAdornment: (
+              <Img src={common1} className={"w-16 h-16"} />
+            ),
+            endAdornment: null
+          }}
+          onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget);
+          }}
+        />
+      )}
+    </PopUp>
+  );
 
   // 5. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
     <Div className={"d-center"}>
-      {secondStr === "plan" || firstStr === "calendar" ? (
+      {(firstStr === "calendar" && secondStr !== "plan") ||
+      (firstStr !== "calendar" && secondStr === "plan") ? (
         <TextField
           select={true}
           label={translate("common-dateType")}
@@ -599,8 +599,7 @@ export const Calendar = ({
         yearSection()
       ) : DATE.dateType === "select" ? (
         selectSection()
-      ) : null 
-      }
+      ) : null}
     </Div>
   );
 

@@ -6,7 +6,6 @@ import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {percent, log} from "../../import/ImportLogics";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Img, Calendar, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
@@ -356,7 +355,7 @@ export const CalendarSave = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
           {secondSection()}

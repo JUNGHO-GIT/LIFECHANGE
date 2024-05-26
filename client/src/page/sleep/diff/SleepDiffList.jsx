@@ -282,7 +282,7 @@ export const SleepDiff = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
         </Div>

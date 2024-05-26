@@ -67,7 +67,7 @@ export const UserSignup = () => {
             setUserId(e.target.value)
           )}
         />
-        <Br20 />
+        <Br10 />
         <TextField
           select={false}
           type={"password"}
@@ -143,16 +143,16 @@ export const UserSignup = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
           <Hr40 />
           {secondSection()}
           <Hr40 />
           {fourthSection()}
-          <Br20 />
+          <Br10 />
           {fifthSection()}
-          <Br20 />
+          <Hr40 />
           {sixthSection()}
         </Div>
       </Paper>

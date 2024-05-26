@@ -20,6 +20,9 @@
 }
 .react-calendar__navigation {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px 0px 0px;
   height: 25px;
   margin-bottom: 4vh;
 }

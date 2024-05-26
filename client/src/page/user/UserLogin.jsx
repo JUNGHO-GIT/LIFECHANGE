@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
-import {Div, Br10, Br20, Img, Hr40, Hr30} from "../../import/ImportComponents.jsx";
+import {Div, Br10, Br20, Img, Hr20, Hr30, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
@@ -81,7 +81,7 @@ export const UserLogin = () => {
             setUserId(e.target.value);
           }}
         />
-        <Br20 />
+        <Br10 />
         <TextField
           select={false}
           type={"text"}
@@ -176,12 +176,12 @@ export const UserLogin = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
           <Hr40 />
           {secondSection()}
-          <Hr30 />
+          <Hr40 />
           {fourthSection()}
           <Br10 />
           {fifthSection()}

@@ -18,12 +18,10 @@ export const Loading = ({
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
-
     if (!LOADING) {
       return;
     }
-
-    if (firstStr === "calendar") {
+    else if (firstStr === "calendar") {
       setHeight("h-min75vh");
     }
     else {

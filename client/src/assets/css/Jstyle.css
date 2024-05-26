@@ -10208,19 +10208,19 @@
 
 /** 98. border ************************************************************************************/
 .border {
-  border: 1px solid #dedede !important;
+  border: 0.5px solid #dedede !important;
 }
 .border-top {
-  border-top: 1px solid #dedede !important;
+  border-top: 0.5px solid #dedede !important;
 }
 .border-right {
-  border-right: 1px solid #dedede !important;
+  border-right: 0.5px solid #dedede !important;
 }
 .border-bottom {
-  border-bottom: 1px solid #dedede !important;
+  border-bottom: 0.5px solid #dedede !important;
 }
 .border-left {
-  border-left: 1px solid #dedede !important;
+  border-left: 0.5px solid #dedede !important;
 }
 .border-none {
   border: none !important;
