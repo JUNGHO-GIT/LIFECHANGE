@@ -72,7 +72,6 @@ router.get("/list", async (req, res) => {
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
-      req.query._id,
       req.query.user_id
     );
     if (result) {

@@ -119,11 +119,11 @@ export const list = async (
 
 // 2. detail (상세는 eq) -------------------------------------------------------------------------->
 export const detail = async (
-  user_id_param, _id_param
+  user_id_param
 ) => {
 
   const finalResult = await repository.detail(
-    user_id_param, _id_param
+    user_id_param
   );
 
   return finalResult

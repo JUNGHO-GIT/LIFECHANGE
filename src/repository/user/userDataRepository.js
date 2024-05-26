@@ -229,7 +229,6 @@ export const detail = async (
 ) => {
 
   const finalResult = await User.findOne({
-    _id: !_id_param ? {$exists:true} : _id_param,
     user_id: user_id_param,
   })
   .lean();

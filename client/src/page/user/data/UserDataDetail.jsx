@@ -1,4 +1,4 @@
-// UserDataInfo.jsx
+// UserDataDetail.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useRef} from "../../../import/ImportReacts.jsx";
@@ -9,7 +9,7 @@ import {Div, Br30, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents
 import {Paper, TextField, Button, Avatar} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserDataInfo = () => {
+export const UserDataDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -57,6 +57,26 @@ export const UserDataInfo = () => {
     user_property: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    setLOADING(true);
+    const res = await axios.get(`${URL_OBJECT}/data/detail`, {
+      params: {
+        user_id: sessionId
+      },
+    });
+    // 첫번째 객체를 제외하고 데이터 추가
+    setOBJECT((prev) => {
+      if (prev.length === 1 && prev[0]._id === "") {
+        return res.data.result;
+      }
+      else {
+        return {...prev, ...res.data.result};
+      }
+    });
+    setLOADING(false);
+  })()}, [sessionId]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
