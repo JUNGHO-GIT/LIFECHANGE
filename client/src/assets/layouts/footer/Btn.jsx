@@ -567,7 +567,7 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.second === "data" && strings?.third === "set") {
+      else if (strings?.second === "data" && strings?.third === "custom") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowDefault()}

@@ -59,7 +59,7 @@ import {SleepPlanSave} from "./page/sleep/plan/SleepPlanSave";
 import {SleepList} from "./page/sleep/SleepList";
 import {SleepSave} from "./page/sleep/SleepSave";
 
-import {UserDataSet} from "./page/user/data/UserDataSet";
+import {UserDataCustom} from "./page/user/data/UserDataCustom";
 import {UserDataList} from "./page/user/data/UserDataList";
 import {UserSignup} from "./page/user/UserSignup";
 import {UserLogin} from "./page/user/UserLogin";
@@ -120,7 +120,7 @@ const Sleep = () => (
 // ------------------------------------------------------------------------------------------------>
 const User = () => (
   <Routes>
-    <Route path="/data/set" element={<UserDataSet />} />
+    <Route path="/data/custom" element={<UserDataCustom />} />
     <Route path="/data/list" element={<UserDataList />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />

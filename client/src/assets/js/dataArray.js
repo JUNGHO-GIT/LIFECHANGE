@@ -67,7 +67,7 @@ export const dataArray = [
     icon: "BiUser",
     title: "User",
     items: [
-      {to: "/user/data/set", label: "UserDataSet"},
+      {to: "/user/data/custom", label: "UserDataCustom"},
       {to: "/user/data/list", label: "UserDataList"},
     ]
   }

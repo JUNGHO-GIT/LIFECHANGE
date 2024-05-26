@@ -115,6 +115,7 @@ export const CalendarList = () => {
               Object.assign(SEND, {
                 id: calendar._id,
                 section_id: section._id,
+                dateType: calendar.calendar_dateType,
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });

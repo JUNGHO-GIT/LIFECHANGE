@@ -8,12 +8,12 @@ import {exerciseArray} from '../../assets/array/exerciseArray.js';
 import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
 
-// 1-1. set -------------------------------------------------------------------------------------->
-export const set = async (
+// 1-1. custom ------------------------------------------------------------------------------------>
+export const custom = async (
   user_id_param
 ) => {
 
-  const findResult = await repository.set.list(
+  const findResult = await repository.custom.list(
     user_id_param
   );
 

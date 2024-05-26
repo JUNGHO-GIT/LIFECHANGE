@@ -241,7 +241,7 @@ export const Paging = ({
           </Div>
         );
       }
-      else if (strings?.second === "data" && strings?.third === "set") {
+      else if (strings?.second === "data" && strings?.third === "custom") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {

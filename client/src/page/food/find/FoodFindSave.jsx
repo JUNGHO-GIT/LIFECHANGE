@@ -19,7 +19,7 @@ export const FoodFindSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataSet") || "{}";
+  const session = sessionStorage.getItem("dataCustom") || "{}";
   const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();

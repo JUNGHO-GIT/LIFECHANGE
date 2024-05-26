@@ -36,7 +36,7 @@ export const useTranslate = () => {
       login: {ko: "로그인", en: "Login"},
       signup: {ko: "회원가입", en: "Signup"},
       logout: {ko: "로그아웃", en: "Logout"},
-      dataSet: {ko: "데이터 입력", en: "Data Input"},
+      dataCustom: {ko: "데이터 입력", en: "Data Input"},
       dataList: {ko: "데이터 리스트", en: "Data List"},
     },
     navBar: {

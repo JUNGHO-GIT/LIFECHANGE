@@ -13,7 +13,7 @@ export const Filter = ({
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const session = sessionStorage.getItem("dataSet") || "{}";
+  const session = sessionStorage.getItem("dataCustom") || "{}";
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
@@ -510,7 +510,7 @@ export const Filter = ({
       else if (strings?.second === "data" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "data" && strings?.third === "set") {
+      else if (strings?.second === "data" && strings?.third === "custom") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {

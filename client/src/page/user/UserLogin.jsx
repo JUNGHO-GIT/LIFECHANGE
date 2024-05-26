@@ -4,7 +4,7 @@ import {React, useState, useNavigate, useLocation} from "../../import/ImportReac
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
 
@@ -21,9 +21,6 @@ export const UserLogin = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -48,7 +45,7 @@ export const UserLogin = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       sessionStorage.setItem("sessionId", userId);
-      sessionStorage.setItem("dataSet", JSON.stringify(res.data.result.dataSet));
+      sessionStorage.setItem("dataCustom", JSON.stringify(res.data.result.dataCustom));
       percent();
       navigate("/calendar/list");
     }
@@ -100,11 +97,10 @@ export const UserLogin = () => {
     );
     // 7-9. first
     const firstSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
-        <Div className={"fs-2-0rem"}>Login</Div>
+      <Card variant={"outlined"} className={"border-none p-20"}>
+        <Div className={"d-center fs-2-0rem"}>로그인</Div>
       </Card>
     );
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()
@@ -112,7 +108,7 @@ export const UserLogin = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min65vh"}>
+        <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
           {thirdSection()}
         </Div>

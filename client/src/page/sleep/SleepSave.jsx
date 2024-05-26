@@ -260,7 +260,6 @@ export const SleepSave = () => {
         {countSection()}
       </Card>
     );
-    // 7-10. second (x)
     // 7-11. third
     const thirdSection = () => (
       tableSection()

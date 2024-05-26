@@ -52,11 +52,11 @@ export const Header = () => {
             </>
           )}
           <Div className={"d-center pointer"} onClick={() => {
-            navigate("/user/data/set");
+            navigate("/user/data/custom");
             closePopup();
           }}>
             <Icons name={"TbUser"} className={"w-24 h-24"} onClick={() => {}} />
-            {translate("header-dataSet")}
+            {translate("header-dataCustom")}
           </Div>
           <Div className={"d-center pointer"} onClick={() => {
             navigate("/user/data/list");

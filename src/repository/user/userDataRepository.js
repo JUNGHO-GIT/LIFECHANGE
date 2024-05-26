@@ -11,8 +11,8 @@ import {Money} from "../../schema/money/Money.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
 
-// 1-1. set --------------------------------------------------------------------------------------->
-export const set = {
+// 1-1. custom ------------------------------------------------------------------------------------>
+export const custom = {
   list: async (
     user_id_param, page_param, limit_param
   ) => {
@@ -22,7 +22,7 @@ export const set = {
       }},
       {$project: {
         _id: 0,
-        dataSet: {
+        dataCustom: {
           calendar: 1,
           food: 1,
           money: 1,
