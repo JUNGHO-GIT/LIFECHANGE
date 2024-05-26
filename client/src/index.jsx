@@ -22,7 +22,6 @@ import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 
 import {Header} from "./import/ImportLayouts.jsx";
-import {NavBar} from "./import/ImportLayouts.jsx";
 import {TopNav} from "./import/ImportLayouts.jsx";
 import {BottomNav} from "./import/ImportLayouts.jsx";
 
@@ -181,10 +180,10 @@ if (rootElement === null) {
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-    <BrowserRouter>
-      <LanguageProvider>
-        <CssBaseline />
-        <App />
-      </LanguageProvider>
-    </BrowserRouter>
+  <BrowserRouter>
+    <LanguageProvider>
+      <CssBaseline />
+      <App />
+    </LanguageProvider>
+  </BrowserRouter>
 );

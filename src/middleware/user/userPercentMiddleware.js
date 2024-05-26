@@ -90,8 +90,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2),
+      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
     };
   };
 
@@ -126,8 +126,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2),
+      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
     };
   };
 
@@ -231,8 +231,8 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2),
+      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
     };
   };
 
@@ -310,8 +310,8 @@ export const percent = async (object) => {
     }
 
     return {
-      score: Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2),
+      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
+      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
     };
   };
 
@@ -522,11 +522,13 @@ export const percent = async (object) => {
     percent: 0,
     count: 0,
   };
+
   ["exercise", "food", "money", "sleep"].forEach(category => {
     total.score += parseFloat(newObject[category].average.score);
     total.percent += parseFloat(newObject[category].average.percent);
     total.count++;
   });
+
   if (total.count > 0) {
     newObject.total = {
       average: {

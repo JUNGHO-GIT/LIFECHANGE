@@ -164,9 +164,9 @@ export const TopNav = () => {
           popTrigger.openPopup(e.currentTarget)
         }}>
           {firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
-            makeIcon("total", "w-max30 h-max30", "N")
+            makeIcon("total", "w-max25 h-max25", "N")
           ) : (
-            makeIcon(part.toLowerCase(), "w-max30 h-max30", "N")
+            makeIcon(part.toLowerCase(), "w-max25 h-max25", "N")
           )}
         </Div>
       )}
