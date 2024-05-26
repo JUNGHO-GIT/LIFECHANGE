@@ -30,7 +30,7 @@ export const UserSetting = () => {
             <TableBody className={"table-tbody"}>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  회원정보 수정
+                  {translate("user-dataDetail")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -40,7 +40,7 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  카테고리 설정
+                  {translate("user-dataCustom")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -50,7 +50,7 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  데이터 관리
+                  {translate("user-dataList")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -60,7 +60,7 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  언어 설정
+                  {translate("user-language")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <PopUp
@@ -98,7 +98,7 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  로그아웃
+                  {translate("user-logout")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {

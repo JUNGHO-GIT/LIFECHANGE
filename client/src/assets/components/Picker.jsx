@@ -227,7 +227,7 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -316,7 +316,7 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -405,7 +405,7 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
@@ -503,7 +503,7 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
-          className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
+          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
             className: "fs-0-8rem",
