@@ -19,19 +19,57 @@ export const Img = (props) => {
   return (
     <img style={{margin: "0px 10px 0px 0px"}} alt={fileName} {...props} />
   );
-}
+};
 
 // ------------------------------------------------------------------------------------------------>
-const createBrComponent = (height) => {
-  return () => <div style={{height: `${height}px`}} />;
-}
+const createBr = (param) => {
+
+  const style = {
+    "width": "100%",
+    "-webkit-flex-shrink": "0",
+    "-ms-flex-negative": "0",
+    "flex-shrink": "0",
+    "height": `${param}px`
+  };
+
+  return () => <div style={style} />;
+};
 
 // ------------------------------------------------------------------------------------------------>
-export const Br5 = createBrComponent(5);
-export const Br10 = createBrComponent(10);
-export const Br15 = createBrComponent(15);
-export const Br20 = createBrComponent(20);
-export const Br25 = createBrComponent(25);
-export const Br30 = createBrComponent(30);
-export const Br35 = createBrComponent(35);
-export const Br40 = createBrComponent(40);
+const createHr = (param) => {
+
+  const style = {
+    "width": "100%",
+    "-webkit-flex-shrink": "0",
+    "-ms-flex-negative": "0",
+    "flex-shrink": "0",
+    "border-width": "0",
+    "border-style": "solid",
+    "border-color": "rgba(0, 0, 0, 0.12)",
+    "border-bottom-width": "thin",
+    "margin": `${param / 2}px 16px`,
+  };
+
+  return () =>  <div style={style} />;
+
+};
+
+// ------------------------------------------------------------------------------------------------>
+export const Br5 = createBr(5);
+export const Br10 = createBr(10);
+export const Br15 = createBr(15);
+export const Br20 = createBr(20);
+export const Br25 = createBr(25);
+export const Br30 = createBr(30);
+export const Br35 = createBr(35);
+export const Br40 = createBr(40);
+
+// ------------------------------------------------------------------------------------------------>
+export const Hr5 = createHr(5);
+export const Hr10 = createHr(10);
+export const Hr15 = createHr(15);
+export const Hr20 = createHr(20);
+export const Hr25 = createHr(25);
+export const Hr30 = createHr(30);
+export const Hr35 = createHr(35);
+export const Hr40 = createHr(40);

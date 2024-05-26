@@ -1,11 +1,11 @@
 // UserLogin.jsx
 
-import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
-import {Div, Br20, Img} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField, Button} from "../../import/ImportMuis.jsx";
+import {Div, Br10, Br20, Img, Hr20} from "../../import/ImportComponents.jsx";
+import {Card, Paper, TextField, Button, Checkbox, Divider} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -19,9 +19,6 @@ export const UserLogin = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -34,8 +31,18 @@ export const UserLogin = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [isChecked, setIsChecked] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (sessionId) {
+      setUserId(sessionId);
+      setIsChecked(true);
+    }
+  }, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -45,6 +52,12 @@ export const UserLogin = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
+      if (isChecked) {
+        localStorage.setItem("sessionId", userId);
+      }
+      else {
+        localStorage.setItem("sessionId", "");
+      }
       sessionStorage.setItem("sessionId", userId);
       sessionStorage.setItem("dataCustom", JSON.stringify(res.data.result.dataCustom));
       sessionStorage.setItem("lang", "ko");
@@ -61,7 +74,7 @@ export const UserLogin = () => {
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"p-20"} key={i}>
+      <Card className={"border-none p-10"} key={i}>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -99,10 +112,6 @@ export const UserLogin = () => {
             }}
           />
         </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-7rem"}>아이디 저장</Div>
-        </Div>
       </Card>
     );
     // 7-8. table
@@ -115,9 +124,25 @@ export const UserLogin = () => {
         {translate("user-login")}
       </Div>
     );
+    // 7-11. second
+    const secondSection = () => (
+      tableSection()
+    );
     // 7-11. third
     const thirdSection = () => (
-      tableSection()
+      <Div className={"d-center"}>
+        <Checkbox
+          color={"primary"}
+          size={"small"}
+          checked={isChecked}
+          onChange={(e) => {
+            setIsChecked(e.target.checked);
+          }}
+        />
+        <Div className={"fs-0-8rem"}>
+          아이디 저장
+        </Div>
+      </Div>
     );
     // 7-11. fourth
     const fourthSection = () => (
@@ -166,19 +191,33 @@ export const UserLogin = () => {
       </Div>
     );
     // 7-11. seventh
+    const seventhSection = () => (
+      <Div className={"d-center w-86vw fs-0-8rem"}>
+        {translate("user-notPw")}
+        <Div className={"d-center blue ms-10"} onClick={() => {
+          navigate("/user/find");
+        }}>
+          {translate("user-find")}
+        </Div>
+      </Div>
+    );
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
-          <Br20 />
+          <Hr20 />
+          {secondSection()}
+          <Hr20 />
           {thirdSection()}
-          <Br20 />
+          <Hr20 />
           {fourthSection()}
-          <Br20 />
+          <Br10 />
           {fifthSection()}
-          <Br20 />
+          <Hr20 />
           {sixthSection()}
+          <Br10 />
+          {seventhSection()}
         </Div>
       </Paper>
     );

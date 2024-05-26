@@ -105,8 +105,8 @@ export const UserSignup = () => {
         {translate("user-signup")}
       </Div>
     );
-    // 7-11. third
-    const thirdSection = () => (
+    // 7-11. second
+    const secondSection = () => (
       tableSection()
     );
     // 7-11. fourth
@@ -155,14 +155,13 @@ export const UserSignup = () => {
         </Div>
       </Div>
     );
-    // 7-11. seventh
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
           <Br20 />
-          {thirdSection()}
+          {secondSection()}
           <Br20 />
           {fourthSection()}
           <Br20 />

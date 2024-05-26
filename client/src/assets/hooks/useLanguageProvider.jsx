@@ -206,9 +206,7 @@ export const useTranslate = () => {
           {result[lang]}
         </div>
       ) : (
-        <div>
-          {result[lang]}
-        </div>
+        result[lang]
       )
     );
   }, [lang]);
