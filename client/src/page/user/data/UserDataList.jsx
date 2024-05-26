@@ -906,23 +906,23 @@ export const UserDataList = () => {
     const tableEmpty8 = () => (
       <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
         <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("common-dateType")}</TableCell>
+                <TableCell>{translate("sleep-night")}</TableCell>
+                <TableCell>{translate("sleep-morning")}</TableCell>
+                <TableCell>{translate("sleep-time")}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
+                  {translate("common-empty")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
@@ -932,47 +932,47 @@ export const UserDataList = () => {
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_SLEEP?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_SLEEP.length - 1 ? lastRowRef : null}
-              >
-                <TableCell>
-                  {item.sleep_dateStart?.substring(5, 10)}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_dateType}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_time}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("common-dateType")}</TableCell>
+                <TableCell>{translate("sleep-night")}</TableCell>
+                <TableCell>{translate("sleep-morning")}</TableCell>
+                <TableCell>{translate("sleep-time")}</TableCell>
               </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_SLEEP?.map((item, index) => (
+                <TableRow
+                  key={`data-${index}`}
+                  className={"table-tbody-tr"}
+                  ref={index === OBJECT_SLEEP.length - 1 ? lastRowRef : null}
+                >
+                  <TableCell>
+                    {item.sleep_dateStart?.substring(5, 10)}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_dateType}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_night}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_morning}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_time}
+                  </TableCell>
+                </TableRow>
+              ))}
+              {LOADING && Array.from({length: Object.keys(OBJECT_SLEEP_DEF[0]).length}, (_, index) => (
+                <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
+                  <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
+                    <Skeleton className={"animation"}/>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>

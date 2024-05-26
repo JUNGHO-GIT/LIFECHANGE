@@ -81,15 +81,52 @@ export const UserDataMain = () => {
       <Card variant={"outlined"} className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("common-dateType")}</TableCell>
-                <TableCell>{translate("sleep-night")}</TableCell>
-                <TableCell>{translate("sleep-morning")}</TableCell>
-                <TableCell>{translate("sleep-time")}</TableCell>
+            <TableBody className={"table-tbody"}>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
               </TableRow>
-            </TableHead>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-80vw border-right"}>123123</TableCell>
+                <TableCell className={"w-10vw"}>123123</TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
@@ -105,7 +142,7 @@ export const UserDataMain = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper d-row h-min70vh"}>
+        <Div className={"block-wrapper d-row h-min85vh"}>
           {thirdSection()}
         </Div>
       </Paper>

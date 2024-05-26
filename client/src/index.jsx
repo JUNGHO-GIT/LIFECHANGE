@@ -129,7 +129,20 @@ const User = () => (
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   const location = useLocation();
-  const isRequired = location.pathname === '/user/login' || location.pathname === '/user/signup';
+  const noneHeader = (
+    location.pathname === '/user/login' ||
+    location.pathname === '/user/signup'
+  );
+  const noneTop = (
+    location.pathname === '/user/login' ||
+    location.pathname === '/user/signup' ||
+    location.pathname === '/user/data/main'
+  );
+  const noneBottom = (
+    location.pathname === '/user/login' ||
+    location.pathname === '/user/signup' ||
+    location.pathname === '/user/data/main'
+  );
 
   useRoot();
   useScrollTop();
@@ -137,8 +150,8 @@ const App = () => {
 
   return (
     <div className={"App"}>
-      {!isRequired && <Header />}
-      {!isRequired && <TopNav />}
+      {!noneHeader && <Header />}
+      {!noneTop && <TopNav />}
       <Routes>
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/exercise/*" element={<Exercise />} />
@@ -147,7 +160,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      {!isRequired && <BottomNav />}
+      {!noneBottom && <BottomNav />}
     </div>
   );
 };
