@@ -525,37 +525,37 @@ export const MoneyDashPie = () => {
     );
     // 7-7. fragment
     const dashFragment1 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartInToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartOutToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartInWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartOutWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment5 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartInMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment6 = (i=0) => (
-      <Card variant={"outlined"} className={"p-10"} key={i}>
+      <Card className={"p-10"} key={i}>
         {chartOutMonth()}
       </Card>
     );

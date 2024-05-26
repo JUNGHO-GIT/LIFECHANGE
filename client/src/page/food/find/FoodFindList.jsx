@@ -186,7 +186,7 @@ export const FoodFindList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+      <Card className={"border radius p-0"} key={"empty"}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -213,7 +213,7 @@ export const FoodFindList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"border radius p-0"} key={`${PAGING.page}-${i}`}>
+      <Card className={"border radius p-0"} key={`${PAGING.page}-${i}`}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>

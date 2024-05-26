@@ -51,11 +51,6 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
-  user_phone: {
-    type : String,
-    default: "",
-    required : false
-  },
   user_image: {
     type : String,
     default: "",

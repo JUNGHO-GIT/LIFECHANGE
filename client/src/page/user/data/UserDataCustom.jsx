@@ -393,7 +393,7 @@ export const UserDataCustom = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"p-0 radius"} key={i}>
+      <Card className={"p-0 radius"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>

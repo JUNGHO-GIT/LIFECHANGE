@@ -72,42 +72,8 @@ export const Btn = ({
       {translate("btn-goToFindSave")}
     </Button>
   );
-  const btnGoToLogin = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
-      handlers.navigate(objects?.SEND.toLogin);
-    }}>
-      {translate("btn-goToLogin")}
-    </Button>
-  );
-  const btnGoToSignup = () => (
-    <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
-      handlers.navigate(objects?.SEND.toSignup);
-    }}>
-      {translate("btn-goToSignup")}
-    </Button>
-  );
 
   // 2. get
-  const btnGetToday = () => (
-    <Button size={"small"} type={"button"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
-      (objects?.DATE) && (
-        functions?.setDATE((prev={}) => ({
-          ...prev,
-          dateType: "day",
-          dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-          dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
-        }))
-      );
-      (objects?.PAGING) && (
-        functions?.setPAGING((prev) => ({
-          ...prev,
-          page: 1,
-        }))
-      );
-    }}>
-      {translate("btn-getToday")}
-    </Button>
-  );
   const btnGetProperty = () => (
     <PopUp
       type={"innerCenter"}
@@ -585,20 +551,10 @@ export const Btn = ({
         );
       }
       else if (strings?.third === "" && strings?.second === "login") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnFlowLogin()}
-            {btnGoToSignup()}
-          </Card>
-        );
+        return null;
       }
       else if (strings?.third === "" && strings?.second === "signup") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnFlowSignup()}
-            {btnGoToLogin()}
-          </Card>
-        );
+        return null;
       }
     }
   };

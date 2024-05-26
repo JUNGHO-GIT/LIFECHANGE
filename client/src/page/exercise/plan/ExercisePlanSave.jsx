@@ -198,7 +198,7 @@ export const ExercisePlanSave = () => {
     // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
+      <Card className={"p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", i)}
@@ -311,7 +311,7 @@ export const ExercisePlanSave = () => {
     );
     // 7-9. first
     const firstSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card className={"p-20"}>
         {dateSection()}
         <Br20/>
         {countSection()}

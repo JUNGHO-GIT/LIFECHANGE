@@ -321,19 +321,19 @@ export const percent = async (object) => {
     exercise = {
       diff_count: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_volume: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_cardio: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_weight: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
     };
   }
@@ -368,19 +368,19 @@ export const percent = async (object) => {
     food = {
       diff_kcal: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_carb: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_protein: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_fat: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
     };
   }
@@ -415,11 +415,11 @@ export const percent = async (object) => {
     money = {
       diff_in: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_out: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
     };
   }
@@ -444,15 +444,15 @@ export const percent = async (object) => {
     sleep = {
       diff_night: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_morning: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
       diff_time: {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       },
     };
   }
@@ -488,7 +488,7 @@ export const percent = async (object) => {
     if (count === 0) {
       return {
         score: "1.00",
-        percent: "1.00",
+        percent: "0.00",
       };
     }
     return {

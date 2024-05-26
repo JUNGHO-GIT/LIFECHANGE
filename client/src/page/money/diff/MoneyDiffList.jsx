@@ -164,7 +164,7 @@ export const MoneyDiff = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card variant={"outlined"} className={"border radius p-0"} key={"empty"}>
+      <Card className={"border radius p-0"} key={"empty"}>
         <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
@@ -189,7 +189,7 @@ export const MoneyDiff = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
           <TableHead className={"table-thead"}>

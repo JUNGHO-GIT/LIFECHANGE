@@ -43,8 +43,6 @@ export const Footer = ({
 
   // 7. footer ------------------------------------------------------------------------------------>
   const footerNode = () => (
-    strings?.second === "login" ||
-    strings?.second === "signup" ||
     strings?.second === "data" ? (
       <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
         {btnNode()}

@@ -278,7 +278,7 @@ export const MoneySave = () => {
     // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"p-20"}  key={i}>
+      <Card className={"p-20"}  key={i}>
         <Div className={"d-column"}>
           <Div className={"d-between"}>
             {badgeSection(i)}
@@ -414,7 +414,7 @@ export const MoneySave = () => {
     );
     // 7-9. first
     const firstSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card className={"p-20"}>
         {dateSection()}
         <Br20/>
         {countSection()}
@@ -422,7 +422,7 @@ export const MoneySave = () => {
     );
     // 7-10. second
     const secondSection = () => (
-      <Card variant={"outlined"} className={"p-20"}>
+      <Card className={"p-20"}>
         {totalSection()}
       </Card>
     );

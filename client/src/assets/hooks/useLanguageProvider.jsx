@@ -169,6 +169,15 @@ export const useTranslate = () => {
       planMorning: {ko: "기상 목표", en: "Wake-up Time Goals"},
       planTime: {ko: "수면 목표", en: "Sleep Time Goals"},
     },
+    user: {
+      login: {ko: "로그인", en: "Login"},
+      logout: {ko: "로그아웃", en: "Logout"},
+      signup: {ko: "회원가입", en: "Signup"},
+      id: {ko: "아이디", en: "ID"},
+      pw: {ko: "비밀번호", en: "Password"},
+      find: {ko: "찾기", en: "Find"},
+      save: {ko: "저장", en: "Save"},
+    },
   };
 
   const translate = useCallback((key) => {

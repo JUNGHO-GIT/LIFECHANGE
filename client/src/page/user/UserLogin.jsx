@@ -17,6 +17,7 @@ export const UserLogin = () => {
   const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
+  const {translate} = useTranslate();
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
@@ -46,6 +47,7 @@ export const UserLogin = () => {
       alert(res.data.msg);
       sessionStorage.setItem("sessionId", userId);
       sessionStorage.setItem("dataCustom", JSON.stringify(res.data.result.dataCustom));
+      sessionStorage.setItem("lang", "ko");
       percent();
       navigate("/calendar/list");
     }
@@ -59,7 +61,7 @@ export const UserLogin = () => {
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"p-20"} key={i}>
+      <Card className={"p-20"} key={i}>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -97,50 +99,47 @@ export const UserLogin = () => {
     );
     // 7-9. first
     const firstSection = () => (
-      <Card variant={"outlined"} className={"border-none p-20"}>
-        <Div className={"d-center fs-2-0rem"}>로그인</Div>
+      <Card className={"border-none p-20"}>
+        <Div className={"d-center fs-2-0rem"}>{translate("user-login")}</Div>
       </Card>
     );
     // 7-11. third
     const thirdSection = () => (
       tableSection()
     );
+    // 7-11. fourth
+    const fourthSection = () => (
+      <Card className={"border-none p-20"}>
+        <Div className={"d-center"}>
+          계정이 없는 경우
+          <Div className={"d-center blue ms-10"} onClick={() => {
+            navigate("/user/signup");
+          }}>
+            회원가입
+          </Div>
+        </Div>
+      </Card>
+    );
+    // 7-11. fifth
+    // 7-11. sixth
+    // 7-11. seventh
+    // 7-12. return
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper d-column h-min85vh"}>
+        <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
           {thirdSection()}
+          {fourthSection()}
         </Div>
       </Paper>
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
-  const footerNode = () => (
-    <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
-        SEND
-      }}
-      functions={{
-        setSEND
-      }}
-      handlers={{
-        navigate, flowSave
-      }}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {tableNode()}
-      {footerNode()}
     </>
   );
 };

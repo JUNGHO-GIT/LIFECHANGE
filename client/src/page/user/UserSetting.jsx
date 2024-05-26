@@ -2,52 +2,29 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Button} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {PopUp, Div, Icons, Br20, Img} from "../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {flag1, flag2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSetting = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [SEND, setSEND] = useState({
-    id: "",
-    dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00"
-  });
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd,
-  });
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const [lang, setLang] = useState(sessionStorage.getItem('lang'));
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card variant={"outlined"} className={"border radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableBody className={"table-tbody"}>
@@ -73,7 +50,7 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  데이터 리스트
+                  데이터 관리
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -83,11 +60,48 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
+                  언어 설정
+                </TableCell>
+                <TableCell className={"w-10vw"}>
+                  <PopUp
+                    type={"innerCenter"}
+                    position={"bottom"}
+                    direction={"center"}
+                    contents={({closePopup}) => (
+                    <Div className={"d-column align-left"}>
+                      <Div className={"d-center"} onClick={() => {
+                        setLang("ko")
+                        sessionStorage.setItem("lang", "ko")
+                      }}>
+                        <Img src={flag1} className={"w-24 h-24"} />한국어
+                        <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "ko" ? "d-none" : ""}`} onClick={() => {}} />
+                      </Div>
+                      <Br20 />
+                      <Div className={"d-center"} onClick={() => {
+                        setLang("en")
+                        sessionStorage.setItem("lang", "en")
+                      }}>
+                        <Img src={flag2} className={"w-24 h-24"} />English
+                        <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "en" ? "d-none" : ""}`} onClick={() => {}} />
+                      </Div>
+                    </Div>
+                    )}>
+                    {(popTrigger={}) => (
+                      <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={(e) => {
+                        popTrigger.openPopup(e.currentTarget)
+                      }} />
+                    )}
+                  </PopUp>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={"w-90vw"}>
                   로그아웃
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     sessionStorage.clear()
+                    localStorage.clear()
                     navigate("/")
                   }} />
                 </TableCell>

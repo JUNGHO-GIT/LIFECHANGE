@@ -32,66 +32,6 @@ export const Header = () => {
     )
   );
 
-  {/* <PopUp
-    type={"dropdown"}
-    position={"bottom"}
-    direction={"center"}
-    contents={({closePopup}) => (
-      <Div className={"d-column align-left p-5"}>
-        {!sessionId ? (
-          <>
-          <Div className={"d-center pointer"} onClick={() => {
-            navigate("/user/login");
-            closePopup();
-          }}>
-            <Icons name={"TbLogin"} className={"w-24 h-24"} onClick={() => {}} />
-            {translate("header-login")}
-          </Div>
-          <Div className={"d-center pointer"} onClick={() => {
-            navigate("/user/signup");
-            closePopup();
-          }}>
-            <Icons name={"TbLogin2"} className={"w-24 h-24"} onClick={() => {}} />
-            {translate("header-signup")}
-          </Div>
-          </>
-        ) : (
-          <>
-          <Div className={"d-center pointer"} onClick={() => {
-            navigate("/");
-            sessionStorage.removeItem("sessionId");
-            closePopup();
-          }}>
-            <Icons name={"TbLogout"} className={"w-24 h-24"} onClick={() => {}} />
-            {translate("header-logout")}
-          </Div>
-          </>
-        )}
-        <Div className={"d-center pointer"} onClick={() => {
-          navigate("/user/data/custom");
-          closePopup();
-        }}>
-          <Icons name={"TbUser"} className={"w-24 h-24"} onClick={() => {}} />
-          {translate("header-dataCustom")}
-        </Div>
-        <Div className={"d-center pointer"} onClick={() => {
-          navigate("/user/data/list");
-          closePopup();
-        }}>
-          <Icons name={"TbUser"} className={"w-24 h-24"} onClick={() => {}} />
-          {translate("header-dataList")}
-        </Div>
-      </Div>
-    )}>
-    {(popTrigger={}) => (
-      <Icons name={"TbAlignRight"} className={"w-24 h-24 black"}
-        onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}
-      />
-    )}
-  </PopUp> */}
-
   // 6. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <Div className={"d-between w-100p"}>
