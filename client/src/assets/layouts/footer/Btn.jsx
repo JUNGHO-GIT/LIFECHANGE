@@ -269,11 +269,6 @@ export const Btn = ({
       {translate("btn-flowDefault")}
     </Button>
   );
-  const btnFlowReset = () => (
-    <Button variant={"contained"} color={"error"} size={"small"} className={"m-20"} onClick={() => (sessionStorage.clear())}>
-      Clear
-    </Button>
-  );
   const btnFlowDemo = () => (
     <Div className={"d-center"}>
       <TextField
@@ -349,7 +344,6 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnGoToSave()}
             {btnGetProperty()}
-            {btnFlowReset()}
           </Card>
         );
       }

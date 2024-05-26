@@ -60,10 +60,10 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "cardio") {
-      const hoursPlan = parseInt(plan.split(":")[0], 10);
-      const minutesPlan = parseInt(plan.split(":")[1], 10);
-      const hoursReal = parseInt(real.split(":")[0], 10);
-      const minutesReal = parseInt(real.split(":")[1], 10);
+      const hoursPlan = parseInt(plan?.split(":")[0], 10);
+      const minutesPlan = parseInt(plan?.split(":")[1], 10);
+      const hoursReal = parseInt(real?.split(":")[0], 10);
+      const minutesReal = parseInt(real?.split(":")[1], 10);
       const hours = Math.abs(hoursPlan - hoursReal);
       const minutes = Math.abs(minutesPlan - minutesReal);
       const diffVal = (hours * 60) + minutes;
@@ -276,10 +276,10 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "time") {
-      const hoursPlan = parseInt(plan.split(":")[0], 10);
-      const minutesPlan = parseInt(plan.split(":")[1], 10);
-      const hoursReal = parseInt(real.split(":")[0], 10);
-      const minutesReal = parseInt(real.split(":")[1], 10);
+      const hoursPlan = parseInt(plan?.split(":")[0], 10);
+      const minutesPlan = parseInt(plan?.split(":")[1], 10);
+      const hoursReal = parseInt(real?.split(":")[0], 10);
+      const minutesReal = parseInt(real?.split(":")[1], 10);
       const hours = Math.abs(hoursPlan - hoursReal);
       const minutes = Math.abs(minutesPlan - minutesReal);
 

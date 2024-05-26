@@ -25,8 +25,8 @@ export const list = async (
   );
 
   const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const dateStart = plan.food_plan_dateStart;
-    const dateEnd = plan.food_plan_dateEnd;
+    const dateStart = plan?.food_plan_dateStart;
+    const dateEnd = plan?.food_plan_dateEnd;
 
     const listReal = await repository.list.list (
       user_id_param, dateType, dateStart, dateEnd
