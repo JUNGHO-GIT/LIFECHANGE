@@ -177,6 +177,10 @@ export const useTranslate = () => {
       pw: {ko: "비밀번호", en: "Password"},
       find: {ko: "찾기", en: "Find"},
       save: {ko: "저장", en: "Save"},
+      alreadyId: {ko: "이미 아이디가 있는 경우", en: "Already have an Account"},
+      notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
+      googleLogin: {ko: "구글 아이디로 로그인", en: "Login with Google"},
+      googleSignup: {ko: "구글 아이디로 회원가입", en: "Signup with Google"},
     },
   };
 

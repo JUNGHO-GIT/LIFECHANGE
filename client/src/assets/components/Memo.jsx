@@ -47,7 +47,7 @@ export const Memo = ({
           />
         </Div>
         <Div className={"d-center"}>
-          <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
+          <Button size={"small"} color={"primary"} variant={"contained"}
             className={"primary-btn me-5"} onClick={() => {
               closePopup();
             }}>

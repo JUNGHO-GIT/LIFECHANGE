@@ -4,9 +4,9 @@ import {React, useState, useNavigate, useLocation} from "../../import/ImportReac
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
-import {Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
+import {Div, Br20, Img} from "../../import/ImportComponents.jsx";
+import {Card, Paper, TextField, Button} from "../../import/ImportMuis.jsx";
+import {user1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -68,7 +68,13 @@ export const UserLogin = () => {
             type={"text"}
             size={"small"}
             label={"ID"}
+            className={"w-86vw"}
             value={userId}
+            InputProps={{
+              readOnly: false,
+              startAdornment: null,
+              endAdornment: null,
+            }}
             onChange={(e) => {
               setUserId(e.target.value);
             }}
@@ -82,6 +88,12 @@ export const UserLogin = () => {
             size={"small"}
             label={"Password"}
             value={userPw}
+            className={"w-86vw"}
+            InputProps={{
+              readOnly: false,
+              startAdornment: null,
+              endAdornment: null,
+            }}
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
@@ -99,9 +111,9 @@ export const UserLogin = () => {
     );
     // 7-9. first
     const firstSection = () => (
-      <Card className={"border-none p-20"}>
-        <Div className={"d-center fs-2-0rem"}>{translate("user-login")}</Div>
-      </Card>
+      <Div className={"d-center fs-2-0rem"}>
+        {translate("user-login")}
+      </Div>
     );
     // 7-11. third
     const thirdSection = () => (
@@ -109,28 +121,64 @@ export const UserLogin = () => {
     );
     // 7-11. fourth
     const fourthSection = () => (
-      <Card className={"border-none p-20"}>
-        <Div className={"d-center"}>
-          계정이 없는 경우
-          <Div className={"d-center blue ms-10"} onClick={() => {
-            navigate("/user/signup");
-          }}>
-            회원가입
-          </Div>
-        </Div>
-      </Card>
+      <Div className={"d-center w-86vw"}>
+        <Button
+          size={"small"}
+          color={"primary"}
+          className={"w-100p fs-1-0rem"}
+          variant={"contained"}
+          onClick={() => {
+            flowSave();
+          }}
+        >
+          {translate("user-login")}
+        </Button>
+      </Div>
     );
     // 7-11. fifth
+    const fifthSection = () => (
+      <Div className={"d-center w-86vw"}>
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          value={translate("user-googleLogin")}
+          className={"w-100p bg-white"}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <Img src={user1} className={"w-15 h-15"} />
+            ),
+            endAdornment: null,
+          }}
+        />
+      </Div>
+    );
     // 7-11. sixth
+    const sixthSection = () => (
+      <Div className={"d-center w-86vw fs-0-8rem"}>
+        {translate("user-notId")}
+        <Div className={"d-center blue ms-10"} onClick={() => {
+          navigate("/user/signup");
+        }}>
+          {translate("user-signup")}
+        </Div>
+      </Div>
+    );
     // 7-11. seventh
-    // 7-12. return
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
+          <Br20 />
           {thirdSection()}
+          <Br20 />
           {fourthSection()}
+          <Br20 />
+          {fifthSection()}
+          <Br20 />
+          {sixthSection()}
         </Div>
       </Paper>
     );
