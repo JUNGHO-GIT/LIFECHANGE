@@ -179,7 +179,7 @@ export const CalendarList = () => {
           const calendarForDates = OBJECT?.filter((calendar) => (
             dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
           ));
-          if (calendarForDates.length > 2) {
+          if (calendarForDates.length >= 3) {
             return `calendar-tile over-y-auto`;
           }
           else {
@@ -209,7 +209,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper"}>
-        <Div className={"block-wrapper h-min65vh"}>
+        <Div className={"block-wrapper h-min67vh"}>
           {firstSection()}
         </Div>
       </Paper>

@@ -26,34 +26,24 @@ export const Memo = ({
       position={"top"}
       direction={"center"}
       contents={({closePopup}) => (
-      <Div className={"d-column"}>
-        <Div className={"d-center"}>
-          <TextArea
-            readOnly={false}
-            className={"w-70vw h-55vh border p-10"}
-            value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-            onChange={(e) => {
-              const newContent = e.target.value;
-              setOBJECT((prev) => ({
-                ...prev,
-                [`${firstStr}_section`]: prev[`${firstStr}_section`].map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    [`${extra}`]: newContent
-                  } : item
-                ))
-              }));
-            }}
-          />
-        </Div>
-        <Div className={"d-center"}>
-          <Button size={"small"} color={"primary"} variant={"contained"}
-            className={"primary-btn me-5"} onClick={() => {
-              closePopup();
-            }}>
-            저장
-          </Button>
-        </Div>
+      <Div className={"d-center"}>
+        <TextArea
+          readOnly={false}
+          className={"w-70vw h-55vh border p-10"}
+          value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+          onChange={(e) => {
+            const newContent = e.target.value;
+            setOBJECT((prev) => ({
+              ...prev,
+              [`${firstStr}_section`]: prev[`${firstStr}_section`].map((item, idx) => (
+                idx === i ? {
+                  ...item,
+                  [`${extra}`]: newContent
+                } : item
+              ))
+            }));
+          }}
+        />
       </Div>
       )}>
       {(popTrigger={}) => (

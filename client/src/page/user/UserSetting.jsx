@@ -123,7 +123,7 @@ export const UserSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper"}>
-        <Div className={"block-wrapper d-row h-min85vh"}>
+        <Div className={"block-wrapper d-row h-min87vh"}>
           {thirdSection()}
         </Div>
       </Paper>

@@ -177,7 +177,7 @@ export const UserLogin = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper"}>
-        <Div className={"block-wrapper d-column h-min92vh"}>
+        <Div className={"block-wrapper d-column h-min94vh"}>
           {firstSection()}
           <Hr40 />
           {secondSection()}
