@@ -51,6 +51,7 @@ export const UserDataCustom = () => {
     toDataCustom: "/user/data/custom",
   });
   const [DATE, setDATE] = useState({
+    dateType: "day",
     dateStart: location_dateStart,
     dateEnd: location_dateEnd,
   });
@@ -473,7 +474,7 @@ export const UserDataCustom = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min70vh"}>
+        <Div className={"block-wrapper d-row h-min70vh"}>
           {thirdSection()}
         </Div>
       </Paper>

@@ -14,7 +14,7 @@ import {User} from "../../schema/user/User.js";
 // 1-1. custom ------------------------------------------------------------------------------------>
 export const custom = {
   list: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await User.aggregate([
       {$match: {

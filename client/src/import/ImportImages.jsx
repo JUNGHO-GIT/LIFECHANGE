@@ -50,6 +50,8 @@ import user1 from "../assets/images/user/user1.webp";
 
 import setting1 from "../assets/images/setting/setting1.webp";
 import setting2 from "../assets/images/setting/setting2.webp";
+import setting3 from "../assets/images/setting/setting3.webp";
+import setting4 from "../assets/images/setting/setting4.webp";
 
 // ------------------------------------------------------------------------------------------------>
 export {
@@ -63,5 +65,5 @@ export {
   money1, money2, money3,
   sleep1, sleep2, sleep3, sleep4,
   user1,
-  setting1, setting2
+  setting1, setting2, setting3, setting4
 };

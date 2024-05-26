@@ -11,12 +11,12 @@ export const useRoot = () => {
 
   useEffect(() => {
     if (location.pathname !== "/user/login" && location.pathname !== "/user/signup") {
-      if (!sessionId) {
+      if (location.pathname === '/' && !sessionId) {
         navigate("/user/login");
       }
-      else if (location.pathname === '/') {
-        navigate("/user/login");
+      else if (location.pathname === '/' && sessionId) {
+        navigate("/calendar/list");
       }
     }
-  }, [sessionId]);
+  }, [location, navigate, sessionId]);
 };

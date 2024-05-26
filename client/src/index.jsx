@@ -26,43 +26,43 @@ import {NavBar} from "./import/ImportLayouts.jsx";
 import {TopNav} from "./import/ImportLayouts.jsx";
 import {BottomNav} from "./import/ImportLayouts.jsx";
 
-import {CalendarList} from "./page/calendar/CalendarList";
-import {CalendarSave} from "./page/calendar/CalendarSave";
+import {CalendarList} from "./page/calendar/CalendarList.jsx";
+import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
-import {ExerciseDash} from "./page/exercise/dash/ExerciseDash";
+import {ExerciseDash} from "./page/exercise/dash/ExerciseDash.jsx";
 import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
-import {ExercisePlanList} from "./page/exercise/plan/ExercisePlanList";
-import {ExercisePlanSave} from "./page/exercise/plan/ExercisePlanSave";
-import {ExerciseList} from "./page/exercise/ExerciseList";
-import {ExerciseSave} from "./page/exercise/ExerciseSave";
+import {ExercisePlanList} from "./page/exercise/plan/ExercisePlanList.jsx";
+import {ExercisePlanSave} from "./page/exercise/plan/ExercisePlanSave.jsx";
+import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
+import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
 
-import {FoodDash} from "./page/food/dash/FoodDash";
+import {FoodDash} from "./page/food/dash/FoodDash.jsx";
 import {FoodDiff} from "./page/food/diff/FoodDiffList.jsx";
-import {FoodFindList} from "./page/food/find/FoodFindList";
-import {FoodFindSave} from "./page/food/find/FoodFindSave";
-import {FoodPlanList} from "./page/food/plan/FoodPlanList";
-import {FoodPlanSave} from "./page/food/plan/FoodPlanSave";
-import {FoodList} from "./page/food/FoodList";
-import {FoodSave} from "./page/food/FoodSave";
+import {FoodFindList} from "./page/food/find/FoodFindList.jsx";
+import {FoodFindSave} from "./page/food/find/FoodFindSave.jsx";
+import {FoodPlanList} from "./page/food/plan/FoodPlanList.jsx";
+import {FoodPlanSave} from "./page/food/plan/FoodPlanSave.jsx";
+import {FoodList} from "./page/food/FoodList.jsx";
+import {FoodSave} from "./page/food/FoodSave.jsx";
 
-import {MoneyDash} from "./page/money/dash/MoneyDash";
+import {MoneyDash} from "./page/money/dash/MoneyDash.jsx";
 import {MoneyDiff} from "./page/money/diff/MoneyDiffList.jsx";
-import {MoneyPlanList} from "./page/money/plan/MoneyPlanList";
-import {MoneyPlanSave} from "./page/money/plan/MoneyPlanSave";
-import {MoneyList} from "./page/money/MoneyList";
-import {MoneySave} from "./page/money/MoneySave";
+import {MoneyPlanList} from "./page/money/plan/MoneyPlanList.jsx";
+import {MoneyPlanSave} from "./page/money/plan/MoneyPlanSave.jsx";
+import {MoneyList} from "./page/money/MoneyList.jsx";
+import {MoneySave} from "./page/money/MoneySave.jsx";
 
-import {SleepDash} from "./page/sleep/dash/SleepDash";
+import {SleepDash} from "./page/sleep/dash/SleepDash.jsx";
 import {SleepDiff} from "./page/sleep/diff/SleepDiffList.jsx";
-import {SleepPlanList} from "./page/sleep/plan/SleepPlanList";
-import {SleepPlanSave} from "./page/sleep/plan/SleepPlanSave";
-import {SleepList} from "./page/sleep/SleepList";
-import {SleepSave} from "./page/sleep/SleepSave";
+import {SleepPlanList} from "./page/sleep/plan/SleepPlanList.jsx";
+import {SleepPlanSave} from "./page/sleep/plan/SleepPlanSave.jsx";
+import {SleepList} from "./page/sleep/SleepList.jsx";
+import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
-import {UserDataCustom} from "./page/user/data/UserDataCustom";
-import {UserDataList} from "./page/user/data/UserDataList";
-import {UserSignup} from "./page/user/UserSignup";
-import {UserLogin} from "./page/user/UserLogin";
+import {UserDataMain} from "./page/user/data/UserDataMain.jsx";
+import {UserDataList} from "./page/user/data/UserDataList.jsx";
+import {UserSignup} from "./page/user/UserSignup.jsx";
+import {UserLogin} from "./page/user/UserLogin.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Calendar = () => (
@@ -120,8 +120,7 @@ const Sleep = () => (
 // ------------------------------------------------------------------------------------------------>
 const User = () => (
   <Routes>
-    <Route path="/data/custom" element={<UserDataCustom />} />
-    <Route path="/data/list" element={<UserDataList />} />
+    <Route path="/data/main" element={<UserDataMain />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
   </Routes>
