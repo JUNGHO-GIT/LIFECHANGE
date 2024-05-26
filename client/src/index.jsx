@@ -141,6 +141,7 @@ const App = () => {
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
     location.pathname === "/user/setting" ||
+    location.pathname === "/user/data/info" ||
     location.pathname === "/user/data/custom" ||
     location.pathname === "/user/data/list"
   );
@@ -148,6 +149,7 @@ const App = () => {
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
     location.pathname === "/user/setting" ||
+    location.pathname === "/user/data/info" ||
     location.pathname === "/user/data/custom" ||
     location.pathname === "/user/data/list"
   );

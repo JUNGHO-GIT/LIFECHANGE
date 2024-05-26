@@ -5,9 +5,8 @@ import {useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
-import {Paper, TextField, Button} from "../../../import/ImportMuis.jsx";
-import {user1} from "../../../import/ImportImages.jsx";
+import {Div, Br30, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
+import {Paper, TextField, Button, Avatar} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataInfo = () => {
@@ -48,6 +47,7 @@ export const UserDataInfo = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
+    user_id: "",
     user_number: 0,
     user_sex: "",
     user_age: "",
@@ -79,6 +79,57 @@ export const UserDataInfo = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
       <Div className={"d-column"} key={i}>
+        <Avatar
+          alt={"user_image"}
+          src={OBJECT?.user_image}
+          className={"m-auto w-150 h-150"}
+        />
+        <Br30 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"ID"}
+          value={OBJECT?.user_id}
+          className={"w-86vw"}
+          onChange={(e) => {
+            setOBJECT({
+              ...OBJECT,
+              user_id: e.target.value
+            });
+          }}
+        />
+        <Br20 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"sex"}
+          value={OBJECT?.user_sex}
+          className={"w-86vw"}
+          onChange={(e) => {
+            setOBJECT({
+              ...OBJECT,
+              user_sex: e.target.value
+            });
+          }}
+        />
+        <Br20 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"age"}
+          value={OBJECT?.user_age}
+          className={"w-86vw"}
+          onChange={(e) => {
+            setOBJECT({
+              ...OBJECT,
+              user_age: e.target.value
+            });
+          }}
+        />
+        <Br20 />
         <TextField
           select={false}
           type={"text"}
