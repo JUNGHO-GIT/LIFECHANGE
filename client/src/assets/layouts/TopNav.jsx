@@ -38,7 +38,7 @@ export const TopNav = () => {
   }, [secondStr, thirdStr]);
 
   // 3. logic ------------------------------------------------------------------------------------->
-  const makeIcon = (part, className, text) => {
+  const makeIcon = (part, className, text, popTrigger) => {
 
     const classType = text === "N" ? "d-none" : "fs-0-7rem ms-5";
 
@@ -47,7 +47,9 @@ export const TopNav = () => {
       parseFloat(percent?.[`${part}`]?.average?.score) <= 1
     ) {
       return (
-        <Div className={"d-center"}>
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
           <Img src={smile1} className={className} />
           <Div className={classType}>
             {percent?.[`${part}`]?.average?.score}
@@ -60,7 +62,9 @@ export const TopNav = () => {
       parseFloat(percent?.[`${part}`]?.average?.score) <= 2
     ) {
       return (
-        <Div className={"d-center"}>
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
           <Img src={smile2} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
@@ -72,7 +76,9 @@ export const TopNav = () => {
       parseFloat(percent?.[`${part}`]?.average?.score) <= 3
     ) {
       return (
-        <Div className={"d-center"}>
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
           <Img src={smile3} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
@@ -84,7 +90,9 @@ export const TopNav = () => {
       parseFloat(percent?.[`${part}`]?.average?.score) <= 4
     ) {
       return (
-        <Div className={"d-center"}>
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
           <Img src={smile4} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
@@ -96,7 +104,9 @@ export const TopNav = () => {
       parseFloat(percent?.[`${part}`]?.average?.score) <= 5
     ) {
       return (
-        <Div className={"d-center"}>
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
           <Img src={smile5} className={className} />
           <Div className={classType}>
           {percent?.[`${part}`]?.average?.score}</Div>
@@ -112,63 +122,59 @@ export const TopNav = () => {
       position={"bottom"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column p-10"}>
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+      <Div className={"d-column p-10"}>
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+        </Div>
+        <Br20 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem me-5"}>
+            {translate("navBar-total")}
           </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem me-5"}>
-              {translate("navBar-total")}
-            </Div>
-            {makeIcon("total", "w-max5vw h-max5vh")}
+          {makeIcon("total", "w-max5vw h-max5vh")}
+        </Div>
+        <Br10 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem me-5"}>
+            {translate("navBar-exercise")}
           </Div>
-          <Br10 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem me-5"}>
-              {translate("navBar-exercise")}
-            </Div>
-            {makeIcon("exercise", "w-max5vw h-max5vh")}
+          {makeIcon("exercise", "w-max5vw h-max5vh")}
+        </Div>
+        <Br10 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem me-5"}>
+            {translate("navBar-food")}
           </Div>
-          <Br10 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem me-5"}>
-              {translate("navBar-food")}
-            </Div>
-            {makeIcon("food", "w-max5vw h-max5vh")}
+          {makeIcon("food", "w-max5vw h-max5vh")}
+        </Div>
+        <Br10 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem me-5"}>
+            {translate("navBar-money")}
           </Div>
-          <Br10 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem me-5"}>
-              {translate("navBar-money")}
-            </Div>
-            {makeIcon("money", "w-max5vw h-max5vh")}
+          {makeIcon("money", "w-max5vw h-max5vh")}
+        </Div>
+        <Br10 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-8rem me-5"}>
+            {translate("navBar-sleep")}
           </Div>
-          <Br10 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-8rem me-5"}>
-              {translate("navBar-sleep")}
-            </Div>
-            {makeIcon("sleep", "w-max5vw h-max5vh")}
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Div className={"fs-0-6rem fw-normal"}>
-              {translate("navBar-score")}
-            </Div>
+          {makeIcon("sleep", "w-max5vw h-max5vh")}
+        </Div>
+        <Br20 />
+        <Div className={"d-center"}>
+          <Div className={"fs-0-6rem fw-normal"}>
+            {translate("navBar-score")}
           </Div>
         </Div>
+      </Div>
       )}>
       {(popTrigger={}) => (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          {firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
-            makeIcon("total", "w-max25 h-max25", "N")
-          ) : (
-            makeIcon(part.toLowerCase(), "w-max25 h-max25", "N")
-          )}
-        </Div>
+        firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
+          makeIcon("total", "w-max25 h-max25", "N", popTrigger)
+        ) : (
+          makeIcon(part.toLowerCase(), "w-max25 h-max25", "N", popTrigger)
+        )
       )}
     </PopUp>
   );
@@ -356,21 +362,17 @@ export const TopNav = () => {
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
-      <Card className={"block-wrapper d-row h-7vh"}>
-        <Div className={"ms-0"}>
-          {scoreNode()}
-        </Div>
-        <Div className={"m-auto"}>
-          {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
-            defaultNode()
-          ) : firstStr === "calendar" ? (
-            calendarNode()
-          ) : firstStr === "food" ? (
-            foodNode()
-          ) : (
-            null
-          )}
-        </Div>
+      <Card className={"block-wrapper d-row h-7vh w-100p"}>
+        {scoreNode()}
+        {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
+          defaultNode()
+        ) : firstStr === "calendar" ? (
+          calendarNode()
+        ) : firstStr === "food" ? (
+          foodNode()
+        ) : (
+          null
+        )}
       </Card>
     </Paper>
   );

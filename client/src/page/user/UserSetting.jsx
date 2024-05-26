@@ -34,7 +34,7 @@ export const UserSetting = () => {
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                    alert("회원정보 수정")
+                    navigate("/user/data/info")
                   }} />
                 </TableCell>
               </TableRow>

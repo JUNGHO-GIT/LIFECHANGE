@@ -357,7 +357,7 @@ export const CalendarSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper d-column h-min65vh"}>
+        <Div className={"block-wrapper h-min65vh"}>
           {firstSection()}
           {secondSection()}
         </Div>

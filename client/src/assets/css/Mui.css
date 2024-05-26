@@ -32,7 +32,7 @@
 }
 [class$="MuiBottomNavigationAction-root"] {
   background-color: transparent !important;
-  min-width: 70px !important;
+  min-width: 18vw !important;
 }
 [class$="MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;

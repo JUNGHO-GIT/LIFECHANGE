@@ -4,7 +4,7 @@ import {React, useState, useNavigate, useLocation} from "../../import/ImportReac
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField, Button} from "../../import/ImportMuis.jsx";
+import {Paper, TextField, Button} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>

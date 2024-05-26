@@ -1,15 +1,13 @@
 // UserDataInfo.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
+import {useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Button} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {axios} from "../../../import/ImportLibs.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
+import {Paper, TextField, Button} from "../../../import/ImportMuis.jsx";
+import {user1} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataInfo = () => {
@@ -19,21 +17,12 @@ export const UserDataInfo = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const session = sessionStorage.getItem("dataCustom") || "{}";
-  const calendarArray = JSON.parse(session)?.calendar || [];
-  const exerciseArray = JSON.parse(session)?.exercise || [];
-  const foodArray = JSON.parse(session)?.food || [];
-  const moneyArray = JSON.parse(session)?.money || [];
-  const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const dataCustomArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
@@ -58,6 +47,14 @@ export const UserDataInfo = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
+    _id: "",
+    user_number: 0,
+    user_sex: "",
+    user_age: "",
+    user_height: "",
+    user_weight: "",
+    user_image: "",
+    user_property: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -79,6 +76,40 @@ export const UserDataInfo = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    // 7-7. fragment
+    const tableFragment = (i=0) => (
+      <Div className={"d-column"} key={i}>
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"height"}
+          value={OBJECT?.user_height}
+          className={"w-86vw"}
+          onChange={(e) => {
+            setOBJECT({
+              ...OBJECT,
+              user_height: e.target.value
+            });
+          }}
+        />
+        <Br20 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"weight"}
+          value={OBJECT?.user_weight}
+          className={"w-86vw"}
+          onChange={(e) => {
+            setOBJECT({
+              ...OBJECT,
+              user_weight: e.target.value
+            });
+          }}
+        />
+      </Div>
+    );
     // 7-8. table
     const tableSection = () => (
       tableFragment(0)
@@ -90,38 +121,17 @@ export const UserDataInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min85vh"}>
+        <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
         </Div>
       </Paper>
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
-  const footerNode = () => (
-    <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
-        DATE, SEND
-      }}
-      functions={{
-        setDATE, setSEND
-      }}
-      handlers={{
-        navigate, flowSave
-      }}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
       {tableNode()}
-      {footerNode()}
     </>
   );
 };
