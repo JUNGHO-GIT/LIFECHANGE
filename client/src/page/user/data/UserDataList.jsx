@@ -4,10 +4,11 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table, Card, Skeleton} from "../../../import/ImportMuis.jsx";
+import {Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -203,7 +204,6 @@ export const UserDataList = () => {
       },
     });
     if (PART === "exercisePlan") {
-      // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT_EXERCISE_PLAN((prev) => {
         if (prev.length === 1 && prev[0]._id === "") {
           return [...res.data.result];
@@ -299,7 +299,6 @@ export const UserDataList = () => {
     setLOADING(false);
   }, [
     sessionId, MORE, PART,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit
   ]);
 
@@ -332,35 +331,13 @@ export const UserDataList = () => {
       alert(res.data.msg);
       setCOUNT((prev) => ({
         ...prev,
-        [`${type_param}Cnt`]: prev[`${type_param}Cnt`] + 1
+        inputCnt: 0,
       }));
       setPAGING((prev) => ({
         ...prev,
         page: 1
       }));
       navigate("/user/data/list");
-    }
-  };
-
-  // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (type_param) => {
-    const res = await axios.delete(`${URL_OBJECT}/data/deletes`, {
-      params: {
-        user_id: sessionId,
-        PART: type_param
-      }
-    });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      setCOUNT((prev) => ({
-        ...prev,
-        [`${type_param}Cnt`]: 0
-      }));
-      setPAGING((prev) => ({
-        ...prev,
-        page: 1
-      }));
-      navigate("/user/list");
     }
   };
 
@@ -1027,13 +1004,13 @@ export const UserDataList = () => {
         third: thirdStr,
       }}
       objects={{
-        FILTER, PAGING, COUNT, PART
+        PAGING, COUNT, PART
       }}
       functions={{
-        setFILTER, setPAGING, setCOUNT, setPART
+        setPAGING, setCOUNT, setPART
       }}
       handlers={{
-        navigate, flowSave, flowDelete
+        navigate, flowSave
       }}
     />
   );

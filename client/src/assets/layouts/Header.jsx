@@ -14,17 +14,20 @@ export const Header = () => {
   const PATH = location.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
-    secondStr === "data" && thirdStr === "main" ? (
+    secondStr === "setting" ? (
       <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
         navigate("/")
       }}/>
+    ) : secondStr === "data" ? (
+      <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
+        navigate("/user/setting");
+      }}/>
     ) : (
       <Img src={setting1} className={"w-24 h-24 pointer m-0"} onClick={() => {
-        navigate("/user/data/main")
+        navigate("/user/setting");
       }}/>
     )
   );

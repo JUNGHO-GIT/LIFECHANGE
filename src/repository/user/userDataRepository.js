@@ -40,7 +40,7 @@ export const list = {
 
   // 1. exercisePlan
   countExercisePlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await ExercisePlan.countDocuments({
       user_id: user_id_param
@@ -54,6 +54,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {exercise_plan_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -62,7 +63,7 @@ export const list = {
 
   // 2. exercise
   countExercise: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await Exercise.countDocuments({
       user_id: user_id_param
@@ -76,6 +77,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {exercise_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -84,7 +86,7 @@ export const list = {
 
   // 3. foodPlan
   countFoodPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await FoodPlan.countDocuments({
       user_id: user_id_param
@@ -98,6 +100,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {food_plan_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -106,7 +109,7 @@ export const list = {
 
   // 4. food
   countFood: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await Food.countDocuments({
       user_id: user_id_param
@@ -120,6 +123,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {food_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -128,7 +132,7 @@ export const list = {
 
   // 5. moneyPlan
   countMoneyPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
       user_id: user_id_param
@@ -142,6 +146,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {money_plan_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -150,7 +155,7 @@ export const list = {
 
   // 6. money
   countMoney: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param
@@ -164,6 +169,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {money_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -172,7 +178,7 @@ export const list = {
 
   // 7. sleepPlan
   countSleepPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await SleepPlan.countDocuments({
       user_id: user_id_param
@@ -186,6 +192,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {sleep_plan_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
@@ -194,7 +201,7 @@ export const list = {
 
   // 8. sleep
   countSleep: async (
-    user_id_param, page_param, limit_param
+    user_id_param
   ) => {
     const finalResult = await Sleep.countDocuments({
       user_id: user_id_param
@@ -208,6 +215,7 @@ export const list = {
       {$match: {
         user_id: user_id_param,
       }},
+      {$sort: {sleep_dateStart: 1}},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);

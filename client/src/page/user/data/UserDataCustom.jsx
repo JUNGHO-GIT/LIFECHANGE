@@ -263,7 +263,6 @@ export const UserDataCustom = () => {
     else if (dataType === "sleep") {
       defaultArray = sleepArray;
     }
-
     if (confirm) {
       setOBJECT((prev) => ({
         ...prev,
@@ -279,130 +278,118 @@ export const UserDataCustom = () => {
   const tableNode = () => {
     // 7-6. popup
     const popupSection = (i, closePopup) => (
-      <Div className={"d-column"}>
-        <Div className={"d-center"}>
-          <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-20"}>
-            <TableContainer className={"border-right over-x-hidden"}>
-              <Table>
-                <TableHead className={"table-thead"}>
-                  <TableRow className={"table-thead-tr p-sticky top-0"}>
-                    <TableCell>
-                      Part
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className={"table-tbody"}>
-                  {OBJECT?.dataCustom[dataType]?.map((item, index) => (index > 0) && (
-                    <TableRow key={index} className={`table-tbody-tr`}
-                      onClick={() => {
-                        setSelectedIdx((prev) => ({
-                          ...prev,
-                          partIdx: index
-                        }));
-                      }}>
-                      <TableCell className={selectedIdx.partIdx === index ? "bg-light" : ""}>
-                        <Div className={"d-center"} onClick={() => {
-                          setIdx((prev) => ({
-                            ...prev,
-                            partIdx: index
-                          }));
-                        }}>
-                          <Div className={"fs-0-9rem ms-auto"}>
-                            {item[`${dataType}_part`]}
-                          </Div>
-                          <Div className={"fs-0-9rem ms-auto me-n10"}>
-                            <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
-                              handlerRename("part", index);
-                            }} />
-                            <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
-                              handlerRemove("part", index);
-                            }} />
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-                <TableFooter className={"table-tfoot"}>
-                  <TableRow className={"table-tfoot-tr"}>
+      <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-0"}>
+        <TableContainer className={"border-right over-x-hidden"}>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr p-sticky top-0"}>
+                <TableCell>
+                  Part
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT?.dataCustom[dataType]?.map((item, index) => (index > 0) && (
+                <TableRow key={index} className={`table-tbody-tr`}
+                  onClick={() => {
+                    setSelectedIdx((prev) => ({
+                      ...prev,
+                      partIdx: index
+                    }));
+                  }}>
+                  <TableCell className={selectedIdx.partIdx === index ? "bg-light" : ""}>
+                    <Div className={"d-center"} onClick={() => {
+                      setIdx((prev) => ({
+                        ...prev,
+                        partIdx: index
+                      }));
+                    }}>
+                      <Div className={"fs-0-9rem ms-auto"}>
+                        {item[`${dataType}_part`]}
+                      </Div>
+                      <Div className={"fs-0-9rem ms-auto me-n10"}>
+                        <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
+                          handlerRename("part", index);
+                        }} />
+                        <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
+                          handlerRemove("part", index);
+                        }} />
+                      </Div>
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter className={"table-tfoot"}>
+              <TableRow className={"table-tfoot-tr"}>
+                <TableCell>
+                  <Div className={"d-center"} onClick={() => {
+                    handlerAdd("part");
+                  }}>
+                    <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
+                  </Div>
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+        {(dataType === "exercise" || dataType === "money") && (
+          <TableContainer className={"border-left over-x-hidden"}>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr p-sticky top-0"}>
+                  <TableCell>
+                    Title
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT?.dataCustom[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                  <TableRow key={index} className={`table-tbody-tr`}
+                    onClick={() => {
+                      setSelectedIdx((prev) => ({
+                        ...prev,
+                        titleIdx: index
+                      }));
+                    }}>
                     <TableCell>
                       <Div className={"d-center"} onClick={() => {
-                        handlerAdd("part");
+                        setIdx((prev) => ({
+                          ...prev,
+                          titleIdx: index
+                        }));
                       }}>
-                        <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
+                        <Div className={"fs-0-9rem ms-auto"}>
+                          {item}
+                        </Div>
+                        <Div className={"fs-0-9rem ms-auto d-row me-n10"}>
+                          <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
+                            handlerRename("title", index);
+                          }} />
+                          <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
+                            handlerRemove("title", index);
+                          }} />
+                        </Div>
                       </Div>
                     </TableCell>
                   </TableRow>
-                </TableFooter>
-              </Table>
-            </TableContainer>
-            {(dataType === "exercise" || dataType === "money") && (
-              <TableContainer className={"border-left over-x-hidden"}>
-                <Table>
-                  <TableHead className={"table-thead"}>
-                    <TableRow className={"table-thead-tr p-sticky top-0"}>
-                      <TableCell>
-                        Title
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody className={"table-tbody"}>
-                    {OBJECT?.dataCustom[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                      <TableRow key={index} className={`table-tbody-tr`}
-                        onClick={() => {
-                          setSelectedIdx((prev) => ({
-                            ...prev,
-                            titleIdx: index
-                          }));
-                        }}>
-                        <TableCell>
-                          <Div className={"d-center"} onClick={() => {
-                            setIdx((prev) => ({
-                              ...prev,
-                              titleIdx: index
-                            }));
-                          }}>
-                            <Div className={"fs-0-9rem ms-auto"}>
-                              {item}
-                            </Div>
-                            <Div className={"fs-0-9rem ms-auto d-row me-n10"}>
-                              <Icons name={"BiEdit"} className={"w-14 h-14 navy"} onClick={() => {
-                                handlerRename("title", index);
-                              }} />
-                              <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
-                                handlerRemove("title", index);
-                              }} />
-                            </Div>
-                          </Div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                  <TableFooter className={"table-tfoot"}>
-                    <TableRow className={"table-tfoot-tr"}>
-                      <TableCell>
-                        <Div className={"d-center"} onClick={() => {
-                          handlerAdd("title");
-                        }}>
-                          <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                  </TableFooter>
-                </Table>
-              </TableContainer>
-            )}
-          </Card>
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Button size={"small"} type={"button"} color={"primary"} variant={"contained"} className={"primary-btn"} onClick={() => {
-            closePopup();
-          }}>
-            O
-          </Button>
-        </Div>
-      </Div>
+                ))}
+              </TableBody>
+              <TableFooter className={"table-tfoot"}>
+                <TableRow className={"table-tfoot-tr"}>
+                  <TableCell>
+                    <Div className={"d-center"} onClick={() => {
+                      handlerAdd("title");
+                    }}>
+                      <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        )}
+      </Card>
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
@@ -434,7 +421,7 @@ export const UserDataCustom = () => {
                           popupSection(i, closePopup)
                         )}>
                         {(popTrigger={}) => (
-                          <Icons name={"BiEdit"} className={"w-18 h-18 navy ms-auto"}
+                          <Icons name={"TbPencil"} className={"w-18 h-18 navy ms-auto"}
                             onClick={(e={}) => {
                               setDataType(item);
                               setSelectedIdx((prev) => ({
@@ -474,7 +461,7 @@ export const UserDataCustom = () => {
     // 7-12. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper d-row h-min70vh"}>
+        <Div className={"block-wrapper h-min85vh"}>
           {thirdSection()}
         </Div>
       </Paper>

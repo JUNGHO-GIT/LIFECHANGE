@@ -42,23 +42,20 @@ export const Footer = ({
   );
 
   // 7. footer ------------------------------------------------------------------------------------>
-  const footerNode = () => {
-    if (strings?.second === "login" || strings?.second === "signup") {
-      return (
-        <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
-          {btnNode()}
-        </Paper>
-      );
-    }
-    else {
-      return (
-        <Paper className={"flex-wrapper p-sticky bottom-7vh border radius"}>
-          {filterNode()}
-          {btnNode()}
-        </Paper>
-      );
-    }
-  };
+  const footerNode = () => (
+    strings?.second === "login" ||
+    strings?.second === "signup" ||
+    strings?.second === "data" ? (
+      <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
+        {btnNode()}
+      </Paper>
+    ) : (
+      <Paper className={"flex-wrapper p-sticky bottom-7vh border radius"}>
+        {filterNode()}
+        {btnNode()}
+      </Paper>
+    )
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
