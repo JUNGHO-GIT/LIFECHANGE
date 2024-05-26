@@ -274,16 +274,16 @@ export const MoneyPlanSave = () => {
         {countSection()}
       </Card>
     );
-    // 7-11. third
-    const thirdSection = () => (
+    // 7-9. second
+    const secondSection = () => (
       tableSection()
     );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min65vh"}>
+        <Div className={"block-wrapper d-column h-min65vh"}>
           {firstSection()}
-          {thirdSection()}
+          {secondSection()}
         </Div>
       </Paper>
     );

@@ -981,11 +981,11 @@ export const UserDataList = () => {
         return COUNT.totalCnt === 0 ? tableEmpty8() : tableFragment8(0);
       }
     };
-    // 7-11. third
+    // 7-9. third
     const thirdSection = () => (
       tableSection()
     );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>

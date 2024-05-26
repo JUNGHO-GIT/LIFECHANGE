@@ -200,15 +200,15 @@ export const CalendarList = () => {
     const tableSection = () => (
       tableFragment(0)
     );
-    // 7-11. third
-    const thirdSection = () => (
+    // 7-9. first
+    const firstSection = () => (
       tableSection()
     );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>
-          {thirdSection()}
+          {firstSection()}
         </Div>
       </Paper>
     );

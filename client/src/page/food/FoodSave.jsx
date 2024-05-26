@@ -546,11 +546,11 @@ export const FoodSave = () => {
         {totalSection()}
       </Card>
     );
-    // 7-11. third
+    // 7-9. third
     const thirdSection = () => (
       tableSection()
     );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min65vh"}>

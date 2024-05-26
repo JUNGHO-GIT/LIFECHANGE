@@ -26,10 +26,7 @@ const createBr = (param) => {
 
   const style = {
     "width": "100%",
-    "-webkit-flex-shrink": "0",
-    "-ms-flex-negative": "0",
-    "flex-shrink": "0",
-    "height": `${param}px`
+    "margin": `${param/2}px 0px`,
   };
 
   return () => <div style={style} />;
@@ -40,14 +37,9 @@ const createHr = (param) => {
 
   const style = {
     "width": "100%",
-    "-webkit-flex-shrink": "0",
-    "-ms-flex-negative": "0",
-    "flex-shrink": "0",
-    "border-width": "0",
-    "border-style": "solid",
-    "border-color": "rgba(0, 0, 0, 0.12)",
-    "border-bottom-width": "thin",
-    "margin": `${param / 2}px 16px`,
+    "background": "rgba(0, 0, 0, 0.12)",
+    "height": "0.1px",
+    "margin": `${param/2}px 0px`,
   };
 
   return () =>  <div style={style} />;

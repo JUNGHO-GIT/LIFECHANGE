@@ -429,11 +429,11 @@ export const ExerciseDashAvg = () => {
         <Div className={"ms-auto me-0"}>{dropdownSection2()}</Div>
       </Div>
     );
-    // 7-11. third
+    // 7-9. third
     const thirdSection = () => (
       dashSection()
     );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min40vh"}>

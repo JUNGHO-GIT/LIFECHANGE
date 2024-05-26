@@ -4,8 +4,8 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportLogics";
-import {Div, Br10, Br20, Img, Hr20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField, Button, Checkbox, Divider} from "../../import/ImportMuis.jsx";
+import {Div, Br10, Br20, Img, Hr40, Hr30} from "../../import/ImportComponents.jsx";
+import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -19,16 +19,6 @@ export const UserLogin = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [SEND, setSEND] = useState({
-    id: "",
-    dateType: "",
-    dateStart: "0000-00-00",
-    dateEnd: "0000-00-00",
-    toLogin:"/user/login",
-    toSignup:"/user/signup"
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isChecked, setIsChecked] = useState(false);
@@ -74,45 +64,55 @@ export const UserLogin = () => {
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"border-none p-10"} key={i}>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={"ID"}
-            className={"w-86vw"}
-            value={userId}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null,
-            }}
-            onChange={(e) => {
-              setUserId(e.target.value);
-            }}
-          />
-        </Div>
+      <Div className={"d-column"} key={i}>
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"ID"}
+          className={"w-86vw"}
+          value={userId}
+          InputProps={{
+            readOnly: false,
+            startAdornment: null,
+            endAdornment: null,
+          }}
+          onChange={(e) => {
+            setUserId(e.target.value);
+          }}
+        />
         <Br20 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={"Password"}
+          value={userPw}
+          className={"w-86vw"}
+          InputProps={{
+            readOnly: false,
+            startAdornment: null,
+            endAdornment: null,
+          }}
+          onChange={(e) => {
+            setUserPw(e.target.value);
+          }}
+        />
+        <Br10 />
         <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
+          <Div className={"fs-0-8rem"}>
+            아이디 저장
+          </Div>
+          <Checkbox
+            color={"primary"}
             size={"small"}
-            label={"Password"}
-            value={userPw}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null,
-            }}
+            checked={isChecked}
             onChange={(e) => {
-              setUserPw(e.target.value);
+              setIsChecked(e.target.checked);
             }}
           />
         </Div>
-      </Card>
+      </Div>
     );
     // 7-8. table
     const tableSection = () => (
@@ -124,27 +124,11 @@ export const UserLogin = () => {
         {translate("user-login")}
       </Div>
     );
-    // 7-11. second
+    // 7-9. second
     const secondSection = () => (
       tableSection()
     );
-    // 7-11. third
-    const thirdSection = () => (
-      <Div className={"d-center"}>
-        <Checkbox
-          color={"primary"}
-          size={"small"}
-          checked={isChecked}
-          onChange={(e) => {
-            setIsChecked(e.target.checked);
-          }}
-        />
-        <Div className={"fs-0-8rem"}>
-          아이디 저장
-        </Div>
-      </Div>
-    );
-    // 7-11. fourth
+    // 7-9. fourth
     const fourthSection = () => (
       <Div className={"d-center w-86vw"}>
         <Button
@@ -160,7 +144,7 @@ export const UserLogin = () => {
         </Button>
       </Div>
     );
-    // 7-11. fifth
+    // 7-9. fifth
     const fifthSection = () => (
       <Div className={"d-center w-86vw"}>
         <TextField
@@ -179,7 +163,7 @@ export const UserLogin = () => {
         />
       </Div>
     );
-    // 7-11. sixth
+    // 7-9. sixth
     const sixthSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("user-notId")}
@@ -190,34 +174,19 @@ export const UserLogin = () => {
         </Div>
       </Div>
     );
-    // 7-11. seventh
-    const seventhSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
-        {translate("user-notPw")}
-        <Div className={"d-center blue ms-10"} onClick={() => {
-          navigate("/user/find");
-        }}>
-          {translate("user-find")}
-        </Div>
-      </Div>
-    );
-    // 7-12. return
+    // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min92vh"}>
           {firstSection()}
-          <Hr20 />
+          <Hr40 />
           {secondSection()}
-          <Hr20 />
-          {thirdSection()}
-          <Hr20 />
+          <Hr30 />
           {fourthSection()}
           <Br10 />
           {fifthSection()}
-          <Hr20 />
+          <Hr40 />
           {sixthSection()}
-          <Br10 />
-          {seventhSection()}
         </Div>
       </Paper>
     );
