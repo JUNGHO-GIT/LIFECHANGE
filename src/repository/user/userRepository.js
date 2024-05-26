@@ -32,6 +32,31 @@ export const signup = {
   }
 };
 
+// 0-0. extra ------------------------------------------------------------------------------------->
+export const extra = {
+
+  extra: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const finalResult = await User.findOneAndUpdate(
+      {user_id: user_id_param},
+      {$set: {
+        user_sex: OBJECT_param.user_sex,
+        user_age: OBJECT_param.user_age,
+        user_height: OBJECT_param.user_height,
+        user_weight: OBJECT_param.user_weight,
+        user_image: OBJECT_param.user_image,
+        user_property: OBJECT_param.user_property,
+        user_updateDt: newDate,
+      }},
+      {upsert: true, new: true}
+    )
+    .lean();
+
+    return finalResult;
+  }
+};
+
 // 0.1. login ------------------------------------------------------------------------------------>
 export const login = {
 

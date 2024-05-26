@@ -24,6 +24,26 @@ export const signup = async (
   return finalResult;
 };
 
+// 0-0. extra ------------------------------------------------------------------------------------->
+export const extra = async (
+  user_id_param, OBJECT_param
+) => {
+
+  const findResult = await repository.extra.extra(
+    user_id_param, OBJECT_param
+  );
+
+  let finalResult = null;
+  if (findResult !== null) {
+    finalResult = findResult;
+  }
+  else {
+    finalResult = "fail";
+  }
+
+  return finalResult;
+};
+
 // 0-1. login ------------------------------------------------------------------------------------->
 export const login = async (
   user_id_param, user_pw_param

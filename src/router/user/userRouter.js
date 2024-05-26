@@ -40,6 +40,36 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// 0-0. exta -------------------------------------------------------------------------------------->
+router.post("/extra", async (req, res) => {
+  try {
+    let result = await service.extra (
+      req.body.user_id,
+      req.body.OBJECT
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "회원가입 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "회원가입 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
 // 0-1. login ------------------------------------------------------------------------------------->
 router.post("/login", async (req, res) => {
   try {
