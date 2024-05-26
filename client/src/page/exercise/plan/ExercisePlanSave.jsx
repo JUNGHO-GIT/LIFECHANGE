@@ -8,7 +8,7 @@ import {useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {PopUp, Img, Picker, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
@@ -162,7 +162,7 @@ export const ExercisePlanSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Calendar
+      <Picker
         DATE={DATE}
         setDATE={setDATE}
         isExist={isExist}

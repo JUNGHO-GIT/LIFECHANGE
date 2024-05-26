@@ -1,4 +1,4 @@
-// Calendar.jsx
+// Picker.jsx
 
 import {React, useEffect} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
@@ -10,7 +10,7 @@ import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/Im
 import {common1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Calendar = ({
+export const Picker = ({
   DATE, setDATE, isExist, setIsExist
 }) => {
 
@@ -30,7 +30,7 @@ export const Calendar = ({
       contents={({closePopup}) => (
       <Div className={"d-column"}>
         <Div className={"d-center fs-1-2rem fw-bold"}>
-          일별
+          {translate("common-viewDay")}
         </Div>
         <Br20 />
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -108,7 +108,7 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"날짜"}
+          label={translate("common-date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
           className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
@@ -137,7 +137,7 @@ export const Calendar = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            주별
+            {translate("common-viewWeek")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -224,7 +224,7 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"기간"}
+          label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
@@ -253,7 +253,7 @@ export const Calendar = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            월별
+            {translate("common-viewMonth")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -313,7 +313,7 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"기간"}
+          label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
@@ -342,7 +342,7 @@ export const Calendar = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            년별
+            {translate("common-viewYear")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -402,7 +402,7 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"기간"}
+          label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}
@@ -431,7 +431,7 @@ export const Calendar = ({
       contents={({ closePopup }) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            선택별
+            {translate("common-viewSelect")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -500,7 +500,7 @@ export const Calendar = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={"기간"}
+          label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
           className={`pointer ${secondStr === "plan" ? "w-60vw" : "w-83vw"}`}

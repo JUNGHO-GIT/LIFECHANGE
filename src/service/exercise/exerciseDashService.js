@@ -97,7 +97,7 @@ export const barMonth = async (
 
   // ex. 00일
   const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}일`;
+    return `${i + 1}`;
   });
 
   // ex. 00-00
@@ -285,7 +285,7 @@ export const lineMonth = async (
 
   // ex. 00일
   const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}일`;
+    return `${i + 1}`;
   });
 
   // ex. 00-00

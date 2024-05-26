@@ -9,7 +9,7 @@ import {useTime} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {Calendar, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {Picker, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -160,7 +160,7 @@ export const SleepPlanSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Calendar
+      <Picker
         DATE={DATE}
         setDATE={setDATE}
         isExist={isExist}

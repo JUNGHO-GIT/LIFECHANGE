@@ -32,6 +32,25 @@ export const useLanguage = () => (
 export const useTranslate = () => {
   const {lang} = useLanguage();
   const resources = {
+    common: {
+      empty: {ko: "데이터가 없습니다", en: "No data"},
+      date: {ko: "날짜", en: "Date"},
+      duration: {ko: "기간", en: "Duration"},
+      dateType: {ko: "유형", en: "Type"},
+      dateStart: {ko: "시작일", en: "Start Date"},
+      dateEnd: {ko: "종료일", en: "End Date"},
+      count: {ko: "항목수", en: "Count"},
+      category: {ko: "분류", en: "Category"},
+      plan: {ko: "계획", en: "Plan"},
+      real: {ko: "실제", en: "Real"},
+      diff: {ko: "차이", en: "Diff"},
+      delete: {ko: "삭제", en: "Delete"},
+      endHour: {ko: "h:m", en: "h:m"},
+      viewDay: {ko: "일별", en: "Day View"},
+      viewWeek: {ko: "주별", en: "Week View"},
+      viewMonth: {ko: "월별", en: "Month View"},
+      viewYear: {ko: "년별", en: "Year View"},
+    },
     header: {
       login: {ko: "로그인", en: "Login"},
       signup: {ko: "회원가입", en: "Signup"},
@@ -82,20 +101,6 @@ export const useTranslate = () => {
       flowFind: {ko: "찾기", en: "Find"},
       flowDefault: {ko: "기본값", en: "Default"},
       flowDemo: {ko: "추가", en: "Insert"},
-    },
-    common: {
-      empty: {ko: "데이터가 없습니다", en: "No data"},
-      date: {ko: "날짜", en: "Date"},
-      dateType: {ko: "유형", en: "Date Type"},
-      dateStart: {ko: "시작일", en: "Start Date"},
-      dateEnd: {ko: "종료일", en: "End Date"},
-      count: {ko: "항목수", en: "Count"},
-      category: {ko: "분류", en: "Category"},
-      plan: {ko: "계획", en: "Plan"},
-      real: {ko: "실제", en: "Real"},
-      diff: {ko: "차이", en: "Diff"},
-      delete: {ko: "삭제", en: "Delete"},
-      endHour: {ko: "h:m", en: "h:m"},
     },
     exercise: {
       planCount: {ko: "횟수 목표", en: "Count Goals"},

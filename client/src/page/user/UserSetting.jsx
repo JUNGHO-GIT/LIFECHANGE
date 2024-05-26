@@ -72,6 +72,7 @@ export const UserSetting = () => {
                       <Div className={"d-center"} onClick={() => {
                         setLang("ko")
                         sessionStorage.setItem("lang", "ko")
+                        navigate(0)
                       }}>
                         <Img src={flag1} className={"w-24 h-24"} />한국어
                         <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "ko" ? "d-none" : ""}`} onClick={() => {}} />
@@ -80,6 +81,7 @@ export const UserSetting = () => {
                       <Div className={"d-center"} onClick={() => {
                         setLang("en")
                         sessionStorage.setItem("lang", "en")
+                        navigate(0)
                       }}>
                         <Img src={flag2} className={"w-24 h-24"} />English
                         <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "en" ? "d-none" : ""}`} onClick={() => {}} />

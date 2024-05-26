@@ -8,7 +8,7 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {PopUp, Img, Calendar, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {PopUp, Img, Picker, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {money2} from "../../import/ImportImages.jsx";
 
@@ -199,7 +199,7 @@ export const MoneySave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Calendar
+      <Picker
         DATE={DATE}
         setDATE={setDATE}
         isExist={isExist}

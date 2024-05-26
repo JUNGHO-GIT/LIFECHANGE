@@ -8,7 +8,7 @@ import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {PopUp, Img, Calendar, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {PopUp, Img, Picker, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
@@ -160,7 +160,7 @@ export const FoodPlanSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Calendar
+      <Picker
         DATE={DATE}
         setDATE={setDATE}
         isExist={isExist}

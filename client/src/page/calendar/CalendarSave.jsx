@@ -7,7 +7,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Img, Calendar, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Img, Picker, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {calendar2} from "../../import/ImportImages.jsx";
 
@@ -183,7 +183,7 @@ export const CalendarSave = () => {
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
-      <Calendar
+      <Picker
         DATE={DATE}
         setDATE={setDATE}
         isExist={isExist}
