@@ -72,7 +72,7 @@ export const CalendarSave = () => {
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{
-      calendar_part_idx: 1,
+      calendar_part_idx: 0,
       calendar_part_val: "일정",
       calendar_title : "",
       calendar_color: "black",
@@ -130,7 +130,7 @@ export const CalendarSave = () => {
   useEffect(() => {
     const defaultSection = {
       calendar_part_idx: 0,
-      calendar_part_val: "전체",
+      calendar_part_val: "일정",
       calendar_title: "",
       calendar_color: "black",
       calendar_content: ""
@@ -224,47 +224,14 @@ export const CalendarSave = () => {
           {dropdownSection(OBJECT?._id, OBJECT?.calendar_section[i]?._id, i)}
         </Div>
         <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={"파트"}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newIndex = Number(e.target.value);
-              setOBJECT((prev) => ({
-                ...prev,
-                calendar_section: prev.calendar_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    calendar_part_idx: newIndex,
-                    calendar_part_val: calendarArray[newIndex]?.calendar_part
-                  } : item
-                ))
-              }));
-            }}
-          >
-            {calendarArray.map((item, idx) => (
-              <MenuItem key={idx} value={idx}>
-                {item.calendar_part}
-              </MenuItem>
-            ))}
-          </TextField>
+        <Div className={"d-left"}>
           <TextField
             select={true}
             type={"text"}
             size={"small"}
             label={"색상"}
             variant={"outlined"}
-            className={"w-40vw ms-3vw"}
+            className={"w-86vw"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
             InputProps={{
               readOnly: false,

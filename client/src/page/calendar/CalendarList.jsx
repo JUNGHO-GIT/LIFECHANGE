@@ -1,6 +1,6 @@
 // CalendarList.jsx
 
-import {React, useState, useEffect, useRef} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, useMemo} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
@@ -96,20 +96,20 @@ export const CalendarList = () => {
 
   // 7. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => {
-    const formatDate = (date) => (
-      moment(date).format("YYYY-MM-DD")
-    );
+    const formatDate = (date) => moment(date).format("YYYY-MM-DD");
+  
     const dateInRange = (date, dateStart, dateEnd) => {
       const currDate = formatDate(date);
       return currDate >= dateStart && currDate <= dateEnd;
     };
+  
     const activeLine = (calendarForDates) => (
-      calendarForDates?.map((calendar) => (
+      calendarForDates?.map((calendar) =>
         calendar.calendar_section?.map((section) => (
-          <Div key={`${calendar._id}-${section._id}`} className={"calendar-filled"}
-            style={{
-              backgroundColor: section.calendar_color
-            }}
+          <Div
+            key={`${calendar?._id}`}
+            className={"calendar-filled"}
+            style={{ backgroundColor: section.calendar_color }}
             onClick={(e) => {
               e.stopPropagation();
               Object.assign(SEND, {
@@ -119,85 +119,84 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(SEND.toSave, {
-                state: SEND
-              });
+              navigate(SEND.toSave, { state: SEND });
             }}
           >
             <span className={"calendar-category"}>{section.calendar_title}</span>
           </Div>
         ))
-      ))
+      )
     );
+  
     const unActiveLine = (calendarForDates) => (
-      calendarForDates?.map((calendar) => (
+      calendarForDates?.map((calendar) =>
         calendar.calendar_section.map((section) => (
           <Div key={calendar._id} className={"calendar-unfilled"}>
             <span className={"calendar-category"}>{section.calendar_title}</span>
           </Div>
         ))
-      ))
+      )
     );
+  
     // 7-7. table
-    const tableFragment = (i=0) => (
-      <Calendar
-        key={`${i}-${DATE.dateStart}`}
-        locale={"ko"}
-        view={"month"}
-        value={new Date()}
-        onClickDay={undefined}
-        showNavigation={true}
-        showNeighboringMonth={true}
-        showDoubleView={false}
-        prev2Label={null}
-        next2Label={null}
-        prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
-        nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
-        formatDay={(locale, date) => (moment(date).format("D"))}
-        formatWeekday={(locale, date) => (moment(date).format("D"))}
-        formatMonth={(locale, date) => (moment(date).format("MM"))}
-        formatYear={(locale, date) => (moment(date).format("YYYY"))}
-        formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
-        formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
-        // (월 화 수 목 금 토 일) 한글로 표시
-        formatShortWeekday={(locale, date) => {
-          const day = moment(date).format("d");
-          const week = ["일", "월", "화", "수", "목", "금", "토"];
-          return week[day];
-        }}
-        onActiveStartDateChange={({ activeStartDate, value, view }) => {
-          setDATE((prev={}) => ({
-            ...prev,
-            // @ts-ignore
-            dateStart: moment(value).startOf("month").format("YYYY-MM-DD"),
-            // @ts-ignore
-            dateEnd: moment(value).endOf("month").format("YYYY-MM-DD")
-          }));
-        }}
-        tileClassName={({date, view}) => {
-          // 3개 이상일 경우
-          const calendarForDates = OBJECT?.filter((calendar) => (
-            dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-          ));
-          if (calendarForDates.length >= 3) {
-            return `calendar-tile over-y-auto`;
-          }
-          else {
-            return `calendar-tile`;
-          }
-        }}
-        tileContent={({date, view}) => {
-          const calendarForDates = OBJECT?.filter((calendar) => (
-            dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-          ));
-          return (
-            calendarForDates.length > 0
-            ? activeLine(calendarForDates)
-            : unActiveLine(calendarForDates)
-          );
-        }}
-      />
-    );
+    const tableFragment = (i = 0) => {
+      const calendarForDatesMemo = useMemo(() => {
+        const dateStart = moment().startOf("month").format("YYYY-MM-DD");
+        const dateEnd = moment().endOf("month").format("YYYY-MM-DD");
+        return OBJECT?.filter((calendar) =>
+          dateInRange(calendar.calendar_dateStart, dateStart, dateEnd)
+        );
+      }, [OBJECT]);
+  
+      return (
+        <Calendar
+          key={`${i}`}
+          locale={"ko"}
+          view={"month"}
+          value={new Date()}
+          onClickDay={undefined}
+          showNavigation={true}
+          showNeighboringMonth={true}
+          showDoubleView={false}
+          prev2Label={null}
+          next2Label={null}
+          prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
+          nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
+          formatDay={(locale, date) => moment(date).format("D")}
+          formatWeekday={(locale, date) => moment(date).format("d")}
+          formatMonth={(locale, date) => moment(date).format("MM")}
+          formatYear={(locale, date) => moment(date).format("YYYY")}
+          formatLongDate={(locale, date) => moment(date).format("YYYY-MM-DD")}
+          formatMonthYear={(locale, date) => moment(date).format("YYYY-MM")}
+          // (월 화 수 목 금 토 일) 한글로 표시
+          formatShortWeekday={(locale, date) => {
+            const day = moment(date).format("d");
+            const week = ["일", "월", "화", "수", "목", "금", "토"];
+            return week[day];
+          }}
+          onActiveStartDateChange={({ activeStartDate, value, view }) => {
+            setDATE((prev = {}) => ({
+              ...prev,
+              dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD"),
+            }));
+          }}
+          tileClassName={({ date, view }) => {
+            const calendarForDates = calendarForDatesMemo.filter((calendar) =>
+              dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+            );
+            const className = calendarForDates.length >= 3 ? "calendar-tile over-y-auto" : "calendar-tile";
+            return className;
+          }}
+          tileContent={({ date, view }) => {
+            const calendarForDates = calendarForDatesMemo.filter((calendar) =>
+              dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+            );
+            return calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates);
+          }}
+        />
+      );
+    };
     // 7-8. table
     const tableSection = () => (
       tableFragment(0)
@@ -244,7 +243,7 @@ export const CalendarList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : calendarNode()}
+      {calendarNode()}
       {footerNode()}
     </>
   );
