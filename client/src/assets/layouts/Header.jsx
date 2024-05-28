@@ -21,7 +21,7 @@ export const Header = () => {
       <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
         navigate("/")
       }}/>
-    ) : secondStr === "data" ? (
+    ) : secondStr === "data" || secondStr === "info" ? (
       <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
         navigate("/user/setting");
       }}/>

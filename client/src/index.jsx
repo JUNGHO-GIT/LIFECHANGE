@@ -59,9 +59,9 @@ import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
 import {UserDataCustom} from "./page/user/data/UserDataCustom.jsx";
 import {UserDataDetail} from "./page/user/data/UserDataDetail.jsx";
-import {UserDataInfo} from "./page/user/data/UserDataInfo.jsx";
 import {UserDataList} from "./page/user/data/UserDataList.jsx";
 import {UserSetting} from "./page/user/UserSetting.jsx";
+import {UserInfo} from "./page/user/UserInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
 
@@ -123,9 +123,9 @@ const User = () => (
   <Routes>
     <Route path="/data/custom" element={<UserDataCustom />} />
     <Route path="/data/detail" element={<UserDataDetail />} />
-    <Route path="/data/info" element={<UserDataInfo />} />
     <Route path="/data/list" element={<UserDataList />} />
     <Route path="/setting" element={<UserSetting />} />
+    <Route path="/info" element={<UserInfo />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
   </Routes>
@@ -141,6 +141,7 @@ const App = () => {
   const noneTop = (
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
+    location.pathname === "/user/info" ||
     location.pathname === "/user/setting" ||
     location.pathname === "/user/data/detail" ||
     location.pathname === "/user/data/custom" ||
@@ -149,6 +150,7 @@ const App = () => {
   const noneBottom = (
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
+    location.pathname === "/user/info" ||
     location.pathname === "/user/setting" ||
     location.pathname === "/user/data/detail" ||
     location.pathname === "/user/data/custom" ||

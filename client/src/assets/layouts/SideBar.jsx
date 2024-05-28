@@ -2,7 +2,6 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {dataArray} from "../../import/ImportLogics";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
