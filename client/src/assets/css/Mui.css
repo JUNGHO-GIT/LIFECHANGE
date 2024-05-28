@@ -47,6 +47,9 @@
   text-overflow: clip !important;
   font-size: 0.9rem !important;
 }
+[class$="MuiPopover-paper"] {
+  z-index: 100000 !important;
+}
 
 .MuiFormControlLabel-root {
   margin-left: 0px !important;

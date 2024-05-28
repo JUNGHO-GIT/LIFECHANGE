@@ -159,7 +159,17 @@ export const ExerciseList = () => {
                       state: SEND
                     });
                   }}>
-                    {item.exercise_dateStart?.substring(5, 10)}
+                    {item.exercise_dateStart === item.exercise_dateEnd ? (
+                      <Div>
+                        {item.exercise_dateStart?.substring(5, 10)}
+                      </Div>
+                    ) : (
+                      <Div>
+                        {item.exercise_dateStart?.substring(5, 10)}
+                        &nbsp;~&nbsp;
+                        {item.exercise_dateEnd?.substring(5, 10)}
+                      </Div>
+                    )}
                   </Link>
                 </TableCell>
                 <TableCell>
@@ -178,9 +188,18 @@ export const ExerciseList = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : (
+        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (

@@ -31,8 +31,11 @@ export const MoneySave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [EXIST, setEXIST] = useState([""]);
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -50,14 +53,6 @@ export const MoneySave = () => {
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -405,11 +400,18 @@ export const MoneySave = () => {
         </Div>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (OBJECT?.money_section.map((_, i) => (
-        tableFragment(i)
-      )))
+      COUNT?.newSectionCnt > 0 && (
+        LOADING ? loadingNode() : OBJECT?.money_section.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -461,18 +463,10 @@ export const MoneySave = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

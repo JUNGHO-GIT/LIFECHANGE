@@ -1,10 +1,9 @@
 // App.jsx
 
-import React from "react";
-import {StrictMode} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import React, {useEffect} from "react";
+import {useLocation} from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
 import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
 import {useRoot} from "./assets/hooks/useRoot.jsx";

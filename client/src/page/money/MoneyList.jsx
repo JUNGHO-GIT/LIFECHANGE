@@ -153,7 +153,17 @@ export const MoneyList = () => {
                         state: SEND
                       });
                     }}>
-                      {item.money_dateStart?.substring(5, 10)}
+                      {item.money_dateStart === item.money_dateEnd ? (
+                        <Div>
+                          {item.money_dateStart?.substring(5, 10)}
+                        </Div>
+                      ) : (
+                        <Div>
+                          {item.money_dateStart?.substring(5, 10)}
+                          &nbsp;~&nbsp;
+                          {item.money_dateEnd?.substring(5, 10)}
+                        </Div>
+                      )}
                     </Link>
                   </TableCell>
                   <TableCell>
@@ -169,9 +179,18 @@ export const MoneyList = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : (
+        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -207,18 +226,10 @@ export const MoneyList = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

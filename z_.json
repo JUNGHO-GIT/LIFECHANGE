@@ -1,67 +1,14 @@
-findResult : [
-  {
-    "_id": "664e466793aee10d3456f6b2",
-    "sleep_dateStart": "2024-05-20",
-    "sleep_dateEnd": "2024-05-20",
-    "sleep_section": [
-      {
-        "sleep_night": "04:23",
-        "sleep_morning": "09:36",
-        "sleep_time": "20:58",
-        "_id": "664e466793aee10d3456f6b1"
-      }
-    ]
-  },
-  {
-    "_id": "664b8749eca3663c5331b50c",
-    "sleep_dateStart": "2024-05-21",
-    "sleep_dateEnd": "2024-05-21",
-    "sleep_section": [
-      {
-        "sleep_night": "01:30",
-        "sleep_morning": "02:00",
-        "sleep_time": "00:30",
-        "_id": "664b8749eca3663c5331b50e"
-      }
-    ]
-  },
-  {
-    "_id": "664e466793aee10d3456f6b0",
-    "sleep_dateStart": "2024-05-21",
-    "sleep_dateEnd": "2024-05-21",
-    "sleep_section": [
-      {
-        "sleep_night": "13:31",
-        "sleep_morning": "04:26",
-        "sleep_time": "15:33",
-        "_id": "664e466793aee10d3456f6af"
-      }
-    ]
-  },
-  {
-    "_id": "664e466793aee10d3456f6ae",
-    "sleep_dateStart": "2024-05-22",
-    "sleep_dateEnd": "2024-05-22",
-    "sleep_section": [
-      {
-        "sleep_night": "13:35",
-        "sleep_morning": "01:40",
-        "sleep_time": "01:24",
-        "_id": "664e466793aee10d3456f6ad"
-      }
-    ]
-  },
-  {
-    "_id": "664e466793aee10d3456f6ac",
-    "sleep_dateStart": "2024-05-23",
-    "sleep_dateEnd": "2024-05-23",
-    "sleep_section": [
-      {
-        "sleep_night": "14:59",
-        "sleep_morning": "07:06",
-        "sleep_time": "08:37",
-        "_id": "664e466793aee10d3456f6ab"
-      }
-    ]
-  }
-]
+.loader {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	border-top: 3px solid rgba(62, 150, 252, 0.8);
+	border-right: 3px solid transparent;
+  background-color: #ffffff;
+	animation: loaderAnimation 1s ease-in-out infinite;
+}

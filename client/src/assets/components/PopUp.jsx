@@ -1,13 +1,16 @@
 // PopUp.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import {React, useEffect} from "../../import/ImportReacts.jsx";
 import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
 import {usePopupState} from 'material-ui-popup-state/hooks';
 
 // ------------------------------------------------------------------------------------------------>
 export const PopUp = ({...props}) => {
 
-  const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
+  const popupState = usePopupState({
+    variant: 'popover',
+    popupId: 'demoPopover',
+  });
 
   let popupStyle = {};
   if (props.type === "alert") {
@@ -65,6 +68,9 @@ export const PopUp = ({...props}) => {
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
         onClose={popupState.close}
+        disableAutoFocus={true}
+        disableEnforceFocus={true}
+        disableRestoreFocus={true}
         anchorOrigin={{
           vertical: props.position === "center" ? "center" : (
             props.position === "top" ? "top" : "bottom"
@@ -115,7 +121,18 @@ export const PopUp = ({...props}) => {
         className={props.className}
         open={popupState.isOpen}
         anchorEl={null}
-        onClose={popupState.close}
+        onClose={(event, reason) => {
+          if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+            popupState.close();
+          }
+          else {
+            return;
+          }
+        }}
+        disableAutoFocus={true}
+        disableEnforceFocus={true}
+        disableRestoreFocus={true}
+        disablePortal={true}
         anchorReference={"anchorPosition"}
         anchorPosition={{
           top: window.innerHeight / 2,
@@ -138,7 +155,9 @@ export const PopUp = ({...props}) => {
         }}
       >
         {typeof props.contents === "function"
-          ? props.contents({ closePopup: popupState.close })
+          ? props.contents({
+            popupState: popupState,
+          })
           : props.contents
         }
       </Popover>

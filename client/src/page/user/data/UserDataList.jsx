@@ -775,18 +775,10 @@ export const UserDataList = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

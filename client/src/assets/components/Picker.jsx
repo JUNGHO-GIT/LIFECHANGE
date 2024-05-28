@@ -39,11 +39,11 @@ export const Picker = ({
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "w-50vw h-min0 h-4vh fs-0-7rem pointer"
   ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
-    "w-55vw h-min40 fs-0-8rem pointer"
+    "w-52vw h-min40 fs-0-8rem pointer"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
     "w-75vw h-min40 fs-0-8rem pointer"
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-55vw h-min40 fs-0-8rem pointer"
+    "w-52vw h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
   // 1. day --------------------------------------------------------------------------------------->

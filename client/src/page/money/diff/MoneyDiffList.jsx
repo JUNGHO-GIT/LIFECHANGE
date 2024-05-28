@@ -147,9 +147,17 @@ export const MoneyDiff = () => {
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Link>
-                    <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                    <Div>~</Div>
-                    <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                    {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                      <Div>
+                        {item.money_plan_dateStart?.substring(5, 10)}
+                      </Div>
+                    ) : (
+                      <Div>
+                        {item.money_plan_dateStart?.substring(5, 10)}
+                        &nbsp;~&nbsp;
+                        {item.money_plan_dateEnd?.substring(5, 10)}
+                      </Div>
+                    )}
                   </Link>
                 </TableCell>
                 <TableCell>
@@ -186,9 +194,18 @@ export const MoneyDiff = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : (
+        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -224,18 +241,10 @@ export const MoneyDiff = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

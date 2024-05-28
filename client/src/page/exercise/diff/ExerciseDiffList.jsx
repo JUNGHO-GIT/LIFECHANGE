@@ -157,9 +157,17 @@ export const ExerciseDiff = () => {
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Link>
-                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                    <Div>~</Div>
-                    <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                    {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                      <Div>
+                        {item.exercise_plan_dateStart?.substring(5, 10)}
+                      </Div>
+                    ) : (
+                      <Div>
+                        {item.exercise_plan_dateStart?.substring(5, 10)}
+                        &nbsp;~&nbsp;
+                        {item.exercise_plan_dateEnd?.substring(5, 10)}
+                      </Div>
+                    )}
                   </Link>
                 </TableCell>
                 <TableCell>
@@ -214,9 +222,18 @@ export const ExerciseDiff = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : (
+        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -252,18 +269,10 @@ export const ExerciseDiff = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

@@ -297,11 +297,18 @@ export const CalendarSave = () => {
         <Br20/>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (OBJECT?.calendar_section.map((_, i) => (
-        tableFragment(i)
-      )))
+      COUNT?.newSectionCnt > 0 && (
+        LOADING ? loadingNode() : OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -346,18 +353,10 @@ export const CalendarSave = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

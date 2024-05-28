@@ -322,9 +322,18 @@ export const FoodPlanSave = () => {
         <Br20/>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && tableFragment(0)
+      COUNT?.newSectionCnt > 0 && (
+        LOADING ? loadingNode() : tableFragment(0)
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -369,18 +378,10 @@ export const FoodPlanSave = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );

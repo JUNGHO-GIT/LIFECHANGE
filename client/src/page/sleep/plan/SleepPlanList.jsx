@@ -149,9 +149,17 @@ export const SleepPlanList = () => {
                         state: SEND
                       });
                     }}>
-                      <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                      {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                        <Div>
+                          {item.sleep_plan_dateStart?.substring(5, 10)}
+                        </Div>
+                      ) : (
+                        <Div>
+                          {item.sleep_plan_dateStart?.substring(5, 10)}
+                          &nbsp;~&nbsp;
+                          {item.sleep_plan_dateEnd?.substring(5, 10)}
+                        </Div>
+                      )}
                     </Link>
                   </TableCell>
                   <TableCell>
@@ -170,9 +178,18 @@ export const SleepPlanList = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+      COUNT.totalCnt === 0 ? tableEmpty() : (
+        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      )
     );
     // 7-9. first
     const firstSection = () => (
@@ -208,18 +225,10 @@ export const SleepPlanList = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {LOADING ? loadingNode() : tableNode()}
+      {tableNode()}
       {footerNode()}
     </>
   );
