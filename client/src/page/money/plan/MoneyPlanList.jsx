@@ -135,7 +135,7 @@ export const MoneyPlanList = () => {
             <TableBody className={"table-tbody"}>
               {OBJECT?.map((item, index) => (
                 <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                  <TableCell>
+                  <TableCell width={"30%"}>
                     <Link onClick={() => {
                       Object.assign(SEND, {
                         id: item._id,
@@ -148,15 +148,15 @@ export const MoneyPlanList = () => {
                       });
                     }}>
                       {item.money_plan_dateStart === item.money_plan_dateEnd ? (
-                        <Div>
-                          {item.money_plan_dateStart?.substring(5, 10)}
-                        </Div>
+                        <>
+                          <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        </>
                       ) : (
-                        <Div>
-                          {item.money_plan_dateStart?.substring(5, 10)}
-                          &nbsp;~&nbsp;
-                          {item.money_plan_dateEnd?.substring(5, 10)}
-                        </Div>
+                        <>
+                          <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                        </>
                       )}
                     </Link>
                   </TableCell>

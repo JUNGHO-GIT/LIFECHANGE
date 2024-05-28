@@ -157,18 +157,18 @@ export const FoodDiff = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
+                <TableCell width={"30%"}>
                   <Link>
                     {item.food_plan_dateStart === item.food_plan_dateEnd ? (
-                      <Div>
-                        {item.food_plan_dateStart?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
                     ) : (
-                      <Div>
-                        {item.food_plan_dateStart?.substring(5, 10)}
-                        &nbsp;~&nbsp;
-                        {item.food_plan_dateEnd?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
                     )}
                   </Link>
                 </TableCell>

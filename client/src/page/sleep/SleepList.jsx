@@ -102,22 +102,22 @@ export const SleepList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-0"} key={"empty"}>
         <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
+          <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("sleep-night")}</TableCell>
+                <TableCell>{translate("sleep-morning")}</TableCell>
+                <TableCell>{translate("sleep-time")}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
+                  {translate("common-empty")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
@@ -126,55 +126,55 @@ export const SleepList = () => {
     const tableFragment = (i=0) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  <Link onClick={() => {
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_dateType,
-                      dateStart: item.sleep_dateStart,
-                      dateEnd: item.sleep_dateEnd,
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.sleep_dateStart === item.sleep_dateEnd ? (
-                      <Div>
-                        {item.sleep_dateStart?.substring(5, 10)}
-                      </Div>
-                    ) : (
-                      <Div>
-                        {item.sleep_dateStart?.substring(5, 10)}
-                        &nbsp;~&nbsp;
-                        {item.sleep_dateEnd?.substring(5, 10)}
-                      </Div>
-                    )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_section[0]?.sleep_time}
-                </TableCell>
+            <Table>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("sleep-night")}</TableCell>
+                <TableCell>{translate("sleep-morning")}</TableCell>
+                <TableCell>{translate("sleep-time")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell width={"30%"}>
+                    <Link onClick={() => {
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.sleep_dateType,
+                        dateStart: item.sleep_dateStart,
+                        dateEnd: item.sleep_dateEnd,
+                      });
+                      navigate(SEND.toSave, {
+                        state: SEND
+                      });
+                    }}>
+                      {item.sleep_dateStart === item.sleep_dateEnd ? (
+                        <>
+                          <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_night}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_morning}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_section[0]?.sleep_time}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>

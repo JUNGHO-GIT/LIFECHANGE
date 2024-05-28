@@ -155,18 +155,18 @@ export const ExerciseDiff = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
+                <TableCell width={"30%"}>
                   <Link>
                     {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
-                      <Div>
-                        {item.exercise_plan_dateStart?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
                     ) : (
-                      <Div>
-                        {item.exercise_plan_dateStart?.substring(5, 10)}
-                        &nbsp;~&nbsp;
-                        {item.exercise_plan_dateEnd?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
                     )}
                   </Link>
                 </TableCell>

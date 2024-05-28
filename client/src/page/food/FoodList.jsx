@@ -151,8 +151,8 @@ export const FoodList = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  <Link onClick={() => {
+                  <TableCell width={"30%"}>
+                    <Link onClick={() => {
                     Object.assign(SEND, {
                       id: item._id,
                       dateType: item.food_dateType,
@@ -164,15 +164,15 @@ export const FoodList = () => {
                     });
                   }}>
                     {item.food_dateStart === item.food_dateEnd ? (
-                      <Div>
-                        {item.food_dateStart?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                      </>
                     ) : (
-                      <Div>
-                        {item.food_dateStart?.substring(5, 10)}
-                        &nbsp;~&nbsp;
-                        {item.food_dateEnd?.substring(5, 10)}
-                      </Div>
+                      <>
+                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
+                      </>
                     )}
                   </Link>
                 </TableCell>

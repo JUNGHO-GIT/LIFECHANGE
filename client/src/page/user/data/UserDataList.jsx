@@ -272,9 +272,17 @@ export const UserDataList = () => {
               {OBJECT_EXERCISE_PLAN?.map((item, index) => (
                 <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                   <TableCell>
-                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                    <Div>~</Div>
-                    <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                    {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                      <>
+                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
                   </TableCell>
                   <TableCell>
                     {numeral(item.exercise_plan_count).format("0,0")}
@@ -336,7 +344,17 @@ export const UserDataList = () => {
             {OBJECT_EXERCISE?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  {item.exercise_dateStart?.substring(5, 10)}
+                  {item.exercise_dateStart === item.exercise_dateEnd ? (
+                    <>
+                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {numeral(item.exercise_total_volume).format("0,0")}
@@ -397,9 +415,17 @@ export const UserDataList = () => {
             {OBJECT_FOOD_PLAN?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                  {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                    <>
+                      <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {numeral(item.food_plan_kcal).format('0,0')}
@@ -463,7 +489,17 @@ export const UserDataList = () => {
             {OBJECT_FOOD?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  {item.food_dateStart?.substring(5, 10)}
+                  {item.food_dateStart === item.food_dateEnd ? (
+                    <>
+                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {numeral(item.food_total_kcal).format("0,0")}
@@ -523,9 +559,17 @@ export const UserDataList = () => {
             {OBJECT_MONEY_PLAN?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                  {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                    <>
+                      <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {numeral(item.money_plan_in).format("0,0")}
@@ -579,7 +623,17 @@ export const UserDataList = () => {
             {OBJECT_MONEY?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  {item.money_dateStart?.substring(5, 10)}
+                  {item.money_dateStart === item.money_dateEnd ? (
+                    <>
+                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {numeral(item.money_total_in).format('0,0')}
@@ -635,9 +689,17 @@ export const UserDataList = () => {
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
-                  <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                  {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                    <>
+                      <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                    </>
+                  ) : (
+                    <>
+                      <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
                   {item.sleep_plan_night}
@@ -696,7 +758,17 @@ export const UserDataList = () => {
               {OBJECT_SLEEP?.map((item, index) => (
                 <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                   <TableCell>
-                    {item.sleep_dateStart?.substring(5, 10)}
+                    {item.sleep_dateStart === item.sleep_dateEnd ? (
+                      <>
+                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
                   </TableCell>
                   <TableCell>
                     {item.sleep_section[0]?.sleep_night}

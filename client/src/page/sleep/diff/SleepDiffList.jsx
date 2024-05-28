@@ -151,19 +151,19 @@ export const SleepDiff = () => {
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
               <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
+                <TableCell width={"30%"}>
                   <Link>
-                    {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
-                      <Div>
-                        {item.sleep_plan_dateStart?.substring(5, 10)}
-                      </Div>
-                    ) : (
-                      <Div>
-                        {item.sleep_plan_dateStart?.substring(5, 10)}
-                        &nbsp;~&nbsp;
-                        {item.sleep_plan_dateEnd?.substring(5, 10)}
-                      </Div>
-                    )}
+                      {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                        <>
+                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
                   </Link>
                 </TableCell>
                 <TableCell>

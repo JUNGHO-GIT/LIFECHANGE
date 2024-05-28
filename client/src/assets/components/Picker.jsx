@@ -185,7 +185,7 @@ export const Picker = ({
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.dateStart)}
+              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
                 // 일주일에 해당하는 날짜를 선택
@@ -300,7 +300,7 @@ export const Picker = ({
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.dateStart)}
+              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
                 // 월의 첫번째 날을 선택
@@ -388,7 +388,7 @@ export const Picker = ({
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.dateStart)}
+              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
                 // 매년 1월 1일 선택
