@@ -3,14 +3,15 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {useStorage} from "../../../import/ImportHooks.jsx";
+import {log} from "../../../import/ImportLogics";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import { csCZ } from "@mui/x-date-pickers/locales";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanList = () => {
@@ -84,59 +85,66 @@ export const MoneyPlanList = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setPAGING((prev) => ({
-      ...prev,
-      page: 1
-    }));
-  }, [DATE.dateType]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    loadMoreData();
-  }, [DATE.dateStart, DATE.dateEnd]);
-
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const loadMoreData = useCallback(async () => {
+    if (LOADING || !MORE) {
+      return;
+    }
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
+    await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: sessionId,
         FILTER: FILTER,
         PAGING: PAGING,
         DATE: DATE,
       },
-    });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return [...res.data.result];
+    })
+    .then((res) => {
+      if (res.data.result.length < PAGING.limit) {
+        setMORE(false);
       }
-      else {
-        return [...prev, ...res.data.result];
-      }
+      setOBJECT((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return [...res.data.result];
+        }
+        else {
+          return [...prev, ...res.data.result];
+        }
+      });
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+      setPAGING((prev) => ({
+        ...prev,
+        page: prev.page + 1
+      }));
+      setLOADING(false);
+    })
+    .catch((err) => {
+      log("err", err);
+      setLOADING(false);
     });
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    if (res.data.result.length < PAGING.limit) {
-      setMORE(false);
-    }
-    setPAGING((prev) => ({
-      ...prev,
-      page: prev.page + 1
-    }));
-    setLOADING(false);
   }, [
     sessionId, MORE,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
     PAGING.page, PAGING.limit,
     DATE.dateStart, DATE.dateEnd
   ]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    console.log("===================================");
+    log("DATE", DATE);
+    console.log("===================================");
+    setPAGING((prev) => ({
+      ...prev,
+      page: 1
+    }));
+    loadMoreData();
+  }, [DATE, loadMoreData]);
 
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const lastRowRef = useCallback((node) => {
@@ -151,7 +159,7 @@ export const MoneyPlanList = () => {
     if (node) {
       observer.current.observe(node);
     }
-  }, [LOADING, MORE]);
+  }, [MORE, loadMoreData]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -194,9 +202,10 @@ export const MoneyPlanList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT?.map((item, index) => (
-                <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
-                key={`data-${index}`}
-                className={"table-tbody-tr"}>
+                <TableRow
+                  ref={index === OBJECT.length - 1 ? lastRowRef : null}
+                  key={`data-${index}`}
+                  className={"table-tbody-tr"}>
                   <TableCell>
                     <Link onClick={() => {
                       Object.assign(SEND, {

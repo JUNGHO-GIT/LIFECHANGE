@@ -53,7 +53,6 @@ export const list = {
       money_plan_dateEnd: {
         $gte: dateStart_param,
       },
-      money_plan_dateType: dateType_param,
     });
     return finalResult;
   },
@@ -73,7 +72,6 @@ export const list = {
         money_plan_dateEnd: {
           $gte: dateStart_param,
         },
-        money_plan_dateType: dateType_param,
       }},
       {$project: {
         _id: 1,

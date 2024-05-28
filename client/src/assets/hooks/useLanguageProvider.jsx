@@ -50,6 +50,7 @@ export const useTranslate = () => {
       viewWeek: {ko: "주별", en: "Week View"},
       viewMonth: {ko: "월별", en: "Month View"},
       viewYear: {ko: "년별", en: "Year View"},
+      viewSelect: {ko: "선택별", en: "Select View"},
     },
     header: {
       login: {ko: "로그인", en: "Login"},

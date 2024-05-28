@@ -22,19 +22,17 @@ export const Picker = ({
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
-  const selectStr
-  = (secondStr === "list" || thirdStr === "list") ? (
-    "h-min0 h-4vh fs-0-7rem"
+  const selectStr = (secondStr === "list" || thirdStr === "list") ? (
+    "h-min0 h-4vh fs-0-7rem pointer"
   ) : (secondStr === "save" || thirdStr === "save") ? (
-    "fs-0-8rem"
-  ) : "";
+    "fs-0-8rem pointer"
+  ) : "pointer";
 
-  const dateStr
-  = (secondStr === "list" || thirdStr === "list") ? (
-    "w-50vw h-min0 h-4vh fs-0-7rem"
+  const dateStr = (secondStr === "list" || thirdStr === "list") ? (
+    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
   ) : (secondStr === "save" || thirdStr === "save") ? (
-    "w-40vw fs-0-8rem"
-  ) : "";
+    "w-40vw fs-0-8rem pointer"
+  ) : "pointer";
 
   // 1. day --------------------------------------------------------------------------------------->
   const daySection = () => (
@@ -239,8 +237,7 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("common-duration")}
-          variant={"outlined"}
-          value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           InputProps={{
             readOnly: true,
             className: dateStr,
@@ -327,8 +324,7 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("common-duration")}
-          variant={"outlined"}
-          value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           InputProps={{
             readOnly: true,
             className: dateStr,
@@ -415,8 +411,7 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("common-duration")}
-          variant={"outlined"}
-          value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           InputProps={{
             readOnly: true,
             className: dateStr,
@@ -457,8 +452,7 @@ export const Picker = ({
                   const {outsideCurrentMonth, day, ...other} = props;
                   const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
                   const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
-                  const isSelected =
-                  DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
+                  const isSelected = DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
                   DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
                   let borderRadius = "";
                   let backgroundColor = "";
@@ -484,15 +478,19 @@ export const Picker = ({
                         boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
                       }}
                       onDaySelect={(day) => {
-                        if (!DATE.dateStart || DATE.dateEnd || moment(day).isBefore(DATE.dateStart)) {
-                          setDATE((prev) => ({
+                        if (
+                          !DATE.dateStart ||
+                          DATE.dateEnd ||
+                          moment(day).isBefore(DATE.dateStart)
+                        ) {
+                          setDATE((prev={}) => ({
                             ...prev,
                             dateStart: moment(day).format("YYYY-MM-DD"),
-                            dateEnd: undefined
+                            dateEnd: ""
                           }));
                         }
                         else {
-                          setDATE((prev) => ({
+                          setDATE((prev={}) => ({
                             ...prev,
                             dateStart: prev.dateStart,
                             dateEnd: moment(day).format("YYYY-MM-DD")
@@ -513,7 +511,7 @@ export const Picker = ({
           size={"small"}
           label={translate("common-duration")}
           variant={"outlined"}
-          value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
+          value={`${DATE.dateStart}~${DATE.dateEnd}`}
           InputProps={{
             readOnly: true,
             className: dateStr,
@@ -601,8 +599,15 @@ export const Picker = ({
     )
   );
 
-  // 6. default ----------------------------------------------------------------------------------->
-  const defaultNode = () => (
+  // 6. list -------------------------------------------------------------------------------------->
+  const listNode = () => (
+    <Div className={"d-row"}>
+      {selectSection()}
+    </Div>
+  );
+
+  // 6. save -------------------------------------------------------------------------------------->
+  const saveNode = () => (
     <Div className={"d-row"}>
       {selectNode()}
       {DATE.dateType === "day" ? (
@@ -622,7 +627,11 @@ export const Picker = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {defaultNode()}
+      {secondStr === "list" || thirdStr === "list" ? (
+        listNode()
+      ) : secondStr === "save" || thirdStr === "save" ? (
+        saveNode()
+      ) : null}
     </>
   );
 };

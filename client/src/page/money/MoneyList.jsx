@@ -192,9 +192,10 @@ export const MoneyList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT?.map((item, index) => (
-                <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
-                key={`data-${index}`}
-                className={"table-tbody-tr"}>
+                <TableRow
+                  ref={index === OBJECT.length - 1 ? lastRowRef : null}
+                  key={`data-${index}`}
+                  className={"table-tbody-tr"}>
                   <TableCell>
                     <Link onClick={() => {
                       Object.assign(SEND, {
