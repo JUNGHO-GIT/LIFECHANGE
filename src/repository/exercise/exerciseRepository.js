@@ -56,9 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
-        exercise_dateType: dateType_param
-      }),
       ...(part_param === "전체" ? {} : {
         "exercise_section.exercise_part_val": part_param
       }),
@@ -86,9 +83,6 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          exercise_dateType: dateType_param
-        }),
         ...(part_param === "전체" ? {} : {
           "exercise_section.exercise_part_val": part_param
         }),

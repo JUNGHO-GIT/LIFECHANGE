@@ -56,9 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
-        sleep_dateType: dateType_param
-      }),
     });
     return finalResult;
   },
@@ -80,9 +77,6 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
-          sleep_dateType: dateType_param
-        }),
       }},
       {$unwind: "$sleep_section"},
       {$project: {

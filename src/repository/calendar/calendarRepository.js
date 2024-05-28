@@ -69,9 +69,6 @@ export const list = {
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          calendar_dateType: dateType_param
-        }),
       }},
     ]);
     return finalResult;
@@ -93,6 +90,9 @@ export const detail = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -114,6 +114,9 @@ export const save = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;
@@ -174,6 +177,9 @@ export const deletes = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
+      ...(dateType_param === "전체" ? {} : {
+        calendar_dateType: dateType_param
+      }),
     })
     .lean();
     return finalResult;

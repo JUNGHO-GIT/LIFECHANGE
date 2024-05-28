@@ -54,9 +54,6 @@ export const list = {
       sleep_plan_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "전체" ? {} : {
-        sleep_plan_dateType: dateType_param
-      }),
     });
     return finalResult;
   },
@@ -76,9 +73,6 @@ export const list = {
         sleep_plan_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          sleep_plan_dateType: dateType_param
-        }),
       }},
       {$project: {
         _id: 1,

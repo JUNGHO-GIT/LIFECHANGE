@@ -602,28 +602,11 @@ export const Picker = ({
   );
 
   // 6. list -------------------------------------------------------------------------------------->
-  const listNode = () => {
-    setDATE((prev={}) => ({
-      ...prev,
-      dateType: "전체",
-    }));
-    return (
-      <Div className={"d-row"}>
-        {selectNode()}
-        {DATE.dateType === "day" ? (
-          daySection()
-        ) : DATE.dateType === "week" ? (
-          weekSection()
-        ) : DATE.dateType === "month" ? (
-          monthSection()
-        ) : DATE.dateType === "year" ? (
-          yearSection()
-        ) : DATE.dateType === "select" ? (
-          selectSection()
-        ) : null}
-      </Div>
-    )
-  };
+  const listNode = () => (
+    <Div className={"d-row"}>
+      {yearSection()}
+    </Div>
+  );
 
   // 6. save -------------------------------------------------------------------------------------->
   const saveNode = () => (

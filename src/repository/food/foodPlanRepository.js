@@ -23,9 +23,6 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
-          food_plan_dateType: dateType_param
-        }),
       }},
       {$match: {
         food_plan_dateType: {$exists: true}
@@ -53,9 +50,6 @@ export const list = {
       food_plan_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "전체" ? {} : {
-        food_plan_dateType: dateType_param
-      }),
     });
     return finalResult;
   },
@@ -75,9 +69,6 @@ export const list = {
         food_plan_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          food_plan_dateType: dateType_param
-        }),
       }},
       {$project: {
         _id: 1,

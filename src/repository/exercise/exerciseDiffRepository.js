@@ -18,9 +18,6 @@ export const list = {
       exercise_plan_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "전체" ? {} : {
-        exercise_plan_dateType: dateType_param
-      }),
     });
     return finalResult;
   },
@@ -40,9 +37,6 @@ export const list = {
         exercise_plan_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          exercise_plan_dateType: dateType_param
-        }),
       }},
       {$project: {
         _id: 1,
@@ -76,9 +70,6 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...(dateType_param === "전체" ? {} : {
-          exercise_dateType: dateType_param
-        }),
       }},
       {$project: {
         _id: 1,

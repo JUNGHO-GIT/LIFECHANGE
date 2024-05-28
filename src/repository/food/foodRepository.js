@@ -56,9 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
-        food_dateType: dateType_param
-      }),
       ...(part_param === "전체" ? {} : {
         "food_section.food_part_val": part_param
       }),
@@ -86,9 +83,6 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
-          food_dateType: dateType_param
-        }),
       }},
       {$project: {
         food_dateType: 1,
