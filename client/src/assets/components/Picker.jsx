@@ -1,6 +1,6 @@
 // Picker.jsx
 
-import {React, useEffect} from "../../import/ImportReacts.jsx";
+import {React} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
@@ -476,7 +476,7 @@ export const Picker = ({
               timezone={"Asia/Seoul"}
               views={["day"]}
               readOnly={false}
-              value={moment(DATE.dateStart)}
+              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
               className={"radius border"}
               slots={{
                 day: (props) => {

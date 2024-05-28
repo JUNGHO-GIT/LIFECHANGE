@@ -107,6 +107,16 @@ export const UserSetting = () => {
                   }} />
                 </TableCell>
               </TableRow>
+              <TableRow>
+                <TableCell className={"w-90vw"}>
+                  {translate("user-info")}
+                </TableCell>
+                <TableCell className={"w-10vw"}>
+                  <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
+                    navigate("/user/data/info")
+                  }} />
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
