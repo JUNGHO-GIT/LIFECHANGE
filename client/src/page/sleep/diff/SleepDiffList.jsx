@@ -61,13 +61,11 @@ export const SleepDiff = () => {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_demo: false,
-    sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
-    sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_night: "00:00",
@@ -119,7 +117,6 @@ export const SleepDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
@@ -145,7 +142,6 @@ export const SleepDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
@@ -161,9 +157,6 @@ export const SleepDiff = () => {
                     <Div>~</Div>
                     <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {translate("common-plan")}
@@ -200,13 +193,6 @@ export const SleepDiff = () => {
                 </TableCell>
                 <TableCell className={item.sleep_diff_time_color}>
                   {item.sleep_diff_time}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

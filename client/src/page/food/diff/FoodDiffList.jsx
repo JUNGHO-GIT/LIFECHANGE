@@ -61,14 +61,12 @@ export const FoodDiff = () => {
     _id: "",
     food_plan_number: 0,
     food_plan_demo: false,
-    food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
     food_plan_fat: 0,
-    food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
@@ -123,7 +121,6 @@ export const FoodDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
@@ -150,7 +147,6 @@ export const FoodDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
@@ -167,9 +163,6 @@ export const FoodDiff = () => {
                     <Div>~</Div>
                     <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
-                </TableCell>
-                <TableCell>
-                  {item.food_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {translate("common-plan")}
@@ -215,13 +208,6 @@ export const FoodDiff = () => {
                 </TableCell>
                 <TableCell className={item.food_diff_fat_color}>
                   {numeral(item.food_diff_fat).format('0,0')}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

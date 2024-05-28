@@ -61,7 +61,6 @@ export const MoneyPlanList = () => {
     _id: "",
     money_plan_number: 0,
     money_plan_demo: false,
-    money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,
@@ -106,7 +105,6 @@ export const MoneyPlanList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("common-dateType")}</TableCell>
                 <TableCell>{translate("money-in")}</TableCell>
                 <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
@@ -130,7 +128,6 @@ export const MoneyPlanList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className="table-thead-tr">
                 <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("common-dateType")}</TableCell>
                 <TableCell>{translate("money-in")}</TableCell>
                 <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
@@ -154,9 +151,6 @@ export const MoneyPlanList = () => {
                       <Div>~</Div>
                       <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
                     </Link>
-                  </TableCell>
-                  <TableCell>
-                    {item.money_plan_dateType}
                   </TableCell>
                   <TableCell>
                     {numeral(item.money_plan_in).format("0,0")}

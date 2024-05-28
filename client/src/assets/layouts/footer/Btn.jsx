@@ -113,8 +113,7 @@ export const Btn = ({
           functions?.setPART(newPartVal);
           functions?.setPAGING((prev) => ({
             ...prev,
-            page: 1,
-            limit: 10
+            page: 1
           }));
         }}>
         <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>

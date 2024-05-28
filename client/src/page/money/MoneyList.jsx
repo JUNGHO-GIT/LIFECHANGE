@@ -59,7 +59,6 @@ export const MoneyList = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
-    money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_in: 0,
@@ -112,7 +111,6 @@ export const MoneyList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("common-dateType")}</TableCell>
                 <TableCell>{translate("money-in")}</TableCell>
                 <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
@@ -136,7 +134,6 @@ export const MoneyList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("common-dateType")}</TableCell>
                 <TableCell>{translate("money-in")}</TableCell>
                 <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
@@ -160,20 +157,10 @@ export const MoneyList = () => {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {item.money_dateType}
-                  </TableCell>
-                  <TableCell>
                     {numeral(item.money_total_in).format('0,0')}
                   </TableCell>
                   <TableCell>
                     {numeral(item.money_total_out).format('0,0')}
-                  </TableCell>
-                </TableRow>
-              ))}
-              {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-                <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                  <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                    <Skeleton className={"animation"}/>
                   </TableCell>
                 </TableRow>
               ))}

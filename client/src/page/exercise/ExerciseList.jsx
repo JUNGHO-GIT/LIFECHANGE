@@ -59,7 +59,6 @@ export const ExerciseList = () => {
     _id: "",
     exercise_number: 0,
     exercise_demo: false,
-    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
@@ -116,7 +115,6 @@ export const ExerciseList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
               <TableCell>{translate("exercise-weight")}</TableCell>
@@ -141,7 +139,6 @@ export const ExerciseList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
               <TableCell>{translate("exercise-weight")}</TableCell>
@@ -166,9 +163,6 @@ export const ExerciseList = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {item.exercise_dateType}
-                </TableCell>
-                <TableCell>
                   {numeral(item.exercise_total_volume).format("0,0")}
                 </TableCell>
                 <TableCell>
@@ -176,13 +170,6 @@ export const ExerciseList = () => {
                 </TableCell>
                 <TableCell>
                   {numeral(item.exercise_body_weight).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

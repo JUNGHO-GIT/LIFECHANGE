@@ -61,7 +61,6 @@ export const FoodPlanList = () => {
     _id: "",
     food_plan_number: 0,
     food_plan_demo: false,
-    food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
@@ -108,7 +107,6 @@ export const FoodPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -134,7 +132,6 @@ export const FoodPlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -162,9 +159,6 @@ export const FoodPlanList = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {item.food_plan_dateType}
-                </TableCell>
-                <TableCell>
                   {numeral(item.food_plan_kcal).format('0,0')}
                 </TableCell>
                 <TableCell>
@@ -175,13 +169,6 @@ export const FoodPlanList = () => {
                 </TableCell>
                 <TableCell>
                   {numeral(item.food_plan_fat).format('0,0')}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

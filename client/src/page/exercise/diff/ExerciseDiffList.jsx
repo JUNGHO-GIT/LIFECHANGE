@@ -59,14 +59,12 @@ export const ExerciseDiff = () => {
     _id: "",
     exercise_plan_number: 0,
     exercise_plan_demo: false,
-    exercise_plan_dateType: "",
     exercise_plan_dateStart: "0000-00-00",
     exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,
     exercise_plan_volume: 0,
     exercise_plan_weight: 0,
     exercise_plan_cardio: "00:00",
-    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_count: 0,
@@ -121,7 +119,6 @@ export const ExerciseDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
@@ -148,7 +145,6 @@ export const ExerciseDiff = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("common-category")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
@@ -165,9 +161,6 @@ export const ExerciseDiff = () => {
                     <Div>~</Div>
                     <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
                   </Link>
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_dateType}
                 </TableCell>
                 <TableCell>
                   {translate("common-plan")}
@@ -213,13 +206,6 @@ export const ExerciseDiff = () => {
                 </TableCell>
                 <TableCell className={item.exercise_diff_weight_color}>
                   {numeral(item.exercise_diff_weight).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

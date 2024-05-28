@@ -59,7 +59,6 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_demo: false,
-    sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
@@ -107,7 +106,6 @@ export const SleepList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -132,7 +130,6 @@ export const SleepList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("sleep-night")}</TableCell>
               <TableCell>{translate("sleep-morning")}</TableCell>
               <TableCell>{translate("sleep-time")}</TableCell>
@@ -157,9 +154,6 @@ export const SleepList = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {item.sleep_dateType}
-                </TableCell>
-                <TableCell>
                   {item.sleep_section[0]?.sleep_night}
                 </TableCell>
                 <TableCell>
@@ -167,13 +161,6 @@ export const SleepList = () => {
                 </TableCell>
                 <TableCell>
                   {item.sleep_section[0]?.sleep_time}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

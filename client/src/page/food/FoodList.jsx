@@ -59,7 +59,6 @@ export const FoodList = () => {
     _id: "",
     food_number: 0,
     food_demo: false,
-    food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
@@ -118,7 +117,6 @@ export const FoodList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -144,7 +142,6 @@ export const FoodList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("food-kcal")}</TableCell>
               <TableCell>{translate("food-carb")}</TableCell>
               <TableCell>{translate("food-protein")}</TableCell>
@@ -170,9 +167,6 @@ export const FoodList = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {item.food_dateType}
-                </TableCell>
-                <TableCell>
                   {numeral(item.food_total_kcal).format("0,0")}
                 </TableCell>
                 <TableCell>
@@ -183,13 +177,6 @@ export const FoodList = () => {
                 </TableCell>
                 <TableCell>
                   {numeral(item.food_total_fat).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

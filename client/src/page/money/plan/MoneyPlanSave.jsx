@@ -62,7 +62,6 @@ export const MoneyPlanSave = () => {
     _id: "",
     money_plan_number: 0,
     money_plan_demo: false,
-    money_plan_dateType: "",
     money_plan_dateStart: "0000-00-00",
     money_plan_dateEnd: "0000-00-00",
     money_plan_in: 0,

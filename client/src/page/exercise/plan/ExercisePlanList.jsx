@@ -59,7 +59,6 @@ export const ExercisePlanList = () => {
     _id: "",
     exercise_plan_number: 0,
     exercise_plan_demo: false,
-    exercise_plan_dateType: "",
     exercise_plan_dateStart: "0000-00-00",
     exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,
@@ -106,7 +105,6 @@ export const ExercisePlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -132,7 +130,6 @@ export const ExercisePlanList = () => {
           <TableHead className={"table-thead"}>
             <TableRow className={"table-thead-tr"}>
               <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-dateType")}</TableCell>
               <TableCell>{translate("exercise-count")}</TableCell>
               <TableCell>{translate("exercise-volume")}</TableCell>
               <TableCell>{translate("exercise-cardio")}</TableCell>
@@ -160,9 +157,6 @@ export const ExercisePlanList = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {item.exercise_plan_dateType}
-                </TableCell>
-                <TableCell>
                   {numeral(item.exercise_plan_count).format("0,0")}
                 </TableCell>
                 <TableCell>
@@ -173,13 +167,6 @@ export const ExercisePlanList = () => {
                 </TableCell>
                 <TableCell>
                   {numeral(item.exercise_plan_weight).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-            {LOADING && Array.from({length: Object.keys(OBJECT_DEF[0]).length}, (_, index) => (
-              <TableRow key={`skeleton-${index}`} className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                  <Skeleton className={"animation"}/>
                 </TableCell>
               </TableRow>
             ))}

@@ -62,7 +62,6 @@ export const ExercisePlanSave = () => {
     _id: "",
     exercise_plan_number: 0,
     exercise_plan_demo: false,
-    exercise_plan_dateType: "",
     exercise_plan_dateStart: "0000-00-00",
     exercise_plan_dateEnd: "0000-00-00",
     exercise_plan_count: 0,

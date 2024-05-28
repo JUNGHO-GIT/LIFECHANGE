@@ -64,7 +64,6 @@ export const ExerciseSave = () => {
     _id: "",
     exercise_number: 0,
     exercise_demo: false,
-    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,

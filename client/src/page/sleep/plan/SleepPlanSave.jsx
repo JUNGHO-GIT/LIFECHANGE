@@ -62,7 +62,6 @@ export const SleepPlanSave = () => {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_demo: false,
-    sleep_plan_dateType: "",
     sleep_plan_dateStart: "0000-00-00",
     sleep_plan_dateEnd: "0000-00-00",
     sleep_plan_night: "00:00",

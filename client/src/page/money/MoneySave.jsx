@@ -64,7 +64,6 @@ export const MoneySave = () => {
     _id: "",
     money_number: 0,
     money_demo: false,
-    money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_in: 0,

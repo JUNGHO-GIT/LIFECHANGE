@@ -63,7 +63,6 @@ export const FoodPlanSave = () => {
     _id: "",
     food_plan_number: 0,
     food_plan_demo: false,
-    food_plan_dateType: "",
     food_plan_dateStart: "0000-00-00",
     food_plan_dateEnd: "0000-00-00",
     food_plan_kcal: 0,
