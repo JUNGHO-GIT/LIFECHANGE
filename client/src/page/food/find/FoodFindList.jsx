@@ -29,9 +29,9 @@ export const FoodFindList = () => {
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "전체",
-      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
+      dateType: "day",
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
@@ -273,8 +273,8 @@ export const FoodFindList = () => {
     );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : (
-        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      LOADING ? loadingNode() : (
+        COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
       )
     );
     // 7-9. first

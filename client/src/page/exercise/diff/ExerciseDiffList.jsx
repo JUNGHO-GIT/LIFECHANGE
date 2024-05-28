@@ -30,8 +30,8 @@ export const ExerciseDiff = () => {
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       dateType: "day",
-      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
@@ -231,8 +231,8 @@ export const ExerciseDiff = () => {
     );
     // 7-8. table
     const tableSection = () => (
-      COUNT.totalCnt === 0 ? tableEmpty() : (
-        LOADING ? loadingNode() : OBJECT?.map((_, i) => tableFragment(i))
+      LOADING ? loadingNode() : (
+        COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
       )
     );
     // 7-9. first

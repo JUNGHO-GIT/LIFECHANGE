@@ -29,8 +29,8 @@ export const UserDataList = () => {
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       dateType: "day",
-      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
