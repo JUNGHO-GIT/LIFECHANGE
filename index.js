@@ -67,20 +67,25 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 // mongoose.set("debug", customLogger);
 
 // ------------------------------------------------------------------------------------------------>
-const appPort = Number(process.env.PORT);
-try {
-  app.set("port", appPort);
-  console.log(`서버가 포트 ${appPort}에서 실행 중입니다.`);
+const appPort = Number(process.env.PORT) || 3000; // 기본 포트 3000 설정
+let port = appPort;
+
+function startServer(port) {
+  app.set("port", port);
+  app.listen(port, () => {
+    console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
+  })
+  .on('error', (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.log(`${port} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
+      startServer(port + 1); // 포트를 1 증가시켜 재시도
+    }
+    else {
+      console.error(`서버 실행 중 오류 발생: ${error}`);
+    }
+  });
 }
-catch (error) {
-  if (error.code === "EADDRINUSE") {
-    console.log(`${appPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
-    app.set("port", appPort + 1);
-  }
-  else {
-    console.error(`서버 실행 중 오류 발생: ${error}`);
-  }
-}
+startServer(port);
 
 // ------------------------------------------------------------------------------------------------>
 app.use(cors(), (req, res, next) => {
