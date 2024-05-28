@@ -22,15 +22,10 @@ export const UserDataDetail = () => {
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",

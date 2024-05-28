@@ -29,16 +29,11 @@ export const MoneyPlanSave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -297,10 +292,10 @@ export const MoneyPlanSave = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, SEND, COUNT
+        DATE, SEND, COUNT, EXIST
       }}
       functions={{
-        setDATE, setSEND, setCOUNT
+        setDATE, setSEND, setCOUNT, setEXIST
       }}
       handlers={{
         navigate, flowSave
@@ -308,10 +303,18 @@ export const MoneyPlanSave = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );

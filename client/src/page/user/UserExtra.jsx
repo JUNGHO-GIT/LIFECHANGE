@@ -222,7 +222,7 @@ export const UserExtra = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
     </>
   );
 };

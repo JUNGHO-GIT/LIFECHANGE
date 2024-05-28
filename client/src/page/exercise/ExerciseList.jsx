@@ -45,7 +45,7 @@ export const ExerciseList = () => {
     toSave: "/exercise/save",
   });
   const [PAGING, setPAGING] = useState({
-    order: "asc",
+    sort: "asc",
     page: 1,
   });
   const [COUNT, setCOUNT] = useState({
@@ -103,7 +103,7 @@ export const ExerciseList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -213,6 +213,14 @@ export const ExerciseList = () => {
       handlers={{
         navigate
       }}
+    />
+  );
+
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
     />
   );
 

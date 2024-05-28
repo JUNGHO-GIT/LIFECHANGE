@@ -38,7 +38,7 @@ export const UserDataList = () => {
   const [LOADING, setLOADING] = useState(false);
   const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
-    order: "asc",
+    sort: "asc",
     page: 1,
   });
   const [COUNT, setCOUNT] = useState({
@@ -204,7 +204,7 @@ export const UserDataList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
@@ -775,10 +775,18 @@ export const UserDataList = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );

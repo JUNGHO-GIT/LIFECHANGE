@@ -32,7 +32,7 @@ export const list = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  const sort = PAGING_param.order === "asc" ? 1 : -1;
+  const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.list.cnt(

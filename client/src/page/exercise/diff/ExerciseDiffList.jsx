@@ -45,7 +45,7 @@ export const ExerciseDiff = () => {
     toSave: "/exercise/plan/save",
   });
   const [PAGING, setPAGING] = useState({
-    order: "asc",
+    sort: "asc",
     page: 1,
   });
   const [COUNT, setCOUNT] = useState({
@@ -107,7 +107,7 @@ export const ExerciseDiff = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -252,10 +252,18 @@ export const ExerciseDiff = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );

@@ -450,10 +450,10 @@ export const MoneySave = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, SEND, COUNT
+        DATE, SEND, COUNT, EXIST
       }}
       functions={{
-        setDATE, setSEND, setCOUNT
+        setDATE, setSEND, setCOUNT, setEXIST
       }}
       handlers={{
         navigate, flowSave
@@ -461,10 +461,18 @@ export const MoneySave = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );

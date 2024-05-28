@@ -122,7 +122,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
     </>
   );
 };

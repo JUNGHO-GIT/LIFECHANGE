@@ -45,7 +45,7 @@ export const SleepList = () => {
     toSave: "/sleep/save",
   });
   const [PAGING, setPAGING] = useState({
-    order: "asc",
+    sort: "asc",
     page: 1,
   });
   const [COUNT, setCOUNT] = useState({
@@ -94,7 +94,7 @@ export const SleepList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -208,10 +208,18 @@ export const SleepList = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );

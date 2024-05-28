@@ -44,7 +44,6 @@ export const list = {
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    part_param, title_param,
   ) => {
     const finalResult = await Money.countDocuments({
       user_id: user_id_param,
@@ -63,7 +62,7 @@ export const list = {
   list: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    part_param, title_param, sort_param, page_param,
+    sort_param, page_param,
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {

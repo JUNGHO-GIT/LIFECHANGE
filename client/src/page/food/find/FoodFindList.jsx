@@ -46,7 +46,7 @@ export const FoodFindList = () => {
     toSave:"/food/find/save",
   });
   const [PAGING, setPAGING] = useState({
-    order: "asc",
+    sort: "asc",
     query: "",
     page: 1,
   });
@@ -302,10 +302,18 @@ export const FoodFindList = () => {
     />
   );
 
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading
+      LOADING={LOADING}
+      setLOADING={setLOADING}
+    />
+  );
+
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {tableNode()}
+      {LOADING ? loadingNode() : tableNode()}
       {footerNode()}
     </>
   );
