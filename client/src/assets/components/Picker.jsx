@@ -31,20 +31,35 @@ export const Picker = ({
     "h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
-  const dateStr =
+  const dateStr1 =
   (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
-    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
-    "w-52vw h-min40 fs-0-8rem pointer"
+    "w-60vw"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-75vw h-min40 fs-0-8rem pointer"
+    "w-75vw"
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-52vw h-min40 fs-0-8rem pointer"
-  ) : "pointer";
+    "w-60vw"
+  ) : "";
+
+  const dateStr2 =
+  (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
+    "h-min0 h-4vh fs-0-7rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
+    "h-min0 h-4vh fs-0-7rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
+    "h-min0 h-4vh fs-0-7rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
+    "h-min40 fs-0-8rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "h-min40 fs-0-8rem pointer"
+  ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "h-min40 fs-0-8rem pointer"
+  ) : "";
 
   // 1. day --------------------------------------------------------------------------------------->
   const daySection = () => (
@@ -136,9 +151,10 @@ export const Picker = ({
           label={translate("common-date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
+          className={dateStr1}
           InputProps={{
             readOnly: true,
-            className: dateStr,
+            className: dateStr2,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -250,9 +266,10 @@ export const Picker = ({
           size={"small"}
           label={translate("common-duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          className={dateStr1}
           InputProps={{
             readOnly: true,
-            className: dateStr,
+            className: dateStr2,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -337,9 +354,10 @@ export const Picker = ({
           size={"small"}
           label={translate("common-duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          className={dateStr1}
           InputProps={{
             readOnly: true,
-            className: dateStr,
+            className: dateStr2,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -424,9 +442,10 @@ export const Picker = ({
           size={"small"}
           label={translate("common-duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          className={dateStr1}
           InputProps={{
             readOnly: true,
-            className: dateStr,
+            className: dateStr2,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -524,9 +543,10 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
+          className={dateStr1}
           InputProps={{
             readOnly: true,
-            className: dateStr,
+            className: dateStr2,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
