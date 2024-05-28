@@ -2,13 +2,11 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {axios, numeral} from "../../../import/ImportLibs.jsx";
+import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table, Card, Skeleton} from "../../../import/ImportMuis.jsx";
-import {Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -25,32 +23,29 @@ export const UserDataList = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
+  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "day",
+      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [PART, setPART] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
+    order: "asc",
     page: 1,
-    limit: 10
   });
   const [COUNT, setCOUNT] = useState({
     inputCnt: 0,
     totalCnt: 0,
     sectionCnt: 0
   });
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEF = [{
@@ -186,133 +181,38 @@ export const UserDataList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    loadMoreData();
-  }, []);
-
-  // 2-4. useCallback ----------------------------------------------------------------------------->
-  const loadMoreData = useCallback(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/data/list`, {
+    axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
-        FILTER: FILTER,
         PAGING: PAGING,
-        PART: PART
+        DATE: DATE,
       },
+    })
+    .then((res) => {
+      setOBJECT_EXERCISE_PLAN(res.data.exercisePlan || OBJECT_EXERCISE_PLAN_DEF);
+      setOBJECT_EXERCISE(res.data.exercise || OBJECT_EXERCISE_DEF);
+      setOBJECT_FOOD_PLAN(res.data.foodPlan || OBJECT_FOOD_PLAN_DEF);
+      setOBJECT_FOOD(res.data.food || OBJECT_FOOD_DEF);
+      setOBJECT_MONEY_PLAN(res.data.moneyPlan || OBJECT_MONEY_PLAN_DEF);
+      setOBJECT_MONEY(res.data.money || OBJECT_MONEY_DEF);
+      setOBJECT_SLEEP_PLAN(res.data.sleepPlan || OBJECT_SLEEP_PLAN_DEF);
+      setOBJECT_SLEEP(res.data.sleep || OBJECT_SLEEP_DEF);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+      setLOADING(false);
+    })
+    .catch((err) => {
+      console.log("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    if (PART === "exercisePlan") {
-      setOBJECT_EXERCISE_PLAN((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "exercise") {
-      setOBJECT_EXERCISE((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "foodPlan") {
-      setOBJECT_FOOD_PLAN((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "food") {
-      setOBJECT_FOOD((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "moneyPlan") {
-      setOBJECT_MONEY_PLAN((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "money") {
-      setOBJECT_MONEY((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "sleepPlan") {
-      setOBJECT_SLEEP_PLAN((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    else if (PART === "sleep") {
-      setOBJECT_SLEEP((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
-          return [...res.data.result];
-        }
-        else {
-          return [...prev, ...res.data.result];
-        }
-      });
-    }
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    if (res.data.result.length < PAGING.limit) {
-      setMORE(false);
-    }
-    setPAGING((prev) => ({
-      ...prev,
-      page: prev.page + 1
-    }));
-    setLOADING(false);
-  }, [
-    sessionId, MORE, PART,
-    PAGING.page, PAGING.limit
-  ]);
-
-  // 2-4. useCallback ----------------------------------------------------------------------------->
-  const lastRowRef = useCallback((node) => {
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && MORE) {
-        loadMoreData();
-      }
-    });
-    if (node) {
-      observer.current.observe(node);
-    }
-  }, [LOADING, MORE]);
+  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
@@ -380,11 +280,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-                <TableRow
-                  key={`data-${index}`}
-                  className={"table-tbody-tr"}
-                  ref={index === OBJECT_EXERCISE_PLAN.length - 1 ? lastRowRef : null}
-                >
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                   <TableCell>
                     <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
                     <Div>~</Div>
@@ -460,11 +356,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_EXERCISE?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_EXERCISE.length - 1 ? lastRowRef : null}
-              >
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   {item.exercise_dateStart?.substring(5, 10)}
                 </TableCell>
@@ -537,11 +429,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_FOOD_PLAN.length - 1 ? lastRowRef : null}
-              >
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
@@ -619,9 +507,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_FOOD?.map((item, index) => (
-              <TableRow ref={index === OBJECT_FOOD.length - 1 ? lastRowRef : null}
-              key={`data-${index}`}
-              className={"table-tbody-tr"}>
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   {item.food_dateStart?.substring(5, 10)}
                 </TableCell>
@@ -693,11 +579,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_MONEY_PLAN.length - 1 ? lastRowRef : null}
-              >
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
@@ -765,11 +647,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_MONEY?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_MONEY.length - 1 ? lastRowRef : null}
-              >
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   {item.money_dateStart?.substring(5, 10)}
                 </TableCell>
@@ -837,11 +715,7 @@ export const UserDataList = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <TableRow
-                key={`data-${index}`}
-                className={"table-tbody-tr"}
-                ref={index === OBJECT_SLEEP_PLAN.length - 1 ? lastRowRef : null}
-              >
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
                   <Div>~</Div>
@@ -914,11 +788,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_SLEEP?.map((item, index) => (
-                <TableRow
-                  key={`data-${index}`}
-                  className={"table-tbody-tr"}
-                  ref={index === OBJECT_SLEEP.length - 1 ? lastRowRef : null}
-                >
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                   <TableCell>
                     {item.sleep_dateStart?.substring(5, 10)}
                   </TableCell>

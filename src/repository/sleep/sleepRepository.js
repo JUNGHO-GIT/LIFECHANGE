@@ -63,8 +63,7 @@ export const list = {
   list: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    sort_param,
-    limit_param, page_param,
+    sort_param, page_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
@@ -92,8 +91,7 @@ export const list = {
         }]
       }},
       {$sort: {sleep_dateStart: sort_param}},
-      {$skip: Number(page_param - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)},
+      {$skip: Number(page_param - 1)},
     ]);
 
     return finalResult;

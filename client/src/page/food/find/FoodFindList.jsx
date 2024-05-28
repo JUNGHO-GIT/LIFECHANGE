@@ -24,31 +24,20 @@ export const FoodFindList = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
-  const [checkedQueries, setCheckedQueries] = useState({});
 
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
+      dateType: "전체",
       dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
   );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      query: ""
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [checkedQueries, setCheckedQueries] = useState({});
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -57,8 +46,9 @@ export const FoodFindList = () => {
     toSave:"/food/find/save",
   });
   const [PAGING, setPAGING] = useState({
-    page: 0,
-    limit: 10,
+    order: "asc",
+    query: "",
+    page: 1,
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -84,7 +74,7 @@ export const FoodFindList = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
-    if (FILTER?.query === "") {
+    if (PAGING?.query === "") {
       return;
     }
     flowFind();
@@ -103,7 +93,7 @@ export const FoodFindList = () => {
     else {
       sectionArray = [];
     }
-    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item) => (
       sectionArray.some(sectionItem => sectionItem.food_title === item.food_title)
     ));
@@ -128,7 +118,7 @@ export const FoodFindList = () => {
     }
 
     // 현재 쿼리와 페이지의 체크된 상태
-    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const queryKey = `${PAGING.query}_${PAGING.page}`;
     const pageChecked = checkedQueries[queryKey] || [];
 
     // 체크된 항목들 sectionArray에 추가 또는 제거
@@ -150,7 +140,7 @@ export const FoodFindList = () => {
 
     // sessionStorage에 저장
     sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
-  }, [checkedQueries, PAGING.page, FILTER.query, OBJECT]);
+  }, [checkedQueries, PAGING.page, PAGING.query, OBJECT]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFind = async () => {
@@ -158,7 +148,6 @@ export const FoodFindList = () => {
     const res = await axios.get(`${URL_OBJECT}/find/list`, {
       params: {
         user_id: sessionId,
-        FILTER: FILTER,
         PAGING: PAGING,
         DATE: DATE
       },
@@ -173,7 +162,7 @@ export const FoodFindList = () => {
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCheckboxChange = (index) => {
-    const queryKey = `${FILTER.query}_${PAGING.page}`;
+    const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
     updatedChecked[index] = !updatedChecked[index];
     setCheckedQueries({
@@ -259,8 +248,8 @@ export const FoodFindList = () => {
                       size={"small"}
                       checked={
                         !! (
-                          checkedQueries[`${FILTER.query}_${PAGING.page}`] &&
-                          checkedQueries[`${FILTER.query}_${PAGING.page}`][index]
+                          checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+                          checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
                         )
                       }
                       onChange={() => {
@@ -309,10 +298,10 @@ export const FoodFindList = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, FILTER, SEND, PAGING, COUNT, EXIST
+        DATE, PAGING, SEND, COUNT
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setEXIST
+        setDATE, setPAGING, setSEND, setCOUNT
       }}
       handlers={{
         navigate, flowFind

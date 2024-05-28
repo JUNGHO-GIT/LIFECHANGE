@@ -48,15 +48,14 @@ export const list = {
     return finalResult;
   },
   listExercisePlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {exercise_plan_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -71,15 +70,14 @@ export const list = {
     return finalResult;
   },
   listExercise: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {exercise_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -94,15 +92,14 @@ export const list = {
     return finalResult;
   },
   listFoodPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {food_plan_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -117,15 +114,14 @@ export const list = {
     return finalResult;
   },
   listFood: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {food_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -140,15 +136,14 @@ export const list = {
     return finalResult;
   },
   listMoneyPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {money_plan_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -163,15 +158,14 @@ export const list = {
     return finalResult;
   },
   listMoney: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {money_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -186,15 +180,14 @@ export const list = {
     return finalResult;
   },
   listSleepPlan: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {sleep_plan_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },
@@ -209,15 +202,14 @@ export const list = {
     return finalResult;
   },
   listSleep: async (
-    user_id_param, page_param, limit_param
+    user_id_param, page_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
       {$sort: {sleep_dateStart: 1}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },

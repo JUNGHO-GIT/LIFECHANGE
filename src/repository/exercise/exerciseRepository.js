@@ -56,12 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
-      ...(part_param === "전체" ? {} : {
-        "exercise_section.exercise_part_val": part_param
-      }),
-      ...(title_param === "전체" ? {} : {
-        "exercise_section.exercise_title_val": title_param
-      }),
     });
     return finalResult;
   },
@@ -69,8 +63,7 @@ export const list = {
   list: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    part_param, title_param, sort_param,
-    limit_param, page_param,
+    part_param, title_param, sort_param, page_param,
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
@@ -83,12 +76,6 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...(part_param === "전체" ? {} : {
-          "exercise_section.exercise_part_val": part_param
-        }),
-        ...(title_param === "전체" ? {} : {
-          "exercise_section.exercise_title_val": title_param
-        }),
       }},
       {$project: {
         exercise_dateType: 1,
@@ -97,26 +84,9 @@ export const list = {
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
         exercise_body_weight: 1,
-        exercise_section: {
-          $filter: {
-            input: "$exercise_section",
-            as: "section",
-            cond: {
-              $and: [
-                part_param === "전체"
-                ? {$ne: ["$$section.exercise_part_val", null]}
-                : {$eq: ["$$section.exercise_part_val", part_param]},
-                title_param === "전체"
-                ? {$ne: ["$$section.exercise_title_val", null]}
-                : {$eq: ["$$section.exercise_title_val", title_param]}
-              ]
-            }
-          }
-        }
       }},
       {$sort: {exercise_dateStart: sort_param}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   },

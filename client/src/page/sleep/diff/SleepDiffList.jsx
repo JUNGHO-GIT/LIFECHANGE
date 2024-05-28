@@ -26,13 +26,6 @@ export const SleepDiff = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
@@ -43,27 +36,19 @@ export const SleepDiff = () => {
       dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
   );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave:"/sleep/plan/save"
+    toSave: "/money/plan/save",
   });
   const [PAGING, setPAGING] = useState({
+    order: "asc",
     page: 1,
-    limit: 10
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -99,64 +84,30 @@ export const SleepDiff = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    loadMoreData();
-  }, []);
-
-  // 2-4. useCallback ----------------------------------------------------------------------------->
-  const loadMoreData = useCallback(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/diff/list`, {
+    axios.get(`${URL_OBJECT}/diff/list`, {
       params: {
         user_id: sessionId,
-        FILTER: FILTER,
         PAGING: PAGING,
         DATE: DATE,
       },
+    })
+    .then((res) => {
+      setOBJECT(res.data.result || OBJECT_DEF);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+    })
+    .catch((err) => {
+      console.log("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return [...res.data.result];
-      }
-      else {
-        return [...prev, ...res.data.result];
-      }
-    });
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    if (res.data.result.length < PAGING.limit) {
-      setMORE(false);
-    }
-    setPAGING((prev) => ({
-      ...prev,
-      page: prev.page + 1
-    }));
-    setLOADING(false);
-  }, [
-    sessionId, MORE,
-    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
-    PAGING.page, PAGING.limit,
-    DATE.dateStart, DATE.dateEnd
-  ]);
-
-  // 2-4. useCallback ----------------------------------------------------------------------------->
-  const lastRowRef = useCallback((node) => {
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && MORE) {
-        loadMoreData();
-      }
-    });
-    if (node) {
-      observer.current.observe(node);
-    }
-  }, [LOADING, MORE]);
+  }, [sessionId, PAGING.order, PAGING.page, DATE.dateEnd]);
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -203,9 +154,7 @@ export const SleepDiff = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.map((item, index) => (
-              <TableRow ref={index === OBJECT.length - 1 ? lastRowRef : null}
-              key={`data-${index}`}
-              className={"table-tbody-tr"}>
+              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
                 <TableCell>
                   <Link>
                     <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
@@ -293,10 +242,10 @@ export const SleepDiff = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, FILTER, SEND, PAGING, COUNT, EXIST
+        DATE, SEND, PAGING, COUNT
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setEXIST
+        setDATE, setSEND, setPAGING, setCOUNT
       }}
       handlers={{
         navigate

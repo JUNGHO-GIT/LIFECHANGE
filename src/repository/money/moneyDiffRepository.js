@@ -25,8 +25,7 @@ export const list = {
   listPlan: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    sort_param,
-    limit_param, page_param,
+    sort_param, page_param,
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
@@ -47,8 +46,7 @@ export const list = {
         money_plan_out: 1,
       }},
       {$sort: {money_plan_dateStart: sort_param}},
-      {$skip: Number(page_param - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)},
+      {$skip: Number(page_param - 1)},
     ]);
     return finalResult;
   },

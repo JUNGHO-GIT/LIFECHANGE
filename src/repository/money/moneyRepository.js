@@ -56,12 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(part_param === "전체" ? {} : {
-        "money_section.money_part_val": part_param
-      }),
-      ...(title_param === "전체" ? {} : {
-        "money_section.money_title_val": title_param
-      }),
     });
     return finalResult;
   },
@@ -69,8 +63,7 @@ export const list = {
   list: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    part_param, title_param, sort_param,
-    limit_param, page_param,
+    part_param, title_param, sort_param, page_param,
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
@@ -90,26 +83,9 @@ export const list = {
         money_dateEnd: 1,
         money_total_in: 1,
         money_total_out: 1,
-        money_section: {
-          $filter: {
-            input: "$money_section",
-            as: "section",
-            cond: {
-              $and: [
-                part_param === "전체"
-                ? {$ne: ["$$section.money_part_val", null]}
-                : {$eq: ["$$section.money_part_val", part_param]},
-                title_param === "전체"
-                ? {$ne: ["$$section.money_title_val", null]}
-                : {$eq: ["$$section.money_title_val", title_param]}
-              ]
-            }
-          }
-        }
       }},
       {$sort: {money_dateStart: sort_param}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   }

@@ -50,7 +50,7 @@ export const Btn = ({
     <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
       Object.keys(sessionStorage).forEach((key) => {
-        if (key.includes("FILTER") || key.includes("foodSection")) {
+        if (key.includes("foodSection")) {
           sessionStorage.removeItem(key);
         }
       });
@@ -65,14 +65,14 @@ export const Btn = ({
         size={"small"}
         variant={"outlined"}
         className={"w-150"}
-        value={objects?.FILTER?.query}
+        value={objects?.PAGING?.query}
         InputProps={{
           readOnly: false,
           startAdornment: null,
           endAdornment: null,
         }}
         onChange={(e) => {
-          functions?.setFILTER((prev={}) => ({
+          functions?.setPAGING((prev={}) => ({
             ...prev,
             query: e.target.value
           }));

@@ -56,12 +56,6 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(part_param === "전체" ? {} : {
-        "food_section.food_part_val": part_param
-      }),
-      ...(title_param === "전체" ? {} : {
-        "food_section.food_title": title_param
-      }),
     });
     return finalResult;
   },
@@ -69,8 +63,7 @@ export const list = {
   list: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    part_param, title_param, sort_param,
-    limit_param, page_param,
+    part_param, title_param, sort_param, page_param,
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
@@ -92,26 +85,9 @@ export const list = {
         food_total_carb: 1,
         food_total_protein: 1,
         food_total_fat: 1,
-        food_section: {
-          $filter: {
-            input: "$food_section",
-            as: "section",
-            cond: {
-              $and: [
-                part_param === "전체"
-                ? {$ne: ["$$section.food_part_val", null]}
-                : {$eq: ["$$section.food_part_val", part_param]},
-                title_param === "전체"
-                ? {$ne: ["$$section.food_title", null]}
-                : {$eq: ["$$section.food_title", title_param]}
-              ]
-            }
-          }
-        }
       }},
       {$sort: {food_dateStart: sort_param}},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)}
+      {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
   }

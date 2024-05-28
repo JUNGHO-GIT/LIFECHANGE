@@ -25,8 +25,7 @@ export const list = {
   listPlan: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
-    sort_param,
-    limit_param, page_param,
+    sort_param, page_param,
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
@@ -49,8 +48,7 @@ export const list = {
         food_plan_fat: 1,
       }},
       {$sort: {food_plan_dateStart: sort_param}},
-      {$skip: Number(page_param - 1) * Number(limit_param)},
-      {$limit: Number(limit_param)},
+      {$skip: Number(page_param - 1)},
     ]);
     return finalResult;
   },

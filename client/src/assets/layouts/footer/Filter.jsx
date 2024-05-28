@@ -30,19 +30,19 @@ export const Filter = ({
         size={"small"}
         label={"정렬"}
         variant={"outlined"}
-        value={objects?.FILTER?.order || "asc"}
+        value={objects?.PAGING?.order || "asc"}
         className={"w-20vw me-3"}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
         onChange={(e) => (
-          functions?.setFILTER((prev={}) => ({
+          functions?.setPAGING((prev={}) => ({
             ...prev,
             order: e.target.value
           }))
         )}>
         {["asc", "desc"].map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.FILTER?.order === item}>
+          <MenuItem key={item} value={item} selected={objects?.PAGING?.order === item}>
             {item}
           </MenuItem>
         ))}
@@ -65,7 +65,7 @@ export const Filter = ({
         size={"small"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={objects?.FILTER?.part}
+        value={objects?.PAGING?.part}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
@@ -76,7 +76,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
-          functions?.setFILTER(prev => ({
+          functions?.setPAGING(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -96,20 +96,20 @@ export const Filter = ({
         size={"small"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={objects?.FILTER?.title}
+        value={objects?.PAGING?.title}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
         onChange={(e) => {
           const newTitleVal = e.target.value;
-          const newTitleIndex = exerciseArray[objects?.FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
-          functions?.setFILTER(prev => ({
+          const newTitleIndex = exerciseArray[objects?.PAGING?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
+          functions?.setPAGING(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
           }));
         }}>
-        {exerciseArray[objects?.FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
+        {exerciseArray[objects?.PAGING?.partIdx]?.exercise_title?.map((item, idx) => (
           <MenuItem key={idx} value={item}>
             {item}
           </MenuItem>
@@ -127,7 +127,7 @@ export const Filter = ({
         size={"small"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={objects?.FILTER?.part}
+        value={objects?.PAGING?.part}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
@@ -136,7 +136,7 @@ export const Filter = ({
           const newPartIndex = foodArray.findIndex((item) => (
             item.food_part === newPartVal
           ));
-          functions?.setFILTER(prev => ({
+          functions?.setPAGING(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal
@@ -160,7 +160,7 @@ export const Filter = ({
         size={"small"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={objects?.FILTER?.part}
+        value={objects?.PAGING?.part}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
@@ -171,7 +171,7 @@ export const Filter = ({
           ));
           const newTitleIndex = 0;
           const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
-          functions?.setFILTER(prev => ({
+          functions?.setPAGING(prev => ({
             ...prev,
             partIdx: newPartIndex,
             part: newPartVal,
@@ -191,20 +191,20 @@ export const Filter = ({
         size={"small"}
         className={"ms-2 me-2"}
         variant={"outlined"}
-        value={objects?.FILTER?.title}
+        value={objects?.PAGING?.title}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
         onChange={(e) => {
           const newTitleVal = e.target.value;
-          const newTitleIndex = moneyArray[objects?.FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
-          functions?.setFILTER(prev => ({
+          const newTitleIndex = moneyArray[objects?.PAGING?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
+          functions?.setPAGING(prev => ({
             ...prev,
             titleIdx: newTitleIndex,
             title: newTitleVal
           }));
         }}>
-        {moneyArray[objects?.FILTER?.partIdx]?.money_title?.map((item, idx) => (
+        {moneyArray[objects?.PAGING?.partIdx]?.money_title?.map((item, idx) => (
           <MenuItem key={idx} value={item}>
             {item}
           </MenuItem>

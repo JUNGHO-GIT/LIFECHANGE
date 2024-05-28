@@ -22,11 +22,10 @@ export const custom = async (
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, FILTER_param, PAGING_param, PART_param
+  user_id_param, PAGING_param, PART_param
 ) => {
 
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-  const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
 
   let finalResult = [];
   let totalCnt = 0;
@@ -37,7 +36,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listExercisePlan(
-      user_id_param, page, limit
+      user_id_param, page
     );
   }
 
@@ -47,7 +46,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listExercise(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -57,7 +56,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listFoodPlan(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -67,7 +66,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listFood(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -77,7 +76,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listMoneyPlan(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -87,7 +86,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listMoney(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -97,7 +96,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listSleepPlan(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
@@ -107,7 +106,7 @@ export const list = async (
       user_id_param
     );
     finalResult = await repository.list.listSleep(
-      user_id_param, page, limit
+      user_id_param, page,
     );
   }
 
