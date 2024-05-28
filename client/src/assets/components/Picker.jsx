@@ -11,7 +11,7 @@ import {common1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Picker = ({
-  DATE, setDATE, isExist, setIsExist
+  DATE, setDATE, EXIST, setEXIST
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -58,7 +58,7 @@ export const Picker = ({
             slots={{
               day: (props) => {
                 const {outsideCurrentMonth, day, ...other} = props;
-                const isBadged = isExist.includes(moment(day).format("YYYY-MM-DD"));
+                const isBadged = EXIST.includes(moment(day).format("YYYY-MM-DD"));
                 const isSelected = DATE.dateStart === moment(day).format("YYYY-MM-DD");
                 return (
                   <Badge
@@ -601,15 +601,8 @@ export const Picker = ({
     )
   );
 
-  // 6. list -------------------------------------------------------------------------------------->
-  const listNode = () => (
-    <Div className={"d-row"}>
-      {yearSection()}
-    </Div>
-  );
-
-  // 6. save -------------------------------------------------------------------------------------->
-  const saveNode = () => (
+  // 6. default ----------------------------------------------------------------------------------->
+  const defaultNode = () => (
     <Div className={"d-row"}>
       {selectNode()}
       {DATE.dateType === "day" ? (
@@ -629,11 +622,7 @@ export const Picker = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {secondStr === "list" || thirdStr === "list" ? (
-        listNode()
-      ) : secondStr === "save" || thirdStr === "save" ? (
-        saveNode()
-      ) : null}
+      {defaultNode()}
     </>
   );
 };

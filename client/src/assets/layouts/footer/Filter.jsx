@@ -17,7 +17,9 @@ export const Filter = ({
   const moneyArray = JSON.parse(session).money || [];
   const location = useLocation();
   const PATH = location?.pathname;
+  const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -29,7 +31,7 @@ export const Filter = ({
         label={"정렬"}
         variant={"outlined"}
         value={objects?.FILTER?.order || "asc"}
-        className={"ms-2 me-2"}
+        className={"w-20vw me-3"}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
         }}
@@ -48,8 +50,8 @@ export const Filter = ({
       <Picker
         DATE={objects?.DATE}
         setDATE={functions?.setDATE}
-        isExist={objects?.isExist}
-        setIsExist={functions?.setIsExist}
+        EXIST={objects?.EXIST}
+        setEXIST={functions?.setEXIST}
       />
     </Div>
   );

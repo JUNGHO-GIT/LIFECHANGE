@@ -35,7 +35,7 @@ export const FoodPlanSave = () => {
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
   const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
-  const [isExist, setIsExist] = useState([""]);
+  const [EXIST, setEXIST] = useState([""]);
   const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
@@ -86,7 +86,7 @@ export const FoodPlanSave = () => {
         },
       },
     });
-    setIsExist(res.data.result || []);
+    setEXIST(res.data.result || []);
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
@@ -163,8 +163,8 @@ export const FoodPlanSave = () => {
       <Picker
         DATE={DATE}
         setDATE={setDATE}
-        isExist={isExist}
-        setIsExist={setIsExist}
+        EXIST={EXIST}
+        setEXIST={setEXIST}
       />
     );
     // 7-2. count

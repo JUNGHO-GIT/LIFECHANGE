@@ -29,7 +29,7 @@ export const ExerciseDiff = () => {
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
   const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
-  const [isExist, setIsExist] = useState([""]);
+  const [EXIST, setEXIST] = useState([""]);
   const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
@@ -307,10 +307,10 @@ export const ExerciseDiff = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, FILTER, SEND, PAGING, COUNT, isExist
+        DATE, FILTER, SEND, PAGING, COUNT, EXIST
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setIsExist
+        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setEXIST
       }}
       handlers={{
         navigate

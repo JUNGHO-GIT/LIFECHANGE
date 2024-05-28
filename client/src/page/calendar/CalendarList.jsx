@@ -26,7 +26,7 @@ export const CalendarList = () => {
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
   const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
-  const [isExist, setIsExist] = useState([""]);
+  const [EXIST, setEXIST] = useState([""]);
   const [MORE, setMORE] = useState(true);
   const sessionId = sessionStorage.getItem("sessionId");
 
