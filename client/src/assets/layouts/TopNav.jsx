@@ -2,10 +2,12 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
+import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
+import {Button, TextField} from "../../import/ImportMuis.jsx";
+import {money2} from "../../import/ImportImages.jsx";
 import {Tabs, Tab, tabsClasses, Paper, Card} from "../../import/ImportMuis.jsx";
-import {PopUp, Div, Img, Br10, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -186,6 +188,105 @@ export const TopNav = () => {
         ) : (
           makeIcon(part.toLowerCase(), "w-max25 h-max25", "N", popTrigger)
         )
+      )}
+    </PopUp>
+  );
+
+  // 5. property ---------------------------------------------------------------------------------->
+  const propertyNode = () => (
+    <PopUp
+      type={"innerCenter"}
+      position={"center"}
+      direction={"center"}
+      contents={({closePopup}) => {
+        const property = JSON.parse(sessionStorage.getItem("property") || "{}");
+        const totalIn = property?.totalIn || 0;
+        const totalOut = property?.totalOut || 0;
+        const totalProperty = property?.totalProperty || 0;
+        const dateStart = property?.dateStart;
+        const dateEnd = property?.dateEnd;
+        return (
+          <Div className={"w-max75vw h-max65vh border d-column p-20"}>
+            <Div className={"d-center"}>
+              <Div className={"fs-1-7rem"}>
+                재무 상태
+              </Div>
+            </Div>
+            <Br20/>
+            <Div className={"d-center"}>
+              <Div className={"fs-1-2rem fw-normal"}>
+                {dateStart} ~ {dateEnd}
+              </Div>
+            </Div>
+            <Br40/>
+            <Div className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("money-property")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={numeral(totalProperty).format('0,0')}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    translate("money-endCurrency")
+                  )
+                }}
+              />
+            </Div>
+            <Br20/>
+            <Div className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("money-in")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={numeral(totalIn).format('0,0')}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    translate("money-endCurrency")
+                  )
+                }}
+              />
+            </Div>
+            <Br20/>
+            <Div className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("money-out")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-60vw"}
+                value={numeral(totalOut).format('0,0')}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    translate("money-endCurrency")
+                  )
+                }}
+              />
+            </Div>
+          </Div>
+        );
+      }}>
+      {(popTrigger={}) => (
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
+          <Img src={money2} className={"w-max25 h-max25"} />
+        </Div>
       )}
     </PopUp>
   );
@@ -375,6 +476,7 @@ export const TopNav = () => {
     <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
       <Card className={"block-wrapper d-row h-7vh w-100p"}>
         {smileNode()}
+        {propertyNode()}
         {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (
           defaultNode()
         ) : firstStr === "calendar" ? (

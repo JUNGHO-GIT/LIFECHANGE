@@ -41,7 +41,7 @@ export const MoneyPlanSave = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
     id: "",
-    dateType: "전체",
+    dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/money/plan/list"

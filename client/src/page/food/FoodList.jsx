@@ -36,7 +36,7 @@ export const FoodList = () => {
   // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "전체",
+      dateType: "day",
       dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
     }
@@ -103,9 +103,6 @@ export const FoodList = () => {
 
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const loadMoreData = useCallback(async () => {
-    if (LOADING || !MORE) {
-      return;
-    }
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
@@ -147,9 +144,6 @@ export const FoodList = () => {
 
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const lastRowRef = useCallback((node) => {
-    if (LOADING || !MORE) {
-      return;
-    }
     if (observer.current) {
       observer.current.disconnect();
     }
@@ -282,10 +276,10 @@ export const FoodList = () => {
         third: thirdStr,
       }}
       objects={{
-        DATE, FILTER, SEND, PAGING, COUNT
+        DATE, FILTER, SEND, PAGING, COUNT, isExist
       }}
       functions={{
-        setDATE, setFILTER, setSEND, setPAGING, setCOUNT
+        setDATE, setFILTER, setSEND, setPAGING, setCOUNT, setIsExist
       }}
       handlers={{
         navigate

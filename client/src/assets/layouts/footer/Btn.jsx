@@ -16,20 +16,6 @@ export const Btn = ({
   const {translate} = useTranslate();
 
   // 1. go
-  const btnGoToList = () => (
-    <Button size={"small"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        dateType: objects?.DATE.dateType,
-        dateStart: objects?.DATE.dateStart,
-        dateEnd: objects?.DATE.dateEnd
-      });
-      handlers.navigate(objects?.SEND.toList, {
-        state: objects?.SEND,
-      });
-    }}>
-      {translate("btn-goToList")}
-    </Button>
-  );
   const btnGoToFind = () => (
     <Button size={"small"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
       Object.assign(objects?.SEND, {
@@ -42,20 +28,6 @@ export const Btn = ({
       });
     }}>
       {translate("btn-goToFind")}
-    </Button>
-  );
-  const btnGoToSave = () => (
-    <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        dateType: objects?.DATE.dateType,
-        dateStart: objects?.DATE.dateStart,
-        dateEnd: objects?.DATE.dateEnd
-      });
-      handlers.navigate(objects?.SEND.toSave, {
-        state: objects?.SEND,
-      });
-    }}>
-      {translate("btn-goToSave")}
     </Button>
   );
   const btnGoToFindSave = () => (
@@ -71,105 +43,6 @@ export const Btn = ({
     }}>
       {translate("btn-goToFindSave")}
     </Button>
-  );
-
-  // 2. get
-  const btnGetProperty = () => (
-    <PopUp
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => {
-        const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-        const totalIn = property?.totalIn || 0;
-        const totalOut = property?.totalOut || 0;
-        const totalProperty = property?.totalProperty || 0;
-        const dateStart = property?.dateStart;
-        const dateEnd = property?.dateEnd;
-        return (
-          <Div className={"w-max75vw h-max65vh border d-column p-20"}>
-            <Div className={"d-center"}>
-              <Div className={"fs-1-7rem"}>
-                재무 상태
-              </Div>
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <Div className={"fs-1-2rem fw-normal"}>
-                {dateStart} ~ {dateEnd}
-              </Div>
-            </Div>
-            <Br40/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("money-property")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalProperty).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("money-endCurrency")
-                  )
-                }}
-              />
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("money-in")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalIn).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("money-endCurrency")
-                  )
-                }}
-              />
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("money-out")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalOut).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("money-endCurrency")
-                  )
-                }}
-              />
-            </Div>
-          </Div>
-        );
-      }}>
-      {(popTrigger={}) => (
-        <Button size={"small"} color={"success"} variant={"contained"} className={"me-5"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          {translate("btn-getProperty")}
-        </Button>
-      )}
-    </PopUp>
   );
 
   // 3. flow
@@ -292,18 +165,12 @@ export const Btn = ({
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
@@ -312,42 +179,25 @@ export const Btn = ({
     // 2. exercise
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
@@ -356,12 +206,7 @@ export const Btn = ({
     // 3. food
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "find" && strings?.third === "list") {
         return (
@@ -380,34 +225,22 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
@@ -416,42 +249,25 @@ export const Btn = ({
     // 4. money
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
@@ -460,42 +276,25 @@ export const Btn = ({
     // 5. sleep
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
-            {btnGetProperty()}
-          </Card>
-        );
+        return null
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }
@@ -524,7 +323,6 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
-            {btnGoToSave()}
           </Card>
         );
       }
@@ -532,7 +330,6 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowSave()}
-            {btnGoToList()}
           </Card>
         );
       }

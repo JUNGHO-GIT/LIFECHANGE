@@ -2,10 +2,8 @@
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {moment} from "../../../import/ImportLibs.jsx";
-import {PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {TextField, DateCalendar, MenuItem, Card} from "../../../import/ImportMuis.jsx";
-import {LocalizationProvider, AdapterMoment} from "../../../import/ImportMuis.jsx";
+import {Picker, PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
+import {TextField, MenuItem, Card} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Filter = ({
@@ -28,44 +26,13 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        label={"유형"}
-        variant={"outlined"}
-        value={objects?.DATE?.dateType || "전체"}
-        className={"ms-2 me-2"}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
-        onChange={(e) => {
-          functions?.setDATE((prev={}) => ({
-            ...prev,
-            dateType: e.target.value
-          }))
-          functions?.setPAGING((prev) => ({
-            ...prev,
-            page: 1
-          }))
-        }}>
-        {secondStr === "plan" ? (
-          ["전체", "day", "week", "month", "year"].map((item) => (
-            <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
-              {item}
-            </MenuItem>
-          ))
-        ) : (
-          ["전체", "day"].map((item) => (
-            <MenuItem key={item} value={item} selected={objects?.DATE?.dateType === item}>
-              {item}
-            </MenuItem>
-          ))
-        )}
-      </TextField>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
         label={"정렬"}
         variant={"outlined"}
         value={objects?.FILTER?.order || "asc"}
         className={"ms-2 me-2"}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => (
           functions?.setFILTER((prev={}) => ({
             ...prev,
@@ -78,118 +45,12 @@ export const Filter = ({
           </MenuItem>
         ))}
       </TextField>
-      <PopUp
-        type={"innerCenter"}
-        position={"center"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-center"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["year", "day"]}
-                readOnly={false}
-                defaultValue={moment(objects?.DATE.dateStart)}
-                className={"radius border w-max42vw h-max30vh me-2"}
-                onChange={(date) => {
-                  (objects?.DATE) && (
-                    functions?.setDATE((prev={}) => ({
-                      ...prev,
-                      dateStart: moment(date).format("YYYY-MM-DD")
-                    }))
-                  );
-                  (objects?.PAGING) && (
-                    functions?.setPAGING((prev) => ({
-                      ...prev,
-                      page: 1,
-                    }))
-                  );
-                }}
-                sx={{
-                  "& .MuiDateCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiYearCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    minHeight: "0px",
-                  },
-                  "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.65rem",
-                    height: "3.0vh",
-                  },
-                  '& .MuiPickersDay-root': {
-                    fontSize: "0.65rem",
-                    height: "3.0vh",
-                  },
-                }}
-              />
-              <DateCalendar
-                timezone={"Asia/Seoul"}
-                views={["year", "day"]}
-                readOnly={false}
-                defaultValue={moment(objects?.DATE.dateEnd)}
-                className={"radius border w-max42vw h-max30vh ms-2"}
-                onChange={(date) => {
-                  (objects?.DATE) && (
-                    functions?.setDATE((prev={}) => ({
-                      ...prev,
-                      dateEnd: moment(date).format("YYYY-MM-DD")
-                    }))
-                  );
-                  (objects?.PAGING) && (
-                    functions?.setPAGING((prev) => ({
-                      ...prev,
-                      page: 1,
-                    }))
-                  );
-                }}
-                sx={{
-                  "& .MuiDateCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiYearCalendar-root": {
-                    width: "100%",
-                    height: "100%",
-                  },
-                  "& .MuiDayCalendar-slideTransition": {
-                    minHeight: "0px",
-                  },
-                  "& .MuiDayCalendar-weekDayLabel": {
-                    fontSize: "0.65rem",
-                    height: "3.0vh",
-                  },
-                  '& .MuiPickersDay-root': {
-                    fontSize: "0.65rem",
-                    height: "3.0vh",
-                  },
-                }}
-              />
-            </LocalizationProvider>
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          <TextField
-            type={"text"}
-            size={"small"}
-            label={"기간"}
-            variant={"outlined"}
-            value={`${objects?.DATE?.dateStart} ~ ${objects?.DATE?.dateEnd}`}
-            className={"ms-2 me-2"}
-            InputProps={{
-              readOnly: true,
-              className: "w-40vw h-4vh fs-0-7rem"
-            }}
-            onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget);
-            }}
-          />
-        )}
-      </PopUp>
+      <Picker
+        DATE={objects?.DATE}
+        setDATE={functions?.setDATE}
+        isExist={objects?.isExist}
+        setIsExist={functions?.setIsExist}
+      />
     </Div>
   );
 
@@ -203,7 +64,9 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = exerciseArray.findIndex((item) => (
@@ -232,7 +95,9 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = exerciseArray[objects?.FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
@@ -261,7 +126,9 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = foodArray.findIndex((item) => (
@@ -292,7 +159,9 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.part}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => {
           const newPartVal = e.target.value;
           const newPartIndex = moneyArray.findIndex((item) => (
@@ -321,7 +190,9 @@ export const Filter = ({
         className={"ms-2 me-2"}
         variant={"outlined"}
         value={objects?.FILTER?.title}
-        InputProps={{className: "h-4vh fs-0-7rem"}}
+        InputProps={{
+          className: "h-min0 h-4vh fs-0-7rem"
+        }}
         onChange={(e) => {
           const newTitleVal = e.target.value;
           const newTitleIndex = moneyArray[objects?.FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
@@ -368,7 +239,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-            {/* {exerciseNode()} */}
           </Card>
         );
       }
@@ -386,7 +256,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-            {/* {exerciseNode()} */}
           </Card>
         );
       }
@@ -425,7 +294,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-            {/* {foodNode()} */}
           </Card>
         );
       }
@@ -440,7 +308,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-            {/* {moneyNode()} */}
           </Card>
         );
       }
@@ -458,7 +325,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {defaultNode()}
-            {/* {moneyNode()} */}
           </Card>
         );
       }

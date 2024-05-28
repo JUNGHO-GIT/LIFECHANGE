@@ -191,9 +191,6 @@ export const UserDataList = () => {
 
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const loadMoreData = useCallback(async () => {
-    if (LOADING || !MORE) {
-      return;
-    }
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/data/list`, {
       params: {
@@ -304,9 +301,6 @@ export const UserDataList = () => {
 
   // 2-4. useCallback ----------------------------------------------------------------------------->
   const lastRowRef = useCallback((node) => {
-    if (LOADING || !MORE) {
-      return;
-    }
     if (observer.current) {
       observer.current.disconnect();
     }

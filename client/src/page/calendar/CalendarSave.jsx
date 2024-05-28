@@ -74,8 +74,8 @@ export const CalendarSave = () => {
     calendar_section: [{
       calendar_part_idx: 0,
       calendar_part_val: "일정",
-      calendar_title : "",
       calendar_color: "black",
+      calendar_title : "",
       calendar_content: ""
     }]
   };

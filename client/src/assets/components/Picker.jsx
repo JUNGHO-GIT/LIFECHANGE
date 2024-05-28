@@ -20,6 +20,21 @@ export const Picker = ({
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
+
+  const selectStr
+  = (secondStr === "list" || thirdStr === "list") ? (
+    "h-min0 h-4vh fs-0-7rem"
+  ) : (secondStr === "save" || thirdStr === "save") ? (
+    "fs-0-8rem"
+  ) : "";
+
+  const dateStr
+  = (secondStr === "list" || thirdStr === "list") ? (
+    "w-50vw h-min0 h-4vh fs-0-7rem"
+  ) : (secondStr === "save" || thirdStr === "save") ? (
+    "w-40vw fs-0-8rem"
+  ) : "";
 
   // 1. day --------------------------------------------------------------------------------------->
   const daySection = () => (
@@ -111,10 +126,9 @@ export const Picker = ({
           label={translate("common-date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
-          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
-            className: "fs-0-8rem",
+            className: dateStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -227,10 +241,9 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
-            className: "fs-0-8rem",
+            className: dateStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -316,10 +329,9 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
-            className: "fs-0-8rem",
+            className: dateStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -405,10 +417,9 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
-            className: "fs-0-8rem",
+            className: dateStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -503,10 +514,9 @@ export const Picker = ({
           label={translate("common-duration")}
           variant={"outlined"}
           value={`${DATE.dateStart || ""}~${DATE.dateEnd || ""}`}
-          className={`pointer ${(firstStr === "calendar" || secondStr === "plan") ? "w-60vw" : "w-83vw"}`}
           InputProps={{
             readOnly: true,
-            className: "fs-0-8rem",
+            className: dateStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -520,75 +530,105 @@ export const Picker = ({
     </PopUp>
   );
 
-  // 5. date -------------------------------------------------------------------------------------->
-  const dateNode = () => (
-    <Div className={"d-center"}>
-      {(firstStr === "calendar" && secondStr !== "plan") ||
-      (firstStr !== "calendar" && secondStr === "plan") ? (
-        <TextField
-          select={true}
-          label={translate("common-dateType")}
-          size={"small"}
-          value={DATE.dateType || ""}
-          variant={"outlined"}
-          className={"w-20vw me-3vw"}
-          InputProps={{
-            readOnly: false,
-            startAdornment: null,
-            endAdornment: null
-          }}
-          onChange={(e) => {
-            if (e.target.value === "day") {
-              setDATE((prev={}) => ({
-                ...prev,
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "week") {
-              setDATE((prev={}) => ({
-                ...prev,
-                dateType: "week",
-                dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "month") {
-              setDATE((prev={}) => ({
-                ...prev,
-                dateType: "month",
-                dateStart: moment().startOf("month").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("month").format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "year") {
-              setDATE((prev={}) => ({
-                ...prev,
-                dateType: "year",
-                dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-                dateEnd: moment().endOf("year").format("YYYY-MM-DD")
-              }));
-            }
-            else if (e.target.value === "select") {
-              setDATE((prev={}) => ({
-                ...prev,
-                dateType: "select",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD")
-              }));
-            }
-          }}
-        >
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
-      ) : (
-        null
-      )}
+  // 5. select ------------------------------------------------------------------------------------>
+  const selectNode = () => (
+    firstStr === "calendar" && secondStr !== "plan" ||
+    firstStr !== "calendar" && secondStr === "plan" ? (
+      <TextField
+        select={true}
+        label={translate("common-dateType")}
+        size={"small"}
+        value={DATE.dateType || ""}
+        variant={"outlined"}
+        className={"w-20vw me-3"}
+        InputProps={{
+          readOnly: false,
+          className: selectStr,
+          startAdornment: null,
+          endAdornment: null
+        }}
+        onChange={(e) => {
+          if (e.target.value === "day") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "week") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "week",
+              dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "month") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "month",
+              dateStart: moment().startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("month").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "year") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "year",
+              dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "select") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "select",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }));
+          }
+        }}
+      >
+        {["day", "week", "month", "year", "select"].map((item) => (
+          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+            {item}
+          </MenuItem>
+        ))}
+      </TextField>
+    ) : (
+      null
+    )
+  );
+
+  // 6. list -------------------------------------------------------------------------------------->
+  const listNode = () => {
+    setDATE((prev={}) => ({
+      ...prev,
+      dateType: "전체",
+    }));
+    return (
+      <Div className={"d-row"}>
+        {selectNode()}
+        {DATE.dateType === "day" ? (
+          daySection()
+        ) : DATE.dateType === "week" ? (
+          weekSection()
+        ) : DATE.dateType === "month" ? (
+          monthSection()
+        ) : DATE.dateType === "year" ? (
+          yearSection()
+        ) : DATE.dateType === "select" ? (
+          selectSection()
+        ) : null}
+      </Div>
+    )
+  };
+
+  // 6. save -------------------------------------------------------------------------------------->
+  const saveNode = () => (
+    <Div className={"d-row"}>
+      {selectNode()}
       {DATE.dateType === "day" ? (
         daySection()
       ) : DATE.dateType === "week" ? (
@@ -603,9 +643,14 @@ export const Picker = ({
     </Div>
   );
 
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {dateNode()}
+      {secondStr === "list" || thirdStr === "list" ? (
+        listNode()
+      ) : secondStr === "save" || thirdStr === "save" ? (
+        saveNode()
+      ) : null}
     </>
   );
 };
