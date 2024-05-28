@@ -22,16 +22,28 @@ export const Picker = ({
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
-  const selectStr = (secondStr === "list" || thirdStr === "list") ? (
+  const selectStr =
+  (secondStr === "plan" && thirdStr === "list") ||
+  (secondStr === "list" && thirdStr === "") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (secondStr === "save" || thirdStr === "save") ? (
-    "fs-0-8rem pointer"
+  ) : (secondStr === "plan" && thirdStr === "save") ||
+  (secondStr === "save" && thirdStr === "") ? (
+    "h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
-  const dateStr = (secondStr === "list" || thirdStr === "list") ? (
+  const dateStr =
+  (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
     "w-50vw h-min0 h-4vh fs-0-7rem pointer"
-  ) : (secondStr === "save" || thirdStr === "save") ? (
-    "w-40vw fs-0-8rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
+    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
+    "w-50vw h-min0 h-4vh fs-0-7rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
+    "w-55vw h-min40 fs-0-8rem pointer"
+  ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "w-75vw h-min40 fs-0-8rem pointer"
+  ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "w-55vw h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
   // 1. day --------------------------------------------------------------------------------------->
@@ -530,8 +542,8 @@ export const Picker = ({
 
   // 5. select ------------------------------------------------------------------------------------>
   const selectNode = () => (
-    firstStr === "calendar" && secondStr !== "plan" ||
-    firstStr !== "calendar" && secondStr === "plan" ? (
+    (firstStr === "calendar" && secondStr !== "plan") ||
+    (firstStr !== "calendar" && secondStr === "plan") ? (
       <TextField
         select={true}
         label={translate("common-dateType")}
