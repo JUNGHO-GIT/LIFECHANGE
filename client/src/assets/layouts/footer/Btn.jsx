@@ -105,7 +105,7 @@ export const Btn = ({
         value={objects?.PART}
         InputProps={{
           readOnly: false,
-          className: "h-30",
+          className: "h-min0 h-30",
         }}
         defaultValue={"exercisePlan"}
         onChange={(e) => {
@@ -133,7 +133,7 @@ export const Btn = ({
         value={Math.min(objects?.COUNT?.inputCnt, 100)}
         InputProps={{
           readOnly: false,
-          className: "h-30",
+          className: "h-min0 h-30",
         }}
         onChange={(e) => {
           const limitedValue = Math.min(Number(e.target.value), 100);

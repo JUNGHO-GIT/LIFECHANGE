@@ -196,7 +196,6 @@ export const SleepList = () => {
     const thirdSection = () => (
       tableSection()
     );
-
     // 7-10. return
     return (
       <Paper className={"content-wrapper"}>

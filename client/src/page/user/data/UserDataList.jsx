@@ -6,7 +6,7 @@ import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Card, Skeleton} from "../../../import/ImportMuis.jsx";
+import {Paper, TableContainer, Table, Card} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -24,15 +24,6 @@ export const UserDataList = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
-
-  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -174,29 +165,44 @@ export const UserDataList = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/list`, {
+    axios.get(`${URL_OBJECT}/data/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
-        DATE: DATE,
+        PART: PART,
       },
     })
     .then((res) => {
-      setOBJECT_EXERCISE_PLAN(res.data.exercisePlan || OBJECT_EXERCISE_PLAN_DEF);
-      setOBJECT_EXERCISE(res.data.exercise || OBJECT_EXERCISE_DEF);
-      setOBJECT_FOOD_PLAN(res.data.foodPlan || OBJECT_FOOD_PLAN_DEF);
-      setOBJECT_FOOD(res.data.food || OBJECT_FOOD_DEF);
-      setOBJECT_MONEY_PLAN(res.data.moneyPlan || OBJECT_MONEY_PLAN_DEF);
-      setOBJECT_MONEY(res.data.money || OBJECT_MONEY_DEF);
-      setOBJECT_SLEEP_PLAN(res.data.sleepPlan || OBJECT_SLEEP_PLAN_DEF);
-      setOBJECT_SLEEP(res.data.sleep || OBJECT_SLEEP_DEF);
+      if (PART === "exercisePlan") {
+        setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
+      }
+      else if (PART === "exercise") {
+        setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
+      }
+      else if (PART === "foodPlan") {
+        setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
+      }
+      else if (PART === "food") {
+        setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
+      }
+      else if (PART === "moneyPlan") {
+        setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
+      }
+      else if (PART === "money") {
+        setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
+      }
+      else if (PART === "sleepPlan") {
+        setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
+      }
+      else if (PART === "sleep") {
+        setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
+      }
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
-      setLOADING(false);
     })
     .catch((err) => {
       console.log("err", err);
@@ -204,7 +210,7 @@ export const UserDataList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async (type_param) => {
@@ -786,31 +792,54 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => {
       if (PART === "exercisePlan") {
-        return COUNT.totalCnt === 0 ? tableEmpty1() : tableFragment1(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty1() : tableFragment1(0)
+        );
       }
       else if (PART === "exercise") {
-        return COUNT.totalCnt === 0 ? tableEmpty2() : tableFragment2(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty2() : tableFragment2(0)
+        );
       }
       else if (PART === "foodPlan") {
-        return COUNT.totalCnt === 0 ? tableEmpty3() : tableFragment3(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty3() : tableFragment3(0)
+        );
       }
       else if (PART === "food") {
-        return COUNT.totalCnt === 0 ? tableEmpty4() : tableFragment4(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty4() : tableFragment4(0)
+        );
       }
       else if (PART === "moneyPlan") {
-        return COUNT.totalCnt === 0 ? tableEmpty5() : tableFragment5(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty5() : tableFragment5(0)
+        );
       }
       else if (PART === "money") {
-        return COUNT.totalCnt === 0 ? tableEmpty6() : tableFragment6(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty6() : tableFragment6(0)
+        );
       }
       else if (PART === "sleepPlan") {
-        return COUNT.totalCnt === 0 ? tableEmpty7() : tableFragment7(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty7() : tableFragment7(0)
+        );
       }
       else if (PART === "sleep") {
-        return COUNT.totalCnt === 0 ? tableEmpty8() : tableFragment8(0);
+        return LOADING ? loadingNode() : (
+          COUNT.totalCnt === 0 ? tableEmpty8() : tableFragment8(0)
+        );
       }
     };
     // 7-9. third
