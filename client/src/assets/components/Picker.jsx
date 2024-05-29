@@ -36,6 +36,8 @@ export const Picker = ({
     "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
     "w-50vw"
+  ) : (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
+    "w-75vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (

@@ -4,7 +4,7 @@ import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, numeral} from "../../../import/ImportLibs.jsx";
 import {PopUp, Div, Img, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, MenuItem, Card} from "../../../import/ImportMuis.jsx";
+import {Button, TextField, MenuItem, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -64,7 +64,7 @@ export const Btn = ({
         select={false}
         size={"small"}
         variant={"outlined"}
-        className={"w-150"}
+        className={"w-20vw"}
         value={objects?.PAGING?.query}
         InputProps={{
           readOnly: false,
@@ -78,7 +78,7 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={async () => {
+      <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5 me-5"} onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
           ...prev,
@@ -89,6 +89,30 @@ export const Btn = ({
       </Button>
     </Div>
   );
+  const btnPagination = () => (
+    <TablePagination
+      rowsPerPageOptions={[10]}
+      component={"div"}
+      labelRowsPerPage={""}
+      count={objects?.COUNT.totalCnt}
+      rowsPerPage={10}
+      page={objects?.PAGING.page}
+      showFirstButton={true}
+      showLastButton={true}
+      onPageChange={(event, newPage) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          page: newPage
+        }));
+      }}
+      onRowsPerPageChange={(event) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          limit: parseInt(event.target.value, 10)
+        }));
+      }}
+    />
+  )
   const btnFlowDefault = () => (
     <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
       {translate("btn-flowDefault")}
@@ -212,6 +236,7 @@ export const Btn = ({
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowFind()}
             {btnGoToFindSave()}
+            {btnPagination()}
           </Card>
         );
       }
@@ -311,7 +336,7 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.second === "data" && strings?.third === "custom") {
+      else if (strings?.second === "data" && strings?.third === "category") {
         return (
           <Card className={"block-wrapper border-none d-row h-7vh"}>
             {btnFlowDefault()}

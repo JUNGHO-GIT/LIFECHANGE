@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/user/userDataService.js";
 export const router = express.Router();
 
-// 1-1. custom ------------------------------------------------------------------------------------>
-router.get("/custom", async (req, res) => {
+// 1-1. category ------------------------------------------------------------------------------------>
+router.get("/category", async (req, res) => {
   try {
-    let result = await service.custom (
+    let result = await service.category (
       req.query.user_id
     );
     if (result) {

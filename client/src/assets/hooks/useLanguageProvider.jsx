@@ -56,7 +56,7 @@ export const useTranslate = () => {
       login: {ko: "로그인", en: "Login"},
       signup: {ko: "회원가입", en: "Signup"},
       logout: {ko: "로그아웃", en: "Logout"},
-      dataCustom: {ko: "데이터 입력", en: "Data Input"},
+      dataCategory: {ko: "데이터 입력", en: "Data Input"},
       dataList: {ko: "데이터 리스트", en: "Data List"},
     },
     navBar: {
@@ -184,7 +184,7 @@ export const useTranslate = () => {
       find: {ko: "찾기", en: "Find"},
       save: {ko: "저장", en: "Save"},
       dataDetail: {ko: "회원정보 수정", en: "User Information"},
-      dataCustom: {ko: "카테고리 편집", en: "Edit Category"},
+      dataCategory: {ko: "카테고리 편집", en: "Edit Category"},
       dataList: {ko: "데이터 리스트", en: "Data List"},
       language: {ko: "언어", en: "Language"},
       alreadyId: {ko: "아이디가 있는 경우", en: "Already have an Account"},

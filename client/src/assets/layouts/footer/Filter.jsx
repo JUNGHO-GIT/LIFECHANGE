@@ -11,7 +11,7 @@ export const Filter = ({
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
@@ -30,7 +30,7 @@ export const Filter = ({
         size={"small"}
         label={"정렬"}
         variant={"outlined"}
-        value={objects?.PAGING?.order || "asc"}
+        value={objects?.PAGING?.sort || "asc"}
         className={"w-20vw me-3"}
         InputProps={{
           className: "h-min0 h-4vh fs-0-7rem"
@@ -38,11 +38,11 @@ export const Filter = ({
         onChange={(e) => (
           functions?.setPAGING((prev={}) => ({
             ...prev,
-            order: e.target.value
+            sort: e.target.value
           }))
         )}>
         {["asc", "desc"].map((item) => (
-          <MenuItem key={item} value={item} selected={objects?.PAGING?.order === item}>
+          <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
             {item}
           </MenuItem>
         ))}
@@ -378,7 +378,7 @@ export const Filter = ({
       else if (strings?.second === "data" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "data" && strings?.third === "custom") {
+      else if (strings?.second === "data" && strings?.third === "category") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {

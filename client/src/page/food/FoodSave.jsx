@@ -18,7 +18,7 @@ export const FoodSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const foodArray = JSON.parse(session)?.food || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -145,6 +145,30 @@ export const FoodSave = () => {
       food_total_protein: Number(totals.totalProtein.toFixed(1)),
     }));
   }, [OBJECT?.food_section]);
+  
+    // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const defaultSection = {
+      food_part_idx: 1,
+      food_part_val: "아침",
+      food_title: "",
+      food_count: 0,
+      food_serv: "회",
+      food_gram: 0,
+      food_kcal: 0,
+      food_fat: 0,
+      food_carb: 0,
+      food_protein: 0,
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      food_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -436,7 +460,7 @@ export const FoodSave = () => {
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: null,
               endAdornment: null
             }}
@@ -452,7 +476,7 @@ export const FoodSave = () => {
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Img src={food2} className={"w-16 h-16"} />
               ),
@@ -469,7 +493,7 @@ export const FoodSave = () => {
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Img src={food3} className={"w-16 h-16"} />
               ),
@@ -489,7 +513,7 @@ export const FoodSave = () => {
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Img src={food4} className={"w-16 h-16"} />
               ),
@@ -506,7 +530,7 @@ export const FoodSave = () => {
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
-              readOnly: true,
+              readOnly: false,
               startAdornment: (
                 <Img src={food5} className={"w-16 h-16"} />
               ),

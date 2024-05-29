@@ -1,7 +1,8 @@
 // UserInfo.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {PopUp, Div, Icons, Br20, Img} from "../../import/ImportComponents.jsx";
+import {axios} from "../../import/ImportLibs.jsx"
+import {PopUp, Div, Icons, Br20, Img, Br40} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableBody, TableRow, TableCell, TableHead} from "../../import/ImportMuis.jsx";
@@ -9,12 +10,53 @@ import {logo1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserInfo = () => {
+  
+  
+  // 1. common ------------------------------------------------------------------------------------>
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_USER || "";
+  const URL_OBJECT = URL + SUBFIX;
+  const sessionId = sessionStorage.getItem("sessionId");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
+  
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const OBJECT_DEF = {
+    version: "",
+    date: "",
+    github: "",
+    license: ""
+  };
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    setLOADING(true); // Start loading
+    axios.get(`${URL_OBJECT}/info`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then(res => {
+      setOBJECT(res.data.result);
+    })
+    .catch(error => {
+      console.error('Error fetching data', error);
+    })
+    .finally(() => {
+      setLOADING(false); // Stop loading
+    });
+  })()}, [sessionId]);
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. img
     const imageSection = () => (
+      <Div className={"d-center mt-n100"}>
       <Img src={logo1} alt={"logo1"} className={"w-240 h-200"} />
+      </Div>
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
@@ -27,47 +69,31 @@ export const UserInfo = () => {
                   version
                 </TableCell>
                 <TableCell className={"w-10vw"}>
-                  1.0.0
+                  {OBJECT.version}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  version
+                  date
                 </TableCell>
                 <TableCell className={"w-10vw"}>
-                  1.0.0
+                  {OBJECT.date}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  version
+                  github
                 </TableCell>
                 <TableCell className={"w-10vw"}>
-                  1.0.0
+                  {OBJECT.github}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  version
+                  license
                 </TableCell>
                 <TableCell className={"w-10vw"}>
-                  1.0.0
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={"w-90vw"}>
-                  version
-                </TableCell>
-                <TableCell className={"w-10vw"}>
-                  1.0.0
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={"w-90vw"}>
-                  version
-                </TableCell>
-                <TableCell className={"w-10vw"}>
-                  1.0.0
+                  {OBJECT.license}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -90,9 +116,10 @@ export const UserInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper"}>
-        <Div className={"block-wrapper d-column h-min78vh"}>
+        <Div className={"block-wrapper d-column h-min87vh"}>
           {firstSection()}
-          <Br20 />
+          <Br40 />
+          <Br40 />
           {secondSection()}
         </Div>
       </Paper>

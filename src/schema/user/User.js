@@ -57,7 +57,7 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  dataCustom: {
+  dataCategory: {
     calendar: {
       type: Array,
       default: calendarArray,

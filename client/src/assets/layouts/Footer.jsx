@@ -1,7 +1,6 @@
 // Footer.jsx
 
 import {React}from "../../import/ImportReacts.jsx";
-import {Paging} from "./footer/Paging.jsx";
 import {Filter} from "./footer/Filter.jsx";
 import {Btn} from "./footer/Btn.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -10,16 +9,6 @@ import {Paper} from "../../import/ImportMuis.jsx";
 export const Footer = ({
   strings, objects, functions, handlers
 }) => {
-
-  // 6. pagingNode -------------------------------------------------------------------------------->
-  const pagingNode = () => (
-    <Paging
-      strings={strings}
-      objects={objects}
-      functions={functions}
-      handlers={handlers}
-    />
-  );
 
   // 6. filterNode -------------------------------------------------------------------------------->
   const filterNode = () => (
@@ -48,7 +37,7 @@ export const Footer = ({
         {btnNode()}
       </Paper>
     ) : (
-      <Paper className={"flex-wrapper p-sticky bottom-7vh border radius"}>
+      <Paper className={"flex-wrapper p-sticky bottom-7vh border radius over-x-auto"}>
         {filterNode()}
         {btnNode()}
       </Paper>

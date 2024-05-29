@@ -34,6 +34,12 @@ export const FoodFindList = () => {
       dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
+  const {val:PAGING, set:setPAGING} = useStorage(
+    `PAGING(${PATH})`, {
+    sort: "asc",
+    query: "",
+    page: 1,
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [checkedQueries, setCheckedQueries] = useState({});
@@ -44,11 +50,6 @@ export const FoodFindList = () => {
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave:"/food/find/save",
-  });
-  const [PAGING, setPAGING] = useState({
-    sort: "asc",
-    query: "",
-    page: 1,
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,

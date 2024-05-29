@@ -18,7 +18,7 @@ export const MoneySave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const moneyArray = JSON.parse(session)?.money || [];
   const navigate = useNavigate();
   const location = useLocation();

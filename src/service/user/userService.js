@@ -1,6 +1,23 @@
 // userService.js
 
 import * as repository from "../../repository/user/userRepository.js";
+import fs from "fs";
+import path from "path";
+import {fileURLToPath} from "url";
+
+// 0-0. info
+export const info = async (
+  user_id_param
+) => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../package.json'), 'utf-8'));
+  const finalResult = {
+    version: packageJson.version
+  }
+
+  return finalResult;
+}
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (

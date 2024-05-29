@@ -4,6 +4,35 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
+// 0-0. info
+router.get("/info", async (req, res) => {
+  try {
+    let result = await service.info (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
 // 0-0. signup ------------------------------------------------------------------------------------>
 router.post("/signup", async (req, res) => {
   try {

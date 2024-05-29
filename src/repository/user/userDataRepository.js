@@ -11,8 +11,8 @@ import {Money} from "../../schema/money/Money.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
 
-// 1-1. custom ------------------------------------------------------------------------------------>
-export const custom = {
+// 1-1. category ------------------------------------------------------------------------------------>
+export const category = {
   list: async (
     user_id_param
   ) => {
@@ -22,7 +22,7 @@ export const custom = {
       }},
       {$project: {
         _id: 0,
-        dataCustom: {
+        dataCategory: {
           calendar: 1,
           food: 1,
           money: 1,

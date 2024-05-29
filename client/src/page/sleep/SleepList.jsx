@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import {Div, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {Paper, Card, TableContainer, Table, Link, Skeleton} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -122,6 +122,7 @@ export const SleepList = () => {
       </Card>
     );
     // 7-7. fragment
+    {/**
     const tableFragment = (i=0) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
@@ -178,6 +179,51 @@ export const SleepList = () => {
         </TableContainer>
       </Card>
     );
+    **/}
+    const tableFragment = (i=0) => (
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-20"} key={i}>
+          <Div className={"black"}>
+            <Link onClick={() => {
+              Object.assign(SEND, {
+                id: item._id,
+                dateType: item.sleep_dateType,
+                dateStart: item.sleep_dateStart,
+                dateEnd: item.sleep_dateEnd,
+              });
+              navigate(SEND.toSave, {
+                state: SEND
+              });
+            }}>
+              {item.sleep_dateStart === item.sleep_dateEnd ? (
+                <>
+                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                </>
+              ) : (
+                <>
+                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                </>
+              )}
+            </Link>
+          </Div>
+          <Br10/>
+          <Div className={"black"}>
+            {item.sleep_section[0].sleep_night}
+          </Div>
+          <Br10/>
+          <Div className={"black"}>
+            {item.sleep_section[0].sleep_morning}
+          </Div>
+          <Br10/>
+          <Div className={"black"}>
+            {item.sleep_section[0].sleep_time}
+          </Div>
+        </Card>
+      ))
+    );
+    
     // 7-8. loading
     const loadingNode = () => (
       <Loading

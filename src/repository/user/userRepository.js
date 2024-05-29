@@ -108,7 +108,7 @@ export const save = {
       user_pw: OBJECT_param.user_pw,
       user_name: OBJECT_param.user_name,
       user_image: OBJECT_param.user_image,
-      dataCustom: OBJECT_param.dataCustom,
+      dataCategory: OBJECT_param.dataCategory,
       user_regDt: newDate,
       user_updateDt: "",
     });
@@ -123,7 +123,7 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        dataCustom: OBJECT_param.dataCustom,
+        dataCategory: OBJECT_param.dataCategory,
         user_updateDt: newDate,
       }},
       {upsert: true, new: true}

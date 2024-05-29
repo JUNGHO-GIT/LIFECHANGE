@@ -17,7 +17,7 @@ export const CalendarSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navigate = useNavigate();
   const location = useLocation();

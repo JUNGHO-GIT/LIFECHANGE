@@ -15,7 +15,7 @@ export const UserDataDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -31,7 +31,7 @@ export const UserDataDetail = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCustom: "/user/data/custom",
+    toDataCategory: "/user/data/category",
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
@@ -81,11 +81,11 @@ export const UserDataDetail = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      navigate(SEND.toDataCustom);
+      navigate(SEND.toDataCategory);
     }
     else {
       alert(res.data.msg);
-      sessionStorage.setItem("dataCustom", JSON.stringify(OBJECT_DEF.dataCustom));
+      sessionStorage.setItem("dataCategory", JSON.stringify(OBJECT_DEF.dataCategory));
     }
   };
 

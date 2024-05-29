@@ -40,11 +40,11 @@ export const UserSetting = () => {
               </TableRow>
               <TableRow>
                 <TableCell className={"w-90vw"}>
-                  {translate("user-dataCustom")}
+                  {translate("user-dataCategory")}
                 </TableCell>
                 <TableCell className={"w-10vw"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                    navigate("/user/data/custom")
+                    navigate("/user/data/category")
                   }} />
                 </TableCell>
               </TableRow>

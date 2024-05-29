@@ -8,12 +8,12 @@ import {exerciseArray} from '../../assets/array/exerciseArray.js';
 import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
 
-// 1-1. custom ------------------------------------------------------------------------------------>
-export const custom = async (
+// 1-1. category ------------------------------------------------------------------------------------>
+export const category = async (
   user_id_param
 ) => {
 
-  const findResult = await repository.custom.list(
+  const findResult = await repository.category.list(
     user_id_param
   );
 

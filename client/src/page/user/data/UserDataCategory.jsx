@@ -1,4 +1,4 @@
-// UserDataCustom.jsx
+// UserDataCategory.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
@@ -12,13 +12,13 @@ import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserDataCustom = () => {
+export const UserDataCategory = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCustom") || "{}";
+  const session = sessionStorage.getItem("dataCategory") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const foodArray = JSON.parse(session)?.food || [];
@@ -33,7 +33,7 @@ export const UserDataCustom = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const dataCustomArray = ["exercise", "food", "calendar", "money", "sleep"];
+  const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
@@ -48,7 +48,7 @@ export const UserDataCustom = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCustom: "/user/data/custom",
+    toDataCategory: "/user/data/category",
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
@@ -71,7 +71,7 @@ export const UserDataCustom = () => {
   const OBJECT_DEF = {
     user_id: sessionId,
     user_number: 0,
-    dataCustom: {
+    dataCategory: {
       calendar: [{
         calendar_part: ""
       }],
@@ -96,7 +96,7 @@ export const UserDataCustom = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/data/custom`, {
+    const res = await axios.get(`${URL_OBJECT}/data/category`, {
       params: {
         user_id: sessionId
       }
@@ -121,8 +121,8 @@ export const UserDataCustom = () => {
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
-      sessionStorage.setItem("dataCustom", JSON.stringify(res.data.result.dataCustom));
-      navigate(SEND.toDataCustom);
+      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+      navigate(SEND.toDataCategory);
     }
     else {
       alert(res.data.msg);
@@ -134,10 +134,10 @@ export const UserDataCustom = () => {
     if (type === "part") {
       setOBJECT((prev) => ({
         ...prev,
-        dataCustom: {
-          ...prev.dataCustom,
+        dataCategory: {
+          ...prev.dataCategory,
           [dataType]: [
-            ...prev.dataCustom[dataType], {
+            ...prev.dataCategory[dataType], {
               [`${dataType}_part`]: "",
               [`${dataType}_title`]: [""]
             }
@@ -148,17 +148,17 @@ export const UserDataCustom = () => {
     else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
-        dataCustom: {
-          ...prev.dataCustom,
+        dataCategory: {
+          ...prev.dataCategory,
           [dataType]: [
-            ...prev.dataCustom[dataType]?.slice(0, idx.partIdx), {
-              ...prev.dataCustom[dataType]?.[idx.partIdx],
+            ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
+              ...prev.dataCategory[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.dataCustom[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
+                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
                 ""
               ]
             },
-            ...prev.dataCustom[dataType]?.slice(idx.partIdx + 1)
+            ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }))
@@ -172,14 +172,14 @@ export const UserDataCustom = () => {
       if (newPart) {
         setOBJECT((prev) => ({
           ...prev,
-          dataCustom: {
-            ...prev.dataCustom,
+          dataCategory: {
+            ...prev.dataCategory,
             [dataType]: [
-              ...prev.dataCustom[dataType]?.slice(0, index), {
-                ...prev.dataCustom[dataType]?.[index],
+              ...prev.dataCategory[dataType]?.slice(0, index), {
+                ...prev.dataCategory[dataType]?.[index],
                 [`${dataType}_part`]: newPart
               },
-              ...prev.dataCustom[dataType]?.slice(index + 1)
+              ...prev.dataCategory[dataType]?.slice(index + 1)
             ]
           }
         }));
@@ -190,18 +190,18 @@ export const UserDataCustom = () => {
       if (newTitle) {
         setOBJECT((prev) => ({
           ...prev,
-          dataCustom: {
-            ...prev.dataCustom,
+          dataCategory: {
+            ...prev.dataCategory,
             [dataType]: [
-              ...prev.dataCustom[dataType]?.slice(0, idx.partIdx), {
-                ...prev.dataCustom[dataType]?.[idx.partIdx],
+              ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
+                ...prev.dataCategory[dataType]?.[idx.partIdx],
                 [`${dataType}_title`]: [
-                  ...prev.dataCustom[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                  ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
                   newTitle,
-                  ...prev.dataCustom[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                  ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                 ]
               },
-              ...prev.dataCustom[dataType]?.slice(idx.partIdx + 1)
+              ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
             ]
           }
         }));
@@ -214,11 +214,11 @@ export const UserDataCustom = () => {
     if (type === "part") {
       setOBJECT((prev) => ({
         ...prev,
-        dataCustom: {
-          ...prev.dataCustom,
+        dataCategory: {
+          ...prev.dataCategory,
           [dataType]: [
-            ...prev.dataCustom[dataType]?.slice(0, index),
-            ...prev.dataCustom[dataType]?.slice(index + 1)
+            ...prev.dataCategory[dataType]?.slice(0, index),
+            ...prev.dataCategory[dataType]?.slice(index + 1)
           ]
         }
       }));
@@ -226,17 +226,17 @@ export const UserDataCustom = () => {
     else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
-        dataCustom: {
-          ...prev.dataCustom,
+        dataCategory: {
+          ...prev.dataCategory,
           [dataType]: [
-            ...prev.dataCustom[dataType]?.slice(0, idx.partIdx), {
-              ...prev.dataCustom[dataType]?.[idx.partIdx],
+            ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
+              ...prev.dataCategory[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.dataCustom[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                ...prev.dataCustom[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
               ]
             },
-            ...prev.dataCustom[dataType]?.slice(idx.partIdx + 1)
+            ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }));
@@ -265,8 +265,8 @@ export const UserDataCustom = () => {
     if (confirm) {
       setOBJECT((prev) => ({
         ...prev,
-        dataCustom: {
-          ...prev.dataCustom,
+        dataCategory: {
+          ...prev.dataCategory,
           [dataType]: defaultArray
         }
       }));
@@ -288,7 +288,7 @@ export const UserDataCustom = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT?.dataCustom[dataType]?.map((item, index) => (index > 0) && (
+              {OBJECT?.dataCategory[dataType]?.map((item, index) => (index > 0) && (
                 <TableRow key={index} className={`table-tbody-tr`}
                   onClick={() => {
                     setSelectedIdx((prev) => ({
@@ -343,7 +343,7 @@ export const UserDataCustom = () => {
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {OBJECT?.dataCustom[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                {OBJECT?.dataCategory[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
                   <TableRow key={index} className={`table-tbody-tr`}
                     onClick={() => {
                       setSelectedIdx((prev) => ({
@@ -403,7 +403,7 @@ export const UserDataCustom = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {dataCustomArray.map((item, index) => (
+              {dataCategoryArray.map((item, index) => (
                 <TableRow key={index} className={"table-tbody-tr"}>
                   <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                     <Div className={"d-center"}>
