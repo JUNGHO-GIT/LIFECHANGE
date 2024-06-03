@@ -11,9 +11,12 @@ export const info = async (
 ) => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../package.json'), 'utf-8'));
+  const json = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../package.json'), 'utf-8'));
   const finalResult = {
-    version: packageJson.version
+    version: json.version || "",
+    date: json.date || "",
+    git: json.git || "",
+    license: json.license || "",
   }
 
   return finalResult;

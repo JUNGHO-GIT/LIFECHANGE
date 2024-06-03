@@ -2,6 +2,8 @@
   "name": "JPAGE-server",
   "version": "1.0.0",
   "main": "index.js",
+  "date": "2024-05-30",
+  "git": "www.gitbub.com/JUNGHO-GIT",
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",

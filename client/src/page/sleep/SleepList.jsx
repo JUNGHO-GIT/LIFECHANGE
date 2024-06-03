@@ -6,7 +6,7 @@ import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10} from "../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table, Link, Skeleton} from "../../import/ImportMuis.jsx";
+import {Paper, Card, TableContainer, Table, Link, Skeleton, Alert} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -67,6 +67,15 @@ export const SleepList = () => {
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+  
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  const ShowAlert = () => {
+    return (
+      <Alert severity="success">
+        This is a success Alert
+      </Alert>
+    );
+  };
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -91,7 +100,7 @@ export const SleepList = () => {
       console.log("err", err);
     })
     .finally(() => {
-      setLOADING(false);
+      setLOADING(false)
     });
   }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
@@ -223,7 +232,6 @@ export const SleepList = () => {
         </Card>
       ))
     );
-    
     // 7-8. loading
     const loadingNode = () => (
       <Loading

@@ -6,8 +6,8 @@ import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Button} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Icons, Br20, Messeage} from "../../../import/ImportComponents.jsx";
+import {Card, Paper, Button, Alert, Dialog, DialogActions} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
@@ -34,13 +34,11 @@ export const UserDataCategory = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
   const [LOADING, setLOADING] = useState(false);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
+  const [dataType, setDataType] = useState("exercise");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -56,16 +54,15 @@ export const UserDataCategory = () => {
     dateEnd: location_dateEnd,
   });
   const [idx, setIdx] = useState({
-    sectionIdx: 0,
-    partIdx: 1,
-    titleIdx: 1
+    category1Idx: 0,
+    category2Idx: 1,
+    category3Idx: 1
   });
   const [selectedIdx, setSelectedIdx] = useState({
-    sectionIdx: 0,
-    partIdx: 1,
-    titleIdx: 1
+    category1Idx: 0,
+    category2Idx: 1,
+    category3Idx: 1
   });
-  const [dataType, setDataType] = useState("exercise");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
@@ -130,81 +127,94 @@ export const UserDataCategory = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handlerAdd = (type) => {
+   const handlerAdd = (type) => {
     if (type === "part") {
-      setOBJECT((prev) => ({
-        ...prev,
-        dataCategory: {
-          ...prev.dataCategory,
-          [dataType]: [
-            ...prev.dataCategory[dataType], {
-              [`${dataType}_part`]: "",
-              [`${dataType}_title`]: [""]
-            }
-          ]
-        }
-      }))
-    }
-    else if (type === "title") {
-      setOBJECT((prev) => ({
-        ...prev,
-        dataCategory: {
-          ...prev.dataCategory,
-          [dataType]: [
-            ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
-              ...prev.dataCategory[dataType]?.[idx.partIdx],
-              [`${dataType}_title`]: [
-                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
-                ""
-              ]
-            },
-            ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
-          ]
-        }
-      }))
-    }
-  };
-
-  // 4-2. handler --------------------------------------------------------------------------------->
-  const handlerRename = (type, index) => {
-    if (type === "part") {
-      const newPart = prompt("새로운 이름을 입력하세요.");
-      if (newPart) {
-        setOBJECT((prev) => ({
+      setOBJECT((prev) => {
+        const newPart = {
+          [`${dataType}_part`]: "",
+          [`${dataType}_title`]: [""]
+        };
+        return {
           ...prev,
           dataCategory: {
             ...prev.dataCategory,
             [dataType]: [
-              ...prev.dataCategory[dataType]?.slice(0, index), {
-                ...prev.dataCategory[dataType]?.[index],
-                [`${dataType}_part`]: newPart
-              },
-              ...prev.dataCategory[dataType]?.slice(index + 1)
+              ...prev.dataCategory[dataType],
+              newPart
             ]
           }
-        }));
+        };
+      });
+    }
+    else if (type === "title") {
+      setOBJECT((prev) => {
+        const newTitle = "";
+        return {
+          ...prev,
+          dataCategory: {
+            ...prev.dataCategory,
+            [dataType]: [
+              ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
+              {
+                ...prev.dataCategory[dataType]?.[idx.category2Idx],
+                [`${dataType}_title`]: [
+                  ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`],
+                  newTitle
+                ]
+              },
+              ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
+            ]
+          }
+        };
+      });
+    }
+  };
+  
+  const handlerRename = (type, index) => {
+    if (type === "part") {
+      const newCategory2 = prompt("새로운 이름을 입력하세요.");
+      if (newCategory2) {
+        setOBJECT((prev) => {
+          return {
+            ...prev,
+            dataCategory: {
+              ...prev.dataCategory,
+              [dataType]: [
+                ...prev.dataCategory[dataType]?.slice(0, index),
+                {
+                  ...prev.dataCategory[dataType]?.[index],
+                  [`${dataType}_part`]: newCategory2
+                },
+                ...prev.dataCategory[dataType]?.slice(index + 1)
+              ]
+            }
+          };
+        });
       }
     }
     else if (type === "title") {
-      const newTitle = prompt("새로운 이름을 입력하세요.");
-      if (newTitle) {
-        setOBJECT((prev) => ({
-          ...prev,
-          dataCategory: {
-            ...prev.dataCategory,
-            [dataType]: [
-              ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
-                ...prev.dataCategory[dataType]?.[idx.partIdx],
-                [`${dataType}_title`]: [
-                  ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                  newTitle,
-                  ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
-                ]
-              },
-              ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
-            ]
-          }
-        }));
+      const newCategory3 = prompt("새로운 이름을 입력하세요.");
+      if (newCategory3) {
+        setOBJECT((prev) => {
+          return {
+            ...prev,
+            dataCategory: {
+              ...prev.dataCategory,
+              [dataType]: [
+                ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
+                {
+                  ...prev.dataCategory[dataType]?.[idx.category2Idx],
+                  [`${dataType}_title`]: [
+                    ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                    newCategory3,
+                    ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+                  ]
+                },
+                ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
+              ]
+            }
+          };
+        });
       }
     }
   };
@@ -212,34 +222,56 @@ export const UserDataCategory = () => {
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerRemove = (type, index) => {
     if (type === "part") {
-      setOBJECT((prev) => ({
-        ...prev,
-        dataCategory: {
-          ...prev.dataCategory,
-          [dataType]: [
-            ...prev.dataCategory[dataType]?.slice(0, index),
-            ...prev.dataCategory[dataType]?.slice(index + 1)
-          ]
+      setOBJECT((prev) => {
+        const currentPart = prev.dataCategory?.[dataType]?.[idx.category2Idx];
+        const newPart = [
+          ...prev.dataCategory[dataType]?.slice(0, index),
+          ...prev.dataCategory[dataType]?.slice(index + 1)
+        ];
+  
+        // 하나만 남았을 때 삭제 시도 시 경고
+        if (currentPart <= 2) {
+          alert('최소 하나의 part가 필요합니다.');
+          return prev;
         }
-      }));
+  
+        return {
+          ...prev,
+          dataCategory: {
+            ...prev.dataCategory,
+            [dataType]: newPart
+          }
+        };
+      });
     }
     else if (type === "title") {
-      setOBJECT((prev) => ({
-        ...prev,
-        dataCategory: {
-          ...prev.dataCategory,
-          [dataType]: [
-            ...prev.dataCategory[dataType]?.slice(0, idx.partIdx), {
-              ...prev.dataCategory[dataType]?.[idx.partIdx],
-              [`${dataType}_title`]: [
-                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                ...prev.dataCategory[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
-              ]
-            },
-            ...prev.dataCategory[dataType]?.slice(idx.partIdx + 1)
-          ]
+      setOBJECT((prev) => {
+        const currentTitles = prev.dataCategory?.[dataType]?.[idx.category2Idx]?.[`${dataType}_title`];
+        const newTitles = [
+          ...currentTitles.slice(0, index),
+          ...currentTitles.slice(index + 1)
+        ];
+        // 하나만 남았을 때 삭제 시도 시 경고
+        if (currentTitles.length <= 2) {
+          alert("ddd");
+          return prev;
         }
-      }));
+  
+        return {
+          ...prev,
+          dataCategory: {
+            ...prev.dataCategory,
+            [dataType]: [
+              ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
+              {
+                ...prev.dataCategory[dataType]?.[idx.category2Idx],
+                [`${dataType}_title`]: newTitles
+              },
+              ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
+            ]
+          }
+        };
+      });
     }
   };
 
@@ -273,6 +305,19 @@ export const UserDataCategory = () => {
     }
   };
 
+
+const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. popup
@@ -283,7 +328,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0"}>
                 <TableCell>
-                  Part
+                  Category2
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -293,14 +338,14 @@ export const UserDataCategory = () => {
                   onClick={() => {
                     setSelectedIdx((prev) => ({
                       ...prev,
-                      partIdx: index
+                      category2Idx: index
                     }));
                   }}>
-                  <TableCell className={selectedIdx.partIdx === index ? "bg-light" : ""}>
+                  <TableCell className={selectedIdx.category2Idx === index ? "bg-light" : ""}>
                     <Div className={"d-center"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
-                        partIdx: index
+                        category2Idx: index
                       }));
                     }}>
                       <Div className={"fs-0-9rem ms-auto"}>
@@ -338,24 +383,24 @@ export const UserDataCategory = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0"}>
                   <TableCell>
-                    Title
+                    Category3
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {OBJECT?.dataCategory[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                {OBJECT?.dataCategory[dataType]?.[idx?.category2Idx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
                   <TableRow key={index} className={`table-tbody-tr`}
                     onClick={() => {
                       setSelectedIdx((prev) => ({
                         ...prev,
-                        titleIdx: index
+                        category3Idx: index
                       }));
                     }}>
                     <TableCell>
                       <Div className={"d-center"} onClick={() => {
                         setIdx((prev) => ({
                           ...prev,
-                          titleIdx: index
+                          category3Idx: index
                         }));
                       }}>
                         <Div className={"fs-0-9rem ms-auto"}>
@@ -398,7 +443,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  Section
+                  Category1
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -425,14 +470,14 @@ export const UserDataCategory = () => {
                               setDataType(item);
                               setSelectedIdx((prev) => ({
                                 ...prev,
-                                sectionIdx: index,
-                                partIdx: 1,
-                                titleIdx: 1
+                                category1Idx: index,
+                                category2Idx: 1,
+                                category3Idx: 1
                               }));
                               setIdx((prev) => ({
                                 ...prev,
-                                partIdx: 1,
-                                titleIdx: 1
+                                category2Idx: 1,
+                                category3Idx: 1
                               }));
                               popTrigger.openPopup(e.currentTarget)
                             }}
@@ -453,6 +498,29 @@ export const UserDataCategory = () => {
     const tableSection = () => (
       tableFragment(0)
     );
+    // 7-9. first
+    const firstSection = () => (
+      <>
+        <Button variant="outlined" onClick={handleClick}>
+        Show Alert
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Alert severity="info" style={{ margin: '20px' }}>
+          This is an important message!
+        </Alert>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      </>
+    );
     // 7-9. third
     const thirdSection = () => (
       tableSection()
@@ -461,6 +529,7 @@ export const UserDataCategory = () => {
     return (
       <Paper className={"content-wrapper"}>
         <Div className={"block-wrapper h-min85vh"}>
+          {firstSection()}
           {thirdSection()}
         </Div>
       </Paper>

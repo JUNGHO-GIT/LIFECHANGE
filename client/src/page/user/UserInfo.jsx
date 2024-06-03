@@ -65,34 +65,34 @@ export const UserInfo = () => {
           <Table>
             <TableBody className={"table-tbody"}>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-40vw"}>
                   version
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-60vw"}>
                   {OBJECT.version}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-40vw"}>
                   date
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-60vw"}>
                   {OBJECT.date}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-40vw"}>
                   github
                 </TableCell>
-                <TableCell className={"w-10vw"}>
-                  {OBJECT.github}
+                <TableCell className={"w-60vw"}>
+                  {OBJECT.git}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-40vw"}>
                   license
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-60vw"}>
                   {OBJECT.license}
                 </TableCell>
               </TableRow>
