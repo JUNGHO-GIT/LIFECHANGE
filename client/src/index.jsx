@@ -1,6 +1,6 @@
 // App.jsx
 
-import React, {useEffect} from "react";
+import React from "react";
 import {useLocation} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -15,7 +15,7 @@ import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";
 import "./assets/css/Dash.css";
-// import "./assets/css/Mui.css";
+import "./assets/css/Mui.css";
 import "./assets/css/Components.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
@@ -180,7 +180,6 @@ const App = () => {
 
 // ------------------------------------------------------------------------------------------------>
 const rootElement = document.getElementById("root");
-
 if (rootElement === null) {
   throw new Error("root element is null");
 }

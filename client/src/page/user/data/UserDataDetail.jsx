@@ -186,7 +186,7 @@ export const UserDataDetail = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
         </Div>

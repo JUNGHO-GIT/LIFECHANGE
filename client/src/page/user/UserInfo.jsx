@@ -10,8 +10,8 @@ import {logo1} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserInfo = () => {
-  
-  
+
+
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
@@ -21,7 +21,7 @@ export const UserInfo = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
-  
+
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     version: "",
@@ -30,7 +30,7 @@ export const UserInfo = () => {
     license: ""
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-  
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true); // Start loading
@@ -60,7 +60,7 @@ export const UserInfo = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"border radius p-0"} key={i}>
+      <Card className={"radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableBody className={"table-tbody"}>
@@ -115,7 +115,7 @@ export const UserInfo = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min87vh"}>
           {firstSection()}
           <Br40 />

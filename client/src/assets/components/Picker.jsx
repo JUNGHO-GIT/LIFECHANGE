@@ -37,13 +37,13 @@ export const Picker = ({
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
     "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
-    "w-75vw"
+    "w-80vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
     "w-60vw"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-75vw"
+    "w-80vw"
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
     "w-60vw"
   ) : "";
@@ -635,14 +635,14 @@ export const Picker = ({
 
   // 6. list -------------------------------------------------------------------------------------->
   const listNode = () => (
-    <Div className={"d-row"}>
+    <Div className={"d-center"}>
       {selectSection()}
     </Div>
   );
 
   // 6. save -------------------------------------------------------------------------------------->
   const saveNode = () => (
-    <Div className={"d-row"}>
+    <Div className={"d-center"}>
       {selectNode()}
       {DATE.dateType === "day" ? (
         daySection()

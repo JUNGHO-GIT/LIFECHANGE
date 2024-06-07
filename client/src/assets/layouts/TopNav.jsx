@@ -474,7 +474,7 @@ export const TopNav = () => {
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
-      <Card className={"block-wrapper d-row h-7vh w-100p"}>
+      <Card className={"block-wrapper d-row h-8vh w-100p"}>
         {smileNode()}
         {propertyNode()}
         {firstStr === "exercise" || firstStr === "money" || firstStr === "sleep" ? (

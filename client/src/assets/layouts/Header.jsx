@@ -1,9 +1,9 @@
 // Header.jsx
 
 import {React, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {Div, Img} from "../../import/ImportComponents.jsx";
+import {Div, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
-import {logo2, logo3, setting1, setting4} from "../../import/ImportImages.jsx";
+import {logo2, logo3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -18,15 +18,15 @@ export const Header = () => {
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
     secondStr === "setting" ? (
-      <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
+      <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {
         navigate("/")
       }}/>
     ) : secondStr === "data" || secondStr === "info" ? (
-      <Img src={setting4} className={"w-24 h-24 pointer m-0"} onClick={() => {
+      <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
         navigate("/user/setting");
       }}/>
     ) : (
-      <Img src={setting1} className={"w-24 h-24 pointer m-0"} onClick={() => {
+      <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
         navigate("/user/setting");
       }}/>
     )
@@ -48,7 +48,7 @@ export const Header = () => {
   // 7. header ------------------------------------------------------------------------------------>
   const navbarNode = () => (
     <Paper className={"flex-wrapper p-sticky top-0vh radius border"}>
-      <Card className={"block-wrapper d-row h-7vh"}>
+      <Card className={"block-wrapper d-row h-8vh"}>
         {defaultNode()}
       </Card>
     </Paper>

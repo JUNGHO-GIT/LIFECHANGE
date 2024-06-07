@@ -167,7 +167,7 @@ export const UserLogin = () => {
     const sixthSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("user-notId")}
-        <Div className={"d-center blue ms-10"} onClick={() => {
+        <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");
         }}>
           {translate("user-signup")}
@@ -176,7 +176,7 @@ export const UserLogin = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
           {firstSection()}
           <Hr40 />

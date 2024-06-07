@@ -10,12 +10,12 @@ import {Time} from "../assets/components/Time.jsx";
 import {Count} from "../assets/components/Count.jsx";
 import {DropDown} from "../assets/components/Dropdown";
 import {Memo} from "../assets/components/Memo.jsx";
-import {Messeage} from "../assets/components/Messeage.jsx";
+import {Message} from "../assets/components/Message.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export {
   Div, Img,
   Br5, Br10, Br15, Br20, Br25, Br30, Br35, Br40,
   Hr5, Hr10, Hr15, Hr20, Hr25, Hr30, Hr35, Hr40,
-  Icons, PopUp, Picker, Time, Count, DropDown, Memo, Messeage
+  Icons, PopUp, Picker, Time, Count, DropDown, Memo, Message
 };

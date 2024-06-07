@@ -24,7 +24,7 @@ export const UserSetting = () => {
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"border radius p-0"} key={i}>
+      <Card className={"radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableBody className={"table-tbody"}>
@@ -132,7 +132,7 @@ export const UserSetting = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper d-row h-min87vh"}>
           {thirdSection()}
         </Div>

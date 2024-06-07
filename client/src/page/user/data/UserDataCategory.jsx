@@ -6,7 +6,7 @@ import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20, Messeage} from "../../../import/ImportComponents.jsx";
+import {PopUp, Div, Icons, Br20, Message} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Button, Alert, Dialog, DialogActions} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
@@ -169,7 +169,7 @@ export const UserDataCategory = () => {
       });
     }
   };
-  
+
   const handlerRename = (type, index) => {
     if (type === "part") {
       const newCategory2 = prompt("새로운 이름을 입력하세요.");
@@ -228,13 +228,13 @@ export const UserDataCategory = () => {
           ...prev.dataCategory[dataType]?.slice(0, index),
           ...prev.dataCategory[dataType]?.slice(index + 1)
         ];
-  
+
         // 하나만 남았을 때 삭제 시도 시 경고
         if (currentPart <= 2) {
           alert('최소 하나의 part가 필요합니다.');
           return prev;
         }
-  
+
         return {
           ...prev,
           dataCategory: {
@@ -256,7 +256,7 @@ export const UserDataCategory = () => {
           alert("ddd");
           return prev;
         }
-  
+
         return {
           ...prev,
           dataCategory: {
@@ -527,7 +527,7 @@ const [open, setOpen] = useState(false);
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min85vh"}>
           {firstSection()}
           {thirdSection()}

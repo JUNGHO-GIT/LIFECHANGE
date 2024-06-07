@@ -1,4 +1,4 @@
-// Messeage.jsx
+//  message
 
 import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
@@ -7,7 +7,7 @@ import {TextField, Button, TextArea, Alert} from "../../import/ImportMuis.jsx";
 import {calendar3} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Messeage = (props) => {
+export const Message = (props) => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
@@ -16,8 +16,8 @@ export const Messeage = (props) => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
 
-  // 2. messeageNode -------------------------------------------------------------------------------->
-  const messeageNode = () => (
+  // 2. messageNode ------------------------------------------------------------------------------->
+  const messageNode = () => (
     <Alert serverity={props.serverity}>
       {props.child}
     </Alert>
@@ -26,7 +26,7 @@ export const Messeage = (props) => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {messeageNode()}
+      {messageNode()}
     </>
   );
 };

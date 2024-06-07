@@ -239,14 +239,14 @@ export const Filter = ({
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -256,7 +256,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -270,7 +270,7 @@ export const Filter = ({
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
             {/* {foodNode()} */}
           </Card>
@@ -284,7 +284,7 @@ export const Filter = ({
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -294,7 +294,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -308,14 +308,14 @@ export const Filter = ({
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -325,7 +325,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -339,14 +339,14 @@ export const Filter = ({
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
       else if (strings?.second === "plan" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -356,7 +356,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -370,7 +370,7 @@ export const Filter = ({
     else if (strings?.first === "user") {
       if (strings?.second === "diff" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
@@ -383,7 +383,7 @@ export const Filter = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );

@@ -2,7 +2,6 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios} from "../../../import/ImportLibs.jsx";
 import {useTime} from "../../../import/ImportHooks.jsx";
@@ -188,7 +187,7 @@ export const SleepPlanSave = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"p-20"} key={i}>
+      <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", i)}
@@ -250,7 +249,7 @@ export const SleepPlanSave = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min67vh"}>
           {firstSection()}
           {secondSection()}

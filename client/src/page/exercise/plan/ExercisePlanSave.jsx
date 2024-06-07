@@ -194,10 +194,9 @@ export const ExercisePlanSave = () => {
         handlerDelete={handlerDelete}
       />
     );
-    // 7-6. empty
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"p-20"} key={i}>
+      <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
           {dropdownSection(OBJECT?._id, "", i)}
@@ -331,7 +330,7 @@ export const ExercisePlanSave = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min67vh"}>
           {firstSection()}
           {secondSection()}

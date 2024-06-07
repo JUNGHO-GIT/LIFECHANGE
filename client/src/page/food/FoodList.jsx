@@ -110,7 +110,7 @@ export const FoodList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
+      <Card className={"radius p-0"} key={"empty"}>
         <TableContainer>
         <Table>
           <TableHead className={"table-thead"}>
@@ -135,7 +135,7 @@ export const FoodList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"border radius p-0"} key={i}>
+      <Card className={"radius p-0"} key={i}>
         <TableContainer>
           <Table>
           <TableHead className={"table-thead"}>
@@ -213,7 +213,7 @@ export const FoodList = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper"}>
+      <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min67vh"}>
           {firstSection()}
         </Div>

@@ -192,7 +192,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -209,7 +209,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -219,7 +219,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -233,7 +233,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowFind()}
             {btnGoToFindSave()}
             {btnPagination()}
@@ -242,7 +242,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
             {btnGoToFind()}
           </Card>
@@ -253,7 +253,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -263,7 +263,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -280,7 +280,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -290,7 +290,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -307,7 +307,7 @@ export const Btn = ({
       }
       else if (strings?.second === "plan" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -317,7 +317,7 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
@@ -331,14 +331,14 @@ export const Btn = ({
       }
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowDemo()}
           </Card>
         );
       }
       else if (strings?.second === "data" && strings?.third === "category") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowDefault()}
             {btnFlowSave()}
           </Card>
@@ -346,13 +346,13 @@ export const Btn = ({
       }
       else if (strings?.third === "" && strings?.second === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
           </Card>
         );
       }
       else if (strings?.third === "" && strings?.second === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-7vh"}>
+          <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
           </Card>
         );
