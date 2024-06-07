@@ -112,7 +112,7 @@ export const useTranslate = () => {
       totalVolume: {ko: "총 볼륨", en: "Total Volume"},
       totalCardio: {ko: "총 유산소", en: "Total Cardio"},
       part: {ko: "부위", en: "Part"},
-      title: {ko: "운동명", en: "Name"},
+      title: {ko: "운동", en: "Name"},
       count: {ko: "횟수", en: "Count"},
       volume: {ko: "볼륨", en: "Volume"},
       cardio: {ko: "유산소", en: "Cardio"},

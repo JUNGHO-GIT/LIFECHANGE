@@ -269,7 +269,7 @@ export const MoneySave = () => {
       </Div>
     );
     // 7-7. fragment
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
         <Div className={"d-column"}>
           <Div className={"d-between"}>

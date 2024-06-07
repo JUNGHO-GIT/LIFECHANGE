@@ -121,7 +121,7 @@ export const FoodDiff = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>

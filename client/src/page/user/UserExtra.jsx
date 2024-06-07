@@ -57,7 +57,7 @@ export const UserExtra = () => {
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-7. fragment
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
         <Avatar
           alt={"user_image"}

@@ -114,9 +114,9 @@ export const SleepList = () => {
         </Div>
       </Card>
     );
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
-        <Card className={"border radius p-20"} key={i}>
+        <Card className={"border radius p-20"} key={index}>
           <Div className={"black"}>
             <Link onClick={() => {
               Object.assign(SEND, {
@@ -144,14 +144,17 @@ export const SleepList = () => {
           </Div>
           <Br10/>
           <Div className={"black"}>
+            {`${translate("sleep-night")}  :  `}
             {item.sleep_section[0].sleep_night}
           </Div>
           <Br10/>
           <Div className={"black"}>
+            {`${translate("sleep-morning")}  :  `}
             {item.sleep_section[0].sleep_morning}
           </Div>
           <Br10/>
           <Div className={"black"}>
+            {`${translate("sleep-time")}  :  `}
             {item.sleep_section[0].sleep_time}
           </Div>
         </Card>

@@ -201,7 +201,7 @@ export const FoodFindList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       <Card className={"radius p-0"} key={`${PAGING.page}-${i}`}>
         <TableContainer>
           <Table>

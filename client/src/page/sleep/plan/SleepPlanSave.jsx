@@ -186,7 +186,7 @@ export const SleepPlanSave = () => {
       />
     );
     // 7-7. fragment
-    const tableFragment = (i=0) => (
+    const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
