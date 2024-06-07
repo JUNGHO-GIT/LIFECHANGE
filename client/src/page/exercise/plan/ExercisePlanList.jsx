@@ -6,7 +6,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, Link} from "../../../import/ImportMuis.jsx";
+import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -110,19 +110,17 @@ export const ExercisePlanList = () => {
         <Card className={"border radius p-20"} key={`${index}-${i}`}>
           <Div className={"align-left"}>
             <Div className={"d-between w-100p"}>
-              <Link className={"black fs-1-2rem"}>
-                {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
-                  <>
-                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                  </>
-                ) : (
-                  <>
-                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                    <Div>~</Div>
-                    <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
-                  </>
-                )}
-              </Link>
+              {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                <Div className={"fs-1-2rem fw-bolder"}>
+                  <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                </Div>
+              ) : (
+                <Div className={"fs-1-2rem fw-bolder"}>
+                  <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                  <Div>~</Div>
+                  <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                </Div>
+              )}
               <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
                 Object.assign(SEND, {
                   id: item._id,

@@ -10152,6 +10152,35 @@
   position: sticky !important;
 }
 
+/** 96. flex *************************************************************************************/
+.flex-grow {
+  flex-grow: 1 !important;
+}
+.flex-shrink {
+  flex-shrink: 1 !important;
+}
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-row {
+  flex-direction: row !important;
+}
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
 /** 96. shadow ************************************************************************************/
 .shadow {
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1) !important;
