@@ -116,7 +116,7 @@ export const UserDataCategory = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-      navigate(SEND.toDataCategory);
+      navigate(0);
     }
     else {
       alert(res.data.msg);
@@ -310,7 +310,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0"}>
                 <TableCell>
-                  Category2
+                  {translate("user-dataCategory2")}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -365,7 +365,7 @@ export const UserDataCategory = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0"}>
                   <TableCell>
-                    Category3
+                    {translate("user-dataCategory3")}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -425,7 +425,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  Category1
+                  {translate("user-dataCategory1")}
                 </TableCell>
               </TableRow>
             </TableHead>

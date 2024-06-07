@@ -283,8 +283,8 @@ export const SleepDashPie = () => {
     const titleSection = () => (
       <Div className={"d-center"}>수면 비율</Div>
     );
-    // 7-4. dropdown
-    const dropdownSection1 = () => (
+    // 7-4. delete
+    const deleteSection1 = () => (
       <Div className={"d-center"}>
         <TextField
         select={true}
@@ -302,8 +302,8 @@ export const SleepDashPie = () => {
       </TextField>
       </Div>
     );
-    // 7-4. dropdown
-    const dropdownSection2 = () => (
+    // 7-4. delete
+    const deleteSection2 = () => (
       <Img src={common3_1} className={"w-24 h-24"} />
     );
     // 7-7. fragment
@@ -339,9 +339,9 @@ export const SleepDashPie = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto"}>{dropdownSection2()}</Div>
+        <Div className={"ms-auto"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

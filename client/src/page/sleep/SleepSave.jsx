@@ -6,8 +6,8 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Picker, Time, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Div, Br20, Br40, Icons} from "../../import/ImportComponents.jsx";
+import {Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -192,9 +192,9 @@ export const SleepSave = () => {
         showZero={true}
       />
     );
-    // 7-4. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <DropDown
+    // 7-4. delete
+    const deleteSection = (id, sectionId, index) => (
+      <Delete
         id={id}
         sectionId={sectionId}
         index={index}
@@ -206,7 +206,7 @@ export const SleepSave = () => {
       <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
+          {deleteSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
         </Div>
         <Br40 />
         <Div className={"d-center"}>

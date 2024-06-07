@@ -7,7 +7,7 @@ import {useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {PopUp, Img, Picker, Time, Count, DropDown} from "../../../import/ImportComponents.jsx";
+import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
@@ -179,9 +179,9 @@ export const ExercisePlanSave = () => {
         showZero={true}
       />
     );
-    // 7-4. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <DropDown
+    // 7-4. delete
+    const deleteSection = (id, sectionId, index) => (
+      <Delete
         id={id}
         sectionId={sectionId}
         index={index}
@@ -193,7 +193,7 @@ export const ExercisePlanSave = () => {
       <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, "", i)}
+          {deleteSection(OBJECT?._id, "", i)}
         </Div>
         <Br40/>
         <Div className={"d-center"}>

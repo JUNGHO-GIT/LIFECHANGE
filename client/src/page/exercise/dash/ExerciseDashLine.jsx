@@ -343,8 +343,8 @@ export const ExerciseDashLine = () => {
     const titleSection = () => (
       <Div className={"d-center"}>볼륨 / 유산소 추이</Div>
     );
-    // 7-4. dropdown
-    const dropdownSection1 = () => (
+    // 7-4. delete
+    const deleteSection1 = () => (
       <Div className={"d-center"}>
         <TextField
           select={true}
@@ -361,8 +361,8 @@ export const ExerciseDashLine = () => {
         </TextField>
       </Div>
     );
-    // 7-4. dropdown
-    const dropdownSection2 = () => (
+    // 7-4. delete
+    const deleteSection2 = () => (
       <PopUp
         type={"dash"}
         position={"bottom"}
@@ -430,9 +430,9 @@ export const ExerciseDashLine = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{dropdownSection1()}</Div>
+        <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{dropdownSection2()}</Div>
+        <Div className={"me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

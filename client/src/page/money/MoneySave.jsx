@@ -7,7 +7,7 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {PopUp, Img, Picker, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {PopUp, Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {money2} from "../../import/ImportImages.jsx";
 
@@ -215,9 +215,9 @@ export const MoneySave = () => {
         showZero={true}
       />
     );
-    // 7-4. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <DropDown
+    // 7-4. delete
+    const deleteSection = (id, sectionId, index) => (
+      <Delete
         id={id}
         sectionId={sectionId}
         index={index}
@@ -274,7 +274,7 @@ export const MoneySave = () => {
         <Div className={"d-column"}>
           <Div className={"d-between"}>
             {badgeSection(i)}
-            {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
+            {deleteSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
           </Div>
           <Br20/>
           <Br20/>

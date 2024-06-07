@@ -6,7 +6,7 @@ import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Img, Picker, Memo, Count, DropDown} from "../../import/ImportComponents.jsx";
+import {Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {calendar2} from "../../import/ImportImages.jsx";
 
@@ -200,9 +200,9 @@ export const CalendarSave = () => {
         showZero={true}
       />
     );
-    // 7-4. dropdown
-    const dropdownSection = (id, sectionId, index) => (
-      <DropDown
+    // 7-4. delete
+    const deleteSection = (id, sectionId, index) => (
+      <Delete
         id={id}
         sectionId={sectionId}
         index={index}
@@ -215,7 +215,7 @@ export const CalendarSave = () => {
       <Card className={"border p-20"} key={i}>
         <Div className={"d-between"}>
           {badgeSection(i)}
-          {dropdownSection(OBJECT?._id, OBJECT?.calendar_section[i]?._id, i)}
+          {deleteSection(OBJECT?._id, OBJECT?.calendar_section[i]?._id, i)}
         </Div>
         <Br40/>
         <Div className={"d-left"}>
