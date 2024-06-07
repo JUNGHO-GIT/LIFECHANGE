@@ -473,7 +473,7 @@ export const TopNav = () => {
 
   // 7. topNav ------------------------------------------------------------------------------------>
   const topNavNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-7vh border radius"}>
+    <Paper className={"flex-wrapper p-sticky top-8vh border radius"}>
       <Card className={"block-wrapper d-row h-8vh w-100p"}>
         {smileNode()}
         {propertyNode()}

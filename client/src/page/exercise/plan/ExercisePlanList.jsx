@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, Link} from "../../../import/ImportMuis.jsx";
+import {exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExercisePlanList = () => {
@@ -56,14 +56,14 @@ export const ExercisePlanList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    exercise_plan_number: 0,
-    exercise_plan_demo: false,
-    exercise_plan_dateStart: "0000-00-00",
-    exercise_plan_dateEnd: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00"
+    exercise_plan_plan_number: 0,
+    exercise_plan_plan_demo: false,
+    exercise_plan_plan_dateStart: "0000-00-00",
+    exercise_plan_plan_dateEnd: "0000-00-00",
+    exercise_plan_plan_count: 0,
+    exercise_plan_plan_volume: 0,
+    exercise_plan_plan_weight: 0,
+    exercise_plan_plan_cardio: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -106,64 +106,68 @@ export const ExercisePlanList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("exercise-count")}</TableCell>
-              <TableCell>{translate("exercise-volume")}</TableCell>
-              <TableCell>{translate("exercise-cardio")}</TableCell>
-              <TableCell>{translate("exercise-weight")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                  <TableCell width={"30%"}>
-                    <Link onClick={() => {
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.exercise_plan_dateType,
-                      dateStart: item.exercise_plan_dateStart,
-                      dateEnd: item.exercise_plan_dateEnd
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
-                      <>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_count).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_volume).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_plan_cardio}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_plan_weight).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-20"} key={`${index}-${i}`}>
+          <Div className={"align-left"}>
+            <Div className={"d-between w-100p"}>
+              <Link className={"black fs-1-2rem"}>
+                {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                  <>
+                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                  </>
+                ) : (
+                  <>
+                    <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                  </>
+                )}
+              </Link>
+              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                Object.assign(SEND, {
+                  id: item._id,
+                  dateType: item.exercise_plan_dateType,
+                  dateStart: item.exercise_plan_dateStart,
+                  dateEnd: item.exercise_plan_dateEnd,
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }} />
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={exercise3} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("exercise-planVolume")}
+              </Div>
+              {numeral(item.exercise_plan_volume).format('0,0')}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={exercise4} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("exercise-planCardio")}
+              </Div>
+              {item.exercise_plan_cardio}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={exercise5} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("exercise-planWeight")}
+              </Div>
+              {numeral(item.exercise_plan_weight).format('0,0')}
+            </Div>
+          </Div>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

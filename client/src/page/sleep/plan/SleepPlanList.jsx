@@ -6,9 +6,9 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Div, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, Link} from "../../../import/ImportMuis.jsx";
+import {sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanList = () => {
@@ -106,60 +106,68 @@ export const SleepPlanList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("sleep-night")}</TableCell>
-                <TableCell>{translate("sleep-morning")}</TableCell>
-                <TableCell>{translate("sleep-time")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                  <TableCell width={"30%"}>
-                    <Link onClick={() => {
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.sleep_plan_dateType,
-                        dateStart: item.sleep_plan_dateStart,
-                        dateEnd: item.sleep_plan_dateEnd,
-                      });
-                      navigate(SEND.toSave, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
-                        <>
-                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
-                          <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
-                        </>
-                      )}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_plan_night}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_plan_morning}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_plan_time}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-20"} key={`${index}-${i}`}>
+          <Div className={"align-left"}>
+            <Div className={"d-between w-100p"}>
+              <Link className={"black fs-1-2rem"}>
+                {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                  <>
+                    <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                  </>
+                ) : (
+                  <>
+                    <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                  </>
+                )}
+              </Link>
+              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                Object.assign(SEND, {
+                  id: item._id,
+                  dateType: item.sleep_plan_dateType,
+                  dateStart: item.sleep_plan_dateStart,
+                  dateEnd: item.sleep_plan_dateEnd,
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }} />
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep2} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-planNight")}
+              </Div>
+              {item.sleep_plan_night}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep3} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-planMorning")}
+              </Div>
+              {item.sleep_plan_morning}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep4} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-planTime")}
+              </Div>
+              {item.sleep_plan_time}
+            </Div>
+          </Div>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

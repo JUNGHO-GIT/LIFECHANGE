@@ -6,7 +6,7 @@ import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportLogics";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40, Icons} from "../../import/ImportComponents.jsx";
+import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
 

@@ -6,10 +6,9 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, Card} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, Link} from "../../../import/ImportMuis.jsx";
+import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanList = () => {
@@ -108,64 +107,78 @@ export const FoodPlanList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                  <TableCell width={"30%"}>
-                    <Link onClick={() => {
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.food_plan_dateType,
-                      dateStart: item.food_plan_dateStart,
-                      dateEnd: item.food_plan_dateEnd
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.food_plan_dateStart === item.food_plan_dateEnd ? (
-                      <>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_kcal).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_carb).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_protein).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_fat).format('0,0')}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-20"} key={`${index}-${i}`}>
+          <Div className={"align-left"}>
+            <Div className={"d-between w-100p"}>
+              <Link className={"black fs-1-2rem"}>
+                {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                  <>
+                    <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                  </>
+                ) : (
+                  <>
+                    <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                  </>
+                )}
+              </Link>
+              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                Object.assign(SEND, {
+                  id: item._id,
+                  dateType: item.food_plan_dateType,
+                  dateStart: item.food_plan_dateStart,
+                  dateEnd: item.food_plan_dateEnd,
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }} />
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={food2} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("food-planKcal")}
+              </Div>
+              {numeral(item.food_plan_kcal).format('0,0')}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={food3} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("food-planCarb")}
+              </Div>
+              {numeral(item.food_plan_carb).format('0,0')}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={food4} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("food-planProtein")}
+              </Div>
+              {numeral(item.food_plan_protein).format('0,0')}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={food5} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("food-planFat")}
+              </Div>
+              {numeral(item.food_plan_fat).format('0,0')}
+            </Div>
+          </Div>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

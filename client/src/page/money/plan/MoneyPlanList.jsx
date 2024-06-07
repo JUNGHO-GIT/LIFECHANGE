@@ -4,12 +4,12 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportLogics";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
+import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanList = () => {
@@ -106,56 +106,58 @@ export const MoneyPlanList = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className="table-thead-tr">
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("money-in")}</TableCell>
-                <TableCell>{translate("money-out")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                  <TableCell width={"30%"}>
-                    <Link onClick={() => {
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.money_plan_dateType,
-                        dateStart: item.money_plan_dateStart,
-                        dateEnd: item.money_plan_dateEnd
-                      });
-                      navigate(SEND.toSave, {
-                        state: SEND
-                      });
-                    }}>
-                      {item.money_plan_dateStart === item.money_plan_dateEnd ? (
-                        <>
-                          <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
-                          <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
-                        </>
-                      )}
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_plan_in).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_plan_out).format("0,0")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-20"} key={`${index}-${i}`}>
+          <Div className={"align-left"}>
+            <Div className={"d-between w-100p"}>
+              <Link className={"black fs-1-2rem"}>
+                {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                  <>
+                    <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                  </>
+                ) : (
+                  <>
+                    <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                  </>
+                )}
+              </Link>
+              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                Object.assign(SEND, {
+                  id: item._id,
+                  dateType: item.money_plan_dateType,
+                  dateStart: item.money_plan_dateStart,
+                  dateEnd: item.money_plan_dateEnd,
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }} />
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={money2} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("money-planIn")}
+              </Div>
+              {numeral(item.money_plan_in).format("0,0")}
+            </Div>
+          </Div>
+          <Br10/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={money2} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("money-planOut")}
+              </Div>
+              {numeral(item.money_plan_out).format("0,0")}
+            </Div>
+          </Div>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

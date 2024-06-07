@@ -9,7 +9,7 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
-import {exercise2, exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
+import {exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {

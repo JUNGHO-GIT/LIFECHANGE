@@ -10057,12 +10057,15 @@
   text-align: right !important;
 }
 .align-center {
+  display: flex !important;
   align-items: center !important;
 }
 .align-left {
+  display: flex !important;
   align-items: flex-start !important;
 }
 .align-right {
+  display: flex !important;
   align-items: flex-end !important;
 }
 .d-none {
@@ -10351,6 +10354,13 @@
 }
 .grey:hover, .grey:focus, .grey:active {
   color: #6B7280 !important;
+}
+
+.dark {
+  color: #5e5e5e !important;
+}
+.dark:hover, .dark:focus, .dark:active {
+  color: #3d3d3d !important;
 }
 
 .black {

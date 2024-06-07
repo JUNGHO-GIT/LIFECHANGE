@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br10} from "../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table, Link, Skeleton, Alert} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {Div, Br20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Paper, Card, Link} from "../../import/ImportMuis.jsx";
+import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -69,15 +69,6 @@ export const SleepList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  const ShowAlert = () => {
-    return (
-      <Alert severity="success">
-        This is a success Alert
-      </Alert>
-    );
-  };
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
@@ -114,48 +105,67 @@ export const SleepList = () => {
         </Div>
       </Card>
     );
+    // 7-7. fragment
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
-        <Card className={"border radius p-20"} key={index}>
-          <Div className={"black"}>
-            <Link onClick={() => {
-              Object.assign(SEND, {
-                id: item._id,
-                dateType: item.sleep_dateType,
-                dateStart: item.sleep_dateStart,
-                dateEnd: item.sleep_dateEnd,
-              });
-              navigate(SEND.toSave, {
-                state: SEND
-              });
-            }}>
-              {item.sleep_dateStart === item.sleep_dateEnd ? (
-                <>
-                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                </>
-              ) : (
-                <>
-                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
-                </>
-              )}
-            </Link>
+        <Card className={"border radius p-20"} key={`${index}-${i}`}>
+          <Div className={"align-left"}>
+            <Div className={"d-between w-100p"}>
+              <Link className={"black fs-1-2rem"}>
+                {item.sleep_dateStart === item.sleep_dateEnd ? (
+                  <>
+                    <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                  </>
+                ) : (
+                  <>
+                    <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                  </>
+                )}
+              </Link>
+              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                Object.assign(SEND, {
+                  id: item._id,
+                  dateType: item.sleep_dateType,
+                  dateStart: item.sleep_dateStart,
+                  dateEnd: item.sleep_dateEnd,
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }} />
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep2} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-night")}
+              </Div>
+              {item.sleep_section[0].sleep_night}
+            </Div>
           </Div>
           <Br10/>
-          <Div className={"black"}>
-            {`${translate("sleep-night")}  :  `}
-            {item.sleep_section[0].sleep_night}
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep3} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-morning")}
+              </Div>
+              {item.sleep_section[0].sleep_morning}
+            </Div>
           </Div>
           <Br10/>
-          <Div className={"black"}>
-            {`${translate("sleep-morning")}  :  `}
-            {item.sleep_section[0].sleep_morning}
-          </Div>
-          <Br10/>
-          <Div className={"black"}>
-            {`${translate("sleep-time")}  :  `}
-            {item.sleep_section[0].sleep_time}
+          <Div className={"align-left"}>
+            <Div className={"d-center"}>
+              <Img src={sleep4} className={"w-15 h-15"} />
+              <Div className={"dark me-10"}>
+                {translate("sleep-time")}
+              </Div>
+              {item.sleep_section[0].sleep_time}
+            </Div>
           </Div>
         </Card>
       ))
