@@ -115,33 +115,15 @@ export const FoodDiff = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-category")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
           <TableHead className={"table-thead"}>

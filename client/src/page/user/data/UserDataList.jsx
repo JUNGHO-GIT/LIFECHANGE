@@ -237,32 +237,15 @@ export const UserDataList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty1 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("exercise-count")}</TableCell>
-              <TableCell>{translate("exercise-volume")}</TableCell>
-              <TableCell>{translate("exercise-cardio")}</TableCell>
-              <TableCell>{translate("exercise-weight")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_EXERCISE_PLAN_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment1 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -311,421 +294,280 @@ export const UserDataList = () => {
     );
     // 7-6. empty
     const tableEmpty2 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("exercise-volume")}</TableCell>
-              <TableCell>{translate("exercise-cardio")}</TableCell>
-              <TableCell>{translate("exercise-weight")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_EXERCISE_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment2 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("exercise-volume")}</TableCell>
-              <TableCell>{translate("exercise-cardio")}</TableCell>
-              <TableCell>{translate("exercise-weight")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_EXERCISE?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.exercise_dateStart === item.exercise_dateEnd ? (
-                    <>
-                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_total_volume).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {item.exercise_total_cardio}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.exercise_body_weight).format("0,0")}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("exercise-volume")}</TableCell>
+                <TableCell>{translate("exercise-cardio")}</TableCell>
+                <TableCell>{translate("exercise-weight")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_EXERCISE?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.exercise_dateStart === item.exercise_dateEnd ? (
+                      <>
+                        <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.exercise_total_volume).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {item.exercise_total_cardio}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.exercise_body_weight).format("0,0")}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
     // 7-6. empty
     const tableEmpty3 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_FOOD_PLAN_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment3 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.food_plan_dateStart === item.food_plan_dateEnd ? (
-                    <>
-                      <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_kcal).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_carb).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_protein).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_fat).format('0,0')}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("food-kcal")}</TableCell>
+                <TableCell>{translate("food-carb")}</TableCell>
+                <TableCell>{translate("food-protein")}</TableCell>
+                <TableCell>{translate("food-fat")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_FOOD_PLAN?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                      <>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_plan_kcal).format('0,0')}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_plan_carb).format('0,0')}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_plan_protein).format('0,0')}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_plan_fat).format('0,0')}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
     // 7-6. empty
     const tableEmpty4 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_FOOD_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment4 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_FOOD?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.food_dateStart === item.food_dateEnd ? (
-                    <>
-                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_kcal).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_carb).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_protein).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_fat).format("0,0")}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("food-kcal")}</TableCell>
+                <TableCell>{translate("food-carb")}</TableCell>
+                <TableCell>{translate("food-protein")}</TableCell>
+                <TableCell>{translate("food-fat")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_FOOD?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.food_dateStart === item.food_dateEnd ? (
+                      <>
+                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_total_kcal).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_total_carb).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_total_protein).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.food_total_fat).format("0,0")}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
     // 7-6. empty
     const tableEmpty5 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_MONEY_PLAN_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment5 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className="table-thead-tr">
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.money_plan_dateStart === item.money_plan_dateEnd ? (
-                    <>
-                      <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_in).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_out).format("0,0")}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className="table-thead-tr">
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("money-in")}</TableCell>
+                <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_MONEY_PLAN?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                      <>
+                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_plan_in).format("0,0")}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_plan_out).format("0,0")}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
     // 7-6. empty
     const tableEmpty6 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_MONEY_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment6 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_MONEY?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.money_dateStart === item.money_dateEnd ? (
-                    <>
-                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_total_in).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_total_out).format('0,0')}
-                </TableCell>
+            <TableHead className={"table-thead"}>
+              <TableRow className={"table-thead-tr"}>
+                <TableCell>{translate("common-date")}</TableCell>
+                <TableCell>{translate("money-in")}</TableCell>
+                <TableCell>{translate("money-out")}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {OBJECT_MONEY?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.money_dateStart === item.money_dateEnd ? (
+                      <>
+                        <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_total_in).format('0,0')}
+                  </TableCell>
+                  <TableCell>
+                    {numeral(item.money_total_out).format('0,0')}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
     // 7-6. empty
     const tableEmpty7 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
-        <TableContainer>
-        <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={Object.keys(OBJECT_SLEEP_PLAN_DEF[0]).length}>
-                {translate("common-empty")}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-          </Table>
-        </TableContainer>
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
       </Card>
     );
     // 7-7. fragment
     const tableFragment7 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell>
-                  {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
-                    <>
-                      <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                    </>
-                  ) : (
-                    <>
-                      <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
-                    </>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_time}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-6. empty
-    const tableEmpty8 = () => (
-      <Card className={"radius p-0"} key={"empty"}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -737,19 +579,48 @@ export const UserDataList = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              <TableRow className={"table-tbody-tr"}>
-                <TableCell colSpan={Object.keys(OBJECT_SLEEP_DEF[0]).length}>
-                  {translate("common-empty")}
-                </TableCell>
-              </TableRow>
+              {OBJECT_SLEEP_PLAN?.map((item, index) => (
+                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                  <TableCell>
+                    {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                      <>
+                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                      </>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_plan_night}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_plan_morning}
+                  </TableCell>
+                  <TableCell>
+                    {item.sleep_plan_time}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Card>
     );
+    // 7-6. empty
+    const tableEmpty8 = () => (
+      <Card className={"border radius p-0"} key={"empty"}>
+        <Div className={"d-center"}>
+          {translate("common-empty")}
+        </Div>
+      </Card>
+    );
     // 7-7. fragment
     const tableFragment8 = (i=0) => (
-      <Card className={"radius p-0"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
