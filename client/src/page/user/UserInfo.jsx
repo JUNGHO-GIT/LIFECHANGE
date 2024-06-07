@@ -116,9 +116,8 @@ export const UserInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper d-column h-min87vh"}>
+        <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
-          <Br40 />
           <Br40 />
           {secondSection()}
         </Div>

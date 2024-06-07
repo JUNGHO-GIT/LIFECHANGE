@@ -2,7 +2,6 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
@@ -29,8 +28,11 @@ export const ExercisePlanSave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -48,14 +50,6 @@ export const ExercisePlanSave = () => {
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  /** @type {React.MutableRefObject<IntersectionObserver|null>} **/
-  const observer = useRef(null);
-  const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
-  const [MORE, setMORE] = useState(true);
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {

@@ -2,12 +2,12 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useCallback, useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
+import {log} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20, Message} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Button, Alert, Dialog, DialogActions} from "../../../import/ImportMuis.jsx";
+import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
@@ -33,7 +33,7 @@ export const UserDataCategory = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
+  const dataCategoryArray = ["exercise", "food", "money", "sleep"];
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -69,9 +69,6 @@ export const UserDataCategory = () => {
     user_id: sessionId,
     user_number: 0,
     dataCategory: {
-      calendar: [{
-        calendar_part: ""
-      }],
       exercise: [{
         exercise_part: "",
         exercise_title: [""]
@@ -127,7 +124,7 @@ export const UserDataCategory = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-   const handlerAdd = (type) => {
+  const handlerAdd = (type) => {
     if (type === "part") {
       setOBJECT((prev) => {
         const newPart = {
@@ -170,6 +167,7 @@ export const UserDataCategory = () => {
     }
   };
 
+  // 4-2. handler --------------------------------------------------------------------------------->
   const handlerRename = (type, index) => {
     if (type === "part") {
       const newCategory2 = prompt("새로운 이름을 입력하세요.");
@@ -223,15 +221,13 @@ export const UserDataCategory = () => {
   const handlerRemove = (type, index) => {
     if (type === "part") {
       setOBJECT((prev) => {
-        const currentPart = prev.dataCategory?.[dataType]?.[idx.category2Idx];
-        const newPart = [
-          ...prev.dataCategory[dataType]?.slice(0, index),
-          ...prev.dataCategory[dataType]?.slice(index + 1)
+        const newCategory1 = [
+          ...prev.dataCategory[dataType].slice(0, index),
+          ...prev.dataCategory[dataType].slice(index + 1)
         ];
-
         // 하나만 남았을 때 삭제 시도 시 경고
-        if (currentPart <= 2) {
-          alert('최소 하나의 part가 필요합니다.');
+        if (newCategory1.length <= 1) {
+          alert("ddd");
           return prev;
         }
 
@@ -239,7 +235,7 @@ export const UserDataCategory = () => {
           ...prev,
           dataCategory: {
             ...prev.dataCategory,
-            [dataType]: newPart
+            [dataType]: newCategory1
           }
         };
       });
@@ -304,20 +300,6 @@ export const UserDataCategory = () => {
       }));
     }
   };
-
-
-const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. popup
@@ -351,7 +333,7 @@ const [open, setOpen] = useState(false);
                       <Div className={"fs-0-9rem ms-auto"}>
                         {item[`${dataType}_part`]}
                       </Div>
-                      <Div className={"fs-0-9rem ms-auto me-n10"}>
+                      <Div className={"fs-0-9rem ms-auto"}>
                         <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
                           handlerRename("part", index);
                         }} />
@@ -406,7 +388,7 @@ const [open, setOpen] = useState(false);
                         <Div className={"fs-0-9rem ms-auto"}>
                           {item}
                         </Div>
-                        <Div className={"fs-0-9rem ms-auto d-row me-n10"}>
+                        <Div className={"fs-0-9rem ms-auto d-row"}>
                           <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
                             handlerRename("title", index);
                           }} />
@@ -437,7 +419,7 @@ const [open, setOpen] = useState(false);
     );
     // 7-7. fragment
     const tableFragment = (i=0) => (
-      <Card className={"p-0 radius"} key={i}>
+      <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -494,32 +476,16 @@ const [open, setOpen] = useState(false);
         </TableContainer>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
-      <>
-        <Button variant="outlined" onClick={handleClick}>
-        Show Alert
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <Alert severity="info" style={{ margin: '20px' }}>
-          This is an important message!
-        </Alert>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      </>
+      LOADING ? loadingNode() : tableFragment(0)
     );
     // 7-9. third
     const thirdSection = () => (
@@ -528,8 +494,7 @@ const [open, setOpen] = useState(false);
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min85vh"}>
-          {firstSection()}
+        <Div className={"block-wrapper h-min75vh"}>
           {thirdSection()}
         </Div>
       </Paper>
