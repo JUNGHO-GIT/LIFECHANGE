@@ -11,15 +11,11 @@ export const Filter = ({
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
+  const {translate} = useTranslate();
   const session = sessionStorage.getItem("dataCategory") || "{}";
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
-  const location = useLocation();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -28,12 +24,12 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        label={"정렬"}
+        label={translate("common-sort")}
         variant={"outlined"}
         value={objects?.PAGING?.sort || "asc"}
         className={"w-20vw me-3"}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => (
           functions?.setPAGING((prev={}) => ({
@@ -43,7 +39,7 @@ export const Filter = ({
         )}>
         {["asc", "desc"].map((item) => (
           <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
-            {item}
+            {translate(`common-${item}`)}
           </MenuItem>
         ))}
       </TextField>
@@ -67,7 +63,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.PAGING?.part}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => {
           const newPartVal = e.target.value;
@@ -98,7 +94,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.PAGING?.title}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => {
           const newTitleVal = e.target.value;
@@ -129,7 +125,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.PAGING?.part}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => {
           const newPartVal = e.target.value;
@@ -162,7 +158,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.PAGING?.part}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => {
           const newPartVal = e.target.value;
@@ -193,7 +189,7 @@ export const Filter = ({
         variant={"outlined"}
         value={objects?.PAGING?.title}
         InputProps={{
-          className: "h-min0 h-4vh fs-0-7rem"
+          className: "h-min0 h-4vh"
         }}
         onChange={(e) => {
           const newTitleVal = e.target.value;

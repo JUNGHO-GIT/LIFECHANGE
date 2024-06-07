@@ -56,6 +56,9 @@ export const useTranslate = () => {
       viewMonth: {ko: "월별", en: "Month View"},
       viewYear: {ko: "년별", en: "Year View"},
       viewSelect: {ko: "선택별", en: "Select View"},
+      asc: {ko: "오름차순", en: "Asc"},
+      desc: {ko: "내림차순", en: "Desc"},
+      sort: {ko: "정렬", en: "Sort"},
     },
     header: {
       login: {ko: "로그인", en: "Login"},
@@ -227,6 +230,13 @@ export const useTranslate = () => {
         end.indexOf("end") !== -1
       ) ? (
         <div className={"fs-0-6rem"}>
+          {result[lang]}
+        </div>
+      ) : (
+        end.indexOf("asc") !== -1 ||
+        end.indexOf("desc") !== -1
+      ) ? (
+        <div className={"fs-0-7rem"}>
           {result[lang]}
         </div>
       ) : (
