@@ -58,6 +58,13 @@ export const Btn = ({
       {translate("btn-flowSave")}
     </Button>
   );
+  const btnFlowDeletes = () => (
+    <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={() => {
+      handlers.flowDeletes();
+    }}>
+      {translate("btn-flowDeletes")}
+    </Button>
+  );
   const btnFlowFind = () => (
     <Div className={"d-center"}>
       <TextField
@@ -194,6 +201,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -211,6 +219,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -221,6 +230,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -255,6 +265,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -265,6 +276,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -282,6 +294,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -291,7 +304,8 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
-            {btnFlowSave()}
+            {btnFlowSave()}           
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -309,6 +323,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
@@ -319,6 +334,7 @@ export const Btn = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }

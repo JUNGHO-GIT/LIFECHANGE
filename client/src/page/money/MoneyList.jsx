@@ -43,7 +43,7 @@ export const MoneyList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/money/plan/save",
+    toSave: "/money/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",

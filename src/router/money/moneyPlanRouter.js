@@ -137,12 +137,12 @@ router.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-router.delete("/deletes", async (req, res) => {
+router.post("/deletes", async (req, res) => {
   try {
     let result = await service.deletes(
-      req.query.user_id,
-      req.query._id,
-      req.query.DATE
+      req.body.user_id,
+      req.body._id,
+      req.body.DATE
     );
     if (result) {
       res.json({

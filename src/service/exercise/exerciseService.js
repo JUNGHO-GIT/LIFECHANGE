@@ -101,7 +101,7 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  user_id_param, _id_param, section_id_param, DATE_param
+  user_id_param, _id_param, DATE_param
 ) => {
 
   const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
@@ -111,29 +111,14 @@ export const deletes = async (
   const findResult = await repository.deletes.detail(
     user_id_param, _id_param, dateType, dateStart, dateEnd
   );
+
   if (!findResult) {
     return null;
   }
   else {
-    const updateResult = await repository.deletes.update(
-      user_id_param, _id_param, section_id_param, dateType, dateStart, dateEnd
+    await repository.deletes.deletes(
+      user_id_param, _id_param
     );
-    if (!updateResult) {
-      return null;
-    }
-    else {
-      const findAgain = await repository.deletes.detail(
-        user_id_param, _id_param, dateType, dateStart, dateEnd
-      );
-      if (findAgain?.exercise_section.length === 0) {
-        await repository.deletes.deletes(
-          user_id_param, _id_param
-        );
-        return "deleted";
-      }
-      else {
-        return findAgain;
-      }
-    }
+    return "deleted";
   }
 };

@@ -207,6 +207,30 @@ export const ExerciseSave = () => {
       alert(res.data.msg);
     }
   };
+  
+    // 3. flow -------------------------------------------------------------------------------------->
+  const flowDeletes = async () => {
+    const res = await axios.post(`${URL_OBJECT}/deletes`, {
+      user_id: sessionId,
+      _id: OBJECT._id,
+      DATE: DATE,
+    });
+    if (res.data.status === "success") {
+      alert(res.data.msg);
+      percent();
+      Object.assign(SEND, {
+        dateStart: DATE.dateStart,
+        dateEnd: DATE.dateEnd
+      });
+      navigate(SEND.toList, {
+        state: SEND
+      });
+    }
+    else {
+      alert(res.data.msg);
+    }
+  };
+
 
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
@@ -581,7 +605,7 @@ export const ExerciseSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       handlers={{
-        navigate, flowSave
+        navigate, flowSave, flowDeletes
       }}
     />
   );
