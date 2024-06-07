@@ -22,6 +22,7 @@ export const Picker = ({
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
+  // 1. common ------------------------------------------------------------------------------------>
   const selectStr =
   (secondStr === "plan" && thirdStr === "list") ||
   (secondStr === "list" && thirdStr === "") ? (
@@ -31,6 +32,7 @@ export const Picker = ({
     "h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
+  // 1. common ------------------------------------------------------------------------------------>
   const dateStr1 =
   (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
     "w-50vw"
@@ -48,6 +50,7 @@ export const Picker = ({
     "w-60vw"
   ) : "";
 
+  // 1. common ------------------------------------------------------------------------------------>
   const dateStr2 =
   (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
@@ -62,6 +65,77 @@ export const Picker = ({
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
     "h-min40 fs-0-8rem pointer"
   ) : "";
+
+  // 1. type -------------------------------------------------------------------------------------->
+  const typeNode = () => (
+    (firstStr === "calendar" && secondStr !== "plan") ||
+    (firstStr !== "calendar" && secondStr === "plan") ? (
+      <TextField
+        select={true}
+        label={translate("common-dateType")}
+        size={"small"}
+        value={DATE.dateType || ""}
+        variant={"outlined"}
+        className={"w-20vw me-3"}
+        InputProps={{
+          readOnly: false,
+          className: selectStr,
+          startAdornment: null,
+          endAdornment: null
+        }}
+        onChange={(e) => {
+          if (e.target.value === "day") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "week") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "week",
+              dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "month") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "month",
+              dateStart: moment().startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("month").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "year") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "year",
+              dateStart: moment().startOf("year").format("YYYY-MM-DD"),
+              dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "select") {
+            setDATE((prev={}) => ({
+              ...prev,
+              dateType: "select",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }));
+          }
+        }}
+      >
+        {["day", "week", "month", "year", "select"].map((item) => (
+          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+            {translate(`common-${item}`)}
+          </MenuItem>
+        ))}
+      </TextField>
+    ) : (
+      null
+    )
+  );
 
   // 1. day --------------------------------------------------------------------------------------->
   const daySection = () => (
@@ -461,7 +535,7 @@ export const Picker = ({
     </PopUp>
   );
 
-  // 4. select ------------------------------------------------------------------------------------>
+  // 5. select ------------------------------------------------------------------------------------>
   const selectSection = () => (
     <PopUp
       type={"innerCenter"}
@@ -562,77 +636,6 @@ export const Picker = ({
     </PopUp>
   );
 
-  // 5. select ------------------------------------------------------------------------------------>
-  const selectNode = () => (
-    (firstStr === "calendar" && secondStr !== "plan") ||
-    (firstStr !== "calendar" && secondStr === "plan") ? (
-      <TextField
-        select={true}
-        label={translate("common-dateType")}
-        size={"small"}
-        value={DATE.dateType || ""}
-        variant={"outlined"}
-        className={"w-20vw me-3"}
-        InputProps={{
-          readOnly: false,
-          className: selectStr,
-          startAdornment: null,
-          endAdornment: null
-        }}
-        onChange={(e) => {
-          if (e.target.value === "day") {
-            setDATE((prev={}) => ({
-              ...prev,
-              dateType: "day",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "week") {
-            setDATE((prev={}) => ({
-              ...prev,
-              dateType: "week",
-              dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "month") {
-            setDATE((prev={}) => ({
-              ...prev,
-              dateType: "month",
-              dateStart: moment().startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("month").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "year") {
-            setDATE((prev={}) => ({
-              ...prev,
-              dateType: "year",
-              dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("year").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "select") {
-            setDATE((prev={}) => ({
-              ...prev,
-              dateType: "select",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }));
-          }
-        }}
-      >
-        {["day", "week", "month", "year", "select"].map((item) => (
-          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-            {item}
-          </MenuItem>
-        ))}
-      </TextField>
-    ) : (
-      null
-    )
-  );
-
   // 6. list -------------------------------------------------------------------------------------->
   const listNode = () => (
     <Div className={"d-center"}>
@@ -643,7 +646,7 @@ export const Picker = ({
   // 6. save -------------------------------------------------------------------------------------->
   const saveNode = () => (
     <Div className={"d-center"}>
-      {selectNode()}
+      {typeNode()}
       {DATE.dateType === "day" ? (
         daySection()
       ) : DATE.dateType === "week" ? (
