@@ -288,13 +288,13 @@ export const MoneyDashLine = () => {
     );
 
     // 7-7. fragment
-    const dashFragment1 = (i=0) => (
+    const dashFragment1 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i=0) => (
+    const dashFragment2 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartMonth()}
       </Card>

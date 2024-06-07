@@ -29,40 +29,40 @@ export const UserSetting = () => {
           <Table>
             <TableBody className={"table-tbody"}>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataDetail")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     navigate("/user/data/detail")
                   }} />
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataCategory")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     navigate("/user/data/category")
                   }} />
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataList")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     navigate("/user/data/list")
                   }} />
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-language")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <PopUp
                     type={"innerCenter"}
                     position={"bottom"}
@@ -97,10 +97,10 @@ export const UserSetting = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-logout")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     sessionStorage.clear()
                     navigate("/")
@@ -108,10 +108,10 @@ export const UserSetting = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-90vw"}>
+                <TableCell className={"w-90vw p-15"}>
                   {translate("user-info")}
                 </TableCell>
-                <TableCell className={"w-10vw"}>
+                <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                     navigate("/user/info")
                   }} />

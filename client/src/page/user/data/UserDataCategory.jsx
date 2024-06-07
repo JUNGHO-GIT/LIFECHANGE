@@ -316,7 +316,7 @@ export const UserDataCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT?.dataCategory[dataType]?.map((item, index) => (index > 0) && (
-                <TableRow key={index} className={`table-tbody-tr`}
+                <TableRow key={index} className={"table-tbody-tr border-bottom"}
                   onClick={() => {
                     setSelectedIdx((prev) => ({
                       ...prev,
@@ -371,7 +371,7 @@ export const UserDataCategory = () => {
               </TableHead>
               <TableBody className={"table-tbody"}>
                 {OBJECT?.dataCategory[dataType]?.[idx?.category2Idx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                  <TableRow key={index} className={`table-tbody-tr`}
+                  <TableRow key={index} className={"table-tbody-tr border-bottom"}
                     onClick={() => {
                       setSelectedIdx((prev) => ({
                         ...prev,
@@ -431,11 +431,11 @@ export const UserDataCategory = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {dataCategoryArray.map((item, index) => (
-                <TableRow key={index} className={"table-tbody-tr"}>
+                <TableRow key={index} className={"table-tbody-tr border-top"}>
                   <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem ms-0"}>
-                        {item}
+                        {translate(`user-${item}`)}
                       </Div>
                       <Div className={"fs-1-0rem ms-auto"}>
                       <PopUp

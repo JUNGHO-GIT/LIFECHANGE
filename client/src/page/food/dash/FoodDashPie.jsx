@@ -524,37 +524,37 @@ export const FoodDashPie = () => {
       </PopUp>
     );
     // 7-7. fragment
-    const dashFragment1 = (i=0) => (
+    const dashFragment1 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartKcalToday()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment2 = (i=0) => (
+    const dashFragment2 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartNutToday()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment3 = (i=0) => (
+    const dashFragment3 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartKcalWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment4 = (i=0) => (
+    const dashFragment4 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartNutWeek()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment5 = (i=0) => (
+    const dashFragment5 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartKcalMonth()}
       </Card>
     );
     // 7-7. fragment
-    const dashFragment6 = (i=0) => (
+    const dashFragment6 = (i) => (
       <Card className={"p-10"} key={i}>
         {chartNutMonth()}
       </Card>

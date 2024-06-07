@@ -236,7 +236,7 @@ export const UserDataList = () => {
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. empty
-    const tableEmpty1 = () => (
+    const tableEmpty = () => (
       <Card className={"border radius p-0"} key={"empty"}>
         <Div className={"d-center"}>
           {translate("common-empty")}
@@ -244,7 +244,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-7. fragment
-    const tableFragment1 = (i=0) => (
+    const tableFragment1 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -259,7 +259,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
                       <>
@@ -292,16 +292,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty2 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment2 = (i=0) => (
+    const tableFragment2 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -315,7 +307,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_EXERCISE?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
@@ -345,16 +337,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty3 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment3 = (i=0) => (
+    const tableFragment3 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -369,7 +353,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_FOOD_PLAN?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.food_plan_dateStart === item.food_plan_dateEnd ? (
                       <>
@@ -402,16 +386,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty4 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment4 = (i=0) => (
+    const tableFragment4 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -426,7 +402,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_FOOD?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.food_dateStart === item.food_dateEnd ? (
                       <>
@@ -459,16 +435,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty5 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment5 = (i=0) => (
+    const tableFragment5 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -481,7 +449,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_MONEY_PLAN?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.money_plan_dateStart === item.money_plan_dateEnd ? (
                       <>
@@ -508,16 +476,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty6 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment6 = (i=0) => (
+    const tableFragment6 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -530,7 +490,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_MONEY?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.money_dateStart === item.money_dateEnd ? (
                       <>
@@ -557,16 +517,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty7 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment7 = (i=0) => (
+    const tableFragment7 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -580,7 +532,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_SLEEP_PLAN?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
                       <>
@@ -610,16 +562,8 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-6. empty
-    const tableEmpty8 = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("common-empty")}
-        </Div>
-      </Card>
-    );
     // 7-7. fragment
-    const tableFragment8 = (i=0) => (
+    const tableFragment8 = (i) => (
       <Card className={"border radius p-0"} key={i}>
         <TableContainer>
           <Table>
@@ -633,7 +577,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_SLEEP?.map((item, index) => (
-                <TableRow className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
                     {item.sleep_dateStart === item.sleep_dateEnd ? (
                       <>
@@ -674,42 +618,42 @@ export const UserDataList = () => {
     const tableSection = () => {
       if (PART === "exercisePlan") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty1() : tableFragment1(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment1(0)
         );
       }
       else if (PART === "exercise") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty2() : tableFragment2(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment2(0)
         );
       }
       else if (PART === "foodPlan") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty3() : tableFragment3(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment3(0)
         );
       }
       else if (PART === "food") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty4() : tableFragment4(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment4(0)
         );
       }
       else if (PART === "moneyPlan") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty5() : tableFragment5(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment5(0)
         );
       }
       else if (PART === "money") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty6() : tableFragment6(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment6(0)
         );
       }
       else if (PART === "sleepPlan") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty7() : tableFragment7(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment7(0)
         );
       }
       else if (PART === "sleep") {
         return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty8() : tableFragment8(0)
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment8(0)
         );
       }
     };
