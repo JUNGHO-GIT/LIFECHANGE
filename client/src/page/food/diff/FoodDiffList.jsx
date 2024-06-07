@@ -6,10 +6,12 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
+import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableRow} from "../../../import/ImportMuis.jsx";
+import {TableBody, TableCell} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDiff = () => {
@@ -122,88 +124,195 @@ export const FoodDiff = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-category")}</TableCell>
-              <TableCell>{translate("food-kcal")}</TableCell>
-              <TableCell>{translate("food-carb")}</TableCell>
-              <TableCell>{translate("food-protein")}</TableCell>
-              <TableCell>{translate("food-fat")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell width={"30%"}>
-                  <Link>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={5}>
                     {item.food_plan_dateStart === item.food_plan_dateEnd ? (
-                      <>
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
                         <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                      </>
+                      </Div>
                     ) : (
-                      <>
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
                         <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
                         <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
-                      </>
+                      </Div>
                     )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {translate("common-plan")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_kcal).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_carb).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_protein).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_plan_fat).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {translate("common-real")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_kcal).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_carb).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_protein).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.food_total_fat).format('0,0')}
-                </TableCell>
-                <TableCell>
-                  {translate("common-diff")}
-                </TableCell>
-                <TableCell className={item.food_diff_kcal_color}>
-                  {numeral(item.food_diff_kcal).format('0,0')}
-                </TableCell>
-                <TableCell className={item.food_diff_carb_color}>
-                  {numeral(item.food_diff_carb).format('0,0')}
-                </TableCell>
-                <TableCell className={item.food_diff_protein_color}>
-                  {numeral(item.food_diff_protein).format('0,0')}
-                </TableCell>
-                <TableCell className={item.food_diff_fat_color}>
-                  {numeral(item.food_diff_fat).format('0,0')}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food2} className={"w-15 h-15"} />
+                      {translate("food-kcal")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_kcal).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_total_kcal).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.food_diff_kcal_color}`}>
+                      {numeral(item.food_diff_kcal).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food3} className={"w-15 h-15"} />
+                      {translate("food-carb")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_carb).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_total_carb).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.food_diff_carb_color}`}>
+                      {numeral(item.food_diff_carb).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food4} className={"w-15 h-15"} />
+                      {translate("food-protein")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_protein).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_total_protein).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.food_diff_protein_color}`}>
+                      {numeral(item.food_diff_protein).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food5} className={"w-15 h-15"} />
+                      {translate("food-fat")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_fat).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_total_fat).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.food_diff_fat_color}`}>
+                      {numeral(item.food_diff_fat).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

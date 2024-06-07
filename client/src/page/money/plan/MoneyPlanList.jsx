@@ -7,6 +7,8 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -105,53 +107,75 @@ export const MoneyPlanList = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
-        <Card className={"border radius p-20"} key={`${index}-${i}`}>
-          <Div className={"align-left"}>
-            <Div className={"d-between w-100p"}>
-              {item.money_plan_dateStart === item.money_plan_dateEnd ? (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                </Div>
-              ) : (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
-                </Div>
-              )}
-              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
-                Object.assign(SEND, {
-                  id: item._id,
-                  dateType: item.money_plan_dateType,
-                  dateStart: item.money_plan_dateStart,
-                  dateEnd: item.money_plan_dateEnd,
-                });
-                navigate(SEND.toSave, {
-                  state: SEND
-                });
-              }} />
-            </Div>
-          </Div>
-          <Br20/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={money2} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("money-planIn")}
-              </Div>
-              {numeral(item.money_plan_in).format("0,0")}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={money2} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("money-planOut")}
-              </Div>
-              {numeral(item.money_plan_out).format("0,0")}
-            </Div>
-          </Div>
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={2}>
+                    {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                      </Div>
+                    ) : (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                      </Div>
+                    )}
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                    <Div className={"fs-1-2rem fw-bolder d-right"}>
+                      <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.money_plan_dateType,
+                          dateStart: item.money_plan_dateStart,
+                          dateEnd: item.money_plan_dateEnd,
+                        });
+                        navigate(SEND.toSave, {
+                          state: SEND
+                        });
+                      }} />
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                      {translate("money-in")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_plan_in).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                      {translate("money-out")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_out).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Card>
       ))
     );

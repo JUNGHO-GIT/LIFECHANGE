@@ -259,7 +259,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_EXERCISE_PLAN?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
                       <>
@@ -315,7 +315,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_EXERCISE?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
@@ -369,7 +369,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_FOOD_PLAN?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.food_plan_dateStart === item.food_plan_dateEnd ? (
                       <>
@@ -426,7 +426,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_FOOD?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.food_dateStart === item.food_dateEnd ? (
                       <>
@@ -481,7 +481,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_MONEY_PLAN?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.money_plan_dateStart === item.money_plan_dateEnd ? (
                       <>
@@ -530,7 +530,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_MONEY?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.money_dateStart === item.money_dateEnd ? (
                       <>
@@ -580,7 +580,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_SLEEP_PLAN?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
                       <>
@@ -633,7 +633,7 @@ export const UserDataList = () => {
             </TableHead>
             <TableBody className={"table-tbody"}>
               {OBJECT_SLEEP?.map((item, index) => (
-                <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
+                <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     {item.sleep_dateStart === item.sleep_dateEnd ? (
                       <>

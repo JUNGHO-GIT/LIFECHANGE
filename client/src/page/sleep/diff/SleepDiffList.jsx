@@ -8,8 +8,9 @@ import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDiff = () => {
@@ -43,7 +44,7 @@ export const SleepDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/money/plan/save",
+    toSave: "/sleep/plan/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -118,78 +119,155 @@ export const SleepDiff = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className={"table-thead-tr"}>
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-category")}</TableCell>
-              <TableCell>{translate("sleep-night")}</TableCell>
-              <TableCell>{translate("sleep-morning")}</TableCell>
-              <TableCell>{translate("sleep-time")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell width={"30%"}>
-                  <Link>
-                      {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
-                        <>
-                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
-                          <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
-                        </>
-                      )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {translate("common-plan")}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_plan_time}
-                </TableCell>
-                <TableCell>
-                  {translate("common-real")}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_night}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_morning}
-                </TableCell>
-                <TableCell>
-                  {item.sleep_time}
-                </TableCell>
-                <TableCell>
-                  {translate("common-diff")}
-                </TableCell>
-                <TableCell className={item.sleep_diff_night_color}>
-                  {item.sleep_diff_night}
-                </TableCell>
-                <TableCell className={item.sleep_diff_morning_color}>
-                  {item.sleep_diff_morning}
-                </TableCell>
-                <TableCell className={item.sleep_diff_time_color}>
-                  {item.sleep_diff_time}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={5}>
+                    {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                      </Div>
+                    ) : (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                      </Div>
+                    )}
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep2} className={"w-15 h-15"} />
+                      {translate("sleep-night")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_plan_night}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_night}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.sleep_diff_night_color}`}>
+                      {item.sleep_diff_night}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep3} className={"w-15 h-15"} />
+                      {translate("sleep-morning")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_plan_morning}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_morning}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.sleep_diff_morning_color}`}>
+                      {item.sleep_diff_morning}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep4} className={"w-15 h-15"} />
+                      {translate("sleep-time")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_plan_time}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_time}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.sleep_diff_time_color}`}>
+                      {item.sleep_diff_time}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (

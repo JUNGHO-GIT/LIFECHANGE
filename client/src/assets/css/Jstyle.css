@@ -10093,13 +10093,13 @@
 .d-left {
   display: flex !important;
   justify-content: flex-start !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   text-align: left !important;
 }
 .d-right {
   display: flex !important;
   justify-content: flex-end !important;
-  align-items: flex-end !important;
+  align-items: center !important;
   text-align: right !important;
 }
 .d-row {
@@ -10245,14 +10245,26 @@
 .border-top {
   border-top: 0.5px solid #dedede !important;
 }
+.border-top-none {
+  border-top: none !important;
+}
 .border-right {
   border-right: 0.5px solid #dedede !important;
+}
+.border-right-none {
+  border-right: none !important;
 }
 .border-bottom {
   border-bottom: 0.5px solid #dedede !important;
 }
+.border-bottom-none {
+  border-bottom: none !important;
+}
 .border-left {
   border-left: 0.5px solid #dedede !important;
+}
+.border-left-none {
+  border-left: none !important;
 }
 .border-none {
   border: none !important;

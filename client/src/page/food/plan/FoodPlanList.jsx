@@ -8,6 +8,8 @@ import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -57,14 +59,14 @@ export const FoodPlanList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    food_plan_number: 0,
-    food_plan_demo: false,
-    food_plan_dateStart: "0000-00-00",
-    food_plan_dateEnd: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0
+    food_plan_plan_number: 0,
+    food_plan_plan_demo: false,
+    food_plan_plan_dateStart: "0000-00-00",
+    food_plan_plan_dateEnd: "0000-00-00",
+    food_plan_plan_kcal: 0,
+    food_plan_plan_carb: 0,
+    food_plan_plan_protein: 0,
+    food_plan_plan_fat: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -108,73 +110,105 @@ export const FoodPlanList = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
-        <Card className={"border radius p-20"} key={`${index}-${i}`}>
-          <Div className={"align-left"}>
-            <Div className={"d-between w-100p"}>
-              {item.food_plan_dateStart === item.food_plan_dateEnd ? (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                </Div>
-              ) : (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
-                </Div>
-              )}
-              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
-                Object.assign(SEND, {
-                  id: item._id,
-                  dateType: item.food_plan_dateType,
-                  dateStart: item.food_plan_dateStart,
-                  dateEnd: item.food_plan_dateEnd,
-                });
-                navigate(SEND.toSave, {
-                  state: SEND
-                });
-              }} />
-            </Div>
-          </Div>
-          <Br20/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={food2} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("food-planKcal")}
-              </Div>
-              {numeral(item.food_plan_kcal).format('0,0')}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={food3} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("food-planCarb")}
-              </Div>
-              {numeral(item.food_plan_carb).format('0,0')}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={food4} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("food-planProtein")}
-              </Div>
-              {numeral(item.food_plan_protein).format('0,0')}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={food5} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("food-planFat")}
-              </Div>
-              {numeral(item.food_plan_fat).format('0,0')}
-            </Div>
-          </Div>
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={2}>
+                    {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                      </Div>
+                    ) : (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                      </Div>
+                    )}
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                    <Div className={"fs-1-2rem fw-bolder d-right"}>
+                      <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.food_plan_dateType,
+                          dateStart: item.food_plan_dateStart,
+                          dateEnd: item.food_plan_dateEnd,
+                        });
+                        navigate(SEND.toSave, {
+                          state: SEND
+                        });
+                      }} />
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food2} className={"w-15 h-15"} />
+                      {translate("food-kcal")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_total_kcal).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food3} className={"w-15 h-15"} />
+                      {translate("food-carb")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_carb).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food4} className={"w-15 h-15"} />
+                      {translate("food-protein")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_protein).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={food5} className={"w-15 h-15"} />
+                      {translate("food-fat")} 목표
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.food_plan_fat).format("0,0")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Card>
       ))
     );

@@ -7,6 +7,8 @@ import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -108,63 +110,90 @@ export const SleepList = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
-        <Card className={"border radius p-20"} key={`${index}-${i}`}>
-          <Div className={"align-left"}>
-            <Div className={"d-between w-100p"}>
-              {item.sleep_dateStart === item.sleep_dateEnd ? (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                </Div>
-              ) : (
-                <Div className={"fs-1-2rem fw-bolder"}>
-                  <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                  <Div>~</Div>
-                  <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
-                </Div>
-              )}
-              <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
-                Object.assign(SEND, {
-                  id: item._id,
-                  dateType: item.sleep_dateType,
-                  dateStart: item.sleep_dateStart,
-                  dateEnd: item.sleep_dateEnd,
-                });
-                navigate(SEND.toSave, {
-                  state: SEND
-                });
-              }} />
-            </Div>
-          </Div>
-          <Br20/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={sleep2} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("sleep-night")}
-              </Div>
-              {item.sleep_section[0].sleep_night}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={sleep3} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("sleep-morning")}
-              </Div>
-              {item.sleep_section[0].sleep_morning}
-            </Div>
-          </Div>
-          <Br10/>
-          <Div className={"align-left"}>
-            <Div className={"d-center"}>
-              <Img src={sleep4} className={"w-15 h-15"} />
-              <Div className={"dark me-10"}>
-                {translate("sleep-time")}
-              </Div>
-              {item.sleep_section[0].sleep_time}
-            </Div>
-          </Div>
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={2}>
+                    {item.sleep_dateStart === item.sleep_dateEnd ? (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                      </Div>
+                    ) : (
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                        <Div>~</Div>
+                        <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                      </Div>
+                    )}
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                    <Div className={"fs-1-2rem fw-bolder d-right"}>
+                      <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.sleep_dateType,
+                          dateStart: item.sleep_dateStart,
+                          dateEnd: item.sleep_dateEnd,
+                        });
+                        navigate(SEND.toSave, {
+                          state: SEND
+                        });
+                      }} />
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep2} className={"w-15 h-15"} />
+                      {translate("sleep-night")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_section[0].sleep_night}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep3} className={"w-15 h-15"} />
+                      {translate("sleep-morning")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_section[0].sleep_morning}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={sleep4} className={"w-15 h-15"} />
+                      {translate("sleep-time")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={3}>
+                    <Div className={"d-left fw-bold"}>
+                      {item.sleep_section[0].sleep_time}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Card>
       ))
     );

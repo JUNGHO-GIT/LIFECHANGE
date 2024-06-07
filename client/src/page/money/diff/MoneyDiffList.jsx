@@ -6,10 +6,11 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Br20} from "../../../import/ImportComponents.jsx";
+import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
+import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {money2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDiff = () => {
@@ -114,68 +115,115 @@ export const MoneyDiff = () => {
     );
     // 7-7. fragment
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
-        <TableContainer>
-          <Table>
-          <TableHead className={"table-thead"}>
-            <TableRow className="table-thead-tr">
-              <TableCell>{translate("common-date")}</TableCell>
-              <TableCell>{translate("common-category")}</TableCell>
-              <TableCell>{translate("money-in")}</TableCell>
-              <TableCell>{translate("money-out")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className={"table-tbody"}>
-            {OBJECT?.map((item, index) => (
-              <TableRow key={`data-${index}`} className={"table-tbody-tr"}>
-                <TableCell width={"30%"}>
-                  <Link>
+      OBJECT?.map((item, index) => (
+        <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell colSpan={5}>
                     {item.money_plan_dateStart === item.money_plan_dateEnd ? (
-                      <>
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
                         <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
-                      </>
+                      </Div>
                     ) : (
-                      <>
+                      <Div className={"fs-1-2rem fw-bolder d-left"}>
                         <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
                         <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
-                      </>
+                      </Div>
                     )}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {translate("common-plan")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_in).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_plan_out).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {translate("common-real")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_total_in).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {numeral(item.money_total_out).format("0,0")}
-                </TableCell>
-                <TableCell>
-                  {translate("common-diff")}
-                </TableCell>
-                <TableCell className={item.money_diff_in_color}>
-                  {numeral(item.money_diff_in).format("0,0")}
-                </TableCell>
-                <TableCell className={item.money_diff_out_color}>
-                  {numeral(item.money_diff_out).format("0,0")}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+                  </TableCell>
+                  <TableCell colSpan={1}>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                      {translate("money-in")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_plan_in).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_total_in).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.money_diff_in_color}`}>
+                      {numeral(item.money_diff_in).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr border-top"}>
+                  <TableCell colSpan={6}>
+                    <Div className={"d-left dark fw-bold"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                      {translate("money-out")}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      목표
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_plan_out).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      실제
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left fw-bold"}>
+                      {numeral(item.money_total_out).format('0,0')}
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={"d-left dark fs-0-8rem"}>
+                      차이
+                    </Div>
+                  </TableCell>
+                  <TableCell>
+                    <Div className={`d-left fw-bold ${item.money_diff_out_color}`}>
+                      {numeral(item.money_diff_out).format('0,0')}
+                    </Div>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (
