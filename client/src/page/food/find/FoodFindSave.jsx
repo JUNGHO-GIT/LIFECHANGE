@@ -594,7 +594,7 @@ export const FoodFindSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       handlers={{
-        navigate, flowSave, flowDeletes
+        navigate, flowSave
       }}
     />
   );

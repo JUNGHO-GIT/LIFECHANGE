@@ -208,12 +208,6 @@ export const TopNav = () => {
         return (
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center"}>
-              <Div className={"fs-1-7rem"}>
-                재무 상태
-              </Div>
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
               <Div className={"fs-1-2rem fw-normal"}>
                 {dateStart} ~ {dateEnd}
               </Div>
