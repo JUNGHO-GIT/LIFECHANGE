@@ -28,10 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "cache": "npm cache clean -f",
-    "upgrade": "npm update --save",
-    "fetch": "git fetch --all && git reset --hard origin/master"
+    "build": "react-scripts build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
