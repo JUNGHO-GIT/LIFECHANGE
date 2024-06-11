@@ -4,11 +4,9 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Button, TextField} from "../../import/ImportMuis.jsx";
-import {money2} from "../../import/ImportImages.jsx";
-import {Tabs, Tab, tabsClasses, Paper, Card} from "../../import/ImportMuis.jsx";
+import {TextField, Tabs, Tab, tabsClasses, Paper, Card} from "../../import/ImportMuis.jsx";
 import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
+import {smile1, smile2, smile3, smile4, smile5, money2} from "../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const TopNav = () => {

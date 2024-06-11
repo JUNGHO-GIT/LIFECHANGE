@@ -17,17 +17,13 @@ export const Header = () => {
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
-    secondStr === "setting" ? (
-      <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {
-        navigate("/")
-      }}/>
-    ) : secondStr === "data" || secondStr === "info" ? (
+    firstStr !== "user" ? (
       <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
         navigate("/user/setting");
       }}/>
     ) : (
-      <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
-        navigate("/user/setting");
+      <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {
+        navigate("/")
       }}/>
     )
   );

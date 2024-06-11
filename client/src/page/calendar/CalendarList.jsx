@@ -192,7 +192,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
-        <Div className={"block-wrapper h-min94vh"}>
+        <Div className={"block-wrapper h-min87vh"}>
           {firstSection()}
         </Div>
       </Paper>

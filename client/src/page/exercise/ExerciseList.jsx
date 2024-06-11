@@ -110,7 +110,7 @@ export const ExerciseList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
+      <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
           {translate("common-empty")}
         </Div>

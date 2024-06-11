@@ -113,7 +113,7 @@ export const ExerciseDiff = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card className={"border radius p-0"} key={"empty"}>
+      <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
           {translate("common-empty")}
         </Div>
@@ -156,7 +156,7 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      목표
+                      {translate("common-plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -166,7 +166,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      실제
+                      {translate("common-real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -176,7 +176,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      차이
+                      {translate("common-diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -196,7 +196,7 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      목표
+                      {translate("common-plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -206,7 +206,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      실제
+                      {translate("common-real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -216,7 +216,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      차이
+                      {translate("common-diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -236,7 +236,7 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      목표
+                      {translate("common-plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -246,7 +246,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      실제
+                      {translate("common-real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -256,7 +256,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      차이
+                      {translate("common-diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
