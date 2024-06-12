@@ -133,9 +133,10 @@ export const ExercisePlanSave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
-  
+
     // 3. flow -------------------------------------------------------------------------------------->
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/plan/deletes`, {
@@ -156,6 +157,7 @@ export const ExercisePlanSave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

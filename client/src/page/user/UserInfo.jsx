@@ -54,8 +54,8 @@ export const UserInfo = () => {
   const tableNode = () => {
     // 7-6. img
     const imageSection = () => (
-      <Div className={"d-center mt-n100"}>
-      <Img src={logo1} alt={"logo1"} className={"w-240 h-200"} />
+      <Div className={"d-center"}>
+        <Img src={logo1} alt={"logo1"} className={"w-240 h-200"} />
       </Div>
     );
     // 7-7. fragment
@@ -65,34 +65,34 @@ export const UserInfo = () => {
           <Table>
             <TableBody className={"table-tbody"}>
               <TableRow>
-                <TableCell className={"w-40vw"}>
+                <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   version
                 </TableCell>
-                <TableCell className={"w-60vw"}>
+                <TableCell className={"w-60vw fs-0-8rem p-15"}>
                   {OBJECT.version}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-40vw"}>
+                <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   date
                 </TableCell>
-                <TableCell className={"w-60vw"}>
+                <TableCell className={"w-60vw fs-0-8rem p-15"}>
                   {OBJECT.date}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-40vw"}>
+                <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   github
                 </TableCell>
-                <TableCell className={"w-60vw"}>
+                <TableCell className={"w-60vw fs-0-8rem p-15"}>
                   {OBJECT.git}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={"w-40vw"}>
+                <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   license
                 </TableCell>
-                <TableCell className={"w-60vw"}>
+                <TableCell className={"w-60vw fs-0-8rem p-15"}>
                   {OBJECT.license}
                 </TableCell>
               </TableRow>

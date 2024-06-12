@@ -132,9 +132,10 @@ export const SleepPlanSave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
-  
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/plan/deletes`, {
@@ -155,6 +156,7 @@ export const SleepPlanSave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

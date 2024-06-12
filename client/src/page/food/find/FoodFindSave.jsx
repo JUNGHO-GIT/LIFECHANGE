@@ -172,6 +172,7 @@ export const FoodFindSave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

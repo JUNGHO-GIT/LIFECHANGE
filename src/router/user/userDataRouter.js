@@ -132,9 +132,8 @@ router.post("/save", async (req, res) => {
 // 4. deletes ------------------------------------------------------------------------------------->
 router.delete("/deletes", async (req, res) => {
   try {
-    let result = await service.deletes(
-      req.query._id,
-      req.query.user_id
+    let result = await service.deletes (
+      req.body.user_id
     );
     if (result) {
       res.json({

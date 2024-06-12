@@ -122,11 +122,11 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  user_id_param, _id_param
+  user_id_param
 ) => {
 
   const finalResult = await repository.deletes.deletes(
-    user_id_param, _id_param
+    user_id_param
   );
 
   return finalResult

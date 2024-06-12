@@ -173,9 +173,10 @@ export const MoneySave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
-  
+
     // 3. flow -------------------------------------------------------------------------------------->
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/deletes`, {
@@ -196,6 +197,7 @@ export const MoneySave = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

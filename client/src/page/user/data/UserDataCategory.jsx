@@ -120,6 +120,7 @@ export const UserDataCategory = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

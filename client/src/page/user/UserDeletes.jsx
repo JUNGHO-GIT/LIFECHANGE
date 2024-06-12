@@ -58,8 +58,10 @@ export const UserDeletes = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const res = await axios.post (`${URL_OBJECT}/deletes`, {
-      user_id: sessionId,
+    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
+      data: {
+        user_id: sessionId,
+      },
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
@@ -67,6 +69,7 @@ export const UserDeletes = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

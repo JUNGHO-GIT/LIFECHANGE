@@ -48,6 +48,7 @@ export const UserSignup = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 

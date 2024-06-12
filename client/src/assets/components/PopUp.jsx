@@ -32,7 +32,7 @@ export const PopUp = ({...props}) => {
       alignItems: "center",
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "6px 12px 6px 6px",
+      padding: "6px 0px 6px 12px",
     };
   }
   else if (props.type === "innerCenter") {

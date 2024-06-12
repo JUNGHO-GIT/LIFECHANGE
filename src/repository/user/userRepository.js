@@ -2,6 +2,14 @@
 
 import mongoose from "mongoose";
 import {newDate} from "../../assets/js/date.js";
+import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
+import {Exercise} from "../../schema/exercise/Exercise.js";
+import {FoodPlan} from "../../schema/food/FoodPlan.js";
+import {Food} from "../../schema/food/Food.js";
+import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
+import {Money} from "../../schema/money/Money.js";
+import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
+import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
@@ -137,40 +145,36 @@ export const save = {
 export const deletes = {
 
   deletes: async (
-    user_id_param, _id_param
+    user_id_param
   ) => {
-    const updateResult = await User.updateOne(
-      {user_id: user_id_param,
-        _id: !_id_param ? {$exists:true} : _id_param
-      },
-      {$pull: {
-        user_section: {
-          _id: !_id_param ? {$exists:true} : _id_param
-        },
-      },
-      $set: {
-        user_updateDt: newDate,
-      }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
-    )
-    .lean();
-
-    let finalResult = null;
-    if (updateResult.modifiedCount > 0) {
-      const doc = await User.findOne({
-        user_id: user_id_param
-      })
-      .lean();
-
-      if (doc) {
-        finalResult = await User.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-    };
+    const finalResult =
+    await ExercisePlan.deleteMany({
+      user_id: user_id_param
+    })
+    await Exercise.deleteMany({
+      user_id: user_id_param
+    })
+    await FoodPlan.deleteMany({
+      user_id: user_id_param
+    })
+    await Food.deleteMany({
+      user_id: user_id_param
+    })
+    await MoneyPlan.deleteMany({
+      user_id: user_id_param
+    })
+    await Money.deleteMany({
+      user_id: user_id_param
+    })
+    await SleepPlan.deleteMany({
+      user_id: user_id_param
+    })
+    await Sleep.deleteMany({
+      user_id: user_id_param
+    })
+    await User.deleteOne({
+      user_id: user_id_param
+    })
     return finalResult;
   }
 };

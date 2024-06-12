@@ -51,6 +51,7 @@ export const UserExtra = () => {
     }
     else {
       alert(res.data.msg);
+      navigate(0);
     }
   };
 
