@@ -33,7 +33,7 @@ export const UserInfo = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true); // Start loading
+    setLOADING(true);
     axios.get(`${URL_OBJECT}/info`, {
       params: {
         user_id: sessionId,
@@ -46,7 +46,7 @@ export const UserInfo = () => {
       console.error('Error fetching data', error);
     })
     .finally(() => {
-      setLOADING(false); // Stop loading
+      setLOADING(false);
     });
   })()}, [sessionId]);
 

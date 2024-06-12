@@ -61,6 +61,7 @@ import {UserDataCategory} from "./page/user/data/UserDataCategory.jsx";
 import {UserDataDetail} from "./page/user/data/UserDataDetail.jsx";
 import {UserDataList} from "./page/user/data/UserDataList.jsx";
 import {UserSetting} from "./page/user/UserSetting.jsx";
+import {UserDeletes} from "./page/user/UserDeletes.jsx";
 import {UserInfo} from "./page/user/UserInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
@@ -126,7 +127,7 @@ const User = () => (
     <Route path="/data/list" element={<UserDataList />} />
     <Route path="/setting" element={<UserSetting />} />
     <Route path="/info" element={<UserInfo />} />
-    <Route path="/delete" element={<UserInfo />} />
+    <Route path="/deletes" element={<UserDeletes />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
   </Routes>
@@ -140,22 +141,10 @@ const App = () => {
     location.pathname === "/user/signup"
   );
   const noneTop = (
-    location.pathname === "/user/login" ||
-    location.pathname === "/user/signup" ||
-    location.pathname === "/user/info" ||
-    location.pathname === "/user/setting" ||
-    location.pathname === "/user/data/detail" ||
-    location.pathname === "/user/data/category" ||
-    location.pathname === "/user/data/list"
+    location.pathname.indexOf("/user") > -1
   );
   const noneBottom = (
-    location.pathname === "/user/login" ||
-    location.pathname === "/user/signup" ||
-    location.pathname === "/user/info" ||
-    location.pathname === "/user/setting" ||
-    location.pathname === "/user/data/detail" ||
-    location.pathname === "/user/data/category" ||
-    location.pathname === "/user/data/list"
+    location.pathname.indexOf("/user") > -1
   );
 
   useRoot();

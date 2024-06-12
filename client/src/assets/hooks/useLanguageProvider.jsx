@@ -210,6 +210,8 @@ export const useTranslate = () => {
       notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
       googleLogin: {ko: "구글 아이디로 로그인", en: "Login with Google"},
       googleSignup: {ko: "구글 아이디로 회원가입", en: "Signup with Google"},
+      signupDate: {ko: "가입일", en: "Signup Date"},
+      lastLogin: {ko: "최근 로그인", en: "Last Login"},
     },
   };
 
