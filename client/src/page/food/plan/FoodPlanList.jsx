@@ -150,7 +150,10 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food2} className={"w-15 h-15"} />
-                      {translate("food-kcal")} 목표
+                      {translate("food-kcal")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -158,6 +161,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_plan_total_kcal).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        kcal
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -165,7 +171,10 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food3} className={"w-15 h-15"} />
-                      {translate("food-carb")} 목표
+                      {translate("food-carb")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -173,6 +182,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_plan_carb).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -180,7 +192,10 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food4} className={"w-15 h-15"} />
-                      {translate("food-protein")} 목표
+                      {translate("food-protein")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -188,6 +203,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_plan_protein).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -195,7 +213,10 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food5} className={"w-15 h-15"} />
-                      {translate("food-fat")} 목표
+                      {translate("food-fat")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -203,6 +224,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_plan_fat).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>

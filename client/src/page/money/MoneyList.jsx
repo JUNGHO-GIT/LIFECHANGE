@@ -162,6 +162,9 @@ export const MoneyList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
+                      <Div className={"fs-0-7rem dark fw-normal me-8"}>
+                        ₩
+                      </Div>
                       {numeral(item.money_total_in).format("0,0")}
                     </Div>
                   </TableCell>
@@ -177,6 +180,9 @@ export const MoneyList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
+                      <Div className={"fs-0-7rem dark fw-normal me-8"}>
+                        ₩
+                      </Div>
                       {numeral(item.money_total_out).format("0,0")}
                     </Div>
                   </TableCell>

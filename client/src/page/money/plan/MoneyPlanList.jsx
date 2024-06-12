@@ -147,13 +147,19 @@ export const MoneyPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-in")} 목표
+                      {translate("money-in")}
+                      <Div className={"fs-0-8rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
+                      <Div className={"fs-0-7rem dark fw-normal me-8"}>
+                        ₩
+                      </Div>
                       {numeral(item.money_plan_in).format("0,0")}
                     </Div>
                   </TableCell>
@@ -162,13 +168,19 @@ export const MoneyPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-out")} 목표
+                      {translate("money-out")}
+                      <Div className={"fs-0-8rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
+                      <Div className={"fs-0-7rem dark fw-normal me-8"}>
+                        ₩
+                      </Div>
                       {numeral(item.money_out).format("0,0")}
                     </Div>
                   </TableCell>

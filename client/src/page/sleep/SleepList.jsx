@@ -158,6 +158,9 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_night}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -173,6 +176,9 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_morning}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -188,6 +194,9 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_time}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>

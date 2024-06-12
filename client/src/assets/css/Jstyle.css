@@ -10094,13 +10094,13 @@
   display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
-  text-align: left !important;
+  text-align: center !important;
 }
 .d-right {
   display: flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
-  text-align: right !important;
+  text-align: center !important;
 }
 .d-row {
   display: flex !important;

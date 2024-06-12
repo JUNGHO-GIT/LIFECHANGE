@@ -103,13 +103,13 @@ export const Btn = ({
       labelRowsPerPage={""}
       count={objects?.COUNT.totalCnt}
       rowsPerPage={10}
-      page={objects?.PAGING.page}
+      page={Math.max(0, objects?.PAGING.page - 1)}
       showFirstButton={true}
       showLastButton={true}
       onPageChange={(event, newPage) => {
         functions.setPAGING((prev) => ({
           ...prev,
-          page: newPage
+          page: newPage + 1
         }));
       }}
       onRowsPerPageChange={(event) => {
@@ -119,7 +119,7 @@ export const Btn = ({
         }));
       }}
     />
-  )
+  );
   const btnFlowDefault = () => (
     <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
       {translate("btn-flowDefault")}
@@ -304,7 +304,7 @@ export const Btn = ({
       else if (strings?.third === "" && strings?.second === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
-            {btnFlowSave()}           
+            {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
         );

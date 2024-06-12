@@ -167,6 +167,9 @@ export const ExerciseList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.exercise_total_volume).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        vol
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -182,6 +185,9 @@ export const ExerciseList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.exercise_total_cardio}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -197,6 +203,9 @@ export const ExerciseList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.exercise_total_weight).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        kg
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>

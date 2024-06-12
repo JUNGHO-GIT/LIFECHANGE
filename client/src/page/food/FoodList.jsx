@@ -169,6 +169,9 @@ export const FoodList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_total_kcal).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        kcal
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -184,6 +187,9 @@ export const FoodList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_total_carb).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -199,6 +205,9 @@ export const FoodList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_total_protein).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -214,6 +223,9 @@ export const FoodList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_total_fat).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        g
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>

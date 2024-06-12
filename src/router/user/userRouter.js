@@ -4,7 +4,7 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
-// 0-0. info
+// 0-0. info -------------------------------------------------------------------------------------->
 router.get("/info", async (req, res) => {
   try {
     let result = await service.info (

@@ -126,6 +126,7 @@ const User = () => (
     <Route path="/data/list" element={<UserDataList />} />
     <Route path="/setting" element={<UserSetting />} />
     <Route path="/info" element={<UserInfo />} />
+    <Route path="/delete" element={<UserInfo />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
   </Routes>

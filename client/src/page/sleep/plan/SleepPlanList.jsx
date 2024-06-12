@@ -149,7 +149,10 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("sleep-night")} 목표
+                      {translate("sleep-night")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -157,6 +160,9 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_plan_night}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -164,7 +170,10 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("sleep-morning")} 목표
+                      {translate("sleep-morning")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -172,6 +181,9 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_plan_morning}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -179,7 +191,10 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("sleep-time")} 목표
+                      {translate("sleep-time")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -187,6 +202,9 @@ export const SleepPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_plan_time}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>

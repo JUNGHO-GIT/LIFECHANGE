@@ -28,6 +28,7 @@ export const UserSetting = () => {
         <TableContainer>
           <Table>
             <TableBody className={"table-tbody"}>
+              {/** detail **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataDetail")}
@@ -38,6 +39,7 @@ export const UserSetting = () => {
                   }} />
                 </TableCell>
               </TableRow>
+              {/** category **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataCategory")}
@@ -48,6 +50,7 @@ export const UserSetting = () => {
                   }} />
                 </TableCell>
               </TableRow>
+              {/** list **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("user-dataList")}
@@ -58,6 +61,7 @@ export const UserSetting = () => {
                   }} />
                 </TableCell>
               </TableRow>
+              {/** language **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("user-language")}
@@ -96,6 +100,18 @@ export const UserSetting = () => {
                   </PopUp>
                 </TableCell>
               </TableRow>
+              {/** info **/}
+              <TableRow>
+                <TableCell className={"w-90vw p-15"}>
+                  {translate("user-info")}
+                </TableCell>
+                <TableCell className={"w-10vw p-15"}>
+                  <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
+                    navigate("/user/info")
+                  }} />
+                </TableCell>
+              </TableRow>
+              {/** logout **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("user-logout")}
@@ -107,13 +123,14 @@ export const UserSetting = () => {
                   }} />
                 </TableCell>
               </TableRow>
+              {/** deletes **/}
               <TableRow>
-                <TableCell className={"w-90vw p-15"}>
-                  {translate("user-info")}
+                <TableCell className={"w-90vw p-15 red"}>
+                  {translate("user-deletes")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                    navigate("/user/info")
+                    navigate("/user/deletes")
                   }} />
                 </TableCell>
               </TableRow>

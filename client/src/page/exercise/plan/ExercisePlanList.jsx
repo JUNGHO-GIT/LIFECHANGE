@@ -149,7 +149,10 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise3} className={"w-15 h-15"} />
-                      {translate("exercise-volume")} 목표
+                      {translate("exercise-volume")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -157,6 +160,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.exercise_plan_volume).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        vol
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -164,7 +170,10 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise4} className={"w-15 h-15"} />
-                      {translate("exercise-cardio")} 목표
+                      {translate("exercise-cardio")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -172,6 +181,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {item.exercise_plan_cardio}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        h:m
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -179,7 +191,10 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise5} className={"w-15 h-15"} />
-                      {translate("exercise-weight")} 목표
+                      {translate("exercise-weight")}
+                      <Div className={"fs-0-9rem dark fw-normal ms-5"}>
+                        {translate("common-goal")}
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -187,6 +202,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.exercise_plan_weight).format("0,0")}
+                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                        kg
+                      </Div>
                     </Div>
                   </TableCell>
                 </TableRow>
