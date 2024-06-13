@@ -109,7 +109,7 @@ export const MoneyDiff = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -143,14 +143,14 @@ export const MoneyDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-in")}
+                      {translate("in")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -160,7 +160,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -170,7 +170,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -183,14 +183,14 @@ export const MoneyDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-out")}
+                      {translate("out")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -200,7 +200,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -210,7 +210,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>

@@ -25,6 +25,21 @@ export const UserSignup = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
+  const [verified, setVerified] = useState(false);
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowVerify = async () => {
+    const res = await axios.post (`${URL_OBJECT}/verify`, {
+      user_id: userId,
+    });
+    if (res.data.status === "success") {
+      alert(res.data.msg);
+    }
+    else {
+      alert(res.data.msg);
+      navigate(0);
+    }
+  };
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -61,7 +76,7 @@ export const UserSignup = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"ID"}
+          label={`${translate("id")} (email)`}
           value={userId}
           className={"w-86vw"}
           onChange={(e) => (
@@ -69,11 +84,33 @@ export const UserSignup = () => {
           )}
         />
         <Br10 />
+        <Div className={"d-center w-86vw"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("verified")}
+            value={verified}
+            className={"w-66vw"}
+          />
+          <Button
+            size={"small"}
+            color={"primary"}
+            className={"w-20vw fs-0-8rem"}
+            variant={"contained"}
+            onClick={() => {
+              flowVerify();
+            }}
+          >
+            {translate("send")}
+          </Button>
+        </Div>
+        <Br10 />
         <TextField
           select={false}
           type={"password"}
           size={"small"}
-          label={"Password"}
+          label={translate("pw")}
           value={userPw}
           className={"w-86vw"}
           onChange={(e) => (
@@ -89,7 +126,7 @@ export const UserSignup = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("user-signup")}
+        {translate("signup")}
       </Div>
     );
     // 7-9. second
@@ -108,7 +145,7 @@ export const UserSignup = () => {
             flowSave();
           }}
         >
-          {translate("user-signup")}
+          {translate("signup")}
         </Button>
       </Div>
     );
@@ -119,7 +156,7 @@ export const UserSignup = () => {
           select={false}
           type={"text"}
           size={"small"}
-          value={translate("user-googleSignup")}
+          value={translate("googleSignup")}
           className={"w-100p bg-white"}
           InputProps={{
             readOnly: true,
@@ -134,11 +171,11 @@ export const UserSignup = () => {
     // 7-9. sixth
     const sixthSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
-        {translate("user-alreadyId")}
+        {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/login");
         }}>
-          {translate("user-login")}
+          {translate("login")}
         </Div>
       </Div>
     );

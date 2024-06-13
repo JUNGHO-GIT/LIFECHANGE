@@ -15,6 +15,16 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  user_token: {
+    type: String,
+    default: "",
+    required: false
+  },
+  user_expire: {
+    type: Date,
+    default: Date.now,
+    required: false
+  },
   user_pw : {
     type : String,
     default: "",

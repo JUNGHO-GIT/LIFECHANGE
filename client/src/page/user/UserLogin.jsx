@@ -86,7 +86,7 @@ export const UserLogin = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"Password"}
+          label={"PW"}
           value={userPw}
           className={"w-86vw"}
           InputProps={{
@@ -121,7 +121,7 @@ export const UserLogin = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("user-login")}
+        {translate("login")}
       </Div>
     );
     // 7-9. second
@@ -140,7 +140,7 @@ export const UserLogin = () => {
             flowSave();
           }}
         >
-          {translate("user-login")}
+          {translate("login")}
         </Button>
       </Div>
     );
@@ -151,7 +151,7 @@ export const UserLogin = () => {
           select={false}
           type={"text"}
           size={"small"}
-          value={translate("user-googleLogin")}
+          value={translate("googleLogin")}
           className={"w-100p bg-white"}
           InputProps={{
             readOnly: true,
@@ -166,11 +166,11 @@ export const UserLogin = () => {
     // 7-9. sixth
     const sixthSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
-        {translate("user-notId")}
+        {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");
         }}>
-          {translate("user-signup")}
+          {translate("signup")}
         </Div>
       </Div>
     );

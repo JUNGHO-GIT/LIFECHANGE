@@ -33,6 +33,35 @@ router.get("/info", async (req, res) => {
   }
 });
 
+// 0-0 verify ------------------------------------------------------------------------------------->
+router.post("/verify", async (req, res) => {
+  try {
+    let result = await service.verify (
+      req.body.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "인증 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "인증 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
 // 0-0. signup ------------------------------------------------------------------------------------>
 router.post("/signup", async (req, res) => {
   try {

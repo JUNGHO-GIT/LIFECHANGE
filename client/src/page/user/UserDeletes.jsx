@@ -82,7 +82,7 @@ export const UserDeletes = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={translate("user-id")}
+          label={translate("id")}
           value={sessionId}
           className={"w-86vw"}
           InputProps={{
@@ -94,7 +94,7 @@ export const UserDeletes = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={translate("user-signupDate")}
+          label={translate("signupDate")}
           value={OBJECT.date}
           className={"w-86vw"}
           InputProps={{
@@ -104,8 +104,8 @@ export const UserDeletes = () => {
         <Br10 />
         <TextArea
           readOnly={false}
-          className={"w-86vw h-30vh border p-10 pointer"}
-          value={`회원정보를 삭제하시겠습니까? 삭제 후에는 복구가 불가능합니다.`}
+          className={"w-86vw h-10vh border radius p-10 pointer"}
+          value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
         />
       </Div>
     );
@@ -116,7 +116,7 @@ export const UserDeletes = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("user-deletes")}
+        {translate("deletes")}
       </Div>
     );
     // 7-9. second
@@ -135,7 +135,7 @@ export const UserDeletes = () => {
             flowSave();
           }}
         >
-          {translate("user-deletes")}
+          {translate("deletes")}
         </Button>
       </Div>
     );

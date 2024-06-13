@@ -103,7 +103,7 @@ export const SleepList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -150,7 +150,7 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("sleep-night")}
+                      {translate("night")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -168,7 +168,7 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("sleep-morning")}
+                      {translate("morning")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -186,7 +186,7 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("sleep-time")}
+                      {translate("time")}
                     </Div>
                   </TableCell>
                 </TableRow>

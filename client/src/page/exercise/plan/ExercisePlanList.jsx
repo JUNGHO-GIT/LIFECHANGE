@@ -102,7 +102,7 @@ export const ExercisePlanList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -149,9 +149,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise3} className={"w-15 h-15"} />
-                      {translate("exercise-volume")}
+                      {translate("volume")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -170,9 +170,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise4} className={"w-15 h-15"} />
-                      {translate("exercise-cardio")}
+                      {translate("cardio")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -191,9 +191,9 @@ export const ExercisePlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise5} className={"w-15 h-15"} />
-                      {translate("exercise-weight")}
+                      {translate("weight")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>

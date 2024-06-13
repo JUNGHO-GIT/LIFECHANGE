@@ -220,7 +220,7 @@ export const MoneyPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("money-planIn")}
+            label={translate("planIn")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.money_plan_in).format("0,0")}
@@ -230,7 +230,7 @@ export const MoneyPlanSave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("money-endCurrency")
+                translate("endCurrency")
               )
             }}
             onChange={(e) => {
@@ -251,7 +251,7 @@ export const MoneyPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("money-planOut")}
+            label={translate("planOut")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.money_plan_out).format("0,0")}
@@ -261,7 +261,7 @@ export const MoneyPlanSave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("money-endCurrency")
+                translate("endCurrency")
               )
             }}
             onChange={(e) => {

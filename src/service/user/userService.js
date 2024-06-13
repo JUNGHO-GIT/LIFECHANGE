@@ -4,23 +4,53 @@ import * as repository from "../../repository/user/userRepository.js";
 import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
+import {email} from "../../assets/js/email.js";
+import crypto from 'crypto';
 
-// 0-0. info
+// 0-0. info -------------------------------------------------------------------------------------->
 export const info = async (
   user_id_param
 ) => {
+
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const json = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../package.json'), 'utf-8'));
+
   const finalResult = {
     version: json.version || "",
     date: json.date || "",
     git: json.git || "",
     license: json.license || "",
-  }
+  };
 
   return finalResult;
-}
+};
+
+// 0-0. verify ------------------------------------------------------------------------------------>
+export const verify = async (
+  user_id_param
+) => {
+
+  // 토큰 1시간 설정
+  const token = crypto.randomBytes(20).toString('hex');
+  const expire = Date.now() + 3600000;
+
+  const finalResult = await repository.verify.verify(
+    user_id_param, token
+  );
+
+  if (!finalResult) {
+    return null;
+  }
+
+  await email(
+    user_id_param,
+    "이메일 인증",
+    "http://localhost:3000/user/verify?user_id=" + user_id_param + "&token=" + token
+  );
+
+  return finalResult;
+};
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (

@@ -31,7 +31,7 @@ export const UserSetting = () => {
               {/** detail **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-dataDetail")}
+                  {translate("dataDetail")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -42,7 +42,7 @@ export const UserSetting = () => {
               {/** category **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-dataCategory")}
+                  {translate("dataCategory")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -53,7 +53,7 @@ export const UserSetting = () => {
               {/** list **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-dataList")}
+                  {translate("dataList")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -64,7 +64,7 @@ export const UserSetting = () => {
               {/** language **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-language")}
+                  {translate("language")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <PopUp
@@ -103,7 +103,7 @@ export const UserSetting = () => {
               {/** info **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-info")}
+                  {translate("info")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -114,7 +114,7 @@ export const UserSetting = () => {
               {/** logout **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15"}>
-                  {translate("user-logout")}
+                  {translate("logout")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
@@ -126,7 +126,7 @@ export const UserSetting = () => {
               {/** deletes **/}
               <TableRow>
                 <TableCell className={"w-90vw p-15 red"}>
-                  {translate("user-deletes")}
+                  {translate("deletes")}
                 </TableCell>
                 <TableCell className={"w-10vw p-15"}>
                   <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {

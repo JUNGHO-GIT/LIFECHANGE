@@ -11,6 +11,23 @@ import {Money} from "../../schema/money/Money.js";
 import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
+// userRepository.js
+// 0-0. verify ------------------------------------------------------------------------------------>
+export const verify = {
+
+  verify: async (
+    user_id_param, token_param
+  ) => {
+    const finalResult = await User.findOne({
+      user_id: user_id_param,
+      user_token: token_param,
+      user_expire: {$gt: Date.now()}
+    })
+    .lean();
+
+    return finalResult;
+  }
+};
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = {

@@ -227,7 +227,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("exercise-planCount")}
+            label={translate("planCount")}
             className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_count).format("0,0")}
             InputProps={{
@@ -236,7 +236,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endCount")
+                translate("endCount")
               )
             }}
             onChange={(e) => {
@@ -257,7 +257,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("exercise-planVolume")}
+            label={translate("planVolume")}
             className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_volume).format("0,0")}
             InputProps={{
@@ -266,7 +266,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endVolume")
+                translate("endVolume")
               )
             }}
             onChange={(e) => {
@@ -296,7 +296,7 @@ export const ExercisePlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("exercise-planWeight")}
+            label={translate("planWeight")}
             className={"w-86vw"}
             value={numeral(OBJECT?.exercise_plan_weight).format("0,0")}
             InputProps={{
@@ -305,7 +305,7 @@ export const ExercisePlanSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endWeight")
+                translate("endWeight")
               )
             }}
             onChange={(e) => {

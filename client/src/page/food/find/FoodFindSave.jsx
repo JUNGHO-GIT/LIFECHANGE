@@ -251,7 +251,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-totalKcal")}
+            label={translate("totalKcal")}
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
@@ -262,7 +262,7 @@ export const FoodFindSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endKcal")
+                translate("endKcal")
               )
             }}
           />
@@ -271,7 +271,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-totalCarb")}
+            label={translate("totalCarb")}
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
@@ -282,7 +282,7 @@ export const FoodFindSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />
@@ -291,7 +291,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-totalProtein")}
+            label={translate("totalProtein")}
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
@@ -302,7 +302,7 @@ export const FoodFindSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />
@@ -311,7 +311,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-totalFat")}
+            label={translate("totalFat")}
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
@@ -322,7 +322,7 @@ export const FoodFindSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />
@@ -343,7 +343,7 @@ export const FoodFindSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={translate("food-part")}
+            label={translate("part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             defaultValue={1}
@@ -376,7 +376,7 @@ export const FoodFindSave = () => {
           {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
-              label={translate("food-count")}
+              label={translate("count")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
@@ -386,7 +386,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("food-endCount")
+                  translate("endCount")
                 )
               }}
               onChange={(e) => {
@@ -425,7 +425,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("food-endGram")
+                  translate("endGram")
                 )
               }}
               onChange={(e) => {
@@ -457,7 +457,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-title")}
+            label={translate("title")}
             size={"small"}
             value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
             variant={"outlined"}
@@ -473,7 +473,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-kcal")}
+            label={translate("kcal")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}
             variant={"outlined"}
@@ -484,13 +484,13 @@ export const FoodFindSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endKcal")
+                translate("endKcal")
               )
             }}
           />
           <TextField
             select={false}
-            label={translate("food-carb")}
+            label={translate("carb")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}
             variant={"outlined"}
@@ -501,7 +501,7 @@ export const FoodFindSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />
@@ -510,7 +510,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("food-protein")}
+            label={translate("protein")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}
             variant={"outlined"}
@@ -521,13 +521,13 @@ export const FoodFindSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />
           <TextField
             select={false}
-            label={translate("food-fat")}
+            label={translate("fat")}
             size={"small"}
             value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}
             variant={"outlined"}
@@ -538,7 +538,7 @@ export const FoodFindSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
           />

@@ -140,42 +140,42 @@ export const TopNav = () => {
         <Br20 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem me-5"}>
-            {translate("navBar-total")}
+            {translate("total")}
           </Div>
           {makeIcon("total", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem me-5"}>
-            {translate("navBar-exercise")}
+            {translate("exercise")}
           </Div>
           {makeIcon("exercise", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem me-5"}>
-            {translate("navBar-food")}
+            {translate("food")}
           </Div>
           {makeIcon("food", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem me-5"}>
-            {translate("navBar-money")}
+            {translate("money")}
           </Div>
           {makeIcon("money", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem me-5"}>
-            {translate("navBar-sleep")}
+            {translate("sleep")}
           </Div>
           {makeIcon("sleep", "w-max5vw h-max5vh")}
         </Div>
         <Br20 />
         <Div className={"d-center"}>
           <Div className={"fs-0-6rem fw-normal"}>
-            {translate("navBar-score")}
+            {translate("score")}
           </Div>
         </Div>
       </Div>
@@ -214,7 +214,7 @@ export const TopNav = () => {
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("money-property")}
+                label={translate("property")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -225,7 +225,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("money-endCurrency")
+                    translate("endCurrency")
                   )
                 }}
               />
@@ -234,7 +234,7 @@ export const TopNav = () => {
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("money-in")}
+                label={translate("in")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -245,7 +245,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("money-endCurrency")
+                    translate("endCurrency")
                   )
                 }}
               />
@@ -254,7 +254,7 @@ export const TopNav = () => {
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("money-out")}
+                label={translate("out")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -265,7 +265,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("money-endCurrency")
+                    translate("endCurrency")
                   )
                 }}
               />
@@ -306,42 +306,42 @@ export const TopNav = () => {
         });
       }}>
       <Tab
-        label={translate("topNav-dashList")}
+        label={translate("dashList")}
         value={"dash/list"}
         onClick={() => {
           setValue("dash/list");
         }}
       />
       <Tab
-        label={translate("topNav-diffList")}
+        label={translate("diffList")}
         value={"diff/list"}
         onClick={() => {
           setValue("diff/list");
         }}
       />
       <Tab
-        label={translate("topNav-planList")}
+        label={translate("planList")}
         value={"plan/list"}
         onClick={() => {
           setValue("plan/list");
         }}
       />
       <Tab
-        label={translate("topNav-planSave")}
+        label={translate("planSave")}
         value={"plan/save"}
         onClick={() => {
           setValue("plan/save");
         }}
       />
       <Tab
-        label={translate("topNav-list")}
+        label={translate("list")}
         value={"list"}
         onClick={() => {
           setValue("list");
         }}
       />
       <Tab
-        label={translate("topNav-save")}
+        label={translate("save")}
         value={"save"}
         onClick={() => {
           setValue("save");
@@ -373,14 +373,14 @@ export const TopNav = () => {
         });
       }}>
       <Tab
-        label={translate("topNav-list")}
+        label={translate("list")}
         value={"list"}
         onClick={() => {
           setValue("list");
         }}
       />
       <Tab
-        label={translate("topNav-save")}
+        label={translate("save")}
         value={"save"}
         onClick={() => {
           setValue("save");
@@ -412,49 +412,49 @@ export const TopNav = () => {
         });
       }}>
       <Tab
-        label={translate("topNav-dashList")}
+        label={translate("dashList")}
         value={"dash/list"}
         onClick={() => {
           setValue("dash/list");
         }}
       />
       <Tab
-        label={translate("topNav-diffList")}
+        label={translate("diffList")}
         value={"diff/list"}
         onClick={() => {
           setValue("diff/list");
         }}
       />
       <Tab
-        label={translate("topNav-findList")}
+        label={translate("findList")}
         value={"find/list" || "find/save"}
         onClick={() => {
           setValue("find/list");
         }}
       />
       <Tab
-        label={translate("topNav-planList")}
+        label={translate("planList")}
         value={"plan/list"}
         onClick={() => {
           setValue("plan/list");
         }}
       />
       <Tab
-        label={translate("topNav-planSave")}
+        label={translate("planSave")}
         value={"plan/save"}
         onClick={() => {
           setValue("plan/save");
         }}
       />
       <Tab
-        label={translate("topNav-list")}
+        label={translate("list")}
         value={"list"}
         onClick={() => {
           setValue("list");
         }}
       />
       <Tab
-        label={translate("topNav-save")}
+        label={translate("save")}
         value={"save"}
         onClick={() => {
           setValue("save");

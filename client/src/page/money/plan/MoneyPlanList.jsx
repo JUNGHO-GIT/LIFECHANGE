@@ -100,7 +100,7 @@ export const MoneyPlanList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -147,9 +147,9 @@ export const MoneyPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-in")}
+                      {translate("in")}
                       <Div className={"fs-0-8rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -168,9 +168,9 @@ export const MoneyPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("money-out")}
+                      {translate("out")}
                       <Div className={"fs-0-8rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>

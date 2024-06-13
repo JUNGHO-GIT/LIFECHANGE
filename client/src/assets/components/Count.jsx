@@ -31,7 +31,7 @@ export const Count = ({
         {(popTrigger={}) => (
           <TextField
             type={"text"}
-            label={translate("common-count")}
+            label={translate("count")}
             variant={"outlined"}
             size={"small"}
             className={"w-86vw"}

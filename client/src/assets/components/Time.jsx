@@ -25,29 +25,29 @@ export const Time = ({
   if (firstStr === "sleep" && secondStr === "plan") {
     if (extra.split("_")[2] === "night") {
       image = sleep2;
-      translateStr = "sleep-planNight";
+      translateStr = "planNight";
     }
     else if (extra.split("_")[2] === "morning") {
       image = sleep3;
-      translateStr = "sleep-planMorning";
+      translateStr = "planMorning";
     }
     else if (extra.split("_")[2] === "time") {
       image = sleep4;
-      translateStr = "sleep-planTime";
+      translateStr = "planTime";
     }
   }
   else if (firstStr === "sleep" && secondStr !== "plan") {
     if (extra.split("_")[1] === "night") {
       image = sleep2;
-      translateStr = "sleep-night";
+      translateStr = "night";
     }
     else if (extra.split("_")[1] === "morning") {
       image = sleep3;
-      translateStr = "sleep-morning";
+      translateStr = "morning";
     }
     else if (extra.split("_")[1] === "time") {
       image = sleep4;
-      translateStr = "sleep-time";
+      translateStr = "time";
     }
   }
   else if (firstStr === "exercise" && secondStr === "plan") {
@@ -102,7 +102,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("common-endHour")
+              translate("endHour")
             )
           }}
           onClick={(e) => {
@@ -157,7 +157,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("common-endHour")
+              translate("endHour")
             )
           }}
           onClick={(e) => {

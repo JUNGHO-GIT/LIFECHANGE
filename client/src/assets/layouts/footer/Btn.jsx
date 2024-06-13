@@ -27,7 +27,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      {translate("btn-goToFind")}
+      {translate("goToFind")}
     </Button>
   );
   const btnGoToFindSave = () => (
@@ -41,7 +41,7 @@ export const Btn = ({
         state: objects?.SEND,
       });
     }}>
-      {translate("btn-goToFindSave")}
+      {translate("goToFindSave")}
     </Button>
   );
 
@@ -50,19 +50,19 @@ export const Btn = ({
     <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowSave();
       Object.keys(sessionStorage).forEach((key) => {
-        if (key.includes("foodSection")) {
+        if (key.includes("foodSection") || key.includes("PAGING")) {
           sessionStorage.removeItem(key);
         }
       });
     }}>
-      {translate("btn-flowSave")}
+      {translate("flowSave")}
     </Button>
   );
   const btnFlowDeletes = () => (
     <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={() => {
       handlers.flowDeletes();
     }}>
-      {translate("btn-flowDeletes")}
+      {translate("flowDeletes")}
     </Button>
   );
   const btnFlowFind = () => (
@@ -92,7 +92,7 @@ export const Btn = ({
           page: 0
         }));
       }}>
-        {translate("btn-flowFind")}
+        {translate("flowFind")}
       </Button>
     </Div>
   );
@@ -122,7 +122,7 @@ export const Btn = ({
   );
   const btnFlowDefault = () => (
     <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
-      {translate("btn-flowDefault")}
+      {translate("flowDefault")}
     </Button>
   );
   const btnFlowDemo = () => (
@@ -176,7 +176,7 @@ export const Btn = ({
       />
       <Button size={"small"} className={"ms-5"} color={"success"} variant={"contained"}
       onClick={() => (handlers.flowSave(objects.PART))}>
-        {translate("btn-flowDemo")}
+        {translate("flowDemo")}
       </Button>
     </Div>
   );

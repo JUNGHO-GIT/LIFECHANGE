@@ -239,7 +239,7 @@ export const UserDataList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -250,11 +250,11 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("exercise-count")}</TableCell>
-                <TableCell>{translate("exercise-volume")}</TableCell>
-                <TableCell>{translate("exercise-cardio")}</TableCell>
-                <TableCell>{translate("exercise-weight")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("count")}</TableCell>
+                <TableCell>{translate("volume")}</TableCell>
+                <TableCell>{translate("cardio")}</TableCell>
+                <TableCell>{translate("weight")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -299,10 +299,10 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("exercise-volume")}</TableCell>
-                <TableCell>{translate("exercise-cardio")}</TableCell>
-                <TableCell>{translate("exercise-weight")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("volume")}</TableCell>
+                <TableCell>{translate("cardio")}</TableCell>
+                <TableCell>{translate("weight")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -344,11 +344,11 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("food-kcal")}</TableCell>
-                <TableCell>{translate("food-carb")}</TableCell>
-                <TableCell>{translate("food-protein")}</TableCell>
-                <TableCell>{translate("food-fat")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("kcal")}</TableCell>
+                <TableCell>{translate("carb")}</TableCell>
+                <TableCell>{translate("protein")}</TableCell>
+                <TableCell>{translate("fat")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -393,11 +393,11 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("food-kcal")}</TableCell>
-                <TableCell>{translate("food-carb")}</TableCell>
-                <TableCell>{translate("food-protein")}</TableCell>
-                <TableCell>{translate("food-fat")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("kcal")}</TableCell>
+                <TableCell>{translate("carb")}</TableCell>
+                <TableCell>{translate("protein")}</TableCell>
+                <TableCell>{translate("fat")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -442,9 +442,9 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className="table-thead-tr">
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("money-in")}</TableCell>
-                <TableCell>{translate("money-out")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("in")}</TableCell>
+                <TableCell>{translate("out")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -483,9 +483,9 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("money-in")}</TableCell>
-                <TableCell>{translate("money-out")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("in")}</TableCell>
+                <TableCell>{translate("out")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -524,10 +524,10 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("sleep-night")}</TableCell>
-                <TableCell>{translate("sleep-morning")}</TableCell>
-                <TableCell>{translate("sleep-time")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("night")}</TableCell>
+                <TableCell>{translate("morning")}</TableCell>
+                <TableCell>{translate("time")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -569,10 +569,10 @@ export const UserDataList = () => {
           <Table>
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("common-date")}</TableCell>
-                <TableCell>{translate("sleep-night")}</TableCell>
-                <TableCell>{translate("sleep-morning")}</TableCell>
-                <TableCell>{translate("sleep-time")}</TableCell>
+                <TableCell>{translate("date")}</TableCell>
+                <TableCell>{translate("night")}</TableCell>
+                <TableCell>{translate("morning")}</TableCell>
+                <TableCell>{translate("time")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>

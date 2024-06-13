@@ -103,7 +103,7 @@ export const FoodPlanList = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -150,9 +150,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food2} className={"w-15 h-15"} />
-                      {translate("food-kcal")}
+                      {translate("kcal")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -171,9 +171,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food3} className={"w-15 h-15"} />
-                      {translate("food-carb")}
+                      {translate("carb")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -192,9 +192,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food4} className={"w-15 h-15"} />
-                      {translate("food-protein")}
+                      {translate("protein")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -213,9 +213,9 @@ export const FoodPlanList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food5} className={"w-15 h-15"} />
-                      {translate("food-fat")}
+                      {translate("fat")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
-                        {translate("common-goal")}
+                        {translate("goal")}
                       </Div>
                     </Div>
                   </TableCell>

@@ -256,7 +256,7 @@ export const MoneySave = () => {
         <Div className={"d-center"}>
         <TextField
           select={false}
-          label={translate("money-totalIn")}
+          label={translate("totalIn")}
           size={"small"}
           value={numeral(OBJECT?.money_total_in).format('0,0')}
           variant={"outlined"}
@@ -267,7 +267,7 @@ export const MoneySave = () => {
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("money-endCurrency")
+              translate("endCurrency")
             )
           }}
         />
@@ -276,7 +276,7 @@ export const MoneySave = () => {
         <Div className={"d-center"}>
         <TextField
           select={false}
-          label={translate("money-totalOut")}
+          label={translate("totalOut")}
           size={"small"}
           value={numeral(OBJECT?.money_total_out).format('0,0')}
           variant={"outlined"}
@@ -287,7 +287,7 @@ export const MoneySave = () => {
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("money-endCurrency")
+              translate("endCurrency")
             )
           }}
         />
@@ -309,7 +309,7 @@ export const MoneySave = () => {
               select={true}
               type={"text"}
               size={"small"}
-              label={translate("money-part")}
+              label={translate("part")}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.money_section[i]?.money_part_idx}
@@ -344,7 +344,7 @@ export const MoneySave = () => {
               select={true}
               type={"text"}
               size={"small"}
-              label={translate("money-title")}
+              label={translate("title")}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.money_section[i]?.money_title_idx}
@@ -381,7 +381,7 @@ export const MoneySave = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
-              label={translate("money-amount")}
+              label={translate("amount")}
               size={"small"}
               variant={"outlined"}
               className={"w-86vw"}
@@ -392,7 +392,7 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("money-endCurrency")
+                  translate("endCurrency")
                 )
               }}
               onChange={(e) => {

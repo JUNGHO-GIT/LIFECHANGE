@@ -24,7 +24,7 @@ export const Filter = ({
         select={true}
         type={"text"}
         size={"small"}
-        label={translate("common-sort")}
+        label={translate("sort")}
         variant={"outlined"}
         value={objects?.PAGING?.sort || "asc"}
         className={"w-20vw me-3"}
@@ -39,7 +39,7 @@ export const Filter = ({
         )}>
         {["asc", "desc"].map((item) => (
           <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
-            {translate(`common-${item}`)}
+            {translate(item)}
           </MenuItem>
         ))}
       </TextField>

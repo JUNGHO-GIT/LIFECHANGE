@@ -118,7 +118,7 @@ export const FoodDiff = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -152,14 +152,14 @@ export const FoodDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food2} className={"w-15 h-15"} />
-                      {translate("food-kcal")}
+                      {translate("kcal")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -169,7 +169,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -179,7 +179,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -192,14 +192,14 @@ export const FoodDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food3} className={"w-15 h-15"} />
-                      {translate("food-carb")}
+                      {translate("carb")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -209,7 +209,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -219,7 +219,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -232,14 +232,14 @@ export const FoodDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food4} className={"w-15 h-15"} />
-                      {translate("food-protein")}
+                      {translate("protein")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -249,7 +249,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -259,7 +259,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -272,14 +272,14 @@ export const FoodDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={food5} className={"w-15 h-15"} />
-                      {translate("food-fat")}
+                      {translate("fat")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -289,7 +289,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -299,7 +299,7 @@ export const FoodDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>

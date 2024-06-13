@@ -49,7 +49,7 @@ export const BottomNav = () => {
         setValue(newValue);
       }}>
       <BottomNavigationAction
-        label={translate("bottomNav-exercise")}
+        label={translate("exercise")}
         value={"exercise"}
         icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
@@ -64,7 +64,7 @@ export const BottomNav = () => {
         }}
       />
       <BottomNavigationAction
-        label={translate("bottomNav-food")}
+        label={translate("food")}
         value={"food"}
         icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
@@ -79,7 +79,7 @@ export const BottomNav = () => {
         }}
       />
       <BottomNavigationAction
-        label={translate("bottomNav-calendar")}
+        label={translate("calendar")}
         value={"calendar"}
         icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
@@ -94,7 +94,7 @@ export const BottomNav = () => {
         }}
       />
       <BottomNavigationAction
-        label={translate("bottomNav-money")}
+        label={translate("money")}
         value={"money"}
         icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
@@ -109,7 +109,7 @@ export const BottomNav = () => {
         }}
       />
       <BottomNavigationAction
-        label={translate("bottomNav-sleep")}
+        label={translate("sleep")}
         value={"sleep"}
         icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
         onClick={() => {

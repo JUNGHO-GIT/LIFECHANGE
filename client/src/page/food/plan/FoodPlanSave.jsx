@@ -224,7 +224,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("food-planKcal")}
+            label={translate("planKcal")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_plan_kcal).format("0,0")}
@@ -234,7 +234,7 @@ export const FoodPlanSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endKcal")
+                translate("endKcal")
               )
             }}
             onChange={(e) => {
@@ -255,7 +255,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("food-planCarb")}
+            label={translate("planCarb")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_plan_carb).format("0,0")}
@@ -265,7 +265,7 @@ export const FoodPlanSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
             onChange={(e) => {
@@ -286,7 +286,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("food-planProtein")}
+            label={translate("planProtein")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_plan_protein).format("0,0")}
@@ -296,7 +296,7 @@ export const FoodPlanSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
             onChange={(e) => {
@@ -317,7 +317,7 @@ export const FoodPlanSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("food-planFat")}
+            label={translate("planFat")}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_plan_fat).format("0,0")}
@@ -327,7 +327,7 @@ export const FoodPlanSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("food-endGram")
+                translate("endGram")
               )
             }}
             onChange={(e) => {

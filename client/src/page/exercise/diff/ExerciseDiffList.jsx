@@ -115,7 +115,7 @@ export const ExerciseDiff = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -149,14 +149,14 @@ export const ExerciseDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise3} className={"w-15 h-15"} />
-                      {translate("exercise-volume")}
+                      {translate("volume")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -166,7 +166,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -176,7 +176,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -189,14 +189,14 @@ export const ExerciseDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise4} className={"w-15 h-15"} />
-                      {translate("exercise-cardio")}
+                      {translate("cardio")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -206,7 +206,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -216,7 +216,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -229,14 +229,14 @@ export const ExerciseDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={exercise5} className={"w-15 h-15"} />
-                      {translate("exercise-weight")}
+                      {translate("weight")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -246,7 +246,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -256,7 +256,7 @@ export const ExerciseDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>

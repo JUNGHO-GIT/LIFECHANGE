@@ -288,7 +288,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("exercise-totalVolume")}
+            label={translate("totalVolume")}
             size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format('0,0')}
             variant={"outlined"}
@@ -299,7 +299,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endVolume")
+                translate("endVolume")
               )
             }}
           />
@@ -308,7 +308,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("exercise-totalCardio")}
+            label={translate("totalCardio")}
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
@@ -319,7 +319,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("common-endHour")
+                translate("endHour")
               )
             }}
           />
@@ -328,7 +328,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("exercise-weight")}
+            label={translate("weight")}
             type={"text"}
             size={"small"}
             value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
@@ -350,7 +350,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endWeight")
+                translate("endWeight")
               )
             }}
           />
@@ -370,7 +370,7 @@ export const ExerciseSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={translate("exercise-part")}
+            label={translate("part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             value={OBJECT?.exercise_section[i]?.exercise_part_idx}
@@ -405,7 +405,7 @@ export const ExerciseSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={translate("exercise-title")}
+            label={translate("title")}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             value={OBJECT?.exercise_section[i]?.exercise_title_idx}
@@ -442,7 +442,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("exercise-set")}
+            label={translate("set")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
@@ -453,7 +453,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endSet")
+                translate("endSet")
               )
             }}
             onChange={(e) => {
@@ -474,7 +474,7 @@ export const ExerciseSave = () => {
           />
           <TextField
             select={false}
-            label={translate("exercise-rep")}
+            label={translate("rep")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
@@ -485,7 +485,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endRep")
+                translate("endRep")
               )
             }}
             onChange={(e) => {
@@ -509,7 +509,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("exercise-kg")}
+            label={translate("kg")}
             size={"small"}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
@@ -520,7 +520,7 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("exercise-endKg")
+                translate("endKg")
               )
             }}
             onChange={(e) => {

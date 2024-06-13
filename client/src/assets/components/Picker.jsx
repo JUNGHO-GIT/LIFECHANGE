@@ -72,7 +72,7 @@ export const Picker = ({
     (firstStr !== "calendar" && secondStr === "plan") ? (
       <TextField
         select={true}
-        label={translate("common-dateType")}
+        label={translate("dateType")}
         size={"small"}
         value={DATE.dateType || ""}
         variant={"outlined"}
@@ -128,7 +128,7 @@ export const Picker = ({
       >
         {["day", "week", "month", "year", "select"].map((item) => (
           <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-            {translate(`common-${item}`)}
+            {translate(item)}
           </MenuItem>
         ))}
       </TextField>
@@ -146,7 +146,7 @@ export const Picker = ({
       contents={({closePopup}) => (
       <Div className={"d-column"}>
         <Div className={"d-center fs-1-2rem fw-bold"}>
-          {translate("common-viewDay")}
+          {translate("viewDay")}
         </Div>
         <Br20 />
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -224,7 +224,7 @@ export const Picker = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={translate("common-date")}
+          label={translate("date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
           className={dateStr1}
@@ -253,7 +253,7 @@ export const Picker = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            {translate("common-viewWeek")}
+            {translate("viewWeek")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -340,7 +340,7 @@ export const Picker = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={translate("common-duration")}
+          label={translate("duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={dateStr1}
           InputProps={{
@@ -368,7 +368,7 @@ export const Picker = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            {translate("common-viewMonth")}
+            {translate("viewMonth")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -428,7 +428,7 @@ export const Picker = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={translate("common-duration")}
+          label={translate("duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={dateStr1}
           InputProps={{
@@ -456,7 +456,7 @@ export const Picker = ({
       contents={({closePopup}) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            {translate("common-viewYear")}
+            {translate("viewYear")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -516,7 +516,7 @@ export const Picker = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={translate("common-duration")}
+          label={translate("duration")}
           variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={dateStr1}
           InputProps={{
@@ -544,7 +544,7 @@ export const Picker = ({
       contents={({ closePopup }) => (
         <Div className={"d-column"}>
           <Div className={"d-center fs-1-2rem fw-bold"}>
-            {translate("common-viewSelect")}
+            {translate("viewSelect")}
           </Div>
           <Br20 />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -616,7 +616,7 @@ export const Picker = ({
         <TextField
           type={"text"}
           size={"small"}
-          label={translate("common-duration")}
+          label={translate("duration")}
           variant={"outlined"}
           value={`${DATE.dateStart}~${DATE.dateEnd}`}
           className={dateStr1}

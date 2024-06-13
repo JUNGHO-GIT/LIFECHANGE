@@ -311,7 +311,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr p-sticky top-0"}>
                 <TableCell>
-                  {translate("user-dataCategory2")}
+                  {translate("dataCategory2")}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -366,7 +366,7 @@ export const UserDataCategory = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr p-sticky top-0"}>
                   <TableCell>
-                    {translate("user-dataCategory3")}
+                    {translate("dataCategory3")}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -426,7 +426,7 @@ export const UserDataCategory = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>
-                  {translate("user-dataCategory1")}
+                  {translate("dataCategory1")}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -436,7 +436,7 @@ export const UserDataCategory = () => {
                   <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem ms-0"}>
-                        {translate(`user-${item}`)}
+                        {translate(item)}
                       </Div>
                       <Div className={"fs-1-0rem ms-auto"}>
                       <PopUp

@@ -149,7 +149,7 @@ export const UserExtra = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("user-signup")}
+        {translate("signup")}
       </Div>
     );
     // 7-9. second
@@ -168,7 +168,7 @@ export const UserExtra = () => {
             flowSave();
           }}
         >
-          {translate("user-signup")}
+          {translate("signup")}
         </Button>
       </Div>
     );
@@ -179,7 +179,7 @@ export const UserExtra = () => {
           select={false}
           type={"text"}
           size={"small"}
-          value={translate("user-googleSignup")}
+          value={translate("googleSignup")}
           className={"w-100p bg-white"}
           InputProps={{
             readOnly: true,
@@ -194,11 +194,11 @@ export const UserExtra = () => {
     // 7-9. sixth
     const sixthSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
-        {translate("user-alreadyId")}
+        {translate("alreadyId")}
         <Div className={"d-center blue ms-10"} onClick={() => {
           navigate("/user/login");
         }}>
-          {translate("user-login")}
+          {translate("login")}
         </Div>
       </Div>
     );

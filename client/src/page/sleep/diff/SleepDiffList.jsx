@@ -113,7 +113,7 @@ export const SleepDiff = () => {
     const tableEmpty = () => (
       <Card className={"border radius p-10"} key={"empty"}>
         <Div className={"d-center"}>
-          {translate("common-empty")}
+          {translate("empty")}
         </Div>
       </Card>
     );
@@ -147,14 +147,14 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("sleep-night")}
+                      {translate("night")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -164,7 +164,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -174,7 +174,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -187,14 +187,14 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("sleep-morning")}
+                      {translate("morning")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -204,7 +204,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -214,7 +214,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -227,14 +227,14 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("sleep-time")}
+                      {translate("time")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-plan")}
+                      {translate("plan")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -244,7 +244,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-real")}
+                      {translate("real")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -254,7 +254,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("common-diff")}
+                      {translate("diff")}
                     </Div>
                   </TableCell>
                   <TableCell>
