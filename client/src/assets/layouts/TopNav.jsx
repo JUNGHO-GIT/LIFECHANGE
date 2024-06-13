@@ -22,7 +22,7 @@ export const TopNav = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
   const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
-  const plan = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
+  const goal = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [value, setValue] = useState("diff/list");
@@ -320,17 +320,17 @@ export const TopNav = () => {
         }}
       />
       <Tab
-        label={translate("planList")}
-        value={"plan/list"}
+        label={translate("goalList")}
+        value={"goal/list"}
         onClick={() => {
-          setValue("plan/list");
+          setValue("goal/list");
         }}
       />
       <Tab
-        label={translate("planSave")}
-        value={"plan/save"}
+        label={translate("goalSave")}
+        value={"goal/save"}
         onClick={() => {
-          setValue("plan/save");
+          setValue("goal/save");
         }}
       />
       <Tab
@@ -433,17 +433,17 @@ export const TopNav = () => {
         }}
       />
       <Tab
-        label={translate("planList")}
-        value={"plan/list"}
+        label={translate("goalList")}
+        value={"goal/list"}
         onClick={() => {
-          setValue("plan/list");
+          setValue("goal/list");
         }}
       />
       <Tab
-        label={translate("planSave")}
-        value={"plan/save"}
+        label={translate("goalSave")}
+        value={"goal/save"}
         onClick={() => {
-          setValue("plan/save");
+          setValue("goal/save");
         }}
       />
       <Tab

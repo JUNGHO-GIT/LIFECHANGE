@@ -19,6 +19,7 @@ export const FoodDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -349,7 +350,9 @@ export const FoodDashLine = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>칼로리/영양소 추이</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("kcalNut")} ${translate("trend")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -364,8 +367,8 @@ export const FoodDashLine = () => {
             setSECTION(e.target.value)
           )}
         >
-          <MenuItem value={"week"}>주간</MenuItem>
-          <MenuItem value={"month"}>월간</MenuItem>
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
         </TextField>
       </Div>
     );

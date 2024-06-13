@@ -1,33 +1,33 @@
 // sleepDashRepository.js
 
 import {Sleep} from "../../schema/sleep/Sleep.js";
-import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
+import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await SleepPlan.aggregate([
+    const finalResult = await SleepGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_dateStart: {
+        sleep_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        sleep_plan_dateEnd: {
+        sleep_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param
         }
       }},
       {$project: {
-        sleep_plan_dateStart: 1,
-        sleep_plan_dateEnd: 1,
-        sleep_plan_night: 1,
-        sleep_plan_morning: 1,
-        sleep_plan_time: 1,
+        sleep_goal_dateStart: 1,
+        sleep_goal_dateEnd: 1,
+        sleep_goal_night: 1,
+        sleep_goal_morning: 1,
+        sleep_goal_time: 1,
       }},
-      {$sort: {sleep_plan_dateStart: 1}}
+      {$sort: {sleep_goal_dateStart: 1}}
     ])
     return finalResult;
   },

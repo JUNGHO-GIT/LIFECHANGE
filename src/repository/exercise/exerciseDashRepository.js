@@ -1,33 +1,33 @@
 // exerciseDashRepository.js
 
 import {Exercise} from "../../schema/exercise/Exercise.js";
-import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
+import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_dateStart: {
+        exercise_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_plan_dateEnd: {
+        exercise_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_plan_dateStart: 1,
-        exercise_plan_dateEnd: 1,
-        exercise_plan_weight: {
-          $ifNull: ["$exercise_plan_weight", 0]
+        exercise_goal_dateStart: 1,
+        exercise_goal_dateEnd: 1,
+        exercise_goal_weight: {
+          $ifNull: ["$exercise_goal_weight", 0]
         }
       }},
-      {$sort: {exercise_plan_dateStart: -1}}
+      {$sort: {exercise_goal_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -62,29 +62,29 @@ export const barToday = {
 
 // 1-2. dash (bar - week) ------------------------------------------------------------------------->
 export const barWeek = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_dateStart: {
+        exercise_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_plan_dateEnd: {
+        exercise_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_plan_dateStart: 1,
-        exercise_plan_dateEnd: 1,
-        exercise_plan_weight: {
-          $ifNull: ["$exercise_plan_weight", 0]
+        exercise_goal_dateStart: 1,
+        exercise_goal_dateEnd: 1,
+        exercise_goal_weight: {
+          $ifNull: ["$exercise_goal_weight", 0]
         }
       }},
-      {$sort: {exercise_plan_dateStart: -1}}
+      {$sort: {exercise_goal_dateStart: -1}}
     ]);
     return finalResult;
   },
@@ -119,29 +119,29 @@ export const barWeek = {
 
 // 1-3. dash (bar - month) ------------------------------------------------------------------------>
 export const barMonth = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_dateStart: {
+        exercise_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_plan_dateEnd: {
+        exercise_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        exercise_plan_dateStart: 1,
-        exercise_plan_dateEnd: 1,
-        exercise_plan_weight: {
-          $ifNull: ["$exercise_plan_weight", 0]
+        exercise_goal_dateStart: 1,
+        exercise_goal_dateEnd: 1,
+        exercise_goal_weight: {
+          $ifNull: ["$exercise_goal_weight", 0]
         }
       }},
-      {$sort: {exercise_plan_dateStart: -1}}
+      {$sort: {exercise_goal_dateStart: -1}}
     ]);
     return finalResult;
   },

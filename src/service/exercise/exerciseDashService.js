@@ -15,11 +15,11 @@ export const barToday = async (
   const dateStart = newDate.format("YYYY-MM-DD");
   const dateEnd = newDate.format("YYYY-MM-DD");
 
-  let findPlan = [];
+  let findGoal = [];
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.barToday.listPlan(
+  findGoal = await repository.barToday.listGoal(
     user_id_param, dateStart, dateEnd
   );
   findReal = await repository.barToday.list(
@@ -30,7 +30,7 @@ export const barToday = async (
     {
       name: "체중",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
+      목표: intFormat(findGoal?.[0]?.exercise_goal_weight),
       실제: intFormat(findReal?.[0]?.exercise_body_weight)
     }
   ];
@@ -56,11 +56,11 @@ export const barWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findPlan = [];
+  let findGoal = [];
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.barWeek.listPlan(
+  findGoal = await repository.barWeek.listGoal(
     user_id_param, dateStart, dateEnd
   );
   findReal = await repository.barWeek.list(
@@ -70,8 +70,8 @@ export const barWeek = async (
   // week = getDay() + 1
   // month = getDate()
   name.forEach((data, index) => {
-    const findIndexPlan = findPlan?.findIndex((item) => (
-      new Date(item.exercise_plan_dateStart).getDay() === index + 1
+    const findIndexGoal = findGoal?.findIndex((item) => (
+      new Date(item.exercise_goal_dateStart).getDay() === index + 1
     ));
     const findIndexReal = findReal?.findIndex((item) => (
       new Date(item.exercise_dateStart).getDay() === index + 1
@@ -79,7 +79,7 @@ export const barWeek = async (
     finalResult.push({
       name: data,
       date: date[index],
-      목표: findIndexPlan !== -1 ? intFormat(findPlan[findIndexPlan]?.exercise_plan_weight) : 0,
+      목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
       실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });
@@ -105,11 +105,11 @@ export const barMonth = async (
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findPlan = [];
+  let findGoal = [];
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.barMonth.listPlan(
+  findGoal = await repository.barMonth.listGoal(
     user_id_param, dateStart, dateEnd
   );
   findReal = await repository.barMonth.list(
@@ -119,8 +119,8 @@ export const barMonth = async (
   // week = getDay() + 1
   // month = getDate()
   name.forEach((data, index) => {
-    const findIndexPlan = findPlan?.findIndex((item) => (
-      new Date(item.exercise_plan_dateStart).getDate() === index
+    const findIndexGoal = findGoal?.findIndex((item) => (
+      new Date(item.exercise_goal_dateStart).getDate() === index
     ));
     const findIndexReal = findReal?.findIndex((item) => (
       new Date(item.exercise_dateStart).getDate() === index
@@ -128,7 +128,7 @@ export const barMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      목표: findIndexPlan !== -1 ? intFormat(findPlan[findIndexPlan]?.exercise_plan_weight) : 0,
+      목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
       실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });

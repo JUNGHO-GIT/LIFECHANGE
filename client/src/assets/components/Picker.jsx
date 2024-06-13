@@ -24,17 +24,17 @@ export const Picker = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const selectStr =
-  (secondStr === "plan" && thirdStr === "list") ||
+  (secondStr === "goal" && thirdStr === "list") ||
   (secondStr === "list" && thirdStr === "") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (secondStr === "plan" && thirdStr === "save") ||
+  ) : (secondStr === "goal" && thirdStr === "save") ||
   (secondStr === "save" && thirdStr === "") ? (
     "h-min40 fs-0-8rem pointer"
   ) : "pointer";
 
   // 1. common ------------------------------------------------------------------------------------>
   const dateStr1 =
-  (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
+  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
     "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
     "w-50vw"
@@ -42,7 +42,7 @@ export const Picker = ({
     "w-80vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "w-50vw"
-  ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
+  ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
     "w-60vw"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
     "w-80vw"
@@ -52,13 +52,13 @@ export const Picker = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const dateStr2 =
-  (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "list") ? (
+  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (firstStr !== "calendar" && secondStr === "plan" && thirdStr === "save") ? (
+  ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
     "h-min40 fs-0-8rem pointer"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
     "h-min40 fs-0-8rem pointer"
@@ -68,8 +68,8 @@ export const Picker = ({
 
   // 1. type -------------------------------------------------------------------------------------->
   const typeNode = () => (
-    (firstStr === "calendar" && secondStr !== "plan") ||
-    (firstStr !== "calendar" && secondStr === "plan") ? (
+    (firstStr === "calendar" && secondStr !== "goal") ||
+    (firstStr !== "calendar" && secondStr === "goal") ? (
       <TextField
         select={true}
         label={translate("dateType")}

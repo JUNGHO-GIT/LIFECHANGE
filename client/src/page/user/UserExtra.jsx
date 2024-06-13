@@ -29,7 +29,7 @@ export const UserExtra = () => {
     _id: "",
     user_id: "",
     user_number: 0,
-    user_sex: "",
+    user_gender: "",
     user_age: "",
     user_height: "",
     user_weight: "",
@@ -85,13 +85,13 @@ export const UserExtra = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"sex"}
-          value={OBJECT?.user_sex}
+          label={"gender"}
+          value={OBJECT?.user_gender}
           className={"w-86vw"}
           onChange={(e) => {
             setOBJECT({
               ...OBJECT,
-              user_sex: e.target.value
+              user_gender: e.target.value
             });
           }}
         />

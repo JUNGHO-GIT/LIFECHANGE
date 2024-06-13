@@ -18,13 +18,13 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-  const listPlan = await repository.list.listPlan(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const dateStart = plan?.exercise_plan_dateStart;
-    const dateEnd = plan?.exercise_plan_dateEnd;
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.exercise_goal_dateStart;
+    const dateEnd = goal?.exercise_goal_dateEnd;
 
     const listReal = await repository.list.list (
       user_id_param, dateType, dateStart, dateEnd
@@ -49,7 +49,7 @@ export const list = async (
     )));
 
     return {
-      ...plan,
+      ...goal,
       exercise_total_count: exerciseTotalCount,
       exercise_total_volume: exerciseTotalVolume,
       exercise_total_cardio: decimalToStr(exerciseTotalCardio),

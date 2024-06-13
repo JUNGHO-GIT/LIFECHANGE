@@ -42,7 +42,7 @@ export const ExerciseDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/exercise/plan/save",
+    toSave: "/exercise/goal/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -57,14 +57,14 @@ export const ExerciseDiff = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    exercise_plan_number: 0,
-    exercise_plan_demo: false,
-    exercise_plan_dateStart: "0000-00-00",
-    exercise_plan_dateEnd: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
-    exercise_plan_cardio: "00:00",
+    exercise_goal_number: 0,
+    exercise_goal_demo: false,
+    exercise_goal_dateStart: "0000-00-00",
+    exercise_goal_dateEnd: "0000-00-00",
+    exercise_goal_count: 0,
+    exercise_goal_volume: 0,
+    exercise_goal_weight: 0,
+    exercise_goal_cardio: "00:00",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_count: 0,
@@ -128,15 +128,15 @@ export const ExerciseDiff = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={5}>
-                    {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
                       </Div>
                     ) : (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
                   </TableCell>
@@ -156,12 +156,12 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_plan_volume).format("0,0")}
+                      {numeral(item.exercise_goal_volume).format("0,0")}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -196,12 +196,12 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.exercise_plan_cardio}
+                      {item.exercise_goal_cardio}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -236,12 +236,12 @@ export const ExerciseDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_plan_weight).format("0,0")}
+                      {numeral(item.exercise_goal_weight).format("0,0")}
                     </Div>
                   </TableCell>
                   <TableCell>

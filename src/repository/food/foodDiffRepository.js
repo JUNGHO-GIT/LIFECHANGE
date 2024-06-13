@@ -1,7 +1,7 @@
 // foodDiffRepository.js
 
 import {Food} from "../../schema/food/Food.js";
-import {FoodPlan} from "../../schema/food/FoodPlan.js";
+import {FoodGoal} from "../../schema/food/FoodGoal.js";
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
@@ -10,44 +10,44 @@ export const list = {
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
   ) => {
-    const finalResult = await FoodPlan.countDocuments({
+    const finalResult = await FoodGoal.countDocuments({
       user_id: user_id_param,
-      food_plan_dateStart: {
+      food_goal_dateStart: {
         $lte: dateEnd_param,
       },
-      food_plan_dateEnd: {
+      food_goal_dateEnd: {
         $gte: dateStart_param,
       },
     });
     return finalResult;
   },
 
-  listPlan: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
   ) => {
-    const finalResult = await FoodPlan.aggregate([
+    const finalResult = await FoodGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_dateStart: {
+        food_goal_dateStart: {
           $lte: dateEnd_param,
         },
-        food_plan_dateEnd: {
+        food_goal_dateEnd: {
           $gte: dateStart_param,
         },
       }},
       {$project: {
         _id: 1,
-        food_plan_dateType: 1,
-        food_plan_dateStart: 1,
-        food_plan_dateEnd: 1,
-        food_plan_kcal: 1,
-        food_plan_carb: 1,
-        food_plan_protein: 1,
-        food_plan_fat: 1,
+        food_goal_dateType: 1,
+        food_goal_dateStart: 1,
+        food_goal_dateEnd: 1,
+        food_goal_kcal: 1,
+        food_goal_carb: 1,
+        food_goal_protein: 1,
+        food_goal_fat: 1,
       }},
-      {$sort: {food_plan_dateStart: sort_param}},
+      {$sort: {food_goal_dateStart: sort_param}},
       {$skip: Number(page_param - 1)},
     ]);
     return finalResult;

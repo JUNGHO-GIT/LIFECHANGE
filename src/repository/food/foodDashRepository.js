@@ -1,34 +1,34 @@
 // foodDashRepository.js
 
 import {Food} from "../../schema/food/Food.js";
-import {FoodPlan} from "../../schema/food/FoodPlan.js";
+import {FoodGoal} from "../../schema/food/FoodGoal.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await FoodPlan.aggregate([
+    const finalResult = await FoodGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_dateStart: {
+        food_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_plan_dateEnd: {
+        food_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        food_plan_dateStart: 1,
-        food_plan_dateEnd: 1,
-        food_plan_kcal: 1,
-        food_plan_carb: 1,
-        food_plan_protein: 1,
-        food_plan_fat: 1
+        food_goal_dateStart: 1,
+        food_goal_dateEnd: 1,
+        food_goal_kcal: 1,
+        food_goal_carb: 1,
+        food_goal_protein: 1,
+        food_goal_fat: 1
       }},
-      {$sort: {food_plan_dateStart: -1}},
+      {$sort: {food_goal_dateStart: -1}},
     ]);
     return finalResult;
   },

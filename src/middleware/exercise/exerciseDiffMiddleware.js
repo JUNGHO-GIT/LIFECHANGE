@@ -7,28 +7,28 @@ export const list = async (object) => {
     return [];
   }
 
-  const compareCount = (plan, real) => {
-    const diffVal = Math.abs(real - plan);
+  const compareCount = (goal, real) => {
+    const diffVal = Math.abs(real - goal);
     return diffVal;
   };
 
-  const compareTime = (plan, real) => {
-    const hoursPlan = parseInt(plan?.split(":")[0], 10);
-    const minutesPlan = parseInt(plan?.split(":")[1], 10);
+  const compareTime = (goal, real) => {
+    const hoursGoal = parseInt(goal?.split(":")[0], 10);
+    const minutesGoal = parseInt(goal?.split(":")[1], 10);
 
     const hoursReal = parseInt(real?.split(":")[0], 10);
     const minutesReal = parseInt(real?.split(":")[1], 10);
 
-    const hours = Math.abs(hoursPlan - hoursReal);
-    const minutes = Math.abs(minutesPlan - minutesReal);
+    const hours = Math.abs(hoursGoal - hoursReal);
+    const minutes = Math.abs(minutesGoal - minutesReal);
 
     const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
     return diffTime;
   };
 
-  const makeColor = (plan, real, extra) => {
+  const makeColor = (goal, real, extra) => {
     if (extra === "count" || extra === "volume") {
-      const percent = ((real - plan) / plan) * 100;
+      const percent = ((real - goal) / goal) * 100;
       // 1. ~ 1%
       if (percent <= 1) {
         return "primary";
@@ -51,7 +51,7 @@ export const list = async (object) => {
       }
     }
     else if (extra === "weight") {
-      const percent = ((real - plan) / plan) * 100;
+      const percent = ((real - goal) / goal) * 100;
       // 1. ~ 1%
       if (percent <= 1) {
         return "danger";
@@ -74,14 +74,14 @@ export const list = async (object) => {
       }
     }
     else if (extra === "cardio") {
-      const hoursPlan = parseInt(plan?.split(":")[0], 10);
-      const minutesPlan = parseInt(plan?.split(":")[1], 10);
+      const hoursGoal = parseInt(goal?.split(":")[0], 10);
+      const minutesGoal = parseInt(goal?.split(":")[1], 10);
 
       const hoursReal = parseInt(real?.split(":")[0], 10);
       const minutesReal = parseInt(real?.split(":")[1], 10);
 
-      const hours = Math.abs(hoursPlan - hoursReal);
-      const minutes = Math.abs(minutesPlan - minutesReal);
+      const hours = Math.abs(hoursGoal - hoursReal);
+      const minutes = Math.abs(minutesGoal - minutesReal);
 
       const diffVal = (hours * 60) + minutes;
       // 1. ~ 10분
@@ -110,28 +110,28 @@ export const list = async (object) => {
   object?.result?.map((item) => {
     Object.assign((item), {
       exercise_diff_count: compareCount(
-        item?.exercise_plan_count, item?.exercise_total_count
+        item?.exercise_goal_count, item?.exercise_total_count
       ),
       exercise_diff_volume: compareCount(
-        item?.exercise_plan_volume, item?.exercise_total_volume
+        item?.exercise_goal_volume, item?.exercise_total_volume
       ),
       exercise_diff_cardio: compareTime(
-        item?.exercise_plan_cardio, item?.exercise_total_cardio
+        item?.exercise_goal_cardio, item?.exercise_total_cardio
       ),
       exercise_diff_weight: compareCount(
-        item?.exercise_plan_weight, item?.exercise_body_weight
+        item?.exercise_goal_weight, item?.exercise_body_weight
       ),
       exercise_diff_count_color: makeColor(
-        item?.exercise_plan_count, item?.exercise_total_count, "count"
+        item?.exercise_goal_count, item?.exercise_total_count, "count"
       ),
       exercise_diff_volume_color: makeColor(
-        item?.exercise_plan_volume, item?.exercise_total_volume, "volume"
+        item?.exercise_goal_volume, item?.exercise_total_volume, "volume"
       ),
       exercise_diff_cardio_color: makeColor(
-        item?.exercise_plan_cardio, item?.exercise_total_cardio, "cardio"
+        item?.exercise_goal_cardio, item?.exercise_total_cardio, "cardio"
       ),
       exercise_diff_weight_color: makeColor(
-        item?.exercise_plan_weight, item?.exercise_body_weight, "weight"
+        item?.exercise_goal_weight, item?.exercise_body_weight, "weight"
       ),
     });
   });

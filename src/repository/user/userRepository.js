@@ -2,13 +2,13 @@
 
 import mongoose from "mongoose";
 import {newDate} from "../../assets/js/date.js";
-import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
+import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 import {Exercise} from "../../schema/exercise/Exercise.js";
-import {FoodPlan} from "../../schema/food/FoodPlan.js";
+import {FoodGoal} from "../../schema/food/FoodGoal.js";
 import {Food} from "../../schema/food/Food.js";
-import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
+import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 import {Money} from "../../schema/money/Money.js";
-import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
+import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
 // userRepository.js
@@ -43,13 +43,19 @@ export const signup = {
   },
 
   signup: async (
-    user_id_param, user_pw_param
+    user_id_param, OBJECT_param
   ) => {
 
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      user_pw: user_pw_param,
+      user_pw: OBJECT_param.user_pw,
+      user_age: OBJECT_param.user_age,
+      user_gender: OBJECT_param.user_gender,
+      user_height: OBJECT_param.user_height,
+      user_weight: OBJECT_param.user_weight,
+      user_image: OBJECT_param.user_image,
+      user_property: OBJECT_param.user_property,
       user_regDt: newDate,
       user_updateDt: "",
     });
@@ -66,7 +72,7 @@ export const extra = {
     const finalResult = await User.findOneAndUpdate(
       {user_id: user_id_param},
       {$set: {
-        user_sex: OBJECT_param.user_sex,
+        user_gender: OBJECT_param.user_gender,
         user_age: OBJECT_param.user_age,
         user_height: OBJECT_param.user_height,
         user_weight: OBJECT_param.user_weight,
@@ -131,7 +137,6 @@ export const save = {
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
       user_pw: OBJECT_param.user_pw,
-      user_name: OBJECT_param.user_name,
       user_image: OBJECT_param.user_image,
       dataCategory: OBJECT_param.dataCategory,
       user_regDt: newDate,
@@ -165,25 +170,25 @@ export const deletes = {
     user_id_param
   ) => {
     const finalResult =
-    await ExercisePlan.deleteMany({
+    await ExerciseGoal.deleteMany({
       user_id: user_id_param
     })
     await Exercise.deleteMany({
       user_id: user_id_param
     })
-    await FoodPlan.deleteMany({
+    await FoodGoal.deleteMany({
       user_id: user_id_param
     })
     await Food.deleteMany({
       user_id: user_id_param
     })
-    await MoneyPlan.deleteMany({
+    await MoneyGoal.deleteMany({
       user_id: user_id_param
     })
     await Money.deleteMany({
       user_id: user_id_param
     })
-    await SleepPlan.deleteMany({
+    await SleepGoal.deleteMany({
       user_id: user_id_param
     })
     await Sleep.deleteMany({

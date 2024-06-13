@@ -67,7 +67,7 @@ router.post("/signup", async (req, res) => {
   try {
     let result = await service.signup (
       req.body.user_id,
-      req.body.user_pw
+      req.body.OBJECT
     );
     if (result && result !== "duplicated") {
       res.json({

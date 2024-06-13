@@ -12,7 +12,7 @@ export const list = async (
   const dateEnd = DATE_param.dateEnd;
 
   // 1. exercise
-  const listExercisePlan = await repository.percent.listExercisePlan(
+  const listExerciseGoal = await repository.percent.listExerciseGoal(
     user_id_param, dateStart, dateEnd
   );
   const listExercise = await repository.percent.listExercise(
@@ -34,7 +34,7 @@ export const list = async (
   });
 
   // 2. food
-  const listFoodPlan = await repository.percent.listFoodPlan(
+  const listFoodGoal = await repository.percent.listFoodGoal(
     user_id_param, dateStart, dateEnd
   );
   const listFood = await repository.percent.listFood(
@@ -42,7 +42,7 @@ export const list = async (
   );
 
   // 3. money
-  const listMoneyPlan = await repository.percent.listMoneyPlan(
+  const listMoneyGoal = await repository.percent.listMoneyGoal(
     user_id_param, dateStart, dateEnd
   );
   const listMoney = await repository.percent.listMoney(
@@ -50,7 +50,7 @@ export const list = async (
   );
 
   // 4. sleep
-  const listSleepPlan = await repository.percent.listSleepPlan(
+  const listSleepGoal = await repository.percent.listSleepGoal(
     user_id_param, dateStart, dateEnd
   );
   const listSleep = await repository.percent.listSleep(
@@ -58,13 +58,13 @@ export const list = async (
   );
 
   const finalResult = {
-    exercisePlan: listExercisePlan,
+    exerciseGoal: listExerciseGoal,
     exercise: listExercise,
-    foodPlan: listFoodPlan,
+    foodGoal: listFoodGoal,
     food: listFood,
-    moneyPlan: listMoneyPlan,
+    moneyGoal: listMoneyGoal,
     money: listMoney,
-    sleepPlan: listSleepPlan,
+    sleepGoal: listSleepGoal,
     sleep: listSleep,
   };
 

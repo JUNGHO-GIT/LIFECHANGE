@@ -29,8 +29,8 @@ import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
 import {ExerciseDash} from "./page/exercise/dash/ExerciseDash.jsx";
 import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
-import {ExercisePlanList} from "./page/exercise/plan/ExercisePlanList.jsx";
-import {ExercisePlanSave} from "./page/exercise/plan/ExercisePlanSave.jsx";
+import {ExerciseGoalList} from "./page/exercise/goal/ExerciseGoalList.jsx";
+import {ExerciseGoalSave} from "./page/exercise/goal/ExerciseGoalSave.jsx";
 import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
 import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
 
@@ -38,22 +38,22 @@ import {FoodDash} from "./page/food/dash/FoodDash.jsx";
 import {FoodDiff} from "./page/food/diff/FoodDiffList.jsx";
 import {FoodFindList} from "./page/food/find/FoodFindList.jsx";
 import {FoodFindSave} from "./page/food/find/FoodFindSave.jsx";
-import {FoodPlanList} from "./page/food/plan/FoodPlanList.jsx";
-import {FoodPlanSave} from "./page/food/plan/FoodPlanSave.jsx";
+import {FoodGoalList} from "./page/food/goal/FoodGoalList.jsx";
+import {FoodGoalSave} from "./page/food/goal/FoodGoalSave.jsx";
 import {FoodList} from "./page/food/FoodList.jsx";
 import {FoodSave} from "./page/food/FoodSave.jsx";
 
 import {MoneyDash} from "./page/money/dash/MoneyDash.jsx";
 import {MoneyDiff} from "./page/money/diff/MoneyDiffList.jsx";
-import {MoneyPlanList} from "./page/money/plan/MoneyPlanList.jsx";
-import {MoneyPlanSave} from "./page/money/plan/MoneyPlanSave.jsx";
+import {MoneyGoalList} from "./page/money/goal/MoneyGoalList.jsx";
+import {MoneyGoalSave} from "./page/money/goal/MoneyGoalSave.jsx";
 import {MoneyList} from "./page/money/MoneyList.jsx";
 import {MoneySave} from "./page/money/MoneySave.jsx";
 
 import {SleepDash} from "./page/sleep/dash/SleepDash.jsx";
 import {SleepDiff} from "./page/sleep/diff/SleepDiffList.jsx";
-import {SleepPlanList} from "./page/sleep/plan/SleepPlanList.jsx";
-import {SleepPlanSave} from "./page/sleep/plan/SleepPlanSave.jsx";
+import {SleepGoalList} from "./page/sleep/goal/SleepGoalList.jsx";
+import {SleepGoalSave} from "./page/sleep/goal/SleepGoalSave.jsx";
 import {SleepList} from "./page/sleep/SleepList.jsx";
 import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
@@ -78,8 +78,8 @@ const Exercise = () =>  (
   <Routes>
     <Route path="/dash/list" element={<ExerciseDash />} />
     <Route path="/diff/list" element={<ExerciseDiff />} />
-    <Route path="/plan/list" element={<ExercisePlanList />} />
-    <Route path="/plan/save" element={<ExercisePlanSave />} />
+    <Route path="/goal/list" element={<ExerciseGoalList />} />
+    <Route path="/goal/save" element={<ExerciseGoalSave />} />
     <Route path="/list" element={<ExerciseList />} />
     <Route path="/save" element={<ExerciseSave />} />
   </Routes>
@@ -91,8 +91,8 @@ const Food = () => (
     <Route path="/diff/list" element={<FoodDiff />} />
     <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/find/save" element={<FoodFindSave />} />
-    <Route path="/plan/list" element={<FoodPlanList />} />
-    <Route path="/plan/save" element={<FoodPlanSave />} />
+    <Route path="/goal/list" element={<FoodGoalList />} />
+    <Route path="/goal/save" element={<FoodGoalSave />} />
     <Route path="/list" element={<FoodList />} />
     <Route path="/save" element={<FoodSave />} />
   </Routes>
@@ -102,8 +102,8 @@ const Money = () =>  (
   <Routes>
     <Route path="/dash/list" element={<MoneyDash />} />
     <Route path="/diff/list" element={<MoneyDiff />} />
-    <Route path="/plan/list" element={<MoneyPlanList />} />
-    <Route path="/plan/save" element={<MoneyPlanSave />} />
+    <Route path="/goal/list" element={<MoneyGoalList />} />
+    <Route path="/goal/save" element={<MoneyGoalSave />} />
     <Route path="/list" element={<MoneyList />} />
     <Route path="/save" element={<MoneySave />} />
   </Routes>
@@ -113,8 +113,8 @@ const Sleep = () => (
   <Routes>
     <Route path="/dash/list" element={<SleepDash />} />
     <Route path="/diff/list" element={<SleepDiff />} />
-    <Route path="/plan/list" element={<SleepPlanList />} />
-    <Route path="/plan/save" element={<SleepPlanSave />} />
+    <Route path="/goal/list" element={<SleepGoalList />} />
+    <Route path="/goal/save" element={<SleepGoalSave />} />
     <Route path="/list" element={<SleepList />} />
     <Route path="/save" element={<SleepSave />} />
   </Routes>

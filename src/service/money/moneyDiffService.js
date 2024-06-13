@@ -17,13 +17,13 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-  const listPlan = await repository.list.listPlan(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const dateStart = plan?.money_plan_dateStart;
-    const dateEnd = plan?.money_plan_dateEnd;
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.money_goal_dateStart;
+    const dateEnd = goal?.money_goal_dateEnd;
 
     const listReal = await repository.list.list (
       user_id_param, dateType, dateStart, dateEnd
@@ -37,7 +37,7 @@ export const list = async (
     ), 0);
 
     return {
-      ...plan,
+      ...goal,
       money_total_in: moneyTotalIn,
       money_total_out: moneyTotalOut
     };

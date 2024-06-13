@@ -44,7 +44,7 @@ export const SleepDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/sleep/plan/save",
+    toSave: "/sleep/goal/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -59,13 +59,13 @@ export const SleepDiff = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    sleep_plan_number: 0,
-    sleep_plan_demo: false,
-    sleep_plan_dateStart: "0000-00-00",
-    sleep_plan_dateEnd: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
+    sleep_goal_number: 0,
+    sleep_goal_demo: false,
+    sleep_goal_dateStart: "0000-00-00",
+    sleep_goal_dateEnd: "0000-00-00",
+    sleep_goal_night: "00:00",
+    sleep_goal_morning: "00:00",
+    sleep_goal_time: "00:00",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_night: "00:00",
@@ -126,15 +126,15 @@ export const SleepDiff = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={5}>
-                    {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                    {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                       </Div>
                     ) : (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
                   </TableCell>
@@ -154,12 +154,12 @@ export const SleepDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_plan_night}
+                      {item.sleep_goal_night}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -194,12 +194,12 @@ export const SleepDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_plan_morning}
+                      {item.sleep_goal_morning}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -234,12 +234,12 @@ export const SleepDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_plan_time}
+                      {item.sleep_goal_time}
                     </Div>
                   </TableCell>
                   <TableCell>

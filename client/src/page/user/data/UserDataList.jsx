@@ -27,7 +27,7 @@ export const UserDataList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
-  const [PART, setPART] = useState("exercisePlan");
+  const [PART, setPART] = useState("exerciseGoal");
   const [PAGING, setPAGING] = useState({
     sort: "asc",
     page: 1,
@@ -39,16 +39,16 @@ export const UserDataList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_EXERCISE_PLAN_DEF = [{
+  const OBJECT_EXERCISE_GOAL_DEF = [{
     _id: "",
-    exercise_plan_number: 0,
-    exercise_plan_demo: false,
-    exercise_plan_dateStart: "0000-00-00",
-    exercise_plan_dateEnd: "0000-00-00",
-    exercise_plan_count: 0,
-    exercise_plan_cardio: "00:00",
-    exercise_plan_volume: 0,
-    exercise_plan_weight: 0,
+    exercise_goal_number: 0,
+    exercise_goal_demo: false,
+    exercise_goal_dateStart: "0000-00-00",
+    exercise_goal_dateEnd: "0000-00-00",
+    exercise_goal_count: 0,
+    exercise_goal_cardio: "00:00",
+    exercise_goal_volume: 0,
+    exercise_goal_weight: 0,
   }];
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
@@ -71,16 +71,16 @@ export const UserDataList = () => {
       exercise_cardio: "00:00",
     }],
   }];
-  const OBJECT_FOOD_PLAN_DEF = [{
+  const OBJECT_FOOD_GOAL_DEF = [{
     _id: "",
-    food_plan_number: 0,
-    food_plan_demo: false,
-    food_plan_dateStart: "0000-00-00",
-    food_plan_dateEnd: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
+    food_goal_number: 0,
+    food_goal_demo: false,
+    food_goal_dateStart: "0000-00-00",
+    food_goal_dateEnd: "0000-00-00",
+    food_goal_kcal: 0,
+    food_goal_carb: 0,
+    food_goal_protein: 0,
+    food_goal_fat: 0,
   }];
   const OBJECT_FOOD_DEF = [{
     _id: "",
@@ -105,14 +105,14 @@ export const UserDataList = () => {
       food_protein: 0,
     }],
   }];
-  const OBJECT_MONEY_PLAN_DEF = [{
+  const OBJECT_MONEY_GOAL_DEF = [{
     _id: "",
-    money_plan_number: 0,
-    money_plan_demo: false,
-    money_plan_dateStart: "0000-00-00",
-    money_plan_dateEnd: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0,
+    money_goal_number: 0,
+    money_goal_demo: false,
+    money_goal_dateStart: "0000-00-00",
+    money_goal_dateEnd: "0000-00-00",
+    money_goal_in: 0,
+    money_goal_out: 0,
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
@@ -131,15 +131,15 @@ export const UserDataList = () => {
       money_content: "",
     }],
   }];
-  const OBJECT_SLEEP_PLAN_DEF = [{
+  const OBJECT_SLEEP_GOAL_DEF = [{
     _id: "",
-    sleep_plan_number: 0,
-    sleep_plan_demo: false,
-    sleep_plan_dateStart: "0000-00-00",
-    sleep_plan_dateEnd: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
+    sleep_goal_number: 0,
+    sleep_goal_demo: false,
+    sleep_goal_dateStart: "0000-00-00",
+    sleep_goal_dateEnd: "0000-00-00",
+    sleep_goal_night: "00:00",
+    sleep_goal_morning: "00:00",
+    sleep_goal_time: "00:00",
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",
@@ -153,10 +153,10 @@ export const UserDataList = () => {
       sleep_time: "00:00",
     }],
   }];
-  const [OBJECT_EXERCISE_PLAN, setOBJECT_EXERCISE_PLAN] = useState(OBJECT_EXERCISE_PLAN_DEF);
-  const [OBJECT_FOOD_PLAN, setOBJECT_FOOD_PLAN] = useState(OBJECT_FOOD_PLAN_DEF);
-  const [OBJECT_MONEY_PLAN, setOBJECT_MONEY_PLAN] = useState(OBJECT_MONEY_PLAN_DEF);
-  const [OBJECT_SLEEP_PLAN, setOBJECT_SLEEP_PLAN] = useState(OBJECT_SLEEP_PLAN_DEF);
+  const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState(OBJECT_EXERCISE_GOAL_DEF);
+  const [OBJECT_FOOD_GOAL, setOBJECT_FOOD_GOAL] = useState(OBJECT_FOOD_GOAL_DEF);
+  const [OBJECT_MONEY_GOAL, setOBJECT_MONEY_GOAL] = useState(OBJECT_MONEY_GOAL_DEF);
+  const [OBJECT_SLEEP_GOAL, setOBJECT_SLEEP_GOAL] = useState(OBJECT_SLEEP_GOAL_DEF);
   const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
   const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
   const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEF);
@@ -173,26 +173,26 @@ export const UserDataList = () => {
       },
     })
     .then((res) => {
-      if (PART === "exercisePlan") {
-        setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
+      if (PART === "exerciseGoal") {
+        setOBJECT_EXERCISE_GOAL(res.data.result || OBJECT_EXERCISE_GOAL_DEF);
       }
       else if (PART === "exercise") {
         setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
       }
-      else if (PART === "foodPlan") {
-        setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
+      else if (PART === "foodGoal") {
+        setOBJECT_FOOD_GOAL(res.data.result || OBJECT_FOOD_GOAL_DEF);
       }
       else if (PART === "food") {
         setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
       }
-      else if (PART === "moneyPlan") {
-        setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
+      else if (PART === "moneyGoal") {
+        setOBJECT_MONEY_GOAL(res.data.result || OBJECT_MONEY_GOAL_DEF);
       }
       else if (PART === "money") {
         setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
       }
-      else if (PART === "sleepPlan") {
-        setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
+      else if (PART === "sleepGoal") {
+        setOBJECT_SLEEP_GOAL(res.data.result || OBJECT_SLEEP_GOAL_DEF);
       }
       else if (PART === "sleep") {
         setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
@@ -258,32 +258,32 @@ export const UserDataList = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT_EXERCISE_PLAN?.map((item, index) => (
+              {OBJECT_EXERCISE_GOAL?.map((item, index) => (
                 <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
-                    {item.exercise_plan_dateStart === item.exercise_plan_dateEnd ? (
+                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
                       <>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
                       </>
                     ) : (
                       <>
-                        <Div>{item.exercise_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.exercise_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                       </>
                     )}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.exercise_plan_count).format("0,0")}
+                    {numeral(item.exercise_goal_count).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.exercise_plan_volume).format("0,0")}
+                    {numeral(item.exercise_goal_volume).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {item.exercise_plan_cardio}
+                    {item.exercise_goal_cardio}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.exercise_plan_weight).format("0,0")}
+                    {numeral(item.exercise_goal_weight).format("0,0")}
                   </TableCell>
                 </TableRow>
               ))}
@@ -352,32 +352,32 @@ export const UserDataList = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT_FOOD_PLAN?.map((item, index) => (
+              {OBJECT_FOOD_GOAL?.map((item, index) => (
                 <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
-                    {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                       </>
                     ) : (
                       <>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                       </>
                     )}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.food_plan_kcal).format('0,0')}
+                    {numeral(item.food_goal_kcal).format('0,0')}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.food_plan_carb).format('0,0')}
+                    {numeral(item.food_goal_carb).format('0,0')}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.food_plan_protein).format('0,0')}
+                    {numeral(item.food_goal_protein).format('0,0')}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.food_plan_fat).format('0,0')}
+                    {numeral(item.food_goal_fat).format('0,0')}
                   </TableCell>
                 </TableRow>
               ))}
@@ -448,26 +448,26 @@ export const UserDataList = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT_MONEY_PLAN?.map((item, index) => (
+              {OBJECT_MONEY_GOAL?.map((item, index) => (
                 <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
-                    {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                    {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                       <>
-                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
                       </>
                     ) : (
                       <>
-                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                       </>
                     )}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_plan_in).format("0,0")}
+                    {numeral(item.money_goal_in).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_plan_out).format("0,0")}
+                    {numeral(item.money_goal_out).format("0,0")}
                   </TableCell>
                 </TableRow>
               ))}
@@ -531,29 +531,29 @@ export const UserDataList = () => {
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
-              {OBJECT_SLEEP_PLAN?.map((item, index) => (
+              {OBJECT_SLEEP_GOAL?.map((item, index) => (
                 <TableRow className={"table-tbody-tr border-top"}>
                   <TableCell>
-                    {item.sleep_plan_dateStart === item.sleep_plan_dateEnd ? (
+                    {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                       <>
-                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                       </>
                     ) : (
                       <>
-                        <Div>{item.sleep_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.sleep_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
                       </>
                     )}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_plan_night}
+                    {item.sleep_goal_night}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_plan_morning}
+                    {item.sleep_goal_morning}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_plan_time}
+                    {item.sleep_goal_time}
                   </TableCell>
                 </TableRow>
               ))}
@@ -616,7 +616,7 @@ export const UserDataList = () => {
     );
     // 7-8. table
     const tableSection = () => {
-      if (PART === "exercisePlan") {
+      if (PART === "exerciseGoal") {
         return LOADING ? loadingNode() : (
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment1(0)
         );
@@ -626,7 +626,7 @@ export const UserDataList = () => {
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment2(0)
         );
       }
-      else if (PART === "foodPlan") {
+      else if (PART === "foodGoal") {
         return LOADING ? loadingNode() : (
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment3(0)
         );
@@ -636,7 +636,7 @@ export const UserDataList = () => {
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment4(0)
         );
       }
-      else if (PART === "moneyPlan") {
+      else if (PART === "moneyGoal") {
         return LOADING ? loadingNode() : (
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment5(0)
         );
@@ -646,7 +646,7 @@ export const UserDataList = () => {
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment6(0)
         );
       }
-      else if (PART === "sleepPlan") {
+      else if (PART === "sleepGoal") {
         return LOADING ? loadingNode() : (
           COUNT.totalCnt === 0 ? tableEmpty() : tableFragment7(0)
         );

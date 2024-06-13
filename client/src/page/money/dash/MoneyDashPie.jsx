@@ -17,6 +17,7 @@ export const MoneyDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -475,7 +476,9 @@ export const MoneyDashPie = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>수입/지출 비율</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("inOut")} ${translate("ratio")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -490,9 +493,9 @@ export const MoneyDashPie = () => {
           setSECTION(e.target.value)
         )}
       >
-        <MenuItem value={"today"}>오늘</MenuItem>
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"today"}>{translate("today")}</MenuItem>
+        <MenuItem value={"week"}>{translate("week")}</MenuItem>
+        <MenuItem value={"month"}>{translate("month")}</MenuItem>
       </TextField>
       </Div>
     );

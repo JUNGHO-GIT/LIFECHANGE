@@ -138,7 +138,7 @@ export const Btn = ({
           readOnly: false,
           className: "h-min0 h-30",
         }}
-        defaultValue={"exercisePlan"}
+        defaultValue={"exerciseGoal"}
         onChange={(e) => {
           const newPartVal = e.target.value;
           functions?.setPART(newPartVal);
@@ -147,13 +147,13 @@ export const Btn = ({
             page: 1
           }));
         }}>
-        <MenuItem value={"exercisePlan"}>운동(계획)</MenuItem>
+        <MenuItem value={"exerciseGoal"}>운동(계획)</MenuItem>
         <MenuItem value={"exercise"}>운동</MenuItem>
-        <MenuItem value={"foodPlan"}>식사(계획)</MenuItem>
+        <MenuItem value={"foodGoal"}>식사(계획)</MenuItem>
         <MenuItem value={"food"}>식사</MenuItem>
-        <MenuItem value={"moneyPlan"}>지출(계획)</MenuItem>
+        <MenuItem value={"moneyGoal"}>지출(계획)</MenuItem>
         <MenuItem value={"money"}>지출</MenuItem>
-        <MenuItem value={"sleepPlan"}>수면(계획)</MenuItem>
+        <MenuItem value={"sleepGoal"}>수면(계획)</MenuItem>
         <MenuItem value={"sleep"}>수면</MenuItem>
       </TextField>
       <TextField
@@ -188,10 +188,10 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
@@ -212,10 +212,10 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -258,10 +258,10 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -287,10 +287,10 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -316,10 +316,10 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}

@@ -4,11 +4,10 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
-import {log} from "../../../import/ImportLogics";
 import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
-import {common3_1} from "../../../import/ImportImages.jsx";
+import {common3_2} from "../../../import/ImportImages.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashPie = () => {
@@ -17,6 +16,7 @@ export const SleepDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["취침", "수면", "기상"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -281,7 +281,9 @@ export const SleepDashPie = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>수면 비율</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("sleep")} ${translate("ratio")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -296,15 +298,15 @@ export const SleepDashPie = () => {
           setSECTION(e.target.value)
         )}
       >
-        <MenuItem value={"today"}>오늘</MenuItem>
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"today"}>{translate("today")}</MenuItem>
+        <MenuItem value={"week"}>{translate("week")}</MenuItem>
+        <MenuItem value={"month"}>{translate("month")}</MenuItem>
       </TextField>
       </Div>
     );
     // 7-4. delete
     const deleteSection2 = () => (
-      <Img src={common3_1} className={"w-24 h-24"} />
+      <Img src={common3_2} className={"w-24 h-24"} />
     );
     // 7-7. fragment
     const dashFragment1 = (i) => (

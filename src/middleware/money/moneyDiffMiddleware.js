@@ -7,22 +7,22 @@ export const list = async (object) => {
     return [];
   }
 
-  const compareCount = (plan, real, extra) => {
+  const compareCount = (goal, real, extra) => {
     if (extra === "in") {
-      return Math.abs(plan - real);
+      return Math.abs(goal - real);
     }
     if (extra === "out") {
-      return Math.abs(real - plan);
+      return Math.abs(real - goal);
     }
   }
 
-  const makeColor = (plan, real, extra) => {
-    if (plan === undefined || real === undefined) {
+  const makeColor = (goal, real, extra) => {
+    if (goal === undefined || real === undefined) {
       return "danger";
     }
     else if (extra === "in") {
-      const percent = (Math.abs(plan - real) / plan) * 100;
-      if (plan > real) {
+      const percent = (Math.abs(goal - real) / goal) * 100;
+      if (goal > real) {
         if (percent > 0 && percent <= 1) {
           return "danger";
         }
@@ -67,8 +67,8 @@ export const list = async (object) => {
       }
     }
     if (extra === "out") {
-      const percent = (Math.abs(plan - real) / plan) * 100;
-      if (plan > real) {
+      const percent = (Math.abs(goal - real) / goal) * 100;
+      if (goal > real) {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
           return "primary";
@@ -118,16 +118,16 @@ export const list = async (object) => {
   object?.result?.map((item) => {
     Object.assign((item), {
       money_diff_in: compareCount(
-        item?.money_plan_in, item?.money_total_in, "in"
+        item?.money_goal_in, item?.money_total_in, "in"
       ),
       money_diff_out: compareCount(
-        item?.money_plan_out, item?.money_total_out, "out"
+        item?.money_goal_out, item?.money_total_out, "out"
       ),
       money_diff_in_color: makeColor(
-        item?.money_plan_in, item?.money_total_in, "in"
+        item?.money_goal_in, item?.money_total_in, "in"
       ),
       money_diff_out_color: makeColor(
-        item?.money_plan_out, item?.money_total_out, "out"
+        item?.money_goal_out, item?.money_total_out, "out"
       ),
     });
   });

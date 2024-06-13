@@ -1,7 +1,7 @@
 // exerciseDiffRepository.js
 
 import {Exercise} from "../../schema/exercise/Exercise.js";
-import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
+import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
@@ -10,44 +10,44 @@ export const list = {
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
   ) => {
-    const finalResult = await ExercisePlan.countDocuments({
+    const finalResult = await ExerciseGoal.countDocuments({
       user_id: user_id_param,
-      exercise_plan_dateStart: {
+      exercise_goal_dateStart: {
         $lte: dateEnd_param,
       },
-      exercise_plan_dateEnd: {
+      exercise_goal_dateEnd: {
         $gte: dateStart_param,
       },
     });
     return finalResult;
   },
 
-  listPlan: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_dateStart: {
+        exercise_goal_dateStart: {
           $lte: dateEnd_param,
         },
-        exercise_plan_dateEnd: {
+        exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
       }},
       {$project: {
         _id: 1,
-        exercise_plan_dateType: 1,
-        exercise_plan_dateStart: 1,
-        exercise_plan_dateEnd: 1,
-        exercise_plan_count: 1,
-        exercise_plan_volume: 1,
-        exercise_plan_cardio: 1,
-        exercise_plan_weight: 1,
+        exercise_goal_dateType: 1,
+        exercise_goal_dateStart: 1,
+        exercise_goal_dateEnd: 1,
+        exercise_goal_count: 1,
+        exercise_goal_volume: 1,
+        exercise_goal_cardio: 1,
+        exercise_goal_weight: 1,
       }},
-      {$sort: {exercise_plan_dateStart: sort_param}},
+      {$sort: {exercise_goal_dateStart: sort_param}},
       {$skip: Number(page_param - 1)},
     ]);
     return finalResult;

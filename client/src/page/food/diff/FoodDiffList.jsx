@@ -45,7 +45,7 @@ export const FoodDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave:"/food/plan/save"
+    toSave:"/food/goal/save"
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -60,14 +60,14 @@ export const FoodDiff = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    food_plan_number: 0,
-    food_plan_demo: false,
-    food_plan_dateStart: "0000-00-00",
-    food_plan_dateEnd: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
+    food_goal_number: 0,
+    food_goal_demo: false,
+    food_goal_dateStart: "0000-00-00",
+    food_goal_dateEnd: "0000-00-00",
+    food_goal_kcal: 0,
+    food_goal_carb: 0,
+    food_goal_protein: 0,
+    food_goal_fat: 0,
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
@@ -131,15 +131,15 @@ export const FoodDiff = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={5}>
-                    {item.food_plan_dateStart === item.food_plan_dateEnd ? (
+                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                       </Div>
                     ) : (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.food_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.food_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
                   </TableCell>
@@ -159,12 +159,12 @@ export const FoodDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_plan_kcal).format('0,0')}
+                      {numeral(item.food_goal_kcal).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -199,12 +199,12 @@ export const FoodDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_plan_carb).format('0,0')}
+                      {numeral(item.food_goal_carb).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -239,12 +239,12 @@ export const FoodDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_plan_protein).format('0,0')}
+                      {numeral(item.food_goal_protein).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -279,12 +279,12 @@ export const FoodDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_plan_fat).format('0,0')}
+                      {numeral(item.food_goal_fat).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>

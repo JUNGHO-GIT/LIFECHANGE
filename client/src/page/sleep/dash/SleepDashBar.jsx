@@ -18,6 +18,7 @@ export const SleepDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -122,7 +123,9 @@ export const SleepDashBar = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>수면 목표</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("sleep")} ${translate("goal")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -137,7 +140,7 @@ export const SleepDashBar = () => {
             setSECTION(e.target.value)
           )}
         >
-          <MenuItem value={"today"}>오늘</MenuItem>
+          <MenuItem value={"today"}>{translate("today")}</MenuItem>
         </TextField>
       </Div>
     );

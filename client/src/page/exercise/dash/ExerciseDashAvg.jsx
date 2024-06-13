@@ -19,6 +19,7 @@ export const ExerciseDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["볼륨", "유산소"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -335,7 +336,9 @@ export const ExerciseDashAvg = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>볼륨 / 유산소 평균</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("volumeCardio")} ${translate("avg")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -350,8 +353,8 @@ export const ExerciseDashAvg = () => {
             setSECTION(e.target.value)
           )}
         >
-          <MenuItem value={"month"}>월간</MenuItem>
-          <MenuItem value={"year"}>연간</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
+          <MenuItem value={"year"}>{translate("year")}</MenuItem>
         </TextField>
       </Div>
     );

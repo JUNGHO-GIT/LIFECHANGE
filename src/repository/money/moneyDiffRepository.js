@@ -1,7 +1,7 @@
 // moneyDiffRepository.js
 
 import {Money} from "../../schema/money/Money.js";
-import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
+import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 
 // 1. list (리스트는 gte lte) --------------------------------------------------------------------->
 export const list = {
@@ -10,42 +10,42 @@ export const list = {
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
   ) => {
-    const finalResult = await MoneyPlan.countDocuments({
+    const finalResult = await MoneyGoal.countDocuments({
       user_id: user_id_param,
-      money_plan_dateStart: {
+      money_goal_dateStart: {
         $lte: dateEnd_param,
       },
-      money_plan_dateEnd: {
+      money_goal_dateEnd: {
         $gte: dateStart_param,
       },
     });
     return finalResult;
   },
 
-  listPlan: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
   ) => {
-    const finalResult = await MoneyPlan.aggregate([
+    const finalResult = await MoneyGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_dateStart: {
+        money_goal_dateStart: {
           $lte: dateEnd_param,
         },
-        money_plan_dateEnd: {
+        money_goal_dateEnd: {
           $gte: dateStart_param,
         },
       }},
       {$project: {
         _id: 1,
-        money_plan_dataType: 1,
-        money_plan_dateStart: 1,
-        money_plan_dateEnd: 1,
-        money_plan_in: 1,
-        money_plan_out: 1,
+        money_goal_dataType: 1,
+        money_goal_dateStart: 1,
+        money_goal_dateEnd: 1,
+        money_goal_in: 1,
+        money_goal_out: 1,
       }},
-      {$sort: {money_plan_dateStart: sort_param}},
+      {$sort: {money_goal_dateStart: sort_param}},
       {$skip: Number(page_param - 1)},
     ]);
     return finalResult;

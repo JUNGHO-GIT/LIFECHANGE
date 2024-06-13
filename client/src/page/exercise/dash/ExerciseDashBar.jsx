@@ -18,6 +18,7 @@ export const ExerciseDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -290,7 +291,9 @@ export const ExerciseDashBar = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>체중 목표</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("weight")} ${translate("goal")}`}
+      </Div>
     );
     // 7-6. dropdown
     const deleteSection1 = () => (
@@ -305,9 +308,9 @@ export const ExerciseDashBar = () => {
             setSECTION(e.target.value)
           )}
         >
-        <MenuItem value={"today"}>오늘</MenuItem>
-        <MenuItem value={"week"}>주간</MenuItem>
-        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"today"}>{translate("today")}</MenuItem>
+        <MenuItem value={"week"}>{translate("week")}</MenuItem>
+        <MenuItem value={"month"}>{translate("month")}</MenuItem>
       </TextField>
       </Div>
     );

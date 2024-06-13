@@ -15,12 +15,12 @@ export const barToday = async (
   const dateStart = koreanDate;
   const dateEnd = koreanDate;
 
-  let findPlan = [];
+  let findGoal = [];
   let findReal = [];
   let finalResultKcal = [];
   let finalResultNut = [];
 
-  findPlan = await repository.barToday.listPlan(
+  findGoal = await repository.barToday.listGoal(
     user_id_param, dateStart, dateEnd
   );
   findReal = await repository.barToday.list(
@@ -32,7 +32,7 @@ export const barToday = async (
     {
       name: "칼로리",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.food_plan_kcal),
+      목표: intFormat(findGoal?.[0]?.food_goal_kcal),
       실제: intFormat(findReal?.[0]?.food_total_kcal)
     }
   ];
@@ -42,19 +42,19 @@ export const barToday = async (
     {
       name: "탄수화물",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.food_plan_carb),
+      목표: intFormat(findGoal?.[0]?.food_goal_carb),
       실제: intFormat(findReal?.[0]?.food_total_carb)
     },
     {
       name: "단백질",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.food_plan_protein),
+      목표: intFormat(findGoal?.[0]?.food_goal_protein),
       실제: intFormat(findReal?.[0]?.food_total_protein)
     },
     {
       name: "지방",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.food_plan_fat),
+      목표: intFormat(findGoal?.[0]?.food_goal_fat),
       실제: intFormat(findReal?.[0]?.food_total_fat)
     }
   ];

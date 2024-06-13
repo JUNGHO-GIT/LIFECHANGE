@@ -15,11 +15,11 @@ export const barToday = async (
   const dateStart = koreanDate;
   const dateEnd = koreanDate;
 
-  let findPlan = [];
+  let findGoal = [];
   let findReal = [];
   let finalResult = [];
 
-  findPlan = await repository.barToday.listPlan(
+  findGoal = await repository.barToday.listGoal(
     user_id_param, dateStart, dateEnd
   );
   findReal = await repository.barToday.list(
@@ -30,13 +30,13 @@ export const barToday = async (
     {
       name: "수입",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.money_plan_in),
+      목표: intFormat(findGoal?.[0]?.money_goal_in),
       실제: intFormat(findReal?.[0]?.money_total_in)
     },
     {
       name: "지출",
       date: dateStart,
-      목표: intFormat(findPlan?.[0]?.money_plan_out),
+      목표: intFormat(findGoal?.[0]?.money_goal_out),
       실제: intFormat(findReal?.[0]?.money_total_out)
     }
   ];

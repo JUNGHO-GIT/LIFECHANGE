@@ -30,12 +30,12 @@ export const list = async (
   let finalResult = [];
   let totalCnt = 0;
 
-  // 1. exercisePlan
-  if (PART_param === "exercisePlan") {
-    totalCnt = await repository.list.countExercisePlan(
+  // 1. exerciseGoal
+  if (PART_param === "exerciseGoal") {
+    totalCnt = await repository.list.countExerciseGoal(
       user_id_param
     );
-    finalResult = await repository.list.listExercisePlan(
+    finalResult = await repository.list.listExerciseGoal(
       user_id_param, page
     );
   }
@@ -50,12 +50,12 @@ export const list = async (
     );
   }
 
-  // 3. foodPlan
-  else if (PART_param === "foodPlan") {
-    totalCnt = await repository.list.countFoodPlan(
+  // 3. foodGoal
+  else if (PART_param === "foodGoal") {
+    totalCnt = await repository.list.countFoodGoal(
       user_id_param
     );
-    finalResult = await repository.list.listFoodPlan(
+    finalResult = await repository.list.listFoodGoal(
       user_id_param, page,
     );
   }
@@ -70,12 +70,12 @@ export const list = async (
     );
   }
 
-  // 5. moneyPlan
-  else if (PART_param === "moneyPlan") {
-    totalCnt = await repository.list.countMoneyPlan(
+  // 5. moneyGoal
+  else if (PART_param === "moneyGoal") {
+    totalCnt = await repository.list.countMoneyGoal(
       user_id_param
     );
-    finalResult = await repository.list.listMoneyPlan(
+    finalResult = await repository.list.listMoneyGoal(
       user_id_param, page,
     );
   }
@@ -90,12 +90,12 @@ export const list = async (
     );
   }
 
-  // 7. sleepPlan
-  else if (PART_param === "sleepPlan") {
-    totalCnt = await repository.list.countSleepPlan(
+  // 7. sleepGoal
+  else if (PART_param === "sleepGoal") {
+    totalCnt = await repository.list.countSleepGoal(
       user_id_param
     );
-    finalResult = await repository.list.listSleepPlan(
+    finalResult = await repository.list.listSleepGoal(
       user_id_param, page,
     );
   }
@@ -137,26 +137,26 @@ export const save = async (
   let finalResult = String("");
   let secondStr = String(PART_param);
 
-  // 1. exercisePlan
-  if (secondStr === "exercisePlan") {
+  // 1. exerciseGoal
+  if (secondStr === "exerciseGoal") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        exercise_plan_number: i + insertCount,
-        exercise_plan_demo: true,
-        exercise_plan_dateType: "day",
-        exercise_plan_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        exercise_plan_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        exercise_plan_count: randomNumber(100),
-        exercise_plan_volume: randomNumber(1000),
-        exercise_plan_cardio: randomTime(),
-        exercise_plan_weight: randomNumber(1000),
-        exercise_plan_regDt: Date.now(),
-        exercise_plan_updateDt: Date.now(),
+        exercise_goal_number: i + insertCount,
+        exercise_goal_demo: true,
+        exercise_goal_dateType: "day",
+        exercise_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_goal_count: randomNumber(100),
+        exercise_goal_volume: randomNumber(1000),
+        exercise_goal_cardio: randomTime(),
+        exercise_goal_weight: randomNumber(1000),
+        exercise_goal_regDt: Date.now(),
+        exercise_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.saveExercisePlan(
+    await repository.save.saveExerciseGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -213,26 +213,26 @@ export const save = async (
     finalResult = "success";
   }
 
-  // 3. foodPlan
-  else if (secondStr === "foodPlan") {
+  // 3. foodGoal
+  else if (secondStr === "foodGoal") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        food_plan_number: i + insertCount,
-        food_plan_demo: true,
-        food_plan_dateType: "day",
-        food_plan_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        food_plan_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        food_plan_kcal: randomNumber(10000),
-        food_plan_carb: randomNumber(1000),
-        food_plan_protein: randomNumber(1000),
-        food_plan_fat: randomNumber(1000),
-        food_plan_regDt: Date.now(),
-        food_plan_updateDt: Date.now(),
+        food_goal_number: i + insertCount,
+        food_goal_demo: true,
+        food_goal_dateType: "day",
+        food_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_goal_kcal: randomNumber(10000),
+        food_goal_carb: randomNumber(1000),
+        food_goal_protein: randomNumber(1000),
+        food_goal_fat: randomNumber(1000),
+        food_goal_regDt: Date.now(),
+        food_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.saveFoodPlan(
+    await repository.save.saveFoodGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -297,24 +297,24 @@ export const save = async (
     finalResult = "success";
   }
 
-  // 5. moneyPlan
-  else if (secondStr === "moneyPlan") {
+  // 5. moneyGoal
+  else if (secondStr === "moneyGoal") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        money_plan_number: i + insertCount,
-        money_plan_demo: true,
-        money_plan_dateType: "day",
-        money_plan_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_plan_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_plan_in: randomNumber(10000),
-        money_plan_out: randomNumber(10000),
-        money_plan_regDt: Date.now(),
-        money_plan_updateDt: Date.now(),
+        money_goal_number: i + insertCount,
+        money_goal_demo: true,
+        money_goal_dateType: "day",
+        money_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_goal_in: randomNumber(10000),
+        money_goal_out: randomNumber(10000),
+        money_goal_regDt: Date.now(),
+        money_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.saveMoneyPlan(
+    await repository.save.saveMoneyGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -367,25 +367,25 @@ export const save = async (
     finalResult = "success";
   }
 
-  // 7. sleepPlan
-  else if (secondStr === "sleepPlan") {
+  // 7. sleepGoal
+  else if (secondStr === "sleepGoal") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        sleep_plan_number: i + insertCount,
-        sleep_plan_demo: true,
-        sleep_plan_dateType: "day",
-        sleep_plan_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        sleep_plan_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        sleep_plan_night: randomTime(),
-        sleep_plan_morning: randomTime(),
-        sleep_plan_time: calcDate(randomTime(), randomTime()),
-        sleep_plan_regDt: Date.now(),
-        sleep_plan_updateDt: Date.now(),
+        sleep_goal_number: i + insertCount,
+        sleep_goal_demo: true,
+        sleep_goal_dateType: "day",
+        sleep_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_goal_night: randomTime(),
+        sleep_goal_morning: randomTime(),
+        sleep_goal_time: calcDate(randomTime(), randomTime()),
+        sleep_goal_regDt: Date.now(),
+        sleep_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.saveSleepPlan(
+    await repository.save.saveSleepGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";

@@ -11,13 +11,13 @@ export const list = async (object) => {
 
   // ex. 22:00 - 04:00 = 06:00
   // ex. 22:00 - 22:30 = 00:30
-  const compareTime = (plan, real, extra) => {
+  const compareTime = (goal, real, extra) => {
     if (extra === "night" || extra === "morning") {
-      const planDate = new Date(`1970-01-01T${plan}Z`);
+      const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
 
       // 밤을 넘어가는 시간 처리
-      let diff = differenceInMinutes(realDate, planDate);
+      let diff = differenceInMinutes(realDate, goalDate);
 
       // 24시간을 분으로 환산
       if (diff < 0) {
@@ -31,30 +31,30 @@ export const list = async (object) => {
       return diffTime;
     }
     else if (extra === "time") {
-      const hoursPlan = parseInt(plan?.split(":")[0], 10);
-      const minutesPlan = parseInt(plan?.split(":")[1], 10);
+      const hoursGoal = parseInt(goal?.split(":")[0], 10);
+      const minutesGoal = parseInt(goal?.split(":")[1], 10);
 
       const hoursReal = parseInt(real?.split(":")[0], 10);
       const minutesReal = parseInt(real?.split(":")[1], 10);
 
-      const hours = Math.abs(hoursPlan - hoursReal);
-      const minutes = Math.abs(minutesPlan - minutesReal);
+      const hours = Math.abs(hoursGoal - hoursReal);
+      const minutes = Math.abs(minutesGoal - minutesReal);
 
       const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
       return diffTime;
     };
   };
 
-  const makeColor = (plan, real, extra) => {
+  const makeColor = (goal, real, extra) => {
     if (extra === "night" || extra === "morning") {
-      const planDate = new Date(`1970-01-01T${plan}Z`);
+      const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
       let diffVal = 0;
-      if (realDate < planDate) {
-        diffVal = planDate.getTime() - realDate.getTime();
+      if (realDate < goalDate) {
+        diffVal = goalDate.getTime() - realDate.getTime();
       }
       else {
-        diffVal = realDate.getTime() - planDate.getTime();
+        diffVal = realDate.getTime() - goalDate.getTime();
       }
       // 1. 10분이내
       if (0 <= diffVal && diffVal <= 600000) {
@@ -78,14 +78,14 @@ export const list = async (object) => {
       }
     }
     else if (extra === "time") {
-      const hoursPlan = parseInt(plan?.split(":")[0], 10);
-      const minutesPlan = parseInt(plan?.split(":")[1], 10);
+      const hoursGoal = parseInt(goal?.split(":")[0], 10);
+      const minutesGoal = parseInt(goal?.split(":")[1], 10);
 
       const hoursReal = parseInt(real?.split(":")[0], 10);
       const minutesReal = parseInt(real?.split(":")[1], 10);
 
-      const hours = Math.abs(hoursPlan - hoursReal);
-      const minutes = Math.abs(minutesPlan - minutesReal);
+      const hours = Math.abs(hoursGoal - hoursReal);
+      const minutes = Math.abs(minutesGoal - minutesReal);
 
       const diffVal = (hours * 60) + minutes;
 
@@ -115,22 +115,22 @@ export const list = async (object) => {
   object?.result?.map((item) => {
     Object.assign((item), {
       sleep_diff_night: compareTime(
-        item?.sleep_plan_night, item?.sleep_night, "night"
+        item?.sleep_goal_night, item?.sleep_night, "night"
       ),
       sleep_diff_morning: compareTime(
-        item?.sleep_plan_morning, item?.sleep_morning, "morning"
+        item?.sleep_goal_morning, item?.sleep_morning, "morning"
       ),
       sleep_diff_time: compareTime(
-        item?.sleep_plan_time, item?.sleep_time, "time"
+        item?.sleep_goal_time, item?.sleep_time, "time"
       ),
       sleep_diff_night_color: makeColor(
-        item?.sleep_plan_night, item?.sleep_night, "night"
+        item?.sleep_goal_night, item?.sleep_night, "night"
       ),
       sleep_diff_morning_color: makeColor(
-        item?.sleep_plan_morning, item?.sleep_morning, "morning"
+        item?.sleep_goal_morning, item?.sleep_morning, "morning"
       ),
       sleep_diff_time_color: makeColor(
-        item?.sleep_plan_time, item?.sleep_time, "time"
+        item?.sleep_goal_time, item?.sleep_time, "time"
       ),
     });
   });

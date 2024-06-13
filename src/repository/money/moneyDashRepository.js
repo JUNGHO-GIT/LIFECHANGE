@@ -1,32 +1,32 @@
 // moneyDashRepository.js
 
 import {Money} from "../../schema/money/Money.js";
-import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
+import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  listPlan: async (
+  listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await MoneyPlan.aggregate([
+    const finalResult = await MoneyGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_dateStart: {
+        money_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        money_plan_dateEnd: {
+        money_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
-        money_plan_dateStart: 1,
-        money_plan_dateEnd: 1,
-        money_plan_in: 1,
-        money_plan_out: 1,
+        money_goal_dateStart: 1,
+        money_goal_dateEnd: 1,
+        money_goal_in: 1,
+        money_goal_out: 1,
       }},
-      {$sort: {money_plan_dateStart: 1}}
+      {$sort: {money_goal_dateStart: 1}}
     ]);
     return finalResult;
   },

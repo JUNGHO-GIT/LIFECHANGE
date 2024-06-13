@@ -1,39 +1,39 @@
 // userPercentRepository.js
 
 import {Exercise} from "../../schema/exercise/Exercise.js";
-import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
+import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 import {Food} from "../../schema/food/Food.js";
-import {FoodPlan} from "../../schema/food/FoodPlan.js";
+import {FoodGoal} from "../../schema/food/FoodGoal.js";
 import {Money} from "../../schema/money/Money.js";
-import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
+import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
-import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
+import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 
 // 1-1. percent ----------------------------------------------------------------------------------->
 export const percent = {
 
-  // 1-1. exercise (plan)
-  listExercisePlan: async (
+  // 1-1. exercise (goal)
+  listExerciseGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        exercise_plan_dateStart: {
+        exercise_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        exercise_plan_dateEnd: {
+        exercise_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
       }},
       {$project: {
         _id: 0,
-        exercise_plan_count: "$exercise_plan_count",
-        exercise_plan_volume: "$exercise_plan_volume",
-        exercise_plan_cardio: "$exercise_plan_cardio",
-        exercise_plan_weight: "$exercise_plan_weight",
+        exercise_goal_count: "$exercise_goal_count",
+        exercise_goal_volume: "$exercise_goal_volume",
+        exercise_goal_cardio: "$exercise_goal_cardio",
+        exercise_goal_weight: "$exercise_goal_weight",
       }}
     ]);
     return finalResult[0];
@@ -65,28 +65,28 @@ export const percent = {
     return finalResult[0];
   },
 
-  // 2-1. food (plan)
-  listFoodPlan: async (
+  // 2-1. food (goal)
+  listFoodGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await FoodPlan.aggregate([
+    const finalResult = await FoodGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_plan_dateStart: {
+        food_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        food_plan_dateEnd: {
+        food_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
       }},
       {$project: {
         _id: 0,
-        food_plan_kcal: "$food_plan_kcal",
-        food_plan_carb: "$food_plan_carb",
-        food_plan_protein: "$food_plan_protein",
-        food_plan_fat: "$food_plan_fat",
+        food_goal_kcal: "$food_goal_kcal",
+        food_goal_carb: "$food_goal_carb",
+        food_goal_protein: "$food_goal_protein",
+        food_goal_fat: "$food_goal_fat",
       }}
     ]);
     return finalResult[0];
@@ -119,26 +119,26 @@ export const percent = {
     return finalResult[0];
   },
 
-  // 3-1. money (plan)
-  listMoneyPlan: async (
+  // 3-1. money (goal)
+  listMoneyGoal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
-    const finalResult = await MoneyPlan.aggregate([
+    const finalResult = await MoneyGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_plan_dateStart: {
+        money_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        money_plan_dateEnd: {
+        money_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
       }},
       {$project: {
         _id: 0,
-        money_plan_in: "$money_plan_in",
-        money_plan_out: "$money_plan_out",
+        money_goal_in: "$money_goal_in",
+        money_goal_out: "$money_goal_out",
       }}
     ]);
     return finalResult[0];
@@ -169,27 +169,27 @@ export const percent = {
     return finalResult[0];
   },
 
-  // 4-1. sleep (plan)
-  listSleepPlan: async (
+  // 4-1. sleep (goal)
+  listSleepGoal: async (
     user_id_param, dateStart_param,  dateEnd_param,
   ) => {
-    const finalResult = await SleepPlan.aggregate([
+    const finalResult = await SleepGoal.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_plan_dateStart: {
+        sleep_goal_dateStart: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        sleep_plan_dateEnd: {
+        sleep_goal_dateEnd: {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         }
       }},
       {$project: {
         _id: 0,
-        sleep_plan_night: "$sleep_plan_night",
-        sleep_plan_morning: "$sleep_plan_morning",
-        sleep_plan_time: "$sleep_plan_time",
+        sleep_goal_night: "$sleep_goal_night",
+        sleep_goal_morning: "$sleep_goal_morning",
+        sleep_goal_time: "$sleep_goal_time",
       }}
     ]);
     return finalResult[0];

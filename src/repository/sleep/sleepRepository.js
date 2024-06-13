@@ -1,4 +1,4 @@
-// sleepPlanRepository.js
+// sleepGoalRepository.js
 
 import mongoose from "mongoose";
 import {Sleep} from "../../schema/sleep/Sleep.js";

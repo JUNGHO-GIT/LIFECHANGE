@@ -33,9 +33,11 @@ export const useTranslate = () => {
   const {lang} = useLanguage();
   const resources = {
     // a
+    age: {ko: "나이", en: "Age"},
     asc: {ko: "오름차순", en: "Asc"},
     alreadyId: {ko: "아이디가 있는 경우", en: "Already have an Account"},
     amount: {ko: "금액", en: "Amount"},
+    avg: {ko: "평균", en: "Avg"},
 
     // b
     brand: {ko: "브랜드", en: "Brand"},
@@ -97,6 +99,7 @@ export const useTranslate = () => {
     food: {ko: "식사", en: "food"},
 
     // g
+    gender: {ko: "성별", en: "Gender"},
     getCalendar: {ko: "달력", en: "Calendar"},
     getToday: {ko: "오늘", en: "Today"},
     goToFind: {ko: "더 찾기", en: "Find More"},
@@ -111,9 +114,12 @@ export const useTranslate = () => {
     googleSignup: {ko: "구글 아이디로 회원가입", en: "Signup with Google"},
 
     // h
+    height: {ko: "키", en: "Height"},
+
     // i
     id: {ko: "아이디", en: "ID"},
     in: {ko: "수입", en: "Income"},
+    inOut: {ko: "수입 / 지출", en: "Income / Expense"},
     info: {ko: "정보", en: "Information"},
     isVerified: {ko: "인증되었습니다", en: "Verified"},
     isNotVerified: {ko: "인증 실패", en: "Not Verified"},
@@ -121,6 +127,7 @@ export const useTranslate = () => {
     // j
     // k
     kcal: {ko: "칼로리", en: "Kcal"},
+    kcalNut: {ko: "칼로리 / 영양소", en: "Kcal / Nutrition"},
     kg: {ko: "kg", en: "kg"},
 
     // l
@@ -138,36 +145,40 @@ export const useTranslate = () => {
     // n
     night: {ko: "취침", en: "Bed Time"},
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
+    nutrition: {ko: "영양소", en: "Nutrition"},
 
     // o
     out: {ko: "지출", en: "Expense"},
 
     // p
     part: {ko: "분류1", en: "Part"},
-    plan: {ko: "계획", en: "Plan"},
-    planCardio: {ko: "유산소 목표", en: "Cardio Goals"},
-    planCarb: {ko: "탄수화물 목표", en: "Carb Goals"},
-    planCount: {ko: "횟수 목표", en: "Count Goals"},
-    planFat: {ko: "지방 목표", en: "Fat Goals"},
-    planIn: {ko: "수입 목표", en: "Income Goals"},
-    planKcal: {ko: "칼로리 목표", en: "Kcal Goals"},
-    planList: {ko: "리스트(계획)", en: "List(Plan)"},
-    planMorning: {ko: "기상 목표", en: "Wake-up Time Goals"},
-    planNight: {ko: "취침 목표", en: "Bed Time Goals"},
-    planOut: {ko: "지출 목표", en: "Expense Goals"},
-    planProtein: {ko: "단백질 목획", en: "Protein Goals"},
-    planSave: {ko: "저장(계획)", en: "Save(Plan)"},
-    planTime: {ko: "수면 목표", en: "Sleep Time Goals"},
-    planVolume: {ko: "볼륨 목표", en: "Volume Goals"},
-    planWeight: {ko: "체중 목표", en: "Weight Goals"},
+    partTitle: {ko: "부위 / 운동", en: "Part / Exercise"},
+    goal: {ko: "계획", en: "Goal"},
+    goalCardio: {ko: "유산소 목표", en: "Cardio Goals"},
+    goalCarb: {ko: "탄수화물 목표", en: "Carb Goals"},
+    goalCount: {ko: "횟수 목표", en: "Count Goals"},
+    goalFat: {ko: "지방 목표", en: "Fat Goals"},
+    goalIn: {ko: "수입 목표", en: "Income Goals"},
+    goalKcal: {ko: "칼로리 목표", en: "Kcal Goals"},
+    goalList: {ko: "리스트(계획)", en: "List(Goal)"},
+    goalMorning: {ko: "기상 목표", en: "Wake-up Time Goals"},
+    goalNight: {ko: "취침 목표", en: "Bed Time Goals"},
+    goalOut: {ko: "지출 목표", en: "Expense Goals"},
+    goalProtein: {ko: "단백질 목획", en: "Protein Goals"},
+    goalSave: {ko: "저장(계획)", en: "Save(Goal)"},
+    goalTime: {ko: "수면 목표", en: "Sleep Time Goals"},
+    goalVolume: {ko: "볼륨 목표", en: "Volume Goals"},
+    goalWeight: {ko: "체중 목표", en: "Weight Goals"},
     property: {ko: "자산", en: "Property"},
     protein: {ko: "단백질", en: "Protein"},
     pw: {ko: "비밀번호", en: "PW"},
+    pwConfirm: {ko: "비밀번호 확인", en: "PW Confirm"},
 
     // q
     // r
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
+    ratio: {ko: "비율", en: "Ratio"},
 
     // s
     save: {ko: "저장", en: "Save"},
@@ -182,6 +193,8 @@ export const useTranslate = () => {
     signupDate: {ko: "가입일", en: "Signup Date"},
 
     // t
+    trend: {ko: "추이", en: "Trend"},
+    today: {ko: "오늘", en: "Today"},
     time: {ko: "수면", en: "Sleep Time"},
     title: {ko: "분류2", en: "Title"},
     total: {ko: "총합", en: "total"},
@@ -204,6 +217,7 @@ export const useTranslate = () => {
     viewWeek: {ko: "주별", en: "Week View"},
     viewYear: {ko: "년별", en: "Year View"},
     volume: {ko: "볼륨", en: "Volume"},
+    volumeCardio: {ko: "볼륨 / 유산소", en: "Volume / Cardio"},
 
     // w
     week: {ko: "주별", en: "Week"},

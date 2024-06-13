@@ -217,10 +217,10 @@ export const Filter = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
@@ -240,14 +240,14 @@ export const Filter = ({
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
@@ -278,14 +278,14 @@ export const Filter = ({
       else if (strings?.second === "find" && strings?.third === "save") {
         return null
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
@@ -309,14 +309,14 @@ export const Filter = ({
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {
@@ -340,14 +340,14 @@ export const Filter = ({
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "list") {
+      else if (strings?.second === "goal" && strings?.third === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
           </Card>
         );
       }
-      else if (strings?.second === "plan" && strings?.third === "save") {
+      else if (strings?.second === "goal" && strings?.third === "save") {
         return null
       }
       else if (strings?.third === "" && strings?.second === "list") {

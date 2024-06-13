@@ -22,21 +22,21 @@ export const Time = ({
 
   let image = null;
   let translateStr = "";
-  if (firstStr === "sleep" && secondStr === "plan") {
+  if (firstStr === "sleep" && secondStr === "goal") {
     if (extra.split("_")[2] === "night") {
       image = sleep2;
-      translateStr = "planNight";
+      translateStr = "goalNight";
     }
     else if (extra.split("_")[2] === "morning") {
       image = sleep3;
-      translateStr = "planMorning";
+      translateStr = "goalMorning";
     }
     else if (extra.split("_")[2] === "time") {
       image = sleep4;
-      translateStr = "planTime";
+      translateStr = "goalTime";
     }
   }
-  else if (firstStr === "sleep" && secondStr !== "plan") {
+  else if (firstStr === "sleep" && secondStr !== "goal") {
     if (extra.split("_")[1] === "night") {
       image = sleep2;
       translateStr = "night";
@@ -50,21 +50,21 @@ export const Time = ({
       translateStr = "time";
     }
   }
-  else if (firstStr === "exercise" && secondStr === "plan") {
+  else if (firstStr === "exercise" && secondStr === "goal") {
     if (extra.split("_")[2] === "cardio") {
       image = exercise4;
-      translateStr =  "exercise-planCardio";
+      translateStr =  "goalCardio";
     }
   }
-  else if (firstStr === "exercise" && secondStr !== "plan") {
+  else if (firstStr === "exercise" && secondStr !== "goal") {
     if (extra.split("_")[1] === "cardio") {
       image = exercise4;
-      translateStr =  "exercise-cardio";
+      translateStr =  "cardio";
     }
   }
 
-  // 2. planNode ---------------------------------------------------------------------------------->
-  const planNode = () => (
+  // 2. goalNode ---------------------------------------------------------------------------------->
+  const goalNode = () => (
     <PopUp
       key={`${i}`}
       type={"innerCenter"}
@@ -171,7 +171,7 @@ export const Time = ({
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <>
-      {secondStr === "plan" ? planNode() : realNode()}
+      {secondStr === "goal" ? goalNode() : realNode()}
     </>
   );
 };

@@ -48,7 +48,7 @@ export const send = async (
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (
-  user_id_param, user_pw_param
+  user_id_param, OBJECT_param
 ) => {
 
   const findResult = await repository.signup.checkId(
@@ -58,7 +58,7 @@ export const signup = async (
   let finalResult = null;
   if (findResult.length === 0) {
     finalResult = await repository.signup.signup(
-      user_id_param, user_pw_param
+      user_id_param, OBJECT_param
     );
   }
   else {

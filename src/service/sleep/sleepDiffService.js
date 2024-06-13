@@ -18,13 +18,13 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-  const listPlan = await repository.list.listPlan(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  const finalResult = await Promise.all(listPlan.map(async (plan) => {
-    const dateStart = plan?.sleep_plan_dateStart;
-    const dateEnd = plan?.sleep_plan_dateEnd;
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.sleep_goal_dateStart;
+    const dateEnd = goal?.sleep_goal_dateEnd;
 
     const listReal = await repository.list.list (
       user_id_param, dateType, dateStart, dateEnd
@@ -41,7 +41,7 @@ export const list = async (
     ), 0);
 
     return {
-      ...plan,
+      ...goal,
       sleep_night: decimalToStr(sleepNight),
       sleep_morning: decimalToStr(sleepMorning),
       sleep_time: decimalToStr(sleepTime)

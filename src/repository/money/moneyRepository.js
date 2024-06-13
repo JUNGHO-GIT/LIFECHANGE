@@ -1,4 +1,4 @@
-// moneyPlanRepository.js
+// moneyGoalRepository.js
 
 import mongoose from "mongoose";
 import {Money} from "../../schema/money/Money.js";

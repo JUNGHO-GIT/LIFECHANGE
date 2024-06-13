@@ -19,6 +19,7 @@ export const MoneyDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["수입", "지출"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -229,7 +230,9 @@ export const MoneyDashLine = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>수입/지출 추이</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("inOut")} ${translate("trend")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -244,8 +247,8 @@ export const MoneyDashLine = () => {
             setSECTION(e.target.value)
           )}
         >
-          <MenuItem value={"week"}>주간</MenuItem>
-          <MenuItem value={"month"}>월간</MenuItem>
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
         </TextField>
       </Div>
     );

@@ -14,23 +14,23 @@ import {router as calendarRouter} from "./src/router/calendar/calendarRouter.js"
 import {router as exerciseDashRouter} from "./src/router/exercise/exerciseDashRouter.js";
 import {router as exerciseDiffRouter} from "./src/router/exercise/exerciseDiffRouter.js";
 import {router as exerciseRouter} from "./src/router/exercise/exerciseRouter.js";
-import {router as exercisePlanRouter} from "./src/router/exercise/exercisePlanRouter.js";
+import {router as exerciseGoalRouter} from "./src/router/exercise/exerciseGoalRouter.js";
 
 import {router as foodDashRouter} from "./src/router/food/foodDashRouter.js";
 import {router as foodDiffRouter} from "./src/router/food/foodDiffRouter.js";
 import {router as foodFindRouter} from "./src/router/food/foodFindRouter.js";
 import {router as foodRouter} from "./src/router/food/foodRouter.js";
-import {router as foodPlanRouter} from "./src/router/food/foodPlanRouter.js";
+import {router as foodGoalRouter} from "./src/router/food/foodGoalRouter.js";
 
 import {router as moneyDashRouter} from "./src/router/money/moneyDashRouter.js";
 import {router as moneyDiffRouter} from "./src/router/money/moneyDiffRouter.js";
 import {router as moneyRouter} from "./src/router/money/moneyRouter.js";
-import {router as moneyPlanRouter} from "./src/router/money/moneyPlanRouter.js";
+import {router as moneyGoalRouter} from "./src/router/money/moneyGoalRouter.js";
 
 import {router as sleepDashRouter} from "./src/router/sleep/sleepDashRouter.js";
 import {router as sleepDiffRouter} from "./src/router/sleep/sleepDiffRouter.js";
 import {router as sleepRouter} from "./src/router/sleep/sleepRouter.js";
-import {router as sleepPlanRouter} from "./src/router/sleep/sleepPlanRouter.js";
+import {router as sleepGoalRouter} from "./src/router/sleep/sleepGoalRouter.js";
 
 import {router as userPercentRouter} from "./src/router/user/userPercentRouter.js";
 import {router as userDataRouter} from "./src/router/user/userDataRouter.js";
@@ -100,23 +100,23 @@ app.use("/calendar", calendarRouter);
 
 app.use("/exercise/dash", exerciseDashRouter);
 app.use("/exercise/diff", exerciseDiffRouter);
-app.use("/exercise/plan", exercisePlanRouter);
+app.use("/exercise/goal", exerciseGoalRouter);
 app.use("/exercise", exerciseRouter);
 
 app.use("/food/dash", foodDashRouter);
 app.use("/food/diff", foodDiffRouter);
 app.use("/food/find", foodFindRouter);
-app.use("/food/plan", foodPlanRouter);
+app.use("/food/goal", foodGoalRouter);
 app.use("/food", foodRouter);
 
 app.use("/money/dash", moneyDashRouter);
 app.use("/money/diff", moneyDiffRouter);
-app.use("/money/plan", moneyPlanRouter);
+app.use("/money/goal", moneyGoalRouter);
 app.use("/money", moneyRouter);
 
 app.use("/sleep/dash", sleepDashRouter);
 app.use("/sleep/diff", sleepDiffRouter);
-app.use("/sleep/plan", sleepPlanRouter);
+app.use("/sleep/goal", sleepGoalRouter);
 app.use("/sleep", sleepRouter);
 
 app.use("/user/percent", userPercentRouter);

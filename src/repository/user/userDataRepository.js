@@ -1,10 +1,10 @@
 // userRepository.js
 
 import {newDate} from "../../assets/js/date.js";
-import {ExercisePlan} from "../../schema/exercise/ExercisePlan.js";
-import {FoodPlan} from "../../schema/food/FoodPlan.js";
-import {MoneyPlan} from "../../schema/money/MoneyPlan.js";
-import {SleepPlan} from "../../schema/sleep/SleepPlan.js";
+import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
+import {FoodGoal} from "../../schema/food/FoodGoal.js";
+import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
+import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {Food} from "../../schema/food/Food.js";
 import {Money} from "../../schema/money/Money.js";
@@ -38,23 +38,23 @@ export const category = {
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = {
 
-  // 1. exercisePlan
-  countExercisePlan: async (
+  // 1. exerciseGoal
+  countExerciseGoal: async (
     user_id_param
   ) => {
-    const finalResult = await ExercisePlan.countDocuments({
+    const finalResult = await ExerciseGoal.countDocuments({
       user_id: user_id_param
     });
     return finalResult;
   },
-  listExercisePlan: async (
+  listExerciseGoal: async (
     user_id_param, page_param,
   ) => {
-    const finalResult = await ExercisePlan.aggregate([
+    const finalResult = await ExerciseGoal.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {exercise_plan_dateStart: 1}},
+      {$sort: {exercise_goal_dateStart: 1}},
       {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
@@ -82,23 +82,23 @@ export const list = {
     return finalResult;
   },
 
-  // 3. foodPlan
-  countFoodPlan: async (
+  // 3. foodGoal
+  countFoodGoal: async (
     user_id_param
   ) => {
-    const finalResult = await FoodPlan.countDocuments({
+    const finalResult = await FoodGoal.countDocuments({
       user_id: user_id_param
     });
     return finalResult;
   },
-  listFoodPlan: async (
+  listFoodGoal: async (
     user_id_param, page_param,
   ) => {
-    const finalResult = await FoodPlan.aggregate([
+    const finalResult = await FoodGoal.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {food_plan_dateStart: 1}},
+      {$sort: {food_goal_dateStart: 1}},
       {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
@@ -126,23 +126,23 @@ export const list = {
     return finalResult;
   },
 
-  // 5. moneyPlan
-  countMoneyPlan: async (
+  // 5. moneyGoal
+  countMoneyGoal: async (
     user_id_param
   ) => {
-    const finalResult = await MoneyPlan.countDocuments({
+    const finalResult = await MoneyGoal.countDocuments({
       user_id: user_id_param
     });
     return finalResult;
   },
-  listMoneyPlan: async (
+  listMoneyGoal: async (
     user_id_param, page_param,
   ) => {
-    const finalResult = await MoneyPlan.aggregate([
+    const finalResult = await MoneyGoal.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {money_plan_dateStart: 1}},
+      {$sort: {money_goal_dateStart: 1}},
       {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
@@ -170,23 +170,23 @@ export const list = {
     return finalResult;
   },
 
-  // 7. sleepPlan
-  countSleepPlan: async (
+  // 7. sleepGoal
+  countSleepGoal: async (
     user_id_param
   ) => {
-    const finalResult = await SleepPlan.countDocuments({
+    const finalResult = await SleepGoal.countDocuments({
       user_id: user_id_param
     });
     return finalResult;
   },
-  listSleepPlan: async (
+  listSleepGoal: async (
     user_id_param, page_param,
   ) => {
-    const finalResult = await SleepPlan.aggregate([
+    const finalResult = await SleepGoal.aggregate([
       {$match: {
         user_id: user_id_param,
       }},
-      {$sort: {sleep_plan_dateStart: 1}},
+      {$sort: {sleep_goal_dateStart: 1}},
       {$skip: (Number(page_param) - 1)}
     ]);
     return finalResult;
@@ -250,17 +250,17 @@ export const save = {
     return insertResult;
   },
 
-  saveExercisePlan: async (
+  saveExerciseGoal: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
-    const deleteResult = await ExercisePlan.deleteMany({
+    const deleteResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
-      exercise_plan_demo: true
+      exercise_goal_demo: true
     });
 
     // 데이터 삽입
-    const insertResult = await ExercisePlan.insertMany(OBJECT_param);
+    const insertResult = await ExerciseGoal.insertMany(OBJECT_param);
 
     // 로그
     console.log('Deleted documents : ' + deleteResult.deletedCount);
@@ -288,17 +288,17 @@ export const save = {
     return insertResult;
   },
 
-  saveFoodPlan: async (
+  saveFoodGoal: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
-    const deleteResult = await FoodPlan.deleteMany({
+    const deleteResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
-      food_plan_demo: true
+      food_goal_demo: true
     });
 
     // 데이터 삽입
-    const insertResult = await FoodPlan.insertMany(OBJECT_param);
+    const insertResult = await FoodGoal.insertMany(OBJECT_param);
 
     // 로그
     console.log('Deleted documents : ' + deleteResult.deletedCount);
@@ -326,17 +326,17 @@ export const save = {
     return insertResult;
   },
 
-  saveMoneyPlan: async (
+  saveMoneyGoal: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
-    const deleteResult = await MoneyPlan.deleteMany({
+    const deleteResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
-      money_plan_demo: true
+      money_goal_demo: true
     });
 
     // 데이터 삽입
-    const insertResult = await MoneyPlan.insertMany(OBJECT_param);
+    const insertResult = await MoneyGoal.insertMany(OBJECT_param);
 
     // 로그
     console.log('Deleted documents : ' + deleteResult.deletedCount);
@@ -364,17 +364,17 @@ export const save = {
     return insertResult;
   },
 
-  saveSleepPlan: async (
+  saveSleepGoal: async (
     user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
-    const deleteResult = await SleepPlan.deleteMany({
+    const deleteResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
-      sleep_plan_demo: true
+      sleep_goal_demo: true
     });
 
     // 데이터 삽입
-    const insertResult = await SleepPlan.insertMany(OBJECT_param);
+    const insertResult = await SleepGoal.insertMany(OBJECT_param);
 
     // 로그
     console.log('Deleted documents : ' + deleteResult.deletedCount);

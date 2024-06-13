@@ -17,9 +17,9 @@ export const dataArray = [
       {to: "/exercise/dash", label: "ExerciseDash"},
       {to: "/exercise/diff", label: "ExerciseDiff"},
       {to: "/exercise/list", label: "ExerciseList"},
-      {to: "/exercise/plan/list", label: "ExercisePlanList"},
+      {to: "/exercise/goal/list", label: "ExerciseGoalList"},
       {to: "/exercise/save", label: "ExerciseSave"},
-      {to: "/exercise/plan/save", label: "ExercisePlanSave"},
+      {to: "/exercise/goal/save", label: "ExerciseGoalSave"},
     ]
   },
   // food
@@ -31,9 +31,9 @@ export const dataArray = [
       {to: "/food/diff", label: "FoodDiff"},
       {to: "/food/find", label: "FoodFindList"},
       {to: "/food/list", label: "FoodList"},
-      {to: "/food/plan/list", label: "FoodPlanList"},
+      {to: "/food/goal/list", label: "FoodGoalList"},
       {to: "/food/save", label: "FoodSave"},
-      {to: "/food/plan/save", label: "FoodPlanSave"},
+      {to: "/food/goal/save", label: "FoodGoalSave"},
     ]
   },
   // money
@@ -44,9 +44,9 @@ export const dataArray = [
       {to: "/money/dash", label: "MoneyDash"},
       {to: "/money/diff", label: "MoneyDiff"},
       {to: "/money/list", label: "MoneyList"},
-      {to: "/money/plan/list", label: "MoneyPlanList"},
+      {to: "/money/goal/list", label: "MoneyGoalList"},
       {to: "/money/save", label: "MoneySave"},
-      {to: "/money/plan/save", label: "MoneyPlanSave"},
+      {to: "/money/goal/save", label: "MoneyGoalSave"},
     ]
   },
   // sleep
@@ -57,9 +57,9 @@ export const dataArray = [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/diff", label: "SleepDiff"},
       {to: "/sleep/list", label: "SleepList"},
-      {to: "/sleep/plan/list", label: "SleepPlanList"},
+      {to: "/sleep/goal/list", label: "SleepGoalList"},
       {to: "/sleep/save", label: "SleepSave"},
-      {to: "/sleep/plan/save", label: "SleepPlanSave"},
+      {to: "/sleep/goal/save", label: "SleepGoalSave"},
     ]
   },
   // user

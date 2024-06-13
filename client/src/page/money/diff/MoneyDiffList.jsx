@@ -44,7 +44,7 @@ export const MoneyDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave: "/money/plan/save",
+    toSave: "/money/goal/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -59,12 +59,12 @@ export const MoneyDiff = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    money_plan_number: 0,
-    money_plan_demo: false,
-    money_plan_dateStart: "0000-00-00",
-    money_plan_dateEnd: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0,
+    money_goal_number: 0,
+    money_goal_demo: false,
+    money_goal_dateStart: "0000-00-00",
+    money_goal_dateEnd: "0000-00-00",
+    money_goal_in: 0,
+    money_goal_out: 0,
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_in: 0,
@@ -122,15 +122,15 @@ export const MoneyDiff = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={5}>
-                    {item.money_plan_dateStart === item.money_plan_dateEnd ? (
+                    {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
                       </Div>
                     ) : (
                       <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.money_plan_dateStart?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
-                        <Div>{item.money_plan_dateEnd?.substring(5, 10)}</Div>
+                        <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
                   </TableCell>
@@ -150,12 +150,12 @@ export const MoneyDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_plan_in).format('0,0')}
+                      {numeral(item.money_goal_in).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -190,12 +190,12 @@ export const MoneyDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell>
                     <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("plan")}
+                      {translate("goal")}
                     </Div>
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_plan_out).format('0,0')}
+                      {numeral(item.money_goal_out).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>

@@ -19,6 +19,7 @@ export const FoodDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
+  const {translate} = useTranslate();
   const array = ["목표", "실제"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -199,7 +200,9 @@ export const FoodDashBar = () => {
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
-      <Div className={"d-center"}>칼로리/영양소 목표</Div>
+      <Div className={"d-center fs-0-9rem"}>
+        {`${translate("kcalNut")} ${translate("goal")}`}
+      </Div>
     );
     // 7-4. delete
     const deleteSection1 = () => (
@@ -214,7 +217,7 @@ export const FoodDashBar = () => {
           setSECTION(e.target.value)
         )}
       >
-        <MenuItem value={"today"}>오늘</MenuItem>
+        <MenuItem value={"today"}>{translate("today")}</MenuItem>
       </TextField>
       </Div>
     );

@@ -16,9 +16,9 @@ export const useTime = (
   useEffect(() => {
 
     // 1-1. exercise
-    if (type === "plan" && strLow === "exercise") {
-      const startTime = OBJECT?.exercise_plan_dateStart;
-      const endTime = OBJECT?.exercise_plan_dateEnd;
+    if (type === "goal" && strLow === "exercise") {
+      const startTime = OBJECT?.exercise_goal_dateStart;
+      const endTime = OBJECT?.exercise_goal_dateEnd;
 
       if (startTime && endTime) {
         const startDate = new Date(`${startTime}T00:00`);
@@ -30,15 +30,15 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          exercise_plan_time: time,
+          exercise_goal_time: time,
         }));
       }
     }
 
     // 4-1. sleep
-    if (type === "plan" && strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_plan_night;
-      const morningTime = OBJECT?.sleep_plan_morning;
+    if (type === "goal" && strLow === "sleep") {
+      const nightTime = OBJECT?.sleep_goal_night;
+      const morningTime = OBJECT?.sleep_goal_morning;
 
       if (nightTime && morningTime) {
         const startDate = new Date(`${koreanDate}T${nightTime}`);
@@ -55,7 +55,7 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          sleep_plan_time: time,
+          sleep_goal_time: time,
         }));
       }
     }
@@ -90,10 +90,10 @@ export const useTime = (
 
   }, [
     strLow,
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_dateStart : "",
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_dateEnd : "",
-    type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
-    type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
+    type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateStart : "",
+    type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateEnd : "",
+    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_night : "",
+    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_morning : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
   ]);
