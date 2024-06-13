@@ -115,6 +115,8 @@ export const useTranslate = () => {
     id: {ko: "아이디", en: "ID"},
     in: {ko: "수입", en: "Income"},
     info: {ko: "정보", en: "Information"},
+    isVerified: {ko: "인증되었습니다", en: "Verified"},
+    isNotVerified: {ko: "인증 실패", en: "Not Verified"},
 
     // j
     // k
@@ -222,7 +224,7 @@ export const useTranslate = () => {
     return (
       (
         key.indexOf("calendar") === -1 &&
-        key.indexOf("end") !== -1
+        key.startsWith("end")
       ) ? (
         <div className={"fs-0-6rem"}>
           {result[lang]}

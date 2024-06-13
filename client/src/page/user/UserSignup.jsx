@@ -25,19 +25,20 @@ export const UserSignup = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
-  const [verified, setVerified] = useState(false);
+  const [serverCode, setServerCode] = useState("");
+  const [clientCode, setClientCode] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowVerify = async () => {
-    const res = await axios.post (`${URL_OBJECT}/verify`, {
+  const flowSend = async () => {
+    const res = await axios.post (`${URL_OBJECT}/send`, {
       user_id: userId,
     });
     if (res.data.status === "success") {
       alert(res.data.msg);
+      setServerCode(res.data.result.code);
     }
     else {
       alert(res.data.msg);
-      navigate(0);
     }
   };
 
@@ -67,22 +68,45 @@ export const UserSignup = () => {
     }
   };
 
+  // 4. handler ----------------------------------------------------------------------------------->
+  const handlerCheck = () => {
+    if (clientCode === serverCode) {
+      alert(translate("isVerified"));
+    }
+    else {
+      alert(translate("isNotVerified"));
+    }
+  };
+
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={`${translate("id")} (email)`}
-          value={userId}
-          className={"w-86vw"}
-          onChange={(e) => (
-            setUserId(e.target.value)
-          )}
-        />
+        <Div className={"d-center w-86vw"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={`${translate("id")} (email)`}
+            value={userId}
+            className={"w-66vw me-10"}
+            onChange={(e) => (
+              setUserId(e.target.value)
+            )}
+          />
+          <Button
+            size={"small"}
+            color={"primary"}
+            className={"w-20vw"}
+            variant={"contained"}
+            onClick={() => {
+              flowSend();
+            }}
+          >
+            {translate("send")}
+          </Button>
+        </Div>
         <Br10 />
         <Div className={"d-center w-86vw"}>
           <TextField
@@ -90,19 +114,22 @@ export const UserSignup = () => {
             type={"text"}
             size={"small"}
             label={translate("verified")}
-            value={verified}
-            className={"w-66vw"}
+            value={clientCode}
+            className={"w-66vw me-10"}
+            onChange={(e) => (
+              setClientCode(e.target.value)
+            )}
           />
           <Button
             size={"small"}
             color={"primary"}
-            className={"w-20vw fs-0-8rem"}
+            className={"w-20vw"}
             variant={"contained"}
             onClick={() => {
-              flowVerify();
+              handlerCheck();
             }}
           >
-            {translate("send")}
+            {translate("verified")}
           </Button>
         </Div>
         <Br10 />

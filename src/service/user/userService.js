@@ -4,7 +4,7 @@ import * as repository from "../../repository/user/userRepository.js";
 import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
-import {email} from "../../assets/js/email.js";
+import {sendEmail} from "../../assets/js/email.js";
 import crypto from 'crypto';
 
 // 0-0. info -------------------------------------------------------------------------------------->
@@ -26,28 +26,22 @@ export const info = async (
   return finalResult;
 };
 
-// 0-0. verify ------------------------------------------------------------------------------------>
-export const verify = async (
+// 0-0. send -------------------------------------------------------------------------------------->
+export const send = async (
   user_id_param
 ) => {
 
-  // 토큰 1시간 설정
-  const token = crypto.randomBytes(20).toString('hex');
-  const expire = Date.now() + 3600000;
+  // 임의의 코드 생성
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
 
-  const finalResult = await repository.verify.verify(
-    user_id_param, token
+  const findResult = await sendEmail(
+    user_id_param, code
   );
 
-  if (!finalResult) {
-    return null;
-  }
-
-  await email(
-    user_id_param,
-    "이메일 인증",
-    "http://localhost:3000/user/verify?user_id=" + user_id_param + "&token=" + token
-  );
+  const finalResult = {
+    code: code,
+    result: findResult
+  };
 
   return finalResult;
 };
