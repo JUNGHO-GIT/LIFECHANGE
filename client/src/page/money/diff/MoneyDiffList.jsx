@@ -63,12 +63,12 @@ export const MoneyDiff = () => {
     money_goal_demo: false,
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_in: 0,
-    money_goal_out: 0,
+    money_goal_income: 0,
+    money_goal_expense: 0,
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
+    money_total_income: 0,
+    money_total_expense: 0,
     money_diff_in: 0,
     money_diff_out: 0,
     money_diff_in_color: "",
@@ -143,7 +143,7 @@ export const MoneyDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("in")}
+                      {translate("income")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -155,7 +155,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_goal_in).format('0,0')}
+                      {numeral(item.money_goal_income).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -165,7 +165,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_total_in).format('0,0')}
+                      {numeral(item.money_total_income).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -183,7 +183,7 @@ export const MoneyDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("out")}
+                      {translate("expense")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -195,7 +195,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_goal_out).format('0,0')}
+                      {numeral(item.money_goal_expense).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -205,7 +205,7 @@ export const MoneyDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.money_total_out).format('0,0')}
+                      {numeral(item.money_total_expense).format('0,0')}
                     </Div>
                   </TableCell>
                   <TableCell>

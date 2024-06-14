@@ -4,11 +4,13 @@ import mongodb from 'mongodb';
 import moment from 'moment-timezone';
 import * as repository from "../../repository/user/userDataRepository.js";
 import {randomNumber, randomTime, calcDate} from '../../assets/js/utils.js';
+import {calendarArray} from '../../assets/array/calendarArray.js';
 import {exerciseArray} from '../../assets/array/exerciseArray.js';
 import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
+import {sleepArray} from '../../assets/array/sleepArray.js';
 
-// 1-1. category ------------------------------------------------------------------------------------>
+// 1-1. category ---------------------------------------------------------------------------------->
 export const category = async (
   user_id_param
 ) => {
@@ -17,7 +19,18 @@ export const category = async (
     user_id_param
   );
 
-  return findResult;
+  const defaultResult = {
+    calendar: calendarArray,
+    exercise: exerciseArray,
+    food: foodArray,
+    money: moneyArray,
+    sleep: sleepArray,
+  };
+
+  return {
+    dataCategory: findResult.dataCategory,
+    defaultCategory: defaultResult,
+  };
 };
 
 // 1-2. list -------------------------------------------------------------------------------------->
@@ -308,8 +321,8 @@ export const save = async (
         money_goal_dateType: "day",
         money_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_goal_in: randomNumber(10000),
-        money_goal_out: randomNumber(10000),
+        money_goal_income: randomNumber(10000),
+        money_goal_expense: randomNumber(10000),
         money_goal_regDt: Date.now(),
         money_goal_updateDt: Date.now(),
       };
@@ -339,11 +352,11 @@ export const save = async (
       });
 
       const totalIn = sections
-        .filter((section) => (section.money_part_val === "수입"))
+        .filter((section) => (section.money_part_val === "income"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
       const totalOut = sections
-        .filter((section) => (section.money_part_val === "지출"))
+        .filter((section) => (section.money_part_val === "expense"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
       return {
@@ -354,8 +367,8 @@ export const save = async (
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_total_in: totalIn,
-        money_total_out: totalOut,
+        money_total_income: totalIn,
+        money_total_expense: totalOut,
         money_section: sections,
         money_regDt: Date.now(),
         money_updateDt: Date.now(),
@@ -378,9 +391,9 @@ export const save = async (
         sleep_goal_dateType: "day",
         sleep_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        sleep_goal_night: randomTime(),
-        sleep_goal_morning: randomTime(),
-        sleep_goal_time: calcDate(randomTime(), randomTime()),
+        sleep_goal_bedTime: randomTime(),
+        sleep_goal_wakeTime: randomTime(),
+        sleep_goal_sleepTime: calcDate(randomTime(), randomTime()),
         sleep_goal_regDt: Date.now(),
         sleep_goal_updateDt: Date.now(),
       };
@@ -397,9 +410,9 @@ export const save = async (
       const sections = Array.from({length: 1}, () => {
         return {
           _id: new mongodb.ObjectId(),
-          sleep_night: randomTime(),
-          sleep_morning: randomTime(),
-          sleep_time: calcDate(randomTime(), randomTime()),
+          sleep_bedTime: randomTime(),
+          sleep_wakeTime: randomTime(),
+          sleep_sleepTime: calcDate(randomTime(), randomTime()),
         };
       });
       return {

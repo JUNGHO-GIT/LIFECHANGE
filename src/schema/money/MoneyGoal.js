@@ -37,12 +37,12 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  money_goal_in: {
+  money_goal_income: {
     type: Number,
     default: 0,
     required: false
   },
-  money_goal_out: {
+  money_goal_expense: {
     type: Number,
     default: 0,
     required: false

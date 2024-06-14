@@ -20,7 +20,7 @@ export const MoneyDashLine = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["수입", "지출"];
+  const array = ["income", "expense"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -34,10 +34,10 @@ export const MoneyDashLine = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEF = [
-    {name:"", day: "", 수입: 0, 지출: 0},
+    {name:"", day: "", income: 0, expense: 0},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", 수입: 0, 지출: 0},
+    {name:"", day: "", income: 0, expense: 0},
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
@@ -98,13 +98,13 @@ export const MoneyDashLine = () => {
             tick={{fill:"#666", fontSize:12}}
             width={30}
           />
-          {LINE.includes("수입") && (
-            <Line dataKey={"수입"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+          {LINE.includes("income") && (
+            <Line dataKey={"income"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
-          {LINE.includes("지출") && (
-            <Line dataKey={"지출"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+          {LINE.includes("expense") && (
+            <Line dataKey={"expense"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
@@ -179,13 +179,13 @@ export const MoneyDashLine = () => {
             tick={{fill:"#666", fontSize:12}}
             width={30}
           />
-          {LINE.includes("수입") && (
-            <Line dataKey={"수입"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+          {LINE.includes("income") && (
+            <Line dataKey={"income"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
-          {LINE.includes("지출") && (
-            <Line dataKey={"지출"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+          {LINE.includes("expense") && (
+            <Line dataKey={"expense"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
@@ -231,7 +231,7 @@ export const MoneyDashLine = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("inOut")} ${translate("trend")}`}
+        {translate("dashLine")}
       </Div>
     );
     // 7-4. delete
@@ -259,7 +259,7 @@ export const MoneyDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["수입", "지출"].map((key, index) => (
+        ["income", "expense"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel
               control={<Switch checked={LINE.includes(key)}
@@ -316,7 +316,7 @@ export const MoneyDashLine = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

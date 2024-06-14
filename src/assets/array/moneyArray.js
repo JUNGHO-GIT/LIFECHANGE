@@ -2,21 +2,21 @@
 export const moneyArray = [
   // 0
   {
-    money_part: "전체",
+    money_part: "all",
     money_title: [
-      "전체"
+      "all"
     ]
   },
   {
-    money_part: "수입",
+    money_part: "income",
     money_title: [
-      "전체", "근로", "금융", "기타",
+      "all", "labor", "finance", "others",
     ]
   },
   {
-    money_part: "지출",
+    money_part: "expense",
     money_title: [
-      "전체", "식비", "문화", "주거", "건강", "교통", "유흥", "품위", "저축", "금융", "기타",
+      "all", "food", "culture", "housing", "health", "transportation", "entertainment", "dignity", "savings", "finance", "others",
     ]
   }
 ];

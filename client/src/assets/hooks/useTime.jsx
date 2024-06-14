@@ -37,12 +37,12 @@ export const useTime = (
 
     // 4-1. sleep
     if (type === "goal" && strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_goal_night;
-      const morningTime = OBJECT?.sleep_goal_morning;
+      const bedTimeTime = OBJECT?.sleep_goal_bedTime;
+      const wakeTimeTime = OBJECT?.sleep_goal_wakeTime;
 
-      if (nightTime && morningTime) {
-        const startDate = new Date(`${koreanDate}T${nightTime}`);
-        const endDate = new Date(`${koreanDate}T${morningTime}`);
+      if (bedTimeTime && wakeTimeTime) {
+        const startDate = new Date(`${koreanDate}T${bedTimeTime}`);
+        const endDate = new Date(`${koreanDate}T${wakeTimeTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -55,19 +55,19 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          sleep_goal_time: time,
+          sleep_goal_sleepTime: time,
         }));
       }
     }
 
     // 4-2. sleep
     if (type === "real" && strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_section[0]?.sleep_night;
-      const morningTime = OBJECT?.sleep_section[0]?.sleep_morning;
+      const bedTimeTime = OBJECT?.sleep_section[0]?.sleep_bedTime;
+      const wakeTimeTime = OBJECT?.sleep_section[0]?.sleep_wakeTime;
 
-      if (nightTime && morningTime) {
-        const startDate = new Date(`${koreanDate}T${nightTime}Z`);
-        const endDate = new Date(`${koreanDate}T${morningTime}Z`);
+      if (bedTimeTime && wakeTimeTime) {
+        const startDate = new Date(`${koreanDate}T${bedTimeTime}Z`);
+        const endDate = new Date(`${koreanDate}T${wakeTimeTime}Z`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -82,7 +82,7 @@ export const useTime = (
           ...prev,
           sleep_section: [{
             ...prev.sleep_section[0],
-            sleep_time: time,
+            sleep_sleepTime: time,
           }],
         }));
       }
@@ -92,9 +92,9 @@ export const useTime = (
     strLow,
     type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateStart : "",
     type === "goal" && strLow === "exercise" ? OBJECT?.exercise_goal_dateEnd : "",
-    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_night : "",
-    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_morning : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
+    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_bedTime : "",
+    type === "goal" && strLow === "sleep" ? OBJECT?.sleep_goal_wakeTime : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_bedTime : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_wakeTime : "",
   ]);
 };

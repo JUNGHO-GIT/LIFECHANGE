@@ -137,7 +137,7 @@ export const percent = async (object) => {
     let percent = 0;
     let score = 0;
 
-    if (extra === "in") {
+    if (extra === "income") {
       percent = (Math.abs(goal - real) / goal) * 100;
       if (goal > real) {
         if (percent > 0 && percent <= 1) {
@@ -242,7 +242,7 @@ export const percent = async (object) => {
     let score = 0;
     let percent = 0;
 
-    if (extra === "night" || extra === "morning") {
+    if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
       let diffVal = 0;
@@ -426,14 +426,14 @@ export const percent = async (object) => {
   else {
     money = {
       diff_in: diffMoney(
-        object?.moneyGoal?.money_goal_in,
-        object?.money?.money_total_in,
-        "in"
+        object?.moneyGoal?.money_goal_income,
+        object?.money?.money_total_income,
+        "income"
       ),
       diff_out: diffMoney(
-        object?.moneyGoal?.money_goal_out,
-        object?.money?.money_total_out,
-        "out"
+        object?.moneyGoal?.money_goal_expense,
+        object?.money?.money_total_expense,
+        "expense"
       ),
     };
   }
@@ -442,11 +442,11 @@ export const percent = async (object) => {
   let sleep = {};
   if (!object?.sleepGoal || !object?.sleep) {
     sleep = {
-      diff_night: {
+      diff_bedTime: {
         score: "1.00",
         percent: "0.00",
       },
-      diff_morning: {
+      diff_wakeTime: {
         score: "1.00",
         percent: "0.00",
       },
@@ -458,19 +458,19 @@ export const percent = async (object) => {
   }
   else {
     sleep = {
-      diff_night: diffSleep(
-        object?.sleepGoal?.sleep_goal_night,
-        object?.sleep?.sleep_night,
-        "night"
+      diff_bedTime: diffSleep(
+        object?.sleepGoal?.sleep_goal_bedTime,
+        object?.sleep?.sleep_bedTime,
+        "bedTime"
       ),
-      diff_morning: diffSleep(
-        object?.sleepGoal?.sleep_goal_morning,
-        object?.sleep?.sleep_morning,
-        "morning"
+      diff_wakeTime: diffSleep(
+        object?.sleepGoal?.sleep_goal_wakeTime,
+        object?.sleep?.sleep_wakeTime,
+        "wakeTime"
       ),
       diff_time: diffSleep(
-        object?.sleepGoal?.sleep_goal_time,
-        object?.sleep?.sleep_time,
+        object?.sleepGoal?.sleep_goal_sleepTime,
+        object?.sleep?.sleep_sleepTime,
         "time"
       ),
     };

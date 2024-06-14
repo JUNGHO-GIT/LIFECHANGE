@@ -20,7 +20,7 @@ export const MoneyDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["수입", "지출"];
+  const array = ["income", "expense"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -34,10 +34,10 @@ export const MoneyDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", 수입: 0, 지출: 0},
+    {name:"", day: "", income: 0, expense: 0},
   ];
   const OBJECT_YEAR_DEF = [
-    {name:"", day: "", 수입: 0, 지출: 0},
+    {name:"", day: "", income: 0, expense: 0},
   ];
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
   const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
@@ -89,11 +89,11 @@ export const MoneyDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {LINE.includes("수입") && (
-            <Bar dataKey={"수입"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          {LINE.includes("income") && (
+            <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
-          {LINE.includes("지출") && (
-            <Bar dataKey={"지출"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          {LINE.includes("expense") && (
+            <Bar dataKey={"expense"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -157,11 +157,11 @@ export const MoneyDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {LINE.includes("수입") && (
-            <Bar dataKey={"수입"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          {LINE.includes("income") && (
+            <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
-          {LINE.includes("지출") && (
-            <Bar dataKey={"지출"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          {LINE.includes("expense") && (
+            <Bar dataKey={"expense"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -205,7 +205,7 @@ export const MoneyDashAvg = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("inOut")} ${translate("avg")}`}
+        {translate("dashAvg")}
       </Div>
     );
     // 7-4. delete
@@ -233,7 +233,7 @@ export const MoneyDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["수입", "지출"].map((key, index) => (
+        ["income", "expense"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
                 if (LINE.includes(key)) {
@@ -284,7 +284,7 @@ export const MoneyDashAvg = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

@@ -23,9 +23,9 @@ export const barToday = {
       {$project: {
         sleep_goal_dateStart: 1,
         sleep_goal_dateEnd: 1,
-        sleep_goal_night: 1,
-        sleep_goal_morning: 1,
-        sleep_goal_time: 1,
+        sleep_goal_bedTime: 1,
+        sleep_goal_wakeTime: 1,
+        sleep_goal_sleepTime: 1,
       }},
       {$sort: {sleep_goal_dateStart: 1}}
     ])

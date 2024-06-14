@@ -62,8 +62,8 @@ export const MoneyGoalList = () => {
     money_goal_demo: false,
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_in: 0,
-    money_goal_out: 0
+    money_goal_income: 0,
+    money_goal_expense: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -147,7 +147,7 @@ export const MoneyGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("in")}
+                      {translate("income")}
                       <Div className={"fs-0-8rem dark fw-normal ms-5"}>
                         {translate("goal")}
                       </Div>
@@ -160,7 +160,7 @@ export const MoneyGoalList = () => {
                       <Div className={"fs-0-7rem dark fw-normal me-8"}>
                         ₩
                       </Div>
-                      {numeral(item.money_goal_in).format("0,0")}
+                      {numeral(item.money_goal_income).format("0,0")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -168,7 +168,7 @@ export const MoneyGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={money2} className={"w-15 h-15"} />
-                      {translate("out")}
+                      {translate("expense")}
                       <Div className={"fs-0-8rem dark fw-normal ms-5"}>
                         {translate("goal")}
                       </Div>

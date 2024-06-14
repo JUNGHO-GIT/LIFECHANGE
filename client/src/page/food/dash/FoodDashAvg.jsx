@@ -339,7 +339,7 @@ export const FoodDashAvg = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("kcalNut")} ${translate("avg")}`}
+        {translate("dashAvg")}
       </Div>
     );
     // 7-4. delete

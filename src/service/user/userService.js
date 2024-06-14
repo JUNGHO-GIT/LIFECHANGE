@@ -5,7 +5,11 @@ import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
 import {sendEmail} from "../../assets/js/email.js";
-import crypto from 'crypto';
+import {calendarArray} from '../../assets/array/calendarArray.js';
+import {exerciseArray} from '../../assets/array/exerciseArray.js';
+import {foodArray} from '../../assets/array/foodArray.js';
+import {moneyArray} from '../../assets/array/moneyArray.js';
+import {sleepArray} from '../../assets/array/sleepArray.js';
 
 // 0-0. info -------------------------------------------------------------------------------------->
 export const info = async (
@@ -105,7 +109,18 @@ export const login = async (
     finalResult = "fail";
   }
 
-  return finalResult;
+  const defaultResult = {
+    calendar: calendarArray,
+    exercise: exerciseArray,
+    food: foodArray,
+    money: moneyArray,
+    sleep: sleepArray,
+  };
+
+  return {
+    user: finalResult,
+    defaultCategory: defaultResult
+  };
 };
 
 // 2. detail (상세는 eq) -------------------------------------------------------------------------->

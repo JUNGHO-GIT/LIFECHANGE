@@ -23,11 +23,11 @@ export const Time = ({
   let image = null;
   let translateStr = "";
   if (firstStr === "sleep" && secondStr === "goal") {
-    if (extra.split("_")[2] === "night") {
+    if (extra.split("_")[2] === "bedTime") {
       image = sleep2;
       translateStr = "goalNight";
     }
-    else if (extra.split("_")[2] === "morning") {
+    else if (extra.split("_")[2] === "wakeTime") {
       image = sleep3;
       translateStr = "goalMorning";
     }
@@ -37,13 +37,13 @@ export const Time = ({
     }
   }
   else if (firstStr === "sleep" && secondStr !== "goal") {
-    if (extra.split("_")[1] === "night") {
+    if (extra.split("_")[1] === "bedTime") {
       image = sleep2;
-      translateStr = "night";
+      translateStr = "bedTime";
     }
-    else if (extra.split("_")[1] === "morning") {
+    else if (extra.split("_")[1] === "wakeTime") {
       image = sleep3;
-      translateStr = "morning";
+      translateStr = "wakeTime";
     }
     else if (extra.split("_")[1] === "time") {
       image = sleep4;

@@ -63,9 +63,9 @@ export const SleepList = () => {
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
-      sleep_night: "00:00",
-      sleep_morning: "00:00",
-      sleep_time: "00:00",
+      sleep_bedTime: "00:00",
+      sleep_wakeTime: "00:00",
+      sleep_sleepTime: "00:00",
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -150,14 +150,14 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("night")}
+                      {translate("bedTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_night}
+                      {item.sleep_section[0].sleep_bedTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>
@@ -168,14 +168,14 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("morning")}
+                      {translate("wakeTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_morning}
+                      {item.sleep_section[0].sleep_wakeTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>
@@ -186,14 +186,14 @@ export const SleepList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("time")}
+                      {translate("sleepTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_time}
+                      {item.sleep_section[0].sleep_sleepTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>

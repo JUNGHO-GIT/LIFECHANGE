@@ -30,16 +30,16 @@ export const list = async (
     );
 
     const moneyTotalIn = listReal.reduce((acc, curr) => (
-      acc + (curr?.money_total_in ?? 0)
+      acc + (curr?.money_total_income ?? 0)
     ), 0);
     const moneyTotalOut = listReal.reduce((acc, curr) => (
-      acc + (curr?.money_total_out ?? 0)
+      acc + (curr?.money_total_expense ?? 0)
     ), 0);
 
     return {
       ...goal,
-      money_total_in: moneyTotalIn,
-      money_total_out: moneyTotalOut
+      money_total_income: moneyTotalIn,
+      money_total_expense: moneyTotalOut
     };
   }));
 

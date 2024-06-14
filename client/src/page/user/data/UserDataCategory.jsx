@@ -18,12 +18,6 @@ export const UserDataCategory = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCategory") || "{}";
-  const calendarArray = JSON.parse(session)?.calendar || [];
-  const exerciseArray = JSON.parse(session)?.exercise || [];
-  const foodArray = JSON.parse(session)?.food || [];
-  const moneyArray = JSON.parse(session)?.money || [];
-  const sleepArray = JSON.parse(session)?.sleep || [];
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -39,6 +33,7 @@ export const UserDataCategory = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
   const [dataType, setDataType] = useState("exercise");
+  const [defaultCategory, setDefaultData] = useState({});
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -69,6 +64,9 @@ export const UserDataCategory = () => {
     user_id: sessionId,
     user_number: 0,
     dataCategory: {
+      calendar: [{
+        calendar_part: ""
+      }],
       exercise: [{
         exercise_part: "",
         exercise_title: [""]
@@ -87,6 +85,13 @@ export const UserDataCategory = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  useEffect(() => {
+    console.log("===================================");
+    log("OBJECT", OBJECT);
+    log("defaultCategory", defaultCategory);
+    console.log("===================================");
+  }, [OBJECT]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -104,6 +109,7 @@ export const UserDataCategory = () => {
         return {...prev, ...res.data.result};
       }
     });
+    setDefaultData(res.data.result.defaultCategory);
     setLOADING(false);
   })()}, [sessionId]);
 
@@ -275,32 +281,20 @@ export const UserDataCategory = () => {
   // 4-4. handler --------------------------------------------------------------------------------->
   const handlerDefault = () => {
     const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
-    let defaultArray = [];
-    if (dataType === "calendar") {
-      defaultArray = calendarArray;
-    }
-    else if (dataType === "exercise") {
-      defaultArray = exerciseArray;
-    }
-    else if (dataType === "food") {
-      defaultArray = foodArray;
-    }
-    else if (dataType === "money") {
-      defaultArray = moneyArray;
-    }
-    else if (dataType === "sleep") {
-      defaultArray = sleepArray;
-    }
     if (confirm) {
       setOBJECT((prev) => ({
-        ...prev,
-        dataCategory: {
-          ...prev.dataCategory,
-          [dataType]: defaultArray
+        dataCategory : {
+          calendar: defaultCategory.calendar,
+          exercise: defaultCategory.exercise,
+          food: defaultCategory.food,
+          money: defaultCategory.money,
+          sleep: defaultCategory.sleep
         }
       }));
     }
+    navigate(0);
   };
+
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. popup

@@ -1,4 +1,4 @@
-// index.js
+// incomedex.js
 
 import path from "path";
 import cors from "cors";

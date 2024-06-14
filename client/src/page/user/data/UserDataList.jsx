@@ -94,7 +94,7 @@ export const UserDataList = () => {
     food_total_protein: 0,
     food_section: [{
       food_part_idx: 1,
-      food_part_val: "아침",
+      food_part_val: "breakfast",
       food_title: "",
       food_count: 0,
       food_serv: "회",
@@ -111,8 +111,8 @@ export const UserDataList = () => {
     money_goal_demo: false,
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_in: 0,
-    money_goal_out: 0,
+    money_goal_income: 0,
+    money_goal_expense: 0,
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
@@ -120,8 +120,8 @@ export const UserDataList = () => {
     money_demo: false,
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
+    money_total_income: 0,
+    money_total_expense: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -137,9 +137,9 @@ export const UserDataList = () => {
     sleep_goal_demo: false,
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_night: "00:00",
-    sleep_goal_morning: "00:00",
-    sleep_goal_time: "00:00",
+    sleep_goal_bedTime: "00:00",
+    sleep_goal_wakeTime: "00:00",
+    sleep_goal_sleepTime: "00:00",
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",
@@ -148,9 +148,9 @@ export const UserDataList = () => {
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
-      sleep_night: "00:00",
-      sleep_morning: "00:00",
-      sleep_time: "00:00",
+      sleep_bedTime: "00:00",
+      sleep_wakeTime: "00:00",
+      sleep_sleepTime: "00:00",
     }],
   }];
   const [OBJECT_EXERCISE_GOAL, setOBJECT_EXERCISE_GOAL] = useState(OBJECT_EXERCISE_GOAL_DEF);
@@ -443,8 +443,8 @@ export const UserDataList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className="table-thead-tr">
                 <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("in")}</TableCell>
-                <TableCell>{translate("out")}</TableCell>
+                <TableCell>{translate("income")}</TableCell>
+                <TableCell>{translate("expense")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -464,10 +464,10 @@ export const UserDataList = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_goal_in).format("0,0")}
+                    {numeral(item.money_goal_income).format("0,0")}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_goal_out).format("0,0")}
+                    {numeral(item.money_goal_expense).format("0,0")}
                   </TableCell>
                 </TableRow>
               ))}
@@ -484,8 +484,8 @@ export const UserDataList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("in")}</TableCell>
-                <TableCell>{translate("out")}</TableCell>
+                <TableCell>{translate("income")}</TableCell>
+                <TableCell>{translate("expense")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -505,10 +505,10 @@ export const UserDataList = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_total_in).format('0,0')}
+                    {numeral(item.money_total_income).format('0,0')}
                   </TableCell>
                   <TableCell>
-                    {numeral(item.money_total_out).format('0,0')}
+                    {numeral(item.money_total_expense).format('0,0')}
                   </TableCell>
                 </TableRow>
               ))}
@@ -525,9 +525,9 @@ export const UserDataList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("night")}</TableCell>
-                <TableCell>{translate("morning")}</TableCell>
-                <TableCell>{translate("time")}</TableCell>
+                <TableCell>{translate("bedTime")}</TableCell>
+                <TableCell>{translate("wakeTime")}</TableCell>
+                <TableCell>{translate("sleepTime")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -547,13 +547,13 @@ export const UserDataList = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_goal_night}
+                    {item.sleep_goal_bedTime}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_goal_morning}
+                    {item.sleep_goal_wakeTime}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_goal_time}
+                    {item.sleep_goal_sleepTime}
                   </TableCell>
                 </TableRow>
               ))}
@@ -570,9 +570,9 @@ export const UserDataList = () => {
             <TableHead className={"table-thead"}>
               <TableRow className={"table-thead-tr"}>
                 <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("night")}</TableCell>
-                <TableCell>{translate("morning")}</TableCell>
-                <TableCell>{translate("time")}</TableCell>
+                <TableCell>{translate("bedTime")}</TableCell>
+                <TableCell>{translate("wakeTime")}</TableCell>
+                <TableCell>{translate("sleepTime")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className={"table-tbody"}>
@@ -592,13 +592,13 @@ export const UserDataList = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_section[0]?.sleep_night}
+                    {item.sleep_section[0]?.sleep_bedTime}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_section[0]?.sleep_morning}
+                    {item.sleep_section[0]?.sleep_wakeTime}
                   </TableCell>
                   <TableCell>
-                    {item.sleep_section[0]?.sleep_time}
+                    {item.sleep_section[0]?.sleep_sleepTime}
                   </TableCell>
                 </TableRow>
               ))}

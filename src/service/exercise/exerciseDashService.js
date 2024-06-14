@@ -30,8 +30,8 @@ export const barToday = async (
     {
       name: "체중",
       date: dateStart,
-      목표: intFormat(findGoal?.[0]?.exercise_goal_weight),
-      실제: intFormat(findReal?.[0]?.exercise_body_weight)
+      goal: intFormat(findGoal?.[0]?.exercise_goal_weight),
+      real: intFormat(findReal?.[0]?.exercise_body_weight)
     }
   ];
 
@@ -46,9 +46,9 @@ export const barWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월
+  // ex mon, tue
   const name = [
-    "월", "화", "수", "목", "금", "토", "일"
+    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
 
   // ex. 00-00
@@ -80,7 +80,7 @@ export const barWeek = async (
       name: data,
       date: date[index],
       목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
-      실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+      real: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });
 
@@ -129,7 +129,7 @@ export const barMonth = async (
       name: data,
       date: date[index],
       목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
-      실제: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+      real: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
     });
   });
 
@@ -224,9 +224,9 @@ export const lineWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월
+  // ex mon, tue
   const name = [
-    "월", "화", "수", "목", "금", "토", "일"
+    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
 
   // ex. 00-00
@@ -345,7 +345,7 @@ export const avgMonth = async (
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
-    return `${i + 1}주차`;
+    return `Week ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00
@@ -426,7 +426,7 @@ export const avgYear = async (
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
-    return `${i + 1}월`;
+    return `Month ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00

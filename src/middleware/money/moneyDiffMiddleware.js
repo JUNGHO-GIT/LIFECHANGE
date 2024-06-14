@@ -8,10 +8,10 @@ export const list = async (object) => {
   }
 
   const compareCount = (goal, real, extra) => {
-    if (extra === "in") {
+    if (extra === "income") {
       return Math.abs(goal - real);
     }
-    if (extra === "out") {
+    if (extra === "expense") {
       return Math.abs(real - goal);
     }
   }
@@ -20,7 +20,7 @@ export const list = async (object) => {
     if (goal === undefined || real === undefined) {
       return "danger";
     }
-    else if (extra === "in") {
+    else if (extra === "income") {
       const percent = (Math.abs(goal - real) / goal) * 100;
       if (goal > real) {
         if (percent > 0 && percent <= 1) {
@@ -118,16 +118,16 @@ export const list = async (object) => {
   object?.result?.map((item) => {
     Object.assign((item), {
       money_diff_in: compareCount(
-        item?.money_goal_in, item?.money_total_in, "in"
+        item?.money_goal_income, item?.money_total_income, "income"
       ),
       money_diff_out: compareCount(
-        item?.money_goal_out, item?.money_total_out, "out"
+        item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
       money_diff_in_color: makeColor(
-        item?.money_goal_in, item?.money_total_in, "in"
+        item?.money_goal_income, item?.money_total_income, "income"
       ),
       money_diff_out_color: makeColor(
-        item?.money_goal_out, item?.money_total_out, "out"
+        item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
     });
   });

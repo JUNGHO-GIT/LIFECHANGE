@@ -19,7 +19,7 @@ export const ExerciseDashBar = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["목표", "실제"];
+  const array = ["goal", "real"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -32,13 +32,13 @@ export const ExerciseDashBar = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEF = [
-    {name:"", date:"", 목표: 0, 실제: 0},
+    {name:"", date:"", goal:0, real:0},
   ];
   const OBJECT_WEEK_DEF = [
-    {name:"", date:"", 목표: 0, 실제: 0},
+    {name:"", date:"", goal:0, real:0},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", date:"", 목표: 0, 실제: 0},
+    {name:"", date:"", goal:0, real:0},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
@@ -99,11 +99,11 @@ export const ExerciseDashBar = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"목표"} stroke={COLORS[0]} strokeWidth={2} dot={false}
+          <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
-          <ReferenceLine y={OBJECT_TODAY[0].목표} stroke={COLORS[0]} strokeDasharray={"3 3"}
+          <ReferenceLine y={OBJECT_TODAY[0].goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
-          <Bar dataKey={"실제"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
@@ -169,12 +169,12 @@ export const ExerciseDashBar = () => {
             width={30}
           />
           <Scatter
-            dataKey={"목표"}
+            dataKey={"goal"}
             fill={COLORS[0]}
             line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Scatter
-            dataKey={"실제"}
+            dataKey={"real"}
             fill={COLORS[2]}
             line={{stroke: COLORS[2], strokeWidth: 0.6}}
           />
@@ -241,12 +241,12 @@ export const ExerciseDashBar = () => {
             width={30}
           />
           <Scatter
-            dataKey={"목표"}
+            dataKey={"goal"}
             fill={COLORS[0]}
             line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Scatter
-            dataKey={"실제"}
+            dataKey={"real"}
             fill={COLORS[2]}
             line={{stroke: COLORS[2], strokeWidth: 0.6}}
           />
@@ -292,7 +292,7 @@ export const ExerciseDashBar = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("weight")} ${translate("goal")}`}
+        {translate("dashBar")}
       </Div>
     );
     // 7-6. dropdown
@@ -351,9 +351,9 @@ export const ExerciseDashBar = () => {
     // 7-9. first
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0 me-auto"}>{deleteSection1()}</Div>
+        <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0 ms-auto"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

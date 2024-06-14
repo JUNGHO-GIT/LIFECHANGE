@@ -2,65 +2,65 @@
 export const exerciseArray = [
   // 0
   {
-    exercise_part: "전체",
+    exercise_part: "all",
     exercise_title: [
-      "전체"
+      "all"
     ]
   },
   // 1
   {
-    exercise_part: "등",
+    exercise_part: "back",
     exercise_title: [
-      "전체", "데드리프트", "바벨로우", "덤벨로우", "시티드로우", "랫풀다운", "풀업"
+      "all", "deadLift", "barbellRow", "dumbbellRow", "seatedRow", "latPulldown", "pullUp"
     ]
   },
   // 2
   {
-    exercise_part : "하체",
-    exercise_title : [
-      "전체", "백스쿼트", "프론트스쿼트", "핵스쿼트", "바벨런지", "덤벨런지", "레그프레스", "레그익스텐션", "레그컬"
+    exercise_part: "leg",
+    exercise_title: [
+      "all", "backSquat", "frontSquat", "hackSquat", "barbellLunge", "dumbbellLunge", "legPress", "legExtension", "legCurl"
     ]
   },
   // 3
   {
-    exercise_part: "가슴",
+    exercise_part: "chest",
     exercise_title: [
-      "전체", "바벨벤치프레스", "덤벨벤치프레스", "머신벤치프레스", "인클라인벤치프레스", "디클라인벤치프레스", "덤벨플라이", "케이블플라이", "케이블크로스오버", "딥스", "푸쉬업"
+      "all", "barbellBenchPress", "dumbbellBenchPress", "machineBenchPress", "inclineBenchPress", "declineBenchPress", "dumbbellFly", "cableFly", "cableCrossover", "dips", "pushUp"
     ]
   },
   // 4
   {
-    exercise_part: "어깨",
+    exercise_part: "shoulders",
     exercise_title: [
-      "전체", "밀리터리프레스", "바벨프레스", "덤벨프레스", "머신프레스", "비하인드넥프레스", "프론트레터럴레이즈", "사이드레터럴레이즈", "벤트오버레터럴레이즈", "페이스풀"
+      "all", "militaryPress", "barbellPress", "dumbbellPress", "machinePress", "behindTheNeckPress", "frontLateralRaise", "sideLateralRaise", "bentOverLateralRaise", "facePull"
     ]
   },
   // 5
   {
-    exercise_part: "삼두",
+    exercise_part: "triceps",
     exercise_title: [
-      "전체", "라잉트라이셉스익스텐션", "덤벨트라이셉스익스텐션", "오버헤드트라이셉스익스텐션", "클로즈그립벤치프레스", "케이블트라이셉스푸쉬다운", "케이블트라이셉스로프다운", "킥백"
+      "all", "lyingTricepsExtension", "dumbbellTricepsExtension", "overheadTricepsExtension", "closeGripBenchPress", "cableTricepsPushDown", "cableTricepsRopeDown", "kickback"
     ]
   },
   // 6
   {
-    exercise_part: "이두",
+    exercise_part: "biceps",
     exercise_title: [
-      "전체", "바벨컬", "덤벨컬", "해머컬", "머신컬", "케이블컬", "바벨프리처컬", "덤벨프리처컬"
+      "all", "barbellCurl", "dumbbellCurl", "hammerCurl", "machineCurl", "cableCurl", "barbellPreacherCurl", "dumbbellPreacherCurl"
     ]
   },
   // 7
   {
-    exercise_part: "유산소",
+    exercise_part: "cardio",
     exercise_title: [
-      "전체", "걷기", "달리기", "스텝퍼", "자전거", "수영", "플랭크"
+      "all", "walking", "running", "stepper", "cycling", "swimming", "plank"
     ]
   },
   // 8
   {
-    exercise_part: "휴식",
+    exercise_part: "rest",
     exercise_title: [
-      "전체", "휴식"
+      "all", "rest"
     ]
   },
 ];

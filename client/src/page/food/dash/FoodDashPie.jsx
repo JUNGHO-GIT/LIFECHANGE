@@ -477,7 +477,7 @@ export const FoodDashPie = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("kcalNut")} ${translate("ratio")}`}
+        {translate("dashPie")}
       </Div>
     );
     // 7-4. delete
@@ -588,7 +588,7 @@ export const FoodDashPie = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

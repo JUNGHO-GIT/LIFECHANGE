@@ -23,8 +23,8 @@ export const barToday = {
       {$project: {
         money_goal_dateStart: 1,
         money_goal_dateEnd: 1,
-        money_goal_in: 1,
-        money_goal_out: 1,
+        money_goal_income: 1,
+        money_goal_expense: 1,
       }},
       {$sort: {money_goal_dateStart: 1}}
     ]);
@@ -49,8 +49,8 @@ export const barToday = {
       {$project: {
         money_dateStart: 1,
         money_dateEnd: 1,
-        money_total_in: 1,
-        money_total_out: 1,
+        money_total_income: 1,
+        money_total_expense: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
@@ -279,8 +279,8 @@ export const lineWeek = {
       {$project: {
         money_dateStart: 1,
         money_dateEnd: 1,
-        money_total_in: 1,
-        money_total_out: 1,
+        money_total_income: 1,
+        money_total_expense: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
@@ -308,8 +308,8 @@ export const lineMonth = {
       {$project: {
         money_dateStart: 1,
         money_dateEnd: 1,
-        money_total_in: 1,
-        money_total_out: 1,
+        money_total_income: 1,
+        money_total_expense: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
@@ -337,8 +337,8 @@ export const avgMonth = {
       {$project: {
         money_dateStart: 1,
         money_dateEnd: 1,
-        money_total_in: 1,
-        money_total_out: 1,
+        money_total_income: 1,
+        money_total_expense: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);
@@ -366,8 +366,8 @@ export const avgYear = {
       {$project: {
         money_dateStart: 1,
         money_dateEnd: 1,
-        money_total_in: 1,
-        money_total_out: 1,
+        money_total_income: 1,
+        money_total_expense: 1,
       }},
       {$sort: {money_dateStart: 1}}
     ]);

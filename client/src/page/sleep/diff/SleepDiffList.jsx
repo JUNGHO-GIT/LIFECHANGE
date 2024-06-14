@@ -63,19 +63,19 @@ export const SleepDiff = () => {
     sleep_goal_demo: false,
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_night: "00:00",
-    sleep_goal_morning: "00:00",
-    sleep_goal_time: "00:00",
+    sleep_goal_bedTime: "00:00",
+    sleep_goal_wakeTime: "00:00",
+    sleep_goal_sleepTime: "00:00",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
-    sleep_diff_night: "00:00",
-    sleep_diff_morning: "00:00",
+    sleep_bedTime: "00:00",
+    sleep_wakeTime: "00:00",
+    sleep_sleepTime: "00:00",
+    sleep_diff_bedTime: "00:00",
+    sleep_diff_wakeTime: "00:00",
     sleep_diff_time: "00:00",
-    sleep_diff_night_color: "",
-    sleep_diff_morning_color: "",
+    sleep_diff_bedTime_color: "",
+    sleep_diff_wakeTime_color: "",
     sleep_diff_time_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -147,7 +147,7 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("night")}
+                      {translate("bedTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -159,7 +159,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_night}
+                      {item.sleep_goal_bedTime}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -169,7 +169,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_night}
+                      {item.sleep_bedTime}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -178,8 +178,8 @@ export const SleepDiff = () => {
                     </Div>
                   </TableCell>
                   <TableCell>
-                    <Div className={`d-left fw-bold ${item.sleep_diff_night_color}`}>
-                      {item.sleep_diff_night}
+                    <Div className={`d-left fw-bold ${item.sleep_diff_bedTime_color}`}>
+                      {item.sleep_diff_bedTime}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -187,7 +187,7 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("morning")}
+                      {translate("wakeTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -199,7 +199,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_morning}
+                      {item.sleep_goal_wakeTime}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -209,7 +209,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_morning}
+                      {item.sleep_wakeTime}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -218,8 +218,8 @@ export const SleepDiff = () => {
                     </Div>
                   </TableCell>
                   <TableCell>
-                    <Div className={`d-left fw-bold ${item.sleep_diff_morning_color}`}>
-                      {item.sleep_diff_morning}
+                    <Div className={`d-left fw-bold ${item.sleep_diff_wakeTime_color}`}>
+                      {item.sleep_diff_wakeTime}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -227,7 +227,7 @@ export const SleepDiff = () => {
                   <TableCell colSpan={6}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("time")}
+                      {translate("sleepTime")}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -239,7 +239,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_time}
+                      {item.sleep_goal_sleepTime}
                     </Div>
                   </TableCell>
                   <TableCell>
@@ -249,7 +249,7 @@ export const SleepDiff = () => {
                   </TableCell>
                   <TableCell>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_time}
+                      {item.sleep_sleepTime}
                     </Div>
                   </TableCell>
                   <TableCell>

@@ -12,7 +12,7 @@ export const list = async (object) => {
   // ex. 22:00 - 04:00 = 06:00
   // ex. 22:00 - 22:30 = 00:30
   const compareTime = (goal, real, extra) => {
-    if (extra === "night" || extra === "morning") {
+    if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
 
@@ -46,7 +46,7 @@ export const list = async (object) => {
   };
 
   const makeColor = (goal, real, extra) => {
-    if (extra === "night" || extra === "morning") {
+    if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
       let diffVal = 0;
@@ -114,23 +114,23 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      sleep_diff_night: compareTime(
-        item?.sleep_goal_night, item?.sleep_night, "night"
+      sleep_diff_bedTime: compareTime(
+        item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
       ),
-      sleep_diff_morning: compareTime(
-        item?.sleep_goal_morning, item?.sleep_morning, "morning"
+      sleep_diff_wakeTime: compareTime(
+        item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
       sleep_diff_time: compareTime(
-        item?.sleep_goal_time, item?.sleep_time, "time"
+        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "time"
       ),
-      sleep_diff_night_color: makeColor(
-        item?.sleep_goal_night, item?.sleep_night, "night"
+      sleep_diff_bedTime_color: makeColor(
+        item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
       ),
-      sleep_diff_morning_color: makeColor(
-        item?.sleep_goal_morning, item?.sleep_morning, "morning"
+      sleep_diff_wakeTime_color: makeColor(
+        item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
       sleep_diff_time_color: makeColor(
-        item?.sleep_goal_time, item?.sleep_time, "time"
+        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "time"
       ),
     });
   });

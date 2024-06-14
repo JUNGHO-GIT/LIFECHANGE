@@ -68,7 +68,7 @@ export const FoodFindSave = () => {
     food_total_fat: 0,
     food_section: [{
       food_part_idx: 1,
-      food_part_val: "아침",
+      food_part_val: "breakfast",
       food_title: "",
       food_count: 0,
       food_serv: "회",

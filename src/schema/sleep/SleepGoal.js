@@ -37,17 +37,17 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  sleep_goal_night: {
+  sleep_goal_bedTime: {
     type: String,
     default: "00:00",
     required: false
   },
-  sleep_goal_morning: {
+  sleep_goal_wakeTime: {
     type: String,
     default: "00:00",
     required: false
   },
-  sleep_goal_time: {
+  sleep_goal_sleepTime: {
     type: String,
     default: "00:00",
     required: false

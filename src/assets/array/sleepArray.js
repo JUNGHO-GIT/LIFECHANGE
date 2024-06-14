@@ -2,18 +2,18 @@
 export const sleepArray = [
   // 0
   {
-    sleep_part: "전체"
+    sleep_part: "all"
   },
   // 1
   {
-    sleep_part: "취침"
+    sleep_part: "bedTime"
   },
   // 2
   {
-    sleep_part: "기상"
+    sleep_part: "wakeTime"
   },
   // 3
   {
-    sleep_part: "수면"
+    sleep_part: "sleepTime"
   },
 ];

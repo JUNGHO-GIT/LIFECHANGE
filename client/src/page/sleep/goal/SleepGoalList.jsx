@@ -63,9 +63,9 @@ export const SleepGoalList = () => {
     sleep_goal_demo: false,
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_night: "00:00",
-    sleep_goal_morning: "00:00",
-    sleep_goal_time: "00:00",
+    sleep_goal_bedTime: "00:00",
+    sleep_goal_wakeTime: "00:00",
+    sleep_goal_sleepTime: "00:00",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -149,7 +149,7 @@ export const SleepGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("night")}
+                      {translate("bedTime")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
                         {translate("goal")}
                       </Div>
@@ -159,7 +159,7 @@ export const SleepGoalList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_night}
+                      {item.sleep_goal_bedTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>
@@ -170,7 +170,7 @@ export const SleepGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("morning")}
+                      {translate("wakeTime")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
                         {translate("goal")}
                       </Div>
@@ -180,7 +180,7 @@ export const SleepGoalList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_morning}
+                      {item.sleep_goal_wakeTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>
@@ -191,7 +191,7 @@ export const SleepGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left dark fw-bold"}>
                       <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("time")}
+                      {translate("sleepTime")}
                       <Div className={"fs-0-9rem dark fw-normal ms-5"}>
                         {translate("goal")}
                       </Div>
@@ -201,7 +201,7 @@ export const SleepGoalList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {item.sleep_goal_time}
+                      {item.sleep_goal_sleepTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         h:m
                       </Div>

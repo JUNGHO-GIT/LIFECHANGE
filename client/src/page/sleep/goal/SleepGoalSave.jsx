@@ -58,9 +58,9 @@ export const SleepGoalSave = () => {
     sleep_goal_demo: false,
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
-    sleep_goal_night: "00:00",
-    sleep_goal_morning: "00:00",
-    sleep_goal_time: "00:00",
+    sleep_goal_bedTime: "00:00",
+    sleep_goal_wakeTime: "00:00",
+    sleep_goal_sleepTime: "00:00",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -164,9 +164,9 @@ export const SleepGoalSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      sleep_goal_night: "00:00",
-      sleep_goal_morning: "00:00",
-      sleep_goal_time: "00:00",
+      sleep_goal_bedTime: "00:00",
+      sleep_goal_wakeTime: "00:00",
+      sleep_goal_sleepTime: "00:00",
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -222,7 +222,7 @@ export const SleepGoalSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_goal_night"}
+            extra={"sleep_goal_bedTime"}
             i={i}
           />
         </Div>
@@ -231,7 +231,7 @@ export const SleepGoalSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_goal_morning"}
+            extra={"sleep_goal_wakeTime"}
             i={i}
           />
         </Div>
@@ -240,7 +240,7 @@ export const SleepGoalSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_goal_time"}
+            extra={"sleep_goal_sleepTime"}
             i={i}
           />
         </Div>

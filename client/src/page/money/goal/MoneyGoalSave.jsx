@@ -58,8 +58,8 @@ export const MoneyGoalSave = () => {
     money_goal_demo: false,
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_in: 0,
-    money_goal_out: 0
+    money_goal_income: 0,
+    money_goal_expense: 0
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -161,8 +161,8 @@ export const MoneyGoalSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      money_goal_in: 0,
-      money_goal_out: 0
+      money_goal_income: 0,
+      money_goal_expense: 0
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -223,7 +223,7 @@ export const MoneyGoalSave = () => {
             label={translate("goalIn")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={numeral(OBJECT?.money_goal_in).format("0,0")}
+            value={numeral(OBJECT?.money_goal_income).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -240,7 +240,7 @@ export const MoneyGoalSave = () => {
               const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
-                money_goal_in: limitedValue
+                money_goal_income: limitedValue
               }));
             }}
           />
@@ -254,7 +254,7 @@ export const MoneyGoalSave = () => {
             label={translate("goalOut")}
             variant={"outlined"}
             className={"w-86vw"}
-            value={numeral(OBJECT?.money_goal_out).format("0,0")}
+            value={numeral(OBJECT?.money_goal_expense).format("0,0")}
             InputProps={{
               readOnly: false,
               startAdornment: (
@@ -271,7 +271,7 @@ export const MoneyGoalSave = () => {
               const limitedValue = Math.min(Number(rawValue), 9999999999);
               setOBJECT((prev) => ({
                 ...prev,
-                money_goal_out: limitedValue
+                money_goal_expense: limitedValue
               }));
             }}
           />

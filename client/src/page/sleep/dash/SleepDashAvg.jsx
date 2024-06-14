@@ -21,7 +21,7 @@ export const SleepDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["취침", "기상", "수면"];
+  const array = ["bedTime", "wakeTime", "sleepTime"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -35,10 +35,10 @@ export const SleepDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", 취침: 0, 기상: 0, 수면: 0}
+    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
   ];
   const OBJECT_YEAR_DEF = [
-    {name:"", day: "", 취침: 0, 기상: 0, 수면: 0}
+    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
   ];
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
   const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
@@ -90,16 +90,16 @@ export const SleepDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {PART.includes("취침") && (
-            <Bar dataKey={"취침"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("bedTime") && (
+            <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
-          {PART.includes("기상") && (
-            <Bar dataKey={"기상"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("wakeTime") && (
+            <Bar dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
-          {PART.includes("수면") && (
-            <Bar dataKey={"수면"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("sleepTime") && (
+            <Bar dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip
@@ -164,16 +164,16 @@ export const SleepDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {PART.includes("취침") && (
-            <Bar dataKey={"취침"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("bedTime") && (
+            <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
-          {PART.includes("기상") && (
-            <Bar dataKey={"기상"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("wakeTime") && (
+            <Bar dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
-          {PART.includes("수면") && (
-            <Bar dataKey={"수면"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+          {PART.includes("sleepTime") && (
+            <Bar dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip
@@ -218,7 +218,7 @@ export const SleepDashAvg = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("sleep")} ${translate("avg")}`}
+        {translate("dashAvg")}
       </Div>
     );
     // 7-4. delete
@@ -247,7 +247,7 @@ export const SleepDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["취침", "기상", "수면"]?.map((key, index) => (
+        ["bedTime", "wakeTime", "sleepTime"]?.map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel
               control={<Switch checked={PART.includes(key)} onChange={() => {
@@ -300,7 +300,7 @@ export const SleepDashAvg = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

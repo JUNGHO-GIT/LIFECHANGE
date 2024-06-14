@@ -2,22 +2,22 @@
 export const foodArray = [
   // 0
   {
-    food_part: "전체"
+    food_part: "all"
   },
   // 1
   {
-    food_part: "아침"
+    food_part: "breakfast"
   },
   // 2
   {
-    food_part: "점심"
+    food_part: "lunch"
   },
   // 3
   {
-    food_part: "저녁"
+    food_part: "dinner"
   },
   // 4
   {
-    food_part: "간식"
+    food_part: "snack"
   },
 ];

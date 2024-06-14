@@ -28,22 +28,22 @@ export const barToday = async (
 
   finalResult = [
     {
-      name: "취침",
+      name: "bedTime",
       date: dateStart,
-      목표: timeFormat(findGoal?.[0]?.sleep_goal_night),
-      실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_night)
+      goal: timeFormat(findGoal?.[0]?.sleep_goal_bedTime),
+      real: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_bedTime)
     },
     {
-      name: "수면",
+      name: "wakeTime",
       date: dateStart,
-      목표: timeFormat(findGoal?.[0]?.sleep_goal_time),
-      실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_time)
+      goal: timeFormat(findGoal?.[0]?.sleep_goal_sleepTime),
+      real: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime)
     },
     {
-      name: "기상",
+      name: "sleepTime",
       date: dateStart,
-      목표: timeFormat(findGoal?.[0]?.sleep_goal_morning),
-      실제: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_morning)
+      goal: timeFormat(findGoal?.[0]?.sleep_goal_wakeTime),
+      real: timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime)
     }
   ];
 
@@ -73,9 +73,9 @@ export const pieToday = async (
 
   // 누락된 데이터가 있는지 확인
   let dataMissing = findResult.some((data) => (
-    !data.sleep_section[0]?.sleep_night ||
-    !data.sleep_section[0]?.sleep_morning ||
-    !data.sleep_section[0]?.sleep_time
+    !data.sleep_section[0]?.sleep_bedTime ||
+    !data.sleep_section[0]?.sleep_wakeTime ||
+    !data.sleep_section[0]?.sleep_sleepTime
   ));
 
   // 데이터가 누락되었는지 확인
@@ -84,24 +84,24 @@ export const pieToday = async (
   }
   else {
     findResult.forEach((data, index) => {
-      sumNight += timeFormat(data.sleep_section[0]?.sleep_night);
-      sumMorning += timeFormat(data.sleep_section[0]?.sleep_morning);
-      sumTime += timeFormat(data.sleep_section[0]?.sleep_time);
+      sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+      sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+      sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
       countRecords++;
     });
     totalSleep = sumNight + sumMorning + sumTime;
 
     finalResult = [
       {
-        name: "취침",
+        name: "bedTime",
         value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
       },
       {
-        name: "기상",
+        name: "wakeTime",
         value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
       },
       {
-        name: "수면",
+        name: "sleepTime",
         value: totalSleep > 0 ? Math.round(sumTime / totalSleep * 100) : 0
       },
     ];
@@ -131,24 +131,24 @@ export const pieWeek = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumNight += timeFormat(data.sleep_section[0]?.sleep_night);
-    sumMorning += timeFormat(data.sleep_section[0]?.sleep_morning);
-    sumTime += timeFormat(data.sleep_section[0]?.sleep_time);
+    sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords++;
   });
   totalSleep = sumNight + sumMorning + sumTime;
 
   finalResult = [
     {
-      name: "취침",
+      name: "bedTime",
       value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
     },
     {
-      name: "기상",
+      name: "wakeTime",
       value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
     },
     {
-      name: "수면",
+      name: "sleepTime",
       value: totalSleep > 0 ? Math.round(sumTime / totalSleep * 100) : 0
     },
   ];
@@ -177,24 +177,24 @@ export const pieMonth = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumNight += timeFormat(data.sleep_section[0]?.sleep_night);
-    sumMorning += timeFormat(data.sleep_section[0]?.sleep_morning);
-    sumTime += timeFormat(data.sleep_section[0]?.sleep_time);
+    sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords++;
   });
   totalSleep = sumNight + sumMorning + sumTime;
 
   finalResult = [
     {
-      name: "취침",
+      name: "bedTime",
       value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
     },
     {
-      name: "기상",
+      name: "wakeTime",
       value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
     },
     {
-      name: "수면",
+      name: "sleepTime",
       value: totalSleep > 0 ? Math.round(sumTime / totalSleep * 100) : 0
     },
   ];
@@ -210,9 +210,9 @@ export const lineWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월
+  // ex mon, tue
   const name = [
-    "월", "화", "수", "목", "금", "토", "일"
+    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
 
   // ex. 00-00
@@ -237,9 +237,9 @@ export const lineWeek = async (
     finalResult.push({
       name: data,
       date: date[index],
-      취침: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_night) : 0,
-      수면: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_time) : 0,
-      기상: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_morning) : 0
+      bedTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime) : 0,
+      wakeTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime) : 0,
+      sleepTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime) : 0
     });
   });
 
@@ -281,9 +281,9 @@ export const lineMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      취침: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_night) : 0,
-      수면: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_time) : 0,
-      기상: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_morning) : 0
+      bedTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime) : 0,
+      wakeTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime) : 0,
+      sleepTime: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime) : 0,
     });
   });
 
@@ -300,7 +300,7 @@ export const avgMonth = async (
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
-    return `${i + 1}주차`;
+    return `Week ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00
@@ -325,9 +325,9 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumNight[weekNum] += timeFormat(data.sleep_section[0]?.sleep_night);
-      sumMorning[weekNum] += timeFormat(data.sleep_section[0]?.sleep_morning);
-      sumTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_time);
+      sumNight[weekNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+      sumMorning[weekNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+      sumTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
       countRecords[weekNum]++;
     }
   });
@@ -338,9 +338,9 @@ export const avgMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      취침: timeFormat(sumNight[index] / countRecords[index]),
-      기상: timeFormat(sumMorning[index] / countRecords[index]),
-      수면: timeFormat(sumTime[index] / countRecords[index]),
+      bedTime: timeFormat(sumNight[index] / countRecords[index]),
+      wakeTime: timeFormat(sumMorning[index] / countRecords[index]),
+      sleepTime: timeFormat(sumTime[index] / countRecords[index]),
     });
   });
 
@@ -357,7 +357,7 @@ export const avgYear = async (
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
-    return `${i + 1}월`;
+    return `Month ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00
@@ -379,9 +379,9 @@ export const avgYear = async (
   findResult.forEach((data, index) => {
     const sleepDate = new Date(data.sleep_dateStart);
     const monthNum = sleepDate.getMonth();
-    sumNight[monthNum] += timeFormat(data.sleep_section[0]?.sleep_night);
-    sumMorning[monthNum] += timeFormat(data.sleep_section[0]?.sleep_morning);
-    sumTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_time);
+    sumNight[monthNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumMorning[monthNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords[monthNum]++;
   });
 
@@ -391,9 +391,9 @@ export const avgYear = async (
     finalResult.push({
       name: data,
       date: date[index],
-      취침: timeFormat(sumNight[index] / countRecords[index]),
-      기상: timeFormat(sumMorning[index] / countRecords[index]),
-      수면: timeFormat(sumTime[index] / countRecords[index]),
+      bedTime: timeFormat(sumNight[index] / countRecords[index]),
+      wakeTime: timeFormat(sumMorning[index] / countRecords[index]),
+      sleepTime: timeFormat(sumTime[index] / countRecords[index]),
     });
   });
 

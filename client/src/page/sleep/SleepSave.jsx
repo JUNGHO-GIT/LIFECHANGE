@@ -58,9 +58,9 @@ export const SleepSave = () => {
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
-      sleep_night: "00:00",
-      sleep_morning: "00:00",
-      sleep_time: "00:00",
+      sleep_bedTime: "00:00",
+      sleep_wakeTime: "00:00",
+      sleep_sleepTime: "00:00",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -116,9 +116,9 @@ export const SleepSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const defaultSection = {
-      sleep_night: "00:00",
-      sleep_morning: "00:00",
-      sleep_time: "00:00",
+      sleep_bedTime: "00:00",
+      sleep_wakeTime: "00:00",
+      sleep_sleepTime: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
       idx < OBJECT?.sleep_section.length ? OBJECT?.sleep_section[idx] : defaultSection
@@ -239,7 +239,7 @@ export const SleepSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_night"}
+            extra={"sleep_bedTime"}
             i={i}
           />
         </Div>
@@ -248,7 +248,7 @@ export const SleepSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_morning"}
+            extra={"sleep_wakeTime"}
             i={i}
           />
         </Div>
@@ -257,7 +257,7 @@ export const SleepSave = () => {
           <Time
             OBJECT={OBJECT}
             setOBJECT={setOBJECT}
-            extra={"sleep_time"}
+            extra={"sleep_sleepTime"}
             i={i}
           />
         </Div>

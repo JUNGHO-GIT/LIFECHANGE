@@ -33,6 +33,7 @@ export const useTranslate = () => {
   const {lang} = useLanguage();
   const resources = {
     // a
+    all: {ko: "전체", en: "All"},
     age: {ko: "나이", en: "Age"},
     asc: {ko: "오름차순", en: "Asc"},
     alreadyId: {ko: "아이디가 있는 경우", en: "Already have an Account"},
@@ -41,6 +42,7 @@ export const useTranslate = () => {
 
     // b
     brand: {ko: "브랜드", en: "Brand"},
+    breakfast: {ko: "아침", en: "Breakfast"},
 
     // c
     calendar: {ko: "일정", en: "calendar"},
@@ -48,9 +50,14 @@ export const useTranslate = () => {
     category: {ko: "분류", en: "Category"},
     content: {ko: "내용", en: "Content"},
     count: {ko: "항목수", en: "Count"},
+    culture: {ko: "문화", en: "Culture"},
 
     // d
-    dataCategory: {ko: "데이터 입력", en: "Data Input"},
+    dashBar: {ko: "목표", en: "Goal"},
+    dashPie: {ko: "비율", en: "Proportion"},
+    dashLine: {ko: "추이", en: "Trend"},
+    dashAvg: {ko: "평균", en: "Average"},
+    dataCategory: {ko: "카테고리", en: "Category"},
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
     dataCategory3: {ko: "분류 3", en: "Category 3"},
@@ -58,6 +65,7 @@ export const useTranslate = () => {
     dataList: {ko: "데이터 리스트", en: "Data List"},
     dashList: {ko: "통계", en: "Statistics"},
     date: {ko: "날짜", en: "Date"},
+    data: {ko: "데이터", en: "Data"},
     dateEnd: {ko: "종료일", en: "End Date"},
     dateStart: {ko: "시작일", en: "Start Date"},
     dateType: {ko: "유형", en: "Type"},
@@ -67,6 +75,8 @@ export const useTranslate = () => {
     diff: {ko: "차이", en: "Diff"},
     diffList: {ko: "비교", en: "Comparison"},
     duration: {ko: "기간", en: "Duration"},
+    dignity: {ko: "품위", en: "Dignity"},
+    dinner: {ko: "저녁", en: "Dinner"},
 
     // e
     empty: {ko: "데이터가 없습니다", en: "No data"},
@@ -84,6 +94,8 @@ export const useTranslate = () => {
     endVolume: {ko: "vol", en: "vol"},
     endWeight: {ko: "kg", en: "kg"},
     exercise: {ko: "운동", en: "exercise"},
+    expense: {ko: "지출", en: "Expense"},
+    entertainment: {ko: "유흥", en: "Entertainment"},
 
     // f
     find: {ko: "찾기", en: "Find"},
@@ -97,6 +109,7 @@ export const useTranslate = () => {
     flowSave: {ko: "저장", en: "Save"},
     flowSignup: {ko: "회원가입", en: "Signup"},
     food: {ko: "식사", en: "food"},
+    finance: {ko: "금융", en: "Finance"},
 
     // g
     gender: {ko: "성별", en: "Gender"},
@@ -116,8 +129,8 @@ export const useTranslate = () => {
     goalIn: {ko: "수입 목표", en: "Income Goals"},
     goalKcal: {ko: "칼로리 목표", en: "Kcal Goals"},
     goalList: {ko: "리스트(계획)", en: "List(Goal)"},
-    goalMorning: {ko: "기상 목표", en: "Wake-up Time Goals"},
-    goalNight: {ko: "취침 목표", en: "Bed Time Goals"},
+    goalMorning: {ko: "기상 목표", en: "WakeTime Goals"},
+    goalNight: {ko: "취침 목표", en: "BedTime Goals"},
     goalOut: {ko: "지출 목표", en: "Expense Goals"},
     goalProtein: {ko: "단백질 목획", en: "Protein Goals"},
     goalSave: {ko: "저장(계획)", en: "Save(Goal)"},
@@ -130,11 +143,13 @@ export const useTranslate = () => {
 
     // h
     height: {ko: "키", en: "Height"},
+    housing: {ko: "주거", en: "Housing"},
+    health: {ko: "건강", en: "Health"},
 
     // i
     id: {ko: "아이디", en: "ID"},
-    in: {ko: "수입", en: "Income"},
-    inOut: {ko: "수입 / 지출", en: "Income / Expense"},
+    income: {ko: "수입", en: "Income"},
+    inOut: {ko: "수입-지출", en: "Income-Expense"},
     info: {ko: "정보", en: "Information"},
     isVerified: {ko: "인증되었습니다", en: "Verified"},
     isNotVerified: {ko: "인증 실패", en: "Not Verified"},
@@ -142,7 +157,7 @@ export const useTranslate = () => {
     // j
     // k
     kcal: {ko: "칼로리", en: "Kcal"},
-    kcalNut: {ko: "칼로리 / 영양소", en: "Kcal / Nutrition"},
+    kcalNut: {ko: "칼로리-영양소", en: "Kcal-Nutrition"},
     kg: {ko: "kg", en: "kg"},
 
     // l
@@ -151,23 +166,24 @@ export const useTranslate = () => {
     list: {ko: "리스트", en: "List"},
     login: {ko: "로그인", en: "Login"},
     logout: {ko: "로그아웃", en: "Logout"},
+    lunch: {ko: "점심", en: "Lunch"},
 
     // m
     money: {ko: "재무", en: "money"},
     month: {ko: "월별", en: "Month"},
-    morning: {ko: "기상", en: "Wake-up Time"},
+    wakeTime: {ko: "기상", en: "WakeTime"},
 
     // n
-    night: {ko: "취침", en: "Bed Time"},
+    bedTime: {ko: "취침", en: "BedTime"},
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
     nutrition: {ko: "영양소", en: "Nutrition"},
 
     // o
-    out: {ko: "지출", en: "Expense"},
+    others: {ko: "기타", en: "Others"},
 
     // p
     part: {ko: "분류1", en: "Part"},
-    partTitle: {ko: "부위 / 운동", en: "Part / Exercise"},
+    partTitle: {ko: "부위-운동", en: "Part-Exercise"},
     property: {ko: "자산", en: "Property"},
     protein: {ko: "단백질", en: "Protein"},
     pw: {ko: "비밀번호", en: "PW"},
@@ -177,7 +193,7 @@ export const useTranslate = () => {
     // r
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
-    ratio: {ko: "비율", en: "Ratio"},
+    proportion: {ko: "비율", en: "Proportion"},
 
     // s
     save: {ko: "저장", en: "Save"},
@@ -187,14 +203,17 @@ export const useTranslate = () => {
     set: {ko: "세트", en: "Set"},
     signup: {ko: "회원가입", en: "Signup"},
     sleep: {ko: "수면", en: "sleep"},
+    sleepTime: {ko: "수면", en: "SleepTime"},
     sort: {ko: "정렬", en: "Sort"},
     send: {ko: "전송", en: "Send"},
     signupDate: {ko: "가입일", en: "Signup Date"},
+    saveId: {ko: "아이디 저장", en: "Save ID"},
+    savings: {ko: "저축", en: "Savings"},
+    snack: {ko: "간식", en: "Snack"},
 
     // t
     trend: {ko: "추이", en: "Trend"},
     today: {ko: "오늘", en: "Today"},
-    time: {ko: "수면", en: "Sleep Time"},
     title: {ko: "분류2", en: "Title"},
     total: {ko: "총합", en: "total"},
     totalCount: {ko: "총 횟수", en: "Total Count"},
@@ -206,6 +225,7 @@ export const useTranslate = () => {
     totalOut: {ko: "총 지출", en: "Total Expense"},
     totalProtein: {ko: "총 단백질", en: "Total Protein"},
     totalVolume: {ko: "총 볼륨", en: "Total Volume"},
+    transportation: {ko: "교통", en: "Transportation"},
 
     // u
     // v
@@ -216,7 +236,7 @@ export const useTranslate = () => {
     viewWeek: {ko: "주별", en: "Week View"},
     viewYear: {ko: "년별", en: "Year View"},
     volume: {ko: "볼륨", en: "Volume"},
-    volumeCardio: {ko: "볼륨 / 유산소", en: "Volume / Cardio"},
+    volumeCardio: {ko: "볼륨-유산소", en: "Volume-Cardio"},
 
     // w
     week: {ko: "주별", en: "Week"},
@@ -227,6 +247,62 @@ export const useTranslate = () => {
     year: {ko: "년별", en: "Year"},
 
     // z
+
+    // etc
+    deadLift: {ko: "데드리프트", en: "Dead Lift"},
+    barbellRow: {ko: "바벨로우", en: "Barbell Row"},
+    dumbbellRow: {ko: "덤벨로우", en: "Dumbbell Row"},
+    seatedRow: {ko: "시티드로우", en: "Seated Row"},
+    latPulldown: {ko: "랫풀다운", en: "Lat Pulldown"},
+    pullUp: {ko: "풀업", en: "Pull-Up"},
+    backSquat: {ko: "백스쿼트", en: "Back Squat"},
+    frontSquat: {ko: "프론트스쿼트", en: "Front Squat"},
+    hackSquat: {ko: "핵스쿼트", en: "Hack Squat"},
+    barbellLunge: {ko: "바벨런지", en: "Barbell Lunge"},
+    dumbbellLunge: {ko: "덤벨런지", en: "Dumbbell Lunge"},
+    legPress: {ko: "레그프레스", en: "Leg Press"},
+    legExtension: {ko: "레그익스텐션", en: "Leg Extension"},
+    legCurl: {ko: "레그컬", en: "Leg Curl"},
+    barbellBenchPress: {ko: "바벨벤치프레스", en: "Barbell Bench Press"},
+    dumbbellBenchPress: {ko: "덤벨벤치프레스", en: "Dumbbell Bench Press"},
+    machineBenchPress: {ko: "머신벤치프레스", en: "Machine Bench Press"},
+    inclineBenchPress: {ko: "인클라인벤치프레스", en: "Incline Bench Press"},
+    declineBenchPress: {ko: "디클라인벤치프레스", en: "Decline Bench Press"},
+    dumbbellFly: {ko: "덤벨플라이", en: "Dumbbell Fly"},
+    cableFly: {ko: "케이블플라이", en: "Cable Fly"},
+    cableCrossover: {ko: "케이블크로스오버", en: "Cable Crossover"},
+    dips: {ko: "딥스", en: "Dips"},
+    pushUp: {ko: "푸시업", en: "Push-Up"},
+    militaryPress: {ko: "밀리터리프레스", en: "Military Press"},
+    barbellPress: {ko: "바벨프레스", en: "Barbell Press"},
+    dumbbellPress: {ko: "덤벨프레스", en: "Dumbbell Press"},
+    machinePress: {ko: "머신프레스", en: "Machine Press"},
+    behindTheNeckPress: {ko: "비하인드넥프레스", en: "Behind-The-Neck Press"},
+    frontLateralRaise: {ko: "프론트레터럴레이즈", en: "Front Lateral Raise"},
+    sideLateralRaise: {ko: "사이드레터럴레이즈", en: "Side Lateral Raise"},
+    bentOverLateralRaise: {ko: "벤트오버레터럴레이즈", en: "Bent-Over Lateral Raise"},
+    facePull: {ko: "페이스풀", en: "Face Pull"},
+    lyingTricepsExtension: {ko: "라잉트라이셉스익스텐션", en: "Lying Triceps Extension"},
+    dumbbellTricepsExtension: {ko: "덤벨트라이셉스익스텐션", en: "Dumbbell Triceps Extension"},
+    overheadTricepsExtension: {ko: "오버헤드트라이셉스익스텐션", en: "Overhead Triceps Extension"},
+    closeGripBenchPress: {ko: "클로즈그립벤치프레스", en: "Close-Grip Bench Press"},
+    cableTricepsPushDown: {ko: "케이블트라이셉스푸쉬다운", en: "Cable Triceps Push Down"},
+    cableTricepsRopeDown: {ko: "케이블트라이셉스로프다운", en: "Cable Triceps Rope Down"},
+    kickback: {ko: "킥백", en: "Kickback"},
+    barbellCurl: {ko: "바벨컬", en: "Barbell Curl"},
+    dumbbellCurl: {ko: "덤벨컬", en: "Dumbbell Curl"},
+    hammerCurl: {ko: "해머컬", en: "Hammer Curl"},
+    machineCurl: {ko: "머신컬", en: "Machine Curl"},
+    cableCurl: {ko: "케이블컬", en: "Cable Curl"},
+    barbellPreacherCurl: {ko: "바벨프리처컬", en: "Barbell Preacher Curl"},
+    dumbbellPreacherCurl: {ko: "덤벨프리처컬", en: "Dumbbell Preacher Curl"},
+    walking: {ko: "걷기", en: "Walking"},
+    running: {ko: "달리기", en: "Running"},
+    stepper: {ko: "스텝퍼", en: "Stepper"},
+    cycling: {ko: "사이클", en: "Cycling"},
+    swimming: {ko: "수영", en: "Swimming"},
+    plank: {ko: "플랭크", en: "Plank"},
+    rest: {ko: "휴식", en: "Rest"},
   };
 
   const translate = useCallback((key) => {

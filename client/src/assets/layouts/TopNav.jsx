@@ -234,7 +234,7 @@ export const TopNav = () => {
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("in")}
+                label={translate("income")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
@@ -254,7 +254,7 @@ export const TopNav = () => {
             <Div className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("out")}
+                label={translate("expense")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}

@@ -32,8 +32,8 @@ export const barToday = async (
     {
       name: "칼로리",
       date: dateStart,
-      목표: intFormat(findGoal?.[0]?.food_goal_kcal),
-      실제: intFormat(findReal?.[0]?.food_total_kcal)
+      goal: intFormat(findGoal?.[0]?.food_goal_kcal),
+      real: intFormat(findReal?.[0]?.food_total_kcal)
     }
   ];
 
@@ -42,20 +42,20 @@ export const barToday = async (
     {
       name: "탄수화물",
       date: dateStart,
-      목표: intFormat(findGoal?.[0]?.food_goal_carb),
-      실제: intFormat(findReal?.[0]?.food_total_carb)
+      goal: intFormat(findGoal?.[0]?.food_goal_carb),
+      real: intFormat(findReal?.[0]?.food_total_carb)
     },
     {
       name: "단백질",
       date: dateStart,
-      목표: intFormat(findGoal?.[0]?.food_goal_protein),
-      실제: intFormat(findReal?.[0]?.food_total_protein)
+      goal: intFormat(findGoal?.[0]?.food_goal_protein),
+      real: intFormat(findReal?.[0]?.food_total_protein)
     },
     {
       name: "지방",
       date: dateStart,
-      목표: intFormat(findGoal?.[0]?.food_goal_fat),
-      실제: intFormat(findReal?.[0]?.food_total_fat)
+      goal: intFormat(findGoal?.[0]?.food_goal_fat),
+      real: intFormat(findReal?.[0]?.food_total_fat)
     }
   ];
 
@@ -196,9 +196,9 @@ export const lineWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // ex 월
+  // ex mon, tue
   const name = [
-    "월", "화", "수", "목", "금", "토", "일"
+    "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
 
   // ex. 00-00
@@ -320,7 +320,7 @@ export const avgMonth = async (
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
-    return `${i + 1}주차`;
+    return `Week ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00
@@ -407,7 +407,7 @@ export const avgYear = async (
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
-    return `${i + 1}월`;
+    return `Month ${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00

@@ -24,7 +24,7 @@ export const MoneyDashPie = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("수입");
+  const [LINE, setLINE] = useState("income");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -75,22 +75,22 @@ export const MoneyDashPie = () => {
       },
     });
     setOBJECT_IN_TODAY(
-      resToday.data.result.in.length > 0 ? resToday.data.result.in : OBJECT_IN_TODAY_DEF
+      resToday.data.result.income.length > 0 ? resToday.data.result.income : OBJECT_IN_TODAY_DEF
     );
     setOBJECT_OUT_TODAY(
-      resToday.data.result.out.length > 0 ? resToday.data.result.out : OBJECT_OUT_TODAY_DEF
+      resToday.data.result.expense.length > 0 ? resToday.data.result.expense : OBJECT_OUT_TODAY_DEF
     );
     setOBJECT_IN_WEEK(
-      resWeek.data.result.in.length > 0 ? resWeek.data.result.in : OBJECT_IN_WEEK_DEF
+      resWeek.data.result.income.length > 0 ? resWeek.data.result.income : OBJECT_IN_WEEK_DEF
     );
     setOBJECT_OUT_WEEK(
-      resWeek.data.result.out.length > 0 ? resWeek.data.result.out : OBJECT_OUT_WEEK_DEF
+      resWeek.data.result.expense.length > 0 ? resWeek.data.result.expense : OBJECT_OUT_WEEK_DEF
     );
     setOBJECT_IN_MONTH(
-      resMonth.data.result.in.length > 0 ? resMonth.data.result.in : OBJECT_IN_MONTH_DEF
+      resMonth.data.result.income.length > 0 ? resMonth.data.result.income : OBJECT_IN_MONTH_DEF
     );
     setOBJECT_OUT_MONTH(
-      resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
+      resMonth.data.result.expense.length > 0 ? resMonth.data.result.expense : OBJECT_OUT_MONTH_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
@@ -477,7 +477,7 @@ export const MoneyDashPie = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("inOut")} ${translate("ratio")}`}
+        {translate("dashPie")}
       </Div>
     );
     // 7-4. delete
@@ -506,7 +506,7 @@ export const MoneyDashPie = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["수입", "지출"].map((key, index) => (
+        ["income", "expense"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
               if (LINE === key) {
@@ -564,22 +564,22 @@ export const MoneyDashPie = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "수입") {
+      if (SECTION === "today" && LINE === "income") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "today" && LINE === "지출") {
+      else if (SECTION === "today" && LINE === "expense") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "수입") {
+      else if (SECTION === "week" && LINE === "income") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "week" && LINE === "지출") {
+      else if (SECTION === "week" && LINE === "expense") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
-      else if (SECTION === "month" && LINE === "수입") {
+      else if (SECTION === "month" && LINE === "income") {
         return LOADING ? loadingNode() : dashFragment5(0);
       }
-      else if (SECTION === "month" && LINE === "지출") {
+      else if (SECTION === "month" && LINE === "expense") {
         return LOADING ? loadingNode() : dashFragment6(0);
       }
     }
@@ -588,7 +588,7 @@ export const MoneyDashPie = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

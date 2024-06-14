@@ -85,9 +85,9 @@ export const list = {
         sleep_dateEnd: 1,
         sleep_section: [{
           _id: "$sleep_section._id",
-          sleep_night: "$sleep_section.sleep_night",
-          sleep_morning: "$sleep_section.sleep_morning",
-          sleep_time: "$sleep_section.sleep_time",
+          sleep_bedTime: "$sleep_section.sleep_bedTime",
+          sleep_wakeTime: "$sleep_section.sleep_wakeTime",
+          sleep_sleepTime: "$sleep_section.sleep_sleepTime",
         }]
       }},
       {$sort: {sleep_dateStart: sort_param}},

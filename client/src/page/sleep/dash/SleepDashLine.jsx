@@ -20,7 +20,7 @@ export const SleepDashLine = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["취침", "수면", "기상"];
+  const array = ["bedTime", "wakeTime", "sleepTime"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
@@ -34,10 +34,10 @@ export const SleepDashLine = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEF = [
-    {name:"", day: "", 취침: 0, 기상: 0, 수면: 0},
+    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", 취침: 0, 기상: 0, 수면: 0},
+    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
@@ -89,16 +89,16 @@ export const SleepDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {PART.includes("취침") && (
-            <Line dataKey={"취침"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
+          {PART.includes("bedTime") && (
+            <Line dataKey={"bedTime"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
-          {PART.includes("기상") && (
-            <Line dataKey={"기상"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+          {PART.includes("wakeTime") && (
+            <Line dataKey={"wakeTime"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
-          {PART.includes("수면") && (
-            <Line dataKey={"수면"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
+          {PART.includes("sleepTime") && (
+            <Line dataKey={"sleepTime"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           <Tooltip
@@ -163,16 +163,16 @@ export const SleepDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          {PART.includes("취침") && (
-            <Line dataKey={"취침"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
+          {PART.includes("bedTime") && (
+            <Line dataKey={"bedTime"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
-          {PART.includes("기상") && (
-            <Line dataKey={"기상"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+          {PART.includes("wakeTime") && (
+            <Line dataKey={"wakeTime"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
-          {PART.includes("수면") && (
-            <Line dataKey={"수면"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
+          {PART.includes("sleepTime") && (
+            <Line dataKey={"sleepTime"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
             strokeWidth={2}/>
           )}
           <Tooltip
@@ -217,7 +217,7 @@ export const SleepDashLine = () => {
     // 7-5. title
     const titleSection = () => (
       <Div className={"d-center fs-0-9rem"}>
-        {`${translate("sleep")} ${translate("trend")}`}
+        {translate("dashLine")}
       </Div>
     );
     // 7-4. delete
@@ -245,7 +245,7 @@ export const SleepDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["취침", "기상", "수면"]?.map((key, index) => (
+        ["bedTime", "wakeTime", "sleepTime"]?.map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel
               control={<Switch checked={PART.includes(key)}
@@ -300,7 +300,7 @@ export const SleepDashLine = () => {
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
         <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
-        <Div className={"me-0"}>{deleteSection2()}</Div>
+        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );
     // 7-9. third

@@ -137,8 +137,8 @@ export const percent = {
       }},
       {$project: {
         _id: 0,
-        money_goal_in: "$money_goal_in",
-        money_goal_out: "$money_goal_out",
+        money_goal_income: "$money_goal_income",
+        money_goal_expense: "$money_goal_expense",
       }}
     ]);
     return finalResult[0];
@@ -162,8 +162,8 @@ export const percent = {
       }},
       {$project: {
         _id: 0,
-        money_total_in: "$money_total_in",
-        money_total_out: "$money_total_out",
+        money_total_income: "$money_total_income",
+        money_total_expense: "$money_total_expense",
       }}
     ]);
     return finalResult[0];
@@ -187,9 +187,9 @@ export const percent = {
       }},
       {$project: {
         _id: 0,
-        sleep_goal_night: "$sleep_goal_night",
-        sleep_goal_morning: "$sleep_goal_morning",
-        sleep_goal_time: "$sleep_goal_time",
+        sleep_goal_bedTime: "$sleep_goal_bedTime",
+        sleep_goal_wakeTime: "$sleep_goal_wakeTime",
+        sleep_goal_sleepTime: "$sleep_goal_sleepTime",
       }}
     ]);
     return finalResult[0];
@@ -213,9 +213,9 @@ export const percent = {
       }},
       {$project: {
         _id: 0,
-        sleep_night: { $arrayElemAt: ["$sleep_section.sleep_night", 0] },
-        sleep_morning: { $arrayElemAt: ["$sleep_section.sleep_morning", 0] },
-        sleep_time: { $arrayElemAt: ["$sleep_section.sleep_time", 0] },
+        sleep_bedTime: { $arrayElemAt: ["$sleep_section.sleep_bedTime", 0] },
+        sleep_wakeTime: { $arrayElemAt: ["$sleep_section.sleep_wakeTime", 0] },
+        sleep_sleepTime: { $arrayElemAt: ["$sleep_section.sleep_sleepTime", 0] },
       }}
     ]);
     return finalResult[0];
@@ -233,15 +233,15 @@ export const property = {
       }},
       {$group: {
         _id: null,
-        money_total_in: { $sum: "$money_total_in" },
-        money_total_out: { $sum: "$money_total_out" },
+        money_total_income: { $sum: "$money_total_income" },
+        money_total_expense: { $sum: "$money_total_expense" },
         property_dateStart: { $min: "$money_dateStart" },
         property_dateEnd: { $max: "$money_dateEnd" },
       }},
       {$project: {
         _id: 0,
-        money_total_in: "$money_total_in",
-        money_total_out: "$money_total_out",
+        money_total_income: "$money_total_income",
+        money_total_expense: "$money_total_expense",
         property_dateStart: "$property_dateStart",
         property_dateEnd: "$property_dateEnd",
       }}

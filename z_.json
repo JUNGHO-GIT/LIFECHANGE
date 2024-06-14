@@ -1,14 +1,372 @@
-.loader {
-	width: 40px;
-	height: 40px;
-	position: relative;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 50%;
-	border-top: 3px solid rgba(62, 150, 252, 0.8);
-	border-right: 3px solid transparent;
-  background-color: #ffffff;
-	animation: loaderAnimation 1s ease-in-out infinite;
+OBJECT : {
+  "user_id": "123",
+  "user_number": 0,
+  "dataCategory": {
+    "calendar": [
+      {
+        "calendar_part": "일정"
+      }
+    ],
+    "exercise": [
+      {
+        "exercise_part": "전체",
+        "exercise_title": [
+          "전체"
+        ]
+      },
+      {
+        "exercise_part": "등",
+        "exercise_title": [
+          "전체",
+          "데드리프트",
+          "바벨로우",
+          "덤벨로우",
+          "시티드로우",
+          "랫풀다운",
+          "풀업"
+        ]
+      },
+      {
+        "exercise_part": "하체",
+        "exercise_title": [
+          "전체",
+          "백스쿼트",
+          "프론트스쿼트",
+          "핵스쿼트",
+          "바벨런지",
+          "덤벨런지",
+          "레그프레스",
+          "레그익스텐션",
+          "레그컬"
+        ]
+      },
+      {
+        "exercise_part": "가슴",
+        "exercise_title": [
+          "전체",
+          "바벨벤치프레스",
+          "덤벨벤치프레스",
+          "머신벤치프레스",
+          "인클라인벤치프레스",
+          "디클라인벤치프레스",
+          "덤벨플라이",
+          "케이블플라이",
+          "케이블크로스오버",
+          "딥스",
+          "푸쉬업"
+        ]
+      },
+      {
+        "exercise_part": "어깨",
+        "exercise_title": [
+          "전체",
+          "밀리터리프레스",
+          "바벨프레스",
+          "덤벨프레스",
+          "머신프레스",
+          "비하인드넥프레스",
+          "프론트레터럴레이즈",
+          "사이드레터럴레이즈",
+          "벤트오버레터럴레이즈",
+          "페이스풀"
+        ]
+      },
+      {
+        "exercise_part": "삼두",
+        "exercise_title": [
+          "전체",
+          "라잉트라이셉스익스텐션",
+          "덤벨트라이셉스익스텐션",
+          "오버헤드트라이셉스익스텐션",
+          "클로즈그립벤치프레스",
+          "케이블트라이셉스푸쉬다운",
+          "케이블트라이셉스로프다운",
+          "킥백"
+        ]
+      },
+      {
+        "exercise_part": "이두",
+        "exercise_title": [
+          "전체",
+          "바벨컬",
+          "덤벨컬",
+          "해머컬",
+          "머신컬",
+          "케이블컬",
+          "바벨프리처컬",
+          "덤벨프리처컬"
+        ]
+      },
+      {
+        "exercise_part": "유산소",
+        "exercise_title": [
+          "전체",
+          "걷기",
+          "달리기",
+          "스텝퍼",
+          "자전거",
+          "수영",
+          "플랭크"
+        ]
+      },
+      {
+        "exercise_part": "휴식",
+        "exercise_title": [
+          "전체",
+          "휴식"
+        ]
+      }
+    ],
+    "food": [
+      {
+        "food_part": "전체"
+      },
+      {
+        "food_part": "아침"
+      },
+      {
+        "food_part": "점심"
+      },
+      {
+        "food_part": "저녁"
+      },
+      {
+        "food_part": "간식"
+      }
+    ],
+    "money": [
+      {
+        "money_part": "전체",
+        "money_title": [
+          "전체"
+        ]
+      },
+      {
+        "money_part": "수입",
+        "money_title": [
+          "전체",
+          "근로",
+          "금융",
+          "기타"
+        ]
+      },
+      {
+        "money_part": "지출",
+        "money_title": [
+          "전체",
+          "식비",
+          "문화",
+          "주거",
+          "건강",
+          "교통",
+          "유흥",
+          "품위",
+          "저축",
+          "금융",
+          "기타"
+        ]
+      },
+      {
+        "money_part": "222",
+        "money_title": [
+          ""
+        ]
+      }
+    ],
+    "sleep": [
+      {
+        "sleep_part": "전체"
+      },
+      {
+        "sleep_part": "취침"
+      },
+      {
+        "sleep_part": "기상"
+      },
+      {
+        "sleep_part": "수면"
+      }
+    ]
+  },
+  "defaultCategory": {
+    "calendar": [
+      {
+        "calendar_part": "schedule"
+      }
+    ],
+    "exercise": [
+      {
+        "exercise_part": "all",
+        "exercise_title": [
+          "all"
+        ]
+      },
+      {
+        "exercise_part": "back",
+        "exercise_title": [
+          "all",
+          "deadLift",
+          "barbellRow",
+          "dumbbellRow",
+          "seatedRow",
+          "latPulldown",
+          "pullUp"
+        ]
+      },
+      {
+        "exercise_part": "leg",
+        "exercise_title": [
+          "all",
+          "backSquat",
+          "frontSquat",
+          "hackSquat",
+          "barbellLunge",
+          "dumbbellLunge",
+          "legPress",
+          "legExtension",
+          "legCurl"
+        ]
+      },
+      {
+        "exercise_part": "chest",
+        "exercise_title": [
+          "all",
+          "barbellBenchPress",
+          "dumbbellBenchPress",
+          "machineBenchPress",
+          "inclineBenchPress",
+          "declineBenchPress",
+          "dumbbellFly",
+          "cableFly",
+          "cableCrossover",
+          "dips",
+          "pushUp"
+        ]
+      },
+      {
+        "exercise_part": "shoulders",
+        "exercise_title": [
+          "all",
+          "militaryPress",
+          "barbellPress",
+          "dumbbellPress",
+          "machinePress",
+          "behindTheNeckPress",
+          "frontLateralRaise",
+          "sideLateralRaise",
+          "bentOverLateralRaise",
+          "facePull"
+        ]
+      },
+      {
+        "exercise_part": "triceps",
+        "exercise_title": [
+          "all",
+          "lyingTricepsExtension",
+          "dumbbellTricepsExtension",
+          "overheadTricepsExtension",
+          "closeGripBenchPress",
+          "cableTricepsPushDown",
+          "cableTricepsRopeDown",
+          "kickback"
+        ]
+      },
+      {
+        "exercise_part": "biceps",
+        "exercise_title": [
+          "all",
+          "barbellCurl",
+          "dumbbellCurl",
+          "hammerCurl",
+          "machineCurl",
+          "cableCurl",
+          "barbellPreacherCurl",
+          "dumbbellPreacherCurl"
+        ]
+      },
+      {
+        "exercise_part": "cardio",
+        "exercise_title": [
+          "all",
+          "walking",
+          "running",
+          "stepper",
+          "cycling",
+          "swimming",
+          "plank"
+        ]
+      },
+      {
+        "exercise_part": "rest",
+        "exercise_title": [
+          "all",
+          "rest"
+        ]
+      }
+    ],
+    "food": [
+      {
+        "food_part": "all"
+      },
+      {
+        "food_part": "breakfast"
+      },
+      {
+        "food_part": "lunch"
+      },
+      {
+        "food_part": "dinner"
+      },
+      {
+        "food_part": "snack"
+      }
+    ],
+    "money": [
+      {
+        "money_part": "all",
+        "money_title": [
+          "all"
+        ]
+      },
+      {
+        "money_part": "income",
+        "money_title": [
+          "all",
+          "labor",
+          "finance",
+          "others"
+        ]
+      },
+      {
+        "money_part": "expense",
+        "money_title": [
+          "all",
+          "food",
+          "culture",
+          "housing",
+          "health",
+          "transportation",
+          "entertainment",
+          "dignity",
+          "savings",
+          "finance",
+          "others"
+        ]
+      }
+    ],
+    "sleep": [
+      {
+        "sleep_part": "all"
+      },
+      {
+        "sleep_part": "bedTime"
+      },
+      {
+        "sleep_part": "wakeTime"
+      },
+      {
+        "sleep_part": "sleepTime"
+      }
+    ]
+  }
 }

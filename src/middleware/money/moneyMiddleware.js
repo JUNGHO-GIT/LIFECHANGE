@@ -9,16 +9,16 @@ export const save = async (object) => {
   let totalOut = 0;
 
   object?.money_section?.map((item) => {
-    if (item?.money_part_val === "수입") {
+    if (item?.money_part_val === "income") {
       totalIn += item?.money_amount;
     }
-    else if (item?.money_part_val === "지출") {
+    else if (item?.money_part_val === "expense") {
       totalOut += item?.money_amount;
     }
   });
 
-  object.money_total_in = totalIn;
-  object.money_total_out = totalOut;
+  object.money_total_income = totalIn;
+  object.money_total_expense = totalOut;
 
   return object;
 };
@@ -32,16 +32,16 @@ export const deletes = async (object) => {
   let totalOut = 0;
 
   object?.money_section?.map((item) => {
-    if (item?.money_part_val === "수입") {
+    if (item?.money_part_val === "income") {
       totalIn += item?.money_amount;
     }
-    else if (item?.money_part_val === "지출") {
+    else if (item?.money_part_val === "expense") {
       totalOut += item?.money_amount;
     }
   });
 
-  object.money_total_in = totalIn;
-  object.money_total_out = totalOut;
+  object.money_total_income = totalIn;
+  object.money_total_expense = totalOut;
 
   return object;
 };

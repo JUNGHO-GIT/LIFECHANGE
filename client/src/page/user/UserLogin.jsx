@@ -49,7 +49,8 @@ export const UserLogin = () => {
         localStorage.setItem("sessionId", "");
       }
       sessionStorage.setItem("sessionId", userId);
-      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.user.dataCategory));
+      sessionStorage.setItem("defaultCategory", JSON.stringify(res.data.result.defaultCategory));
       sessionStorage.setItem("lang", "ko");
       percent();
       navigate("/calendar/list");
@@ -69,7 +70,7 @@ export const UserLogin = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"ID"}
+          label={translate("id")}
           className={"w-86vw"}
           value={userId}
           InputProps={{
@@ -86,7 +87,7 @@ export const UserLogin = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"PW"}
+          label={translate("pw")}
           value={userPw}
           className={"w-86vw"}
           InputProps={{
@@ -101,7 +102,7 @@ export const UserLogin = () => {
         <Br10 />
         <Div className={"d-center"}>
           <Div className={"fs-0-8rem"}>
-            아이디 저장
+            {translate("saveId")}
           </Div>
           <Checkbox
             color={"primary"}

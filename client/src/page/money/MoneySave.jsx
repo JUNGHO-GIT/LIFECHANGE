@@ -60,8 +60,8 @@ export const MoneySave = () => {
     money_demo: false,
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_in: 0,
-    money_total_out: 0,
+    money_total_income: 0,
+    money_total_expense: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -117,18 +117,18 @@ export const MoneySave = () => {
   useEffect(() => {
     const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
-        // money_part_val 가 수입인경우
-        totalIn: acc.totalIn + (cur.money_part_val === "수입" ? cur.money_amount : 0),
+        // money_part_val 가 income인경우
+        totalIn: acc.totalIn + (cur.money_part_val === "income" ? cur.money_amount : 0),
 
-        // money_part_val 가 지출인경우
-        totalOut: acc.totalOut + (cur.money_part_val === "지출" ? cur.money_amount : 0)
+        // money_part_val 가 expense인경우
+        totalOut: acc.totalOut + (cur.money_part_val === "expense" ? cur.money_amount : 0)
       };
     }, {totalIn: 0, totalOut: 0});
 
     setOBJECT((prev) => ({
       ...prev,
-      money_total_in: Math.round(totals.totalIn),
-      money_total_out: Math.round(totals.totalOut)
+      money_total_income: Math.round(totals.totalIn),
+      money_total_expense: Math.round(totals.totalOut)
     }));
 
   }, [OBJECT?.money_section]);
@@ -258,7 +258,7 @@ export const MoneySave = () => {
           select={false}
           label={translate("totalIn")}
           size={"small"}
-          value={numeral(OBJECT?.money_total_in).format('0,0')}
+          value={numeral(OBJECT?.money_total_income).format('0,0')}
           variant={"outlined"}
           className={"w-86vw"}
           InputProps={{
@@ -278,7 +278,7 @@ export const MoneySave = () => {
           select={false}
           label={translate("totalOut")}
           size={"small"}
-          value={numeral(OBJECT?.money_total_out).format('0,0')}
+          value={numeral(OBJECT?.money_total_expense).format('0,0')}
           variant={"outlined"}
           className={"w-86vw"}
           InputProps={{

@@ -31,20 +31,20 @@ export const list = async (
     );
 
     const sleepNight = listReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_night)
+      acc + strToDecimal(curr?.sleep_bedTime)
     ), 0);
     const sleepMorning = listReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_morning)
+      acc + strToDecimal(curr?.sleep_wakeTime)
     ), 0);
     const sleepTime = listReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_time)
+      acc + strToDecimal(curr?.sleep_sleepTime)
     ), 0);
 
     return {
       ...goal,
-      sleep_night: decimalToStr(sleepNight),
-      sleep_morning: decimalToStr(sleepMorning),
-      sleep_time: decimalToStr(sleepTime)
+      sleep_bedTime: decimalToStr(sleepNight),
+      sleep_wakeTime: decimalToStr(sleepMorning),
+      sleep_sleepTime: decimalToStr(sleepTime)
     };
   }));
 

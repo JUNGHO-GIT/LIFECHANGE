@@ -11,7 +11,7 @@ import {Money} from "../../schema/money/Money.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
 
-// 1-1. category ------------------------------------------------------------------------------------>
+// 1-1. category ---------------------------------------------------------------------------------->
 export const category = {
   list: async (
     user_id_param
