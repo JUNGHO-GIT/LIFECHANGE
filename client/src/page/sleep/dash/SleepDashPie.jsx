@@ -118,7 +118,7 @@ export const SleepDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${getNameWithoutTime(OBJECT_TODAY[index]?.name)} ${Number(value).toLocaleString()} %`}
+        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -138,7 +138,7 @@ export const SleepDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${getNameWithoutTime(OBJECT_TODAY[index]?.name)} ${Number(value).toLocaleString()} %`}
+        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -158,7 +158,7 @@ export const SleepDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${getNameWithoutTime(OBJECT_TODAY[index]?.name)} ${Number(value).toLocaleString()} %`}
+        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -194,6 +194,9 @@ export const SleepDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -235,6 +238,9 @@ export const SleepDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -276,6 +282,9 @@ export const SleepDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",

@@ -136,7 +136,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_IN_TODAY[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_IN_TODAY[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   };
@@ -153,7 +153,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_OUT_TODAY[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_OUT_TODAY[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   }
@@ -170,7 +170,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_IN_WEEK[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_IN_WEEK[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   }
@@ -187,7 +187,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_OUT_WEEK[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_OUT_WEEK[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   }
@@ -204,7 +204,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_IN_MONTH[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_IN_MONTH[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   }
@@ -221,7 +221,7 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_OUT_MONTH[index]?.name.substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
+        {`${translate(OBJECT_OUT_MONTH[index]?.name).substring(0, 5)} ₩ ${Number(value).toLocaleString()}`}
       </text>
     );
   }
@@ -257,6 +257,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -298,6 +301,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -339,6 +345,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -380,6 +389,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -421,6 +433,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -462,6 +477,9 @@ export const MoneyDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",

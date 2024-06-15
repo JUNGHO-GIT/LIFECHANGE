@@ -314,7 +314,7 @@ export const useTranslate = () => {
     barbellPress: {ko: "바벨프레스", en: "Barbell Press"},
     dumbbellPress: {ko: "덤벨프레스", en: "Dumbbell Press"},
     machinePress: {ko: "머신프레스", en: "Machine Press"},
-    behindTheNeckPress: {ko: "비하인드넥프레스", en: "Behind-The-Neck Press"},
+    behindNeckPress: {ko: "비하인드넥프레스", en: "Behind-The-Neck Press"},
     frontLateralRaise: {ko: "프론트레터럴레이즈", en: "Front Lateral Raise"},
     sideLateralRaise: {ko: "사이드레터럴레이즈", en: "Side Lateral Raise"},
     bentOverLateralRaise: {ko: "벤트오버레터럴레이즈", en: "Bent-Over Lateral Raise"},

@@ -117,7 +117,7 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_PART_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${translate(OBJECT_PART_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -134,7 +134,7 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_TITLE_WEEK[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${translate(OBJECT_TITLE_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   }
@@ -151,7 +151,7 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_PART_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${translate(OBJECT_PART_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   }
@@ -168,7 +168,7 @@ export const ExerciseDashPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${OBJECT_TITLE_MONTH[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
+        {`${translate(OBJECT_TITLE_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -204,6 +204,9 @@ export const ExerciseDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -245,6 +248,9 @@ export const ExerciseDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -286,6 +292,9 @@ export const ExerciseDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",
@@ -327,6 +336,9 @@ export const ExerciseDashPie = () => {
           iconType={"circle"}
           verticalAlign={"bottom"}
           align={"center"}
+          formatter={(value) => {
+            return translate(value);
+          }}
           wrapperStyle={{
             lineHeight:"40px",
             paddingTop:"10px",

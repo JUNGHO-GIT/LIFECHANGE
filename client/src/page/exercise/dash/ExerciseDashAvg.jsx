@@ -253,7 +253,7 @@ export const ExerciseDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} vol`;
+              return `${translate(name)}: ${Number(value).toLocaleString()} vol`;
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -321,7 +321,7 @@ export const ExerciseDashAvg = () => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
               return `${date}`;
             }}
-            formatter={(value, name, props) => {
+            formatter={(value) => {
               return `${Number(value).toLocaleString()}`;
             }}
             cursor={{

@@ -80,6 +80,12 @@ export const ExerciseSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useTime(OBJECT, setOBJECT, PATH, "real");
 
+  useEffect(() => {
+    console.log("===================================");
+    log("OBJECT", OBJECT);
+    console.log("===================================");
+  }, [OBJECT]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -232,7 +238,6 @@ export const ExerciseSave = () => {
       navigate(0);
     }
   };
-
 
   // 4-3. handler --------------------------------------------------------------------------------->
   const handlerDelete = (index) => {
