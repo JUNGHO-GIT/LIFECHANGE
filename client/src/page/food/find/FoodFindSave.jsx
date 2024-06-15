@@ -59,7 +59,7 @@ export const FoodFindSave = () => {
   const OBJECT_DEF = {
     _id: "",
     food_number: 0,
-    food_demo: false,
+    food_dummy: false,
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,

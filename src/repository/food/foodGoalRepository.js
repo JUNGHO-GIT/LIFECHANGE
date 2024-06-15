@@ -139,7 +139,7 @@ export const save = {
     const finalResult = await FoodGoal.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      food_goal_demo: false,
+      food_goal_dummy: false,
       food_goal_dateType: dateType_param,
       food_goal_dateStart: dateStart_param,
       food_goal_dateEnd: dateEnd_param,

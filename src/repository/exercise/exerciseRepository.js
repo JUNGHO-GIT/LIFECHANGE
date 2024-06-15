@@ -145,7 +145,7 @@ export const save = {
     const finalResult = await Exercise.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      exercise_demo: false,
+      exercise_dummy: false,
       exercise_dateType: dateType_param,
       exercise_dateStart: dateStart_param,
       exercise_dateEnd: dateEnd_param,

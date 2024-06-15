@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
-  exercise_goal_demo: {
+  exercise_goal_dummy: {
     type: Boolean,
     default: false,
     required: false

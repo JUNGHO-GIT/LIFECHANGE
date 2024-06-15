@@ -262,7 +262,7 @@ export const SleepDashAvg = () => {
                 else {
                   setPART([...PART, key]);
                 }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>

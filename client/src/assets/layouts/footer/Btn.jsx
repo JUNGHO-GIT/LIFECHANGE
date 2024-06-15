@@ -125,7 +125,7 @@ export const Btn = ({
       {translate("flowDefault")}
     </Button>
   );
-  const btnFlowDemo = () => (
+  const btnFlowDummy = () => (
     <Div className={"d-center"}>
       <TextField
         select={true}
@@ -147,14 +147,30 @@ export const Btn = ({
             page: 1
           }));
         }}>
-        <MenuItem value={"exerciseGoal"}>운동(계획)</MenuItem>
-        <MenuItem value={"exercise"}>운동</MenuItem>
-        <MenuItem value={"foodGoal"}>식사(계획)</MenuItem>
-        <MenuItem value={"food"}>식사</MenuItem>
-        <MenuItem value={"moneyGoal"}>지출(계획)</MenuItem>
-        <MenuItem value={"money"}>지출</MenuItem>
-        <MenuItem value={"sleepGoal"}>수면(계획)</MenuItem>
-        <MenuItem value={"sleep"}>수면</MenuItem>
+        <MenuItem value={"exerciseGoal"}>
+          {`${translate("exercise")}(${translate("goal")})`}
+        </MenuItem>
+        <MenuItem value={"exercise"}>
+          {translate("exercise")}
+        </MenuItem>
+        <MenuItem value={"foodGoal"}>
+          {`${translate("food")}(${translate("goal")})`}
+        </MenuItem>
+        <MenuItem value={"food"}>
+          {translate("food")}
+        </MenuItem>
+        <MenuItem value={"moneyGoal"}>
+          {`${translate("money")}(${translate("goal")})`}
+        </MenuItem>
+        <MenuItem value={"money"}>
+          {translate("money")}
+        </MenuItem>
+        <MenuItem value={"sleepGoal"}>
+          {`${translate("sleep")}(${translate("goal")})`}
+        </MenuItem>
+        <MenuItem value={"sleep"}>
+          {translate("sleep")}
+        </MenuItem>
       </TextField>
       <TextField
         select={false}
@@ -176,7 +192,7 @@ export const Btn = ({
       />
       <Button size={"small"} className={"ms-5"} color={"success"} variant={"contained"}
       onClick={() => (handlers.flowSave(objects.PART))}>
-        {translate("flowDemo")}
+        {translate("flowDummy")}
       </Button>
     </Div>
   );
@@ -348,7 +364,7 @@ export const Btn = ({
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
-            {btnFlowDemo()}
+            {btnFlowDummy()}
           </Card>
         );
       }

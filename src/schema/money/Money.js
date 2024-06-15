@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
-  money_demo: {
+  money_dummy: {
     type: Boolean,
     default: false,
     required: false

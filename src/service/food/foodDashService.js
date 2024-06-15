@@ -30,7 +30,7 @@ export const barToday = async (
   // kcal
   finalResultKcal = [
     {
-      name: "칼로리",
+      name: "kcal",
       date: dateStart,
       goal: intFormat(findGoal?.[0]?.food_goal_kcal),
       real: intFormat(findReal?.[0]?.food_total_kcal)
@@ -40,19 +40,19 @@ export const barToday = async (
   // nut
   finalResultNut = [
     {
-      name: "탄수화물",
+      name: "carb",
       date: dateStart,
       goal: intFormat(findGoal?.[0]?.food_goal_carb),
       real: intFormat(findReal?.[0]?.food_total_carb)
     },
     {
-      name: "단백질",
+      name: "protein",
       date: dateStart,
       goal: intFormat(findGoal?.[0]?.food_goal_protein),
       real: intFormat(findReal?.[0]?.food_total_protein)
     },
     {
-      name: "지방",
+      name: "fat",
       date: dateStart,
       goal: intFormat(findGoal?.[0]?.food_goal_fat),
       real: intFormat(findReal?.[0]?.food_total_fat)
@@ -94,9 +94,9 @@ export const pieToday = async (
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "탄수화물", value: intFormat(item.food_total_carb)},
-    {name: "단백질", value: intFormat(item.food_total_protein)},
-    {name: "지방", value: intFormat(item.food_total_fat)}
+    {name: "carb", value: intFormat(item.food_total_carb)},
+    {name: "protein", value: intFormat(item.food_total_protein)},
+    {name: "fat", value: intFormat(item.food_total_fat)}
   ]).flat();
 
   return {
@@ -135,9 +135,9 @@ export const pieWeek = async (
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "탄수화물", value: intFormat(item.food_total_carb)},
-    {name: "단백질", value: intFormat(item.food_total_protein)},
-    {name: "지방", value: intFormat(item.food_total_fat)}
+    {name: "carb", value: intFormat(item.food_total_carb)},
+    {name: "protein", value: intFormat(item.food_total_protein)},
+    {name: "fat", value: intFormat(item.food_total_fat)}
   ]).flat();
 
   return {
@@ -176,9 +176,9 @@ export const pieMonth = async (
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "탄수화물", value: intFormat(item.food_total_carb)},
-    {name: "단백질", value: intFormat(item.food_total_protein)},
-    {name: "지방", value: intFormat(item.food_total_fat)}
+    {name: "carb", value: intFormat(item.food_total_carb)},
+    {name: "protein", value: intFormat(item.food_total_protein)},
+    {name: "fat", value: intFormat(item.food_total_fat)}
   ]).flat();
 
   return {
@@ -232,14 +232,14 @@ export const lineWeek = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
+      kcal: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
-      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
-      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
+      carb: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
+      protein: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
+      fat: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
     });
   });
 
@@ -293,14 +293,14 @@ export const lineMonth = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
+      kcal: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
-      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
-      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
+      carb: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
+      protein: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
+      fat: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
     });
   });
 
@@ -380,14 +380,14 @@ export const avgMonth = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      칼로리: intFormat(sumKcal[index] / countRecords[index])
+      kcal: intFormat(sumKcal[index] / countRecords[index])
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      탄수화물: intFormat(sumCarb[index] / countRecords[index]),
-      단백질: intFormat(sumProtein[index] / countRecords[index]),
-      지방: intFormat(sumFat[index] / countRecords[index])
+      carb: intFormat(sumCarb[index] / countRecords[index]),
+      protein: intFormat(sumProtein[index] / countRecords[index]),
+      fat: intFormat(sumFat[index] / countRecords[index])
     });
   });
 
@@ -458,14 +458,14 @@ export const avgYear = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      칼로리: intFormat(sumKcal[index] / countRecords[index])
+      kcal: intFormat(sumKcal[index] / countRecords[index])
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      탄수화물: intFormat(sumCarb[index] / countRecords[index]),
-      단백질: intFormat(sumProtein[index] / countRecords[index]),
-      지방: intFormat(sumFat[index] / countRecords[index])
+      carb: intFormat(sumCarb[index] / countRecords[index]),
+      protein: intFormat(sumProtein[index] / countRecords[index]),
+      fat: intFormat(sumFat[index] / countRecords[index])
     });
   });
 

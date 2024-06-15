@@ -515,7 +515,7 @@ export const MoneyDashPie = () => {
               else {
                 setLINE(key);
               }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>

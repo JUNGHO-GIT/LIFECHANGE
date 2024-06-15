@@ -152,7 +152,7 @@ export const save = {
     const finalResult = await Sleep.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      sleep_demo: false,
+      sleep_dummy: false,
       sleep_dateType: dateType_param,
       sleep_dateStart: dateStart_param,
       sleep_dateEnd:  dateEnd_param,

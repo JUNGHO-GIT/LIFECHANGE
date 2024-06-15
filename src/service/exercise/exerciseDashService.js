@@ -28,7 +28,7 @@ export const barToday = async (
 
   finalResult = [
     {
-      name: "체중",
+      name: "weight",
       date: dateStart,
       goal: intFormat(findGoal?.[0]?.exercise_goal_weight),
       real: intFormat(findReal?.[0]?.exercise_body_weight)
@@ -260,12 +260,12 @@ export const lineWeek = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
+      volume: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      유산소: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      cardio: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 
@@ -320,12 +320,12 @@ export const lineMonth = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
+      volume: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      유산소: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      cardio: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 
@@ -401,12 +401,12 @@ export const avgMonth = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      볼륨: intFormat(sumVolume[index] / countRecords[index])
+      volume: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      유산소: intFormat(sumCardio[index] / countRecords[index])
+      cardio: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 
@@ -473,12 +473,12 @@ export const avgYear = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      볼륨: intFormat(sumVolume[index] / countRecords[index])
+      volume: intFormat(sumVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      유산소: intFormat(sumCardio[index] / countRecords[index])
+      cardio: intFormat(sumCardio[index] / countRecords[index])
     });
   });
 

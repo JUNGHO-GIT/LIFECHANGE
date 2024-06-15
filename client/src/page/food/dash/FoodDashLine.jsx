@@ -20,13 +20,13 @@ export const FoodDashLine = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["칼로리", "탄수화물", "단백질", "지방"];
+  const array = ["kcal", "carb", "protein", "fat"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
-  const [LINE, setLINE] = useState("칼로리");
+  const [LINE, setLINE] = useState("kcal");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -34,16 +34,16 @@ export const FoodDashLine = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_WEEK_DEF = [
-    {name:"", date:"", 칼로리: 0},
+    {name:"", date:"", kcal: 0},
   ];
   const OBJECT_NUT_WEEK_DEF = [
-    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", carb: 0, protein: 0, fat: 0},
   ];
   const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", date:"", 칼로리: 0},
+    {name:"", date:"", kcal: 0},
   ];
   const OBJECT_NUT_MONTH_DEF = [
-    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", carb: 0, protein: 0, fat: 0},
   ];
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);
@@ -102,7 +102,7 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"칼로리"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+          <Line dataKey={"kcal"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
           activeDot={{r: 6}}/>
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -165,13 +165,13 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"탄수화물"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
+          <Line dataKey={"carb"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
             activeDot={{r: 6}}
           />
-          <Line dataKey={"단백질"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
+          <Line dataKey={"protein"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
             activeDot={{r: 6}}
           />
-          <Line dataKey={"지방"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
+          <Line dataKey={"fat"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Tooltip
@@ -236,7 +236,7 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"칼로리"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+          <Line dataKey={"kcal"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Tooltip
@@ -300,13 +300,13 @@ export const FoodDashLine = () => {
             tick={{fill:'#666', fontSize:14}}
             width={30}
           />
-          <Line dataKey={"탄수화물"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
+          <Line dataKey={"carb"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
             activeDot={{r: 6}}
           />
-          <Line dataKey={"단백질"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
+          <Line dataKey={"protein"} type={"monotone"} stroke={COLORS[4]} strokeWidth={2}
             activeDot={{r: 6}}
           />
-          <Line dataKey={"지방"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
+          <Line dataKey={"fat"} type={"monotone"} stroke={COLORS[2]} strokeWidth={2}
             activeDot={{r: 6}}
           />
           <Tooltip
@@ -379,7 +379,7 @@ export const FoodDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["칼로리", "영양소"].map((key, index) => (
+        ["kcal", "nut"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {
@@ -388,7 +388,7 @@ export const FoodDashLine = () => {
                 else {
                   setLINE(key);
                 }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>
@@ -425,16 +425,16 @@ export const FoodDashLine = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "칼로리") {
+      if (SECTION === "week" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "month" && LINE === "칼로리") {
+      else if (SECTION === "month" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "영양소") {
+      else if (SECTION === "week" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "영양소") {
+      else if (SECTION === "month" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
     }

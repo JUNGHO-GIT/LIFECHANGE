@@ -20,13 +20,13 @@ export const ExerciseDashLine = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["볼륨", "유산소"];
+  const array = ["volume", "cardio"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
-  const [LINE, setLINE] = useState("볼륨");
+  const [LINE, setLINE] = useState("volume");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -34,13 +34,13 @@ export const ExerciseDashLine = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_WEEK_DEF = [
-    {name:"", date:"", 볼륨: 0},
+    {name:"", date:"", volume: 0},
   ];
   const OBJECT_CARDIO_WEEK_DEF = [
     {name:"", date:"", 시간: 0},
   ];
   const OBJECT_VOLUME_MONTH_DEF = [
-    {name:"", date:"", 볼륨: 0},
+    {name:"", date:"", volume: 0},
   ];
   const OBJECT_CARDIO_MONTH_DEF = [
     {name:"", date:"", 시간: 0},
@@ -103,7 +103,7 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"볼륨"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+          <Line dataKey={"volume"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}
           />
           <Tooltip
@@ -168,7 +168,7 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"유산소"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
+          <Line dataKey={"cardio"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
             strokeWidth={2}
           />
           <Tooltip
@@ -233,7 +233,7 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"볼륨"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
+          <Line dataKey={"volume"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}
           />
           <Tooltip
@@ -298,7 +298,7 @@ export const ExerciseDashLine = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Line dataKey={"유산소"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
+          <Line dataKey={"cardio"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
             strokeWidth={2}
           />
           <Tooltip
@@ -371,7 +371,7 @@ export const ExerciseDashLine = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["볼륨", "유산소"].map((key, index) => (
+        ["volume", "cardio"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -380,7 +380,7 @@ export const ExerciseDashLine = () => {
               else {
                 setLINE(key);
               }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>
@@ -417,16 +417,16 @@ export const ExerciseDashLine = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "week" && LINE === "볼륨") {
+      if (SECTION === "week" && LINE === "volume") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "month" && LINE === "볼륨") {
+      else if (SECTION === "month" && LINE === "volume") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "유산소") {
+      else if (SECTION === "week" && LINE === "cardio") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "유산소") {
+      else if (SECTION === "month" && LINE === "cardio") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
     }

@@ -54,7 +54,7 @@ export const SleepSave = () => {
   const OBJECT_DEF = {
     _id: "",
     sleep_number: 0,
-    sleep_demo: false,
+    sleep_dummy: false,
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{

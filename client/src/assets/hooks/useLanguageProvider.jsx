@@ -101,7 +101,7 @@ export const useTranslate = () => {
     find: {ko: "찾기", en: "Find"},
     findList: {ko: "찾기", en: "Find"},
     flowDefault: {ko: "기본값", en: "Default"},
-    flowDemo: {ko: "추가", en: "Insert"},
+    flowDummy: {ko: "추가", en: "Insert"},
     flowDeletes: {ko: "삭제", en: "Delete"},
     flowFind: {ko: "찾기", en: "Find"},
     flowLogin: {ko: "로그인", en: "Login"},
@@ -169,9 +169,10 @@ export const useTranslate = () => {
     lunch: {ko: "점심", en: "Lunch"},
 
     // m
-    money: {ko: "재무", en: "money"},
+    money: {ko: "자산", en: "money"},
     month: {ko: "월별", en: "Month"},
     wakeTime: {ko: "기상", en: "WakeTime"},
+    [`month ${1}`]: {ko: "1월", en: "Month 1"},
 
     // n
     bedTime: {ko: "취침", en: "BedTime"},
@@ -241,6 +242,7 @@ export const useTranslate = () => {
     // w
     week: {ko: "주별", en: "Week"},
     weight: {ko: "체중", en: "Weight"},
+    [`week ${1}`]: {ko: "1주차", en: "Week 1"},
 
     // x
     // y

@@ -59,7 +59,7 @@ export const MoneyList = () => {
   const OBJECT_DEF = [{
     _id: "",
     money_number: 0,
-    money_demo: false,
+    money_dummy: false,
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: 0,

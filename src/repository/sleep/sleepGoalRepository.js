@@ -143,7 +143,7 @@ export const save = {
     const finalResult = await SleepGoal.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      sleep_goal_demo: false,
+      sleep_goal_dummy: false,
       sleep_goal_dateType: dateType_param,
       sleep_goal_dateStart: dateStart_param,
       sleep_goal_dateEnd: dateEnd_param,

@@ -59,7 +59,7 @@ export const ExerciseGoalList = () => {
   const OBJECT_DEF = [{
     _id: "",
     exercise_goal_goal_number: 0,
-    exercise_goal_goal_demo: false,
+    exercise_goal_goal_dummy: false,
     exercise_goal_goal_dateStart: "0000-00-00",
     exercise_goal_goal_dateEnd: "0000-00-00",
     exercise_goal_goal_count: 0,

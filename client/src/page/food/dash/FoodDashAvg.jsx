@@ -20,13 +20,13 @@ export const FoodDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["칼로리", "탄수화물", "단백질", "지방"];
+  const array = ["kcal", "carb", "protein", "fat"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("칼로리");
+  const [LINE, setLINE] = useState("kcal");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -34,16 +34,16 @@ export const FoodDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", date:"", 칼로리: 0},
+    {name:"", date:"", kcal: 0},
   ];
   const OBJECT_NUT_MONTH_DEF = [
-    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", carb: 0, protein: 0, fat: 0},
   ];
   const OBJECT_KCAL_YEAR_DEF = [
-    {name:"", date:"", 칼로리: 0},
+    {name:"", date:"", kcal: 0},
   ];
   const OBJECT_NUT_YEAR_DEF = [
-    {name:"", date:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", date:"", carb: 0, protein: 0, fat: 0},
   ];
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
@@ -103,7 +103,7 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"칼로리"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -166,9 +166,9 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"탄수화물"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"단백질"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"지방"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -231,7 +231,7 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"칼로리"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -294,9 +294,9 @@ export const FoodDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"탄수화물"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"단백질"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"지방"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -367,7 +367,7 @@ export const FoodDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["칼로리", "영양소"].map((key, index) => (
+        ["kcal", "nut"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel
               control={<Switch checked={LINE === key}
@@ -378,7 +378,7 @@ export const FoodDashAvg = () => {
                 else {
                   setLINE(key);
                 }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>
@@ -415,16 +415,16 @@ export const FoodDashAvg = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "month" && LINE === "칼로리") {
+      if (SECTION === "month" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "year" && LINE === "칼로리") {
+      else if (SECTION === "year" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "영양소") {
+      else if (SECTION === "month" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "year" && LINE === "영양소") {
+      else if (SECTION === "year" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
     }

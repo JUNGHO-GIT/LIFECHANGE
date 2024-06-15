@@ -60,7 +60,7 @@ export const list = async (
   };
 
   const findResult = await getFindResult();
-  const document = new JSDOM(findResult).window.document;
+  const document = new JSDOM(findResult).window._document;
 
   // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;

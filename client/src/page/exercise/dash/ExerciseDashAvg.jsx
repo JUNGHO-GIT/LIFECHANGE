@@ -20,13 +20,13 @@ export const ExerciseDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["볼륨", "유산소"];
+  const array = ["volume", "cardio"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
-  const [LINE, setLINE] = useState("볼륨");
+  const [LINE, setLINE] = useState("volume");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -34,13 +34,13 @@ export const ExerciseDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_MONTH_DEF = [
-    {name:"", date:"", 볼륨: 0},
+    {name:"", date:"", volume: 0},
   ];
   const OBJECT_CARDIO_MONTH_DEF = [
     {name:"", date:"", 시간: 0},
   ];
   const OBJECT_VOLUME_YEAR_DEF = [
-    {name:"", date:"", 볼륨: 0},
+    {name:"", date:"", volume: 0},
   ];
   const OBJECT_CARDIO_YEAR_DEF = [
     {name:"", date:"", 시간: 0},
@@ -103,7 +103,7 @@ export const ExerciseDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"볼륨"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -167,7 +167,7 @@ export const ExerciseDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"유산소"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -231,7 +231,7 @@ export const ExerciseDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"볼륨"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -294,7 +294,7 @@ export const ExerciseDashAvg = () => {
             tick={{fill:"#666", fontSize:14}}
             width={30}
           />
-          <Bar dataKey={"유산소"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
@@ -365,16 +365,16 @@ export const ExerciseDashAvg = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["볼륨", "유산소"].map((key, index) => (
+        ["volume", "cardio"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                if (LINE === key) {
-                  return;
-                }
-                else {
-                  setLINE(key);
-                }
-            }}/>} label={key} labelPlacement={"start"}>
+              if (LINE === key) {
+                return;
+              }
+              else {
+                setLINE(key);
+              }
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>
@@ -411,16 +411,16 @@ export const ExerciseDashAvg = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "month" && LINE === "볼륨") {
+      if (SECTION === "month" && LINE === "volume") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "year" && LINE === "볼륨") {
+      else if (SECTION === "year" && LINE === "volume") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "유산소") {
+      else if (SECTION === "month" && LINE === "cardio") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "year" && LINE === "유산소") {
+      else if (SECTION === "year" && LINE === "cardio") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
     }

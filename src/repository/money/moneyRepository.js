@@ -144,7 +144,7 @@ export const save = {
     const finalResult = await Money.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      money_demo: false,
+      money_dummy: false,
       money_dateType: dateType_param,
       money_dateStart: dateStart_param,
       money_dateEnd: dateEnd_param,

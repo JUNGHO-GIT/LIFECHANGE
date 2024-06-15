@@ -157,7 +157,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         exercise_goal_number: i + insertCount,
-        exercise_goal_demo: true,
+        exercise_goal_dummy: true,
         exercise_goal_dateType: "day",
         exercise_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -197,18 +197,18 @@ export const save = async (
       });
 
       const totalVolume = sections
-        .filter((section) => (section.exercise_part_val !== "유산소"))
+        .filter((section) => (section.exercise_part_val !== "cardio"))
         .reduce((sum, section) => (sum + section.exercise_volume), 0);
 
       const totalCardio = sections
-        .filter((section) => (section.exercise_part_val === "유산소"))
+        .filter((section) => (section.exercise_part_val === "cardio"))
         .reduce((sum, section) => (sum + moment.duration(section.exercise_cardio).asMinutes()), 0);
 
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         exercise_number: i + insertCount,
-        exercise_demo: true,
+        exercise_dummy: true,
         exercise_dateType: "day",
         exercise_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -233,7 +233,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         food_goal_number: i + insertCount,
-        food_goal_demo: true,
+        food_goal_dummy: true,
         food_goal_dateType: "day",
         food_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -290,7 +290,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         food_number: i + insertCount,
-        food_demo: true,
+        food_dummy: true,
         food_dateType: "day",
         food_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -317,7 +317,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         money_goal_number: i + insertCount,
-        money_goal_demo: true,
+        money_goal_dummy: true,
         money_goal_dateType: "day",
         money_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -363,7 +363,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         money_number: i + insertCount,
-        money_demo: true,
+        money_dummy: true,
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -387,7 +387,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         sleep_goal_number: i + insertCount,
-        sleep_goal_demo: true,
+        sleep_goal_dummy: true,
         sleep_goal_dateType: "day",
         sleep_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_goal_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -419,7 +419,7 @@ export const save = async (
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
         sleep_number: i + insertCount,
-        sleep_demo: true,
+        sleep_dummy: true,
         sleep_dateType: "day",
         sleep_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),

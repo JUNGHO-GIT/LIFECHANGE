@@ -237,7 +237,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await Exercise.deleteMany({
       user_id: user_id_param,
-      exercise_demo: true
+      exercise_dummy: true
     });
 
     // 데이터 삽입
@@ -256,7 +256,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
-      exercise_goal_demo: true
+      exercise_goal_dummy: true
     });
 
     // 데이터 삽입
@@ -275,7 +275,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await Food.deleteMany({
       user_id: user_id_param,
-      food_demo: true
+      food_dummy: true
     });
 
     // 데이터 삽입
@@ -294,7 +294,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
-      food_goal_demo: true
+      food_goal_dummy: true
     });
 
     // 데이터 삽입
@@ -313,7 +313,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await Money.deleteMany({
       user_id: user_id_param,
-      money_demo: true
+      money_dummy: true
     });
 
     // 데이터 삽입
@@ -332,7 +332,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
-      money_goal_demo: true
+      money_goal_dummy: true
     });
 
     // 데이터 삽입
@@ -351,7 +351,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await Sleep.deleteMany({
       user_id: user_id_param,
-      sleep_demo: true
+      sleep_dummy: true
     });
 
     // 데이터 삽입
@@ -370,7 +370,7 @@ export const save = {
     // 일단 전체 데이터 삭제
     const deleteResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
-      sleep_goal_demo: true
+      sleep_goal_dummy: true
     });
 
     // 데이터 삽입

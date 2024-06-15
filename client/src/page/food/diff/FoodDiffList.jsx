@@ -61,7 +61,7 @@ export const FoodDiff = () => {
   const OBJECT_DEF = [{
     _id: "",
     food_goal_number: 0,
-    food_goal_demo: false,
+    food_goal_dummy: false,
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
     food_goal_kcal: 0,

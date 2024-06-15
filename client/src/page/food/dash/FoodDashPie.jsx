@@ -24,7 +24,7 @@ export const FoodDashPie = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("칼로리");
+  const [LINE, setLINE] = useState("kcal");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -506,7 +506,7 @@ export const FoodDashPie = () => {
         position={"bottom"}
         direction={"center"}
         contents={({closePopup}) => (
-        ["칼로리", "영양소"].map((key, index) => (
+        ["kcal", "nut"].map((key, index) => (
           <FormGroup key={index}>
             <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
               if (LINE === key) {
@@ -515,7 +515,7 @@ export const FoodDashPie = () => {
               else {
                 setLINE(key);
               }
-            }}/>} label={key} labelPlacement={"start"}>
+            }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         )))}>
@@ -564,22 +564,22 @@ export const FoodDashPie = () => {
     );
     // 7-8. dash
     const dashSection = () => {
-      if (SECTION === "today" && LINE === "칼로리") {
+      if (SECTION === "today" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment1(0);
       }
-      else if (SECTION === "week" && LINE === "칼로리") {
+      else if (SECTION === "week" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "칼로리") {
+      else if (SECTION === "month" && LINE === "kcal") {
         return LOADING ? loadingNode() : dashFragment5(0);
       }
-      else if (SECTION === "today" && LINE === "영양소") {
+      else if (SECTION === "today" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "영양소") {
+      else if (SECTION === "week" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment4(0);
       }
-      else if (SECTION === "month" && LINE === "영양소") {
+      else if (SECTION === "month" && LINE === "nut") {
         return LOADING ? loadingNode() : dashFragment6(0);
       }
     }
