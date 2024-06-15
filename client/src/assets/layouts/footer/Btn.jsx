@@ -120,11 +120,6 @@ export const Btn = ({
       }}
     />
   );
-  const btnFlowDefault = () => (
-    <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={handlers?.handlerDefault}>
-      {translate("flowDefault")}
-    </Button>
-  );
   const btnFlowDummy = () => (
     <Div className={"d-center"}>
       <TextField
@@ -371,7 +366,6 @@ export const Btn = ({
       else if (strings?.second === "data" && strings?.third === "category") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
-            {btnFlowDefault()}
             {btnFlowSave()}
           </Card>
         );

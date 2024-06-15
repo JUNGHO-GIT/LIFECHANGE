@@ -49,8 +49,7 @@ export const UserLogin = () => {
         localStorage.setItem("sessionId", "");
       }
       sessionStorage.setItem("sessionId", userId);
-      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.user.dataCategory));
-      sessionStorage.setItem("defaultCategory", JSON.stringify(res.data.result.defaultCategory));
+      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
       sessionStorage.setItem("lang", "ko");
       percent();
       navigate("/calendar/list");

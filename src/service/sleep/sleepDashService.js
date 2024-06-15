@@ -300,7 +300,7 @@ export const avgMonth = async (
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
-    return `Week ${i + 1}`;
+    return `Week${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00
@@ -357,7 +357,7 @@ export const avgYear = async (
 
   // ex. 00월
   const name = Array.from({ length: 12 }, (_, i) => {
-    return `Month ${i + 1}`;
+    return `Month${i + 1}`;
   });
 
   // ex. 00-00 ~ 00-00

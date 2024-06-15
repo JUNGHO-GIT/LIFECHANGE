@@ -284,7 +284,7 @@ export const FoodSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endKcal")
+                translate("endKcal", "fs-0-6rem")
               )
             }}
           />
@@ -304,7 +304,7 @@ export const FoodSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />
@@ -324,7 +324,7 @@ export const FoodSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />
@@ -344,7 +344,7 @@ export const FoodSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />
@@ -391,7 +391,7 @@ export const FoodSave = () => {
           >
             {foodArray.map((item, idx) => (
               <MenuItem key={idx} value={idx}>
-                {item.food_part}
+                {translate(item.food_part, "fs-0-8rem")}
               </MenuItem>
             ))}
           </TextField>
@@ -408,7 +408,7 @@ export const FoodSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("endCount")
+                  translate("endCount", "fs-0-6rem")
                 )
               }}
               onChange={(e) => {
@@ -447,7 +447,7 @@ export const FoodSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("endGram")
+                  translate("endGram", "fs-0-6rem")
                 )
               }}
               onChange={(e) => {
@@ -506,7 +506,7 @@ export const FoodSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endKcal")
+                translate("endKcal", "fs-0-6rem")
               )
             }}
           />
@@ -523,7 +523,7 @@ export const FoodSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />
@@ -543,7 +543,7 @@ export const FoodSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />
@@ -560,7 +560,7 @@ export const FoodSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
                endAdornment: (
-                translate("endGram")
+                translate("endGram", "fs-0-6rem")
               )
             }}
           />

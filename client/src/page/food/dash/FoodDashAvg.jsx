@@ -92,6 +92,9 @@ export const FoodDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value, "d-inline-flex")
+            )}
           />
           <YAxis
             type={"number"}
@@ -128,6 +131,9 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
               width:"95%",
               display:"flex",
@@ -193,6 +199,9 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
               width:"95%",
               display:"flex",
@@ -256,11 +265,14 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
+              width:"95%",
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-
               fontSize: "0.8rem",
             }}
           />
@@ -321,6 +333,9 @@ export const FoodDashAvg = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
               width:"95%",
               display:"flex",

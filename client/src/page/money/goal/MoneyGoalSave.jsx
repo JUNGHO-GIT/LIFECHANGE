@@ -230,7 +230,7 @@ export const MoneyGoalSave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endCurrency")
+                translate("endCurrency", "fs-0-6rem")
               )
             }}
             onChange={(e) => {
@@ -261,7 +261,7 @@ export const MoneyGoalSave = () => {
                 <Img src={money2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endCurrency")
+                translate("endCurrency", "fs-0-6rem")
               )
             }}
             onChange={(e) => {

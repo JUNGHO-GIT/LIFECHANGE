@@ -19,18 +19,7 @@ export const category = async (
     user_id_param
   );
 
-  const defaultResult = {
-    calendar: calendarArray,
-    exercise: exerciseArray,
-    food: foodArray,
-    money: moneyArray,
-    sleep: sleepArray,
-  };
-
-  return {
-    dataCategory: findResult.dataCategory,
-    defaultCategory: defaultResult,
-  };
+  return findResult;
 };
 
 // 1-2. list -------------------------------------------------------------------------------------->

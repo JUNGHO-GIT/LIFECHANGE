@@ -114,6 +114,9 @@ export const FoodDashBar = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
               width:"95%",
               display:"flex",
@@ -183,6 +186,9 @@ export const FoodDashBar = () => {
             iconType={"circle"}
             verticalAlign={"bottom"}
             align={"center"}
+            formatter={(value) => {
+              return translate(value, "d-inline-flex");
+            }}
             wrapperStyle={{
               width:"95%",
               display:"flex",

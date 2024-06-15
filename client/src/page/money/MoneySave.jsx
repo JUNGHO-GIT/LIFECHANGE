@@ -267,7 +267,7 @@ export const MoneySave = () => {
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endCurrency")
+              translate("endCurrency", "fs-0-6rem")
             )
           }}
         />
@@ -287,7 +287,7 @@ export const MoneySave = () => {
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endCurrency")
+              translate("endCurrency", "fs-0-6rem")
             )
           }}
         />
@@ -336,7 +336,7 @@ export const MoneySave = () => {
             >
               {moneyArray.map((item, idx) => (
                 <MenuItem key={idx} value={idx}>
-                  {item.money_part}
+                  {translate(item.money_part, "fs-0-8rem")}
                 </MenuItem>
               ))}
             </TextField>
@@ -372,7 +372,7 @@ export const MoneySave = () => {
             >
               {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
                 <MenuItem key={idx} value={idx}>
-                  {title}
+                  {translate(title, "fs-0-8rem")}
                 </MenuItem>
               ))}
             </TextField>
@@ -392,7 +392,7 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("endCurrency")
+                  translate("endCurrency", "fs-0-6rem")
                 )
               }}
               onChange={(e) => {

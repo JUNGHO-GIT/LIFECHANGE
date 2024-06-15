@@ -30,7 +30,7 @@ export const exerciseArray = [
   },
   // 4
   {
-    exercise_part: "shoulders",
+    exercise_part: "shoulder",
     exercise_title: [
       "all", "militaryPress", "barbellPress", "dumbbellPress", "machinePress", "behindTheNeckPress", "frontLateralRaise", "sideLateralRaise", "bentOverLateralRaise", "facePull"
     ]

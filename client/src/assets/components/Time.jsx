@@ -102,7 +102,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endHour")
+              translate("endHour", "fs-0-6rem")
             )
           }}
           onClick={(e) => {
@@ -157,7 +157,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endHour")
+              translate("endHour", "fs-0-6rem")
             )
           }}
           onClick={(e) => {

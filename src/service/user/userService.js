@@ -109,18 +109,7 @@ export const login = async (
     finalResult = "fail";
   }
 
-  const defaultResult = {
-    calendar: calendarArray,
-    exercise: exerciseArray,
-    food: foodArray,
-    money: moneyArray,
-    sleep: sleepArray,
-  };
-
-  return {
-    user: finalResult,
-    defaultCategory: defaultResult
-  };
+  return finalResult;
 };
 
 // 2. detail (상세는 eq) -------------------------------------------------------------------------->

@@ -43,8 +43,10 @@ export const useTranslate = () => {
     // b
     brand: {ko: "브랜드", en: "Brand"},
     breakfast: {ko: "아침", en: "Breakfast"},
+    bedTime: {ko: "취침", en: "BedTime"},
 
     // c
+    carb: {ko: "탄수화물", en: "Carb"},
     calendar: {ko: "일정", en: "calendar"},
     cardio: {ko: "유산소", en: "Cardio"},
     category: {ko: "분류", en: "Category"},
@@ -98,6 +100,7 @@ export const useTranslate = () => {
     entertainment: {ko: "유흥", en: "Entertainment"},
 
     // f
+    fat: {ko: "지방", en: "Fat"},
     find: {ko: "찾기", en: "Find"},
     findList: {ko: "찾기", en: "Find"},
     flowDefault: {ko: "기본값", en: "Default"},
@@ -167,17 +170,28 @@ export const useTranslate = () => {
     login: {ko: "로그인", en: "Login"},
     logout: {ko: "로그아웃", en: "Logout"},
     lunch: {ko: "점심", en: "Lunch"},
+    labor: {ko: "근로", en: "Labor"},
 
     // m
     money: {ko: "자산", en: "money"},
     month: {ko: "월별", en: "Month"},
-    wakeTime: {ko: "기상", en: "WakeTime"},
-    [`month ${1}`]: {ko: "1월", en: "Month 1"},
+    month1: {ko: "1월", en: "Month 1"},
+    month2: {ko: "2월", en: "Month 2"},
+    month3: {ko: "3월", en: "Month 3"},
+    month4: {ko: "4월", en: "Month 4"},
+    month5: {ko: "5월", en: "Month 5"},
+    month6: {ko: "6월", en: "Month 6"},
+    month7: {ko: "7월", en: "Month 7"},
+    month8: {ko: "8월", en: "Month 8"},
+    month9: {ko: "9월", en: "Month 9"},
+    month10: {ko: "10월", en: "Month 10"},
+    month11: {ko: "11월", en: "Month 11"},
+    month12: {ko: "12월", en: "Month 12"},
 
     // n
-    bedTime: {ko: "취침", en: "BedTime"},
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
     nutrition: {ko: "영양소", en: "Nutrition"},
+    nut: {ko: "영양소", en: "Nutrition"},
 
     // o
     others: {ko: "기타", en: "Others"},
@@ -189,12 +203,12 @@ export const useTranslate = () => {
     protein: {ko: "단백질", en: "Protein"},
     pw: {ko: "비밀번호", en: "PW"},
     pwConfirm: {ko: "비밀번호 확인", en: "PW Confirm"},
+    proportion: {ko: "비율", en: "Proportion"},
 
     // q
     // r
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
-    proportion: {ko: "비율", en: "Proportion"},
 
     // s
     save: {ko: "저장", en: "Save"},
@@ -242,7 +256,13 @@ export const useTranslate = () => {
     // w
     week: {ko: "주별", en: "Week"},
     weight: {ko: "체중", en: "Weight"},
-    [`week ${1}`]: {ko: "1주차", en: "Week 1"},
+    wakeTime: {ko: "기상", en: "WakeTime"},
+    week1: {ko: "1주차", en: "Week 1"},
+    week2: {ko: "2주차", en: "Week 2"},
+    week3: {ko: "3주차", en: "Week 3"},
+    week4: {ko: "4주차", en: "Week 4"},
+    week5: {ko: "5주차", en: "Week 5"},
+    week6: {ko: "6주차", en: "Week 6"},
 
     // x
     // y
@@ -251,6 +271,11 @@ export const useTranslate = () => {
     // z
 
     // etc
+    chest: {ko: "가슴", en: "Chest"},
+    back: {ko: "등", en: "Back"},
+    shoulder: {ko: "어깨", en: "Shoulder"},
+    biceps: {ko: "이두", en: "Biceps"},
+    triceps: {ko: "삼두", en: "Triceps"},
     deadLift: {ko: "데드리프트", en: "Dead Lift"},
     barbellRow: {ko: "바벨로우", en: "Barbell Row"},
     dumbbellRow: {ko: "덤벨로우", en: "Dumbbell Row"},
@@ -262,6 +287,7 @@ export const useTranslate = () => {
     hackSquat: {ko: "핵스쿼트", en: "Hack Squat"},
     barbellLunge: {ko: "바벨런지", en: "Barbell Lunge"},
     dumbbellLunge: {ko: "덤벨런지", en: "Dumbbell Lunge"},
+    leg: {ko: "하체", en: "Leg"},
     legPress: {ko: "레그프레스", en: "Leg Press"},
     legExtension: {ko: "레그익스텐션", en: "Leg Extension"},
     legCurl: {ko: "레그컬", en: "Leg Curl"},
@@ -307,29 +333,15 @@ export const useTranslate = () => {
     rest: {ko: "휴식", en: "Rest"},
   };
 
-  const translate = useCallback((key) => {
+  const translate = useCallback((key, className) => {
     const result = resources[key];
     if (!result) {
       return key;
     }
     return (
-      (
-        key.indexOf("calendar") === -1 &&
-        key.startsWith("end")
-      ) ? (
-        <div className={"fs-0-6rem"}>
-          {result[lang]}
-        </div>
-      ) : (
-        key.indexOf("asc") !== -1 ||
-        key.indexOf("desc") !== -1
-      ) ? (
-        <div className={"fs-0-7rem"}>
-          {result[lang]}
-        </div>
-      ) : (
-        result[lang]
-      )
+      <div className={className}>
+        {result[lang]}
+      </div>
     );
   }, [lang]);
 

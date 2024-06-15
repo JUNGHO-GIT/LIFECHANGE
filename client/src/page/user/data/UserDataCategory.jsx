@@ -33,7 +33,6 @@ export const UserDataCategory = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
   const [dataType, setDataType] = useState("exercise");
-  const [defaultCategory, setDefaultData] = useState({});
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -85,13 +84,6 @@ export const UserDataCategory = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  useEffect(() => {
-    console.log("===================================");
-    log("OBJECT", OBJECT);
-    log("defaultCategory", defaultCategory);
-    console.log("===================================");
-  }, [OBJECT]);
-
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -109,7 +101,6 @@ export const UserDataCategory = () => {
         return {...prev, ...res.data.result};
       }
     });
-    setDefaultData(res.data.result.defaultCategory);
     setLOADING(false);
   })()}, [sessionId]);
 
@@ -278,23 +269,6 @@ export const UserDataCategory = () => {
     }
   };
 
-  // 4-4. handler --------------------------------------------------------------------------------->
-  const handlerDefault = () => {
-    const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
-    if (confirm) {
-      setOBJECT((prev) => ({
-        dataCategory : {
-          calendar: defaultCategory.calendar,
-          exercise: defaultCategory.exercise,
-          food: defaultCategory.food,
-          money: defaultCategory.money,
-          sleep: defaultCategory.sleep
-        }
-      }));
-    }
-    navigate(0);
-  };
-
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-6. popup
@@ -326,7 +300,7 @@ export const UserDataCategory = () => {
                       }));
                     }}>
                       <Div className={"fs-0-9rem ms-auto"}>
-                        {item[`${dataType}_part`]}
+                        {translate(item[`${dataType}_part`])}
                       </Div>
                       <Div className={"fs-0-9rem ms-auto"}>
                         <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
@@ -381,7 +355,7 @@ export const UserDataCategory = () => {
                         }));
                       }}>
                         <Div className={"fs-0-9rem ms-auto"}>
-                          {item}
+                          {translate(item)}
                         </Div>
                         <Div className={"fs-0-9rem ms-auto d-row"}>
                           <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
@@ -511,7 +485,7 @@ export const UserDataCategory = () => {
         setDATE, setSEND
       }}
       handlers={{
-        navigate, flowSave, handlerDefault
+        navigate, flowSave
       }}
     />
   );

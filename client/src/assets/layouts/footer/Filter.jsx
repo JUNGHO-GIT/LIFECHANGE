@@ -12,10 +12,6 @@ export const Filter = ({
 
   // 1. common ------------------------------------------------------------------------------------>
   const {translate} = useTranslate();
-  const session = sessionStorage.getItem("dataCategory") || "{}";
-  const exerciseArray = JSON.parse(session).exercise || [];
-  const foodArray = JSON.parse(session).food || [];
-  const moneyArray = JSON.parse(session).money || [];
 
   // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
@@ -39,7 +35,7 @@ export const Filter = ({
         )}>
         {["asc", "desc"].map((item) => (
           <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
-            {translate(item)}
+            {translate(item, "fs-0-7rem")}
           </MenuItem>
         ))}
       </TextField>
@@ -49,163 +45,6 @@ export const Filter = ({
         EXIST={objects?.EXIST}
         setEXIST={functions?.setEXIST}
       />
-    </Div>
-  );
-
-  // 2. exercise ---------------------------------------------------------------------------------->
-  const exerciseNode = () => (
-    <Div className={"d-center"}>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={objects?.PAGING?.part}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
-        onChange={(e) => {
-          const newPartVal = e.target.value;
-          const newPartIndex = exerciseArray.findIndex((item) => (
-            item.exercise_part === newPartVal
-          ));
-          const newTitleIndex = 0;
-          const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
-          functions?.setPAGING(prev => ({
-            ...prev,
-            partIdx: newPartIndex,
-            part: newPartVal,
-            titleIdx: newTitleIndex,
-            title: newTitleVal
-          }));
-        }}>
-        {exerciseArray?.map((item, idx) => (
-          <MenuItem key={idx} value={item.exercise_part}>
-            {item.exercise_part}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={objects?.PAGING?.title}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
-        onChange={(e) => {
-          const newTitleVal = e.target.value;
-          const newTitleIndex = exerciseArray[objects?.PAGING?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
-          functions?.setPAGING(prev => ({
-            ...prev,
-            titleIdx: newTitleIndex,
-            title: newTitleVal
-          }));
-        }}>
-        {exerciseArray[objects?.PAGING?.partIdx]?.exercise_title?.map((item, idx) => (
-          <MenuItem key={idx} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Div>
-  );
-
-  // 3. food -------------------------------------------------------------------------------------->
-  const foodNode = () => (
-    <Div className={"d-center"}>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={objects?.PAGING?.part}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
-        onChange={(e) => {
-          const newPartVal = e.target.value;
-          const newPartIndex = foodArray.findIndex((item) => (
-            item.food_part === newPartVal
-          ));
-          functions?.setPAGING(prev => ({
-            ...prev,
-            partIdx: newPartIndex,
-            part: newPartVal
-          }));
-        }}>
-        {foodArray?.map((item, idx) => (
-          <MenuItem key={idx} value={item.food_part}>
-            {item.food_part}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Div>
-  );
-
-  // 4. money ------------------------------------------------------------------------------------->
-  const moneyNode = () => (
-    <Div className={"d-center"}>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={objects?.PAGING?.part}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
-        onChange={(e) => {
-          const newPartVal = e.target.value;
-          const newPartIndex = moneyArray.findIndex((item) => (
-            item.money_part === newPartVal
-          ));
-          const newTitleIndex = 0;
-          const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
-          functions?.setPAGING(prev => ({
-            ...prev,
-            partIdx: newPartIndex,
-            part: newPartVal,
-            titleIdx: newTitleIndex,
-            title: newTitleVal
-          }));
-        }}>
-        {moneyArray?.map((item, idx) => (
-          <MenuItem key={idx} value={item.money_part}>
-            {item.money_part}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        select={true}
-        type={"text"}
-        size={"small"}
-        className={"ms-2 me-2"}
-        variant={"outlined"}
-        value={objects?.PAGING?.title}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
-        onChange={(e) => {
-          const newTitleVal = e.target.value;
-          const newTitleIndex = moneyArray[objects?.PAGING?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
-          functions?.setPAGING(prev => ({
-            ...prev,
-            titleIdx: newTitleIndex,
-            title: newTitleVal
-          }));
-        }}>
-        {moneyArray[objects?.PAGING?.partIdx]?.money_title?.map((item, idx) => (
-          <MenuItem key={idx} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </TextField>
     </Div>
   );
 

@@ -13,7 +13,6 @@ export const Header = () => {
   const location = useLocation();
   const PATH = location.pathname;
   const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
 
   // 6-2. button ---------------------------------------------------------------------------------->
   const btnUser = () => (
@@ -23,7 +22,7 @@ export const Header = () => {
       }}/>
     ) : (
       <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {
-        navigate("/")
+        navigate(-1);
       }}/>
     )
   );

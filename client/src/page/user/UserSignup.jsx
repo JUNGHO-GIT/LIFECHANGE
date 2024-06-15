@@ -285,7 +285,7 @@ export const UserSignup = () => {
           InputProps={{
             readOnly: false,
             endAdornment: (
-              translate("endCurrency")
+              translate("endCurrency", "fs-0-6rem")
             )
           }}
         />
