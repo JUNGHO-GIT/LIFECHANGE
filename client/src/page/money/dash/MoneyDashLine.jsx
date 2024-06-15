@@ -66,7 +66,7 @@ export const MoneyDashLine = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -87,12 +87,15 @@ export const MoneyDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
-            tickFormatter={tickFormatter}
+            tickFormatter={formatterY}
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:12}}
@@ -133,7 +136,7 @@ export const MoneyDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -150,7 +153,7 @@ export const MoneyDashLine = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -171,12 +174,15 @@ export const MoneyDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
-            tickFormatter={tickFormatter}
+            tickFormatter={formatterY}
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:12}}
@@ -217,7 +223,7 @@ export const MoneyDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

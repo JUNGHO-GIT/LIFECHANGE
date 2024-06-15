@@ -66,7 +66,7 @@ export const MoneyDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -78,16 +78,19 @@ export const MoneyDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           {LINE.includes("income") && (
             <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -120,7 +123,7 @@ export const MoneyDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -137,7 +140,7 @@ export const MoneyDashAvg = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_YEAR} margin={{top: 30, right: 20, bottom: 20, left: 20}}
@@ -149,16 +152,19 @@ export const MoneyDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           {LINE.includes("income") && (
             <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -191,7 +197,7 @@ export const MoneyDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

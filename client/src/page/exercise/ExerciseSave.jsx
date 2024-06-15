@@ -299,7 +299,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endVolume", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endVolume")}
+                </Div>
               )
             }}
           />
@@ -319,7 +321,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endHour", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endHour")}
+                </Div>
               )
             }}
           />
@@ -350,7 +354,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endWeight", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endWeight")}
+                </Div>
               )
             }}
           />
@@ -397,7 +403,9 @@ export const ExerciseSave = () => {
           >
             {exerciseArray.map((item, idx) => (
               <MenuItem key={idx} value={idx}>
-                {translate(item.exercise_part, "fs-0-8rem")}
+                <Div className={"fs-0-8rem"}>
+                  {translate(item.exercise_part)}
+                </Div>
               </MenuItem>
             ))}
           </TextField>
@@ -433,7 +441,9 @@ export const ExerciseSave = () => {
           >
             {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
               <MenuItem key={idx} value={idx}>
-                {translate(title, "fs-0-8rem")}
+                <Div className={"fs-0-8rem"}>
+                  {translate(title)}
+                </Div>
               </MenuItem>
             ))}
           </TextField>
@@ -453,7 +463,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endSet", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endSet")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -485,7 +497,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endRep", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endRep")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -520,7 +534,9 @@ export const ExerciseSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endKg", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endKg")}
+                </Div>
               )
             }}
             onChange={(e) => {

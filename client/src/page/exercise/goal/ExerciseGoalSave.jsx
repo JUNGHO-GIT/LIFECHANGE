@@ -235,7 +235,9 @@ export const ExerciseGoalSave = () => {
                 <Img src={exercise2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endCount", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endCount")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -265,7 +267,9 @@ export const ExerciseGoalSave = () => {
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endVolume", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endVolume")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -304,7 +308,9 @@ export const ExerciseGoalSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endWeight", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endWeight")}
+                </Div>
               )
             }}
             onChange={(e) => {

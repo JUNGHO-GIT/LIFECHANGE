@@ -13,13 +13,13 @@ export const Div = (props) => {
 export const Img = (props) => {
 
   // src속성 찾기
-  const src = props.src;
-  const fileName = src.split("/").pop().split(".")[0];
-
-  return (
-    <img style={{margin: "0px 10px 0px 0px"}} 
-    loading={"lazy"} alt={fileName} {...props} />
-  );
+  const srcProps = props.src;
+  if (srcProps) {
+    const fileName = srcProps.split("/").pop().split(".")[0];
+    return (
+      <img style={{margin: "0px 10px 0px 0px"}} loading={"lazy"} alt={fileName} {...props} />
+    );
+  }
 };
 
 // ------------------------------------------------------------------------------------------------>

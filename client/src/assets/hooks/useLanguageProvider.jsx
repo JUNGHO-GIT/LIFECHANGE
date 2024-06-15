@@ -175,18 +175,18 @@ export const useTranslate = () => {
     // m
     money: {ko: "자산", en: "money"},
     month: {ko: "월별", en: "Month"},
-    month1: {ko: "1월", en: "Month 1"},
-    month2: {ko: "2월", en: "Month 2"},
-    month3: {ko: "3월", en: "Month 3"},
-    month4: {ko: "4월", en: "Month 4"},
-    month5: {ko: "5월", en: "Month 5"},
-    month6: {ko: "6월", en: "Month 6"},
-    month7: {ko: "7월", en: "Month 7"},
-    month8: {ko: "8월", en: "Month 8"},
-    month9: {ko: "9월", en: "Month 9"},
-    month10: {ko: "10월", en: "Month 10"},
-    month11: {ko: "11월", en: "Month 11"},
-    month12: {ko: "12월", en: "Month 12"},
+    month1: {ko: "1월", en: "Month1"},
+    month2: {ko: "2월", en: "Month2"},
+    month3: {ko: "3월", en: "Month3"},
+    month4: {ko: "4월", en: "Month4"},
+    month5: {ko: "5월", en: "Month5"},
+    month6: {ko: "6월", en: "Month6"},
+    month7: {ko: "7월", en: "Month7"},
+    month8: {ko: "8월", en: "Month8"},
+    month9: {ko: "9월", en: "Month9"},
+    month10: {ko: "10월", en: "Month10"},
+    month11: {ko: "11월", en: "Month11"},
+    month12: {ko: "12월", en: "Month12"},
 
     // n
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
@@ -257,12 +257,12 @@ export const useTranslate = () => {
     week: {ko: "주별", en: "Week"},
     weight: {ko: "체중", en: "Weight"},
     wakeTime: {ko: "기상", en: "WakeTime"},
-    week1: {ko: "1주차", en: "Week 1"},
-    week2: {ko: "2주차", en: "Week 2"},
-    week3: {ko: "3주차", en: "Week 3"},
-    week4: {ko: "4주차", en: "Week 4"},
-    week5: {ko: "5주차", en: "Week 5"},
-    week6: {ko: "6주차", en: "Week 6"},
+    week1: {ko: "1주차", en: "Week1"},
+    week2: {ko: "2주차", en: "Week2"},
+    week3: {ko: "3주차", en: "Week3"},
+    week4: {ko: "4주차", en: "Week4"},
+    week5: {ko: "5주차", en: "Week5"},
+    week6: {ko: "6주차", en: "Week6"},
 
     // x
     // y
@@ -270,7 +270,16 @@ export const useTranslate = () => {
 
     // z
 
-    // etc
+    // day
+    mon: {ko: "월", en: "Mon"},
+    tue: {ko: "화", en: "Tue"},
+    wed: {ko: "수", en: "Wed"},
+    thu: {ko: "목", en: "Thu"},
+    fri: {ko: "금", en: "Fri"},
+    sat: {ko: "토", en: "Sat"},
+    sun: {ko: "일", en: "Sun"},
+
+    // exercise
     chest: {ko: "가슴", en: "Chest"},
     back: {ko: "등", en: "Back"},
     shoulder: {ko: "어깨", en: "Shoulder"},
@@ -338,11 +347,7 @@ export const useTranslate = () => {
     if (!result) {
       return key;
     }
-    return (
-      <div className={className}>
-        {result[lang]}
-      </div>
-    );
+    return result[lang];
   }, [lang]);
 
   return {translate};

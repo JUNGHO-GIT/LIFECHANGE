@@ -80,7 +80,7 @@ export const ExerciseDashLine = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartVolumeWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -92,16 +92,19 @@ export const ExerciseDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"volume"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}
@@ -131,7 +134,7 @@ export const ExerciseDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -148,7 +151,7 @@ export const ExerciseDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartCardioWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -160,16 +163,19 @@ export const ExerciseDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"cardio"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
             strokeWidth={2}
@@ -199,7 +205,7 @@ export const ExerciseDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -216,7 +222,7 @@ export const ExerciseDashLine = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartVolumeMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -228,16 +234,19 @@ export const ExerciseDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"volume"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
             strokeWidth={2}
@@ -267,7 +276,7 @@ export const ExerciseDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -284,7 +293,7 @@ export const ExerciseDashLine = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartCardioMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -296,16 +305,19 @@ export const ExerciseDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"cardio"} type={"monotone"} stroke={COLORS[3]} activeDot={{r:8}}
             strokeWidth={2}
@@ -335,7 +347,7 @@ export const ExerciseDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

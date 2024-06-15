@@ -67,7 +67,7 @@ export const SleepDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -79,16 +79,19 @@ export const SleepDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
             <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
@@ -127,7 +130,7 @@ export const SleepDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -144,7 +147,7 @@ export const SleepDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -156,16 +159,19 @@ export const SleepDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
             <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
@@ -204,7 +210,7 @@ export const SleepDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

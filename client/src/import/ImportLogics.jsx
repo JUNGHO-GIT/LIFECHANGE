@@ -1,7 +1,7 @@
 // ImportLogics.jsx
 
 import {dataArray} from "../assets/js/dataArray.js";
-import {handlerY} from "../assets/js/handlerY.js";
+import {handlerY} from "../assets/js/dashFormatter.js";
 import {percent} from "../assets/js/percent.js";
 import {log} from "../assets/js/utils";
 import {newDate, koreanDate} from "../assets/js/date.js";
@@ -12,7 +12,9 @@ import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 
 // ------------------------------------------------------------------------------------------------>
 export {
-  dataArray, handlerY, percent, log,
+  dataArray,
+  handlerY,
+  percent, log,
   newDate, koreanDate,
   curWeekStart, curWeekEnd,
   curMonthStart, curMonthEnd,

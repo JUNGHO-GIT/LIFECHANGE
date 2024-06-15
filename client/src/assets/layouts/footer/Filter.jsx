@@ -35,7 +35,9 @@ export const Filter = ({
         )}>
         {["asc", "desc"].map((item) => (
           <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
-            {translate(item, "fs-0-7rem")}
+            <Div className={"fs-0-6rem"}>
+              {translate(item)}
+            </Div>
           </MenuItem>
         ))}
       </TextField>

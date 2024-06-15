@@ -80,7 +80,7 @@ export const ExerciseDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartVolumeMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
@@ -92,16 +92,19 @@ export const ExerciseDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
           />
@@ -130,7 +133,7 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -147,7 +150,7 @@ export const ExerciseDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartCardioMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
@@ -159,16 +162,19 @@ export const ExerciseDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -196,7 +202,7 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -213,7 +219,7 @@ export const ExerciseDashAvg = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartVolumeYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_YEAR, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_YEAR, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_YEAR} barGap={8} barCategoryGap={"20%"}
@@ -226,16 +232,19 @@ export const ExerciseDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -263,7 +272,7 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -280,7 +289,7 @@ export const ExerciseDashAvg = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartCardioYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_YEAR, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_YEAR, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_YEAR} barGap={8} barCategoryGap={"20%"}
@@ -292,16 +301,19 @@ export const ExerciseDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -329,7 +341,7 @@ export const ExerciseDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

@@ -234,7 +234,9 @@ export const FoodGoalSave = () => {
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endKcal", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endKcal")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -265,7 +267,9 @@ export const FoodGoalSave = () => {
                 <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endGram", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endGram")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -296,7 +300,9 @@ export const FoodGoalSave = () => {
                 <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endGram", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endGram")}
+                </Div>
               )
             }}
             onChange={(e) => {
@@ -327,7 +333,9 @@ export const FoodGoalSave = () => {
                 <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                translate("endGram", "fs-0-6rem")
+                <Div className={"fs-0-8rem"}>
+                  {translate("endGram")}
+                </Div>
               )
             }}
             onChange={(e) => {

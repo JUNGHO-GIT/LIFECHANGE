@@ -61,7 +61,7 @@ export const FoodDashBar = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartKcalToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_TODAY, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}} barGap={80} barCategoryGap={"20%"}>
@@ -72,16 +72,19 @@ export const FoodDashBar = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
@@ -115,7 +118,7 @@ export const FoodDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -132,7 +135,7 @@ export const FoodDashBar = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNutToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_TODAY, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_TODAY, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -144,16 +147,19 @@ export const FoodDashBar = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
@@ -187,7 +193,7 @@ export const FoodDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

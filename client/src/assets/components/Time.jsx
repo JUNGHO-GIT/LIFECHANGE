@@ -3,7 +3,7 @@
 import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {PopUp, Img} from "../../import/ImportComponents.jsx";
+import {PopUp, Img, Div} from "../../import/ImportComponents.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 import {DigitalClock, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4, exercise4} from "../../import/ImportImages.jsx";
@@ -31,7 +31,7 @@ export const Time = ({
       image = sleep3;
       translateStr = "goalMorning";
     }
-    else if (extra.split("_")[2] === "time") {
+    else if (extra.split("_")[2] === "sleepTime") {
       image = sleep4;
       translateStr = "goalTime";
     }
@@ -45,7 +45,7 @@ export const Time = ({
       image = sleep3;
       translateStr = "wakeTime";
     }
-    else if (extra.split("_")[1] === "time") {
+    else if (extra.split("_")[1] === "sleepTime") {
       image = sleep4;
       translateStr = "time";
     }
@@ -102,7 +102,9 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endHour", "fs-0-6rem")
+              <Div className={"fs-0-8rem"}>
+                {translate("endHour")}
+              </Div>
             )
           }}
           onClick={(e) => {
@@ -157,7 +159,9 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              translate("endHour", "fs-0-6rem")
+              <Div className={"fs-0-8rem"}>
+                {translate("endHour")}
+              </Div>
             )
           }}
           onClick={(e) => {

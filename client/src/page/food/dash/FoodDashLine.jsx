@@ -80,7 +80,7 @@ export const FoodDashLine = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartKcalWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -90,17 +90,20 @@ export const FoodDashLine = () => {
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
-            width={30}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"kcal"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
           activeDot={{r: 6}}/>
@@ -129,7 +132,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -146,7 +149,7 @@ export const FoodDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNutWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -156,17 +159,20 @@ export const FoodDashLine = () => {
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
-            width={30}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"carb"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
             activeDot={{r: 6}}
@@ -202,7 +208,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -219,7 +225,7 @@ export const FoodDashLine = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartKcalMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -230,17 +236,20 @@ export const FoodDashLine = () => {
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
-            width={30}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"kcal"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
             activeDot={{r: 6}}
@@ -270,7 +279,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -287,7 +296,7 @@ export const FoodDashLine = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartNutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -297,17 +306,20 @@ export const FoodDashLine = () => {
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
-            tick={{fill:'#666', fontSize:14}}
-            width={30}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"carb"} type={"monotone"} stroke={COLORS[1]} strokeWidth={2}
             activeDot={{r: 6}}
@@ -343,7 +355,7 @@ export const FoodDashLine = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

@@ -76,7 +76,7 @@ export const ExerciseDashBar = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -88,16 +88,19 @@ export const ExerciseDashBar = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
@@ -131,7 +134,7 @@ export const ExerciseDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -148,7 +151,7 @@ export const ExerciseDashBar = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -160,16 +163,19 @@ export const ExerciseDashBar = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Scatter
             dataKey={"goal"}
@@ -206,7 +212,7 @@ export const ExerciseDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -223,7 +229,7 @@ export const ExerciseDashBar = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -235,16 +241,19 @@ export const ExerciseDashBar = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Scatter
             dataKey={"goal"}
@@ -281,7 +290,7 @@ export const ExerciseDashBar = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

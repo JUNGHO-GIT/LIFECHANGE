@@ -80,7 +80,7 @@ export const FoodDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartKcalMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -93,18 +93,18 @@ export const FoodDashAvg = () => {
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
             tickFormatter={(value) => (
-              translate(value, "d-inline-flex")
+              translate(value)
             )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -132,7 +132,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -149,7 +149,7 @@ export const FoodDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -161,16 +161,19 @@ export const FoodDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -200,7 +203,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -217,7 +220,7 @@ export const FoodDashAvg = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartKcalYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -229,16 +232,19 @@ export const FoodDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Tooltip
@@ -266,7 +272,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",
@@ -283,7 +289,7 @@ export const FoodDashAvg = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartNutYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -295,16 +301,19 @@ export const FoodDashAvg = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
           />
           <YAxis
+            width={30}
             type={"number"}
             domain={domain}
-            ticks={ticks}
-            tickFormatter={tickFormatter}
             tickLine={false}
             axisLine={false}
+            ticks={ticks}
             tick={{fill:"#666", fontSize:14}}
-            width={30}
+            tickFormatter={formatterY}
           />
           <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
           <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -334,7 +343,7 @@ export const FoodDashAvg = () => {
             verticalAlign={"bottom"}
             align={"center"}
             formatter={(value) => {
-              return translate(value, "d-inline-flex");
+              return translate(value);
             }}
             wrapperStyle={{
               width:"95%",

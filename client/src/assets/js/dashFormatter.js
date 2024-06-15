@@ -1,4 +1,4 @@
-// handlerY.js
+// dashFormatter.js
 
 // ------------------------------------------------------------------------------------------------>
 export const handlerY = (
@@ -50,6 +50,6 @@ export const handlerY = (
   return {
     domain: [0, topValue],
     ticks: ticks,
-    tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
+    formatterY: (tick) => (`${Number(tick).toLocaleString()}`)
   };
 };

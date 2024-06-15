@@ -225,7 +225,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("endCurrency", "fs-0-6rem")
+                    translate("endCurrency")
                   )
                 }}
               />
@@ -245,7 +245,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("endCurrency", "fs-0-6rem")
+                    translate("endCurrency")
                   )
                 }}
               />
@@ -265,7 +265,7 @@ export const TopNav = () => {
                     <Img src={money2} className={"w-16 h-16"} />
                   ),
                   endAdornment: (
-                    translate("endCurrency", "fs-0-6rem")
+                    translate("endCurrency")
                   )
                 }}
               />
