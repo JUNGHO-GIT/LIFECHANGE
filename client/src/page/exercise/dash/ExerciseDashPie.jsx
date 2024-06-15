@@ -193,7 +193,10 @@ export const ExerciseDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}%`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -237,7 +240,10 @@ export const ExerciseDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}%`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -281,7 +287,10 @@ export const ExerciseDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}%`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -325,7 +334,10 @@ export const ExerciseDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}%`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}%`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",

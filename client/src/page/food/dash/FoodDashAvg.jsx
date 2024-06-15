@@ -113,7 +113,8 @@ export const FoodDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} kcal`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kcal`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -184,7 +185,8 @@ export const FoodDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} g`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} g`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -253,7 +255,8 @@ export const FoodDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} kcal`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kcal`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -324,7 +327,8 @@ export const FoodDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} g`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} g`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"

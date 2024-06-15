@@ -114,7 +114,8 @@ export const ExerciseDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} vol`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} vol`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -183,7 +184,8 @@ export const ExerciseDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()}`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} hr`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -253,7 +255,8 @@ export const ExerciseDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${translate(name)}: ${Number(value).toLocaleString()} vol`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} vol`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -321,8 +324,9 @@ export const ExerciseDashAvg = () => {
               const date = payload.length > 0 ? payload[0].payload.date : '';
               return `${date}`;
             }}
-            formatter={(value) => {
-              return `${Number(value).toLocaleString()}`;
+            formatter={(value, name, props) => {
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} hr`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"

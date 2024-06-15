@@ -246,7 +246,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}kcal`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -290,7 +293,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}g`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -334,7 +340,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}kcal`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -378,7 +387,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}g`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -422,7 +434,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}kcal`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",
@@ -466,7 +481,10 @@ export const FoodDashPie = () => {
           ))}
         </Pie>
         <Tooltip
-          formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+          formatter={(value, name, props) => {
+            const customName = translate(name);
+            return [`${Number(value).toLocaleString()}g`, customName];
+          }}
           contentStyle={{
             backgroundColor:"rgba(255, 255, 255, 0.8)",
             border:"none",

@@ -115,7 +115,8 @@ export const ExerciseDashBar = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} kg`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kg`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -193,7 +194,8 @@ export const ExerciseDashBar = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} kg`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kg`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -271,7 +273,8 @@ export const ExerciseDashBar = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()} kg`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kg`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"

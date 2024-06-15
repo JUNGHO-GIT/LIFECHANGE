@@ -104,7 +104,8 @@ export const MoneyDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()}`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()}`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
@@ -178,7 +179,8 @@ export const MoneyDashAvg = () => {
               return `${date}`;
             }}
             formatter={(value, name, props) => {
-              return `${Number(value).toLocaleString()}`;
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()}`, customName];
             }}
             cursor={{
               fill:"rgba(0, 0, 0, 0.1)"
