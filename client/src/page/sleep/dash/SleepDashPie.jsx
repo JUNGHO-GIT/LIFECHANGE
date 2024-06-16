@@ -17,14 +17,12 @@ export const SleepDashPie = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const array = ["bedTime", "wakeTime", "sleepTime"];
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
-  const [PART, setPART] = useState(array);
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -112,13 +110,11 @@ export const SleepDashPie = () => {
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-    const getNameWithoutTime = (name) => name.replace(/Time$/, '');
-
     // ex. wakeTime -> wake , bedTime -> bed
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
+        {`${translate(OBJECT_TODAY[index]?.name)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -132,13 +128,11 @@ export const SleepDashPie = () => {
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-    const getNameWithoutTime = (name) => name.replace(/Time$/, '');
-
     // ex. wakeTime -> wake , bedTime -> bed
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
+        {`${translate(OBJECT_WEEK[index]?.name)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };
@@ -152,13 +146,11 @@ export const SleepDashPie = () => {
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-    const getNameWithoutTime = (name) => name.replace(/Time$/, '');
-
     // ex. wakeTime -> wake , bedTime -> bed
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(getNameWithoutTime(OBJECT_TODAY[index]?.name))} ${Number(value).toLocaleString()} %`}
+        {`${translate(OBJECT_MONTH[index]?.name)} ${Number(value).toLocaleString()} %`}
       </text>
     );
   };

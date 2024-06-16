@@ -43,7 +43,7 @@ export const useTranslate = () => {
     // b
     brand: {ko: "브랜드", en: "Brand"},
     breakfast: {ko: "아침", en: "Breakfast"},
-    bedTime: {ko: "취침", en: "BedTime"},
+    bedTime: {ko: "취침", en: "Bed"},
 
     // c
     carb: {ko: "탄수화물", en: "Carb"},
@@ -82,6 +82,7 @@ export const useTranslate = () => {
 
     // e
     empty: {ko: "데이터가 없습니다", en: "No data"},
+    Empty: {ko: "Empty", en: "Empty"},
     endCarb: {ko: "g", en: "g"},
     endCount: {ko: "회", en: "times"},
     endCurrency: {ko: "₩", en: "$"},
@@ -218,7 +219,7 @@ export const useTranslate = () => {
     set: {ko: "세트", en: "Set"},
     signup: {ko: "회원가입", en: "Signup"},
     sleep: {ko: "수면", en: "sleep"},
-    sleepTime: {ko: "수면", en: "SleepTime"},
+    sleepTime: {ko: "수면", en: "Sleep"},
     sort: {ko: "정렬", en: "Sort"},
     send: {ko: "전송", en: "Send"},
     signupDate: {ko: "가입일", en: "Signup Date"},
@@ -256,7 +257,7 @@ export const useTranslate = () => {
     // w
     week: {ko: "주별", en: "Week"},
     weight: {ko: "체중", en: "Weight"},
-    wakeTime: {ko: "기상", en: "WakeTime"},
+    wakeTime: {ko: "기상", en: "Wake"},
     week1: {ko: "1주차", en: "Week1"},
     week2: {ko: "2주차", en: "Week2"},
     week3: {ko: "3주차", en: "Week3"},

@@ -110,7 +110,7 @@ export const pieToday = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_part_idx": 2
+        "money_section.money_part_idx": 2
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -244,7 +244,7 @@ export const pieMonth = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_part_idx": 2
+        "money_section.money_part_idx": 2
       }},
       {$group: {
         _id: "$money_section.money_title_val",

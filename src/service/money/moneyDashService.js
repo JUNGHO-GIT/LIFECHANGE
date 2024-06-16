@@ -53,33 +53,33 @@ export const pieToday = async (
   const dateEnd = koreanDate;
 
   let findResultInCome = [];
-  let findResultOutCome = [];
+  let findResultExpense = [];
   let finalResultInCome = [];
-  let finalResultOutCome = [];
+  let finalResultExpense = [];
 
   // income
   findResultInCome = await repository.pieToday.listIn(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultOutCome = await repository.pieToday.listOut(
+  findResultExpense = await repository.pieToday.listOut(
     user_id_param, dateStart, dateEnd
   );
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
   // expense
-  finalResultOutCome = findResultOutCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+  finalResultExpense = findResultExpense?.map((item) => ({
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
-    expense: finalResultOutCome,
+    expense: finalResultExpense,
     date: `${dateStart} ~ ${dateEnd}`
   };
 };
@@ -93,33 +93,33 @@ export const pieWeek = async (
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
   let findResultInCome = [];
-  let findResultOutCome = [];
+  let findResultExpense = [];
   let finalResultInCome = [];
-  let finalResultOutCome = [];
+  let finalResultExpense = [];
 
   // income
   findResultInCome = await repository.pieWeek.listIn(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultOutCome = await repository.pieWeek.listOut(
+  findResultExpense = await repository.pieWeek.listOut(
     user_id_param, dateStart, dateEnd
   );
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
   // expense
-  finalResultOutCome = findResultOutCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+  finalResultExpense = findResultExpense?.map((item) => ({
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
-    expense: finalResultOutCome,
+    expense: finalResultExpense,
     date: `${dateStart} ~ ${dateEnd}`
   };
 };
@@ -133,33 +133,33 @@ export const pieMonth = async (
   const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
   let findResultInCome = [];
-  let findResultOutCome = [];
+  let findResultExpense = [];
   let finalResultInCome = [];
-  let finalResultOutCome = [];
+  let finalResultExpense = [];
 
   // income
   findResultInCome = await repository.pieMonth.listIn(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultOutCome = await repository.pieMonth.listOut(
+  findResultExpense = await repository.pieMonth.listOut(
     user_id_param, dateStart, dateEnd
   );
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
   // expense
-  finalResultOutCome = findResultOutCome?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+  finalResultExpense = findResultExpense?.map((item) => ({
+    name: item._id || "",
+    value: intFormat(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
-    expense: finalResultOutCome,
+    expense: finalResultExpense,
     date: `${dateStart} ~ ${dateEnd}`
   };
 };
