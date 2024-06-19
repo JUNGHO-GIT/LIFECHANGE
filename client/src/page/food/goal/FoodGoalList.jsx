@@ -59,14 +59,14 @@ export const FoodGoalList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
-    food_goal_goal_number: 0,
-    food_goal_goal_dummy: false,
-    food_goal_goal_dateStart: "0000-00-00",
-    food_goal_goal_dateEnd: "0000-00-00",
-    food_goal_goal_kcal: 0,
-    food_goal_goal_carb: 0,
-    food_goal_goal_protein: 0,
-    food_goal_goal_fat: 0
+    food_goal_number: 0,
+    food_goal_dummy: false,
+    food_goal_dateStart: "0000-00-00",
+    food_goal_dateEnd: "0000-00-00",
+    food_goal_kcal: 0,
+    food_goal_carb: 0,
+    food_goal_protein: 0,
+    food_goal_fat: 0
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -160,7 +160,7 @@ export const FoodGoalList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_goal_total_kcal).format("0,0")}
+                      {numeral(item.food_goal_kcal).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         kcal
                       </Div>

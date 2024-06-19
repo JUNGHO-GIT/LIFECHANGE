@@ -23,9 +23,6 @@ export const FoodFindSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType;
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
@@ -50,9 +47,9 @@ export const FoodFindSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType,
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd
+    dateType: "day",
+    dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

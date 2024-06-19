@@ -2,8 +2,9 @@
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {moment} from "../../../import/ImportLibs.jsx";
 import {Picker, PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
-import {TextField, MenuItem, Card} from "../../../import/ImportMuis.jsx";
+import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Filter = ({
@@ -47,6 +48,16 @@ export const Filter = ({
         EXIST={objects?.EXIST}
         setEXIST={functions?.setEXIST}
       />
+      <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5"} onClick={() => {
+        functions?.setDATE((prev) => ({
+          ...prev,
+          dateType: "day",
+          dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+          dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+        }));
+      }}>
+        {translate("today")}
+      </Button>
     </Div>
   );
 
