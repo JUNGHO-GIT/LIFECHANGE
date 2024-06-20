@@ -207,35 +207,22 @@ export const TopNav = () => {
         return (
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center"}>
-              <Div className={"fs-1-2rem fw-normal"}>
+              <Div className={"fs-1-0rem fw-normal"}>
                 {dateStart}
               </Div>
-              <Div className={"fs-0-8rem fw-normal ms-10 me-10"}>
+              <Div className={"fs-0-7rem fw-normal ms-10 me-10"}>
                 ~
               </Div>
-              <Div className={"fs-1-2rem fw-normal"}>
+              <Div className={"fs-1-0rem fw-normal"}>
                 {dateEnd}
               </Div>
             </Div>
-            <Br40/>
+            <Br20/>
             <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("property")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalProperty).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("endCurrency")
-                  )
-                }}
-              />
+              <Img src={money2} className={"w-16 h-16"} />
+              <Div className={"fs-1-4rem fw-bold"}>
+                {numeral(totalProperty).format('0,0')}
+              </Div>
             </Div>
             <Br20/>
             <Div className={"d-center"}>
