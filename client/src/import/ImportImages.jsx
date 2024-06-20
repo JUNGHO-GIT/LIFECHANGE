@@ -40,6 +40,7 @@ import food5 from "../assets/images/food/food5.webp";
 import money1 from "../assets/images/money/money1.webp";
 import money2 from "../assets/images/money/money2.webp";
 import money3 from "../assets/images/money/money3.webp";
+import money4 from "../assets/images/money/money4.webp";
 
 import sleep1 from "../assets/images/sleep/sleep1.webp";
 import sleep2 from "../assets/images/sleep/sleep2.webp";
@@ -62,7 +63,7 @@ export {
   calendar1, calendar2, calendar3,
   exercise1, exercise2, exercise3, exercise4, exercise5,
   food1, food2, food3, food4, food5,
-  money1, money2, money3,
+  money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep4,
   user1,
   setting1, setting2, setting3, setting4

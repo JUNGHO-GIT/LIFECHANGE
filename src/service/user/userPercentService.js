@@ -82,7 +82,7 @@ export const property = async (
     user_id_param
   );
   const finalResult = {
-    totalIn: findResult?.money_total_income,
+    totalIncome: findResult?.money_total_income,
     totalExpense: findResult?.money_total_expense,
     totalProperty: findResult?.money_total_income - findResult?.money_total_expense,
     dateStart: findResult?.property_dateStart,

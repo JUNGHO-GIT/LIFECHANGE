@@ -66,7 +66,7 @@ export const MoneyGoalSave = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/exist`, {
+    await axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -75,87 +75,102 @@ export const MoneyGoalSave = () => {
           dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
         },
       },
+    })
+    .then((res) => {
+      setEXIST(res.data.result || []);
+    })
+    .catch((err) => {
+      console.error("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setEXIST(res.data.result || []);
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/goal/detail`, {
+    await axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
         _id: "",
         DATE: DATE,
       },
+    })
+    .then((res) => {
+      setOBJECT(res.data.result || OBJECT_DEF);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+    })
+    .catch((err) => {
+      console.error("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return res.data.result;
-      }
-      else {
-        return {...prev, ...res.data.result};
-      }
-    });
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/goal/save`, {
+    await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateType: "",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      Object.assign(SEND, {
-        dateStart: DATE.dateStart,
-        dateEnd: DATE.dateEnd
-      });
-      navigate(SEND.toList, {
-        state: SEND
-      });
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    const res = await axios.post(`${URL_OBJECT}/goal/deletes`, {
+    await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
       _id: OBJECT._id,
       DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateType: "",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      Object.assign(SEND, {
-        dateStart: DATE.dateStart,
-        dateEnd: DATE.dateEnd
-      });
-      navigate(SEND.toList, {
-        state: SEND
-      });
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
-
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {

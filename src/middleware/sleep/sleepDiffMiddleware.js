@@ -97,15 +97,15 @@ export const list = async (object) => {
       else if (10 < diffVal && diffVal <= 20) {
         return "success";
       }
-      // 3. 20분 ~ 30분
-      else if (20 < diffVal && diffVal <= 30) {
+      // 3. 20분 ~ 40분
+      else if (20 < diffVal && diffVal <= 40) {
         return "secondary";
       }
-      // 4. 30분 ~ 40분
-      else if (30 < diffVal && diffVal <= 40) {
+      // 4. 40분 ~ 60분
+      else if (40 < diffVal && diffVal <= 60) {
         return "warning";
       }
-      // 5. 40분 ~
+      // 5. 60분 ~
       else {
         return "danger";
       }

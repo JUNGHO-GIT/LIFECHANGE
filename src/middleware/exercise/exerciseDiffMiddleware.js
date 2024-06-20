@@ -1,5 +1,7 @@
 // exerciseDiffMiddleware.js
 
+import {log} from "../../assets/js/utils.js";
+
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {
 
@@ -7,7 +9,7 @@ export const list = async (object) => {
     return [];
   }
 
-  const compareCount = (goal, real) => {
+  const compareValue = (goal, real) => {
     const diffVal = Math.abs(real - goal);
     return diffVal;
   };
@@ -27,10 +29,13 @@ export const list = async (object) => {
   };
 
   const makeColor = (goal, real, extra) => {
-    if (extra === "count" || extra === "volume") {
-      const percent = ((real - goal) / goal) * 100;
+    if (extra === "count") {
+      const percent = Math.abs(((goal - real) / goal) * 100);
+
+      log("exercise_count", percent);
+
       // 1. ~ 1%
-      if (percent <= 1) {
+      if (percent > 0 && percent <= 1) {
         return "primary";
       }
       // 2. 1% ~ 10%
@@ -50,15 +55,18 @@ export const list = async (object) => {
         return "danger";
       }
     }
-    else if (extra === "weight") {
-      const percent = ((real - goal) / goal) * 100;
+    else if (extra === "volume") {
+      const percent = Math.abs(((goal - real) / goal) * 100);
+
+      log("exercise_volume", percent);
+
       // 1. ~ 1%
-      if (percent <= 1) {
-        return "danger";
+      if (percent > 0 && percent <= 1) {
+        return "primary";
       }
       // 2. 1% ~ 10%
       else if (percent > 1 && percent <= 10) {
-        return "warning";
+        return "success";
       }
       // 3. 10% ~ 30%
       else if (percent > 10 && percent <= 30) {
@@ -66,11 +74,11 @@ export const list = async (object) => {
       }
       // 4. 30% ~ 50%
       else if (percent > 30 && percent <= 50) {
-        return "success";
+        return "warning";
       }
       // 5. 50% ~
       else {
-        return "primary";
+        return "danger";
       }
     }
     else if (extra === "cardio") {
@@ -85,6 +93,8 @@ export const list = async (object) => {
 
       const diffVal = (hours * 60) + minutes;
 
+      log("exercise_cardio", diffVal);
+
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
         return "primary";
@@ -93,15 +103,41 @@ export const list = async (object) => {
       else if (10 < diffVal && diffVal <= 20) {
         return "success";
       }
-      // 3. 20분 ~ 30분
-      else if (20 < diffVal && diffVal <= 30) {
+      // 3. 20분 ~ 40분
+      else if (20 < diffVal && diffVal <= 40) {
         return "secondary";
       }
-      // 4. 30분 ~ 40분
-      else if (30 < diffVal && diffVal <= 40) {
+      // 4. 40분 ~ 60분
+      else if (40 < diffVal && diffVal <= 60) {
         return "warning";
       }
-      // 5. 40분 ~
+      // 5. 60분 ~
+      else {
+        return "danger";
+      }
+    }
+    else if (extra === "weight") {
+      const percent = Math.abs(((goal - real) / goal) * 100);
+
+      log("exercise_weight", percent);
+
+      // 1. ~ 1%
+      if (percent > 0 && percent <= 1) {
+        return "primary";
+      }
+      // 2. 1% ~ 10%
+      else if (percent > 1 && percent <= 10) {
+        return "success";
+      }
+      // 3. 10% ~ 30%
+      else if (percent > 10 && percent <= 30) {
+        return "secondary";
+      }
+      // 4. 30% ~ 50%
+      else if (percent > 30 && percent <= 50) {
+        return "warning";
+      }
+      // 5. 50% ~
       else {
         return "danger";
       }
@@ -110,16 +146,16 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      exercise_diff_count: compareCount(
+      exercise_diff_count: compareValue(
         item?.exercise_goal_count, item?.exercise_total_count
       ),
-      exercise_diff_volume: compareCount(
+      exercise_diff_volume: compareValue(
         item?.exercise_goal_volume, item?.exercise_total_volume
       ),
       exercise_diff_cardio: compareTime(
         item?.exercise_goal_cardio, item?.exercise_total_cardio
       ),
-      exercise_diff_weight: compareCount(
+      exercise_diff_weight: compareValue(
         item?.exercise_goal_weight, item?.exercise_body_weight
       ),
       exercise_diff_count_color: makeColor(

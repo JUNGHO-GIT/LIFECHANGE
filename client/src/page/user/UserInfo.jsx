@@ -42,8 +42,8 @@ export const UserInfo = () => {
     .then(res => {
       setOBJECT(res.data.result);
     })
-    .catch(error => {
-      console.error('Error fetching data', error);
+    .catch((err) => {
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);

@@ -87,38 +87,51 @@ export const UserDataCategory = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/data/category`, {
+    await axios.get(`${URL_OBJECT}/data/category`, {
       params: {
         user_id: sessionId
       }
+    })
+    .then((res) => {
+      // 첫번째 객체를 제외하고 데이터 추가
+      setOBJECT((prev) => {
+        if (prev.length === 1 && prev[0]._id === "") {
+          return res.data.result;
+        }
+        else {
+          return {...prev, ...res.data.result};
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    // 첫번째 객체를 제외하고 데이터 추가
-    setOBJECT((prev) => {
-      if (prev.length === 1 && prev[0]._id === "") {
-        return res.data.result;
-      }
-      else {
-        return {...prev, ...res.data.result};
-      }
-    });
-    setLOADING(false);
   })()}, [sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/save`, {
+    await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
+      navigate(0);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-      navigate(0);
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 4-1. handler ----------------------------------------------------------------------------------

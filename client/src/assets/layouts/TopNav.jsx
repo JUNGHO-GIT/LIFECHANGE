@@ -6,7 +6,8 @@ import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {TextField, Tabs, Tab, tabsClasses, Paper, Card} from "../../import/ImportMuis.jsx";
 import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {smile1, smile2, smile3, smile4, smile5, money2} from "../../import/ImportImages.jsx";
+import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
+import {money2, money4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -198,7 +199,7 @@ export const TopNav = () => {
       direction={"center"}
       contents={({closePopup}) => {
         const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-        const totalIn = property?.totalIn || 0;
+        const totalIncome = property?.totalIncome || 0;
         const totalExpense = property?.totalExpense || 0;
         const totalProperty = property?.totalProperty || 0;
         const dateStart = property?.dateStart;
@@ -207,7 +208,13 @@ export const TopNav = () => {
           <Div className={"w-max75vw h-max65vh border d-column p-20"}>
             <Div className={"d-center"}>
               <Div className={"fs-1-2rem fw-normal"}>
-                {dateStart} ~ {dateEnd}
+                {dateStart}
+              </Div>
+              <Div className={"fs-0-8rem fw-normal ms-10 me-10"}>
+                ~
+              </Div>
+              <Div className={"fs-1-2rem fw-normal"}>
+                {dateEnd}
               </Div>
             </Div>
             <Br40/>
@@ -238,7 +245,7 @@ export const TopNav = () => {
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
-                value={numeral(totalIn).format('0,0')}
+                value={numeral(totalIncome).format('0,0')}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -277,7 +284,7 @@ export const TopNav = () => {
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          <Img src={money2} className={"w-max25 h-max25"} />
+          <Img src={money4} className={"w-max25 h-max25"} />
         </Div>
       )}
     </PopUp>

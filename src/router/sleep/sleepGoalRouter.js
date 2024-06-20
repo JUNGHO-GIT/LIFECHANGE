@@ -2,7 +2,6 @@
 
 import express from "express";
 import * as service from "../../service/sleep/sleepGoalService.js";
-import * as middleware from "../../middleware/sleep/sleepGoalMiddleware.js";
 export const router = express.Router();
 
 // 0. exist ----------------------------------------------------------------------------------------

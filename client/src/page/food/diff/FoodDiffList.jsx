@@ -105,7 +105,7 @@ export const FoodDiff = () => {
       }));
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);

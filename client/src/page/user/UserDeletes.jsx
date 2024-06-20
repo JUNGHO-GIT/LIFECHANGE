@@ -48,8 +48,8 @@ export const UserDeletes = () => {
     .then(res => {
       setOBJECT(res.data.result);
     })
-    .catch(error => {
-      console.error('Error fetching data', error);
+    .catch((err) => {
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);
@@ -58,19 +58,24 @@ export const UserDeletes = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.delete(`${URL_OBJECT}/deletes`, {
+    await axios.delete(`${URL_OBJECT}/deletes`, {
       data: {
         user_id: sessionId,
       },
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        navigate("/user/login");
+      }
+      else {
+        alert(res.data.msg);
+        navigate(0);
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      navigate("/user/login");
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 7. table --------------------------------------------------------------------------------------

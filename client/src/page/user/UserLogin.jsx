@@ -36,28 +36,33 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post (`${URL_OBJECT}/login`, {
+    await axios.post (`${URL_OBJECT}/login`, {
       user_id: userId,
       user_pw: userPw,
-    });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      if (isChecked) {
-        localStorage.setItem("sessionId", userId);
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        if (isChecked) {
+          localStorage.setItem("sessionId", userId);
+        }
+        else {
+          localStorage.setItem("sessionId", "");
+        }
+        sessionStorage.setItem("sessionId", userId);
+        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem("lang", "ko");
+        percent();
+        navigate("/calendar/list");
       }
       else {
-        localStorage.setItem("sessionId", "");
+        alert(res.data.msg);
+        sessionStorage.setItem("sessionId", "");
       }
-      sessionStorage.setItem("sessionId", userId);
-      sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-      sessionStorage.setItem("lang", "ko");
-      percent();
-      navigate("/calendar/list");
-    }
-    else {
-      alert(res.data.msg);
-      sessionStorage.setItem("sessionId", "");
-    }
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    });
   };
 
   // 7. table --------------------------------------------------------------------------------------

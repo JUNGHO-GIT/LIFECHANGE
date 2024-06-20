@@ -183,7 +183,7 @@ export const percent = async (object) => {
         }
       }
     }
-    else if (extra === "out") {
+    else if (extra === "expense") {
       percent = (Math.abs(goal - real) / goal) * 100;
       if (goal > real) {
         // 1. 0% ~ 1%
@@ -413,11 +413,11 @@ export const percent = async (object) => {
   let money = {};
   if (!object?.moneyGoal || !object?.money) {
     money = {
-      diff_in: {
+      diff_income: {
         score: "1.00",
         percent: "0.00",
       },
-      diff_out: {
+      diff_expense: {
         score: "1.00",
         percent: "0.00",
       },
@@ -425,12 +425,12 @@ export const percent = async (object) => {
   }
   else {
     money = {
-      diff_in: diffMoney(
+      diff_income: diffMoney(
         object?.moneyGoal?.money_goal_income,
         object?.money?.money_total_income,
         "income"
       ),
-      diff_out: diffMoney(
+      diff_expense: diffMoney(
         object?.moneyGoal?.money_goal_expense,
         object?.money?.money_total_expense,
         "expense"

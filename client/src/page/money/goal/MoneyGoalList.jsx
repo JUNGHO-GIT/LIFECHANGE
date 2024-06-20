@@ -87,7 +87,7 @@ export const MoneyGoalList = () => {
       }));
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);
@@ -181,7 +181,7 @@ export const MoneyGoalList = () => {
                       <Div className={"fs-0-7rem dark fw-normal me-8"}>
                         ₩
                       </Div>
-                      {numeral(item.money_out).format("0,0")}
+                      {numeral(item.money_goal_expense).format("0,0")}
                     </Div>
                   </TableCell>
                 </TableRow>

@@ -76,7 +76,7 @@ export const MoneySave = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/exist`, {
+    await axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -85,32 +85,47 @@ export const MoneySave = () => {
           dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
         },
       },
+    })
+    .then((res) => {
+      setEXIST(res.data.result || []);
+      setLOADING(false);
+    })
+    .catch((err) => {
+      console.error("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setEXIST(res.data.result || []);
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/detail`, {
+    await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
         _id: "",
         DATE: DATE,
       },
+    })
+    .then((res) => {
+      setOBJECT((prev) => ({
+        ...prev,
+        ...res.data.result || OBJECT_DEF
+      }));
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+    })
+    .catch((err) => {
+      console.error("err", err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setOBJECT((prev) => ({
-      ...prev,
-      ...res.data.result || OBJECT_DEF
-    }));
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -118,16 +133,16 @@ export const MoneySave = () => {
     const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
         // money_part_val 가 income인경우
-        totalIn: acc.totalIn + (cur.money_part_val === "income" ? cur.money_amount : 0),
+        totalIncome: acc.totalIncome + (cur.money_part_val === "income" ? cur.money_amount : 0),
 
         // money_part_val 가 expense인경우
         totalExpense: acc.totalExpense + (cur.money_part_val === "expense" ? cur.money_amount : 0)
       };
-    }, {totalIn: 0, totalExpense: 0});
+    }, {totalIncome: 0, totalExpense: 0});
 
     setOBJECT((prev) => ({
       ...prev,
-      money_total_income: Math.round(totals.totalIn),
+      money_total_income: Math.round(totals.totalIncome),
       money_total_expense: Math.round(totals.totalExpense)
     }));
 
@@ -155,52 +170,59 @@ export const MoneySave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/save`, {
+    await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      Object.assign(SEND, {
-        dateStart: DATE.dateStart,
-        dateEnd: DATE.dateEnd
-      });
-      navigate(SEND.toList, {
-        state: SEND
-      });
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    const res = await axios.post(`${URL_OBJECT}/deletes`, {
+    await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
       _id: OBJECT._id,
       DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      Object.assign(SEND, {
-        dateStart: DATE.dateStart,
-        dateEnd: DATE.dateEnd
-      });
-      navigate(SEND.toList, {
-        state: SEND
-      });
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
-
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
@@ -256,7 +278,7 @@ export const MoneySave = () => {
         <Div className={"d-center"}>
         <TextField
           select={false}
-          label={translate("totalIn")}
+          label={translate("totalIncome")}
           size={"small"}
           value={numeral(OBJECT?.money_total_income).format('0,0')}
           variant={"outlined"}

@@ -146,19 +146,26 @@ export const FoodFindList = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/find/list`, {
+    await axios.get(`${URL_OBJECT}/find/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
         DATE: DATE
       },
+    })
+    .then((res) => {
+      setOBJECT(res.data.result || []);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
+      }));
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setOBJECT(res.data.result || []);
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
-    }));
-    setLOADING(false);
   };
 
   // 4. handler ------------------------------------------------------------------------------------

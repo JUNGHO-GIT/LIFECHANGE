@@ -24,11 +24,11 @@ export const list = async (object) => {
       const percent = (Math.abs(goal - real) / goal) * 100;
       if (goal > real) {
         if (percent > 0 && percent <= 1) {
-          return "danger";
+          return "primary";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "warning";
+          return "success";
         }
         // 3. 10% ~ 30%
         else if (percent > 10 && percent <= 30) {
@@ -36,21 +36,21 @@ export const list = async (object) => {
         }
         // 4. 30% ~ 50%
         else if (percent > 30 && percent <= 50) {
-          return "success";
+          return "warning";
         }
         // 5. 50% ~
         else {
-          return "primary";
+          return "danger";
         }
       }
       else {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "primary";
+          return "danger";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "success";
+          return "warning";
         }
         // 3. 10% ~ 30%
         else if (percent > 10 && percent <= 30) {
@@ -58,24 +58,24 @@ export const list = async (object) => {
         }
         // 4. 30% ~ 50%
         else if (percent > 30 && percent <= 50) {
-          return "warning";
+          return "success";
         }
         // 5. 50% ~
         else {
-          return "danger";
+          return "primary";
         }
       }
     }
-    if (extra === "out") {
+    if (extra === "expense") {
       const percent = (Math.abs(goal - real) / goal) * 100;
       if (goal > real) {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "primary";
+          return "danger";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "success";
+          return "warning";
         }
         // 3. 10% ~ 30%
         else if (percent > 10 && percent <= 30) {
@@ -83,21 +83,21 @@ export const list = async (object) => {
         }
         // 4. 30% ~ 50%
         else if (percent > 30 && percent <= 50) {
-          return "warning";
+          return "success";
         }
         // 5. 50% ~
         else {
-          return "danger";
+          return "primary";
         }
       }
       else {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "danger";
+          return "primary";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "warning";
+          return "success";
         }
         // 3. 10% ~ 30%
         else if (percent > 10 && percent <= 30) {
@@ -105,11 +105,11 @@ export const list = async (object) => {
         }
         // 4. 30% ~ 50%
         else if (percent > 30 && percent <= 50) {
-          return "success";
+          return "warning";
         }
         // 5. 50% ~
         else {
-          return "primary";
+          return "danger";
         }
       }
     }
@@ -117,16 +117,16 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      money_diff_in: compareCount(
+      money_diff_income: compareCount(
         item?.money_goal_income, item?.money_total_income, "income"
       ),
-      money_diff_out: compareCount(
+      money_diff_expense: compareCount(
         item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
-      money_diff_in_color: makeColor(
+      money_diff_income_color: makeColor(
         item?.money_goal_income, item?.money_total_income, "income"
       ),
-      money_diff_out_color: makeColor(
+      money_diff_expense_color: makeColor(
         item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
     });

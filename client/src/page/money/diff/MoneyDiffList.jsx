@@ -69,10 +69,10 @@ export const MoneyDiff = () => {
     money_dateEnd: "0000-00-00",
     money_total_income: 0,
     money_total_expense: 0,
-    money_diff_in: 0,
-    money_diff_out: 0,
-    money_diff_in_color: "",
-    money_diff_out_color: "",
+    money_diff_income: 0,
+    money_diff_expense: 0,
+    money_diff_income_color: "",
+    money_diff_expense_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -96,7 +96,7 @@ export const MoneyDiff = () => {
       }));
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);
@@ -174,8 +174,8 @@ export const MoneyDiff = () => {
                     </Div>
                   </TableCell>
                   <TableCell>
-                    <Div className={`d-left fw-bold ${item.money_diff_in_color}`}>
-                      {numeral(item.money_diff_in).format('0,0')}
+                    <Div className={`d-left fw-bold ${item.money_diff_income_color}`}>
+                      {numeral(item.money_diff_income).format('0,0')}
                     </Div>
                   </TableCell>
                 </TableRow>
@@ -214,8 +214,8 @@ export const MoneyDiff = () => {
                     </Div>
                   </TableCell>
                   <TableCell>
-                    <Div className={`d-left fw-bold ${item.money_diff_out_color}`}>
-                      {numeral(item.money_diff_out).format('0,0')}
+                    <Div className={`d-left fw-bold ${item.money_diff_expense_color}`}>
+                      {numeral(item.money_diff_expense).format('0,0')}
                     </Div>
                   </TableCell>
                 </TableRow>

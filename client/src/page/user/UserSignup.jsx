@@ -39,48 +39,60 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSend = async () => {
-    const res = await axios.post (`${URL_OBJECT}/send`, {
+    await axios.post (`${URL_OBJECT}/send`, {
       user_id: OBJECT.user_id
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        setServerCode(res.data.result.code);
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      setServerCode(res.data.result.code);
-    }
-    else {
-      alert(res.data.msg);
-    }
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post (`${URL_OBJECT}/signup`, {
+    await axios.post (`${URL_OBJECT}/signup`, {
       user_id: OBJECT.user_id,
       OBJECT: OBJECT
-    });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      navigate("/user/login");
-    }
-    else if (res.data.status === "duplicated") {
-      alert(res.data.msg);
-      setOBJECT((prev) => ({
-        ...prev,
-        user_id: "",
-        user_pw: "",
-      }));
-    }
-    else if (res.data.status === "fail") {
-      alert(res.data.msg);
-      setOBJECT((prev) => ({
-        ...prev,
-        user_id: "",
-        user_pw: "",
-      }));
-    }
-    else {
-      alert(res.data.msg);
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        navigate("/user/login");
+      }
+      else if (res.data.status === "duplicated") {
+        alert(res.data.msg);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id: "",
+          user_pw: "",
+        }));
+      }
+      else if (res.data.status === "fail") {
+        alert(res.data.msg);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id: "",
+          user_pw: "",
+        }));
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
       navigate(0);
-    }
+    });
   };
 
   // 4. handler ------------------------------------------------------------------------------------

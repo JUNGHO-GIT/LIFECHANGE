@@ -15,12 +15,12 @@ export const list = async (object) => {
   const makeColor = (goal, real, extra) => {
     const percent = ((real - goal) / goal) * 100;
     // 1. ~ 1%
-    if (percent <= 1) {
-      return "danger";
+    if (percent > 0 && percent <= 1) {
+      return "primary";
     }
     // 2. 1% ~ 10%
     else if (percent > 1 && percent <= 10) {
-      return "warning";
+      return "success";
     }
     // 3. 10% ~ 30%
     else if (percent > 10 && percent <= 30) {
@@ -28,11 +28,11 @@ export const list = async (object) => {
     }
     // 4. 30% ~ 50%
     else if (percent > 30 && percent <= 50) {
-      return "success";
+      return "warning";
     }
     // 5. 50% ~
     else {
-      return "primary";
+      return "danger";
     }
   };
 

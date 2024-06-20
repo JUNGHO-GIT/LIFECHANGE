@@ -72,20 +72,27 @@ export const CalendarList = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/list`, {
+    await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
         DATE: DATE,
       },
+    })
+    .then((res) => {
+      setOBJECT(res.data.result || OBJECT_DEF);
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setOBJECT(res.data.result || OBJECT_DEF);
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: res.data.totalCnt || 0,
-      sectionCnt: res.data.sectionCnt || 0,
-      newSectionCnt: res.data.sectionCnt || 0
-    }));
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. calendar -----------------------------------------------------------------------------------

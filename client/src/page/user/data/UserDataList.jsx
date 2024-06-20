@@ -205,7 +205,7 @@ export const UserDataList = () => {
       }));
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);
@@ -214,23 +214,30 @@ export const UserDataList = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async (type_param) => {
-    const res = await axios.post(`${URL_OBJECT}/data/save`, {
+    await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: sessionId,
       PART: type_param,
       count: COUNT?.inputCnt
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        setCOUNT((prev) => ({
+          ...prev,
+          inputCnt: 0,
+        }));
+        setPAGING((prev) => ({
+          ...prev,
+          page: 1
+        }));
+      }
+    })
+    .catch((err) => {
+      console.error("err", err);
+    })
+    .finally(() => {
+      navigate(0);
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      setCOUNT((prev) => ({
-        ...prev,
-        inputCnt: 0,
-      }));
-      setPAGING((prev) => ({
-        ...prev,
-        page: 1
-      }));
-      navigate("/user/data/list");
-    }
   };
 
   // 6. table --------------------------------------------------------------------------------------

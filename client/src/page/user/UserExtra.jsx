@@ -40,19 +40,24 @@ export const UserExtra = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post (`${URL_OBJECT}/extra`, {
+    await axios.post (`${URL_OBJECT}/extra`, {
       user_id: sessionId,
       OBJECT: OBJECT,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        navigate("/user/login");
+      }
+      else {
+        alert(res.data.msg);
+        navigate(0);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      navigate("/user/login");
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 7. table --------------------------------------------------------------------------------------

@@ -99,7 +99,7 @@ export const ExerciseList = () => {
       }));
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err", err);
     })
     .finally(() => {
       setLOADING(false);
@@ -202,7 +202,7 @@ export const ExerciseList = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_total_weight).format("0,0")}
+                      {numeral(item.exercise_body_weight).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
                         kg
                       </Div>

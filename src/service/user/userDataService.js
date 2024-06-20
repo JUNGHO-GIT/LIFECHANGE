@@ -168,7 +168,7 @@ export const save = async (
   else if (secondStr === "exercise") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
-        const partIndex = Math.floor(Math.random() * exerciseArray.length);
+        const partIndex = Math.floor(Math.random() * (exerciseArray.length - 1)) + 1;
         const part = exerciseArray[partIndex];
         const titleIndex = Math.floor(Math.random() * part.exercise_title.length);
         return {
@@ -244,7 +244,7 @@ export const save = async (
   else if (secondStr === "food") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
-        const partIndex = Math.floor(Math.random() * foodArray.length);
+        const partIndex = Math.floor(Math.random() * foodArray.length - 1) + 1;
         const part = foodArray[partIndex];
         const titleArray = ["김치찌개", "된장찌개", "부대찌개", "순두부찌개", "갈비탕", "설렁탕", "뼈해장국", "칼국수", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이"]
         const title = titleArray[Math.floor(Math.random() * titleArray.length)];
@@ -326,7 +326,7 @@ export const save = async (
   else if (secondStr === "money") {
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
-        const partIndex = Math.floor(Math.random() * moneyArray.length);
+        const partIndex = Math.floor(Math.random() * moneyArray.length - 1) + 1;
         const part = moneyArray[partIndex];
         const titleIndex = Math.floor(Math.random() * part.money_title.length);
         return {
@@ -340,7 +340,7 @@ export const save = async (
         };
       });
 
-      const totalIn = sections
+      const totalIncome = sections
         .filter((section) => (section.money_part_val === "income"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
@@ -356,7 +356,7 @@ export const save = async (
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
-        money_total_income: totalIn,
+        money_total_income: totalIncome,
         money_total_expense: totalExpense,
         money_section: sections,
         money_regDt: Date.now(),

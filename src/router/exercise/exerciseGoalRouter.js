@@ -2,7 +2,6 @@
 
 import express from "express";
 import * as service from "../../service/exercise/exerciseGoalService.js";
-import * as middleware from "../../middleware/exercise/exerciseGoalMiddleware.js";
 export const router = express.Router();
 
 // 0. exist ----------------------------------------------------------------------------------------

@@ -81,7 +81,7 @@ export const FoodFindSave = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const res = await axios.get(`${URL_OBJECT}/exist`, {
+    await axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -90,9 +90,16 @@ export const FoodFindSave = () => {
           dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
         },
       },
+    })
+    .then((res) => {
+      setEXIST(res.data.result || []);
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    })
+    .finally(() => {
+      setLOADING(false);
     });
-    setEXIST(res.data.result || []);
-    setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3 useEffect ---------------------------------------------------------------------------------
@@ -151,26 +158,30 @@ export const FoodFindSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    const res = await axios.post(`${URL_OBJECT}/find/save`, {
+    await axios.post(`${URL_OBJECT}/find/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
     });
-    if (res.data.status === "success") {
-      alert(res.data.msg);
-      percent();
-      Object.assign(SEND, {
-        dateStart: DATE.dateStart,
-        dateEnd: DATE.dateEnd
-      });
-      navigate(SEND.toList, {
-        state: SEND
-      });
-    }
-    else {
-      alert(res.data.msg);
-      navigate(0);
-    }
   };
 
   // 4-3. handler ----------------------------------------------------------------------------------
