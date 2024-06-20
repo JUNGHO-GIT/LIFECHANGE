@@ -3,7 +3,7 @@
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 
-// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+// 1-1. dash (bar - today) -------------------------------------------------------------------------
 export const barToday = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -58,7 +58,7 @@ export const barToday = {
   }
 };
 
-// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+// 2-1. dash (pie - today) -------------------------------------------------------------------------
 export const pieToday = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -86,7 +86,7 @@ export const pieToday = {
   }
 };
 
-// 2-2. dash (pie - week) ------------------------------------------------------------------------>
+// 2-2. dash (pie - week) -------------------------------------------------------------------------
 export const pieWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -114,7 +114,7 @@ export const pieWeek = {
   }
 };
 
-// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+// 2-3. dash (pie - month) -------------------------------------------------------------------------
 export const pieMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -142,7 +142,7 @@ export const pieMonth = {
   }
 };
 
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
+// 3-1. dash (line - week) -------------------------------------------------------------------------
 export const lineWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -171,7 +171,7 @@ export const lineWeek = {
   }
 };
 
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
+// 3-2. dash (line - month) ------------------------------------------------------------------------
 export const lineMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -199,7 +199,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) -------------------------------------------------------------------------
 export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -227,7 +227,7 @@ export const avgMonth = {
   }
 };
 
-// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+// 4-2. dash (avg - year) -------------------------------------------------------------------------
 export const avgYear = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param

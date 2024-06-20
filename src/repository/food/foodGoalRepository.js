@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {FoodGoal} from "../../schema/food/FoodGoal.js";
 import {newDate} from "../../assets/js/date.js";
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = {
 
   // food_dateType 이 존재하는 경우
@@ -36,7 +36,7 @@ export const exist = {
   }
 };
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = {
   cnt: async (
     user_id_param,
@@ -86,7 +86,7 @@ export const list = {
   }
 };
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = {
   detail: async (
     user_id_param, _id_param,
@@ -109,7 +109,7 @@ export const detail = {
     return finalResult;
   }
 };
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = {
   detail: async (
     user_id_param, _id_param,
@@ -177,7 +177,7 @@ export const save = {
     return finalResult;
   }
 };
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = {
   detail: async (
     user_id_param, _id_param,

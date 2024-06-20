@@ -3,7 +3,7 @@
 import {Money} from "../../schema/money/Money.js";
 import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 
-// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+// 1-1. dash (bar - today) -------------------------------------------------------------------------
 export const barToday = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -58,9 +58,9 @@ export const barToday = {
   }
 };
 
-// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+// 2-1. dash (pie - today) -------------------------------------------------------------------------
 export const pieToday = {
-  listIn: async (
+  listIncome: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -92,7 +92,7 @@ export const pieToday = {
     return finalResult;
   },
 
-  listOut: async (
+  listExpense: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -125,9 +125,9 @@ export const pieToday = {
   }
 };
 
-// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+// 2-2. dash (pie - week) --------------------------------------------------------------------------
 export const pieWeek = {
-  listIn: async (
+  listIncome: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -159,7 +159,7 @@ export const pieWeek = {
     return finalResult;
   },
 
-  listOut: async (
+  listExpense: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -192,9 +192,9 @@ export const pieWeek = {
   }
 };
 
-// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+// 2-3. dash (pie - month) -------------------------------------------------------------------------
 export const pieMonth = {
-  listIn: async (
+  listIncome: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -226,7 +226,7 @@ export const pieMonth = {
     return finalResult;
   },
 
-  listOut: async (
+  listExpense: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -259,7 +259,7 @@ export const pieMonth = {
   }
 };
 
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
+// 3-1. dash (line - week) -------------------------------------------------------------------------
 export const lineWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -288,7 +288,7 @@ export const lineWeek = {
   },
 };
 
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
+// 3-2. dash (line - month) ------------------------------------------------------------------------
 export const lineMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -317,7 +317,7 @@ export const lineMonth = {
   },
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) -------------------------------------------------------------------------
 export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -346,7 +346,7 @@ export const avgMonth = {
   },
 };
 
-// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+// 4-2. dash (avg - year) -------------------------------------------------------------------------
 export const avgYear = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param

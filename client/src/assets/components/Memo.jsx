@@ -6,19 +6,19 @@ import {PopUp, Img, Div} from "../../import/ImportComponents.jsx";
 import {TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
 import {calendar3} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const Memo = ({
   OBJECT, setOBJECT, extra, i
 }) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
 
-  // 2. memoNode ---------------------------------------------------------------------------------->
+  // 2. memoNode -----------------------------------------------------------------------------------
   const memoNode = () => (
     <PopUp
       key={i}
@@ -69,7 +69,7 @@ export const Memo = ({
     </PopUp>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 15. return ------------------------------------------------------------------------------------
   return (
     <>
       {memoNode()}

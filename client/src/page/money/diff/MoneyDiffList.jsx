@@ -12,10 +12,10 @@ import {TableContainer, Table} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const MoneyDiff = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -28,16 +28,16 @@ export const MoneyDiff = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
+  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
+      dateType: "",
       dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -56,7 +56,7 @@ export const MoneyDiff = () => {
     newSectionCnt: 0
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = [{
     _id: "",
     money_goal_number: 0,
@@ -76,7 +76,7 @@ export const MoneyDiff = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/diff/list`, {
@@ -103,7 +103,7 @@ export const MoneyDiff = () => {
     });
   }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
@@ -252,7 +252,7 @@ export const MoneyDiff = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -272,7 +272,7 @@ export const MoneyDiff = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

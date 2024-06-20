@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import {Food} from "../../schema/food/Food.js";
 import {newDate} from "../../assets/js/date.js";
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = {
 
   // food_section 의 length 가 0 이상인 경우
@@ -39,7 +39,7 @@ export const exist = {
   }
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = {
   detail: async (
     user_id_param, _id_param,

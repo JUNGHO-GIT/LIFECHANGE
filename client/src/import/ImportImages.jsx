@@ -53,7 +53,7 @@ import setting2 from "../assets/images/setting/setting2.webp";
 import setting3 from "../assets/images/setting/setting3.webp";
 import setting4 from "../assets/images/setting/setting4.webp";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export {
   logo1, logo2, logo3,
   smile1, smile2, smile3, smile4, smile5,

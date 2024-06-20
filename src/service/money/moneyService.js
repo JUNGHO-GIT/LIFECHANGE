@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/money/moneyRepository.js";
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param, DATE_param
 ) => {
@@ -23,7 +23,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
@@ -49,7 +49,7 @@ export const list = async (
   };
 };
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = async (
   user_id_param, _id_param, DATE_param
 ) => {
@@ -70,7 +70,7 @@ export const detail = async (
   };
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
@@ -98,7 +98,7 @@ export const save = async (
   return finalResult
 };
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param, _id_param, DATE_param
 ) => {

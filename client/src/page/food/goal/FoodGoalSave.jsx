@@ -11,10 +11,10 @@ import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportCom
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const FoodGoalSave = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -31,7 +31,7 @@ export const FoodGoalSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
@@ -52,7 +52,7 @@ export const FoodGoalSave = () => {
     dateEnd: location_dateEnd
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     food_goal_number: 0,
@@ -66,7 +66,7 @@ export const FoodGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/exist`, {
@@ -83,7 +83,7 @@ export const FoodGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/goal/detail`, {
@@ -111,7 +111,7 @@ export const FoodGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
@@ -135,7 +135,7 @@ export const FoodGoalSave = () => {
     }
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
@@ -160,7 +160,7 @@ export const FoodGoalSave = () => {
   };
 
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -175,7 +175,7 @@ export const FoodGoalSave = () => {
     }));
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
@@ -224,7 +224,7 @@ export const FoodGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalKcal")}
+            label={`${translate("goalKcal")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
@@ -257,7 +257,7 @@ export const FoodGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalCarb")}
+            label={`${translate("goalCarb")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_goal_carb).format("0,0")}
@@ -290,7 +290,7 @@ export const FoodGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalProtein")}
+            label={`${translate("goalProtein")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_goal_protein).format("0,0")}
@@ -323,7 +323,7 @@ export const FoodGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalFat")}
+            label={`${translate("goalFat")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.food_goal_fat).format("0,0")}
@@ -389,7 +389,7 @@ export const FoodGoalSave = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -409,7 +409,7 @@ export const FoodGoalSave = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

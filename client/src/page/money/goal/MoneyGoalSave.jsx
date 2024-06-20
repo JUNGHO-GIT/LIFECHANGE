@@ -11,10 +11,10 @@ import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const MoneyGoalSave = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -30,7 +30,7 @@ export const MoneyGoalSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
@@ -51,7 +51,7 @@ export const MoneyGoalSave = () => {
     dateEnd: location_dateEnd
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     money_goal_number: 0,
@@ -63,7 +63,7 @@ export const MoneyGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/exist`, {
@@ -80,7 +80,7 @@ export const MoneyGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/goal/detail`, {
@@ -108,7 +108,7 @@ export const MoneyGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
@@ -132,7 +132,7 @@ export const MoneyGoalSave = () => {
     }
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
@@ -157,7 +157,7 @@ export const MoneyGoalSave = () => {
   };
 
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -171,7 +171,7 @@ export const MoneyGoalSave = () => {
   };
 
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
@@ -220,7 +220,7 @@ export const MoneyGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalIn")}
+            label={`${translate("goalIncome")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.money_goal_income).format("0,0")}
@@ -253,7 +253,7 @@ export const MoneyGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalOut")}
+            label={`${translate("goalExpense")} (${translate("total")})`}
             variant={"outlined"}
             className={"w-86vw"}
             value={numeral(OBJECT?.money_goal_expense).format("0,0")}
@@ -319,7 +319,7 @@ export const MoneyGoalSave = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -339,7 +339,7 @@ export const MoneyGoalSave = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

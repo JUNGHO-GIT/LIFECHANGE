@@ -4,7 +4,7 @@ import express from "express";
 import * as service from "../../service/food/foodDashService.js";
 export const router = express.Router();
 
-// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+// 1-1. dash (bar - today) -------------------------------------------------------------------------
 router.get("/bar/today", async (req, res) => {
   try {
     let result = await service.barToday (
@@ -34,7 +34,7 @@ router.get("/bar/today", async (req, res) => {
   }
 });
 
-// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+// 2-1. dash (pie - today) -------------------------------------------------------------------------
 router.get("/pie/today", async (req, res) => {
   try {
     let result = await service.pieToday (
@@ -64,7 +64,7 @@ router.get("/pie/today", async (req, res) => {
   }
 });
 
-// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+// 2-2. dash (pie - week) --------------------------------------------------------------------------
 router.get("/pie/week", async (req, res) => {
   try {
     let result = await service.pieWeek (
@@ -94,7 +94,7 @@ router.get("/pie/week", async (req, res) => {
   }
 });
 
-// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+// 2-3. dash (pie - month) -------------------------------------------------------------------------
 router.get("/pie/month", async (req, res) => {
   try {
     let result = await service.pieMonth (
@@ -124,7 +124,7 @@ router.get("/pie/month", async (req, res) => {
   }
 });
 
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
+// 3-1. dash (line - week) -------------------------------------------------------------------------
 router.get("/line/week", async (req, res) => {
   try {
     let result = await service.lineWeek (
@@ -154,7 +154,7 @@ router.get("/line/week", async (req, res) => {
   }
 });
 
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
+// 3-2. dash (line - month) ------------------------------------------------------------------------
 router.get("/line/month", async (req, res) => {
   try {
     let result = await service.lineMonth (
@@ -184,7 +184,7 @@ router.get("/line/month", async (req, res) => {
   }
 });
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) -------------------------------------------------------------------------
 router.get("/avg/month", async (req, res) => {
   try {
     let result = await service.avgMonth (
@@ -214,7 +214,7 @@ router.get("/avg/month", async (req, res) => {
   }
 });
 
-// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+// 4-2. dash (avg - year) -------------------------------------------------------------------------
 router.get("/avg/year", async (req, res) => {
   try {
     let result = await service.avgYear (

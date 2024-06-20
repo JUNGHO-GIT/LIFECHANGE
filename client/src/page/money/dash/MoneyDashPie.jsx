@@ -10,16 +10,16 @@ import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.js
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const MoneyDashPie = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
@@ -30,7 +30,7 @@ export const MoneyDashPie = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_IN_TODAY_DEF = [
     {name:"Empty", value: 100}
   ];
@@ -56,7 +56,7 @@ export const MoneyDashPie = () => {
   const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
   const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
@@ -95,7 +95,7 @@ export const MoneyDashPie = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const updateRadius = () => {
       // lg
@@ -124,7 +124,7 @@ export const MoneyDashPie = () => {
     }
   }, []);
 
-  // 4-1. render ---------------------------------------------------------------------------------->
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderInToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -141,8 +141,8 @@ export const MoneyDashPie = () => {
     );
   };
 
-  // 4-2. render ---------------------------------------------------------------------------------->
-  const renderOutToday = ({
+  // 4-2. render -----------------------------------------------------------------------------------
+  const renderExpenseToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -158,7 +158,7 @@ export const MoneyDashPie = () => {
     );
   }
 
-  // 4-3. render ---------------------------------------------------------------------------------->
+  // 4-3. render -----------------------------------------------------------------------------------
   const renderInWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -175,8 +175,8 @@ export const MoneyDashPie = () => {
     );
   }
 
-  // 4-4. render ---------------------------------------------------------------------------------->
-  const renderOutWeek = ({
+  // 4-4. render -----------------------------------------------------------------------------------
+  const renderExpenseWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -192,7 +192,7 @@ export const MoneyDashPie = () => {
     );
   }
 
-  // 4-5. render ---------------------------------------------------------------------------------->
+  // 4-5. render -----------------------------------------------------------------------------------
   const renderInMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -209,8 +209,8 @@ export const MoneyDashPie = () => {
     );
   }
 
-  // 4-6. render ---------------------------------------------------------------------------------->
-  const renderOutMonth = ({
+  // 4-6. render -----------------------------------------------------------------------------------
+  const renderExpenseMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -226,8 +226,8 @@ export const MoneyDashPie = () => {
     );
   }
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartInToday = () => (
+  // 5-1. chart ------------------------------------------------------------------------------------
+  const chartIncomeToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
@@ -273,15 +273,15 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartOutToday = () => (
+  // 5-2. chart ------------------------------------------------------------------------------------
+  const chartExpenseToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
           data={OBJECT_OUT_TODAY}
           cx={"50%"}
           cy={"50%"}
-          label={renderOutToday}
+          label={renderExpenseToday}
           labelLine={false}
           outerRadius={radius}
           fill={"#82ca9d"}
@@ -320,8 +320,8 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartInWeek = () => (
+  // 5-3. chart ------------------------------------------------------------------------------------
+  const chartIncomeWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
@@ -367,15 +367,15 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartOutWeek = () => (
+  // 5-4. chart ------------------------------------------------------------------------------------
+  const chartExpenseWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
           data={OBJECT_OUT_WEEK}
           cx={"50%"}
           cy={"50%"}
-          label={renderOutWeek}
+          label={renderExpenseWeek}
           labelLine={false}
           outerRadius={radius}
           fill={"#82ca9d"}
@@ -414,8 +414,8 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-5. chart ----------------------------------------------------------------------------------->
-  const chartInMonth = () =>  (
+  // 5-5. chart ------------------------------------------------------------------------------------
+  const chartIncomeMonth = () =>  (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
@@ -461,15 +461,15 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-6. chart ----------------------------------------------------------------------------------->
-  const chartOutMonth = () => (
+  // 5-6. chart ------------------------------------------------------------------------------------
+  const chartExpenseMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
         <Pie
           data={OBJECT_OUT_MONTH}
           cx={"50%"}
           cy={"50%"}
-          label={renderOutMonth}
+          label={renderExpenseMonth}
           labelLine={false}
           outerRadius={radius}
           fill={"#82ca9d"}
@@ -508,7 +508,7 @@ export const MoneyDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -565,37 +565,37 @@ export const MoneyDashPie = () => {
     // 7-7. fragment
     const dashFragment1 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartInToday()}
+        {chartIncomeToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment2 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartOutToday()}
+        {chartExpenseToday()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment3 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartInWeek()}
+        {chartIncomeWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment4 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartOutWeek()}
+        {chartExpenseWeek()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment5 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartInMonth()}
+        {chartIncomeMonth()}
       </Card>
     );
     // 7-7. fragment
     const dashFragment6 = (i) => (
       <Card className={"p-10"} key={i}>
-        {chartOutMonth()}
+        {chartExpenseMonth()}
       </Card>
     );
     // 7-8. dash
@@ -643,7 +643,7 @@ export const MoneyDashPie = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -651,7 +651,7 @@ export const MoneyDashPie = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

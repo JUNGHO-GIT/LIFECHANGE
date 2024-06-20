@@ -10,10 +10,10 @@ import {Paper, Card, TableContainer, Table, Checkbox} from "../../../import/Impo
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const FoodFindList = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -26,10 +26,10 @@ export const FoodFindList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
+  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
+      dateType: "",
       dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
@@ -41,7 +41,7 @@ export const FoodFindList = () => {
     page: 1,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [checkedQueries, setCheckedQueries] = useState({});
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
@@ -57,7 +57,7 @@ export const FoodFindList = () => {
     newSectionCnt: 0
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = [{
     food_perNumber: 1,
     food_title: "",
@@ -72,7 +72,7 @@ export const FoodFindList = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
     if (PAGING?.query === "") {
@@ -81,7 +81,7 @@ export const FoodFindList = () => {
     flowFind();
   }, [PAGING.page]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 로드 시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
@@ -104,7 +104,7 @@ export const FoodFindList = () => {
     });
   }, [OBJECT]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   // 체크박스 상태 변경 시 sessionStorage에 저장
   useEffect(() => {
     let sectionArray = [];
@@ -143,7 +143,7 @@ export const FoodFindList = () => {
     sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
   }, [checkedQueries, PAGING.page, PAGING.query, OBJECT]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/find/list`, {
@@ -161,7 +161,7 @@ export const FoodFindList = () => {
     setLOADING(false);
   };
 
-  // 4. handler ----------------------------------------------------------------------------------->
+  // 4. handler ------------------------------------------------------------------------------------
   const handlerCheckboxChange = (index) => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];
@@ -172,7 +172,7 @@ export const FoodFindList = () => {
     });
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
@@ -324,7 +324,7 @@ export const FoodFindList = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -344,7 +344,7 @@ export const FoodFindList = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

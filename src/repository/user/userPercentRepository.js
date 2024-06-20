@@ -9,7 +9,7 @@ import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 
-// 1-1. percent ----------------------------------------------------------------------------------->
+// 1-1. percent ------------------------------------------------------------------------------------
 export const percent = {
 
   // 1-1. exercise (goal)
@@ -222,7 +222,7 @@ export const percent = {
   },
 };
 
-// 2. property ------------------------------------------------------------------------------------>
+// 2. property -------------------------------------------------------------------------------------
 export const property = {
   listMoney: async (
     user_id_param

@@ -5,7 +5,7 @@ import * as service from "../../service/food/foodFindService.js";
 import * as middleware from "../../middleware/food/foodFindMiddleware.js";
 export const router = express.Router();
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 router.get("/exist", async (req, res) => {
   try {
     let result = await service.exist (
@@ -36,7 +36,7 @@ router.get("/exist", async (req, res) => {
   }
 });
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
@@ -71,7 +71,7 @@ router.get("/list", async (req, res) => {
 });
 
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save(

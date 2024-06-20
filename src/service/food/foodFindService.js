@@ -5,7 +5,7 @@ import axios from "axios";
 import * as repository from "../../repository/food/foodFindRepository.js";
 import {log} from "../../assets/js/utils.js";
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param, DATE_param
 ) => {
@@ -26,7 +26,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
@@ -157,7 +157,7 @@ export const list = async (
   };
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {

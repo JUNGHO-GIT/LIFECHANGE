@@ -6,15 +6,15 @@ import {moment} from "../../../import/ImportLibs.jsx";
 import {Picker, PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const Filter = ({
   strings, objects, functions, handlers
 }) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const {translate} = useTranslate();
 
-  // 1. default ----------------------------------------------------------------------------------->
+  // 1. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <Div className={"d-center"}>
       <TextField
@@ -48,10 +48,11 @@ export const Filter = ({
         EXIST={objects?.EXIST}
         setEXIST={functions?.setEXIST}
       />
-      <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5"} onClick={() => {
+      <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5"}
+      style={{lineHeight: "1.4", padding: "3px 9px"}} onClick={() => {
         functions?.setDATE((prev) => ({
           ...prev,
-          dateType: "day",
+          dateType: "",
           dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
           dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
         }));
@@ -61,7 +62,7 @@ export const Filter = ({
     </Div>
   );
 
-  // 7. filter ------------------------------------------------------------------------------------>
+  // 7. filter -------------------------------------------------------------------------------------
   const filterNode = () => {
 
     // 1. calendar
@@ -120,7 +121,6 @@ export const Filter = ({
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {defaultNode()}
-            {/* {foodNode()} */}
           </Card>
         );
       }
@@ -248,7 +248,7 @@ export const Filter = ({
     }
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
     {filterNode()}

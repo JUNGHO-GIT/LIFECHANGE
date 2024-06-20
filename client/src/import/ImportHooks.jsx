@@ -6,7 +6,7 @@ import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
 import {useLanguage} from "../assets/hooks/useLanguageProvider.jsx";
 import {useTranslate} from "../assets/hooks/useLanguageProvider.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export {
   useTime,
   useStorage,

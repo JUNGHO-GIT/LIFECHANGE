@@ -2,7 +2,7 @@
 
 import {React, useEffect} from "../../import/ImportReacts.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const useEnhancedTouch = () => {
   useEffect(() => {
     const handleTouchStart = (event) => {

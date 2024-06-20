@@ -12,7 +12,7 @@ import {Delete} from "../assets/components/Delete.jsx";
 import {Memo} from "../assets/components/Memo.jsx";
 import {Message} from "../assets/components/Message.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export {
   Div, Img,
   Br5, Br10, Br15, Br20, Br25, Br30, Br35, Br40,

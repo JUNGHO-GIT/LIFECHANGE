@@ -2,24 +2,23 @@
 
 import {differenceInMinutes} from "date-fns";
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {
 
   if (!object) {
     return [];
   }
 
-  // ex. 22:00 - 04:00 = 06:00
-  // ex. 22:00 - 22:30 = 00:30
+  // ex. 22:00 - 04:00 = 06:00   /  22:00 - 22:30 = 00:30  /  22:09 - 23:00 = 00:51
   const compareTime = (goal, real, extra) => {
     if (extra === "bedTime" || extra === "wakeTime") {
-      const goalDate = new Date(`1970-01-01T${goal}Z`);
-      const realDate = new Date(`1970-01-01T${real}Z`);
+      const goalDate = new Date(`1970-01-01T${goal}:00Z`);
+      const realDate = new Date(`1970-01-01T${real}:00Z`);
 
       // 밤을 넘어가는 시간 처리
       let diff = differenceInMinutes(realDate, goalDate);
 
-      // 24시간을 분으로 환산
+      // 24시간을 분으로 환산 후, 차이가 음수인 경우 추가
       if (diff < 0) {
         diff += 1440;
       }
@@ -27,22 +26,23 @@ export const list = async (object) => {
       // HH:mm 형식으로 결과 반환
       const hours = Math.floor(diff / 60);
       const minutes = diff % 60;
-      const diffTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-      return diffTime;
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }
-    else if (extra === "time") {
-      const hoursGoal = parseInt(goal?.split(":")[0], 10);
-      const minutesGoal = parseInt(goal?.split(":")[1], 10);
+    else if (extra === "sleepTime") {
+      const goalDate = new Date(`1970-01-01T${goal}:00Z`);
+      const realDate = new Date(`1970-01-01T${real}:00Z`);
 
-      const hoursReal = parseInt(real?.split(":")[0], 10);
-      const minutesReal = parseInt(real?.split(":")[1], 10);
+      let diff = differenceInMinutes(realDate, goalDate);
 
-      const hours = Math.abs(hoursGoal - hoursReal);
-      const minutes = Math.abs(minutesGoal - minutesReal);
+      // 시간 차이가 음수인 경우 절대값 적용
+      if (diff < 0) {
+        diff = Math.abs(diff);
+      }
 
-      const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-      return diffTime;
-    };
+      const hours = Math.floor(diff / 60);
+      const minutes = diff % 60;
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    }
   };
 
   const makeColor = (goal, real, extra) => {
@@ -56,28 +56,28 @@ export const list = async (object) => {
       else {
         diffVal = realDate.getTime() - goalDate.getTime();
       }
-      // 1. 10분이내
+      // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 600000) {
-        return "danger";
+        return "primary";
       }
       // 2. 10분 ~ 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
-        return "warning";
-      }
-      // 3. 20분 ~ 30분
-      else if (1200000 < diffVal && diffVal <= 1800000) {
-        return "secondary";
-      }
-      // 4. 30분 ~ 50분
-      else if (1800000 < diffVal && diffVal <= 3000000) {
         return "success";
       }
-      // 5. 50분 ~
+      // 3. 20분 ~ 40분
+      else if (1200000 < diffVal && diffVal <= 2400000) {
+        return "secondary";
+      }
+      // 4. 40분 ~ 60분
+      else if (2400000 < diffVal && diffVal <= 3600000) {
+        return "warning";
+      }
+      // 5. 60분 ~
       else {
-        return "primary";
+        return "danger";
       }
     }
-    else if (extra === "time") {
+    else if (extra === "sleepTime") {
       const hoursGoal = parseInt(goal?.split(":")[0], 10);
       const minutesGoal = parseInt(goal?.split(":")[1], 10);
 
@@ -91,23 +91,23 @@ export const list = async (object) => {
 
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
-        return "danger";
+        return "primary";
       }
       // 2. 10분 ~ 20분
       else if (10 < diffVal && diffVal <= 20) {
-        return "warning";
+        return "success";
       }
       // 3. 20분 ~ 30분
       else if (20 < diffVal && diffVal <= 30) {
         return "secondary";
       }
-      // 4. 30분 ~ 50분
-      else if (30 < diffVal && diffVal <= 50) {
-        return "success";
+      // 4. 30분 ~ 40분
+      else if (30 < diffVal && diffVal <= 40) {
+        return "warning";
       }
-      // 5. 50분 ~
+      // 5. 40분 ~
       else {
-        return "primary";
+        return "danger";
       }
     }
   };
@@ -121,7 +121,7 @@ export const list = async (object) => {
         item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
       sleep_diff_time: compareTime(
-        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "time"
+        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
       sleep_diff_bedTime_color: makeColor(
         item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
@@ -130,7 +130,7 @@ export const list = async (object) => {
         item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
       sleep_diff_time_color: makeColor(
-        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "time"
+        item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
     });
   });

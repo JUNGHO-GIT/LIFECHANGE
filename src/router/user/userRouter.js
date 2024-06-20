@@ -4,7 +4,7 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
-// 0-0. info -------------------------------------------------------------------------------------->
+// 0-0. info ---------------------------------------------------------------------------------------
 router.get("/info", async (req, res) => {
   try {
     let result = await service.info (
@@ -33,7 +33,7 @@ router.get("/info", async (req, res) => {
   }
 });
 
-// 0-0. send -------------------------------------------------------------------------------------->
+// 0-0. send ---------------------------------------------------------------------------------------
 router.post("/send", async (req, res) => {
   try {
     let result = await service.send (
@@ -62,7 +62,7 @@ router.post("/send", async (req, res) => {
   }
 });
 
-// 0-0. signup ------------------------------------------------------------------------------------>
+// 0-0. signup -------------------------------------------------------------------------------------
 router.post("/signup", async (req, res) => {
   try {
     let result = await service.signup (
@@ -98,7 +98,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// 0-0. exta -------------------------------------------------------------------------------------->
+// 0-0. exta ---------------------------------------------------------------------------------------
 router.post("/extra", async (req, res) => {
   try {
     let result = await service.extra (
@@ -128,7 +128,7 @@ router.post("/extra", async (req, res) => {
   }
 });
 
-// 0-1. login ------------------------------------------------------------------------------------->
+// 0-1. login --------------------------------------------------------------------------------------
 router.post("/login", async (req, res) => {
   try {
     let result = await service.login (
@@ -158,7 +158,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
@@ -189,7 +189,7 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 3-2. save -------------------------------------------------------------------------------------->
+// 3-2. save ---------------------------------------------------------------------------------------
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save (
@@ -220,7 +220,7 @@ router.post("/save", async (req, res) => {
   }
 });
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.deletes (

@@ -7,7 +7,7 @@ import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+// 1-1. dash (bar - today) -------------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -44,7 +44,7 @@ export const barToday = async (
   return finalResult;
 };
 
-// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+// 2-1. dash (pie - today) -------------------------------------------------------------------------
 export const pieToday = async (
   user_id_param
 ) => {
@@ -58,11 +58,11 @@ export const pieToday = async (
   let finalResultExpense = [];
 
   // income
-  findResultInCome = await repository.pieToday.listIn(
+  findResultInCome = await repository.pieToday.listIncome(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultExpense = await repository.pieToday.listOut(
+  findResultExpense = await repository.pieToday.listExpense(
     user_id_param, dateStart, dateEnd
   );
 
@@ -84,7 +84,7 @@ export const pieToday = async (
   };
 };
 
-// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+// 2-2. dash (pie - week) --------------------------------------------------------------------------
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -98,11 +98,11 @@ export const pieWeek = async (
   let finalResultExpense = [];
 
   // income
-  findResultInCome = await repository.pieWeek.listIn(
+  findResultInCome = await repository.pieWeek.listIncome(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultExpense = await repository.pieWeek.listOut(
+  findResultExpense = await repository.pieWeek.listExpense(
     user_id_param, dateStart, dateEnd
   );
 
@@ -124,7 +124,7 @@ export const pieWeek = async (
   };
 };
 
-// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+// 2-3. dash (pie - month) -------------------------------------------------------------------------
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -138,11 +138,11 @@ export const pieMonth = async (
   let finalResultExpense = [];
 
   // income
-  findResultInCome = await repository.pieMonth.listIn(
+  findResultInCome = await repository.pieMonth.listIncome(
     user_id_param, dateStart, dateEnd
   );
   // expense
-  findResultExpense = await repository.pieMonth.listOut(
+  findResultExpense = await repository.pieMonth.listExpense(
     user_id_param, dateStart, dateEnd
   );
 
@@ -164,7 +164,7 @@ export const pieMonth = async (
   };
 };
 
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
+// 3-1. dash (line - week) -------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -206,7 +206,7 @@ export const lineWeek = async (
   return finalResult;
 };
 
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
+// 3-2. dash (line - month) ------------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param
 ) => {
@@ -248,7 +248,7 @@ export const lineMonth = async (
   return finalResult;
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) -------------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param
 ) => {
@@ -267,7 +267,7 @@ export const avgMonth = async (
   });
 
   let sumIn = Array(5).fill(0);
-  let sumOut = Array(5).fill(0);
+  let sumExpense = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResult = [];
@@ -284,7 +284,7 @@ export const avgMonth = async (
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
       sumIn[weekNum] += intFormat(item.money_total_income);
-      sumOut[weekNum] += intFormat(item.money_total_expense);
+      sumExpense[weekNum] += intFormat(item.money_total_expense);
       countRecords[weekNum]++;
     }
   });
@@ -296,14 +296,14 @@ export const avgMonth = async (
       name: data,
       date: date[index],
       income: intFormat(sumIn[index] / countRecords[index]),
-      expense: intFormat(sumOut[index] / countRecords[index])
+      expense: intFormat(sumExpense[index] / countRecords[index])
     });
   });
 
   return finalResult;
 };
 
-// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+// 4-2. dash (avg - year) -------------------------------------------------------------------------
 export const avgYear = async (
   user_id_param
 ) => {
@@ -322,7 +322,7 @@ export const avgYear = async (
   });
 
   let sumIn = Array(5).fill(0);
-  let sumOut = Array(5).fill(0);
+  let sumExpense = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
   let findResult = [];
@@ -336,7 +336,7 @@ export const avgYear = async (
     const moneyDate = new Date(item.money_dateStart);
     const monthNum = moneyDate.getMonth();
     sumIn[monthNum] += intFormat(item.money_total_income);
-    sumOut[monthNum] += intFormat(item.money_total_expense);
+    sumExpense[monthNum] += intFormat(item.money_total_expense);
     countRecords[monthNum]++;
   });
 
@@ -347,7 +347,7 @@ export const avgYear = async (
       name: data,
       date: date[index],
       income: intFormat(sumIn[index] / countRecords[index]),
-      expense: intFormat(sumOut[index] / countRecords[index])
+      expense: intFormat(sumExpense[index] / countRecords[index])
     });
   });
 

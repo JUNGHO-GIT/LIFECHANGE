@@ -8,10 +8,10 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -23,16 +23,16 @@ export const CalendarList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) ---------------------------------------------------------->
+  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "day",
+      dateType: "",
       dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -50,7 +50,7 @@ export const CalendarList = () => {
     newSectionCnt: 0
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = [{
     _id: "",
     calendar_number: 0,
@@ -69,7 +69,7 @@ export const CalendarList = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/list`, {
@@ -88,7 +88,7 @@ export const CalendarList = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 7. calendar ---------------------------------------------------------------------------------->
+  // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
     const formatDate = (date) => moment(date).format("YYYY-MM-DD");
 
@@ -199,7 +199,7 @@ export const CalendarList = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -219,7 +219,7 @@ export const CalendarList = () => {
     />
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -227,7 +227,7 @@ export const CalendarList = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {calendarNode()}

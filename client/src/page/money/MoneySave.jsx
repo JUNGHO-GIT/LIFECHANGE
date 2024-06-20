@@ -11,10 +11,10 @@ import {PopUp, Img, Picker, Memo, Count, Delete} from "../../import/ImportCompon
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {money2} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const MoneySave = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -32,7 +32,7 @@ export const MoneySave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [EXIST, setEXIST] = useState([""]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
@@ -53,7 +53,7 @@ export const MoneySave = () => {
     dateEnd: location_dateEnd
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     money_number: 0,
@@ -73,7 +73,7 @@ export const MoneySave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/exist`, {
@@ -90,7 +90,7 @@ export const MoneySave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/detail`, {
@@ -113,7 +113,7 @@ export const MoneySave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
@@ -121,19 +121,19 @@ export const MoneySave = () => {
         totalIn: acc.totalIn + (cur.money_part_val === "income" ? cur.money_amount : 0),
 
         // money_part_val 가 expense인경우
-        totalOut: acc.totalOut + (cur.money_part_val === "expense" ? cur.money_amount : 0)
+        totalExpense: acc.totalExpense + (cur.money_part_val === "expense" ? cur.money_amount : 0)
       };
-    }, {totalIn: 0, totalOut: 0});
+    }, {totalIn: 0, totalExpense: 0});
 
     setOBJECT((prev) => ({
       ...prev,
       money_total_income: Math.round(totals.totalIn),
-      money_total_expense: Math.round(totals.totalOut)
+      money_total_expense: Math.round(totals.totalExpense)
     }));
 
   }, [OBJECT?.money_section]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
       money_part_idx: 0,
@@ -153,7 +153,7 @@ export const MoneySave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
@@ -177,7 +177,7 @@ export const MoneySave = () => {
     }
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
@@ -202,7 +202,7 @@ export const MoneySave = () => {
   };
 
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -214,7 +214,7 @@ export const MoneySave = () => {
     }));
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
@@ -278,7 +278,7 @@ export const MoneySave = () => {
         <Div className={"d-center"}>
         <TextField
           select={false}
-          label={translate("totalOut")}
+          label={translate("totalExpense")}
           size={"small"}
           value={numeral(OBJECT?.money_total_expense).format('0,0')}
           variant={"outlined"}
@@ -475,7 +475,7 @@ export const MoneySave = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -495,7 +495,7 @@ export const MoneySave = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

@@ -10,7 +10,7 @@ import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
 import {sleepArray} from '../../assets/array/sleepArray.js';
 
-// 1-1. category ---------------------------------------------------------------------------------->
+// 1-1. category -----------------------------------------------------------------------------------
 export const category = async (
   user_id_param
 ) => {
@@ -22,7 +22,7 @@ export const category = async (
   return findResult;
 };
 
-// 1-2. list -------------------------------------------------------------------------------------->
+// 1-2. list ---------------------------------------------------------------------------------------
 export const list = async (
   user_id_param, PAGING_param, PART_param
 ) => {
@@ -118,7 +118,7 @@ export const list = async (
   };
 };
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = async (
   user_id_param
 ) => {
@@ -130,7 +130,7 @@ export const detail = async (
   return finalResult
 };
 
-// 3-1. save -------------------------------------------------------------------------------------->
+// 3-1. save ---------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, PART_param, count_param
 ) => {
@@ -344,7 +344,7 @@ export const save = async (
         .filter((section) => (section.money_part_val === "income"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
-      const totalOut = sections
+      const totalExpense = sections
         .filter((section) => (section.money_part_val === "expense"))
         .reduce((sum, section) => (sum + section.money_amount), 0);
 
@@ -357,7 +357,7 @@ export const save = async (
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_total_income: totalIn,
-        money_total_expense: totalOut,
+        money_total_expense: totalExpense,
         money_section: sections,
         money_regDt: Date.now(),
         money_updateDt: Date.now(),
@@ -430,7 +430,7 @@ export const save = async (
   return finalResult;
 };
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param, _id_param
 ) => {

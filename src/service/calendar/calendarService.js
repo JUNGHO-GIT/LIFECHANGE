@@ -3,7 +3,7 @@
 import * as repository from "../../repository/calendar/calendarRepository.js";
 import {log} from "../../assets/js/utils.js";
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param, DATE_param
 ) => {
@@ -24,7 +24,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. list ---------------------------------------------------------------------------------------
 export const list = async (
   user_id_param, DATE_param
 ) => {
@@ -47,7 +47,7 @@ export const list = async (
   };
 };
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = async (
   user_id_param, _id_param, DATE_param
 ) => {
@@ -68,7 +68,7 @@ export const detail = async (
   };
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
@@ -96,7 +96,7 @@ export const save = async (
   return finalResult
 };
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param, _id_param, DATE_param
 ) => {

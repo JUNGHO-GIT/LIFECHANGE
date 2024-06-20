@@ -8,10 +8,10 @@ import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.js
 import {Paper, TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserDeletes = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -24,11 +24,11 @@ export const UserDeletes = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     version: "",
     date: "",
@@ -37,7 +37,7 @@ export const UserDeletes = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/info`, {
@@ -56,7 +56,7 @@ export const UserDeletes = () => {
     });
   })()}, [sessionId]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.delete(`${URL_OBJECT}/deletes`, {
       data: {
@@ -73,7 +73,7 @@ export const UserDeletes = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
@@ -153,7 +153,7 @@ export const UserDeletes = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

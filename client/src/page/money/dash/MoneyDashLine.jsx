@@ -12,17 +12,17 @@ import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const MoneyDashLine = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["income", "expense"];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
@@ -32,7 +32,7 @@ export const MoneyDashLine = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_WEEK_DEF = [
     {name:"", day: "", income: 0, expense: 0},
   ];
@@ -42,7 +42,7 @@ export const MoneyDashLine = () => {
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
@@ -64,7 +64,7 @@ export const MoneyDashLine = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money");
     return (
@@ -152,7 +152,7 @@ export const MoneyDashLine = () => {
     );
   };
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
     return (
@@ -240,7 +240,7 @@ export const MoneyDashLine = () => {
     );
   };
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -349,7 +349,7 @@ export const MoneyDashLine = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -357,7 +357,7 @@ export const MoneyDashLine = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

@@ -2,7 +2,7 @@
 
 import {React, useEffect, useLocation} from "../../import/ImportReacts.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const useScrollTop = () => {
   const {pathname} = useLocation();
 

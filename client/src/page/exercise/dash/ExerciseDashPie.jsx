@@ -10,16 +10,16 @@ import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.js
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const ExerciseDashPie = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
@@ -30,7 +30,7 @@ export const ExerciseDashPie = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_PART_WEEK_DEF = [
     {name:"Empty", value: 100},
   ];
@@ -48,7 +48,7 @@ export const ExerciseDashPie = () => {
   const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEF);
   const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
@@ -76,7 +76,7 @@ export const ExerciseDashPie = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const updateRadius = () => {
       // lg
@@ -105,7 +105,7 @@ export const ExerciseDashPie = () => {
     }
   }, []);
 
-  // 4-1. render ---------------------------------------------------------------------------------->
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderPartWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -122,7 +122,7 @@ export const ExerciseDashPie = () => {
     );
   };
 
-  // 4-2. render ---------------------------------------------------------------------------------->
+  // 4-2. render -----------------------------------------------------------------------------------
   const renderTitleWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -139,7 +139,7 @@ export const ExerciseDashPie = () => {
     );
   }
 
-  // 4-3. render ---------------------------------------------------------------------------------->
+  // 4-3. render -----------------------------------------------------------------------------------
   const renderPartMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -156,7 +156,7 @@ export const ExerciseDashPie = () => {
     );
   }
 
-  // 4-4. render ---------------------------------------------------------------------------------->
+  // 4-4. render -----------------------------------------------------------------------------------
   const renderTitleMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -173,7 +173,7 @@ export const ExerciseDashPie = () => {
     );
   };
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartPartWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -220,7 +220,7 @@ export const ExerciseDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartTitleWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -267,7 +267,7 @@ export const ExerciseDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartPartMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -314,7 +314,7 @@ export const ExerciseDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-4. chart ----------------------------------------------------------------------------------->
+  // 5-4. chart ------------------------------------------------------------------------------------
   const chartTitleMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -361,7 +361,7 @@ export const ExerciseDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -477,7 +477,7 @@ export const ExerciseDashPie = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -485,7 +485,7 @@ export const ExerciseDashPie = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

@@ -8,21 +8,21 @@ import {TableContainer, Table} from "../../import/ImportMuis.jsx";
 import {TableBody, TableRow, TableCell, TableHead} from "../../import/ImportMuis.jsx";
 import {logo1} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserInfo = () => {
 
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     version: "",
     date: "",
@@ -31,7 +31,7 @@ export const UserInfo = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/info`, {
@@ -50,7 +50,7 @@ export const UserInfo = () => {
     });
   })()}, [sessionId]);
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-6. img
     const imageSection = () => (
@@ -125,7 +125,7 @@ export const UserInfo = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

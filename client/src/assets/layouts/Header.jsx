@@ -5,16 +5,16 @@ import {Div, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
 import {logo2, logo3} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const Header = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location.pathname;
   const firstStr = PATH?.split("/")[1] || "";
 
-  // 6-2. button ---------------------------------------------------------------------------------->
+  // 6-2. button -----------------------------------------------------------------------------------
   const btnUser = () => (
     firstStr !== "user" ? (
       <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
@@ -27,7 +27,7 @@ export const Header = () => {
     )
   );
 
-  // 6. default ----------------------------------------------------------------------------------->
+  // 6. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <Div className={"d-between w-100p"}>
       <Div className={"d-center"}>
@@ -40,7 +40,7 @@ export const Header = () => {
     </Div>
   );
 
-  // 7. header ------------------------------------------------------------------------------------>
+  // 7. header -------------------------------------------------------------------------------------
   const navbarNode = () => (
     <Paper className={"flex-wrapper p-sticky top-0vh radius border"}>
       <Card className={"block-wrapper d-row h-8vh"}>
@@ -49,7 +49,7 @@ export const Header = () => {
     </Paper>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
     {navbarNode()}

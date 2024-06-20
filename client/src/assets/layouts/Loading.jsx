@@ -4,19 +4,19 @@ import {React, useState, useEffect, useLocation} from "../../import/ImportReacts
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
-// 14. loading ------------------------------------------------------------------------------------>
+// 14. loading -------------------------------------------------------------------------------------
 export const Loading = ({
   LOADING, setLOADING
 }) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const location = useLocation();
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
   const secondStr = PATH?.split("/")[2] ? PATH?.split("/")[2] : "";
   const [height, setHeight] = useState("");
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2. useEffect ----------------------------------------------------------------------------------
   useEffect(() => {
     if (!LOADING) {
       return;
@@ -34,7 +34,7 @@ export const Loading = ({
     }
   }, [secondStr]);
 
-  // 6. default ----------------------------------------------------------------------------------->
+  // 6. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <Div className={`flex-wrapper ${height}`}>
       <Div className={"d-column"}>
@@ -43,14 +43,14 @@ export const Loading = ({
     </Div>
   );
 
-  // 7. loading ----------------------------------------------------------------------------------->
+  // 7. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Paper className={"content-wrapper border radius"}>
       {defaultNode()}
     </Paper>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
     {loadingNode()}

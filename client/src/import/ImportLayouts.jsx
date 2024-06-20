@@ -6,7 +6,7 @@ import {BottomNav} from "../assets/layouts/BottomNav.jsx";
 import {Footer} from "../assets/layouts/Footer.jsx";
 import {Loading} from "../assets/layouts/Loading.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export {
   Header,
   TopNav,

@@ -5,7 +5,7 @@ import * as service from "../../service/money/moneyService.js";
 import * as middleware from "../../middleware/money/moneyMiddleware.js";
 export const router = express.Router();
 
-// 0. exist --------------------------------------------------------------------------------------->
+// 0. exist ----------------------------------------------------------------------------------------
 router.get("/exist", async (req, res) => {
   try {
     let result = await service.exist (
@@ -36,7 +36,7 @@ router.get("/exist", async (req, res) => {
   }
 });
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. list ---------------------------------------------------------------------------------------
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
@@ -70,7 +70,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
@@ -104,7 +104,7 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
@@ -137,7 +137,7 @@ router.post("/save", async (req, res) => {
   }
 });
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 router.post("/deletes", async (req, res) => {
   try {
     let result = await service.deletes(

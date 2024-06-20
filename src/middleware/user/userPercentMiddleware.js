@@ -1,6 +1,6 @@
 // userPercentMiddleware.js
 
-// 1. percent ------------------------------------------------------------------------------------->
+// 1. percent --------------------------------------------------------------------------------------
 export const percent = async (object) => {
 
   if (!object) {
@@ -275,7 +275,7 @@ export const percent = async (object) => {
         score = 1;
       }
     }
-    else if (extra === "time") {
+    else if (extra === "sleepTime") {
       const hoursGoal = parseInt(goal?.split(":")[0], 10);
       const minutesGoal = parseInt(goal?.split(":")[1], 10);
       const hoursReal = parseInt(real?.split(":")[0], 10);
@@ -471,7 +471,7 @@ export const percent = async (object) => {
       diff_time: diffSleep(
         object?.sleepGoal?.sleep_goal_sleepTime,
         object?.sleep?.sleep_sleepTime,
-        "time"
+        "sleepTime"
       ),
     };
   }

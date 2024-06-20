@@ -11,10 +11,10 @@ import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportCom
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const FoodFindSave = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -29,7 +29,7 @@ export const FoodFindSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
@@ -52,7 +52,7 @@ export const FoodFindSave = () => {
     dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     food_number: 0,
@@ -78,7 +78,7 @@ export const FoodFindSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/exist`, {
@@ -95,7 +95,7 @@ export const FoodFindSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3 useEffect -------------------------------------------------------------------------------->
+  // 2-3 useEffect ---------------------------------------------------------------------------------
   useEffect(() => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
@@ -124,7 +124,7 @@ export const FoodFindSave = () => {
 
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const totals = OBJECT?.food_section?.reduce((acc, current) => {
       return {
@@ -149,7 +149,7 @@ export const FoodFindSave = () => {
     }));
   }, [OBJECT?.food_section]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/find/save`, {
       user_id: sessionId,
@@ -173,7 +173,7 @@ export const FoodFindSave = () => {
     }
   };
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
@@ -206,7 +206,7 @@ export const FoodFindSave = () => {
     }));
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
@@ -595,7 +595,7 @@ export const FoodFindSave = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -615,7 +615,7 @@ export const FoodFindSave = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

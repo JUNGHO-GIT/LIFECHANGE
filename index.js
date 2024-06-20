@@ -36,20 +36,20 @@ import {router as userPercentRouter} from "./src/router/user/userPercentRouter.j
 import {router as userDataRouter} from "./src/router/user/userDataRouter.js";
 import {router as userRouter} from "./src/router/user/userRouter.js";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 const id = "eric4757";
 const pw = "M7m7m7m7m7!";
 const host = "34.23.233.23";
 const port = "27017";
 const db = "LIFECHANGE";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
     "\n==============================================\n1.schema: \"%s\" \n2.method: \"%s\" \n3.query: %s \n4.doc: %s",
@@ -61,12 +61,12 @@ const customLogger = (collectionName, method, query, doc) => {
   console.log(message);
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 // mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 // mongoose.set("debug", customLogger);
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 const appPort = Number(process.env.PORT) || 3000;
 function startServer(port) {
   app.set("port", port);
@@ -84,7 +84,7 @@ function startServer(port) {
 };
 startServer(appPort);
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
@@ -95,7 +95,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 app.use("/calendar", calendarRouter);
 
 app.use("/exercise/dash", exerciseDashRouter);

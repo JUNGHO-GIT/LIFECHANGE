@@ -11,7 +11,7 @@ import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
 import {sleepArray} from '../../assets/array/sleepArray.js';
 
-// 0-0. info -------------------------------------------------------------------------------------->
+// 0-0. info ---------------------------------------------------------------------------------------
 export const info = async (
   user_id_param
 ) => {
@@ -30,7 +30,7 @@ export const info = async (
   return finalResult;
 };
 
-// 0-0. send -------------------------------------------------------------------------------------->
+// 0-0. send ---------------------------------------------------------------------------------------
 export const send = async (
   user_id_param
 ) => {
@@ -50,7 +50,7 @@ export const send = async (
   return finalResult;
 };
 
-// 0-0. signup ------------------------------------------------------------------------------------>
+// 0-0. signup -------------------------------------------------------------------------------------
 export const signup = async (
   user_id_param, OBJECT_param
 ) => {
@@ -72,7 +72,7 @@ export const signup = async (
   return finalResult;
 };
 
-// 0-0. extra ------------------------------------------------------------------------------------->
+// 0-0. extra --------------------------------------------------------------------------------------
 export const extra = async (
   user_id_param, OBJECT_param
 ) => {
@@ -92,7 +92,7 @@ export const extra = async (
   return finalResult;
 };
 
-// 0-1. login ------------------------------------------------------------------------------------->
+// 0-1. login --------------------------------------------------------------------------------------
 export const login = async (
   user_id_param, user_pw_param
 ) => {
@@ -112,7 +112,7 @@ export const login = async (
   return finalResult;
 };
 
-// 2. detail (상세는 eq) -------------------------------------------------------------------------->
+// 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = async (
   user_id_param, _id_param
 ) => {
@@ -124,7 +124,7 @@ export const detail = async (
   return finalResult
 };
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
@@ -148,7 +148,7 @@ export const save = async (
   return finalResult
 };
 
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param
 ) => {

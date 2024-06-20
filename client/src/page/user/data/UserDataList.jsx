@@ -9,10 +9,10 @@ import {Div} from "../../../import/ImportComponents.jsx";
 import {Paper, TableContainer, Table, Card} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserDataList = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -25,7 +25,7 @@ export const UserDataList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [PART, setPART] = useState("exerciseGoal");
   const [PAGING, setPAGING] = useState({
@@ -38,7 +38,7 @@ export const UserDataList = () => {
     sectionCnt: 0
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_EXERCISE_GOAL_DEF = [{
     _id: "",
     exercise_goal_number: 0,
@@ -162,7 +162,7 @@ export const UserDataList = () => {
   const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEF);
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/data/list`, {
@@ -212,7 +212,7 @@ export const UserDataList = () => {
     });
   }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async (type_param) => {
     const res = await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: sessionId,
@@ -233,7 +233,7 @@ export const UserDataList = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
@@ -671,7 +671,7 @@ export const UserDataList = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -691,7 +691,7 @@ export const UserDataList = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

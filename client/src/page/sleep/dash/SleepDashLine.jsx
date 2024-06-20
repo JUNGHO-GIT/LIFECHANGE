@@ -12,17 +12,17 @@ import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const SleepDashLine = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["bedTime", "wakeTime", "sleepTime"];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
@@ -32,7 +32,7 @@ export const SleepDashLine = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_WEEK_DEF = [
     {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
   ];
@@ -42,7 +42,7 @@ export const SleepDashLine = () => {
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
@@ -64,7 +64,7 @@ export const SleepDashLine = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "sleep");
     return (
@@ -145,7 +145,7 @@ export const SleepDashLine = () => {
     );
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
@@ -226,7 +226,7 @@ export const SleepDashLine = () => {
     );
   };
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -333,7 +333,7 @@ export const SleepDashLine = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -341,7 +341,7 @@ export const SleepDashLine = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

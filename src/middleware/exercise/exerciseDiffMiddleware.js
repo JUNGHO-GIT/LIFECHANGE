@@ -1,6 +1,6 @@
 // exerciseDiffMiddleware.js
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {
 
   if (!object) {
@@ -84,6 +84,7 @@ export const list = async (object) => {
       const minutes = Math.abs(minutesGoal - minutesReal);
 
       const diffVal = (hours * 60) + minutes;
+
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
         return "primary";
@@ -96,11 +97,11 @@ export const list = async (object) => {
       else if (20 < diffVal && diffVal <= 30) {
         return "secondary";
       }
-      // 4. 30분 ~ 50분
-      else if (30 < diffVal && diffVal <= 50) {
+      // 4. 30분 ~ 40분
+      else if (30 < diffVal && diffVal <= 40) {
         return "warning";
       }
-      // 5. 50분 ~
+      // 5. 40분 ~
       else {
         return "danger";
       }

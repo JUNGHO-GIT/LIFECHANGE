@@ -8,10 +8,10 @@ import {TextField, Tabs, Tab, tabsClasses, Paper, Card} from "../../import/Impor
 import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5, money2} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -24,10 +24,10 @@ export const TopNav = () => {
   const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
   const goal = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [value, setValue] = useState("diff/list");
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (thirdStr !== "") {
       setValue(`${secondStr}/${thirdStr}`);
@@ -37,7 +37,7 @@ export const TopNav = () => {
     }
   }, [secondStr, thirdStr]);
 
-  // 3. logic ------------------------------------------------------------------------------------->
+  // 3. logic --------------------------------------------------------------------------------------
   const makeIcon = (part, className, text, popTrigger) => {
 
     const classType = text === "N" ? "d-none" : "fs-0-7rem ms-5";
@@ -126,7 +126,7 @@ export const TopNav = () => {
     }
   };
 
-  // 5. smileNode --------------------------------------------------------------------------------->
+  // 5. smileNode ----------------------------------------------------------------------------------
   const smileNode = () => (
     <PopUp
       type={"dropdown"}
@@ -190,7 +190,7 @@ export const TopNav = () => {
     </PopUp>
   );
 
-  // 5. property ---------------------------------------------------------------------------------->
+  // 5. property -----------------------------------------------------------------------------------
   const propertyNode = () => (
     <PopUp
       type={"innerCenter"}
@@ -199,7 +199,7 @@ export const TopNav = () => {
       contents={({closePopup}) => {
         const property = JSON.parse(sessionStorage.getItem("property") || "{}");
         const totalIn = property?.totalIn || 0;
-        const totalOut = property?.totalOut || 0;
+        const totalExpense = property?.totalExpense || 0;
         const totalProperty = property?.totalProperty || 0;
         const dateStart = property?.dateStart;
         const dateEnd = property?.dateEnd;
@@ -258,7 +258,7 @@ export const TopNav = () => {
                 size={"small"}
                 variant={"outlined"}
                 className={"w-60vw"}
-                value={numeral(totalOut).format('0,0')}
+                value={numeral(totalExpense).format('0,0')}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -283,7 +283,7 @@ export const TopNav = () => {
     </PopUp>
   );
 
-  // 6. default ----------------------------------------------------------------------------------->
+  // 6. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <Tabs
       value={value}
@@ -350,7 +350,7 @@ export const TopNav = () => {
     </Tabs>
   );
 
-  // 6. calendar ---------------------------------------------------------------------------------->
+  // 6. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => (
     <Tabs
       value={value}
@@ -389,7 +389,7 @@ export const TopNav = () => {
     </Tabs>
   );
 
-  // 6. food -------------------------------------------------------------------------------------->
+  // 6. food ---------------------------------------------------------------------------------------
   const foodNode = () => (
     <Tabs
       value={value}
@@ -463,7 +463,7 @@ export const TopNav = () => {
     </Tabs>
   );
 
-  // 7. topNav ------------------------------------------------------------------------------------>
+  // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-8vh border radius"}>
       <Card className={"block-wrapper d-row h-8vh w-100p"}>
@@ -482,7 +482,7 @@ export const TopNav = () => {
     </Paper>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {topNavNode()}

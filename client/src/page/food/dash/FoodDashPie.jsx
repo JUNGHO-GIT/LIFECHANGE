@@ -10,16 +10,16 @@ import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.js
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const FoodDashPie = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
@@ -30,7 +30,7 @@ export const FoodDashPie = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_TODAY_DEF = [
     {name:"Empty", value: 100}
   ];
@@ -56,7 +56,7 @@ export const FoodDashPie = () => {
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
@@ -95,7 +95,7 @@ export const FoodDashPie = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const updateRadius = () => {
       // lg
@@ -124,7 +124,7 @@ export const FoodDashPie = () => {
     }
   }, []);
 
-  // 4-1. render ---------------------------------------------------------------------------------->
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderKcalToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -141,7 +141,7 @@ export const FoodDashPie = () => {
     );
   };
 
-  // 4-2. render ---------------------------------------------------------------------------------->
+  // 4-2. render -----------------------------------------------------------------------------------
   const renderNutToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -158,7 +158,7 @@ export const FoodDashPie = () => {
     );
   }
 
-  // 4-3. render ---------------------------------------------------------------------------------->
+  // 4-3. render -----------------------------------------------------------------------------------
   const renderKcalWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -175,7 +175,7 @@ export const FoodDashPie = () => {
     );
   }
 
-  // 4-4. render ---------------------------------------------------------------------------------->
+  // 4-4. render -----------------------------------------------------------------------------------
   const renderNutWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -192,7 +192,7 @@ export const FoodDashPie = () => {
     );
   }
 
-  // 4-5. render ---------------------------------------------------------------------------------->
+  // 4-5. render -----------------------------------------------------------------------------------
   const renderKcalMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -209,7 +209,7 @@ export const FoodDashPie = () => {
     );
   }
 
-  // 4-6. render ---------------------------------------------------------------------------------->
+  // 4-6. render -----------------------------------------------------------------------------------
   const renderNutMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -226,7 +226,7 @@ export const FoodDashPie = () => {
     );
   }
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -273,7 +273,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartNutToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -320,7 +320,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -367,7 +367,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-4. chart ----------------------------------------------------------------------------------->
+  // 5-4. chart ------------------------------------------------------------------------------------
   const chartNutWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -414,7 +414,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-5. chart ----------------------------------------------------------------------------------->
+  // 5-5. chart ------------------------------------------------------------------------------------
   const chartKcalMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -461,7 +461,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-6. chart ----------------------------------------------------------------------------------->
+  // 5-6. chart ------------------------------------------------------------------------------------
   const chartNutMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -508,7 +508,7 @@ export const FoodDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -643,7 +643,7 @@ export const FoodDashPie = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -651,7 +651,7 @@ export const FoodDashPie = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

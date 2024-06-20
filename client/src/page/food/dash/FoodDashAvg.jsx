@@ -12,17 +12,17 @@ import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const FoodDashAvg = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["kcal", "carb", "protein", "fat"];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
@@ -32,7 +32,7 @@ export const FoodDashAvg = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_MONTH_DEF = [
     {name:"", date:"", kcal: 0},
   ];
@@ -50,7 +50,7 @@ export const FoodDashAvg = () => {
   const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState(OBJECT_KCAL_YEAR_DEF);
   const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState(OBJECT_NUT_YEAR_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
@@ -78,7 +78,7 @@ export const FoodDashAvg = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
@@ -148,7 +148,7 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartNutMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
@@ -220,7 +220,7 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalYear = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
@@ -290,7 +290,7 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 5-4. chart ----------------------------------------------------------------------------------->
+  // 5-4. chart ------------------------------------------------------------------------------------
   const chartNutYear = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
@@ -362,7 +362,7 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -480,12 +480,12 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING} />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

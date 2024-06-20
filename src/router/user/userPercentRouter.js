@@ -5,7 +5,7 @@ import * as service from "../../service/user/userPercentService.js";
 import * as middleware from "../../middleware/user/userPercentMiddleware.js";
 export const router = express.Router();
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. list ---------------------------------------------------------------------------------------
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
@@ -37,7 +37,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
-// 2. property ------------------------------------------------------------------------------------>
+// 2. property -------------------------------------------------------------------------------------
 router.get("/property", async (req, res) => {
   try {
     let result = await service.property (

@@ -8,7 +8,7 @@ import {moneyArray} from "../../assets/array/moneyArray.js";
 import {foodArray} from "../../assets/array/foodArray.js";
 import {sleepArray} from "../../assets/array/sleepArray.js";
 
-// 1. schema -------------------------------------------------------------------------------------->
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -97,7 +97,7 @@ const schema = new mongoose.Schema({
   }
 });
 
-// 3. counter ------------------------------------------------------------------------------------->
+// 3. counter --------------------------------------------------------------------------------------
 // @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
@@ -106,7 +106,7 @@ schema.pre("save", async function(next) {
   next();
 });
 
-// 5. model --------------------------------------------------------------------------------------->
+// 5. model ----------------------------------------------------------------------------------------
 export const User = mongoose.model(
   "User", schema, "user"
 );

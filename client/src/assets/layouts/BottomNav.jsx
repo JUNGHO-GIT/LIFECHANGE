@@ -8,20 +8,20 @@ import {Div, Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [value, setValue] = useState("calendar");
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (firstStr === "calendar") {
       setValue("calendar");
@@ -40,7 +40,7 @@ export const BottomNav = () => {
     }
   }, [firstStr]);
 
-  // 6. default ----------------------------------------------------------------------------------->
+  // 6. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <BottomNavigation
       showLabels={true}
@@ -126,7 +126,7 @@ export const BottomNav = () => {
     </BottomNavigation>
   );
 
-  // 7. navigation -------------------------------------------------------------------------------->
+  // 7. navigation ---------------------------------------------------------------------------------
   const navigationNode = () => (
     <Paper className={"flex-wrapper p-sticky bottom-0vh border radius"}>
       <Card className={"block-wrapper d-row h-8vh w-100p"}>
@@ -135,7 +135,7 @@ export const BottomNav = () => {
     </Paper>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {navigationNode()}

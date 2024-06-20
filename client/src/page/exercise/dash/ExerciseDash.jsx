@@ -6,10 +6,10 @@ import {ExerciseDashPie} from "./ExerciseDashPie.jsx";
 import {ExerciseDashLine} from "./ExerciseDashLine.jsx";
 import {ExerciseDashAvg} from "./ExerciseDashAvg.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const ExerciseDash = () => {
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {ExerciseDashBar()}

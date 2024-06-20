@@ -2,7 +2,7 @@
 
 import moment from "moment-timezone";
 
-// 1. common -------------------------------------------------------------------------------------->
+// 1. common ---------------------------------------------------------------------------------------
 export const newDate = moment().tz("Asia/Seoul");
 export const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 export const curWeekStart = moment().tz("Asia/Seoul").startOf("isoWeek");
@@ -12,7 +12,7 @@ export const curMonthEnd = moment().tz("Asia/Seoul").endOf("month");
 export const curYearStart = moment().tz("Asia/Seoul").startOf("year");
 export const curYearEnd = moment().tz("Asia/Seoul").endOf("year");
 
-// 1-1. format ------------------------------------------------------------------------------------>
+// 1-1. format -------------------------------------------------------------------------------------
 export const intFormat = (data) => {
   if (!data) {
     return 0;
@@ -26,7 +26,7 @@ export const intFormat = (data) => {
   }
 };
 
-// 1-2. format ------------------------------------------------------------------------------------>
+// 1-2. format -------------------------------------------------------------------------------------
 export const timeFormat = (data) => {
   if (!data) {
     return 0;
@@ -47,13 +47,15 @@ export const timeFormat = (data) => {
   }
 };
 
-// 1-2. convert ----------------------------------------------------------------------------------->
+// 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (time) => {
-  const [hours, minutes] = time.split(":").map(Number);
+  const hours = parseInt(time.split(":")[0], 10);
+  const minutes = parseInt(time.split(":")[1], 10) / 60;
+
   return hours + minutes / 60;
 };
 
-// 1-2. convert ----------------------------------------------------------------------------------->
+// 1-2. convert ------------------------------------------------------------------------------------
 export const decimalToStr = (time) => {
   const hours = Math.floor(time);
   const minutes = Math.round((time - hours) * 60);

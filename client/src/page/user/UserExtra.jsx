@@ -9,10 +9,10 @@ import {Paper, TextField, Button} from "../../import/ImportMuis.jsx";
 import {Avatar} from "@mui/material";
 import {user1} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserExtra = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -21,10 +21,10 @@ export const UserExtra = () => {
   const {translate} = useTranslate();
   const PATH = location?.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     user_id: "",
@@ -38,7 +38,7 @@ export const UserExtra = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post (`${URL_OBJECT}/extra`, {
       user_id: sessionId,
@@ -55,7 +55,7 @@ export const UserExtra = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
@@ -220,7 +220,7 @@ export const UserExtra = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {LOADING ? loadingNode() : tableNode()}

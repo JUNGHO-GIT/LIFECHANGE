@@ -9,15 +9,15 @@ import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";
 import {logo3} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage -------------------------------------------------------------------------------
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -28,11 +28,11 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     toSignup: "/user/signup"
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [isFirstOpen, setIsFirstOpen] = useState("");
   const [isSecondOpen, setIsSecondOpen] = useState("");
 
-  // 3-1. isFirstOpen ----------------------------------------------------------------------------->
+  // 3-1. isFirstOpen ------------------------------------------------------------------------------
   const toggleFirstOpen = (menuLabel) => {
     if (menuLabel) {
       setIsFirstOpen(isFirstOpen === menuLabel ? null : menuLabel);
@@ -48,14 +48,14 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     sessionStorage.setItem("isFirstOpen", isFirstOpen);
   }, [isFirstOpen]);
 
-  // 3-2. isSecondOpen ---------------------------------------------------------------------------->
+  // 3-2. isSecondOpen -----------------------------------------------------------------------------
   useEffect(() => {
     if (location.pathname) {
       setIsSecondOpen(location.pathname);
     }
   }, [location.pathname]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => (
     <SwipeableDrawer
       open={isSidebarOpen}
@@ -118,7 +118,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     </SwipeableDrawer>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {LOADING ? loadingNode() : tableNode()}

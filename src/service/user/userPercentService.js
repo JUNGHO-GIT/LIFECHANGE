@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/user/userPercentRepository.js";
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. list ---------------------------------------------------------------------------------------
 export const list = async (
   user_id_param, DATE_param
 ) => {
@@ -72,7 +72,7 @@ export const list = async (
 };
 
 
-// 2. property ------------------------------------------------------------------------------------>
+// 2. property -------------------------------------------------------------------------------------
 // 현재 재산 상태
 export const property = async (
   user_id_param
@@ -83,7 +83,7 @@ export const property = async (
   );
   const finalResult = {
     totalIn: findResult?.money_total_income,
-    totalOut: findResult?.money_total_expense,
+    totalExpense: findResult?.money_total_expense,
     totalProperty: findResult?.money_total_income - findResult?.money_total_expense,
     dateStart: findResult?.property_dateStart,
     dateEnd: findResult?.property_dateEnd,

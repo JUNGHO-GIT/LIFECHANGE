@@ -7,7 +7,7 @@ import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+// 1-1. dash (bar - today) -------------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -50,7 +50,7 @@ export const barToday = async (
   return finalResult;
 };
 
-// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+// 2-1. dash (pie - today) -------------------------------------------------------------------------
 export const pieToday = async (
   user_id_param
 ) => {
@@ -110,7 +110,7 @@ export const pieToday = async (
   return finalResult;
 };
 
-// 2-2. dash (pie - week) ------------------------------------------------------------------------>
+// 2-2. dash (pie - week) -------------------------------------------------------------------------
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -156,7 +156,7 @@ export const pieWeek = async (
   return finalResult;
 };
 
-// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+// 2-3. dash (pie - month) -------------------------------------------------------------------------
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -202,7 +202,7 @@ export const pieMonth = async (
   return finalResult;
 };
 
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
+// 3-1. dash (line - week) -------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -246,7 +246,7 @@ export const lineWeek = async (
   return finalResult;
 };
 
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
+// 3-2. dash (line - month) ------------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param
 ) => {
@@ -290,7 +290,7 @@ export const lineMonth = async (
   return finalResult;
 }
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) -------------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param
 ) => {
@@ -347,7 +347,7 @@ export const avgMonth = async (
   return finalResult;
 };
 
-// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+// 4-2. dash (avg - year) -------------------------------------------------------------------------
 export const avgYear = async (
   user_id_param
 ) => {

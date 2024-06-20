@@ -8,62 +8,66 @@ import {TextField} from "../../import/ImportMuis.jsx";
 import {DigitalClock, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4, exercise4} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const Time = ({
   OBJECT, setOBJECT, extra, i
 }) => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
 
+  // displayed image
   let image = null;
+
+  // displayed label
   let translateStr = "";
+
   if (firstStr === "sleep" && secondStr === "goal") {
     if (extra.split("_")[2] === "bedTime") {
       image = sleep2;
-      translateStr = "goalNight";
+      translateStr = `${translate("goalBedTime")} (${translate("avg")})`;
     }
     else if (extra.split("_")[2] === "wakeTime") {
       image = sleep3;
-      translateStr = "goalMorning";
+      translateStr = `${translate("goalWakeTime")} (${translate("avg")})`;
     }
     else if (extra.split("_")[2] === "sleepTime") {
       image = sleep4;
-      translateStr = "goalTime";
+      translateStr = `${translate("goalSleepTime")} (${translate("avg")})`;
     }
   }
   else if (firstStr === "sleep" && secondStr !== "goal") {
     if (extra.split("_")[1] === "bedTime") {
       image = sleep2;
-      translateStr = "bedTime";
+      translateStr = `${translate("bedTime")}`;
     }
     else if (extra.split("_")[1] === "wakeTime") {
       image = sleep3;
-      translateStr = "wakeTime";
+      translateStr = `${translate("wakeTime")}`;
     }
     else if (extra.split("_")[1] === "sleepTime") {
       image = sleep4;
-      translateStr = "time";
+      translateStr = `${translate("sleepTime")}`;
     }
   }
   else if (firstStr === "exercise" && secondStr === "goal") {
     if (extra.split("_")[2] === "cardio") {
       image = exercise4;
-      translateStr =  "goalCardio";
+      translateStr = `${translate("goalCardio")} (${translate("total")})`;
     }
   }
   else if (firstStr === "exercise" && secondStr !== "goal") {
     if (extra.split("_")[1] === "cardio") {
       image = exercise4;
-      translateStr =  "cardio";
+      translateStr = `${translate("cardio")} (${translate("total")})`;
     }
   }
 
-  // 2. goalNode ---------------------------------------------------------------------------------->
+  // 2. goalNode -----------------------------------------------------------------------------------
   const goalNode = () => (
     <PopUp
       key={`${i}`}
@@ -91,7 +95,7 @@ export const Time = ({
       {(popTrigger={}) => (
         <TextField
           select={false}
-          label={translate(translateStr)}
+          label={translateStr}
           size={"small"}
           variant={"outlined"}
           className={"w-86vw"}
@@ -115,7 +119,7 @@ export const Time = ({
     </PopUp>
   );
 
-  // 3. realNode ---------------------------------------------------------------------------------->
+  // 3. realNode -----------------------------------------------------------------------------------
   const realNode = () => (
     <PopUp
       key={`${i}`}
@@ -172,7 +176,7 @@ export const Time = ({
     </PopUp>
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
+  // 15. return ------------------------------------------------------------------------------------
   return (
     <>
       {secondStr === "goal" ? goalNode() : realNode()}

@@ -8,10 +8,10 @@ import {Div, Br10, Br20, Img, Hr20, Hr30, Hr40} from "../../import/ImportCompone
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserLogin = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -20,12 +20,12 @@ export const UserLogin = () => {
   const {translate} = useTranslate();
   const PATH = location?.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [isChecked, setIsChecked] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const sessionId = localStorage.getItem("sessionId");
     if (sessionId) {
@@ -34,7 +34,7 @@ export const UserLogin = () => {
     }
   }, []);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post (`${URL_OBJECT}/login`, {
       user_id: userId,
@@ -60,7 +60,7 @@ export const UserLogin = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
@@ -192,7 +192,7 @@ export const UserLogin = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

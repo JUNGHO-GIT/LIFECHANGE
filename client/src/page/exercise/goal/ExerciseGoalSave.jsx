@@ -11,10 +11,10 @@ import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportCom
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const ExerciseGoalSave = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -30,7 +30,7 @@ export const ExerciseGoalSave = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
@@ -51,7 +51,7 @@ export const ExerciseGoalSave = () => {
     dateEnd: location_dateEnd
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     exercise_goal_number: 0,
@@ -65,10 +65,10 @@ export const ExerciseGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/exist`, {
@@ -85,7 +85,7 @@ export const ExerciseGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/goal/detail`, {
@@ -113,7 +113,7 @@ export const ExerciseGoalSave = () => {
     setLOADING(false);
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
@@ -137,7 +137,7 @@ export const ExerciseGoalSave = () => {
     }
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     const res = await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
@@ -162,7 +162,7 @@ export const ExerciseGoalSave = () => {
   };
 
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -177,7 +177,7 @@ export const ExerciseGoalSave = () => {
     }));
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date
     const dateSection = () => (
@@ -226,7 +226,7 @@ export const ExerciseGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalCount")}
+            label={`${translate("goalCount")} (${translate("total")})`}
             className={"w-86vw"}
             value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
             InputProps={{
@@ -258,7 +258,7 @@ export const ExerciseGoalSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("goalVolume")}
+            label={`${translate("goalVolume")} (${translate("total")})`}
             className={"w-86vw"}
             value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
             InputProps={{
@@ -364,7 +364,7 @@ export const ExerciseGoalSave = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -384,7 +384,7 @@ export const ExerciseGoalSave = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

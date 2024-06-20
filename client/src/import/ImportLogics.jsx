@@ -10,7 +10,7 @@ import {curMonthStart, curMonthEnd} from "../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../assets/js/date.js";
 import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export {
   dataArray,
   handlerY,

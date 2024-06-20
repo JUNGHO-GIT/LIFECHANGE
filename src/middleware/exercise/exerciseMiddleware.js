@@ -2,7 +2,7 @@
 
 import {strToDecimal, decimalToStr} from "../../assets/js/date.js";
 
-// 3. save ---------------------------------------------------------------------------------------->
+// 3. save -----------------------------------------------------------------------------------------
 export const save = async (object) => {
 
   if (object === "deleted") {
@@ -22,7 +22,7 @@ export const save = async (object) => {
 
   return object;
 };
-// 4. deletes ------------------------------------------------------------------------------------->
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (object) => {
 
   if (object === "deleted") {

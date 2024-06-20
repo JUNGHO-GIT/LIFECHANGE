@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 
-// 1. schema -------------------------------------------------------------------------------------->
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({
   _id: {
     type: String,
@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
 
 const Counter = mongoose.model("Counter", schema, "counter");
 
-// 2. incrementSeq -------------------------------------------------------------------------------->
+// 2. incrementSeq ---------------------------------------------------------------------------------
 export const incrementSeq = async (sequenceName, modelName) => {
   // 시퀀스 번호 동기화 검증 로직
   const Model = mongoose.model(modelName);

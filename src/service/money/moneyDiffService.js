@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/money/moneyDiffRepository.js";
 
-// 1. list (리스트는 gte lte) --------------------------------------------------------------------->
+// 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
@@ -32,14 +32,14 @@ export const list = async (
     const moneyTotalIn = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_income ?? 0)
     ), 0);
-    const moneyTotalOut = listReal.reduce((acc, curr) => (
+    const moneyTotalExpense = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_expense ?? 0)
     ), 0);
 
     return {
       ...goal,
       money_total_income: moneyTotalIn,
-      money_total_expense: moneyTotalOut
+      money_total_expense: moneyTotalExpense
     };
   }));
 

@@ -11,10 +11,10 @@ import {Card, Paper} from "../../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserDataCategory = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -30,11 +30,11 @@ export const UserDataCategory = () => {
   const dataCategoryArray = ["exercise", "food", "money", "sleep"];
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [dataType, setDataType] = useState("exercise");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -58,7 +58,7 @@ export const UserDataCategory = () => {
     category3Idx: 1
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     user_id: sessionId,
     user_number: 0,
@@ -84,7 +84,7 @@ export const UserDataCategory = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/data/category`, {
@@ -104,7 +104,7 @@ export const UserDataCategory = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
@@ -121,7 +121,7 @@ export const UserDataCategory = () => {
     }
   };
 
-  // 4-1. handler --------------------------------------------------------------------------------->
+  // 4-1. handler ----------------------------------------------------------------------------------
   const handlerAdd = (type) => {
     if (type === "part") {
       setOBJECT((prev) => {
@@ -165,7 +165,7 @@ export const UserDataCategory = () => {
     }
   };
 
-  // 4-2. handler --------------------------------------------------------------------------------->
+  // 4-2. handler ----------------------------------------------------------------------------------
   const handlerRename = (type, index) => {
     if (type === "part") {
       const newCategory2 = prompt("새로운 이름을 입력하세요.");
@@ -215,7 +215,7 @@ export const UserDataCategory = () => {
     }
   };
 
-  // 4-3. handler --------------------------------------------------------------------------------->
+  // 4-3. handler ----------------------------------------------------------------------------------
   const handlerRemove = (type, index) => {
     if (type === "part") {
       setOBJECT((prev) => {
@@ -269,7 +269,7 @@ export const UserDataCategory = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-6. popup
     const popupSection = (i, closePopup) => (
@@ -470,7 +470,7 @@ export const UserDataCategory = () => {
     );
   };
 
-  // 9. footer ------------------------------------------------------------------------------------>
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       strings={{
@@ -490,7 +490,7 @@ export const UserDataCategory = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

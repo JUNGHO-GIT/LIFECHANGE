@@ -9,16 +9,16 @@ import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {common3_2} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const SleepDashPie = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
@@ -28,7 +28,7 @@ export const SleepDashPie = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
     {name:"Empty", value: 100},
   ];
@@ -42,7 +42,7 @@ export const SleepDashPie = () => {
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
@@ -72,7 +72,7 @@ export const SleepDashPie = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const updateRadius = () => {
       // lg
@@ -101,7 +101,7 @@ export const SleepDashPie = () => {
     }
   }, []);
 
-  // 4-1. render ---------------------------------------------------------------------------------->
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderToday = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -119,7 +119,7 @@ export const SleepDashPie = () => {
     );
   };
 
-  // 4-2. render ---------------------------------------------------------------------------------->
+  // 4-2. render -----------------------------------------------------------------------------------
   const renderWeek = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -137,7 +137,7 @@ export const SleepDashPie = () => {
     );
   };
 
-  // 4-3. render ---------------------------------------------------------------------------------->
+  // 4-3. render -----------------------------------------------------------------------------------
   const renderMonth = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
@@ -155,7 +155,7 @@ export const SleepDashPie = () => {
     );
   };
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -202,7 +202,7 @@ export const SleepDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -249,7 +249,7 @@ export const SleepDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
@@ -296,7 +296,7 @@ export const SleepDashPie = () => {
     </ResponsiveContainer>
   );
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -381,7 +381,7 @@ export const SleepDashPie = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -389,7 +389,7 @@ export const SleepDashPie = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

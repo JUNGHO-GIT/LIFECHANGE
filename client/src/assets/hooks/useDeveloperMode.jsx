@@ -2,18 +2,18 @@
 
 import {React, useState, createContext, useContext} from "../../import/ImportReacts.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 const defaultDeveloperModeContext = {
   isDeveloperMode: false,
   toggleDeveloperMode: () => {},
   log: (message) => {}
 };
 
-// 1. useDeveloperMode ---------------------------------------------------------------------------->
+// 1. useDeveloperMode -----------------------------------------------------------------------------
 const DeveloperModeContext = createContext(defaultDeveloperModeContext);
 export const useDeveloperMode = () => useContext(DeveloperModeContext);
 
-// 2. DeveloperModeProvider ----------------------------------------------------------------------->
+// 2. DeveloperModeProvider ------------------------------------------------------------------------
 export const DeveloperModeProvider = (
   {children}
 ) => {

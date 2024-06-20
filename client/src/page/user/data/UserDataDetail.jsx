@@ -8,10 +8,10 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {Div, Br30, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Avatar} from "../../../import/ImportMuis.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const UserDataDetail = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
@@ -24,7 +24,7 @@ export const UserDataDetail = () => {
   const PATH = location?.pathname;
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -39,7 +39,7 @@ export const UserDataDetail = () => {
     dateEnd: location_dateEnd,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     user_id: "",
@@ -53,7 +53,7 @@ export const UserDataDetail = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const res = await axios.get(`${URL_OBJECT}/data/detail`, {
@@ -73,7 +73,7 @@ export const UserDataDetail = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
@@ -89,7 +89,7 @@ export const UserDataDetail = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
@@ -194,7 +194,7 @@ export const UserDataDetail = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}

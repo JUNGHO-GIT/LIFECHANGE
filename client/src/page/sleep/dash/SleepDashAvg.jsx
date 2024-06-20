@@ -13,17 +13,17 @@ import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const SleepDashAvg = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["bedTime", "wakeTime", "sleepTime"];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
@@ -33,7 +33,7 @@ export const SleepDashAvg = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_MONTH_DEF = [
     {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
   ];
@@ -43,7 +43,7 @@ export const SleepDashAvg = () => {
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
   const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
@@ -65,7 +65,7 @@ export const SleepDashAvg = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
@@ -146,7 +146,7 @@ export const SleepDashAvg = () => {
     );
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartYear = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
@@ -227,7 +227,7 @@ export const SleepDashAvg = () => {
     );
   };
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -333,7 +333,7 @@ export const SleepDashAvg = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -341,7 +341,7 @@ export const SleepDashAvg = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}

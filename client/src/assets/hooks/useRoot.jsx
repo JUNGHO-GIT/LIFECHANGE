@@ -3,7 +3,7 @@
 import {useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {useLocation} from "../../import/ImportReacts.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
   const navigate = useNavigate();
   const location = useLocation();

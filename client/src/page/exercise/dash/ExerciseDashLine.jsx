@@ -12,17 +12,17 @@ import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const ExerciseDashLine = () => {
 
-  // 1. common ------------------------------------------------------------------------------------>
+  // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["volume", "cardio"];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
@@ -32,7 +32,7 @@ export const ExerciseDashLine = () => {
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_VOLUME_WEEK_DEF = [
     {name:"", date:"", volume: 0},
   ];
@@ -50,7 +50,7 @@ export const ExerciseDashLine = () => {
   const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEF);
   const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEF);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
@@ -78,7 +78,7 @@ export const ExerciseDashLine = () => {
     setLOADING(false);
   })()}, [sessionId]);
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartVolumeWeek = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
@@ -150,7 +150,7 @@ export const ExerciseDashLine = () => {
     );
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-2. chart ------------------------------------------------------------------------------------
   const chartCardioWeek = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
@@ -222,7 +222,7 @@ export const ExerciseDashLine = () => {
     );
   };
 
-  // 5-3. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartVolumeMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
@@ -294,7 +294,7 @@ export const ExerciseDashLine = () => {
     );
   };
 
-  // 5-4. chart ----------------------------------------------------------------------------------->
+  // 5-4. chart ------------------------------------------------------------------------------------
   const chartCardioMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
@@ -366,7 +366,7 @@ export const ExerciseDashLine = () => {
     );
   };
 
-  // 7. dash -------------------------------------------------------------------------------------->
+  // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
     // 7-5. title
     const titleSection = () => (
@@ -482,7 +482,7 @@ export const ExerciseDashLine = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 8. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
     <Loading
       LOADING={LOADING}
@@ -490,7 +490,7 @@ export const ExerciseDashLine = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {dashNode()}
