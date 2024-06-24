@@ -56,6 +56,25 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
+  const flowVerify = async () => {
+    await axios.post (`${URL_OBJECT}/verify`, {
+      user_id: OBJECT.user_id,
+      verify_code: clientCode
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    });
+  };
+
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     await axios.post (`${URL_OBJECT}/signup`, {
       user_id: OBJECT.user_id,

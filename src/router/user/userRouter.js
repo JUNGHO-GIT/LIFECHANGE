@@ -4,35 +4,6 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
-// 0-0. info ---------------------------------------------------------------------------------------
-router.get("/info", async (req, res) => {
-  try {
-    let result = await service.info (
-      req.query.user_id
-    );
-    if (result) {
-      res.json({
-        status: "success",
-        msg: "조회 성공",
-        result: result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "조회 실패"
-      });
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
-    });
-  }
-});
-
 // 0-0. send ---------------------------------------------------------------------------------------
 router.post("/send", async (req, res) => {
   try {
@@ -50,6 +21,76 @@ router.post("/send", async (req, res) => {
       res.json({
         status: "fail",
         msg: "전송 실패"
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "전송 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 0-0. verify -------------------------------------------------------------------------------------
+router.post("/verify", async (req, res) => {
+  try {
+    let result = await service.verify (
+      req.body.user_id,
+      req.body.verify_code
+    );
+    if (result === "success") {
+      res.json({
+        status: "success",
+        msg: "인증 성공"
+      });
+    }
+    else if (result === "fail") {
+      res.json({
+        status: "fail",
+        msg: "인증 실패"
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "인증 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 0-0. info ---------------------------------------------------------------------------------------
+router.get("/info", async (req, res) => {
+  try {
+    let result = await service.info (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
       });
     }
   }

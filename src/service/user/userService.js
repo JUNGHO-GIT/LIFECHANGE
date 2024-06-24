@@ -11,6 +11,51 @@ import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
 import {sleepArray} from '../../assets/array/sleepArray.js';
 
+// 0-0. send ---------------------------------------------------------------------------------------
+export const send = async (
+  user_id_param
+) => {
+
+  // 임의의 코드 생성
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+  const sendResult = await sendEmail(
+    user_id_param, code
+  );
+  await repository.send.send(
+    user_id_param, code
+  );
+
+  const finalResult = {
+    code: code,
+    result: sendResult
+  };
+
+  return finalResult;
+};
+
+// 0-0. verify -------------------------------------------------------------------------------------
+export const verify = async (
+  user_id_param, code_param
+) => {
+
+  const findResult = await repository.verify.verify(
+    user_id_param
+  );
+
+  let finalResult = null;
+  if (findResult !== null) {
+    if (findResult.verify_code === code_param) {
+      finalResult = "success";
+    }
+    else {
+      finalResult = "fail";
+    }
+  }
+
+  return finalResult;
+};
+
 // 0-0. info ---------------------------------------------------------------------------------------
 export const info = async (
   user_id_param
@@ -25,26 +70,6 @@ export const info = async (
     date: json.date || "",
     git: json.git || "",
     license: json.license || "",
-  };
-
-  return finalResult;
-};
-
-// 0-0. send ---------------------------------------------------------------------------------------
-export const send = async (
-  user_id_param
-) => {
-
-  // 임의의 코드 생성
-  const code = Math.floor(100000 + Math.random() * 900000).toString();
-
-  const findResult = await sendEmail(
-    user_id_param, code
-  );
-
-  const finalResult = {
-    code: code,
-    result: findResult
   };
 
   return finalResult;
