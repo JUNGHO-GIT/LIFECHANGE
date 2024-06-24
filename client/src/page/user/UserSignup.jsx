@@ -28,7 +28,6 @@ export const UserSignup = () => {
     user_number: 0,
     user_id: "",
     user_pw: "",
-    user_gender: "",
     user_age: "",
     user_height: "",
     user_weight: "",
@@ -110,7 +109,6 @@ export const UserSignup = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
-
         {/** section 1 **/}
         <Div className={"d-center w-86vw"}>
           <TextField
@@ -191,9 +189,7 @@ export const UserSignup = () => {
             setPwConfirm(e.target.value)
           )}
         />
-
         <Hr40 />
-
         {/** section 2 **/}
         <TextField
           select={true}

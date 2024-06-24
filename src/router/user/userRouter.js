@@ -39,14 +39,14 @@ router.post("/send", async (req, res) => {
     let result = await service.send (
       req.body.user_id
     );
-    if (result) {
+    if (result.result === "success") {
       res.json({
         status: "success",
         msg: "전송 성공",
         result: result
       });
     }
-    else {
+    else if (result.result === "fail") {
       res.json({
         status: "fail",
         msg: "전송 실패"

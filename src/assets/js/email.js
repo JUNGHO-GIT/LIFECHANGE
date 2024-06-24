@@ -1,21 +1,29 @@
+// email.js
+
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const sendEmail = async (email, code) => {
   try {
     // 이메일 서버 설정
     const transporter = nodemailer.createTransport({
-
-      // SMTP 서버 주소
-      host: "smtp.gmail.com",
-
-      // SMTP 포트 (일반적으로 587)
+      service: 'gmail',
+      host: 'smtp.gmail.com',
       port: 587,
       secure: false,
+      requireTLS: true,
       auth: {
-        user: "junghomun123@gmail.com",
-        pass: "brmv jrza wbpd rvay"
-      }
+        user: process.env.GMAIL_ID,
+        pass: process.env.GMAIL_PW,
+      },
     });
+
+    console.log("===============================");
+    console.log("email : ", email);
+    console.log("id : ", process.env.GMAIL_ID);
+    console.log("pw : ", process.env.GMAIL_PW);
+    console.log("===============================");
 
     // 이메일 전송
     await transporter.sendMail({
@@ -37,7 +45,8 @@ export const sendEmail = async (email, code) => {
     return "success";
   }
   catch (error) {
-    console.log("이메일 전송 중 오류가 발생했습니다.", error);
+    console.log("이메일 전송 중 오류가 발생했습니다.");
+    console.log(error);
     return "fail";
   }
 };

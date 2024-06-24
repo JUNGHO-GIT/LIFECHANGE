@@ -50,6 +50,7 @@ export const UserDataDetail = () => {
     user_weight: "",
     user_image: "",
     user_property: 0,
+    user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -116,14 +117,11 @@ export const UserDataDetail = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"ID"}
+          label={translate("id")}
           value={OBJECT?.user_id}
           className={"w-86vw"}
-          onChange={(e) => {
-            setOBJECT({
-              ...OBJECT,
-              user_id: e.target.value
-            });
+          InputProps={{
+            readOnly: true,
           }}
         />
         <Br20 />
@@ -131,14 +129,23 @@ export const UserDataDetail = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"gender"}
+          label={translate("regDt")}
+          value={OBJECT?.user_regDt.split("T")[0]}
+          className={"w-86vw"}
+          InputProps={{
+            readOnly: true,
+          }}
+        />
+        <Br20 />
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={translate("gender")}
           value={OBJECT?.user_gender}
           className={"w-86vw"}
-          onChange={(e) => {
-            setOBJECT({
-              ...OBJECT,
-              user_gender: e.target.value
-            });
+          InputProps={{
+            readOnly: true,
           }}
         />
         <Br20 />
@@ -146,14 +153,11 @@ export const UserDataDetail = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"age"}
+          label={translate("age")}
           value={OBJECT?.user_age}
           className={"w-86vw"}
-          onChange={(e) => {
-            setOBJECT({
-              ...OBJECT,
-              user_age: e.target.value
-            });
+          InputProps={{
+            readOnly: true,
           }}
         />
         <Br20 />
@@ -161,14 +165,11 @@ export const UserDataDetail = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"height"}
+          label={translate("height")}
           value={OBJECT?.user_height}
           className={"w-86vw"}
-          onChange={(e) => {
-            setOBJECT({
-              ...OBJECT,
-              user_height: e.target.value
-            });
+          InputProps={{
+            readOnly: true,
           }}
         />
         <Br20 />
@@ -176,16 +177,15 @@ export const UserDataDetail = () => {
           select={false}
           type={"text"}
           size={"small"}
-          label={"weight"}
+          label={translate("weight")}
           value={OBJECT?.user_weight}
           className={"w-86vw"}
-          onChange={(e) => {
-            setOBJECT({
-              ...OBJECT,
-              user_weight: e.target.value
-            });
+          InputProps={{
+            readOnly: true,
           }}
         />
+        <Br20 />
+
       </Div>
     );
     // 7-8. table

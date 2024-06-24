@@ -212,6 +212,7 @@ export const useTranslate = () => {
     // r
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
+    regDt: {ko: "가입일", en: "Signup Date"},
 
     // s
     save: {ko: "저장", en: "Save"},
