@@ -221,6 +221,7 @@ export const UserSignup = () => {
           ))}
         </TextField>
         <Br10 />
+        {/** 1 ~ 100 **/}
         <TextField
           select={true}
           type={"text"}
@@ -242,6 +243,7 @@ export const UserSignup = () => {
           ))}
         </TextField>
         <Br10 />
+        {/** 100cm ~ 200cm **/}
         <TextField
           select={true}
           type={"text"}
@@ -256,7 +258,6 @@ export const UserSignup = () => {
             }))
           )}
         >
-          {/** 100cm ~ 200cm **/}
           {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
             <MenuItem key={i} value={item}>
               {`${item} cm`}
@@ -264,6 +265,7 @@ export const UserSignup = () => {
           ))}
         </TextField>
         <Br10 />
+        {/** 30kg ~ 200kg **/}
         <TextField
           select={true}
           type={"text"}
@@ -278,7 +280,6 @@ export const UserSignup = () => {
             }))
           )}
         >
-          {/** 30kg ~ 200kg **/}
           {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
             <MenuItem key={i} value={item}>
               {`${item} kg`}
@@ -286,27 +287,20 @@ export const UserSignup = () => {
           ))}
         </TextField>
         <Br10 />
+        {/** 0 ~ 1,000,000,000 **/}
         <TextField
           select={false}
           type={"text"}
           size={"small"}
           label={translate("property")}
-          value={numeral(OBJECT.user_property).format("0,0")}
+          value={numeral(Math.min(Number(OBJECT.user_property), 1000000000)).format("0,0")}
           className={"w-86vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
-              user_property: Number(e.target.value)
+              user_property: Number((e.target.value).replace(/,/g, ""))
             }))
           )}
-          InputProps={{
-            readOnly: false,
-            endAdornment: (
-              <Div className={"fs-0-8rem"}>
-                {translate("currency")}
-              </Div>
-            )
-          }}
         />
       </Div>
     );
