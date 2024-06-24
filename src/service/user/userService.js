@@ -5,11 +5,6 @@ import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
 import {sendEmail} from "../../assets/js/email.js";
-import {calendarArray} from '../../assets/array/calendarArray.js';
-import {exerciseArray} from '../../assets/array/exerciseArray.js';
-import {foodArray} from '../../assets/array/foodArray.js';
-import {moneyArray} from '../../assets/array/moneyArray.js';
-import {sleepArray} from '../../assets/array/sleepArray.js';
 
 // 0-0. send ---------------------------------------------------------------------------------------
 export const send = async (

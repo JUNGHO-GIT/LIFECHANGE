@@ -32,7 +32,6 @@ export const UserSignup = () => {
     user_height: "",
     user_weight: "",
     user_image: "",
-    user_property: 0
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -287,21 +286,6 @@ export const UserSignup = () => {
           ))}
         </TextField>
         <Br10 />
-        {/** 0 ~ 1,000,000,000 **/}
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("property")}
-          value={numeral(Math.min(Number(OBJECT.user_property), 1000000000)).format("0,0")}
-          className={"w-86vw text-left"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_property: Number((e.target.value).replace(/,/g, ""))
-            }))
-          )}
-        />
       </Div>
     );
     // 7-8. table

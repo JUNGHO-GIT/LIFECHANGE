@@ -17,6 +17,12 @@ export const TopNav = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
+  const property = JSON.parse(sessionStorage.getItem("property") || "{}");
+  const totalIncome = property?.totalIncome || 0;
+  const totalExpense = property?.totalExpense || 0;
+  const totalProperty = property?.totalProperty || 0;
+  const dateStart = property?.dateStart;
+  const dateEnd = property?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
@@ -197,76 +203,68 @@ export const TopNav = () => {
       type={"innerCenter"}
       position={"center"}
       direction={"center"}
-      contents={({closePopup}) => {
-        const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-        const totalIncome = property?.totalIncome || 0;
-        const totalExpense = property?.totalExpense || 0;
-        const totalProperty = property?.totalProperty || 0;
-        const dateStart = property?.dateStart;
-        const dateEnd = property?.dateEnd;
-        return (
-          <Div className={"w-max75vw h-max65vh border d-column p-20"}>
-            <Div className={"d-center"}>
-              <Div className={"fs-1-0rem fw-normal"}>
-                {dateStart}
-              </Div>
-              <Div className={"fs-0-7rem fw-normal ms-10 me-10"}>
-                ~
-              </Div>
-              <Div className={"fs-1-0rem fw-normal"}>
-                {dateEnd}
-              </Div>
+      contents={({closePopup}) => (
+        <Div className={"w-max75vw h-max65vh border d-column p-20"}>
+          <Div className={"d-center"}>
+            <Div className={"fs-1-0rem fw-normal"}>
+              {dateStart}
             </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <Img src={money2} className={"w-16 h-16"} />
-              <Div className={"fs-1-4rem fw-bold"}>
-                {numeral(totalProperty).format('0,0')}
-              </Div>
+            <Div className={"fs-0-7rem fw-normal ms-10 me-10"}>
+              ~
             </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("income")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalIncome).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("won")
-                  )
-                }}
-              />
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("expense")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-60vw"}
-                value={numeral(totalExpense).format('0,0')}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    translate("won")
-                  )
-                }}
-              />
+            <Div className={"fs-1-0rem fw-normal"}>
+              {dateEnd}
             </Div>
           </Div>
-        );
-      }}>
+          <Br20/>
+          <Div className={"d-center"}>
+            <Img src={money2} className={"w-16 h-16"} />
+            <Div className={"fs-1-4rem fw-bold"}>
+              {numeral(totalProperty).format('0,0')}
+            </Div>
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("income")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-60vw"}
+              value={numeral(totalIncome).format('0,0')}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={money2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  translate("currency")
+                )
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("expense")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-60vw"}
+              value={numeral(totalExpense).format('0,0')}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={money2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  translate("currency")
+                )
+              }}
+            />
+          </Div>
+        </Div>
+      )}>
       {(popTrigger={}) => (
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)

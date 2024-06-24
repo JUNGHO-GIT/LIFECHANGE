@@ -34,7 +34,6 @@ export const UserExtra = () => {
     user_height: "",
     user_weight: "",
     user_image: "",
-    user_property: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 

@@ -14,7 +14,8 @@ export const UserDataDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCategory") || "{}";
+  const property = JSON.parse(sessionStorage.getItem("property") || "{}");
+  const totalProperty = property?.totalProperty || 0;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
@@ -48,7 +49,6 @@ export const UserDataDetail = () => {
     user_height: "",
     user_weight: "",
     user_image: "",
-    user_property: 0,
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -202,7 +202,7 @@ export const UserDataDetail = () => {
           type={"text"}
           size={"small"}
           label={translate("property")}
-          value={numeral(OBJECT?.user_property).format("0,0")}
+          value={numeral(totalProperty).format("0,0")}
           InputProps={{
             readOnly: true,
             startAdornment: null,

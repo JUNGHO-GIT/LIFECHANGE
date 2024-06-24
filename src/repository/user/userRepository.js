@@ -83,7 +83,6 @@ export const signup = {
       user_height: OBJECT_param.user_height,
       user_weight: OBJECT_param.user_weight,
       user_image: OBJECT_param.user_image,
-      user_property: OBJECT_param.user_property,
       user_regDt: newDate,
       user_updateDt: "",
     });
@@ -105,7 +104,6 @@ export const extra = {
         user_height: OBJECT_param.user_height,
         user_weight: OBJECT_param.user_weight,
         user_image: OBJECT_param.user_image,
-        user_property: OBJECT_param.user_property,
         user_updateDt: newDate,
       }},
       {upsert: true, new: true}

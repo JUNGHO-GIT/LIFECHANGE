@@ -422,7 +422,7 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("won")
+                  translate("currency")
                 )
               }}
               onChange={(e) => {
