@@ -33,11 +33,6 @@ export const UserDataDetail = () => {
     dateEnd: "0000-00-00",
     toDataCategory: "/user/data/category",
   });
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd,
-  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
