@@ -246,7 +246,7 @@ export const MoneyGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endCurrency")}
+                  {translate("currency")}
                 </Div>
               )
             }}
@@ -279,7 +279,7 @@ export const MoneyGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endCurrency")}
+                  {translate("currency")}
                 </Div>
               )
             }}

@@ -271,7 +271,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endKcal")}
+                  {translate("kcal")}
                 </Div>
               )
             }}
@@ -293,7 +293,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}
@@ -315,7 +315,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}
@@ -337,7 +337,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}
@@ -404,7 +404,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("endCount")
+                  translate("count")
                 )
               }}
               onChange={(e) => {
@@ -443,7 +443,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("endGram")
+                  translate("gram")
                 )
               }}
               onChange={(e) => {
@@ -503,7 +503,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endKcal")}
+                  {translate("kcal")}
                 </Div>
               )
             }}
@@ -522,7 +522,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}
@@ -544,7 +544,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}
@@ -563,7 +563,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endGram")}
+                  {translate("gram")}
                 </Div>
               )
             }}

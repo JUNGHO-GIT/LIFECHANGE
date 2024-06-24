@@ -3,11 +3,11 @@
 import {React, useState, useEffect, useCallback} from "../../import/ImportReacts.jsx";
 import {createContext, useContext} from "../../import/ImportReacts.jsx";
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 // @ts-ignore
 const LanguageContext = createContext();
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState(sessionStorage.getItem('lang') || 'ko');
 
@@ -23,12 +23,12 @@ export const LanguageProvider = ({ children }) => {
   );
 };
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const useLanguage = () => (
   useContext(LanguageContext)
 );
 
-// ------------------------------------------------------------------------------------------------>
+// -------------------------------------------------------------------------------------------------
 export const useTranslate = () => {
   const {lang} = useLanguage();
   const resources = {
@@ -46,6 +46,7 @@ export const useTranslate = () => {
     bedTime: {ko: "취침", en: "Bed"},
 
     // c
+    cm: {ko: "cm", en: "cm"},
     carb: {ko: "탄수화물", en: "Carb"},
     calendar: {ko: "일정", en: "calendar"},
     cardio: {ko: "유산소", en: "Cardio"},
@@ -53,6 +54,7 @@ export const useTranslate = () => {
     content: {ko: "내용", en: "Content"},
     count: {ko: "항목수", en: "Count"},
     culture: {ko: "문화", en: "Culture"},
+    currency: {ko: "₩", en: "$"},
 
     // d
     dashBar: {ko: "목표", en: "Goal"},
@@ -83,24 +85,12 @@ export const useTranslate = () => {
     // e
     empty: {ko: "데이터가 없습니다", en: "No data"},
     Empty: {ko: "Empty", en: "Empty"},
-    endCarb: {ko: "g", en: "g"},
-    endCount: {ko: "회", en: "times"},
-    endCurrency: {ko: "₩", en: "$"},
-    endFat: {ko: "g", en: "g"},
-    endGram: {ko: "g", en: "g"},
-    endHour: {ko: "h:m", en: "h:m"},
-    endKcal: {ko: "kcal", en: "kcal"},
-    endKg: {ko: "kg", en: "kg"},
-    endProtein: {ko: "g", en: "g"},
-    endRep: {ko: "rep", en: "rep"},
-    endSet: {ko: "set", en: "set"},
-    endVolume: {ko: "vol", en: "vol"},
-    endWeight: {ko: "kg", en: "kg"},
     exercise: {ko: "운동", en: "exercise"},
     expense: {ko: "지출", en: "Expense"},
     entertainment: {ko: "유흥", en: "Entertainment"},
 
     // f
+    female: {ko: "여성", en: "Female"},
     fat: {ko: "지방", en: "Fat"},
     find: {ko: "찾기", en: "Find"},
     findList: {ko: "찾기", en: "Find"},
@@ -161,6 +151,9 @@ export const useTranslate = () => {
     isNotVerified: {ko: "인증 실패", en: "Not Verified"},
 
     // j
+    join: {ko: "가입", en: "Join"},
+    joinDate: {ko: "가입일", en: "Join Date"},
+
     // k
     kcal: {ko: "칼로리", en: "Kcal"},
     kcalNut: {ko: "칼로리-영양소", en: "Kcal-Nutrition"},
@@ -176,6 +169,7 @@ export const useTranslate = () => {
     labor: {ko: "근로", en: "Labor"},
 
     // m
+    male: {ko: "남성", en: "Male"},
     money: {ko: "자산", en: "money"},
     month: {ko: "월별", en: "Month"},
     month1: {ko: "1월", en: "Month1"},
@@ -209,6 +203,9 @@ export const useTranslate = () => {
     proportion: {ko: "비율", en: "Proportion"},
 
     // q
+    quantity: {ko: "수량", en: "Quantity"},
+    question: {ko: "질문", en: "Question"},
+
     // r
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
@@ -247,6 +244,8 @@ export const useTranslate = () => {
     transportation: {ko: "교통", en: "Transportation"},
 
     // u
+    unknown: {ko: "선택하지 않음", en: "Unknown"},
+
     // v
     verify: {ko: "인증", en: "Verify"},
     viewDay: {ko: "일별", en: "Day View"},
@@ -258,6 +257,7 @@ export const useTranslate = () => {
     volumeCardio: {ko: "볼륨-유산소", en: "Volume-Cardio"},
 
     // w
+    won: {ko: "₩", en: "₩"},
     week: {ko: "주별", en: "Week"},
     weight: {ko: "체중", en: "Weight"},
     wakeTime: {ko: "기상", en: "Wake"},
@@ -269,6 +269,8 @@ export const useTranslate = () => {
     week6: {ko: "6주차", en: "Week6"},
 
     // x
+    xl: {ko: "대", en: "XL"},
+
     // y
     year: {ko: "년별", en: "Year"},
 

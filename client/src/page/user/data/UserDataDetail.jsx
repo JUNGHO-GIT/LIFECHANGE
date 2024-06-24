@@ -1,9 +1,8 @@
 // UserDataDetail.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useRef} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios} from "../../../import/ImportLibs.jsx";
+import {axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {Div, Br30, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Avatar} from "../../../import/ImportMuis.jsx";
@@ -142,7 +141,10 @@ export const UserDataDetail = () => {
           type={"text"}
           size={"small"}
           label={translate("gender")}
-          value={OBJECT?.user_gender}
+          value={
+            OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
+            translate("female") : translate("unknown")
+          }
           className={"w-86vw"}
           InputProps={{
             readOnly: true,
@@ -166,10 +168,15 @@ export const UserDataDetail = () => {
           type={"text"}
           size={"small"}
           label={translate("height")}
-          value={OBJECT?.user_height}
-          className={"w-86vw"}
+          value={numeral(OBJECT?.user_height).format("0,0")}
           InputProps={{
             readOnly: true,
+            startAdornment: null,
+            endAdornment: (
+              <Div className={"fs-0-8rem"}>
+                {translate("cm")}
+              </Div>
+            )
           }}
         />
         <Br20 />
@@ -178,14 +185,34 @@ export const UserDataDetail = () => {
           type={"text"}
           size={"small"}
           label={translate("weight")}
-          value={OBJECT?.user_weight}
-          className={"w-86vw"}
+          value={numeral(OBJECT?.user_weight).format("0,0")}
           InputProps={{
             readOnly: true,
+            startAdornment: null,
+            endAdornment: (
+              <Div className={"fs-0-8rem"}>
+                {translate("kg")}
+              </Div>
+            )
           }}
         />
         <Br20 />
-
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          label={translate("property")}
+          value={numeral(OBJECT?.user_property).format("0,0")}
+          InputProps={{
+            readOnly: true,
+            startAdornment: null,
+            endAdornment: (
+              <Div className={"fs-0-8rem"}>
+                {translate("currency")}
+              </Div>
+            )
+          }}
+        />
       </Div>
     );
     // 7-8. table

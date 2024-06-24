@@ -251,7 +251,7 @@ export const ExerciseGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endCount")}
+                  {translate("count")}
                 </Div>
               )
             }}
@@ -283,7 +283,7 @@ export const ExerciseGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endVolume")}
+                  {translate("volume")}
                 </Div>
               )
             }}
@@ -324,7 +324,7 @@ export const ExerciseGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endWeight")}
+                  {translate("weight")}
                 </Div>
               )
             }}

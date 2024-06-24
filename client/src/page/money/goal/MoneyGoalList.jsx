@@ -158,7 +158,7 @@ export const MoneyGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       <Div className={"fs-0-7rem dark fw-normal me-8"}>
-                        ₩
+                        {translate("currency")}
                       </Div>
                       {numeral(item.money_goal_income).format("0,0")}
                     </Div>
@@ -179,7 +179,7 @@ export const MoneyGoalList = () => {
                   <TableCell colSpan={3}>
                     <Div className={"d-left fw-bold"}>
                       <Div className={"fs-0-7rem dark fw-normal me-8"}>
-                        ₩
+                        {translate("currency")}
                       </Div>
                       {numeral(item.money_goal_expense).format("0,0")}
                     </Div>

@@ -109,9 +109,6 @@ export const UserSignup = () => {
     .catch((err) => {
       console.log(err, "err");
     })
-    .finally(() => {
-      navigate(0);
-    });
   };
 
   // 7. table --------------------------------------------------------------------------------------
@@ -306,7 +303,7 @@ export const UserSignup = () => {
             readOnly: false,
             endAdornment: (
               <Div className={"fs-0-8rem"}>
-                {translate("endCurrency")}
+                {translate("currency")}
               </Div>
             )
           }}

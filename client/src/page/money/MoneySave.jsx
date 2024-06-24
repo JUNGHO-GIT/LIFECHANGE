@@ -290,7 +290,7 @@ export const MoneySave = () => {
             ),
             endAdornment: (
               <Div className={"fs-0-8rem"}>
-                {translate("endCurrency")}
+                {translate("currency")}
               </Div>
             )
           }}
@@ -312,7 +312,7 @@ export const MoneySave = () => {
             ),
             endAdornment: (
               <Div className={"fs-0-8rem"}>
-                {translate("endCurrency")}
+                {translate("currency")}
               </Div>
             )
           }}
@@ -422,7 +422,7 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("endCurrency")
+                  translate("won")
                 )
               }}
               onChange={(e) => {

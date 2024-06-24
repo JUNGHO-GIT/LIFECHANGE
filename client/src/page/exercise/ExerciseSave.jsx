@@ -327,7 +327,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endVolume")}
+                  {translate("volume")}
                 </Div>
               )
             }}
@@ -349,7 +349,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endHour")}
+                  {translate("hour")}
                 </Div>
               )
             }}
@@ -382,7 +382,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endWeight")}
+                  {translate("weight")}
                 </Div>
               )
             }}
@@ -491,7 +491,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endSet")}
+                  {translate("set")}
                 </Div>
               )
             }}
@@ -525,7 +525,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endRep")}
+                  {translate("rep")}
                 </Div>
               )
             }}
@@ -562,7 +562,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("endKg")}
+                  {translate("kg")}
                 </Div>
               )
             }}
