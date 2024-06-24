@@ -26,6 +26,10 @@ export const send = async (
     user_id_param, code
   );
 
+  console.log("================= send ===============");
+  console.log("code: ", code);
+  console.log("===============================");
+
   const finalResult = {
     code: code,
     result: sendResult

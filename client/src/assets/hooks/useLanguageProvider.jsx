@@ -248,7 +248,7 @@ export const useTranslate = () => {
 
     // u
     // v
-    verified: {ko: "인증", en: "Verified"},
+    verify: {ko: "인증", en: "Verify"},
     viewDay: {ko: "일별", en: "Day View"},
     viewMonth: {ko: "월별", en: "Month View"},
     viewSelect: {ko: "선택별", en: "Select View"},

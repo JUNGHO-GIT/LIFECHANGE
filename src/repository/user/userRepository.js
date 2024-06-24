@@ -11,7 +11,7 @@ import {Money} from "../../schema/money/Money.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {User} from "../../schema/user/User.js";
-import {Verify} from "../../schema/verify/Verify.js";
+import {Verify} from "../../schema/Verify.js";
 
 // 0-0. send ---------------------------------------------------------------------------------------
 export const send = {
@@ -19,6 +19,17 @@ export const send = {
   send: async (
     user_id_param, code_param
   ) => {
+
+    const findResult = await Verify.findOne({
+      verify_id: user_id_param
+    })
+    .lean();
+
+    if (findResult !== null) {
+      await Verify.deleteMany({
+        verify_id: user_id_param
+      });
+    }
 
     const finalResult = await Verify.create({
       verify_id: user_id_param,

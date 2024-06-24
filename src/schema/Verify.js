@@ -22,6 +22,6 @@ const schema = new mongoose.Schema({
 });
 
 // 5. model ----------------------------------------------------------------------------------------
-export const User = mongoose.model(
+export const Verify = mongoose.model(
   "Verify", schema, "verify"
 );

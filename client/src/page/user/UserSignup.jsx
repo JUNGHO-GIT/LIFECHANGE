@@ -19,8 +19,8 @@ export const UserSignup = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [pwConfirm, setPwConfirm] = useState("");
-  const [serverCode, setServerCode] = useState("");
   const [clientCode, setClientCode] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -44,7 +44,6 @@ export const UserSignup = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        setServerCode(res.data.result.code);
       }
       else {
         alert(res.data.msg);
@@ -64,9 +63,11 @@ export const UserSignup = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
+        setIsVerified(true);
       }
       else {
         alert(res.data.msg);
+        setIsVerified(false);
       }
     })
     .catch((err) => {
@@ -113,16 +114,6 @@ export const UserSignup = () => {
     });
   };
 
-  // 4. handler ------------------------------------------------------------------------------------
-  const handlerCheck = () => {
-    if (clientCode === serverCode) {
-      alert(translate("isVerified"));
-    }
-    else {
-      alert(translate("isNotVerified"));
-    }
-  };
-
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-7. fragment
@@ -151,6 +142,7 @@ export const UserSignup = () => {
             variant={"contained"}
             onClick={() => {
               flowSend();
+              setIsVerified(false);
             }}
           >
             {translate("send")}
@@ -162,7 +154,7 @@ export const UserSignup = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("verified")}
+            label={translate("verify")}
             value={clientCode}
             className={"w-66vw me-10"}
             onChange={(e) => (
@@ -174,11 +166,12 @@ export const UserSignup = () => {
             color={"primary"}
             className={"w-20vw"}
             variant={"contained"}
+            disabled={isVerified}
             onClick={() => {
-              handlerCheck();
+              flowVerify();
             }}
           >
-            {translate("verified")}
+            {translate("verify")}
           </Button>
         </Div>
         <Br10 />
