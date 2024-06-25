@@ -3,11 +3,12 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
+import {log} from "../../../import/ImportLogics.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportLogics.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
+import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
@@ -362,7 +363,6 @@ export const FoodFindSave = () => {
             label={translate("part")}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
-            defaultValue={1}
             value={OBJECT?.food_section[i]?.food_part_idx}
             InputProps={{
               readOnly: false,
@@ -370,14 +370,14 @@ export const FoodFindSave = () => {
               endAdornment: null
             }}
             onChange={(e) => {
-              const newIndex = Number(e.target.value);
+              const newPart = Number(e.target.value);
               setOBJECT((prev) => ({
                 ...prev,
                 food_section: prev.food_section.map((item, idx) => (
                   idx === i ? {
                     ...item,
-                    food_part_idx: newIndex,
-                    food_part_val: foodArray[newIndex]?.food_part
+                    food_part_idx: newPart,
+                    food_part_val: foodArray[newPart].food_part,
                   } : item
                 ))
               }));
@@ -570,9 +570,18 @@ export const FoodFindSave = () => {
         <Br20/>
       </Card>
     );
+    // 7-8. loading
+    const loadingNode = () => (
+      <Loading
+        LOADING={LOADING}
+        setLOADING={setLOADING}
+      />
+    );
     // 7-8. table
     const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (OBJECT?.food_section.map((_, i) => (tableFragment(i))))
+      COUNT?.newSectionCnt > 0 && (
+        LOADING ? loadingNode() : OBJECT?.food_section.map((_, i) => (tableFragment(i)))
+      )
     );
     // 7-9. first
     const firstSection = () => (

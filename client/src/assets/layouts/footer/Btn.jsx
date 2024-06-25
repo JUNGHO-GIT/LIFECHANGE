@@ -77,6 +77,7 @@ export const Btn = ({
           readOnly: false,
           startAdornment: null,
           endAdornment: null,
+          className: "h-min0 h-30",
         }}
         onChange={(e) => {
           functions?.setPAGING((prev={}) => ({

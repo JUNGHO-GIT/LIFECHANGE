@@ -509,9 +509,9 @@ export const FoodSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("title")}
+            label={translate("foodTitle")}
             size={"small"}
-            value={OBJECT?.food_section[i]?.food_title}
+            value={OBJECT?.food_section[i]?.food_title || " "}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{

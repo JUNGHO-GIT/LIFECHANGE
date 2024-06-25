@@ -138,6 +138,8 @@ export const list = async (
 
       finalResult.push({
         food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
+        food_part_idx: 1,
+        food_part_val: "breakfast",
         food_title: titleElement,
         food_brand: brandElement,
         food_count: nutritionElement.count,

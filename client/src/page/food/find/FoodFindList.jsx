@@ -5,9 +5,8 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table, Checkbox} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Icons, Hr10, Hr20} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, Checkbox} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
@@ -44,6 +43,7 @@ export const FoodFindList = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [checkedQueries, setCheckedQueries] = useState({});
+  const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -61,6 +61,8 @@ export const FoodFindList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = [{
     food_perNumber: 1,
+    food_part_idx: 1,
+    food_part_val: "breakfast",
     food_title: "",
     food_brand: "",
     food_count: 0,
@@ -97,7 +99,7 @@ export const FoodFindList = () => {
     }
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item) => (
-      sectionArray.some(sectionItem => sectionItem.food_title === item.food_title)
+      sectionArray.some((sectionItem) => sectionItem.food_title === item.food_title)
     ));
     setCheckedQueries({
       ...checkedQueries,
@@ -194,114 +196,94 @@ export const FoodFindList = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <TableContainer>
-            <Table>
-              <Accordion>
-                <AccordionSummary>
-                  <TableHead className={"table-thead"}>
-                    <Div className={"fs-1-1rem fw-bolder d-left"}>
-                      {item.food_title}
-                    </Div>
-                    <Div className={"fs-0-9rem d-left"}>
-                      {item.food_brand}
-                    </Div>
-                    <Div className={"fs-1-1rem fw-bolder d-right"}>
-                      <Checkbox
-                        key={`check-${index}`}
-                        color={"primary"}
-                        size={"small"}
-                        checked={
-                          !! (
-                            checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-                            checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
-                          )
-                        }
-                        onChange={() => {
-                          handlerCheckboxChange(index);
-                        }}
-                      />
-                    </Div>
-                  </TableHead>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <TableBody className={"table-tbody"}>
-                    <TableRow className={"table-tbody-tr border-top"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left dark fw-bold"}>
-                          <Img src={food2} className={"w-15 h-15"} />
-                          {translate("kcal")}
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left fw-bold"}>
-                          {numeral(item.food_kcal).format("0,0")}
-                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                            {translate("k")}
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr border-top"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left dark fw-bold"}>
-                          <Img src={food3} className={"w-15 h-15"} />
-                          {translate("carb")}
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left fw-bold"}>
-                          {numeral(item.food_carb).format("0,0")}
-                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                            {translate("g")}
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr border-top"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left dark fw-bold"}>
-                          <Img src={food4} className={"w-15 h-15"} />
-                          {translate("protein")}
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left fw-bold"}>
-                          {numeral(item.food_protein).format("0,0")}
-                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                            {translate("g")}
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr border-top"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left dark fw-bold"}>
-                          <Img src={food5} className={"w-15 h-15"} />
-                          {translate("fat")}
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow className={"table-tbody-tr"}>
-                      <TableCell colSpan={3}>
-                        <Div className={"d-left fw-bold"}>
-                          {numeral(item.food_fat).format("0,0")}
-                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                            {translate("g")}
-                          </Div>
-                        </Div>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </AccordionDetails>
-              </Accordion>
-            </Table>
-          </TableContainer>
+          <Accordion className={"shadow-none"}>
+            <AccordionSummary expandIcon={
+              <Icons name={"TbChevronDown"} className={"w-20 h-20 black"} onClick={(e) => {
+                setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
+              }}/>
+            }>
+              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                <Div className={"d-left ms-n20"}>
+                  <Div className={"fs-1-1rem fw-bolder d-left"}>
+                    <Checkbox
+                      key={`check-${index}`}
+                      color={"primary"}
+                      size={"small"}
+                      checked={
+                        !! (
+                          checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+                          checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
+                        )
+                      }
+                      onChange={() => {
+                        handlerCheckboxChange(index);
+                      }}
+                    />
+                  </Div>
+                  <Div className={"fs-1-1rem fw-bolder d-left"}>
+                    {/** 10자 넘어가면 ... 처리 */}
+                    {isExpanded.includes(index) ? (
+                      item.food_title
+                    ) : (
+                      item.food_title.length > 10 ?
+                      `${item.food_title.substring(0, 10)}...` :
+                      item.food_title
+                    )}
+                  </Div>
+                </Div>
+                <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                  <Div className={"fs-0-8rem dark d-left ms-20"}>
+                    {item.food_brand}
+                  </Div>
+                </Div>
+              </Div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={food2} className={"w-15 h-15"} />
+                {translate("kcal")}
+              </Div>
+              <Div className={"d-left fw-bold"}>
+                {numeral(item.food_kcal).format("0,0")}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("k")}
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={food3} className={"w-15 h-15"} />
+                {translate("carb")}
+              </Div>
+              <Div className={"d-left fw-bold"}>
+                {numeral(item.food_carb).format("0,0")}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("g")}
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={food4} className={"w-15 h-15"} />
+                {translate("protein")}
+              </Div>
+              <Div className={"d-left fw-bold"}>
+                {numeral(item.food_protein).format("0,0")}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("g")}
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={food5} className={"w-15 h-15"} />
+                {translate("fat")}
+              </Div>
+              <Div className={"d-left fw-bold"}>
+                {numeral(item.food_fat).format("0,0")}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("g")}
+                </Div>
+              </Div>
+            </AccordionDetails>
+          </Accordion>
         </Card>
       ))
     );
