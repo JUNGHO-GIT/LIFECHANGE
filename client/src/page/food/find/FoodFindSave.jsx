@@ -271,7 +271,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("kcal")}
+                  {translate("k")}
                 </Div>
               )
             }}
@@ -293,7 +293,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -315,7 +315,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -337,7 +337,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -394,7 +394,7 @@ export const FoodFindSave = () => {
           {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
-              label={translate("count")}
+              label={translate("foodCount")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
@@ -403,9 +403,7 @@ export const FoodFindSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: (
-                  translate("count")
-                )
+                endAdornment: null,
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -433,7 +431,7 @@ export const FoodFindSave = () => {
           ) : (
             <TextField
               select={false}
-              label={"gram"}
+              label={translate("gram")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
@@ -443,7 +441,7 @@ export const FoodFindSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("gram")
+                  translate("g")
                 )
               }}
               onChange={(e) => {
@@ -475,7 +473,7 @@ export const FoodFindSave = () => {
         <Div className={"d-center"}>
           <TextField
             select={false}
-            label={translate("title")}
+            label={translate("foodTitle")}
             size={"small"}
             value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
             variant={"outlined"}
@@ -503,7 +501,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("kcal")}
+                  {translate("k")}
                 </Div>
               )
             }}
@@ -522,7 +520,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -544,7 +542,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -563,7 +561,7 @@ export const FoodFindSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}

@@ -250,7 +250,7 @@ export const FoodGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("kcal")}
+                  {translate("k")}
                 </Div>
               )
             }}
@@ -283,7 +283,7 @@ export const FoodGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -316,7 +316,7 @@ export const FoodGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -349,7 +349,7 @@ export const FoodGoalSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}

@@ -239,7 +239,7 @@ export const FoodFindList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_kcal).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        kcal
+                        {translate("k")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -257,7 +257,7 @@ export const FoodFindList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_carb).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -275,7 +275,7 @@ export const FoodFindList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_protein).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -293,7 +293,7 @@ export const FoodFindList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_fat).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>

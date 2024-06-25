@@ -104,8 +104,11 @@ export const useTranslate = () => {
     flowSignup: {ko: "회원가입", en: "Signup"},
     food: {ko: "식사", en: "food"},
     finance: {ko: "금융", en: "Finance"},
+    foodCount: {ko: "회", en: "Count"},
+    foodTitle: {ko: "식품명", en: "Food"},
 
     // g
+    g: {ko: "g", en: "g"},
     gender: {ko: "성별", en: "Gender"},
     getCalendar: {ko: "달력", en: "Calendar"},
     getToday: {ko: "오늘", en: "Today"},
@@ -156,6 +159,7 @@ export const useTranslate = () => {
     joinDate: {ko: "가입일", en: "Join Date"},
 
     // k
+    k: {ko: "kcal", en: "kcal"},
     kcal: {ko: "칼로리", en: "Kcal"},
     kcalNut: {ko: "칼로리-영양소", en: "Kcal-Nutrition"},
     kg: {ko: "kg", en: "kg"},

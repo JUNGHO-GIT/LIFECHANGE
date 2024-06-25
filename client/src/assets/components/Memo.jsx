@@ -49,7 +49,7 @@ export const Memo = ({
       {(popTrigger={}) => (
         <TextField
           select={false}
-          label={"메모"}
+          label={translate("memo")}
           size={"small"}
           variant={"outlined"}
           className={"w-86vw pointer"}

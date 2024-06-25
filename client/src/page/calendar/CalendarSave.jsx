@@ -270,7 +270,7 @@ export const CalendarSave = () => {
             select={true}
             type={"text"}
             size={"small"}
-            label={"색상"}
+            label={translate("color")}
             variant={"outlined"}
             className={"w-86vw"}
             value={OBJECT?.calendar_section[i]?.calendar_color}
@@ -306,7 +306,7 @@ export const CalendarSave = () => {
             select={false}
             type={"text"}
             size={"small"}
-            label={"제목"}
+            label={translate("title")}
             variant={"outlined"}
             className={"w-86vw"}
             value={OBJECT?.calendar_section[i]?.calendar_title}

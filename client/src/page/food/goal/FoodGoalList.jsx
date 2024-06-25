@@ -162,7 +162,7 @@ export const FoodGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_goal_kcal).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        kcal
+                        {translate("k")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -183,7 +183,7 @@ export const FoodGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_goal_carb).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -204,7 +204,7 @@ export const FoodGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_goal_protein).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -225,7 +225,7 @@ export const FoodGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {numeral(item.food_goal_fat).format("0,0")}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        g
+                        {translate("g")}
                       </Div>
                     </Div>
                   </TableCell>

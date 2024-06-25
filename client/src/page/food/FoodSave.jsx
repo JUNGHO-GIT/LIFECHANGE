@@ -307,7 +307,7 @@ export const FoodSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("kcal")}
+                  {translate("k")}
                 </Div>
               )
             }}
@@ -327,9 +327,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food3} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -351,7 +351,7 @@ export const FoodSave = () => {
               ),
                endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -371,9 +371,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food5} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -430,7 +430,7 @@ export const FoodSave = () => {
           {(OBJECT?.food_section[i]?.food_gram === 0) ? (
             <TextField
               select={false}
-              label={translate("count")}
+              label={translate("foodCount")}
               size={"small"}
               type={"text"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
@@ -439,9 +439,7 @@ export const FoodSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: (
-                  translate("count")
-                )
+                endAdornment: null,
               }}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
@@ -479,7 +477,7 @@ export const FoodSave = () => {
                 readOnly: false,
                 startAdornment: null,
                 endAdornment: (
-                  translate("gram")
+                  translate("g")
                 )
               }}
               onChange={(e) => {
@@ -537,9 +535,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food2} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("kcal")}
+                  {translate("k")}
                 </Div>
               )
             }}
@@ -556,9 +554,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food3} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -578,9 +576,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food4} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
@@ -597,9 +595,9 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food5} className={"w-16 h-16"} />
               ),
-               endAdornment: (
+              endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("gram")}
+                  {translate("g")}
                 </Div>
               )
             }}
