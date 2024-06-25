@@ -393,203 +393,205 @@ export const ExerciseSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
-        </Div>
-        <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("part")}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={OBJECT?.exercise_section[i]?.exercise_part_idx}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newIndex = Number(e.target.value);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_section: prev.exercise_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    exercise_part_idx: newIndex,
-                    exercise_part_val: exerciseArray[newIndex]?.exercise_part,
-                    exercise_title_idx: 0,
-                    exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
-                  } : item
-                ))
-              }));
-            }}
-          >
-            {exerciseArray.map((item, idx) => (
-              <MenuItem key={idx} value={idx}>
-                <Div className={"fs-0-8rem"}>
-                  {translate(item.exercise_part)}
-                </Div>
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("title")}
-            variant={"outlined"}
-            className={"w-40vw ms-3vw"}
-            value={OBJECT?.exercise_section[i]?.exercise_title_idx}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newTitleIdx = Number(e.target.value);
-              const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
-              if (newTitleIdx >= 0 && newTitleVal) {
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, OBJECT?.exercise_section[i]._id, i)}
+          </Div>
+          <Br40/>
+          <Div className={"d-center"}>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={translate("part")}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+              InputProps={{
+                readOnly: false,
+                startAdornment: null,
+                endAdornment: null
+              }}
+              onChange={(e) => {
+                const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_section: prev.exercise_section.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      exercise_title_idx: newTitleIdx,
-                      exercise_title_val: newTitleVal,
+                      exercise_part_idx: newIndex,
+                      exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                      exercise_title_idx: 0,
+                      exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
                     } : item
                   ))
                 }));
-              }
-            }}
-          >
-            {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
-              <MenuItem key={idx} value={idx}>
-                <Div className={"fs-0-8rem"}>
-                  {translate(title)}
-                </Div>
-              </MenuItem>
-            ))}
-          </TextField>
+              }}
+            >
+              {exerciseArray.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  <Div className={"fs-0-8rem"}>
+                    {translate(item.exercise_part)}
+                  </Div>
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={translate("title")}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+              InputProps={{
+                readOnly: false,
+                startAdornment: null,
+                endAdornment: null
+              }}
+              onChange={(e) => {
+                const newTitleIdx = Number(e.target.value);
+                const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
+                if (newTitleIdx >= 0 && newTitleVal) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_title_idx: newTitleIdx,
+                        exercise_title_val: newTitleVal,
+                      } : item
+                    ))
+                  }));
+                }
+              }}
+            >
+              {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  <Div className={"fs-0-8rem"}>
+                    {translate(title)}
+                  </Div>
+                </MenuItem>
+              ))}
+            </TextField>
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("set")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("set")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_section: prev.exercise_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      exercise_set: limitedValue
+                    } : item
+                  ))
+                }));
+              }}
+            />
+            <TextField
+              select={false}
+              label={translate("rep")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              value={OBJECT?.exercise_section[i]?.exercise_rep}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("rep")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_section: prev.exercise_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      exercise_rep: limitedValue
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("kg")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              value={OBJECT?.exercise_section[i]?.exercise_kg}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("kg")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_section: prev.exercise_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      exercise_kg: limitedValue
+                    } : item
+                  ))
+                }));
+              }}
+            />
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"exercise_cardio"}
+              i={i}
+            />
+          </Div>
+          <Br20/>
         </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={translate("set")}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("set")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_section: prev.exercise_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    exercise_set: limitedValue
-                  } : item
-                ))
-              }));
-            }}
-          />
-          <TextField
-            select={false}
-            label={translate("rep")}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-40vw ms-3vw"}
-            value={OBJECT?.exercise_section[i]?.exercise_rep}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("rep")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_section: prev.exercise_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    exercise_rep: limitedValue
-                  } : item
-                ))
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={translate("kg")}
-            size={"small"}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={OBJECT?.exercise_section[i]?.exercise_kg}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("kg")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_section: prev.exercise_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    exercise_kg: limitedValue
-                  } : item
-                ))
-              }));
-            }}
-          />
-          <Time
-            OBJECT={OBJECT}
-            setOBJECT={setOBJECT}
-            extra={"exercise_cardio"}
-            i={i}
-          />
-        </Div>
-        <Br20/>
       </Card>
     );
     // 7-8. loading

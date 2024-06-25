@@ -350,224 +350,232 @@ export const FoodFindSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
-        </Div>
-        <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("part")}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            value={OBJECT?.food_section[i]?.food_part_idx}
-            InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null
-            }}
-            onChange={(e) => {
-              const newPart = Number(e.target.value);
-              setOBJECT((prev) => ({
-                ...prev,
-                food_section: prev.food_section.map((item, idx) => (
-                  idx === i ? {
-                    ...item,
-                    food_part_idx: newPart,
-                    food_part_val: foodArray[newPart].food_part,
-                  } : item
-                ))
-              }));
-            }}
-          >
-            {foodArray.map((item, idx) => (
-              <MenuItem key={idx} value={idx}>
-                <Div className={"fs-0-8rem"}>
-                  {translate(item.food_part)}
-                </Div>
-              </MenuItem>
-            ))}
-          </TextField>
-          {(OBJECT?.food_section[i]?.food_gram === 0) ? (
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
+          </Div>
+          <Br40/>
+          <Div className={"d-center"}>
             <TextField
-              select={false}
-              label={translate("foodCount")}
-              size={"small"}
+              select={true}
               type={"text"}
-              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+              size={"small"}
+              label={translate("part")}
               variant={"outlined"}
-              className={"w-40vw ms-3vw"}
+              className={"w-40vw me-3vw"}
+              value={OBJECT?.food_section[i]?.food_part_idx}
               InputProps={{
                 readOnly: false,
                 startAdornment: null,
-                endAdornment: null,
+                endAdornment: null
               }}
               onChange={(e) => {
-                const newCount = Number(e.target.value);
-                if (isNaN(newCount) || newCount < 0) {
-                  return;
-                }
-                else if (newCount === 0) {
-                  return;
-                }
+                const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev.food_section.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_count: newCount,
-                      food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
-                      food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
-                      food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
-                      food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
+                      food_part_idx: newPart,
+                      food_part_val: foodArray[newPart].food_part,
                     } : item
                   ))
                 }));
               }}
-            />
-          ) : (
+            >
+              {foodArray.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  <Div className={"fs-0-8rem"}>
+                    {translate(item.food_part)}
+                  </Div>
+                </MenuItem>
+              ))}
+            </TextField>
+            {(OBJECT?.food_section[i]?.food_gram === 0) ? (
+              <TextField
+                select={false}
+                label={translate("foodCount")}
+                size={"small"}
+                type={"text"}
+                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+                variant={"outlined"}
+                className={"w-40vw ms-3vw"}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: null,
+                  endAdornment: null,
+                }}
+                onChange={(e) => {
+                  const newCount = Number(e.target.value);
+                  if (newCount > 9999) {
+                    return;
+                  }
+                  if (isNaN(newCount) || newCount < 0) {
+                    return;
+                  }
+                  else if (newCount === 0) {
+                    return;
+                  }
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev.food_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_count: newCount,
+                        food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
+                        food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
+                        food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
+                        food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            ) : (
+              <TextField
+                select={false}
+                label={translate("gram")}
+                size={"small"}
+                type={"text"}
+                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+                variant={"outlined"}
+                className={"w-40vw ms-3vw"}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: null,
+                  endAdornment: (
+                    translate("g")
+                  )
+                }}
+                onChange={(e) => {
+                  const newGram = Number(e.target.value);
+                  if (newGram > 9999) {
+                    return;
+                  }
+                  if (isNaN(newGram) || newGram < 0) {
+                    return;
+                  }
+                  else if (newGram === 0) {
+                    return;
+                  }
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev.food_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_gram: newGram,
+                        food_kcal: Number(((newGram * item.food_kcal) / item.food_gram).toFixed(2)),
+                        food_fat: Number(((newGram * item.food_fat) / item.food_gram).toFixed(2)),
+                        food_carb: Number(((newGram * item.food_carb) / item.food_gram).toFixed(2)),
+                        food_protein: Number(((newGram * item.food_protein) / item.food_gram).toFixed(2)),
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            )}
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
             <TextField
               select={false}
-              label={translate("gram")}
+              label={translate("foodTitle")}
               size={"small"}
-              type={"text"}
-              value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+              value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
-              className={"w-40vw ms-3vw"}
+              className={"w-86vw"}
               InputProps={{
-                readOnly: false,
+                readOnly: true,
                 startAdornment: null,
+                endAdornment: null
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("kcal")}
+              size={"small"}
+              value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={food2} className={"w-16 h-16"} />
+                ),
                 endAdornment: (
-                  translate("g")
+                  <Div className={"fs-0-8rem"}>
+                    {translate("k")}
+                  </Div>
                 )
               }}
-              onChange={(e) => {
-                const newGram = Number(e.target.value);
-                if (isNaN(newGram) || newGram < 0) {
-                  return;
-                }
-                else if (newGram === 0) {
-                  return;
-                }
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev.food_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_gram: newGram,
-                      food_kcal: Number(((newGram * item.food_kcal) / item.food_gram).toFixed(2)),
-                      food_fat: Number(((newGram * item.food_fat) / item.food_gram).toFixed(2)),
-                      food_carb: Number(((newGram * item.food_carb) / item.food_gram).toFixed(2)),
-                      food_protein: Number(((newGram * item.food_protein) / item.food_gram).toFixed(2)),
-                    } : item
-                  ))
-                }));
+            />
+            <TextField
+              select={false}
+              label={translate("carb")}
+              size={"small"}
+              value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={food3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
               }}
             />
-          )}
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              label={translate("protein")}
+              size={"small"}
+              value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={food4} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
+              }}
+            />
+            <TextField
+              select={false}
+              label={translate("fat")}
+              size={"small"}
+              value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={food5} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
+              }}
+            />
+          </Div>
+          <Br20/>
         </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={translate("foodTitle")}
-            size={"small"}
-            value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: null,
-              endAdornment: null
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={translate("kcal")}
-            size={"small"}
-            value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={food2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-          />
-          <TextField
-            select={false}
-            label={translate("carb")}
-            size={"small"}
-            value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}
-            variant={"outlined"}
-            className={"w-40vw ms-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={food3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            label={translate("protein")}
-            size={"small"}
-            value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}
-            variant={"outlined"}
-            className={"w-40vw me-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={food4} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-          <TextField
-            select={false}
-            label={translate("fat")}
-            size={"small"}
-            value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}
-            variant={"outlined"}
-            className={"w-40vw ms-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={food5} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
-        <Br20/>
       </Card>
     );
     // 7-8. loading

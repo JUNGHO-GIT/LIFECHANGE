@@ -225,77 +225,79 @@ export const MoneyGoalSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, "", i)}
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, "", i)}
+          </Div>
+          <Br40/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalIncome")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.money_goal_income).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={money2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("currency")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_goal_income: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalExpense")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.money_goal_expense).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={money2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("currency")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_goal_expense: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
         </Div>
-        <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalIncome")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.money_goal_income).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={money2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 9999999999);
-              setOBJECT((prev) => ({
-                ...prev,
-                money_goal_income: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalExpense")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={money2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 9999999999);
-              setOBJECT((prev) => ({
-                ...prev,
-                money_goal_expense: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
       </Card>
     );
     // 7-8. loading

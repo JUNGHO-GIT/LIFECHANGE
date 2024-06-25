@@ -231,116 +231,118 @@ export const ExerciseGoalSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, "", i)}
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, "", i)}
+          </Div>
+          <Br40/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalCount")} (${translate("total")})`}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("count")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_goal_count: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalVolume")} (${translate("total")})`}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("volume")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_goal_volume: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"exercise_goal_cardio"}
+              i={i}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={translate("goalWeight")}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={exercise5} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("weight")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_goal_weight: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
         </Div>
-        <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalCount")} (${translate("total")})`}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("count")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_goal_count: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalVolume")} (${translate("total")})`}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("volume")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_goal_volume: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <Time
-            OBJECT={OBJECT}
-            setOBJECT={setOBJECT}
-            extra={"exercise_goal_cardio"}
-            i={i}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("goalWeight")}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={exercise5} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("weight")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_goal_weight: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
       </Card>
     );
     // 7-8. loading

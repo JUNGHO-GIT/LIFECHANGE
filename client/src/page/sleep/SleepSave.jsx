@@ -251,36 +251,39 @@ export const SleepSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
-        </Div>
-        <Br40 />
-        <Div className={"d-center"}>
-          <Time
-            OBJECT={OBJECT}
-            setOBJECT={setOBJECT}
-            extra={"sleep_bedTime"}
-            i={i}
-          />
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Time
-            OBJECT={OBJECT}
-            setOBJECT={setOBJECT}
-            extra={"sleep_wakeTime"}
-            i={i}
-          />
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Time
-            OBJECT={OBJECT}
-            setOBJECT={setOBJECT}
-            extra={"sleep_sleepTime"}
-            i={i}
-          />
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
+          </Div>
+          <Br40 />
+          <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"sleep_bedTime"}
+              i={i}
+            />
+          </Div>
+          <Br20 />
+          <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"sleep_wakeTime"}
+              i={i}
+            />
+          </Div>
+          <Br20 />
+          <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"sleep_sleepTime"}
+              i={i}
+            />
+          </Div>
+          <Br20 />
         </Div>
       </Card>
     );

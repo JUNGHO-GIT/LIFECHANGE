@@ -328,8 +328,7 @@ export const MoneySave = () => {
             {badgeSection(i)}
             {deleteSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
           </Div>
-          <Br20/>
-          <Br20/>
+          <Br40/>
           <Div className={"d-center"}>
             <TextField
               select={true}
@@ -451,6 +450,7 @@ export const MoneySave = () => {
               i={i}
             />
           </Div>
+          <Br20/>
         </Div>
       </Card>
     );

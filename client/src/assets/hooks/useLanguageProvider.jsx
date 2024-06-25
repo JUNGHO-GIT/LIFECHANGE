@@ -174,6 +174,7 @@ export const useTranslate = () => {
     labor: {ko: "근로", en: "Labor"},
 
     // m
+    memo: {ko: "메모", en: "Memo"},
     male: {ko: "남성", en: "Male"},
     money: {ko: "자산", en: "money"},
     month: {ko: "월별", en: "Month"},

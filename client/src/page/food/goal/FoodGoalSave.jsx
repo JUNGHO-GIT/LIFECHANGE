@@ -229,143 +229,145 @@ export const FoodGoalSave = () => {
     // 7-7. fragment
     const tableFragment = (i) => (
       <Card className={"border p-20"} key={i}>
-        <Div className={"d-between"}>
-          {badgeSection(i)}
-          {deleteSection(OBJECT?._id, "", i)}
+        <Div className={"d-column"}>
+          <Div className={"d-between"}>
+            {badgeSection(i)}
+            {deleteSection(OBJECT?._id, "", i)}
+          </Div>
+          <Br40/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalKcal")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={food2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("k")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_goal_kcal: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalCarb")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.food_goal_carb).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={food3} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_goal_carb: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalProtein")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.food_goal_protein).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={food4} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_goal_protein: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("goalFat")} (${translate("total")})`}
+              variant={"outlined"}
+              className={"w-86vw"}
+              value={numeral(OBJECT?.food_goal_fat).format("0,0")}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={food5} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-8rem"}>
+                    {translate("g")}
+                  </Div>
+                )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_goal_fat: limitedValue
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
         </Div>
-        <Br40/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalKcal")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={food2} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(99999, parseInt(rawValue, 10));
-              setOBJECT((prev) => ({
-                ...prev,
-                food_goal_kcal: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalCarb")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={food3} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(99999, parseInt(rawValue, 10));
-              setOBJECT((prev) => ({
-                ...prev,
-                food_goal_carb: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalProtein")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={food4} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(99999, parseInt(rawValue, 10));
-              setOBJECT((prev) => ({
-                ...prev,
-                food_goal_protein: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("goalFat")} (${translate("total")})`}
-            variant={"outlined"}
-            className={"w-86vw"}
-            value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-            InputProps={{
-              readOnly: false,
-              startAdornment: (
-                <Img src={food5} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-            onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(99999, parseInt(rawValue, 10));
-              setOBJECT((prev) => ({
-                ...prev,
-                food_goal_fat: limitedValue
-              }));
-            }}
-          />
-        </Div>
-        <Br20/>
       </Card>
     );
     // 7-8. loading
