@@ -186,7 +186,7 @@ export const ExerciseList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.exercise_total_cardio}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>

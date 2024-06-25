@@ -65,7 +65,7 @@ export const useTranslate = () => {
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
     dataCategory3: {ko: "분류 3", en: "Category 3"},
-    dataDetail: {ko: "회원정보 수정", en: "Edit Information"},
+    dataDetail: {ko: "회원정보", en: "Edit Information"},
     dataList: {ko: "데이터 리스트", en: "Data List"},
     dashList: {ko: "통계", en: "Statistics"},
     date: {ko: "날짜", en: "Date"},
@@ -138,6 +138,7 @@ export const useTranslate = () => {
     googleSignup: {ko: "구글 아이디로 회원가입", en: "Signup with Google"},
 
     // h
+    hm: {ko: "h:m", en: "h:m"},
     height: {ko: "키", en: "Height"},
     housing: {ko: "주거", en: "Housing"},
     health: {ko: "건강", en: "Health"},
@@ -346,6 +347,11 @@ export const useTranslate = () => {
     swimming: {ko: "수영", en: "Swimming"},
     plank: {ko: "플랭크", en: "Plank"},
     rest: {ko: "휴식", en: "Rest"},
+
+    // gender
+    M: {ko: "남성", en: "Male"},
+    F: {ko: "여성", en: "Female"},
+    N: {ko: "선택하지 않음", en: "Unknown"},
   };
 
   const translate = useCallback((key, className) => {

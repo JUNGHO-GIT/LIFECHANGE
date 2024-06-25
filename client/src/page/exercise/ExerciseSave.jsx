@@ -349,7 +349,7 @@ export const ExerciseSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-8rem"}>
-                  {translate("hour")}
+                  {translate("hm")}
                 </Div>
               )
             }}

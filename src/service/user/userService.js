@@ -5,6 +5,9 @@ import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
 import {sendEmail} from "../../assets/js/email.js";
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // 0-0. send ---------------------------------------------------------------------------------------
 export const send = async (
@@ -20,10 +23,6 @@ export const send = async (
   await repository.send.send(
     user_id_param, code
   );
-
-  console.log("================= send ===============");
-  console.log("code: ", code);
-  console.log("===============================");
 
   const finalResult = {
     code: code,
@@ -96,26 +95,6 @@ export const signup = async (
   return finalResult;
 };
 
-// 0-0. extra --------------------------------------------------------------------------------------
-export const extra = async (
-  user_id_param, OBJECT_param
-) => {
-
-  const findResult = await repository.extra.extra(
-    user_id_param, OBJECT_param
-  );
-
-  let finalResult = null;
-  if (findResult !== null) {
-    finalResult = findResult;
-  }
-  else {
-    finalResult = "fail";
-  }
-
-  return finalResult;
-};
-
 // 0-1. login --------------------------------------------------------------------------------------
 export const login = async (
   user_id_param, user_pw_param
@@ -126,6 +105,8 @@ export const login = async (
   );
 
   let finalResult = null;
+  let adminResult = null;
+
   if (findResult !== null) {
     finalResult = findResult;
   }
@@ -133,7 +114,18 @@ export const login = async (
     finalResult = "fail";
   }
 
-  return finalResult;
+  if (user_id_param === process.env.ADMIN_ID) {
+    adminResult = "admin";
+  }
+  else {
+    adminResult = "user";
+  }
+
+
+  return {
+    result: finalResult,
+    admin: adminResult
+  };
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------

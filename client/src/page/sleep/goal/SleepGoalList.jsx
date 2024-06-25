@@ -161,7 +161,7 @@ export const SleepGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_goal_bedTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -182,7 +182,7 @@ export const SleepGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_goal_wakeTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -203,7 +203,7 @@ export const SleepGoalList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_goal_sleepTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>

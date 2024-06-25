@@ -139,36 +139,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// 0-0. exta ---------------------------------------------------------------------------------------
-router.post("/extra", async (req, res) => {
-  try {
-    let result = await service.extra (
-      req.body.user_id,
-      req.body.OBJECT
-    );
-    if (result) {
-      res.json({
-        status: "success",
-        msg: "회원가입 성공",
-        result: result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "회원가입 실패"
-      });
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
-    });
-  }
-});
-
 // 0-1. login --------------------------------------------------------------------------------------
 router.post("/login", async (req, res) => {
   try {
@@ -176,14 +146,15 @@ router.post("/login", async (req, res) => {
       req.body.user_id,
       req.body.user_pw
     );
-    if (result && result !== "fail") {
+    if (result.result && result.result !== "fail") {
       res.json({
         status: "success",
         msg: "로그인 성공",
-        result: result
+        admin: result.admin,
+        result: result.result
       });
     }
-    else if (result === "fail") {
+    else if (result.result === "fail") {
       res.json({
         status: "fail",
         msg: "아이디 또는 비밀번호가 일치하지 않습니다."

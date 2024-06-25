@@ -204,7 +204,7 @@ export const UserSignup = () => {
           type={"text"}
           size={"small"}
           label={translate("gender")}
-          value={OBJECT.user_gender}
+          value={OBJECT.user_gender || "N"}
           className={"w-86vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
@@ -213,7 +213,7 @@ export const UserSignup = () => {
             }))
           )}
         >
-          {["선택하지 않음", "남성", "여성"].map((item, i) => (
+          {[translate("N"), translate("M"), translate("F")].map((item, i) => (
             <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
               {item}
             </MenuItem>

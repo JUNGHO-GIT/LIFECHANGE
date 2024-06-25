@@ -159,7 +159,7 @@ export const SleepList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_bedTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -177,7 +177,7 @@ export const SleepList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_wakeTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>
@@ -195,7 +195,7 @@ export const SleepList = () => {
                     <Div className={"d-left fw-bold"}>
                       {item.sleep_section[0].sleep_sleepTime}
                       <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        h:m
+                        {translate("hm")}
                       </Div>
                     </Div>
                   </TableCell>

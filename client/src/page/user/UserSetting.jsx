@@ -18,7 +18,8 @@ export const UserSetting = () => {
   const {translate} = useTranslate();
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [lang, setLang] = useState(sessionStorage.getItem('lang'));
+  const [lang, setLang] = useState(sessionStorage.getItem("lang"));
+  const [isAdmin, setIsAdmin] = useState(sessionStorage.getItem("isAdmin"));
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -51,7 +52,7 @@ export const UserSetting = () => {
                 </TableCell>
               </TableRow>
               {/** list **/}
-              <TableRow>
+              <TableRow className={`${isAdmin !== "true" ? "d-none" : ""}`}>
                 <TableCell className={"w-90vw p-15"}>
                   {translate("dataList")}
                 </TableCell>

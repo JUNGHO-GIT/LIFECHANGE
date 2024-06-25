@@ -52,6 +52,14 @@ export const UserLogin = () => {
         sessionStorage.setItem("sessionId", userId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
+
+        if (res.data.result.admin === "admin") {
+          sessionStorage.setItem("isAdmin", "true");
+        }
+        else {
+          sessionStorage.setItem("isAdmin", "false");
+        }
+
         percent();
         navigate("/calendar/list");
       }
