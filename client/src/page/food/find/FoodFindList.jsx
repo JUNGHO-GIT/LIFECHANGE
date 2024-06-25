@@ -223,7 +223,7 @@ export const FoodFindList = () => {
                     </Div>
                   </TableHead>
                 </AccordionSummary>
-                <AccordionDetail>
+                <AccordionDetails>
                   <TableBody className={"table-tbody"}>
                     <TableRow className={"table-tbody-tr border-top"}>
                       <TableCell colSpan={3}>
@@ -298,12 +298,12 @@ export const FoodFindList = () => {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                </AccordionDetail>
+                </AccordionDetails>
               </Accordion>
             </Table>
           </TableContainer>
         </Card>
-      ));
+      ))
     );
     // 7-8. loading
     const loadingNode = () => (
