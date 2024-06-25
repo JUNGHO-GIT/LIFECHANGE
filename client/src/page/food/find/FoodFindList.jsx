@@ -5,9 +5,10 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Div, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, TableContainer, Table, Checkbox} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -195,17 +196,15 @@ export const FoodFindList = () => {
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
           <TableContainer>
             <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={2}>
+              <Accordion>
+                <AccordionSummary>
+                  <TableHead className={"table-thead"}>
                     <Div className={"fs-1-1rem fw-bolder d-left"}>
                       {item.food_title}
                     </Div>
                     <Div className={"fs-0-9rem d-left"}>
                       {item.food_brand}
                     </Div>
-                  </TableCell>
-                  <TableCell colSpan={1}>
                     <Div className={"fs-1-1rem fw-bolder d-right"}>
                       <Checkbox
                         key={`check-${index}`}
@@ -222,87 +221,89 @@ export const FoodFindList = () => {
                         }}
                       />
                     </Div>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className={"table-tbody"}>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food2} className={"w-15 h-15"} />
-                      {translate("kcal")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_kcal).format("0,0")}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("k")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food3} className={"w-15 h-15"} />
-                      {translate("carb")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_carb).format("0,0")}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("g")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food4} className={"w-15 h-15"} />
-                      {translate("protein")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_protein).format("0,0")}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("g")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food5} className={"w-15 h-15"} />
-                      {translate("fat")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_fat).format("0,0")}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("g")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+                  </TableHead>
+                </AccordionSummary>
+                <AccordionDetail>
+                  <TableBody className={"table-tbody"}>
+                    <TableRow className={"table-tbody-tr border-top"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left dark fw-bold"}>
+                          <Img src={food2} className={"w-15 h-15"} />
+                          {translate("kcal")}
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left fw-bold"}>
+                          {numeral(item.food_kcal).format("0,0")}
+                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                            {translate("k")}
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr border-top"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left dark fw-bold"}>
+                          <Img src={food3} className={"w-15 h-15"} />
+                          {translate("carb")}
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left fw-bold"}>
+                          {numeral(item.food_carb).format("0,0")}
+                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                            {translate("g")}
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr border-top"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left dark fw-bold"}>
+                          <Img src={food4} className={"w-15 h-15"} />
+                          {translate("protein")}
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left fw-bold"}>
+                          {numeral(item.food_protein).format("0,0")}
+                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                            {translate("g")}
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr border-top"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left dark fw-bold"}>
+                          <Img src={food5} className={"w-15 h-15"} />
+                          {translate("fat")}
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell colSpan={3}>
+                        <Div className={"d-left fw-bold"}>
+                          {numeral(item.food_fat).format("0,0")}
+                          <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                            {translate("g")}
+                          </Div>
+                        </Div>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </AccordionDetail>
+              </Accordion>
             </Table>
           </TableContainer>
         </Card>
-      ))
+      ));
     );
     // 7-8. loading
     const loadingNode = () => (

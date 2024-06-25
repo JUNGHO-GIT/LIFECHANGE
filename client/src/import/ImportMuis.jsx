@@ -2,7 +2,8 @@
 
 // a
 import {
-  Alert, AlertTitle, AppBar, Autocomplete, Avatar, AvatarGroup
+  Alert, AlertTitle, AppBar, Autocomplete, Avatar, AvatarGroup,
+  Accordion, AccordionActions, AccordionDetails, AccordionSummary
 } from "@mui/material";
 
 // b
@@ -91,6 +92,7 @@ export {
 
   // a
   Alert, AlertTitle, AppBar, Autocomplete, Avatar, AvatarGroup,
+  Accordion, AccordionActions, AccordionDetails, AccordionSummary,
 
   // b
   Backdrop, Badge, BottomNavigation, BottomNavigationAction, Button,
