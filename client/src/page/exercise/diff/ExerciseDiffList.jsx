@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, TableContainer, Table} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Hr20, Br10, Icons} from "../../../import/ImportComponents.jsx";
+import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {exercise3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -36,6 +36,7 @@ export const ExerciseDiff = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -123,151 +124,164 @@ export const ExerciseDiff = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <TableContainer>
-            <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={5}>
-                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </TableCell>
-                  <TableCell colSpan={1}>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className={"table-tbody"}>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
+          <Accordion className={"shadow-none"}>
+            <AccordionSummary expandIcon={
+              <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
+                setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
+              }}/>
+            }>
+              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                <Div className={"fs-1-1rem fw-bolder d-left"}>
+                  {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
+                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                    </Div>
+                  ) : (
+                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
+                    </Div>
+                  )}
+                </Div>
+              </Div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-bold dark me-5"}>
                       <Img src={exercise3} className={"w-15 h-15"} />
                       {translate("volume")}
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_goal_volume).format("0,0")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_total_volume).format("0,0")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
+                    <Div className={"fs-0-9rem fw-normal dark"}>
                       {translate("diff")}
                     </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.exercise_diff_volume_color}`}>
+                  </Div>
+                </Grid>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {numeral(item.exercise_goal_volume).format("0,0")}
+                    </Div>
+                  </Div>
+                </Grid>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {numeral(item.exercise_total_volume).format("0,0")}
+                    </Div>
+                  </Div>
+                </Grid>
+                <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                    <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_volume_color}`}>
                       {numeral(item.exercise_diff_volume).format("0,0")}
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
+                  </Div>
+                </Grid>
+              </Grid>
+              <Hr20 />
+              <Div className={"d-column"}>
+                <Div className={"d-left"}>
+                  <Div className={"d-center"}>
+                    <Div className={"fs-1-0rem fw-bold dark"}>
                       <Img src={exercise4} className={"w-15 h-15"} />
                       {translate("cardio")}
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {item.exercise_goal_cardio}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {item.exercise_total_cardio}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
+                    <Div className={"fs-0-9rem fw-normal dark ms-5"}>
                       {translate("diff")}
                     </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.exercise_diff_cardio_color}`}>
+                  </Div>
+                </Div>
+              </Div>
+              <Br10 />
+              <Div className={"d-row"}>
+                <Div className={"d-left"}>
+                  <Div className={"d-center w-30vw me-auto"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {item.exercise_goal_cardio}
+                    </Div>
+                  </Div>
+                  <Div className={"d-center w-30vw me-auto"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {item.exercise_total_cardio}
+                    </Div>
+                  </Div>
+                  <Div className={"d-left w-30vw"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                    <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_cardio_color}`}>
                       {item.exercise_diff_cardio}
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
+                  </Div>
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-column"}>
+                <Div className={"d-left"}>
+                  <Div className={"d-center"}>
+                    <Div className={"fs-1-0rem fw-bold dark"}>
                       <Img src={exercise5} className={"w-15 h-15"} />
                       {translate("weight")}
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_goal_weight).format("0,0")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.exercise_body_weight).format("0,0")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
+                    <Div className={"fs-0-9rem fw-normal dark ms-5"}>
                       {translate("diff")}
                     </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.exercise_diff_weight_color}`}>
+                  </Div>
+                </Div>
+              </Div>
+              <Br10 />
+              <Div className={"d-row"}>
+                <Div className={"d-left"}>
+                  <Div className={"d-center w-30vw me-auto"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {numeral(item.exercise_goal_weight).format("0,0")}
+                    </Div>
+                  </Div>
+                  <Div className={"d-center w-30vw me-auto"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-bold"}>
+                      {numeral(item.exercise_body_weight).format("0,0")}
+                    </Div>
+                  </Div>
+                  <Div className={"d-left w-30vw"}>
+                    <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                    <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_weight_color}`}>
                       {numeral(item.exercise_diff_weight).format("0,0")}
                     </Div>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  </Div>
+                </Div>
+              </Div>
+            </AccordionDetails>
+          </Accordion>
         </Card>
       ))
     );

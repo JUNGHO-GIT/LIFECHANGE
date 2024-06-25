@@ -5,10 +5,9 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Div, Hr20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -37,6 +36,7 @@ export const SleepList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -111,98 +111,82 @@ export const SleepList = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <TableContainer>
-            <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={2}>
-                    {item.sleep_dateStart === item.sleep_dateEnd ? (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
-                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </TableCell>
-                  <TableCell colSpan={1}>
-                    <Div className={"fs-1-2rem fw-bolder d-right"}>
-                      <Icons name={"TbSearch"} className={"black w-18 h-18"} onClick={() => {
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.sleep_dateType,
-                          dateStart: item.sleep_dateStart,
-                          dateEnd: item.sleep_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }} />
+          <Accordion className={"shadow-none"}>
+            <AccordionSummary expandIcon={
+              <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
+                setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
+              }}/>
+            }>
+              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                <Div className={"fs-1-1rem fw-bolder d-left ms-n15"}>
+                  <Icons name={"TbSearch"} className={"w-18 h-18 black me-15"} onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_dateType,
+                      dateStart: item.sleep_dateStart,
+                      dateEnd: item.sleep_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }} />
+                  {item.sleep_dateStart === item.sleep_dateEnd ? (
+                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
                     </Div>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className={"table-tbody"}>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={sleep2} className={"w-15 h-15"} />
-                      {translate("bedTime")}
+                  ) : (
+                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_bedTime}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("hm")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={sleep3} className={"w-15 h-15"} />
-                      {translate("wakeTime")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_wakeTime}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("hm")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={sleep4} className={"w-15 h-15"} />
-                      {translate("sleepTime")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>
-                    <Div className={"d-left fw-bold"}>
-                      {item.sleep_section[0].sleep_sleepTime}
-                      <Div className={"fs-0-7rem dark fw-normal ms-8"}>
-                        {translate("hm")}
-                      </Div>
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  )}
+                </Div>
+              </Div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={sleep2} className={"w-15 h-15"} />
+                {translate("bedTime")}
+              </Div>
+              <Br10 />
+              <Div className={"d-left fw-bold"}>
+                {item.sleep_section[0].sleep_bedTime}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("hm")}
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={sleep3} className={"w-15 h-15"} />
+                {translate("wakeTime")}
+              </Div>
+              <Br10 />
+              <Div className={"d-left fw-bold"}>
+                {item.sleep_section[0].sleep_wakeTime}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("hm")}
+                </Div>
+              </Div>
+              <Hr20 />
+              <Div className={"d-left dark fw-bold"}>
+                <Img src={sleep4} className={"w-15 h-15"} />
+                {translate("sleepTime")}
+              </Div>
+              <Br10 />
+              <Div className={"d-left fw-bold"}>
+                {item.sleep_section[0].sleep_sleepTime}
+                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+                  {translate("hm")}
+                </Div>
+              </Div>
+            </AccordionDetails>
+          </Accordion>
         </Card>
       ))
     );

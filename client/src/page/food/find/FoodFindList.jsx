@@ -198,43 +198,39 @@ export const FoodFindList = () => {
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
           <Accordion className={"shadow-none"}>
             <AccordionSummary expandIcon={
-              <Icons name={"TbChevronDown"} className={"w-20 h-20 black"} onClick={(e) => {
+              <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
               <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
-                <Div className={"d-left ms-n20"}>
-                  <Div className={"fs-1-1rem fw-bolder d-left"}>
-                    <Checkbox
-                      key={`check-${index}`}
-                      color={"primary"}
-                      size={"small"}
-                      checked={
-                        !! (
-                          checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-                          checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
-                        )
-                      }
-                      onChange={() => {
-                        handlerCheckboxChange(index);
-                      }}
-                    />
-                  </Div>
-                  <Div className={"fs-1-1rem fw-bolder d-left"}>
-                    {/** 10자 넘어가면 ... 처리 */}
-                    {isExpanded.includes(index) ? (
-                      item.food_title
-                    ) : (
-                      item.food_title.length > 10 ?
-                      `${item.food_title.substring(0, 10)}...` :
-                      item.food_title
-                    )}
-                  </Div>
+                <Div className={"fs-1-1rem fw-bolder d-left ms-n15"}>
+                  <Checkbox
+                    key={`check-${index}`}
+                    color={"primary"}
+                    size={"small"}
+                    checked={
+                      !! (
+                        checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+                        checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
+                      )
+                    }
+                    onChange={() => {
+                      handlerCheckboxChange(index);
+                    }}
+                  />
+                  {/** 10자 넘어가면 ... 처리 */}
+                  {isExpanded.includes(index) ? (
+                    item.food_title
+                  ) : (
+                    item.food_title.length > 10 ?
+                    `${item.food_title.substring(0, 10)}...` :
+                    item.food_title
+                  )}
                 </Div>
-                <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
-                  <Div className={"fs-0-8rem dark d-left ms-20"}>
-                    {item.food_brand}
-                  </Div>
+              </Div>
+              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                <Div className={"fs-0-8rem dark d-left ms-20"}>
+                  {item.food_brand}
                 </Div>
               </Div>
             </AccordionSummary>

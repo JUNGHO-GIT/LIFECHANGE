@@ -87,6 +87,9 @@ import {DayCalendarSkeleton} from '@mui/x-date-pickers/DayCalendarSkeleton';
 // popupState
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 
+// grid
+import {Grid} from "@mui/material";
+
 // -------------------------------------------------------------------------------------------------
 export {
 
@@ -139,4 +142,7 @@ export {
 
   // popupState
   PopupState, bindTrigger, bindMenu, bindPopover,
+
+  // grid
+  Grid
 };

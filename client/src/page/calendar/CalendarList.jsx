@@ -33,6 +33,7 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",

@@ -2,12 +2,12 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
 import {TableHead, TableRow} from "../../../import/ImportMuis.jsx";
@@ -39,6 +39,7 @@ export const FoodDiff = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -132,11 +133,15 @@ export const FoodDiff = () => {
                 <TableRow className={"table-tbody-tr"}>
                   <TableCell colSpan={5}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                      <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                        e.stopPropagation();
+                      }}>
                         <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                       </Div>
                     ) : (
-                      <Div className={"fs-1-2rem fw-bolder d-left"}>
+                      <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                        e.stopPropagation();
+                      }}>
                         <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                         <Div>~</Div>
                         <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
