@@ -200,16 +200,10 @@ export const Btn = ({
       if (strings?.second === "diff" && strings?.third === "list") {
         return null
       }
-      else if (strings?.second === "goal" && strings?.third === "list") {
+      else if (strings?.second === "list" && strings?.third === "") {
         return null
       }
-      else if (strings?.second === "goal" && strings?.third === "save") {
-        return null
-      }
-      else if (strings?.third === "" && strings?.second === "list") {
-        return null
-      }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -235,10 +229,10 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "list") {
+      else if (strings?.second === "list" && strings?.third === "") {
         return null
       }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -281,10 +275,10 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "list") {
+      else if (strings?.second === "list" && strings?.third === "") {
         return null
       }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -310,10 +304,10 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "list") {
+      else if (strings?.second === "list" && strings?.third === "") {
         return null
       }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -339,10 +333,10 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "list") {
+      else if (strings?.second === "list" && strings?.third === "") {
         return null
       }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
@@ -371,24 +365,22 @@ export const Btn = ({
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "list") {
-        return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
-          </Card>
-        );
+      else if (strings?.second === "list" && strings?.third === "") {
+        return null
       }
-      else if (strings?.third === "" && strings?.second === "save") {
+      else if (strings?.second === "save" && strings?.third === "") {
         return (
           <Card className={"block-wrapper border-none d-row h-8vh"}>
             {btnFlowSave()}
+            {btnFlowDeletes()}
           </Card>
         );
       }
-      else if (strings?.third === "" && strings?.second === "login") {
-        return null;
+      else if (strings?.second === "login" && strings?.third === "") {
+        return null
       }
-      else if (strings?.third === "" && strings?.second === "signup") {
-        return null;
+      else if (strings?.second === "signup" && strings?.third === "") {
+        return null
       }
     }
   };

@@ -3,7 +3,6 @@
 import {dataArray} from "../assets/js/dataArray.js";
 import {handlerY} from "../assets/js/dashFormatter.js";
 import {percent} from "../assets/js/percent.js";
-import {env} from "../assets/js/env.js";
 import {log} from "../assets/js/utils";
 import {newDate, koreanDate} from "../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../assets/js/date.js";
@@ -15,7 +14,7 @@ import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 export {
   dataArray,
   handlerY,
-  percent, log, env,
+  percent, log,
   newDate, koreanDate,
   curWeekStart, curWeekEnd,
   curMonthStart, curMonthEnd,

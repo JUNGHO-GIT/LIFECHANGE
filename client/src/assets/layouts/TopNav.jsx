@@ -230,7 +230,7 @@ export const TopNav = () => {
               label={translate("income")}
               size={"small"}
               variant={"outlined"}
-              className={"w-55vw"}
+              className={"w-50vw"}
               value={numeral(totalIncome).format('0,0')}
               InputProps={{
                 readOnly: true,
@@ -252,7 +252,7 @@ export const TopNav = () => {
               label={translate("expense")}
               size={"small"}
               variant={"outlined"}
-              className={"w-55vw"}
+              className={"w-50vw"}
               value={numeral(totalExpense).format('0,0')}
               InputProps={{
                 readOnly: true,

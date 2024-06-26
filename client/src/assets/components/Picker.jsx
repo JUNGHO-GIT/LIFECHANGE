@@ -35,19 +35,19 @@ export const Picker = ({
   // 1. common -------------------------------------------------------------------------------------
   const dateStr1 =
   (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
-    "w-55vw"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "w-55vw"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
     "w-80vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "w-55vw"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
-    "w-55vw"
+    "w-50vw"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
     "w-80vw"
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-55vw"
+    "w-50vw"
   ) : "";
 
   // 1. common -------------------------------------------------------------------------------------
