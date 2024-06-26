@@ -22,6 +22,7 @@ import "./assets/css/Jstyle.css";
 
 import {Header} from "./import/ImportLayouts.jsx";
 import {TopNav} from "./import/ImportLayouts.jsx";
+import {Ad} from "./import/ImportLayouts.jsx";
 import {BottomNav} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList.jsx";
@@ -143,6 +144,9 @@ const App = () => {
   const noneTop = (
     location.pathname.indexOf("/user") > -1
   );
+  const noneAd = (
+    location.pathname.indexOf("/user") > -1
+  );
   const noneBottom = (
     location.pathname.indexOf("/user") > -1
   );
@@ -163,6 +167,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
+      {!noneAd && <Ad />}
       {!noneBottom && <BottomNav />}
     </div>
   );
