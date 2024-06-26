@@ -1,4 +1,4 @@
-// userRouter.js
+// userDataRouter.js
 
 import express from "express";
 import * as service from "../../service/user/userDataService.js";

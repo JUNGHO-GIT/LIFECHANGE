@@ -1,4 +1,4 @@
-// incomedex.js
+// index.js
 
 import path from "path";
 import cors from "cors";
@@ -74,7 +74,7 @@ function startServer(port) {
     console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
   });
   server.on('error', (error) => {
-    if (error.code === 'EADDRINUSE') {
+    if (error?.code === 'EADDRINUSE') {
       console.log(`${port} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
       startServer(port + 1);
     } else {

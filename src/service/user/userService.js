@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
 import {sendEmail} from "../../assets/js/email.js";
-import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
