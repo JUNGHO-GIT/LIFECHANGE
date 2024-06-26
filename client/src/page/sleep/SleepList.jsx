@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Hr20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
@@ -93,7 +93,7 @@ export const SleepList = () => {
       console.error("err", err);
     })
     .finally(() => {
-      setLOADING(false)
+      setLOADING(false);
     });
   }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
 
@@ -150,41 +150,70 @@ export const SleepList = () => {
               </Div>
             </AccordionSummary>
             <AccordionDetails>
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={sleep2} className={"w-15 h-15"} />
-                {translate("bedTime")}
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep2} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  {translate("bedTime")}
+                </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {item.sleep_section[0].sleep_bedTime}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {item.sleep_section[0].sleep_bedTime}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("hm")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={sleep3} className={"w-15 h-15"} />
-                {translate("wakeTime")}
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep3} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  {translate("wakeTime")}
+                </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {item.sleep_section[0].sleep_wakeTime}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {item.sleep_section[0].sleep_wakeTime}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("hm")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={sleep4} className={"w-15 h-15"} />
-                {translate("sleepTime")}
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep4} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  {translate("sleepTime")}
+                </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {item.sleep_section[0].sleep_sleepTime}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {item.sleep_section[0].sleep_sleepTime}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("hm")}
                 </Div>
               </Div>
+
             </AccordionDetails>
           </Accordion>
         </Card>
@@ -203,15 +232,15 @@ export const SleepList = () => {
         COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
       )
     );
-    // 7-9. third
-    const thirdSection = () => (
+    // 7-9. first
+    const firstSection = () => (
       tableSection()
     );
     // 7-10. return
     return (
       <Paper className={"content-wrapper border radius"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {thirdSection()}
+          {firstSection()}
         </Div>
       </Paper>
     );

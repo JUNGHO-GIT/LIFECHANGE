@@ -165,7 +165,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_goal_bedTime}
                 </Div>
               </Div>
@@ -176,7 +176,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_bedTime}
                 </Div>
               </Div>
@@ -212,7 +212,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_goal_wakeTime}
                 </Div>
               </Div>
@@ -223,7 +223,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_wakeTime}
                 </Div>
               </Div>
@@ -259,7 +259,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_goal_sleepTime}
                 </Div>
               </Div>
@@ -270,7 +270,7 @@ export const SleepDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.sleep_sleepTime}
                 </Div>
               </Div>

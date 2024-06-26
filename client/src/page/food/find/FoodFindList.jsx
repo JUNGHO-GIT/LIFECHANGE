@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img, Icons, Hr10, Hr20} from "../../../import/ImportComponents.jsx";
+import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, Checkbox} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
@@ -235,46 +235,88 @@ export const FoodFindList = () => {
               </Div>
             </AccordionSummary>
             <AccordionDetails>
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food2} className={"w-15 h-15"} />
-                {translate("kcal")}
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food2} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("kcal")}
+                </Div>
               </Div>
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_kcal).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_kcal).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("k")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food3} className={"w-15 h-15"} />
-                {translate("carb")}
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food3} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("carb")}
+                </Div>
               </Div>
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_carb).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_carb).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food4} className={"w-15 h-15"} />
-                {translate("protein")}
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food4} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("protein")}
+                </Div>
               </Div>
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_protein).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_protein).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food5} className={"w-15 h-15"} />
-                {translate("fat")}
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food5} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("fat")}
+                </Div>
               </Div>
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_fat).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_fat).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>

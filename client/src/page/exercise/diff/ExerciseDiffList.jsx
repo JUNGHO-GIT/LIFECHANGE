@@ -169,7 +169,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_goal_volume).format("0,0")}
                 </Div>
               </Div>
@@ -180,7 +180,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_total_volume).format("0,0")}
                 </Div>
               </Div>
@@ -216,7 +216,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.exercise_goal_cardio}
                 </Div>
               </Div>
@@ -227,7 +227,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {item.exercise_total_cardio}
                 </Div>
               </Div>
@@ -263,7 +263,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_goal_weight).format("0,0")}
                 </Div>
               </Div>
@@ -274,7 +274,7 @@ export const ExerciseDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_body_weight).format("0,0")}
                 </Div>
               </Div>

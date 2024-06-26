@@ -169,7 +169,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_goal_kcal).format('0,0')}
                 </Div>
               </Div>
@@ -180,7 +180,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_total_kcal).format('0,0')}
                 </Div>
               </Div>
@@ -216,7 +216,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_goal_carb).format('0,0')}
                 </Div>
               </Div>
@@ -227,7 +227,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_total_carb).format('0,0')}
                 </Div>
               </Div>
@@ -263,7 +263,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_goal_protein).format('0,0')}
                 </Div>
               </Div>
@@ -274,7 +274,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_total_protein).format('0,0')}
                 </Div>
               </Div>
@@ -310,7 +310,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_goal_fat).format('0,0')}
                 </Div>
               </Div>
@@ -321,7 +321,7 @@ export const FoodDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_total_fat).format('0,0')}
                 </Div>
               </Div>

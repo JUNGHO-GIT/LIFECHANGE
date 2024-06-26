@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
@@ -149,65 +149,104 @@ export const FoodGoalList = () => {
               </Div>
             </AccordionSummary>
             <AccordionDetails>
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food2} className={"w-15 h-15"} />
-                {translate("kcal")}
-                <Div className={"fs-0-9rem fw-normal dark ms-5"}>
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food2} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("kcal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
                   {translate("goal")}
                 </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_goal_kcal).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_goal_kcal).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("k")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food3} className={"w-15 h-15"} />
-                {translate("carb")}
-                <Div className={"fs-0-9rem fw-normal dark ms-5"}>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food3} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("carb")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
                   {translate("goal")}
                 </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_goal_carb).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_goal_carb).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food4} className={"w-15 h-15"} />
-                {translate("protein")}
-                <Div className={"fs-0-9rem fw-normal dark ms-5"}>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food4} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("protein")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
                   {translate("goal")}
                 </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_goal_protein).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_goal_protein).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-left dark fw-bold"}>
-                <Img src={food5} className={"w-15 h-15"} />
-                {translate("fat")}
-                <Div className={"fs-0-9rem fw-normal dark ms-5"}>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food5} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("fat")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
                   {translate("goal")}
                 </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-left fw-bold"}>
-                {numeral(item.food_goal_fat).format("0,0")}
-                <Div className={"fs-0-7rem dark fw-normal ms-8"}>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-1-0rem fw-bold"}>
+                  {numeral(item.food_goal_fat).format("0,0")}
+                </Div>
+                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                   {translate("g")}
                 </Div>
               </Div>
+
             </AccordionDetails>
           </Accordion>
         </Card>

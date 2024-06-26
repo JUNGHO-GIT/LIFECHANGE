@@ -161,7 +161,7 @@ export const MoneyDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.money_goal_income).format("0,0")}
                 </Div>
               </Div>
@@ -172,7 +172,7 @@ export const MoneyDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.money_total_income).format("0,0")}
                 </Div>
               </Div>
@@ -208,7 +208,7 @@ export const MoneyDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.money_goal_expense).format("0,0")}
                 </Div>
               </Div>
@@ -219,7 +219,7 @@ export const MoneyDiff = () => {
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
-                <Div className={"fs-0-9rem fw-bold"}>
+                <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.money_total_expense).format("0,0")}
                 </Div>
               </Div>
