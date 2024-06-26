@@ -8,7 +8,7 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
-import {exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
+import {exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseList = () => {
@@ -161,7 +161,7 @@ export const ExerciseList = () => {
             <AccordionDetails>
               <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold dark"}>
-                  <Img src={exercise3} className={"w-15 h-15"} />
+                  <Img src={exercise3_1} className={"w-15 h-15"} />
                 </Div>
                 <Div className={"fs-1-0rem fw-bold dark me-5"}>
                   {translate("volume")}

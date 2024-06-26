@@ -6,7 +6,6 @@ import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
-import {user1} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDeletes = () => {
@@ -94,7 +93,7 @@ export const UserDeletes = () => {
             readOnly: true,
           }}
         />
-        <Br10 />
+        <Br20 />
         <TextField
           select={false}
           type={"text"}
@@ -106,7 +105,7 @@ export const UserDeletes = () => {
             readOnly: true,
           }}
         />
-        <Br10 />
+        <Br20 />
         <TextArea
           readOnly={false}
           className={"w-76vw h-10vh border radius p-10 pointer"}

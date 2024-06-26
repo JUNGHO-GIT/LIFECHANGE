@@ -276,7 +276,7 @@ export const SleepDashLine = () => {
                   setPART([...PART, key]);
                 }
               }}/>}
-              label={key}
+              label={translate(key)}
               labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>

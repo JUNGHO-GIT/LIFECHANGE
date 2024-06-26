@@ -289,9 +289,7 @@ export const MoneyDashLine = () => {
                 else {
                   setLINE([...LINE, key]);
                 }
-                }}/>}
-              label={key}
-              labelPlacement={"start"}>
+              }}/>} label={translate(key)} labelPlacement={"start"}>
             </FormControlLabel>
           </FormGroup>
         ))

@@ -9,7 +9,7 @@ import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
-import {exercise3, exercise4, exercise5} from "../../import/ImportImages.jsx";
+import {exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseSave = () => {
@@ -327,7 +327,7 @@ export const ExerciseSave = () => {
             InputProps={{
               readOnly: true,
               startAdornment: (
-                <Img src={exercise3} className={"w-16 h-16"} />
+                <Img src={exercise3_1} className={"w-16 h-16"} />
               ),
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
@@ -492,7 +492,7 @@ export const ExerciseSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <Img src={exercise3} className={"w-16 h-16"} />
+                  <Img src={exercise3_1} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
                   <Div className={"fs-0-6rem"}>
@@ -526,7 +526,7 @@ export const ExerciseSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <Img src={exercise3} className={"w-16 h-16"} />
+                  <Img src={exercise3_2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
                   <Div className={"fs-0-6rem"}>
@@ -563,7 +563,7 @@ export const ExerciseSave = () => {
               InputProps={{
                 readOnly: false,
                 startAdornment: (
-                  <Img src={exercise3} className={"w-16 h-16"} />
+                  <Img src={exercise3_3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
                   <Div className={"fs-0-6rem"}>

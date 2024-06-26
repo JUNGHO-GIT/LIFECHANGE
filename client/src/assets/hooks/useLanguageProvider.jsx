@@ -68,7 +68,7 @@ export const useTranslate = () => {
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
     dataCategory3: {ko: "분류 3", en: "Category 3"},
-    dataDetail: {ko: "회원정보", en: "Edit Information"},
+    dataDetail: {ko: "회원정보", en: "Information"},
     dataList: {ko: "데이터 리스트", en: "Data List"},
     dashList: {ko: "통계", en: "Statistics"},
     date: {ko: "날짜", en: "Date"},

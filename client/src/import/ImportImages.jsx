@@ -27,7 +27,9 @@ import calendar3 from "../assets/images/calendar/calendar3.webp";
 
 import exercise1 from "../assets/images/exercise/exercise1.webp";
 import exercise2 from "../assets/images/exercise/exercise2.webp";
-import exercise3 from "../assets/images/exercise/exercise3.webp";
+import exercise3_1 from "../assets/images/exercise/exercise3_1.webp";
+import exercise3_2 from "../assets/images/exercise/exercise3_2.webp";
+import exercise3_3 from "../assets/images/exercise/exercise3_3.webp";
 import exercise4 from "../assets/images/exercise/exercise4.webp";
 import exercise5 from "../assets/images/exercise/exercise5.webp";
 
@@ -61,7 +63,7 @@ export {
   flag1, flag2,
   common1, common2, common3_1, common3_2, common4, common5,
   calendar1, calendar2, calendar3,
-  exercise1, exercise2, exercise3, exercise4, exercise5,
+  exercise1, exercise2, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5,
   food1, food2, food3, food4, food5,
   money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep4,

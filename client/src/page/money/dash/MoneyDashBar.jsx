@@ -148,7 +148,9 @@ export const MoneyDashBar = () => {
             setSECTION(e.target.value)
           )}
         >
-          <MenuItem value={"today"}>{translate("today")}</MenuItem>
+          <MenuItem value={"today"}>
+            {translate("today")}
+          </MenuItem>
         </TextField>
       </Div>
     );
