@@ -83,7 +83,7 @@ export const UserLogin = () => {
           type={"text"}
           size={"small"}
           label={translate("id")}
-          className={"w-86vw"}
+          className={"w-76vw"}
           value={userId}
           InputProps={{
             readOnly: false,
@@ -101,7 +101,7 @@ export const UserLogin = () => {
           size={"small"}
           label={translate("pw")}
           value={userPw}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: false,
             startAdornment: null,
@@ -143,7 +143,7 @@ export const UserLogin = () => {
     );
     // 7-9. fourth
     const fourthSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -159,7 +159,7 @@ export const UserLogin = () => {
     );
     // 7-9. fifth
     const fifthSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center w-76vw"}>
         <TextField
           select={false}
           type={"text"}
@@ -178,7 +178,7 @@ export const UserLogin = () => {
     );
     // 7-9. sixth
     const sixthSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center w-76vw fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");

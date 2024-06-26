@@ -46,6 +46,7 @@ export const useTranslate = () => {
     bedTime: {ko: "취침", en: "Bed"},
 
     // c
+    c: {ko: "count", en: "count"},
     cm: {ko: "cm", en: "cm"},
     carb: {ko: "탄수화물", en: "Carb"},
     calendar: {ko: "일정", en: "calendar"},
@@ -200,6 +201,7 @@ export const useTranslate = () => {
     others: {ko: "기타", en: "Others"},
 
     // p
+    p: {ko: "per", en: "per"},
     part: {ko: "분류1", en: "Part"},
     partTitle: {ko: "부위-운동", en: "Part-Exercise"},
     property: {ko: "자산", en: "Property"},
@@ -213,11 +215,13 @@ export const useTranslate = () => {
     question: {ko: "질문", en: "Question"},
 
     // r
+    r: {ko: "rep", en: "rep"},
     real: {ko: "실제", en: "Real"},
     rep: {ko: "횟수", en: "Rep"},
     regDt: {ko: "가입일", en: "Signup Date"},
 
     // s
+    s: {ko: "set", en: "set"},
     save: {ko: "저장", en: "Save"},
     score: {ko: "* 평균점수 : 1.00 ~ 5.00", en: "* Average score : 1.00 ~ 5.00"},
     select: {ko: "선택별", en: "Select"},

@@ -238,7 +238,7 @@ export const MoneyGoalSave = () => {
               size={"small"}
               label={`${translate("goalIncome")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -246,7 +246,7 @@ export const MoneyGoalSave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("currency")}
                   </Div>
                 )
@@ -271,7 +271,7 @@ export const MoneyGoalSave = () => {
               size={"small"}
               label={`${translate("goalExpense")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -279,7 +279,7 @@ export const MoneyGoalSave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("currency")}
                   </Div>
                 )

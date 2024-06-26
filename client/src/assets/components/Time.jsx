@@ -98,7 +98,7 @@ export const Time = ({
           label={translateStr}
           size={"small"}
           variant={"outlined"}
-          className={"w-86vw"}
+          className={"w-76vw"}
           value={OBJECT?.[`${extra}`]}
           InputProps={{
             readOnly: true,
@@ -106,7 +106,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("hm")}
               </Div>
             )
@@ -155,7 +155,7 @@ export const Time = ({
           label={translate(translateStr)}
           size={"small"}
           variant={"outlined"}
-          className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
+          className={`${firstStr === "sleep" ? "w-76vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           InputProps={{
             readOnly: true,
@@ -163,7 +163,7 @@ export const Time = ({
               <Img src={image} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("hm")}
               </Div>
             )

@@ -1,4 +1,4 @@
-// SleepDiff.jsx
+// SleepDiffList.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
@@ -97,6 +97,8 @@ export const SleepDiff = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+      // Accordion 초기값 열림 설정
+      setIsExpanded(res.data.result.map((_, index) => (index)));
     })
     .catch((err) => {
       console.error("err", err);
@@ -120,14 +122,22 @@ export const SleepDiff = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"}>
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
+            onChange={(event, expanded) => {
+              setIsExpanded (
+                expanded
+                ? [...isExpanded, index]
+                : isExpanded.filter((el) => (el !== index)
+              ));
+            }}
+          >
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
               <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
-                <Div className={"fs-1-1rem fw-bolder d-left"}>
+                <Div className={"d-left fs-1-1rem fw-bolder"}>
                   {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                     <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
                       e.stopPropagation();
@@ -161,7 +171,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
@@ -172,7 +182,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
@@ -183,11 +193,11 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("diff")}
                 </Div>
-                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_bedTime_color}`}>
+                <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_bedTime_color}`}>
                   {item.sleep_diff_bedTime}
                 </Div>
               </Div>
@@ -208,7 +218,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
@@ -219,7 +229,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
@@ -230,11 +240,11 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("diff")}
                 </Div>
-                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_wakeTime_color}`}>
+                <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_wakeTime_color}`}>
                   {item.sleep_diff_wakeTime}
                 </Div>
               </Div>
@@ -255,7 +265,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
@@ -266,7 +276,7 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
@@ -277,11 +287,11 @@ export const SleepDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("diff")}
                 </Div>
-                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_time_color}`}>
+                <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_time_color}`}>
                   {item.sleep_diff_time}
                 </Div>
               </Div>

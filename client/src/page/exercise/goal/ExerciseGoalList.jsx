@@ -87,6 +87,8 @@ export const ExerciseGoalList = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+      // Accordion 초기값 열림 설정
+      setIsExpanded(res.data.result.map((_, index) => (index)));
     })
     .catch((err) => {
       console.error("err", err);
@@ -110,13 +112,21 @@ export const ExerciseGoalList = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"}>
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
+            onChange={(event, expanded) => {
+              setIsExpanded (
+                expanded
+                ? [...isExpanded, index]
+                : isExpanded.filter((el) => (el !== index)
+              ));
+            }}
+          >
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
-              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+              <Div className={"d-center"}>
                 <Div className={"fs-1-1rem fw-bolder d-left ms-n15"}>
                   <Icons name={"TbSearch"} className={"w-18 h-18 black me-15"} onClick={(e) => {
                     e.stopPropagation();
@@ -163,7 +173,7 @@ export const ExerciseGoalList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_goal_volume).format("0,0")}
                 </Div>
@@ -188,7 +198,7 @@ export const ExerciseGoalList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {item.exercise_goal_cardio}
                 </Div>
@@ -213,7 +223,7 @@ export const ExerciseGoalList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.exercise_goal_weight).format("0,0")}
                 </Div>

@@ -242,7 +242,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalKcal")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -250,7 +250,7 @@ export const FoodGoalSave = () => {
                   <Img src={food2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("k")}
                   </Div>
                 )
@@ -275,7 +275,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalCarb")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -283,7 +283,7 @@ export const FoodGoalSave = () => {
                   <Img src={food3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )
@@ -308,7 +308,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalProtein")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -316,7 +316,7 @@ export const FoodGoalSave = () => {
                   <Img src={food4} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )
@@ -341,7 +341,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalFat")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -349,7 +349,7 @@ export const FoodGoalSave = () => {
                   <Img src={food5} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )

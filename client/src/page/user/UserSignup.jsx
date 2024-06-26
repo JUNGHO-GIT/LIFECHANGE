@@ -116,7 +116,7 @@ export const UserSignup = () => {
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
         {/** section 1 **/}
-        <Div className={"d-center w-86vw"}>
+        <Div className={"d-center w-76vw"}>
           <TextField
             select={false}
             type={"text"}
@@ -145,7 +145,7 @@ export const UserSignup = () => {
           </Button>
         </Div>
         <Br10 />
-        <Div className={"d-center w-86vw"}>
+        <Div className={"d-center w-76vw"}>
           <TextField
             select={false}
             type={"text"}
@@ -177,7 +177,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("pw")}
           value={OBJECT.user_pw}
-          className={"w-86vw"}
+          className={"w-76vw"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
@@ -192,7 +192,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("pwConfirm")}
           value={pwConfirm}
-          className={"w-86vw"}
+          className={"w-76vw"}
           onChange={(e) => (
             setPwConfirm(e.target.value)
           )}
@@ -205,7 +205,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("gender")}
           value={OBJECT.user_gender || "N"}
-          className={"w-86vw text-left"}
+          className={"w-76vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
@@ -227,7 +227,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("age")}
           value={OBJECT.user_age}
-          className={"w-86vw text-left"}
+          className={"w-76vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
@@ -249,7 +249,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("height")}
           value={OBJECT.user_height}
-          className={"w-86vw text-left"}
+          className={"w-76vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
@@ -271,7 +271,7 @@ export const UserSignup = () => {
           size={"small"}
           label={translate("weight")}
           value={OBJECT.user_weight}
-          className={"w-86vw text-left"}
+          className={"w-76vw text-left"}
           onChange={(e) => (
             setOBJECT((prev) => ({
               ...prev,
@@ -304,7 +304,7 @@ export const UserSignup = () => {
     );
     // 7-9. fourth
     const fourthSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -320,7 +320,7 @@ export const UserSignup = () => {
     );
     // 7-9. fifth
     const fifthSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center w-76vw"}>
         <TextField
           select={false}
           type={"text"}
@@ -339,7 +339,7 @@ export const UserSignup = () => {
     );
     // 7-9. sixth
     const sixthSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center w-76vw fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/login");

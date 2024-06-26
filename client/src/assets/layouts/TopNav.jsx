@@ -230,7 +230,7 @@ export const TopNav = () => {
               label={translate("income")}
               size={"small"}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-55vw"}
               value={numeral(totalIncome).format('0,0')}
               InputProps={{
                 readOnly: true,
@@ -238,7 +238,9 @@ export const TopNav = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("currency")
+                  <Div className={"fs-0-6rem"}>
+                    {translate("currency")}
+                  </Div>
                 )
               }}
             />
@@ -250,7 +252,7 @@ export const TopNav = () => {
               label={translate("expense")}
               size={"small"}
               variant={"outlined"}
-              className={"w-60vw"}
+              className={"w-55vw"}
               value={numeral(totalExpense).format('0,0')}
               InputProps={{
                 readOnly: true,
@@ -258,7 +260,9 @@ export const TopNav = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("currency")
+                  <Div className={"fs-0-6rem"}>
+                    {translate("currency")}
+                  </Div>
                 )
               }}
             />

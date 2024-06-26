@@ -196,13 +196,21 @@ export const FoodFindList = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"}>
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
+            onChange={(event, expanded) => {
+              setIsExpanded (
+                expanded
+                ? [...isExpanded, index]
+                : isExpanded.filter((el) => (el !== index)
+              ));
+            }}
+          >
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
-              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+              <Div className={"d-center"}>
                 <Div className={"fs-1-1rem fw-bolder d-left ms-n15"}>
                   <Checkbox
                     key={`check-${index}`}
@@ -228,7 +236,7 @@ export const FoodFindList = () => {
                   )}
                 </Div>
               </Div>
-              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+              <Div className={"d-center"}>
                 <Div className={"fs-0-8rem dark d-left ms-20"}>
                   {item.food_brand}
                 </Div>
@@ -246,7 +254,7 @@ export const FoodFindList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_kcal).format("0,0")}
                 </Div>
@@ -268,7 +276,7 @@ export const FoodFindList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_carb).format("0,0")}
                 </Div>
@@ -290,7 +298,7 @@ export const FoodFindList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_protein).format("0,0")}
                 </Div>
@@ -312,7 +320,7 @@ export const FoodFindList = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-1-0rem fw-bold"}>
                   {numeral(item.food_fat).format("0,0")}
                 </Div>

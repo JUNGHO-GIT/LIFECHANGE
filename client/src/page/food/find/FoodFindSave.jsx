@@ -264,14 +264,14 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={food2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-6rem"}>
                   {translate("k")}
                 </Div>
               )
@@ -286,14 +286,14 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={food3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
               )
@@ -308,14 +308,14 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={food4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
               )
@@ -330,14 +330,14 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={food5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
               )
@@ -484,7 +484,7 @@ export const FoodFindSave = () => {
               size={"small"}
               value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               InputProps={{
                 readOnly: true,
                 startAdornment: null,
@@ -507,7 +507,7 @@ export const FoodFindSave = () => {
                   <Img src={food2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("k")}
                   </Div>
                 )
@@ -526,7 +526,7 @@ export const FoodFindSave = () => {
                   <Img src={food3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )
@@ -548,7 +548,7 @@ export const FoodFindSave = () => {
                   <Img src={food4} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )
@@ -567,7 +567,7 @@ export const FoodFindSave = () => {
                   <Img src={food5} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
                 )

@@ -89,7 +89,7 @@ export const UserDeletes = () => {
           size={"small"}
           label={translate("id")}
           value={sessionId}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -101,7 +101,7 @@ export const UserDeletes = () => {
           size={"small"}
           label={translate("signupDate")}
           value={OBJECT.date}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -109,7 +109,7 @@ export const UserDeletes = () => {
         <Br10 />
         <TextArea
           readOnly={false}
-          className={"w-86vw h-10vh border radius p-10 pointer"}
+          className={"w-76vw h-10vh border radius p-10 pointer"}
           value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
         />
       </Div>
@@ -130,7 +130,7 @@ export const UserDeletes = () => {
     );
     // 7-9. third
     const thirdSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
           color={"error"}

@@ -29,7 +29,7 @@ export const Memo = ({
       <Div className={"d-center"}>
         <TextArea
           readOnly={false}
-          className={"w-70vw h-55vh border p-10"}
+          className={"w-76vw h-55vh border p-10"}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           onChange={(e) => {
             const newContent = e.target.value;
@@ -52,7 +52,7 @@ export const Memo = ({
           label={translate("memo")}
           size={"small"}
           variant={"outlined"}
-          className={"w-86vw pointer"}
+          className={"w-76vw pointer"}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           InputProps={{
             readOnly: true,

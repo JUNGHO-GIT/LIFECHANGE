@@ -68,7 +68,7 @@ export const UserInfo = () => {
                 <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   version
                 </TableCell>
-                <TableCell className={"w-60vw fs-0-8rem p-15"}>
+                <TableCell className={"w-55vw fs-0-8rem p-15"}>
                   {OBJECT.version}
                 </TableCell>
               </TableRow>
@@ -76,7 +76,7 @@ export const UserInfo = () => {
                 <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   date
                 </TableCell>
-                <TableCell className={"w-60vw fs-0-8rem p-15"}>
+                <TableCell className={"w-55vw fs-0-8rem p-15"}>
                   {OBJECT.date}
                 </TableCell>
               </TableRow>
@@ -84,7 +84,7 @@ export const UserInfo = () => {
                 <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   github
                 </TableCell>
-                <TableCell className={"w-60vw fs-0-8rem p-15"}>
+                <TableCell className={"w-55vw fs-0-8rem p-15"}>
                   {OBJECT.git}
                 </TableCell>
               </TableRow>
@@ -92,7 +92,7 @@ export const UserInfo = () => {
                 <TableCell className={"w-40vw fs-1-0rem p-15"}>
                   license
                 </TableCell>
-                <TableCell className={"w-60vw fs-0-8rem p-15"}>
+                <TableCell className={"w-55vw fs-0-8rem p-15"}>
                   {OBJECT.license}
                 </TableCell>
               </TableRow>

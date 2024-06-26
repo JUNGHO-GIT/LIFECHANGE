@@ -34,7 +34,7 @@ export const Count = ({
             label={translate("count")}
             variant={"outlined"}
             size={"small"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,

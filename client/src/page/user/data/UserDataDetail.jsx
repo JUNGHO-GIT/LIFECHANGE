@@ -113,7 +113,7 @@ export const UserDataDetail = () => {
           size={"small"}
           label={translate("id")}
           value={OBJECT?.user_id}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -125,7 +125,7 @@ export const UserDataDetail = () => {
           size={"small"}
           label={translate("regDt")}
           value={OBJECT?.user_regDt.split("T")[0]}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -140,7 +140,7 @@ export const UserDataDetail = () => {
             OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
             translate("female") : translate("unknown")
           }
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -152,7 +152,7 @@ export const UserDataDetail = () => {
           size={"small"}
           label={translate("age")}
           value={OBJECT?.user_age}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
           }}
@@ -168,7 +168,7 @@ export const UserDataDetail = () => {
             readOnly: true,
             startAdornment: null,
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("cm")}
               </Div>
             )
@@ -185,7 +185,7 @@ export const UserDataDetail = () => {
             readOnly: true,
             startAdornment: null,
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("kg")}
               </Div>
             )
@@ -202,7 +202,7 @@ export const UserDataDetail = () => {
             readOnly: true,
             startAdornment: null,
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("currency")}
               </Div>
             )

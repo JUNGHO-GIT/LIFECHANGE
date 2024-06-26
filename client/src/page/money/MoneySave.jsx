@@ -282,14 +282,14 @@ export const MoneySave = () => {
           size={"small"}
           value={numeral(OBJECT?.money_total_income).format('0,0')}
           variant={"outlined"}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
             startAdornment: (
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("currency")}
               </Div>
             )
@@ -304,14 +304,14 @@ export const MoneySave = () => {
           size={"small"}
           value={numeral(OBJECT?.money_total_expense).format('0,0')}
           variant={"outlined"}
-          className={"w-86vw"}
+          className={"w-76vw"}
           InputProps={{
             readOnly: true,
             startAdornment: (
               <Img src={money2} className={"w-16 h-16"} />
             ),
             endAdornment: (
-              <Div className={"fs-0-8rem"}>
+              <Div className={"fs-0-6rem"}>
                 {translate("currency")}
               </Div>
             )
@@ -413,7 +413,7 @@ export const MoneySave = () => {
               label={translate("amount")}
               size={"small"}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}
               InputProps={{
                 readOnly: false,
@@ -421,7 +421,9 @@ export const MoneySave = () => {
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  translate("currency")
+                  <Div className={"fs-0-6rem"}>
+                    {translate("currency")}
+                  </Div>
                 )
               }}
               onChange={(e) => {

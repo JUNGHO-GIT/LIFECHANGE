@@ -319,15 +319,15 @@ export const ExerciseSave = () => {
             size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format('0,0')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={exercise3} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("volume")}
+                <Div className={"fs-0-6rem"}>
+                  {translate("vol")}
                 </Div>
               )
             }}
@@ -341,14 +341,14 @@ export const ExerciseSave = () => {
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
                 <Img src={exercise4} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+                <Div className={"fs-0-6rem"}>
                   {translate("hm")}
                 </Div>
               )
@@ -364,7 +364,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-76vw"}
             onChange={(e) => {
               const regex = /,/g;
               const match = e.target.value.match(regex);
@@ -381,8 +381,8 @@ export const ExerciseSave = () => {
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
               endAdornment: (
-                <Div className={"fs-0-8rem"}>
-                  {translate("weight")}
+                <Div className={"fs-0-6rem"}>
+                  {translate("kg")}
                 </Div>
               )
             }}
@@ -491,8 +491,8 @@ export const ExerciseSave = () => {
                   <Img src={exercise3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
-                    {translate("set")}
+                  <Div className={"fs-0-6rem"}>
+                    {translate("s")}
                   </Div>
                 )
               }}
@@ -525,8 +525,8 @@ export const ExerciseSave = () => {
                   <Img src={exercise3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
-                    {translate("rep")}
+                  <Div className={"fs-0-6rem"}>
+                    {translate("r")}
                   </Div>
                 )
               }}
@@ -562,7 +562,7 @@ export const ExerciseSave = () => {
                   <Img src={exercise3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
+                  <Div className={"fs-0-6rem"}>
                     {translate("kg")}
                   </Div>
                 )

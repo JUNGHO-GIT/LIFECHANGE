@@ -9909,6 +9909,7 @@
 
 /** 7-2. font (rem) *******************************************************************************/
 .fs-0-1rem {font-size: 0.1rem !important;}
+.fs-0-2rem {font-size: 0.2rem !important;}
 .fs-0-3rem {font-size: 0.3rem !important;}
 .fs-0-4rem {font-size: 0.4rem !important;}
 .fs-0-5rem {font-size: 0.5rem !important;}
@@ -10080,38 +10081,41 @@
   display: inline-flex !important;
 }
 .d-between {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   justify-content: space-between !important;
 }
 .d-center {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-left {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-right {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-row {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   flex-direction: row !important;
   justify-content: center !important;
   text-align: center !important;
 }
 .d-column {
-  display: -webkit-inline-flex !important;
+  display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   text-align: center !important;
+}
+.d-fill {
+  display: -webkit-fill-available !important;
 }
 
 /** 94. overflow **********************************************************************************/
@@ -10317,6 +10321,13 @@
 }
 .light:hover, .light:focus, .light:active {
   color: #d1d2d5 !important;
+}
+
+.dark {
+  color: #697A8D !important;
+}
+.dark:hover, .dark:focus, .dark:active {
+  color: #4B5563 !important;
 }
 
 .red {

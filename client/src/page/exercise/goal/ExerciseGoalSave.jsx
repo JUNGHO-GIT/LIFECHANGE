@@ -243,7 +243,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={`${translate("goalCount")} (${translate("total")})`}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -251,8 +251,8 @@ export const ExerciseGoalSave = () => {
                   <Img src={exercise2} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
-                    {translate("count")}
+                  <Div className={"fs-0-6rem"}>
+                    {translate("c")}
                   </Div>
                 )
               }}
@@ -275,7 +275,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={`${translate("goalVolume")} (${translate("total")})`}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -283,8 +283,8 @@ export const ExerciseGoalSave = () => {
                   <Img src={exercise3} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
-                    {translate("volume")}
+                  <Div className={"fs-0-6rem"}>
+                    {translate("vol")}
                   </Div>
                 )
               }}
@@ -316,7 +316,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={translate("goalWeight")}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -324,8 +324,8 @@ export const ExerciseGoalSave = () => {
                   <Img src={exercise5} className={"w-16 h-16"} />
                 ),
                 endAdornment: (
-                  <Div className={"fs-0-8rem"}>
-                    {translate("weight")}
+                  <Div className={"fs-0-6rem"}>
+                    {translate("kg")}
                   </Div>
                 )
               }}

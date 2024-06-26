@@ -1,4 +1,4 @@
-// MoneyDiff.jsx
+// MoneyDiffList.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
@@ -93,6 +93,8 @@ export const MoneyDiff = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+      // Accordion 초기값 열림 설정
+      setIsExpanded(res.data.result.map((_, index) => (index)));
     })
     .catch((err) => {
       console.error("err", err);
@@ -116,13 +118,21 @@ export const MoneyDiff = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"}>
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
+            onChange={(event, expanded) => {
+              setIsExpanded (
+                expanded
+                ? [...isExpanded, index]
+                : isExpanded.filter((el) => (el !== index)
+              ));
+            }}
+          >
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
-              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+              <Div className={"d-center"}>
                 <Div className={"fs-1-1rem fw-bolder d-left"}>
                   {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                     <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
@@ -157,7 +167,7 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
@@ -168,7 +178,7 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
@@ -179,11 +189,11 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("diff")}
                 </Div>
-                <Div className={`fs-0-9rem fw-bold ${item.money_diff_income_color}`}>
+                <Div className={`fs-1-0rem fw-bold ${item.money_diff_income_color}`}>
                   {numeral(item.money_diff_income).format("0,0")}
                 </Div>
               </Div>
@@ -204,7 +214,7 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("goal")}
                 </Div>
@@ -215,7 +225,7 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("real")}
                 </Div>
@@ -226,11 +236,11 @@ export const MoneyDiff = () => {
 
               <Br10 />
 
-              <Div className={"d-center"}>
+              <Div className={"d-left"}>
                 <Div className={"fs-0-8rem fw-normal dark me-10"}>
                   {translate("diff")}
                 </Div>
-                <Div className={`fs-0-9rem fw-bold ${item.money_diff_expense_color}`}>
+                <Div className={`fs-1-0rem fw-bold ${item.money_diff_expense_color}`}>
                   {numeral(item.money_diff_expense).format("0,0")}
                 </Div>
               </Div>

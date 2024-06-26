@@ -273,7 +273,7 @@ export const CalendarSave = () => {
               size={"small"}
               label={translate("color")}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={OBJECT?.calendar_section[i]?.calendar_color}
               InputProps={{
                 readOnly: false,
@@ -309,7 +309,7 @@ export const CalendarSave = () => {
               size={"small"}
               label={translate("title")}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-76vw"}
               value={OBJECT?.calendar_section[i]?.calendar_title}
               InputProps={{
                 readOnly: false,
