@@ -28,7 +28,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "tar": "rm -rf build.tar.gz && tar -zcvf build.tar.gz build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
