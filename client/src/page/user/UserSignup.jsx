@@ -49,7 +49,7 @@ export const UserSignup = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 
@@ -70,7 +70,7 @@ export const UserSignup = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 
@@ -106,7 +106,7 @@ export const UserSignup = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
   };
 

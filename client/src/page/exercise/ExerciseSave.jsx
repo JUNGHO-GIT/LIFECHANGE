@@ -103,7 +103,7 @@ export const ExerciseSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -138,7 +138,7 @@ export const ExerciseSave = () => {
       }));
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -229,7 +229,7 @@ export const ExerciseSave = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 
@@ -261,7 +261,7 @@ export const ExerciseSave = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 

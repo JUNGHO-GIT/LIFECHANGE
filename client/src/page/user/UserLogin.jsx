@@ -69,7 +69,7 @@ export const UserLogin = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 

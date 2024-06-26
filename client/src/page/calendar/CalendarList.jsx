@@ -89,7 +89,7 @@ export const CalendarList = () => {
       }));
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);

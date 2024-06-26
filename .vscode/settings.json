@@ -35,7 +35,7 @@
     "**/.gitignore": true,
     "**/node_modules": true,
     "**/package-lock.json": true,
-    "**/**build/**": true
+    "**/**build/**": true,
+    "build.tar.gz": true,
   },
-  "explorerExclude.backup": {},
 }

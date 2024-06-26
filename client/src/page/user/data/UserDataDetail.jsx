@@ -68,7 +68,7 @@ export const UserDataDetail = () => {
       });
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -92,7 +92,7 @@ export const UserDataDetail = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 

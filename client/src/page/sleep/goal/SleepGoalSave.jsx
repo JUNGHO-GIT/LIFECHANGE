@@ -84,7 +84,7 @@ export const SleepGoalSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);

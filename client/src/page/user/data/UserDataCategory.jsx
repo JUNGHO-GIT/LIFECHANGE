@@ -104,7 +104,7 @@ export const UserDataCategory = () => {
       });
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -127,7 +127,7 @@ export const UserDataCategory = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       navigate(0);

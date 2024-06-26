@@ -92,7 +92,7 @@ export const CalendarSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -127,7 +127,7 @@ export const CalendarSave = () => {
       }));
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -177,7 +177,7 @@ export const CalendarSave = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 
@@ -209,7 +209,7 @@ export const CalendarSave = () => {
       }
     })
     .catch((err) => {
-      console.log(err, "err");
+      console.log(err);
     });
   };
 
