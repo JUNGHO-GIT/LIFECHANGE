@@ -171,7 +171,7 @@ export const SleepDashBar = () => {
     const firstSection = () => (
       <Div className={"d-center mt-n10"}>
         <Div className={"ms-0"}>{deleteSection1()}</Div>
-        <Div className={"ms-auto me-auto"}>{titleSection()}</Div>
+        <Div className={"ms-auto"}>{titleSection()}</Div>
         <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
       </Div>
     );

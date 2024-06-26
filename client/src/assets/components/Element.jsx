@@ -37,6 +37,8 @@ const createBr = (param) => {
 
   const style = {
     "width": "100%",
+    "background": "none",
+    "height": "0.1px",
     "margin": `${param/2}px 0px`,
   };
 

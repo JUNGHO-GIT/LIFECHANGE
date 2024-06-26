@@ -126,38 +126,28 @@ export const FoodDiff = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
-            onChange={(event, expanded) => {
-              setIsExpanded (
-                expanded
-                ? [...isExpanded, index]
-                : isExpanded.filter((el) => (el !== index)
-              ));
-            }}
-          >
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
               <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
-                <Div className={"d-left fs-1-1rem fw-bolder"}>
-                  {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
-                    </Div>
-                  )}
-                </Div>
+                {item.food_goal_dateStart === item.food_goal_dateEnd ? (
+                  <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
+                    e.stopPropagation();
+                  }}>
+                    <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                  </Div>
+                ) : (
+                  <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
+                    e.stopPropagation();
+                  }}>
+                    <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
+                  </Div>
+                )}
               </Div>
             </AccordionSummary>
             <AccordionDetails>

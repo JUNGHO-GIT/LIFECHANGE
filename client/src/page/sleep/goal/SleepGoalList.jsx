@@ -111,50 +111,40 @@ export const SleepGoalList = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
-            onChange={(event, expanded) => {
-              setIsExpanded (
-                expanded
-                ? [...isExpanded, index]
-                : isExpanded.filter((el) => (el !== index)
-              ));
-            }}
-          >
+          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
             <AccordionSummary expandIcon={
               <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                 setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
               }}/>
             }>
               <Div className={"d-center"}>
-                <Div className={"fs-1-1rem fw-bolder d-left ms-n15"}>
-                  <Icons name={"TbSearch"} className={"w-18 h-18 black me-15"} onClick={(e) => {
+                <Icons name={"TbSearch"} className={"w-18 h-18 black ms-n10 me-15"} onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    id: item._id,
+                    dateType: item.sleep_goal_dateType,
+                    dateStart: item.sleep_goal_dateStart,
+                    dateEnd: item.sleep_goal_dateEnd,
+                  });
+                  navigate(SEND.toSave, {
+                    state: SEND
+                  });
+                }} />
+                {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
+                  <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
                     e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_goal_dateType,
-                      dateStart: item.sleep_goal_dateStart,
-                      dateEnd: item.sleep_goal_dateEnd,
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }} />
-                  {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
-                      <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
-                    </Div>
-                  )}
-                </Div>
+                  }}>
+                    <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                  </Div>
+                ) : (
+                  <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
+                    e.stopPropagation();
+                  }}>
+                    <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                    <Div>~</Div>
+                    <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
+                  </Div>
+                )}
               </Div>
             </AccordionSummary>
             <AccordionDetails>
