@@ -5,13 +5,10 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Br20, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Hr30, Br10, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
+import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
-import {TableContainer, Table, Link, Skeleton} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableRow} from "../../../import/ImportMuis.jsx";
-import {TableBody, TableCell} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodDiff = () => {
@@ -46,7 +43,7 @@ export const FoodDiff = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave:"/food/goal/save"
+    toSave: "/food/goal/save",
   });
   const [PAGING, setPAGING] = useState({
     sort: "asc",
@@ -127,195 +124,220 @@ export const FoodDiff = () => {
     const tableFragment = (i) => (
       OBJECT?.map((item, index) => (
         <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <TableContainer>
-            <Table>
-              <TableHead className={"table-thead"}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={5}>
-                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                      <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </TableCell>
-                  <TableCell colSpan={1}>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className={"table-tbody"}>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food2} className={"w-15 h-15"} />
-                      {translate("kcal")}
+          <Accordion className={"shadow-none"}>
+            <AccordionSummary expandIcon={
+              <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
+                setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
+              }}/>
+            }>
+              <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
+                <Div className={"fs-1-1rem fw-bolder d-left"}>
+                  {item.food_goal_dateStart === item.food_goal_dateEnd ? (
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                     </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
+                  ) : (
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div>~</Div>
+                      <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                     </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_goal_kcal).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_total_kcal).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("diff")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.food_diff_kcal_color}`}>
-                      {numeral(item.food_diff_kcal).format('0,0')}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food3} className={"w-15 h-15"} />
-                      {translate("carb")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_goal_carb).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_total_carb).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("diff")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.food_diff_carb_color}`}>
-                      {numeral(item.food_diff_carb).format('0,0')}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food4} className={"w-15 h-15"} />
-                      {translate("protein")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_goal_protein).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_total_protein).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("diff")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.food_diff_protein_color}`}>
-                      {numeral(item.food_diff_protein).format('0,0')}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr border-top"}>
-                  <TableCell colSpan={6}>
-                    <Div className={"d-left dark fw-bold"}>
-                      <Img src={food5} className={"w-15 h-15"} />
-                      {translate("fat")}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("goal")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_goal_fat).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("real")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left fw-bold"}>
-                      {numeral(item.food_total_fat).format('0,0')}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={"d-left dark fs-0-8rem"}>
-                      {translate("diff")}
-                    </Div>
-                  </TableCell>
-                  <TableCell>
-                    <Div className={`d-left fw-bold ${item.food_diff_fat_color}`}>
-                      {numeral(item.food_diff_fat).format('0,0')}
-                    </Div>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  )}
+                </Div>
+              </Div>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food2} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("kcal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_goal_kcal).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_total_kcal).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.food_diff_kcal_color}`}>
+                  {numeral(item.food_diff_kcal).format('0,0')}
+                </Div>
+              </Div>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food3} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("carb")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_goal_carb).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_total_carb).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.food_diff_carb_color}`}>
+                  {numeral(item.food_diff_carb).format('0,0')}
+                </Div>
+              </Div>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food4} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("protein")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_goal_protein).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_total_protein).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.food_diff_protein_color}`}>
+                  {numeral(item.food_diff_protein).format('0,0')}
+                </Div>
+              </Div>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={food5} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("fat")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_goal_fat).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {numeral(item.food_total_fat).format('0,0')}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.food_diff_fat_color}`}>
+                  {numeral(item.food_diff_fat).format('0,0')}
+                </Div>
+              </Div>
+            </AccordionDetails>
+          </Accordion>
         </Card>
       ))
     );

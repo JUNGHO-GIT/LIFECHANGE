@@ -48,6 +48,10 @@
 [class$="MuiPopover-paper"] {
   z-index: 100000 !important;
 }
+[class$="MuiGrid-root"] > .MuiGrid-item {
+  padding-left: 10px !important;
+  padding-top: 8px !important;
+}
 
 .MuiFormControlLabel-root {
   margin-left: 0px !important;

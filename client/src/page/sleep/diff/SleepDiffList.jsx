@@ -3,9 +3,9 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
+import {axios, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img, Hr20, Br10, Icons} from "../../../import/ImportComponents.jsx";
+import {Div, Img, Hr30, Br10, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
@@ -129,13 +129,13 @@ export const SleepDiff = () => {
               <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
                 <Div className={"fs-1-1rem fw-bolder d-left"}>
                   {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
-                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                     </Div>
                   ) : (
-                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
@@ -147,111 +147,142 @@ export const SleepDiff = () => {
               </Div>
             </AccordionSummary>
             <AccordionDetails>
-              <Div className={"d-column"}>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
-                    <Img src={sleep2} className={"w-15 h-15"} />
-                    {translate("bedTime")}
-                  </Div>
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep2} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("bedTime")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
                 </Div>
               </Div>
+
               <Br10 />
-              <Div className={"d-row"}>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_goal_bedTime}
-                  </Div>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
                 </Div>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_bedTime}
-                  </Div>
-                </Div>
-                <Div className={"d-left w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_bedTime_color}`}>
-                    {item.sleep_diff_bedTime}
-                  </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_goal_bedTime}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-column"}>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
-                    <Img src={sleep4} className={"w-15 h-15"} />
-                    {translate("wakeTime")}
-                  </Div>
-                </Div>
-              </Div>
+
               <Br10 />
-              <Div className={"d-row"}>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_goal_wakeTime}
-                  </Div>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
                 </Div>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_wakeTime}
-                  </Div>
-                </Div>
-                <Div className={"d-left w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_wakeTime_color}`}>
-                    {item.sleep_diff_wakeTime}
-                  </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_bedTime}
                 </Div>
               </Div>
-              <Hr20 />
-              <Div className={"d-column"}>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
-                    <Img src={sleep3} className={"w-15 h-15"} />
-                    {translate("sleepTime")}
-                  </Div>
-                </Div>
-              </Div>
+
               <Br10 />
-              <Div className={"d-row"}>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_goal_sleepTime}
-                  </Div>
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
                 </Div>
-                <Div className={"d-left me-auto w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_sleepTime}
-                  </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_bedTime_color}`}>
+                  {item.sleep_diff_bedTime}
                 </Div>
-                <Div className={"d-left w-30vw"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.sleep_diff_time_color}`}>
-                    {item.sleep_diff_time}
-                  </Div>
+              </Div>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep3} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("wakeTime")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_goal_wakeTime}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_wakeTime}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_wakeTime_color}`}>
+                  {item.sleep_diff_wakeTime}
+                </Div>
+              </Div>
+
+              <Hr30 />
+
+              <Div className={"d-left"}>
+                <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Img src={sleep4} className={"w-15 h-15"} />
+                </Div>
+                <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  {translate("sleepTime")}
+                </Div>
+                <Div className={"fs-0-9rem fw-normal dark"}>
+                  {translate("diff")}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("goal")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_goal_sleepTime}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("real")}
+                </Div>
+                <Div className={"fs-0-9rem fw-bold"}>
+                  {item.sleep_sleepTime}
+                </Div>
+              </Div>
+
+              <Br10 />
+
+              <Div className={"d-center"}>
+                <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  {translate("diff")}
+                </Div>
+                <Div className={`fs-0-9rem fw-bold ${item.sleep_diff_time_color}`}>
+                  {item.sleep_diff_time}
                 </Div>
               </Div>
             </AccordionDetails>

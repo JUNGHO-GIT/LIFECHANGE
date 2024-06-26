@@ -9909,7 +9909,6 @@
 
 /** 7-2. font (rem) *******************************************************************************/
 .fs-0-1rem {font-size: 0.1rem !important;}
-.fs-0-2rem {font-size: 0.2rem !important;}
 .fs-0-3rem {font-size: 0.3rem !important;}
 .fs-0-4rem {font-size: 0.4rem !important;}
 .fs-0-5rem {font-size: 0.5rem !important;}
@@ -10318,13 +10317,6 @@
 }
 .light:hover, .light:focus, .light:active {
   color: #d1d2d5 !important;
-}
-
-.dark {
-  color: #697A8D !important;
-}
-.dark:hover, .dark:focus, .dark:active {
-  color: #4B5563 !important;
 }
 
 .red {

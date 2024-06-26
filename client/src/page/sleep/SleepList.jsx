@@ -132,13 +132,13 @@ export const SleepList = () => {
                     });
                   }} />
                   {item.sleep_dateStart === item.sleep_dateEnd ? (
-                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
                     </Div>
                   ) : (
-                    <Div className={"fs-1-2rem fw-bolder d-left"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-bolder"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
