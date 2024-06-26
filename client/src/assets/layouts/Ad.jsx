@@ -1,9 +1,8 @@
 // Ad.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Div, Img} from "../../import/ImportComponents.jsx";
-import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
+import {Paper, Card} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Ad = () => {

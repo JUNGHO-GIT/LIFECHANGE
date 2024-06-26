@@ -205,7 +205,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -223,7 +223,7 @@ export const Btn = ({
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -234,7 +234,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -249,7 +249,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowFind()}
             {btnGoToFindSave()}
             {btnPagination()}
@@ -258,7 +258,7 @@ export const Btn = ({
       }
       else if (strings?.second === "find" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnGoToFind()}
           </Card>
@@ -269,7 +269,7 @@ export const Btn = ({
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -280,7 +280,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -298,7 +298,7 @@ export const Btn = ({
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -309,7 +309,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -327,7 +327,7 @@ export const Btn = ({
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -338,7 +338,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
@@ -353,14 +353,14 @@ export const Btn = ({
       }
       else if (strings?.second === "data" && strings?.third === "list") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowDummy()}
           </Card>
         );
       }
       else if (strings?.second === "data" && strings?.third === "category") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
           </Card>
         );
@@ -370,7 +370,7 @@ export const Btn = ({
       }
       else if (strings?.second === "save" && strings?.third === "") {
         return (
-          <Card className={"block-wrapper border-none d-row h-8vh"}>
+          <Card className={"block-wrapper d-row h-8vh w-100p"}>
             {btnFlowSave()}
             {btnFlowDeletes()}
           </Card>
