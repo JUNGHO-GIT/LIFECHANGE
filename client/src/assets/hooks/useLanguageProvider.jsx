@@ -56,6 +56,8 @@ export const useTranslate = () => {
     count: {ko: "항목수", en: "Count"},
     culture: {ko: "문화", en: "Culture"},
     currency: {ko: "₩", en: "$"},
+    calendarTitle: {ko: "제목", en: "Title"},
+    color: {ko: "색상", en: "Color"},
 
     // d
     dashBar: {ko: "목표", en: "Goal"},

@@ -564,7 +564,11 @@ export const Picker = ({
                   let borderRadius = "";
                   let backgroundColor = "";
                   if (isSelected) {
-                    if (isFirst) {
+                    if (isFirst && isLast) {
+                      borderRadius = "50%";
+                      backgroundColor = "#1976d2";
+                    }
+                    else if (isFirst) {
                       borderRadius = "50% 0 0 50%";
                       backgroundColor = "#1976d2";
                     }

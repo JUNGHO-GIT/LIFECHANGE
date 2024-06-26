@@ -48,6 +48,7 @@ export const Filter = ({
         EXIST={objects?.EXIST}
         setEXIST={functions?.setEXIST}
       />
+      {/** 오늘 **/}
       <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5"}
       style={{lineHeight: "1.4", padding: "3px 9px"}} onClick={() => {
         functions?.setDATE((prev) => ({

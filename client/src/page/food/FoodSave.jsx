@@ -214,6 +214,10 @@ export const FoodSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
+    if (OBJECT._id === "") {
+      alert("삭제할 데이터가 없습니다.");
+      return;
+    }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
       _id: OBJECT._id,
