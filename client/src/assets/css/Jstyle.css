@@ -10081,35 +10081,35 @@
   display: inline-flex !important;
 }
 .d-between {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   justify-content: space-between !important;
 }
 .d-center {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   justify-content: center !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-left {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   justify-content: flex-start !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-right {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-row {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   flex-direction: row !important;
   justify-content: center !important;
   text-align: center !important;
 }
 .d-column {
-  display: flex !important;
+  display: -webkit-inline-flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   text-align: center !important;

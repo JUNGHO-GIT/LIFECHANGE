@@ -76,7 +76,7 @@ export const useTranslate = () => {
     day: {ko: "일별", en: "Day"},
     deletes: {ko: "회원탈퇴", en: "Delete"},
     desc: {ko: "내림차순", en: "Desc"},
-    diff: {ko: "차이", en: "Diff"},
+    diff: {ko: "비교", en: "Diff"},
     diffList: {ko: "비교", en: "Comparison"},
     duration: {ko: "기간", en: "Duration"},
     dignity: {ko: "품위", en: "Dignity"},

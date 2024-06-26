@@ -32,8 +32,6 @@ export const list = async (object) => {
     if (extra === "count") {
       const percent = Math.abs(((goal - real) / goal) * 100);
 
-      log("exercise_count", percent);
-
       // 1. ~ 1%
       if (percent > 0 && percent <= 1) {
         return "primary";
@@ -57,8 +55,6 @@ export const list = async (object) => {
     }
     else if (extra === "volume") {
       const percent = Math.abs(((goal - real) / goal) * 100);
-
-      log("exercise_volume", percent);
 
       // 1. ~ 1%
       if (percent > 0 && percent <= 1) {
@@ -93,8 +89,6 @@ export const list = async (object) => {
 
       const diffVal = (hours * 60) + minutes;
 
-      log("exercise_cardio", diffVal);
-
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
         return "primary";
@@ -118,8 +112,6 @@ export const list = async (object) => {
     }
     else if (extra === "weight") {
       const percent = Math.abs(((goal - real) / goal) * 100);
-
-      log("exercise_weight", percent);
 
       // 1. ~ 1%
       if (percent > 0 && percent <= 1) {
