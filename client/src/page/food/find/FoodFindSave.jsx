@@ -96,7 +96,7 @@ export const FoodFindSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     })
     .finally(() => {
       setLOADING(false);
@@ -166,7 +166,7 @@ export const FoodFindSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -177,11 +177,11 @@ export const FoodFindSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     });
   };
 

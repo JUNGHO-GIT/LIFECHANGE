@@ -18,5 +18,5 @@ export const calcDate = (startTime, endTime) => {
 
 // 2-1. log ----------------------------------------------------------------------------------------
 export const log = (name, data) => {
-  console.log(`${name} : ` + JSON.stringify(data, null, 2));
+  console.log(JSON.stringify(`${name} : ${data}`, null, 2));
 };

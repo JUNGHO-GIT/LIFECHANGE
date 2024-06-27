@@ -42,34 +42,31 @@ export const UserLogin = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         if (isChecked) {
           localStorage.setItem("sessionId", userId);
         }
         else {
           localStorage.setItem("sessionId", "");
         }
-        sessionStorage.setItem("sessionId", userId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
-
         if (res.data.result.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }
         else {
           sessionStorage.setItem("isAdmin", "false");
         }
-
         percent();
         navigate("/calendar/list");
       }
       else {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         sessionStorage.setItem("sessionId", "");
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     });
   };
 

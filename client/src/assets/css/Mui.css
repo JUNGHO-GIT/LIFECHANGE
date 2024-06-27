@@ -1,10 +1,10 @@
 [class$="MuiPaper-root"] {
   border-radius: 10px !important;
-  box-shadow: none !important;
+  box-shadow: 0px 0px 0px 0px !important;
 }
 [class$="MuiCard-root"] {
   border-radius: 10px !important;
-  box-shadow: none !important;
+  box-shadow: 0px 0px 0px 0px !important;
 }
 [class$="MuiTableCell-root"] {
   padding: 5px 5px 5px 5px !important;

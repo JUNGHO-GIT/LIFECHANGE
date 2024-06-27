@@ -221,7 +221,7 @@ export const UserDataList = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,

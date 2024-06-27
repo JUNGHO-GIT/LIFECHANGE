@@ -42,14 +42,14 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
       }
       else {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     });
   };
 
@@ -61,16 +61,16 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         setIsVerified(true);
       }
       else {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         setIsVerified(false);
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     });
   };
 
@@ -82,11 +82,11 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         navigate("/user/login");
       }
       else if (res.data.status === "duplicated") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -94,7 +94,7 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "fail") {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -102,11 +102,11 @@ export const UserSignup = () => {
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(JSON.stringify(err));
     })
   };
 

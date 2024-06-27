@@ -13,7 +13,7 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     sessionStorage.setItem('lang', lang);
-    console.log('Language changed : ', lang);
+    console.log(JSON.stringify(`LanguageProvider : ${lang}`, null, 2));
   }, [lang]);
 
   return (
