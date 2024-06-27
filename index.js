@@ -86,6 +86,13 @@ function startServer(port) {
 startServer(appPort);
 
 // -------------------------------------------------------------------------------------------------
+// CORS 설정
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
