@@ -242,437 +242,423 @@ export const UserDataList = () => {
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-6. empty
-    const tableEmpty = () => (
-      <Card className={"border shadow-none p-10"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("empty")}
-        </Div>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode1 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("count")}</TableCell>
-                <TableCell>{translate("volume")}</TableCell>
-                <TableCell>{translate("cardio")}</TableCell>
-                <TableCell>{translate("weight")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_EXERCISE_GOAL?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
-                      <>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.exercise_goal_count).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.exercise_goal_volume).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {item.exercise_goal_cardio}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.exercise_goal_weight).format("0,0")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode2 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("volume")}</TableCell>
-                <TableCell>{translate("cardio")}</TableCell>
-                <TableCell>{translate("weight")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_EXERCISE?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.exercise_dateStart === item.exercise_dateEnd ? (
-                      <>
-                        <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.exercise_total_volume).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {item.exercise_total_cardio}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.exercise_body_weight).format("0,0")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode3 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("kcal")}</TableCell>
-                <TableCell>{translate("carb")}</TableCell>
-                <TableCell>{translate("protein")}</TableCell>
-                <TableCell>{translate("fat")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_FOOD_GOAL?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                      <>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_goal_kcal).format('0,0')}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_goal_carb).format('0,0')}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_goal_protein).format('0,0')}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_goal_fat).format('0,0')}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode4 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("kcal")}</TableCell>
-                <TableCell>{translate("carb")}</TableCell>
-                <TableCell>{translate("protein")}</TableCell>
-                <TableCell>{translate("fat")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_FOOD?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.food_dateStart === item.food_dateEnd ? (
-                      <>
-                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_total_kcal).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_total_carb).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_total_protein).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.food_total_fat).format("0,0")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode5 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className="table-thead-tr">
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("income")}</TableCell>
-                <TableCell>{translate("expense")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_MONEY_GOAL?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.money_goal_dateStart === item.money_goal_dateEnd ? (
-                      <>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_goal_income).format("0,0")}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_goal_expense).format("0,0")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode6 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("income")}</TableCell>
-                <TableCell>{translate("expense")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_MONEY?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.money_dateStart === item.money_dateEnd ? (
-                      <>
-                        <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_total_income).format('0,0')}
-                  </TableCell>
-                  <TableCell>
-                    {numeral(item.money_total_expense).format('0,0')}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode7 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("bedTime")}</TableCell>
-                <TableCell>{translate("wakeTime")}</TableCell>
-                <TableCell>{translate("sleepTime")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_SLEEP_GOAL?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
-                      <>
-                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_goal_bedTime}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_goal_wakeTime}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_goal_sleepTime}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-3. table
-    const tableNode8 = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>{translate("date")}</TableCell>
-                <TableCell>{translate("bedTime")}</TableCell>
-                <TableCell>{translate("wakeTime")}</TableCell>
-                <TableCell>{translate("sleepTime")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {OBJECT_SLEEP?.map((item, index) => (
-                <TableRow className={"table-tbody-tr border-top"} key={index}>
-                  <TableCell>
-                    {item.sleep_dateStart === item.sleep_dateEnd ? (
-                      <>
-                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      </>
-                    ) : (
-                      <>
-                        <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
-                        <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_section[0]?.sleep_bedTime}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_section[0]?.sleep_wakeTime}
-                  </TableCell>
-                  <TableCell>
-                    {item.sleep_section[0]?.sleep_sleepTime}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-8. loading
-    const loadingFragment = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
+    // 7-1. table
     const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const emptyFragment = () => (
+        <Card className={"border shadow-none p-10"} key={"empty"}>
+          <Div className={"d-center"}>
+            {translate("empty")}
+          </Div>
+        </Card>
+      );
+      const tableFragment1 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("count")}</TableCell>
+                  <TableCell>{translate("volume")}</TableCell>
+                  <TableCell>{translate("cardio")}</TableCell>
+                  <TableCell>{translate("weight")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_EXERCISE_GOAL?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
+                        <>
+                          <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.exercise_goal_count).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.exercise_goal_volume).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {item.exercise_goal_cardio}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.exercise_goal_weight).format("0,0")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment2 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("volume")}</TableCell>
+                  <TableCell>{translate("cardio")}</TableCell>
+                  <TableCell>{translate("weight")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_EXERCISE?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.exercise_dateStart === item.exercise_dateEnd ? (
+                        <>
+                          <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.exercise_total_volume).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {item.exercise_total_cardio}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.exercise_body_weight).format("0,0")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment3 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("kcal")}</TableCell>
+                  <TableCell>{translate("carb")}</TableCell>
+                  <TableCell>{translate("protein")}</TableCell>
+                  <TableCell>{translate("fat")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_FOOD_GOAL?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.food_goal_dateStart === item.food_goal_dateEnd ? (
+                        <>
+                          <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_goal_kcal).format('0,0')}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_goal_carb).format('0,0')}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_goal_protein).format('0,0')}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_goal_fat).format('0,0')}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment4 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("kcal")}</TableCell>
+                  <TableCell>{translate("carb")}</TableCell>
+                  <TableCell>{translate("protein")}</TableCell>
+                  <TableCell>{translate("fat")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_FOOD?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.food_dateStart === item.food_dateEnd ? (
+                        <>
+                          <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.food_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_total_kcal).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_total_carb).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_total_protein).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.food_total_fat).format("0,0")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment5 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className="table-thead-tr">
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("income")}</TableCell>
+                  <TableCell>{translate("expense")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_MONEY_GOAL?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.money_goal_dateStart === item.money_goal_dateEnd ? (
+                        <>
+                          <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.money_goal_income).format("0,0")}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.money_goal_expense).format("0,0")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment6 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("income")}</TableCell>
+                  <TableCell>{translate("expense")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_MONEY?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.money_dateStart === item.money_dateEnd ? (
+                        <>
+                          <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.money_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.money_total_income).format('0,0')}
+                    </TableCell>
+                    <TableCell>
+                      {numeral(item.money_total_expense).format('0,0')}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment7 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("bedTime")}</TableCell>
+                  <TableCell>{translate("wakeTime")}</TableCell>
+                  <TableCell>{translate("sleepTime")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_SLEEP_GOAL?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
+                        <>
+                          <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_goal_bedTime}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_goal_wakeTime}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_goal_sleepTime}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      const tableFragment8 = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>{translate("date")}</TableCell>
+                  <TableCell>{translate("bedTime")}</TableCell>
+                  <TableCell>{translate("wakeTime")}</TableCell>
+                  <TableCell>{translate("sleepTime")}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {OBJECT_SLEEP?.map((item, index) => (
+                  <TableRow className={"table-tbody-tr border-top"} key={index}>
+                    <TableCell>
+                      {item.sleep_dateStart === item.sleep_dateEnd ? (
+                        <>
+                          <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                          <Div>~</Div>
+                          <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                        </>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_section[0]?.sleep_bedTime}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_section[0]?.sleep_wakeTime}
+                    </TableCell>
+                    <TableCell>
+                      {item.sleep_section[0]?.sleep_sleepTime}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
       if (PART === "exerciseGoal") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode1(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment1(0)
         );
       }
       else if (PART === "exercise") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode2(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment2(0)
         );
       }
       else if (PART === "foodGoal") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode3(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment3(0)
         );
       }
       else if (PART === "food") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode4(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment4(0)
         );
       }
       else if (PART === "moneyGoal") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode5(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment5(0)
         );
       }
       else if (PART === "money") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode6(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment6(0)
         );
       }
       else if (PART === "sleepGoal") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode7(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment7(0)
         );
       }
       else if (PART === "sleep") {
         return LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableNode8(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment8(0)
         );
       }
     };
-    // 7-9. third
-    const thirdSection = () => (
-      tableSection()
-    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {thirdSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

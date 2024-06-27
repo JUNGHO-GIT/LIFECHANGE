@@ -79,56 +79,53 @@ export const UserDeletes = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Div className={"d-column"} key={i}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("id")}
-          value={sessionId}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("signupDate")}
-          value={OBJECT.date}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextArea
-          readOnly={false}
-          className={"w-76vw h-10vh border shadow-none p-10 pointer"}
-          value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
-        />
-      </Div>
-    );
-    // 7-8. table
-    const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
         {translate("deletes")}
       </Div>
     );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
-    // 7-9. third
-    const thirdSection = () => (
+    // 7-2. table
+    const tableSection = () => {
+      const tableFragment = (i) => (
+        <Div className={"d-column"} key={i}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("id")}
+            value={sessionId}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("signupDate")}
+            value={OBJECT.date}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextArea
+            readOnly={false}
+            className={"w-76vw h-10vh border shadow-none p-10 pointer"}
+            value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
+          />
+        </Div>
+      );
+      return (
+        tableFragment(0)
+      );
+    };
+    // 7-3. button
+    const buttonSection = () => (
       <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
@@ -143,15 +140,16 @@ export const UserDeletes = () => {
         </Button>
       </Div>
     );
+
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min84vh"}>
-          {firstSection()}
+          {titleSection()}
           <Hr40 />
-          {secondSection()}
+          {tableSection()}
           <Hr40 />
-          {thirdSection()}
+          {buttonSection()}
         </Div>
       </Paper>
     );

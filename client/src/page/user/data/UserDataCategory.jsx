@@ -284,7 +284,7 @@ export const UserDataCategory = () => {
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-6. popup
+    // 7-1. popup
     const popupSection = (i, closePopup) => (
       <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-0"}>
         <TableContainer className={"border-right over-x-hidden"}>
@@ -399,85 +399,81 @@ export const UserDataCategory = () => {
         )}
       </Card>
     );
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr"}>
-                <TableCell>
-                  {translate("dataCategory1")}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {dataCategoryArray.map((item, index) => (
-                <TableRow key={index} className={"table-tbody-tr border-top"}>
-                  <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem ms-0"}>
-                        {translate(item)}
-                      </Div>
-                      <Div className={"fs-1-0rem ms-auto"}>
-                      <PopUp
-                        key={i}
-                        type={"innerCenter"}
-                        position={"bottom"}
-                        direction={"center"}
-                        contents={({closePopup}) => (
-                          popupSection(i, closePopup)
-                        )}>
-                        {(popTrigger={}) => (
-                          <Icons name={"TbPencil"} className={"w-18 h-18 navy ms-auto"}
-                            onClick={(e={}) => {
-                              setDataType(item);
-                              setSelectedIdx((prev) => ({
-                                ...prev,
-                                category1Idx: index,
-                                category2Idx: 1,
-                                category3Idx: 1
-                              }));
-                              setIdx((prev) => ({
-                                ...prev,
-                                category2Idx: 1,
-                                category3Idx: 1
-                              }));
-                              popTrigger.openPopup(e.currentTarget)
-                            }}
-                          />
-                        )}
-                        </PopUp>
-                      </Div>
-                    </Div>
+    // 7-2. table
+    const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const tableFragment = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableHead className={"table-thead"}>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>
+                    {translate("dataCategory1")}
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-8. loading
-    const loadingFragment = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
-    const tableSection = () => (
-      LOADING ? loadingFragment() : tableFragment(0)
-    );
-    // 7-9. third
-    const thirdSection = () => (
-      tableSection()
-    );
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {dataCategoryArray.map((item, index) => (
+                  <TableRow key={index} className={"table-tbody-tr border-top"}>
+                    <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
+                      <Div className={"d-center"}>
+                        <Div className={"fs-1-0rem ms-0"}>
+                          {translate(item)}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-auto"}>
+                        <PopUp
+                          key={i}
+                          type={"innerCenter"}
+                          position={"bottom"}
+                          direction={"center"}
+                          contents={({closePopup}) => (
+                            popupSection(i, closePopup)
+                          )}>
+                          {(popTrigger={}) => (
+                            <Icons name={"TbPencil"} className={"w-18 h-18 navy ms-auto"}
+                              onClick={(e={}) => {
+                                setDataType(item);
+                                setSelectedIdx((prev) => ({
+                                  ...prev,
+                                  category1Idx: index,
+                                  category2Idx: 1,
+                                  category3Idx: 1
+                                }));
+                                setIdx((prev) => ({
+                                  ...prev,
+                                  category2Idx: 1,
+                                  category3Idx: 1
+                                }));
+                                popTrigger.openPopup(e.currentTarget)
+                              }}
+                            />
+                          )}
+                          </PopUp>
+                        </Div>
+                      </Div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      return (
+        LOADING ? loadingFragment() : tableFragment(0)
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
-          {thirdSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

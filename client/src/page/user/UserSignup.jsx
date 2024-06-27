@@ -112,198 +112,195 @@ export const UserSignup = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Div className={"d-column"} key={i}>
-        {/** section 1 **/}
-        <Div className={"d-center w-76vw"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={`${translate("id")} (email)`}
-            value={OBJECT.user_id}
-            className={"w-66vw me-10"}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_id: e.target.value
-              }))
-            )}
-          />
-          <Button
-            size={"small"}
-            color={"primary"}
-            className={"w-20vw"}
-            variant={"contained"}
-            onClick={() => {
-              flowSend();
-              setIsVerified(false);
-            }}
-          >
-            {translate("send")}
-          </Button>
-        </Div>
-        <Br10 />
-        <Div className={"d-center w-76vw"}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("verify")}
-            value={clientCode}
-            className={"w-66vw me-10"}
-            onChange={(e) => (
-              setClientCode(e.target.value)
-            )}
-          />
-          <Button
-            size={"small"}
-            color={"primary"}
-            className={"w-20vw"}
-            variant={"contained"}
-            disabled={isVerified}
-            onClick={() => {
-              flowVerify();
-            }}
-          >
-            {translate("verify")}
-          </Button>
-        </Div>
-        <Br10 />
-        <TextField
-          select={false}
-          type={"password"}
-          size={"small"}
-          label={translate("pw")}
-          value={OBJECT.user_pw}
-          className={"w-76vw"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_pw: e.target.value
-            }))
-          )}
-        />
-        <Br10 />
-        <TextField
-          select={false}
-          type={"password"}
-          size={"small"}
-          label={translate("pwConfirm")}
-          value={pwConfirm}
-          className={"w-76vw"}
-          onChange={(e) => (
-            setPwConfirm(e.target.value)
-          )}
-        />
-        <Hr40 />
-        {/** section 2 **/}
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          label={translate("gender")}
-          value={OBJECT.user_gender || "N"}
-          className={"w-76vw text-left"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_gender: e.target.value
-            }))
-          )}
-        >
-          {[translate("N"), translate("M"), translate("F")].map((item, i) => (
-            <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Br10 />
-        {/** 1 ~ 100 **/}
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          label={translate("age")}
-          value={OBJECT.user_age}
-          className={"w-76vw text-left"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_age: e.target.value
-            }))
-          )}
-        >
-          {Array.from({length: 100}, (v, i) => i + 1).map((item, i) => (
-            <MenuItem key={i} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Br10 />
-        {/** 100cm ~ 200cm **/}
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          label={translate("height")}
-          value={OBJECT.user_height}
-          className={"w-76vw text-left"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_height: e.target.value
-            }))
-          )}
-        >
-          {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
-            <MenuItem key={i} value={item}>
-              {`${item} cm`}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Br10 />
-        {/** 30kg ~ 200kg **/}
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          label={translate("weight")}
-          value={OBJECT.user_weight}
-          className={"w-76vw text-left"}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              user_weight: e.target.value
-            }))
-          )}
-        >
-          {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
-            <MenuItem key={i} value={item}>
-              {`${item} kg`}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Br10 />
-      </Div>
-    );
-    // 7-8. table
-    const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
         {translate("signup")}
       </Div>
     );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
-    // 7-9. fourth
-    const fourthSection = () => (
+    // 7-2. table
+    const tableSection = () => {
+      const tableFragment = (i) => (
+        <Div className={"d-column"} key={i}>
+          {/** section 1 **/}
+          <Div className={"d-center w-76vw"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={`${translate("id")} (email)`}
+              value={OBJECT.user_id}
+              className={"w-66vw me-10"}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  user_id: e.target.value
+                }))
+              )}
+            />
+            <Button
+              size={"small"}
+              color={"primary"}
+              className={"w-20vw"}
+              variant={"contained"}
+              onClick={() => {
+                flowSend();
+                setIsVerified(false);
+              }}
+            >
+              {translate("send")}
+            </Button>
+          </Div>
+          <Br10 />
+          <Div className={"d-center w-76vw"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={translate("verify")}
+              value={clientCode}
+              className={"w-66vw me-10"}
+              onChange={(e) => (
+                setClientCode(e.target.value)
+              )}
+            />
+            <Button
+              size={"small"}
+              color={"primary"}
+              className={"w-20vw"}
+              variant={"contained"}
+              disabled={isVerified}
+              onClick={() => {
+                flowVerify();
+              }}
+            >
+              {translate("verify")}
+            </Button>
+          </Div>
+          <Br10 />
+          <TextField
+            select={false}
+            type={"password"}
+            size={"small"}
+            label={translate("pw")}
+            value={OBJECT.user_pw}
+            className={"w-76vw"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_pw: e.target.value
+              }))
+            )}
+          />
+          <Br10 />
+          <TextField
+            select={false}
+            type={"password"}
+            size={"small"}
+            label={translate("pwConfirm")}
+            value={pwConfirm}
+            className={"w-76vw"}
+            onChange={(e) => (
+              setPwConfirm(e.target.value)
+            )}
+          />
+          <Hr40 />
+          {/** section 2 **/}
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={translate("gender")}
+            value={OBJECT.user_gender || "N"}
+            className={"w-76vw text-left"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_gender: e.target.value
+              }))
+            )}
+          >
+            {[translate("N"), translate("M"), translate("F")].map((item, i) => (
+              <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 1 ~ 100 **/}
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={translate("age")}
+            value={OBJECT.user_age}
+            className={"w-76vw text-left"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_age: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 100}, (v, i) => i + 1).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 100cm ~ 200cm **/}
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={translate("height")}
+            value={OBJECT.user_height}
+            className={"w-76vw text-left"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_height: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {`${item} cm`}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 30kg ~ 200kg **/}
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            label={translate("weight")}
+            value={OBJECT.user_weight}
+            className={"w-76vw text-left"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_weight: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {`${item} kg`}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+        </Div>
+      );
+      return (
+        tableFragment(0)
+      );
+    };
+    // 7-3. button
+    const buttonSection = () => (
       <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
@@ -318,8 +315,8 @@ export const UserSignup = () => {
         </Button>
       </Div>
     );
-    // 7-9. fifth
-    const fifthSection = () => (
+    // 7-4. google
+    const googleSection = () => (
       <Div className={"d-center w-76vw"}>
         <TextField
           select={false}
@@ -337,8 +334,8 @@ export const UserSignup = () => {
         />
       </Div>
     );
-    // 7-9. sixth
-    const sixthSection = () => (
+    // 7-5. login
+    const loginSection = () => (
       <Div className={"d-center w-76vw fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
@@ -352,15 +349,15 @@ export const UserSignup = () => {
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
-          {firstSection()}
+          {titleSection()}
           <Hr40 />
-          {secondSection()}
+          {tableSection()}
           <Hr40 />
-          {fourthSection()}
+          {buttonSection()}
           <Br10 />
-          {fifthSection()}
+          {googleSection()}
           <Hr40 />
-          {sixthSection()}
+          {loginSection()}
         </Div>
       </Paper>
     );

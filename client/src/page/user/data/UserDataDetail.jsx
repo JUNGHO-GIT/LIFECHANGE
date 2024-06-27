@@ -98,131 +98,128 @@ export const UserDataDetail = () => {
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Div className={"d-column"} key={i}>
-        <Avatar
-          alt={"user_image"}
-          src={OBJECT?.user_image}
-          className={"m-auto w-150 h-150"}
-        />
-        <Br30 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("id")}
-          value={OBJECT?.user_id}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("regDt")}
-          value={OBJECT?.user_regDt.split("T")[0]}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("gender")}
-          value={
-            OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
-            translate("female") : translate("unknown")
-          }
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("age")}
-          value={OBJECT?.user_age}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("height")}
-          value={numeral(OBJECT?.user_height).format("0,0")}
-          InputProps={{
-            readOnly: true,
-            startAdornment: null,
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("cm")}
-              </Div>
-            )
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("weight")}
-          value={numeral(OBJECT?.user_weight).format("0,0")}
-          InputProps={{
-            readOnly: true,
-            startAdornment: null,
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("kg")}
-              </Div>
-            )
-          }}
-        />
-        <Br20 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("property")}
-          value={numeral(totalProperty).format("0,0")}
-          InputProps={{
-            readOnly: true,
-            startAdornment: null,
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("currency")}
-              </Div>
-            )
-          }}
-        />
-      </Div>
-    );
-    // 7-8. table
-    const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
-      tableSection()
-    );
+    // 7-1. table
+    const tableSection = () => {
+      const tableFragment = (i) => (
+        <Div className={"d-column"} key={i}>
+          <Avatar
+            alt={"user_image"}
+            src={OBJECT?.user_image}
+            className={"m-auto w-150 h-150"}
+          />
+          <Br30 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("id")}
+            value={OBJECT?.user_id}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("regDt")}
+            value={OBJECT?.user_regDt.split("T")[0]}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("gender")}
+            value={
+              OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
+              translate("female") : translate("unknown")
+            }
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("age")}
+            value={OBJECT?.user_age}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("height")}
+            value={numeral(OBJECT?.user_height).format("0,0")}
+            InputProps={{
+              readOnly: true,
+              startAdornment: null,
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("cm")}
+                </Div>
+              )
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("weight")}
+            value={numeral(OBJECT?.user_weight).format("0,0")}
+            InputProps={{
+              readOnly: true,
+              startAdornment: null,
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("kg")}
+                </Div>
+              )
+            }}
+          />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("property")}
+            value={numeral(totalProperty).format("0,0")}
+            InputProps={{
+              readOnly: true,
+              startAdornment: null,
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
+        </Div>
+      );
+      return (
+        tableFragment(0)
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min85vh"}>
-          {firstSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

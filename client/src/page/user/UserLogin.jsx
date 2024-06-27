@@ -78,74 +78,71 @@ export const UserLogin = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Div className={"d-column"} key={i}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("id")}
-          className={"w-76vw"}
-          value={userId}
-          InputProps={{
-            readOnly: false,
-            startAdornment: null,
-            endAdornment: null,
-          }}
-          onChange={(e) => {
-            setUserId(e.target.value);
-          }}
-        />
-        <Br10 />
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          label={translate("pw")}
-          value={userPw}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: false,
-            startAdornment: null,
-            endAdornment: null,
-          }}
-          onChange={(e) => {
-            setUserPw(e.target.value);
-          }}
-        />
-        <Br10 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem"}>
-            {translate("saveId")}
-          </Div>
-          <Checkbox
-            color={"primary"}
-            size={"small"}
-            checked={isChecked}
-            onChange={(e) => {
-              setIsChecked(e.target.checked);
-            }}
-          />
-        </Div>
-      </Div>
-    );
-    // 7-8. table
-    const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
         {translate("login")}
       </Div>
     );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
-    // 7-9. fourth
-    const fourthSection = () => (
+    // 7-2. table
+    const tableSection = () => {
+      const tableFragment = (i) => (
+        <Div className={"d-column"} key={i}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("id")}
+            className={"w-76vw"}
+            value={userId}
+            InputProps={{
+              readOnly: false,
+              startAdornment: null,
+              endAdornment: null,
+            }}
+            onChange={(e) => {
+              setUserId(e.target.value);
+            }}
+          />
+          <Br10 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("pw")}
+            value={userPw}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: false,
+              startAdornment: null,
+              endAdornment: null,
+            }}
+            onChange={(e) => {
+              setUserPw(e.target.value);
+            }}
+          />
+          <Br10 />
+          <Div className={"d-center"}>
+            <Div className={"fs-0-8rem"}>
+              {translate("saveId")}
+            </Div>
+            <Checkbox
+              color={"primary"}
+              size={"small"}
+              checked={isChecked}
+              onChange={(e) => {
+                setIsChecked(e.target.checked);
+              }}
+            />
+          </Div>
+        </Div>
+      );
+      return (
+        tableFragment(0)
+      );
+    };
+    // 7-3. button
+    const buttonSection = () => (
       <Div className={"d-center w-76vw"}>
         <Button
           size={"small"}
@@ -160,8 +157,8 @@ export const UserLogin = () => {
         </Button>
       </Div>
     );
-    // 7-9. fifth
-    const fifthSection = () => (
+    // 7-4. google
+    const googleSection = () => (
       <Div className={"d-center w-76vw"}>
         <TextField
           select={false}
@@ -179,8 +176,8 @@ export const UserLogin = () => {
         />
       </Div>
     );
-    // 7-9. sixth
-    const sixthSection = () => (
+    // 7-5. signup
+    const signupSection = () => (
       <Div className={"d-center w-76vw fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
@@ -194,15 +191,15 @@ export const UserLogin = () => {
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
-          {firstSection()}
+          {titleSection()}
           <Hr40 />
-          {secondSection()}
+          {tableSection()}
           <Hr40 />
-          {fourthSection()}
+          {buttonSection()}
           <Br10 />
-          {fifthSection()}
+          {googleSection()}
           <Hr40 />
-          {sixthSection()}
+          {signupSection()}
         </Div>
       </Paper>
     );

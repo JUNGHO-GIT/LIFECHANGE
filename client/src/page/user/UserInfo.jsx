@@ -52,74 +52,67 @@ export const UserInfo = () => {
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-6. img
+    // 7-1. image
     const imageSection = () => (
       <Div className={"d-center"}>
         <Img src={logo1} alt={"logo1"} className={"w-240 h-200"} />
       </Div>
     );
-    // 7-3. table
-    const tableFragment = (i) => (
-      <Card className={"border radius shadow-none p-0"} key={i}>
-        <TableContainer>
-          <Table>
-            <TableBody className={"table-tbody"}>
-              <TableRow>
-                <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                  version
-                </TableCell>
-                <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                  {OBJECT.version}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                  date
-                </TableCell>
-                <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                  {OBJECT.date}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                  github
-                </TableCell>
-                <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                  {OBJECT.git}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                  license
-                </TableCell>
-                <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                  {OBJECT.license}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-    );
-    // 7-8. table
-    const tableSection = () => (
-      tableFragment(0)
-    );
-    // 7-9. first
-    const firstSection = () => (
-      imageSection()
-    );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
+    // 7-2. table
+    const tableSection = () => {
+      const tableFragment = (i) => (
+        <Card className={"border radius shadow-none p-0"} key={i}>
+          <TableContainer>
+            <Table>
+              <TableBody className={"table-tbody"}>
+                <TableRow>
+                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    version
+                  </TableCell>
+                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    {OBJECT.version}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    date
+                  </TableCell>
+                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    {OBJECT.date}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    github
+                  </TableCell>
+                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    {OBJECT.git}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
+                    license
+                  </TableCell>
+                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
+                    {OBJECT.license}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      );
+      return (
+        tableFragment(0)
+      );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min85vh"}>
-          {firstSection()}
+          {imageSection()}
           <Br40 />
-          {secondSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

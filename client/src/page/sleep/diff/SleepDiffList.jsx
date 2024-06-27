@@ -118,7 +118,7 @@ export const SleepDiff = () => {
           setLOADING={setLOADING}
         />
       );
-      const tableEmpty = () => (
+      const emptyFragment = () => (
         <Card className={"border shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
             {translate("empty")}
@@ -276,7 +276,7 @@ export const SleepDiff = () => {
       );
       return (
         LOADING ? loadingFragment() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );
     };
