@@ -70,7 +70,8 @@ function startServer(httpPort, httpsPort) {
   // https 설정
   const options = {
     key: fs.readFileSync("key/privkey.pem"),
-    cert: fs.readFileSync("key/fullchain.pem")
+    cert: fs.readFileSync("key/fullchain.pem"),
+    ca: fs.readFileSync("key/chain.pem"),
   };
 
   // https 서버 시작
