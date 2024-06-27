@@ -150,7 +150,7 @@ export const SleepGoalSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify("삭제할 데이터가 없습니다."));
+      alert(JSON.stringify((translate("noData"))).replace(/\"/g, ""));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {

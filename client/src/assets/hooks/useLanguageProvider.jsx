@@ -195,6 +195,7 @@ export const useTranslate = () => {
     month12: {ko: "12월", en: "Month12"},
 
     // n
+    noDate: {ko: "삭제할 데이터가 없습니다", en: "No data to delete"},
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
     nutrition: {ko: "영양소", en: "Nutrition"},
     nut: {ko: "영양소", en: "Nutrition"},
