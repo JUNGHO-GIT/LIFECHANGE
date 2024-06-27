@@ -81,7 +81,11 @@ function startServer(httpPort, httpsPort) {
 startServer(httpPort, httpsPort);
 
 // 미들웨어 설정
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
