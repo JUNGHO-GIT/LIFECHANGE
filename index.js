@@ -36,8 +36,6 @@ import { router as userRouter } from "./src/router/user/userRouter.js";
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // -------------------------------------------------------------------------------------------------
 const id = "eric4757";
@@ -45,96 +43,73 @@ const pw = "M7m7m7m7m7!";
 const host = "34.23.233.23";
 const port = "27017";
 const db = "LIFECHANGE";
-
-// -------------------------------------------------------------------------------------------------
-const customLogger = (collectionName, method, query, doc) => {
-  const message = util.format(
-    "\n==============================================\n1.schema: \"%s\" \n2.method: \"%s\" \n3.query: %s \n4.doc: %s",
-    collectionName,
-    method,
-    JSON.stringify(query, null, 3),
-    JSON.stringify(doc, null, 3)
-  );
-  console.log(message);
-};
-
-// -------------------------------------------------------------------------------------------------
-// mongodb://eric4757:M7m7m7m7m7!@34.23.233.23:27017/LIFECHANGE
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
-// mongoose.set("debug", customLogger);
 
 // -------------------------------------------------------------------------------------------------
+
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
 const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
 function startServer(httpPort, httpsPort) {
 
-  // 1-1. http 설정
-  app.set("port", httpPort);
-
-  // 1-2. http 리다이렉트 설정
-  app.use((req, res, next) => {
+  // http 리다이렉트 설정
+  /* app.use((req, res, next) => {
     if (req.protocol === 'http') {
       res.redirect(301, `https://${req.headers.host}${req.url}`);
     }
     else {
       next();
     }
-  });
+  }); */
 
-  // 1-3. http 서버 시작
+  // http 서버 시작
   app.listen(httpPort, () => {
     console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
   });
 
-  // 2-1. https 설정
+  // https 설정
   const options = {
     key: fs.readFileSync("key/privkey.pem"),
     cert: fs.readFileSync("key/fullchain.pem")
   };
 
-  // 2-2. https 서버 시작
+  // https 서버 시작
   https.createServer(options, app).listen(httpsPort, () => {
     console.log(`HTTPS 서버가 포트 ${httpsPort}에서 실행 중입니다.`);
   });
 }
-
 startServer(httpPort, httpsPort);
 
-// -------------------------------------------------------------------------------------------------
-app.use(cors(), (req, res, next) => {
-  res.set("Content-Type", "application/json; charset=utf-8");
-  next();
-});
+// 미들웨어 설정
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use((req, res, next) => {
+  res.set("Content-Type", "application/json; charset=utf-8");
+  next();
+});
 
 // -------------------------------------------------------------------------------------------------
 app.use("/calendar", calendarRouter);
-
 app.use("/exercise/dash", exerciseDashRouter);
 app.use("/exercise/diff", exerciseDiffRouter);
 app.use("/exercise/goal", exerciseGoalRouter);
 app.use("/exercise", exerciseRouter);
-
 app.use("/food/dash", foodDashRouter);
 app.use("/food/diff", foodDiffRouter);
 app.use("/food/find", foodFindRouter);
 app.use("/food/goal", foodGoalRouter);
 app.use("/food", foodRouter);
-
 app.use("/money/dash", moneyDashRouter);
 app.use("/money/diff", moneyDiffRouter);
 app.use("/money/goal", moneyGoalRouter);
 app.use("/money", moneyRouter);
-
 app.use("/sleep/dash", sleepDashRouter);
 app.use("/sleep/diff", sleepDiffRouter);
 app.use("/sleep/goal", sleepGoalRouter);
 app.use("/sleep", sleepRouter);
-
 app.use("/user/percent", userPercentRouter);
 app.use("/user/data", userDataRouter);
 app.use("/user", userRouter);
