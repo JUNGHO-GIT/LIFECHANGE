@@ -48,8 +48,17 @@ const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
 function startServer(httpPort, httpsPort) {
   try {
-    app.listen(httpPort, () => {
+    const httpServer = app.listen(httpPort, () => {
       console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
+    });
+    httpServer.on('error', (error) => {
+      if (error?.code === 'EADDRINUSE') {
+        console.log(`${httpPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
+        startServer(httpPort + 1);
+      }
+      else {
+        console.error(`서버 실행 중 오류 발생: ${error}`);
+      }
     });
   }
   catch (error) {
