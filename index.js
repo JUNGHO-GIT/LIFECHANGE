@@ -1,14 +1,11 @@
 // index.js
 
 import fs from "fs";
-import path from "path";
 import cors from "cors";
-import util from "util";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 import https from "https";
 
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
@@ -37,50 +34,47 @@ import { router as userRouter } from "./src/router/user/userRouter.js";
 dotenv.config();
 const app = express();
 
-// -------------------------------------------------------------------------------------------------
-const id = "eric4757";
-const pw = "M7m7m7m7m7!";
-const host = "34.23.233.23";
-const port = "27017";
-const db = "LIFECHANGE";
+// MongoDB 설정 ------------------------------------------------------------------------------------
+const id = process.env.DB_USER;
+const pw = process.env.DB_PASS;
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT || '27017';
+const db = process.env.DB_NAME;
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 
-// -------------------------------------------------------------------------------------------------
-
+// 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
 const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
 function startServer(httpPort, httpsPort) {
+  try {
+    app.listen(httpPort, () => {
+      console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
+    });
+  }
+  catch (error) {
+    console.error('HTTP 서버 설정 중 오류가 발생했습니다:', error.message);
+  }
 
-  // http 리다이렉트 설정
-  /* app.use((req, res, next) => {
-    if (req.protocol === 'http') {
-      res.redirect(301, `https://${req.headers.host}${req.url}`);
-    }
-    else {
-      next();
-    }
-  }); */
+  try {
+    const keyPath = process.env.PRIVKEY_PATH || './key/privkey.pem';
+    const certPath = process.env.FULLCHAIN_PATH || './key/fullchain.pem';
+    const options = {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
 
-  // http 서버 시작
-  app.listen(httpPort, () => {
-    console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
-  });
-
-  // https 설정
-  const options = {
-    key: fs.readFileSync("./key/privkey.pem"),
-    cert: fs.readFileSync("./key/fullchain.pem"),
-  };
-
-  // https 서버 시작
-  https.createServer(options, app).listen(httpsPort, () => {
-    console.log(`HTTPS 서버가 포트 ${httpsPort}에서 실행 중입니다.`);
-  });
+    https.createServer(options, app).listen(httpsPort, () => {
+      console.log(`HTTPS 서버가 포트 ${httpsPort}에서 실행 중입니다.`);
+    });
+  }
+  catch (error) {
+    console.error('HTTPS 서버 설정 중 오류가 발생했습니다:', error.message);
+  }
 }
 startServer(httpPort, httpsPort);
 
-// 미들웨어 설정
+// 미들웨어 설정 -----------------------------------------------------------------------------------
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT"],
