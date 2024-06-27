@@ -69,8 +69,8 @@ function startServer(port) {
   app.set("port", port);
 
   const options = {
-    key: fs.readFileSync("privkey.pem"),
-    cert: fs.readFileSync("fullchain.pem")
+    key: fs.readFileSync("key/privkey.pem"),
+    cert: fs.readFileSync("key/fullchain.pem")
   };
 
   const server = https.createServer(options, app).listen(port, () => {
