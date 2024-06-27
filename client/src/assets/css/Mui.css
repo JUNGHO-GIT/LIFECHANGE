@@ -9,6 +9,9 @@
   min-width: 0px !important;
   min-height: 0px !important;
 }
+.MuiButtonBase-root {
+  min-width: 40px !important;
+}
 .MuiTab-root {
   background-color: transparent !important;
   min-width: 0px !important;
