@@ -79,7 +79,7 @@ export const UserDeletes = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-7. fragment
+    // 7-3. table
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
         <TextField
@@ -108,7 +108,7 @@ export const UserDeletes = () => {
         <Br20 />
         <TextArea
           readOnly={false}
-          className={"w-76vw h-10vh border radius p-10 pointer"}
+          className={"w-76vw h-10vh border shadow-none p-10 pointer"}
           value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
         />
       </Div>
@@ -145,7 +145,7 @@ export const UserDeletes = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min84vh"}>
           {firstSection()}
           <Hr40 />

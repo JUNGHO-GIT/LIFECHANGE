@@ -399,9 +399,9 @@ export const UserDataCategory = () => {
         )}
       </Card>
     );
-    // 7-7. fragment
+    // 7-3. table
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -459,7 +459,7 @@ export const UserDataCategory = () => {
       </Card>
     );
     // 7-8. loading
-    const loadingNode = () => (
+    const loadingFragment = () => (
       <Loading
         LOADING={LOADING}
         setLOADING={setLOADING}
@@ -467,7 +467,7 @@ export const UserDataCategory = () => {
     );
     // 7-8. table
     const tableSection = () => (
-      LOADING ? loadingNode() : tableFragment(0)
+      LOADING ? loadingFragment() : tableFragment(0)
     );
     // 7-9. third
     const thirdSection = () => (
@@ -475,7 +475,7 @@ export const UserDataCategory = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {thirdSection()}
         </Div>

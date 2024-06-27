@@ -44,8 +44,8 @@ export const Loading = ({
   );
 
   // 7. loading ------------------------------------------------------------------------------------
-  const loadingNode = () => (
-    <Paper className={"content-wrapper border radius"}>
+  const loadingFragment = () => (
+    <Paper className={"content-wrapper radius border shadow-none"}>
       {defaultNode()}
     </Paper>
   );
@@ -53,7 +53,7 @@ export const Loading = ({
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-    {loadingNode()}
+    {loadingFragment()}
     </>
   );
 };

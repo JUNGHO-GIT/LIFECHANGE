@@ -58,9 +58,9 @@ export const UserInfo = () => {
         <Img src={logo1} alt={"logo1"} className={"w-240 h-200"} />
       </Div>
     );
-    // 7-7. fragment
+    // 7-3. table
     const tableFragment = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableBody className={"table-tbody"}>
@@ -115,7 +115,7 @@ export const UserInfo = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
           <Br40 />

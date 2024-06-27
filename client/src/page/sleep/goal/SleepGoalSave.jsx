@@ -196,49 +196,48 @@ export const SleepGoalSave = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-1. date
-    const dateSection = () => (
-      <Picker
-        DATE={DATE}
-        setDATE={setDATE}
-        EXIST={EXIST}
-        setEXIST={setEXIST}
-      />
+    // 7-1. date + count
+    const dateCountSection = () => (
+      <Card className={"border shadow-none p-20"}>
+        <Picker
+          DATE={DATE}
+          setDATE={setDATE}
+          EXIST={EXIST}
+          setEXIST={setEXIST}
+        />
+        <Br20/>
+        <Count
+          COUNT={COUNT}
+          setCOUNT={setCOUNT}
+          limit={1}
+        />
+      </Card>
     );
-    // 7-2. count
-    const countSection = () => (
-      <Count
-        COUNT={COUNT}
-        setCOUNT={setCOUNT}
-        limit={1}
-      />
-    );
-    // 7-3. badge
-    const badgeSection = (index) => (
-      <Badge
-        badgeContent={index + 1}
-        color={"primary"}
-        showZero={true}
-      />
-    );
-    // 7-4. delete
-    const deleteSection = (id, sectionId, index) => (
-      <Delete
-        id={id}
-        sectionId={sectionId}
-        index={index}
-        handlerDelete={handlerDelete}
-      />
-    );
-    // 7-7. fragment
-    const tableFragment = (i) => (
-      <Card className={"border p-20"} key={i}>
-        <Div className={"d-column"}>
+    // 7-2. total
+    // 7-3. table
+    const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const tableFragment = (i) => (
+        <Card className={"border shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
-            {badgeSection(i)}
-            {deleteSection(OBJECT?._id, "", i)}
+            <Badge
+              badgeContent={i + 1}
+              color={"primary"}
+              showZero={true}
+            />
+            <Delete
+              id={OBJECT?._id}
+              sectionId={""}
+              index={i}
+              handlerDelete={handlerDelete}
+            />
           </Div>
-          <Br40/>
+          <Br40 />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -266,40 +265,20 @@ export const SleepGoalSave = () => {
             />
           </Div>
           <Br20/>
-        </Div>
-      </Card>
-    );
-    // 7-8. loading
-    const loadingNode = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
-    const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (
-        LOADING ? loadingNode() : tableFragment(0)
-      )
-    );
-    // 7-9. first
-    const firstSection = () => (
-      <Card className={"p-20"}>
-        {dateSection()}
-        <Br20/>
-        {countSection()}
-      </Card>
-    );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
+        </Card>
+      );
+      return (
+        COUNT?.newSectionCnt > 0 && (
+          LOADING ? loadingFragment() : tableFragment(0)
+        )
+      );
+    };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {firstSection()}
-          {secondSection()}
+          {dateCountSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

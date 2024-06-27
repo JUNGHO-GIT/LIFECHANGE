@@ -227,159 +227,139 @@ export const CalendarSave = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-1. date
-    const dateSection = () => (
-      <Picker
-        DATE={DATE}
-        setDATE={setDATE}
-        EXIST={EXIST}
-        setEXIST={setEXIST}
-      />
-    );
-    // 7-2. count
-    const countSection = () => (
-      <Count
-        COUNT={COUNT}
-        setCOUNT={setCOUNT}
-        limit={10}
-      />
-    );
-    // 7-3. badge
-    const badgeSection = (index) => (
-      <Badge
-        badgeContent={index + 1}
-        color={"primary"}
-        showZero={true}
-      />
-    );
-    // 7-4. delete
-    const deleteSection = (id, sectionId, index) => (
-      <Delete
-        id={id}
-        sectionId={sectionId}
-        index={index}
-        handlerDelete={handlerDelete}
-      />
-    );
-    // 7-7. fragment
-    const tableFragment = (i) => (
-      <Card className={"border p-20"} key={i}>
-        <Div className={"d-column"}>
-          <Div className={"d-between"}>
-            {badgeSection(i)}
-            {deleteSection(OBJECT?._id, OBJECT?.calendar_section[i]?._id, i)}
-          </Div>
-          <Br40/>
-          <Div className={"d-left"}>
-            <TextField
-              select={true}
-              type={"text"}
-              size={"small"}
-              label={translate("color")}
-              variant={"outlined"}
-              className={"w-76vw"}
-              value={OBJECT?.calendar_section[i]?.calendar_color}
-              InputProps={{
-                readOnly: false,
-                startAdornment: null,
-                endAdornment: null
-              }}
-              onChange={(e) => {
-                const newColor = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_color: newColor
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {colors.map((item, idx) => (
-                <MenuItem key={idx} value={item}>
-                  <span className={`${item}`}>●</span>
-                  <span className={"ms-10"}>{item}</span>
-                </MenuItem>
-              ))}
-            </TextField>
-          </Div>
-          <Br20/>
-          <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              label={translate("calendarTitle")}
-              variant={"outlined"}
-              className={"w-76vw"}
-              value={OBJECT?.calendar_section[i]?.calendar_title}
-              InputProps={{
-                readOnly: false,
-                startAdornment: (
-                  <Img src={calendar2} className={"w-16 h-16"} />
-                ),
-                endAdornment: null
-              }}
-              onChange={(e) => {
-                const newTitle = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_title: newTitle
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Div>
-          <Br20/>
-          <Div className={"d-center"}>
-            <Memo
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              extra={"calendar_content"}
-              i={i}
-            />
-          </Div>
-          <Br20/>
-        </Div>
-      </Card>
-    );
-    // 7-8. loading
-    const loadingNode = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
-    const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (
-        LOADING ? loadingNode() : OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))
-      )
-    );
-    // 7-9. first
-    const firstSection = () => (
-      <Card className={"p-20"}>
-        {dateSection()}
+    // 7-1. date + count
+    const dateCountSection = () => (
+      <Card className={"border shadow-none p-20"}>
+        <Picker
+          DATE={DATE}
+          setDATE={setDATE}
+          EXIST={EXIST}
+          setEXIST={setEXIST}
+        />
         <Br20/>
-        {countSection()}
+        <Count
+          COUNT={COUNT}
+          setCOUNT={setCOUNT}
+          limit={10}
+        />
       </Card>
     );
-    // 7-9. second
-    const secondSection = () => (
-      tableSection()
-    );
+    // 7-3. table
+    const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const tableFragment = (i) => (
+        <Card className={"border shadow-none p-20"} key={i}>
+          <Div className={"d-column"}>
+            <Div className={"d-between"}>
+              <Badge
+                badgeContent={i + 1}
+                color={"primary"}
+                showZero={true}
+              />
+              <Delete
+                id={OBJECT?._id}
+                sectionId={OBJECT?.calendar_section[i]?._id}
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Div>
+            <Br40/>
+            <Div className={"d-left"}>
+              <TextField
+                select={true}
+                type={"text"}
+                size={"small"}
+                label={translate("color")}
+                variant={"outlined"}
+                className={"w-76vw"}
+                value={OBJECT?.calendar_section[i]?.calendar_color}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: null,
+                  endAdornment: null
+                }}
+                onChange={(e) => {
+                  const newColor = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    calendar_section: prev.calendar_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        calendar_color: newColor
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {colors.map((item, idx) => (
+                  <MenuItem key={idx} value={item}>
+                    <span className={`${item}`}>●</span>
+                    <span className={"ms-10"}>{item}</span>
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Div>
+            <Br20/>
+            <Div className={"d-center"}>
+              <TextField
+                select={false}
+                type={"text"}
+                size={"small"}
+                label={translate("calendarTitle")}
+                variant={"outlined"}
+                className={"w-76vw"}
+                value={OBJECT?.calendar_section[i]?.calendar_title}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: (
+                    <Img src={calendar2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: null
+                }}
+                onChange={(e) => {
+                  const newTitle = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    calendar_section: prev.calendar_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        calendar_title: newTitle
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            </Div>
+            <Br20/>
+            <Div className={"d-center"}>
+              <Memo
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                extra={"calendar_content"}
+                i={i}
+              />
+            </Div>
+            <Br20/>
+          </Div>
+        </Card>
+      );
+      return (
+        COUNT?.newSectionCnt > 0 && (
+          LOADING ? loadingFragment() : OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))
+        )
+      );
+    };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {firstSection()}
-          {secondSection()}
+          {dateCountSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

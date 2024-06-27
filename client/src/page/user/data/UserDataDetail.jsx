@@ -98,7 +98,7 @@ export const UserDataDetail = () => {
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-7. fragment
+    // 7-3. table
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
         <Avatar
@@ -220,7 +220,7 @@ export const UserDataDetail = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min85vh"}>
           {firstSection()}
         </Div>

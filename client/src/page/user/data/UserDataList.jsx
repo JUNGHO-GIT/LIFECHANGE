@@ -244,15 +244,15 @@ export const UserDataList = () => {
   const tableNode = () => {
     // 7-6. empty
     const tableEmpty = () => (
-      <Card className={"border radius p-10"} key={"empty"}>
+      <Card className={"border shadow-none p-10"} key={"empty"}>
         <Div className={"d-center"}>
           {translate("empty")}
         </Div>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment1 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode1 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -299,9 +299,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment2 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode2 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -344,9 +344,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment3 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode3 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -393,9 +393,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment4 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode4 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -442,9 +442,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment5 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode5 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -483,9 +483,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment6 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode6 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -524,9 +524,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment7 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode7 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -569,9 +569,9 @@ export const UserDataList = () => {
         </TableContainer>
       </Card>
     );
-    // 7-7. fragment
-    const tableFragment8 = (i) => (
-      <Card className={"border radius p-0"} key={i}>
+    // 7-3. table
+    const tableNode8 = (i) => (
+      <Card className={"border radius shadow-none p-0"} key={i}>
         <TableContainer>
           <Table>
             <TableHead className={"table-thead"}>
@@ -615,7 +615,7 @@ export const UserDataList = () => {
       </Card>
     );
     // 7-8. loading
-    const loadingNode = () => (
+    const loadingFragment = () => (
       <Loading
         LOADING={LOADING}
         setLOADING={setLOADING}
@@ -624,43 +624,43 @@ export const UserDataList = () => {
     // 7-8. table
     const tableSection = () => {
       if (PART === "exerciseGoal") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment1(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode1(0)
         );
       }
       else if (PART === "exercise") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment2(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode2(0)
         );
       }
       else if (PART === "foodGoal") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment3(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode3(0)
         );
       }
       else if (PART === "food") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment4(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode4(0)
         );
       }
       else if (PART === "moneyGoal") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment5(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode5(0)
         );
       }
       else if (PART === "money") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment6(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode6(0)
         );
       }
       else if (PART === "sleepGoal") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment7(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode7(0)
         );
       }
       else if (PART === "sleep") {
-        return LOADING ? loadingNode() : (
-          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment8(0)
+        return LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableNode8(0)
         );
       }
     };
@@ -670,7 +670,7 @@ export const UserDataList = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
           {thirdSection()}
         </Div>

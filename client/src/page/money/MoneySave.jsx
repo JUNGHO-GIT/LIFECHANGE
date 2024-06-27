@@ -242,95 +242,93 @@ export const MoneySave = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-1. date
-    const dateSection = () => (
-      <Picker
-        DATE={DATE}
-        setDATE={setDATE}
-        EXIST={EXIST}
-        setEXIST={setEXIST}
-      />
-    );
-    // 7-2. count
-    const countSection = () => (
-      <Count
-        COUNT={COUNT}
-        setCOUNT={setCOUNT}
-        limit={10}
-      />
-    );
-    // 7-3. badge
-    const badgeSection = (index) => (
-      <Badge
-        badgeContent={index + 1}
-        color={"primary"}
-        showZero={true}
-      />
-    );
-    // 7-4. delete
-    const deleteSection = (id, sectionId, index) => (
-      <Delete
-        id={id}
-        sectionId={sectionId}
-        index={index}
-        handlerDelete={handlerDelete}
-      />
-    );
-    // 7-5. total
-    const totalSection = () => (
-      <Div className={"d-column"}>
-        <Div className={"d-center"}>
-        <TextField
-          select={false}
-          label={translate("totalIncome")}
-          size={"small"}
-          value={numeral(OBJECT?.money_total_income).format('0,0')}
-          variant={"outlined"}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={money2} className={"w-16 h-16"} />
-            ),
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("currency")}
-              </Div>
-            )
-          }}
+    // 7-1. date + count
+    const dateCountSection = () => (
+      <Card className={"border shadow-none p-20"}>
+        <Picker
+          DATE={DATE}
+          setDATE={setDATE}
+          EXIST={EXIST}
+          setEXIST={setEXIST}
         />
+        <Br20/>
+        <Count
+          COUNT={COUNT}
+          setCOUNT={setCOUNT}
+          limit={10}
+        />
+      </Card>
+    );
+    // 7-2. total
+    const totalSection = () => (
+      <Card className={"border shadow-none p-20"}>
+        <Div className={"d-center"}>
+          <TextField
+            select={false}
+            label={translate("totalIncome")}
+            size={"small"}
+            value={numeral(OBJECT?.money_total_income).format('0,0')}
+            variant={"outlined"}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Img src={money2} className={"w-16 h-16"} />
+              ),
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
         </Div>
         <Br20/>
         <Div className={"d-center"}>
-        <TextField
-          select={false}
-          label={translate("totalExpense")}
-          size={"small"}
-          value={numeral(OBJECT?.money_total_expense).format('0,0')}
-          variant={"outlined"}
-          className={"w-76vw"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={money2} className={"w-16 h-16"} />
-            ),
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("currency")}
-              </Div>
-            )
-          }}
-        />
+          <TextField
+            select={false}
+            label={translate("totalExpense")}
+            size={"small"}
+            value={numeral(OBJECT?.money_total_expense).format('0,0')}
+            variant={"outlined"}
+            className={"w-76vw"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <Img src={money2} className={"w-16 h-16"} />
+              ),
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
         </Div>
-      </Div>
+      </Card>
     );
-    // 7-7. fragment
-    const tableFragment = (i) => (
-      <Card className={"border p-20"} key={i}>
-        <Div className={"d-column"}>
+    // 7-3. table
+    const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const tableFragment = (i) => (
+        <Card className={"border shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
-            {badgeSection(i)}
-            {deleteSection(OBJECT?._id, OBJECT?.money_section[i]?._id, i)}
+            <Badge
+              badgeContent={i + 1}
+              color={"primary"}
+              showZero={true}
+            />
+            <Delete
+              id={OBJECT?._id}
+              sectionId={OBJECT?.money_section[i]?._id}
+              index={i}
+              handlerDelete={handlerDelete}
+            />
           </Div>
           <Br40/>
           <Div className={"d-center"}>
@@ -457,47 +455,21 @@ export const MoneySave = () => {
             />
           </Div>
           <Br20/>
-        </Div>
-      </Card>
-    );
-    // 7-8. loading
-    const loadingNode = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
-    const tableSection = () => (
-      COUNT?.newSectionCnt > 0 && (
-        LOADING ? loadingNode() : OBJECT?.money_section.map((_, i) => tableFragment(i))
-      )
-    );
-    // 7-9. first
-    const firstSection = () => (
-      <Card className={"p-20"}>
-        {dateSection()}
-        <Br20/>
-        {countSection()}
-      </Card>
-    );
-    // 7-10. second
-    const secondSection = () => (
-      <Card className={"p-20"}>
-        {totalSection()}
-      </Card>
-    );
-    // 7-9. third
-    const thirdSection = () => (
-      tableSection()
-    );
+        </Card>
+      );
+      return (
+        COUNT?.newSectionCnt > 0 && (
+          LOADING ? loadingFragment() : OBJECT?.money_section.map((_, i) => tableFragment(i))
+        )
+      );
+    };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {firstSection()}
-          {secondSection()}
-          {thirdSection()}
+          {dateCountSection()}
+          {totalSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

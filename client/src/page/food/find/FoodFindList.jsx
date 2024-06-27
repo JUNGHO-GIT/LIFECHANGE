@@ -184,167 +184,148 @@ export const FoodFindList = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-6. empty
-    const tableEmpty = () => (
-      <Card className={"border radius p-10"} key={"empty"}>
-        <Div className={"d-center"}>
-          {translate("empty")}
-        </Div>
-      </Card>
-    );
-    // 7-7. fragment
-    const tableFragment = (i) => (
-      OBJECT?.map((item, index) => (
-        <Card className={"border radius p-10"} key={`${index}-${i}`}>
-          <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-            <AccordionSummary expandIcon={
-              <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
-                setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
-              }}/>
-            }>
-              <Div className={"d-center"}>
-                <Checkbox
-                  key={`check-${index}`}
-                  color={"primary"}
-                  size={"small"}
-                  checked={
-                    !! (
-                      checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-                      checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
-                    )
-                  }
-                  onChange={() => {
-                    handlerCheckboxChange(index);
-                  }}
-                />
-                {/** 10자 넘어가면 ... 처리 */}
-                {isExpanded.includes(index) ? (
-                  item.food_title
-                ) : (
-                  item.food_title.length > 10 ?
-                  `${item.food_title.substring(0, 10)}...` :
-                  item.food_title
-                )}
-              </Div>
-              <Div className={"d-center"}>
-                <Div className={"fs-0-8rem dark d-left ms-20"}>
-                  {item.food_brand}
-                </Div>
-              </Div>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold dark"}>
-                  <Img src={food2} className={"w-15 h-15"} />
-                </Div>
-                <Div className={"fs-1-0rem fw-bold dark me-5"}>
-                  {translate("kcal")}
-                </Div>
-              </Div>
-
-              <Br10 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold"}>
-                  {numeral(item.food_kcal).format("0,0")}
-                </Div>
-                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
-                  {translate("k")}
-                </Div>
-              </Div>
-
-              <Hr30 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold dark"}>
-                  <Img src={food3} className={"w-15 h-15"} />
-                </Div>
-                <Div className={"fs-1-0rem fw-bold dark me-5"}>
-                  {translate("carb")}
-                </Div>
-              </Div>
-
-              <Br10 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold"}>
-                  {numeral(item.food_carb).format("0,0")}
-                </Div>
-                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
-                  {translate("g")}
-                </Div>
-              </Div>
-
-              <Hr30 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold dark"}>
-                  <Img src={food4} className={"w-15 h-15"} />
-                </Div>
-                <Div className={"fs-1-0rem fw-bold dark me-5"}>
-                  {translate("protein")}
-                </Div>
-              </Div>
-
-              <Br10 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold"}>
-                  {numeral(item.food_protein).format("0,0")}
-                </Div>
-                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
-                  {translate("g")}
-                </Div>
-              </Div>
-
-              <Hr30 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold dark"}>
-                  <Img src={food5} className={"w-15 h-15"} />
-                </Div>
-                <Div className={"fs-1-0rem fw-bold dark me-5"}>
-                  {translate("fat")}
-                </Div>
-              </Div>
-
-              <Br10 />
-
-              <Div className={"d-left"}>
-                <Div className={"fs-1-0rem fw-bold"}>
-                  {numeral(item.food_fat).format("0,0")}
-                </Div>
-                <Div className={"fs-0-7rem dark fw-normal ms-10"}>
-                  {translate("g")}
-                </Div>
-              </Div>
-            </AccordionDetails>
-          </Accordion>
+    // 7-3. table
+    const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const tableEmpty = () => (
+        <Card className={"border shadow-none p-10"} key={"empty"}>
+          <Div className={"d-center"}>
+            {translate("empty")}
+          </Div>
         </Card>
-      ))
-    );
-    // 7-8. loading
-    const loadingNode = () => (
-      <Loading
-        LOADING={LOADING}
-        setLOADING={setLOADING}
-      />
-    );
-    // 7-8. table
-    const tableSection = () => (
-      LOADING ? loadingNode() : (
-        COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
-      )
-    );
-    // 7-9. first
-    const firstSection = () => (
-      tableSection()
-    );
+      );
+      const tableFragment = (i) => (
+        OBJECT?.map((item, index) => (
+          <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
+            <Accordion expanded={isExpanded.includes(index)}>
+              <AccordionSummary expandIcon={
+                <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
+                  setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
+                }}/>
+              }>
+                <Div className={"d-center"}>
+                  <Checkbox
+                    key={`check-${index}`}
+                    color={"primary"}
+                    size={"small"}
+                    checked={
+                      !! (
+                        checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
+                        checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
+                      )
+                    }
+                    onChange={() => {
+                      handlerCheckboxChange(index);
+                    }}
+                  />
+                  {/** 10자 넘어가면 ... 처리 */}
+                  {isExpanded.includes(index) ? (
+                    item.food_title
+                  ) : (
+                    item.food_title.length > 10 ?
+                    `${item.food_title.substring(0, 10)}...` :
+                    item.food_title
+                  )}
+                </Div>
+                <Div className={"d-center"}>
+                  <Div className={"fs-0-8rem dark d-left ms-20"}>
+                    {item.food_brand}
+                  </Div>
+                </Div>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold dark"}>
+                    <Img src={food2} className={"w-15 h-15"} />
+                  </Div>
+                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                    {translate("kcal")}
+                  </Div>
+                </Div>
+                <Br10 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold"}>
+                    {numeral(item.food_kcal).format("0,0")}
+                  </Div>
+                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                    {translate("k")}
+                  </Div>
+                </Div>
+                <Hr30 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold dark"}>
+                    <Img src={food3} className={"w-15 h-15"} />
+                  </Div>
+                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                    {translate("carb")}
+                  </Div>
+                </Div>
+                <Br10 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold"}>
+                    {numeral(item.food_carb).format("0,0")}
+                  </Div>
+                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                    {translate("g")}
+                  </Div>
+                </Div>
+                <Hr30 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold dark"}>
+                    <Img src={food4} className={"w-15 h-15"} />
+                  </Div>
+                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                    {translate("protein")}
+                  </Div>
+                </Div>
+                <Br10 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold"}>
+                    {numeral(item.food_protein).format("0,0")}
+                  </Div>
+                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                    {translate("g")}
+                  </Div>
+                </Div>
+                <Hr30 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold dark"}>
+                    <Img src={food5} className={"w-15 h-15"} />
+                  </Div>
+                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                    {translate("fat")}
+                  </Div>
+                </Div>
+                <Br10 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold"}>
+                    {numeral(item.food_fat).format("0,0")}
+                  </Div>
+                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                    {translate("g")}
+                  </Div>
+                </Div>
+              </AccordionDetails>
+            </Accordion>
+          </Card>
+        ))
+      );
+      return (
+        LOADING ? loadingFragment() : (
+          COUNT.totalCnt === 0 ? tableEmpty() : tableFragment(0)
+        )
+      );
+    };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min67vh"}>
-          {firstSection()}
+          {tableSection()}
         </Div>
       </Paper>
     );

@@ -112,7 +112,7 @@ export const UserSignup = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-7. fragment
+    // 7-3. table
     const tableFragment = (i) => (
       <Div className={"d-column"} key={i}>
         {/** section 1 **/}
@@ -350,7 +350,7 @@ export const UserSignup = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
           {firstSection()}
           <Hr40 />

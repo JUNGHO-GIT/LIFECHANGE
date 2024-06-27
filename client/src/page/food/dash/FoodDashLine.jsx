@@ -454,16 +454,16 @@ export const FoodDashLine = () => {
     // 7-8. dash
     const dashSection = () => {
       if (SECTION === "week" && LINE === "kcal") {
-        return LOADING ? loadingNode() : dashFragment1(0);
+        return LOADING ? loadingFragment() : dashFragment1(0);
       }
       else if (SECTION === "month" && LINE === "kcal") {
-        return LOADING ? loadingNode() : dashFragment2(0);
+        return LOADING ? loadingFragment() : dashFragment2(0);
       }
       else if (SECTION === "week" && LINE === "nut") {
-        return LOADING ? loadingNode() : dashFragment3(0);
+        return LOADING ? loadingFragment() : dashFragment3(0);
       }
       else if (SECTION === "month" && LINE === "nut") {
-        return LOADING ? loadingNode() : dashFragment4(0);
+        return LOADING ? loadingFragment() : dashFragment4(0);
       }
     }
     // 7-9. first
@@ -480,7 +480,7 @@ export const FoodDashLine = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper border radius"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
           {firstSection()}
           <Br20/>
@@ -491,7 +491,7 @@ export const FoodDashLine = () => {
   };
 
   // 8. loading ------------------------------------------------------------------------------------
-  const loadingNode = () => (
+  const loadingFragment = () => (
     <Loading
       LOADING={LOADING}
       setLOADING={setLOADING}

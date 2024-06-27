@@ -1,67 +1,46 @@
-[class$="MuiPaper-root"] {
-  border-radius: 10px !important;
-  box-shadow: 0px 0px 0px 0px !important;
-}
-[class$="MuiCard-root"] {
-  border-radius: 10px !important;
-  box-shadow: 0px 0px 0px 0px !important;
-}
-[class$="MuiTableCell-root"] {
+.MuiTableCell-root {
   padding: 5px 5px 5px 5px !important;
   z-index: 10 !important;
 }
-[class$="MuiToolbar-root"] {
+.MuiToolbar-root {
   padding: 0px 0px 0px 0px !important;
 }
-[class$="MuiButton-root"] {
-  min-width: 50px !important;
-}
-[class$="MuiBadge-badge"] {
+.MuiBadge-badge {
   min-width: 0px !important;
   min-height: 0px !important;
 }
-[class$="MuiTab-root"] {
+.MuiTab-root {
   background-color: transparent !important;
   min-width: 0px !important;
 }
-[class$="MuiBottomNavigation-root"] {
-  background-color: transparent !important;
-  min-width: 0px !important;
-}
-[class$="MuiBottomNavigationAction-root"] {
-  background-color: transparent !important;
-  min-width: 18vw !important;
-}
-[class$="MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
+.MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
   text-overflow: clip !important;
   font-size: 0.9rem !important;
 }
-[class$="MuiInputBase-root-MuiOutlinedInput-root"] {
-  text-overflow: clip !important;
-  font-size: 0.9rem !important;
-  min-height: 40px !important;
-}
-[class$="MuiTypography-root"] {
-  text-overflow: clip !important;
-  font-size: 0.9rem !important;
-}
-[class$="MuiPopover-paper"] {
+.MuiPopover-paper {
   z-index: 100000 !important;
 }
-[class$="MuiGrid-root"] > .MuiGrid-item {
-  padding-left: 10px !important;
-  padding-top: 8px !important;
-}
-
 .MuiFormControlLabel-root {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
+
+/** top *******************************************************************************************/
 .MuiTab-root.Mui-selected {
   color: #006ab3 !important;
   font-weight: bold !important;
   text-decoration: none !important;
   scale: 1.2 !important;
+}
+
+/** bottom ****************************************************************************************/
+.MuiBottomNavigation-root {
+  background-color: transparent !important;
+  min-width: 0px !important;
+}
+.MuiBottomNavigationAction-root {
+  background-color: transparent !important;
+  min-width: 18vw !important;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
   color: #006ab3 !important;
@@ -70,19 +49,24 @@
   scale: 1.2 !important;
 }
 
+/** typography ************************************************************************************/
+.MuiTypography-root {
+  text-overflow: clip !important;
+  font-size: 0.9rem !important;
+}
 /** 일반 **/
-[class$="MuiTypography-root-MuiLink-root"] {
+.MuiTypography-root.MuiLink-root {
   color: unset !important;
   font-weight: bold !important;
   text-decoration: none !important;
 }
 /** 호버 **/
-[class$="MuiTypography-root-MuiLink-root"]:hover {
+.MuiTypography-root.MuiLink-root:hover {
   color: #006ab3 !important;
   scale: 1.1 !important;
 }
 /** 셀렉트, 엑티브 **/
-[class$="MuiTypography-root-MuiLink-root"]:active {
+.MuiTypography-root.MuiLink-root:active {
   color: #006ab3 !important;
   scale: 1.1 !important;
 }

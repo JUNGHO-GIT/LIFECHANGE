@@ -16,8 +16,8 @@ export const Ad = () => {
 
   // 7. adNode -------------------------------------------------------------------------------------
   const adNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-8vh border radius"}>
-      <Card className={"block-wrapper d-row h-8vh w-100p"}>
+    <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
+      <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
         {defaultNode()}
       </Card>
     </Paper>
