@@ -96,7 +96,7 @@ export const FoodFindSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(JSON.stringify(err));
+      console.log(JSON.stringify(err, null, 2));
     })
     .finally(() => {
       setLOADING(false);
@@ -181,7 +181,7 @@ export const FoodFindSave = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err));
+      console.log(JSON.stringify(err, null, 2));
     });
   };
 

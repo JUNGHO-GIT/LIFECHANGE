@@ -66,7 +66,7 @@ export const UserLogin = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err));
+      console.log(JSON.stringify(err, null, 2));
     });
   };
 

@@ -68,7 +68,7 @@ export const UserDataDetail = () => {
       });
     })
     .catch((err) => {
-      console.log(JSON.stringify(err));
+      console.log(JSON.stringify(err, null, 2));
     })
     .finally(() => {
       setLOADING(false);
@@ -92,7 +92,7 @@ export const UserDataDetail = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err));
+      console.log(JSON.stringify(err, null, 2));
     });
   };
 
