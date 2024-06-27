@@ -36,7 +36,7 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios.post (`${URL_OBJECT}/login`, {
+    await axios.post (`https://34.23.233.23:4000/user/login`, {
       user_id: userId,
       user_pw: userPw,
     })
@@ -67,7 +67,7 @@ export const UserLogin = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     });
   };
 

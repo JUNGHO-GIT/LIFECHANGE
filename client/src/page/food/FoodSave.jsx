@@ -98,7 +98,7 @@ export const FoodSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     })
     .finally(() => {
       setLOADING(false);
@@ -133,7 +133,7 @@ export const FoodSave = () => {
       }));
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     })
     .finally(() => {
       setLOADING(false);
@@ -208,7 +208,7 @@ export const FoodSave = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     });
   };
 
@@ -240,7 +240,7 @@ export const FoodSave = () => {
       }
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     });
   };
 

@@ -164,7 +164,7 @@ export const FoodFindList = () => {
       }));
     })
     .catch((err) => {
-      console.log(JSON.stringify(err, null, 2));
+      console.error(JSON.stringify(err, null, 2));
     })
     .finally(() => {
       setLOADING(false);
