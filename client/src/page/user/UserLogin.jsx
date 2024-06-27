@@ -38,7 +38,7 @@ export const UserLogin = () => {
   const flowSave = async () => {
     await axios({
       headers: {"Content-Type": "application/json"},
-      url: `${URL_OBJECT}/login`,
+      url: "http://34.23.233.23:4000/user/login",
       method: "POST",
       data: {
         user_id: userId,

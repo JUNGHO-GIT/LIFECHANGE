@@ -64,41 +64,40 @@ mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 // mongoose.set("debug", customLogger);
 
 // -------------------------------------------------------------------------------------------------
-const httpPort = Number(process.env.PORT) || 4000;
-const httpsPort = 443;
+const httpPort = Number(process.env.HTTP_PORT) || 4000;
+const httpsPort = Number(process.env.HTTPS_PORT) || 443;
 
 function startServer(httpPort, httpsPort) {
+
+  // 1-1. http 설정
   app.set("port", httpPort);
 
-  // HTTPS 설정
+  // 1-2. http 리다이렉트 설정
+  app.use((req, res, next) => {
+    if (req.protocol === 'http') {
+      res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    else {
+      next();
+    }
+  });
+
+  // 1-3. http 서버 시작
+  app.listen(httpPort, () => {
+    console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
+  });
+
+  // 2-1. https 설정
   const options = {
     key: fs.readFileSync("key/privkey.pem"),
     cert: fs.readFileSync("key/fullchain.pem")
   };
 
-  // HTTPS 서버 시작
-  const httpsServer = https.createServer(options, app).listen(httpsPort, () => {
+  // 2-2. https 서버 시작
+  https.createServer(options, app).listen(httpsPort, () => {
     console.log(`HTTPS 서버가 포트 ${httpsPort}에서 실행 중입니다.`);
   });
-
-  // HTTP 리다이렉트 설정
-  app.use((req, res, next) => {
-    if (req.protocol === 'http') {
-      res.redirect(301, `https://${req.headers.host}${req.url}`);
-    } else {
-      next();
-    }
-  });
-
-  httpsServer.on('error', (error) => {
-    if (error?.code === 'EADDRINUSE') {
-      console.log(`${httpsPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
-      startServer(httpPort, httpsPort + 1);
-    } else {
-      console.error(`HTTPS 서버 실행 중 오류 발생: ${error}`);
-    }
-  });
-};
+}
 
 startServer(httpPort, httpsPort);
 
