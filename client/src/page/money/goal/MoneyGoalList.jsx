@@ -116,7 +116,7 @@ export const MoneyGoalList = () => {
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
-            <Accordion expanded={isExpanded.includes(index)}>
+            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                   setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);

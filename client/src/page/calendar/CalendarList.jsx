@@ -33,8 +33,6 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [isExpanded, setIsExpanded] = useState([0]);
-  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
@@ -72,7 +70,6 @@ export const CalendarList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
-    setLOADING(true);
     await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -91,9 +88,6 @@ export const CalendarList = () => {
     .catch((err) => {
       console.log(JSON.stringify(err, null, 2));
     })
-    .finally(() => {
-      setLOADING(false);
-    });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. calendar -----------------------------------------------------------------------------------

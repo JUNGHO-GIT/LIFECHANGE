@@ -77,7 +77,8 @@ function startServer(port) {
     if (error?.code === 'EADDRINUSE') {
       console.log(`${port} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
       startServer(port + 1);
-    } else {
+    }
+    else {
       console.error(`서버 실행 중 오류 발생: ${error}`);
     }
   });

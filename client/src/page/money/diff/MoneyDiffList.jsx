@@ -124,7 +124,7 @@ export const MoneyDiff = () => {
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
-            <Accordion expanded={isExpanded.includes(index)}>
+            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)} key={`${index}-${i}`}>
               <AccordionSummary expandIcon={
                 <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
                   setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
@@ -228,7 +228,6 @@ export const MoneyDiff = () => {
                     {numeral(item.money_diff_expense).format("0,0")}
                   </Div>
                 </Div>
-
               </AccordionDetails>
             </Accordion>
           </Card>
