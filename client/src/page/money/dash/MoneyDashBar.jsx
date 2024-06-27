@@ -129,78 +129,70 @@ export const MoneyDashBar = () => {
 
   // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
-    // 7-5. title
-    const titleSection = () => (
-      <Div className={"d-center fs-0-9rem"}>
-        {translate("dashBar")}
-      </Div>
-    );
-    // 7-4. delete
-    const deleteSection1 = () => (
-      <Div className={"d-center"}>
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          variant={"outlined"}
-          value={SECTION}
-          onChange={(e) => (
-            setSECTION(e.target.value)
-          )}
-        >
-          <MenuItem value={"today"}>
-            {translate("today")}
-          </MenuItem>
-        </TextField>
-      </Div>
-    );
-    // 7-6. dropdown
-    const deleteSection2 = () => (
-      <Img src={common3_2} className={"w-24 h-24"} />
-    );
-    // 7-7. fragment
-    const dashFragment1 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartToday()}
-      </Card>
-    );
-    // 7-8. dash
+    // 7-1. head
+    const headSection = () => {
+      const titleSection = () => (
+        <Div className={"d-center fs-0-9rem"}>
+          {translate("dashBar")}
+        </Div>
+      );
+      const selectSection1 = () => (
+        <Div className={"d-center"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            value={SECTION}
+            onChange={(e) => (
+              setSECTION(e.target.value)
+            )}
+          >
+            <MenuItem value={"today"}>
+              {translate("today")}
+            </MenuItem>
+          </TextField>
+        </Div>
+      );
+      const selectSection2 = () => (
+        <Img src={common3_2} className={"w-24 h-24"} />
+      );
+      return (
+        <Div className={"d-center mt-n10"}>
+          <Div className={"ms-0"}>{selectSection1()}</Div>
+          <Div className={"ms-auto"}>{titleSection()}</Div>
+          <Div className={"ms-auto me-0"}>{selectSection2()}</Div>
+        </Div>
+      );
+    };
+    // 7-2. dash
     const dashSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const dashFragment1 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartToday()}
+        </Card>
+      );
       if (SECTION === "today") {
         return LOADING ? loadingFragment() : dashFragment1(0);
       }
     };
-    // 7-9. first
-    const firstSection = () => (
-      <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{deleteSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
-      </Div>
-    );
-    // 7-9. third
-    const thirdSection = () => (
-      dashSection()
-    );
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
-          {firstSection()}
+          {headSection()}
           <Br20/>
-          {thirdSection()}
+          {dashSection()}
         </Div>
       </Paper>
     );
   };
-
-  // 8. loading ------------------------------------------------------------------------------------
-  const loadingFragment = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
 
   // 10. return ------------------------------------------------------------------------------------
   return (

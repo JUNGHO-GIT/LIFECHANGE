@@ -259,14 +259,6 @@ export const ExerciseList = () => {
     />
   );
 
-  // 8. loading ------------------------------------------------------------------------------------
-  const loadingFragment = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
-
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>

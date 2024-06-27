@@ -362,83 +362,92 @@ export const ExerciseDashAvg = () => {
 
   // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
-    // 7-5. title
-    const titleSection = () => (
-      <Div className={"d-center fs-0-9rem"}>
-        {translate("dashAvg")}
-      </Div>
-    );
-    // 7-4. delete
-    const deleteSection1 = () => (
-      <Div className={"d-center"}>
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          variant={"outlined"}
-          value={SECTION}
-          onChange={(e) => (
-            setSECTION(e.target.value)
+    // 7-1. head
+    const headSection = () => {
+      const titleSection = () => (
+        <Div className={"d-center fs-0-9rem"}>
+          {translate("dashAvg")}
+        </Div>
+      );
+      const selectSection1 = () => (
+        <Div className={"d-center"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            value={SECTION}
+            onChange={(e) => (
+              setSECTION(e.target.value)
+            )}
+          >
+            <MenuItem value={"month"}>{translate("month")}</MenuItem>
+            <MenuItem value={"year"}>{translate("year")}</MenuItem>
+          </TextField>
+        </Div>
+      );
+      const selectSection2 = () => (
+        <PopUp
+          type={"dash"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+          ["volume", "cardio"].map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+                if (LINE === key) {
+                  return;
+                }
+                else {
+                  setLINE(key);
+                }
+              }}/>} label={translate(key)} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          )))}>
+          {(popTrigger={}) => (
+            <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}/>
           )}
-        >
-          <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          <MenuItem value={"year"}>{translate("year")}</MenuItem>
-        </TextField>
-      </Div>
-    );
-    // 7-4. delete
-    const deleteSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-        ["volume", "cardio"].map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-              if (LINE === key) {
-                return;
-              }
-              else {
-                setLINE(key);
-              }
-            }}/>} label={translate(key)} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        )))}>
-        {(popTrigger={}) => (
-          <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
-    );
-    // 7-7. fragment
-    const dashFragment1 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartVolumeMonth()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment2 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartCardioMonth()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment3 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartVolumeYear()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment4 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartCardioYear()}
-      </Card>
-    );
-    // 7-8. dash
+        </PopUp>
+      );
+      return (
+        <Div className={"d-center mt-n10"}>
+          <Div className={"ms-0"}>{selectSection1()}</Div>
+          <Div className={"ms-auto"}>{titleSection()}</Div>
+          <Div className={"ms-auto me-0"}>{selectSection2()}</Div>
+        </Div>
+      );
+    };
+    // 7-2. dash
     const dashSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const dashFragment1 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartVolumeMonth()}
+        </Card>
+      );
+      const dashFragment2 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartCardioMonth()}
+        </Card>
+      );
+      const dashFragment3 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartVolumeYear()}
+        </Card>
+      );
+      const dashFragment4 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartCardioYear()}
+        </Card>
+      );
       if (SECTION === "month" && LINE === "volume") {
         return LOADING ? loadingFragment() : dashFragment1(0);
       }
@@ -451,35 +460,18 @@ export const ExerciseDashAvg = () => {
       else if (SECTION === "year" && LINE === "cardio") {
         return LOADING ? loadingFragment() : dashFragment4(0);
       }
-    }
-    // 7-9. first
-    const firstSection = () => (
-      <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{deleteSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
-      </Div>
-    );
-    // 7-9. third
-    const thirdSection = () => (
-      dashSection()
-    );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
-          {firstSection()}
+          {headSection()}
           <Br20/>
-          {thirdSection()}
+          {dashSection()}
         </Div>
       </Paper>
     );
   };
-
-  // 8. loading ------------------------------------------------------------------------------------
-  const loadingFragment = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING} />
-  );
 
   // 10. return ------------------------------------------------------------------------------------
   return (

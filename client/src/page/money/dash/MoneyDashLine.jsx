@@ -242,118 +242,108 @@ export const MoneyDashLine = () => {
 
   // 7. dash ---------------------------------------------------------------------------------------
   const dashNode = () => {
-    // 7-5. title
-    const titleSection = () => (
-      <Div className={"d-center fs-0-9rem"}>
-        {translate("dashLine")}
-      </Div>
-    );
-    // 7-4. delete
-    const deleteSection1 = () => (
-      <Div className={"d-center"}>
-        <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          variant={"outlined"}
-          value={SECTION}
-          onChange={(e) => (
-            setSECTION(e.target.value)
-          )}
-        >
-          <MenuItem value={"week"}>{translate("week")}</MenuItem>
-          <MenuItem value={"month"}>{translate("month")}</MenuItem>
-        </TextField>
-      </Div>
-    );
-    // 7-4. delete
-    const deleteSection2 = () => (
-      <PopUp
-        type={"dash"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-        ["income", "expense"].map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel
-              control={<Switch checked={LINE.includes(key)}
-              onChange={() => {
-                if (LINE.includes(key)) {
-                  if(LINE.length > 1) {
-                    setLINE(LINE?.filter((item) => (item !== key)));
+    // 7-1. head
+    const headSection = () => {
+      const titleSection = () => (
+        <Div className={"d-center fs-0-9rem"}>
+          {translate("dashLine")}
+        </Div>
+      );
+      const selectSection1 = () => (
+        <Div className={"d-center"}>
+          <TextField
+            select={true}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            value={SECTION}
+            onChange={(e) => (
+              setSECTION(e.target.value)
+            )}
+          >
+            <MenuItem value={"week"}>{translate("week")}</MenuItem>
+            <MenuItem value={"month"}>{translate("month")}</MenuItem>
+          </TextField>
+        </Div>
+      );
+      const selectSection2 = () => (
+        <PopUp
+          type={"dash"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
+          ["income", "expense"].map((key, index) => (
+            <FormGroup key={index}>
+              <FormControlLabel
+                control={<Switch checked={LINE.includes(key)}
+                onChange={() => {
+                  if (LINE.includes(key)) {
+                    if(LINE.length > 1) {
+                      setLINE(LINE?.filter((item) => (item !== key)));
+                    }
+                    else {
+                      return;
+                    }
                   }
                   else {
-                    return;
+                    setLINE([...LINE, key]);
                   }
-                }
-                else {
-                  setLINE([...LINE, key]);
-                }
-              }}/>} label={translate(key)} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))
-      )}>
-        {(popTrigger={}) => (
-          <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}/>
-        )}
-      </PopUp>
-    );
-
-    // 7-7. fragment
-    const dashFragment1 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartWeek()}
-      </Card>
-    );
-    // 7-7. fragment
-    const dashFragment2 = (i) => (
-      <Card className={"p-10"} key={i}>
-        {chartMonth()}
-      </Card>
-    );
-    // 7-8. dash
+                }}/>} label={translate(key)} labelPlacement={"start"}>
+              </FormControlLabel>
+            </FormGroup>
+          ))
+        )}>
+          {(popTrigger={}) => (
+            <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
+              popTrigger.openPopup(e.currentTarget)
+            }}/>
+          )}
+        </PopUp>
+      );
+      return (
+        <Div className={"d-center mt-n10"}>
+          <Div className={"ms-0"}>{selectSection1()}</Div>
+          <Div className={"ms-auto"}>{titleSection()}</Div>
+          <Div className={"ms-auto me-0"}>{selectSection2()}</Div>
+        </Div>
+      );
+    };
+    // 7-2. dash
     const dashSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
+      const dashFragment1 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartWeek()}
+        </Card>
+      );
+      const dashFragment2 = (i) => (
+        <Card className={"border shadow-none p-10"} key={i}>
+          {chartMonth()}
+        </Card>
+      );
       if (SECTION === "week") {
         return LOADING ? loadingFragment() : dashFragment1(0);
       }
       else if (SECTION === "month") {
         return LOADING ? loadingFragment() : dashFragment2(0);
       }
-    }
-    // 7-9. first
-    const firstSection = () => (
-      <Div className={"d-center mt-n10"}>
-        <Div className={"ms-0"}>{deleteSection1()}</Div>
-        <Div className={"ms-auto"}>{titleSection()}</Div>
-        <Div className={"ms-auto me-0"}>{deleteSection2()}</Div>
-      </Div>
-    );
-    // 7-9. third
-    const thirdSection = () => (
-      dashSection()
-    );
+    };
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
-          {firstSection()}
+          {headSection()}
           <Br20/>
-          {thirdSection()}
+          {dashSection()}
         </Div>
       </Paper>
     );
   };
-
-  // 8. loading ------------------------------------------------------------------------------------
-  const loadingFragment = () => (
-    <Loading
-      LOADING={LOADING}
-      setLOADING={setLOADING}
-    />
-  );
 
   // 10. return ------------------------------------------------------------------------------------
   return (
