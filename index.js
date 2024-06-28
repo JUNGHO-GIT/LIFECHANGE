@@ -1,12 +1,10 @@
 // index.js
 
-import fs from "fs";
 import cors from "cors";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import https from "https";
 
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
 import { router as exerciseDashRouter } from "./src/router/exercise/exerciseDashRouter.js";
@@ -64,28 +62,6 @@ function startServer(httpPort, httpsPort) {
   catch (error) {
     console.error('HTTP 서버 설정 중 오류가 발생했습니다:', error.message);
   }
-
-  /* try {
-    const keyPath = process.env.PRIVKEY_PATH || './key/privkey.pem';
-    const certPath = process.env.FULLCHAIN_PATH || './key/fullchain.pem';
-
-    if (!fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
-      console.error('HTTPS 서버 설정 중 오류가 발생했습니다: key 또는 cert 파일이 존재하지 않습니다.');
-      return;
-    }
-
-    const options = {
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath),
-    };
-
-    https.createServer(options, app).listen(httpsPort, () => {
-      console.log(`HTTPS 서버가 포트 ${httpsPort}에서 실행 중입니다.`);
-    });
-  }
-  catch (error) {
-    console.error('HTTPS 서버 설정 중 오류가 발생했습니다:', error.message);
-  } */
 }
 startServer(httpPort, httpsPort);
 

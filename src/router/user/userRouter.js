@@ -6,7 +6,6 @@ export const router = express.Router();
 
 // 0-0. send ---------------------------------------------------------------------------------------
 router.post("/send", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.send (
       req.body.user_id
@@ -42,7 +41,6 @@ router.post("/send", async (req, res) => {
 
 // 0-0. verify -------------------------------------------------------------------------------------
 router.post("/verify", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.verify (
       req.body.user_id,
@@ -78,7 +76,6 @@ router.post("/verify", async (req, res) => {
 
 // 0-0. info ---------------------------------------------------------------------------------------
 router.get("/info", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.info (
       req.query.user_id
@@ -108,7 +105,6 @@ router.get("/info", async (req, res) => {
 
 // 0-0. signup -------------------------------------------------------------------------------------
 router.post("/signup", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.signup (
       req.body.user_id,
@@ -145,7 +141,6 @@ router.post("/signup", async (req, res) => {
 
 // 0-1. login --------------------------------------------------------------------------------------
 router.post("/login", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.login (
       req.body.user_id,
@@ -177,7 +172,6 @@ router.post("/login", async (req, res) => {
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
 router.get("/detail", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.detail (
       req.query._id,
@@ -209,7 +203,6 @@ router.get("/detail", async (req, res) => {
 
 // 3-2. save ---------------------------------------------------------------------------------------
 router.post("/save", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.save (
       req.body.user_id,
@@ -241,7 +234,6 @@ router.post("/save", async (req, res) => {
 
 // 4. deletes --------------------------------------------------------------------------------------
 router.delete("/deletes", async (req, res) => {
-  console.log(JSON.stringify(req, null, 2));
   try {
     let result = await service.deletes (
       req.body.user_id
