@@ -21,8 +21,8 @@ else
   exit $status
 fi
 
-# 만약 pm2에 index.js가 있는경우 삭제
-if pm2 list | grep "index.js"; then
+# pm2에서 index.js가 실행 중인지 확인
+if pm2 list | grep -q "index.js"; then
   pm2 delete index.js
   pm2 save
   status=$?
