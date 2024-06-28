@@ -21,15 +21,17 @@ else
   exit $status
 fi
 
-# pm2 delete
-pm2 delete index.js
-pm2 save
-status=$?
-if [ $status -eq 0 ]; then
-  echo "pm delete : success"
-else
-  echo "pm delete : fail"
-  exit $status
+# 만약 pm2에 index.js가 있는경우 삭제
+if pm2 list | grep "index.js"; then
+  pm2 delete index.js
+  pm2 save
+  status=$?
+  if [ $status -eq 0 ]; then
+    echo "pm delete : success"
+  else
+    echo "pm delete : fail"
+    exit $status
+  fi
 fi
 
 # pm2 start
