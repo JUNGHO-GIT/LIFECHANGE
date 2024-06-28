@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && del build.tar.gz && tar -zcvf build.tar.gz build && gsutil rm gs://jungho-bucket/JPAGE/SERVER/build.tar.gz && gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz"
+    "build": "powershell -Command \"(Get-Content .env) -replace '^(REACT_APP_URL = .*)', ('# Updated on ' + (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') + [System.Environment]::NewLine + 'REACT_APP_URL = https://www.junghomun.com') | Set-Content .env\" && react-scripts build && del build.tar.gz && tar -zcvf build.tar.gz build && gsutil rm gs://jungho-bucket/JPAGE/SERVER/build.tar.gz && gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz && powershell -Command \"(Get-Content .env) -replace '^(REACT_APP_URL = .*)', ('# Updated on ' + (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') + [System.Environment]::NewLine + 'REACT_APP_URL = http://localhost:4000') | Set-Content .env\""
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
