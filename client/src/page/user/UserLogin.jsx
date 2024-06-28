@@ -36,14 +36,9 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios({
-      headers: {"Content-Type": "application/json"},
-      url: `${URL_OBJECT}/login`,
-      method: "POST",
-      data: {
-        user_id: userId,
-        user_pw: userPw,
-      },
+    await axios.post (`${URL_OBJECT}/login`, {
+      user_id: userId,
+      user_pw: userPw,
     })
     .then((res) => {
       if (res.data.status === "success") {
