@@ -6,4 +6,5 @@ pakcage-lock.json
 .vscode
 **.txt
 .txt
-z_*.conf
+*.conf
+.env
