@@ -65,9 +65,15 @@ function startServer(httpPort, httpsPort) {
     console.error('HTTP 서버 설정 중 오류가 발생했습니다:', error.message);
   }
 
-  try {
+  /* try {
     const keyPath = process.env.PRIVKEY_PATH || './key/privkey.pem';
     const certPath = process.env.FULLCHAIN_PATH || './key/fullchain.pem';
+
+    if (!fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
+      console.error('HTTPS 서버 설정 중 오류가 발생했습니다: key 또는 cert 파일이 존재하지 않습니다.');
+      return;
+    }
+
     const options = {
       key: fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
@@ -79,7 +85,7 @@ function startServer(httpPort, httpsPort) {
   }
   catch (error) {
     console.error('HTTPS 서버 설정 중 오류가 발생했습니다:', error.message);
-  }
+  } */
 }
 startServer(httpPort, httpsPort);
 
