@@ -21,30 +21,6 @@ else
   exit $status
 fi
 
-# pm2에서 index.js가 실행 중인지 확인
-if pm2 list | grep -q "index.js"; then
-  pm2 delete index.js
-  pm2 save
-  status=$?
-  if [ $status -eq 0 ]; then
-    echo "pm delete : success"
-  else
-    echo "pm delete : fail"
-    exit $status
-  fi
-fi
-
-# pm2 start
-pm2 start index.js
-pm2 save
-status=$?
-if [ $status -eq 0 ]; then
-  echo "pm start : success"
-else
-  echo "pm start : fail"
-  exit $status
-fi
-
 # pm2 restart
 pm2 restart all
 pm2 save
