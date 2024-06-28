@@ -1,0 +1,529 @@
+[Thu Jun 27 04:20:31.516712 2024] [lbmethod_heartbeat:notice] [pid 5437] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 04:20:31.516901 2024] [mpm_prefork:notice] [pid 5437] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 04:20:31.516916 2024] [core:notice] [pid 5437] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 04:36:43.883805 2024] [cgi:error] [pid 18237] [client 185.191.127.212:38610] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 05:43:01.851671 2024] [cgi:error] [pid 18241] [client 185.191.127.212:42448] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 07:03:03.347203 2024] [cgi:error] [pid 18550] [client 141.98.83.197:54030] script not found or unable to stat: /var/www/cgi-bin/skk_set.cgi
+[Thu Jun 27 07:06:43.915449 2024] [cgi:error] [pid 18238] [client 185.191.127.212:60880] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 08:04:08.538782 2024] [cgi:error] [pid 18239] [client 185.191.127.212:38736] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 08:41:06.190573 2024] [cgi:error] [pid 18239] [client 185.191.127.212:44042] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 09:33:52.658276 2024] [cgi:error] [pid 18237] [client 185.191.127.212:47572] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 10:24:06.449635 2024] [proxy:error] [pid 18239] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:8888 (34.23.233.23) failed
+[Thu Jun 27 10:24:06.463986 2024] [proxy:error] [pid 18239] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 10:24:06.464065 2024] [proxy_http:error] [pid 18239] [client 52.167.144.23:16612] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 11:09:17.320749 2024] [cgi:error] [pid 26900] [client 185.191.127.212:46514] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 11:22:53.680179 2024] [cgi:error] [pid 26902] [client 141.98.83.197:51626] script not found or unable to stat: /var/www/cgi-bin/skk_set.cgi
+[Thu Jun 27 11:38:32.483483 2024] [cgi:error] [pid 18241] [client 141.98.83.197:49888] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 11:38:33.073506 2024] [cgi:error] [pid 18238] [client 141.98.83.197:49890] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 12:37:28.561511 2024] [mpm_prefork:notice] [pid 5437] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 12:37:29.821518 2024] [core:notice] [pid 30432] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 12:37:29.866065 2024] [suexec:notice] [pid 30432] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 12:37:29.878244 2024] [so:warn] [pid 30432] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 12:37:29.878271 2024] [so:warn] [pid 30432] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 12:37:29.878279 2024] [so:warn] [pid 30432] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 12:37:29.880472 2024] [lbmethod_heartbeat:notice] [pid 30432] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 12:37:29.886962 2024] [mpm_prefork:notice] [pid 30432] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 12:37:29.887011 2024] [core:notice] [pid 30432] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 12:44:18.156906 2024] [cgi:error] [pid 30434] [client 185.191.127.212:39990] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 12:46:04.942798 2024] [mpm_prefork:notice] [pid 30432] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 12:46:06.321377 2024] [core:notice] [pid 30764] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 12:46:06.322338 2024] [suexec:notice] [pid 30764] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 12:46:06.334653 2024] [so:warn] [pid 30764] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 12:46:06.334688 2024] [so:warn] [pid 30764] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 12:46:06.334696 2024] [so:warn] [pid 30764] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 12:46:06.336633 2024] [lbmethod_heartbeat:notice] [pid 30764] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 12:46:06.341191 2024] [mpm_prefork:notice] [pid 30764] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 12:46:06.341233 2024] [core:notice] [pid 30764] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 13:16:51.794610 2024] [mpm_prefork:notice] [pid 30764] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 13:16:53.017616 2024] [core:notice] [pid 31677] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 13:16:53.049563 2024] [suexec:notice] [pid 31677] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 13:16:53.061087 2024] [so:warn] [pid 31677] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 13:16:53.061120 2024] [so:warn] [pid 31677] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 13:16:53.061127 2024] [so:warn] [pid 31677] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 13:16:53.063159 2024] [lbmethod_heartbeat:notice] [pid 31677] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 13:16:53.067120 2024] [mpm_prefork:notice] [pid 31677] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 13:16:53.067165 2024] [core:notice] [pid 31677] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 13:26:47.311128 2024] [mpm_prefork:notice] [pid 31677] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 13:26:48.386163 2024] [core:notice] [pid 31952] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 13:26:48.387108 2024] [suexec:notice] [pid 31952] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 13:26:48.399040 2024] [so:warn] [pid 31952] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 13:26:48.399067 2024] [so:warn] [pid 31952] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 13:26:48.399075 2024] [so:warn] [pid 31952] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 13:26:48.401119 2024] [lbmethod_heartbeat:notice] [pid 31952] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 13:26:48.405898 2024] [mpm_prefork:notice] [pid 31952] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 13:26:48.405949 2024] [core:notice] [pid 31952] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 13:28:31.945429 2024] [cgi:error] [pid 31959] [client 185.191.127.212:56408] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 13:33:05.434439 2024] [mpm_prefork:notice] [pid 31952] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 13:33:06.821486 2024] [core:notice] [pid 32252] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 13:33:06.852466 2024] [suexec:notice] [pid 32252] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 13:33:06.863678 2024] [so:warn] [pid 32252] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 13:33:06.863704 2024] [so:warn] [pid 32252] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 13:33:06.863712 2024] [so:warn] [pid 32252] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 13:33:06.865677 2024] [lbmethod_heartbeat:notice] [pid 32252] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 13:33:06.869632 2024] [mpm_prefork:notice] [pid 32252] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 13:33:06.869677 2024] [core:notice] [pid 32252] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 13:37:02.326590 2024] [mpm_prefork:notice] [pid 32252] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 13:37:03.684088 2024] [core:notice] [pid 32318] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 13:37:03.685163 2024] [suexec:notice] [pid 32318] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 13:37:03.696947 2024] [so:warn] [pid 32318] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 13:37:03.696973 2024] [so:warn] [pid 32318] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 13:37:03.696980 2024] [so:warn] [pid 32318] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 13:37:03.698938 2024] [lbmethod_heartbeat:notice] [pid 32318] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 13:37:03.703070 2024] [mpm_prefork:notice] [pid 32318] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 13:37:03.703127 2024] [core:notice] [pid 32318] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 14:30:24.460527 2024] [cgi:error] [pid 32476] [client 185.191.127.212:44920] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 15:27:14.222482 2024] [cgi:error] [pid 32321] [client 141.98.83.197:58986] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 15:27:14.548499 2024] [cgi:error] [pid 32322] [client 141.98.83.197:59002] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 16:03:00.513301 2024] [mpm_prefork:notice] [pid 32318] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 16:03:01.853383 2024] [core:notice] [pid 2681] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 16:03:01.900777 2024] [suexec:notice] [pid 2681] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 16:03:01.911820 2024] [so:warn] [pid 2681] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:03:01.911871 2024] [so:warn] [pid 2681] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:03:01.911890 2024] [so:warn] [pid 2681] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:03:01.913854 2024] [lbmethod_heartbeat:notice] [pid 2681] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:03:01.919078 2024] [mpm_prefork:notice] [pid 2681] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 16:03:01.919143 2024] [core:notice] [pid 2681] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:11:25.660143 2024] [mpm_prefork:notice] [pid 2681] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 16:11:26.965051 2024] [core:notice] [pid 2852] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 16:11:26.965831 2024] [suexec:notice] [pid 2852] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 16:11:26.977187 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:11:26.977214 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:11:26.977222 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:11:26.979134 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:11:26.992673 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) configured -- resuming normal operations
+[Thu Jun 27 16:11:26.992725 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:11:58.753584 2024] [cgi:error] [pid 2853] [client 185.191.127.212:50968] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 16:27:22.389597 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:27:22.422258 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:27:22.422313 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:27:22.422332 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:27:22.446512 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:27:22.447659 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:27:22.447669 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:27:29.837583 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:27:29.871413 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:27:29.871459 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:27:29.871482 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:27:29.877743 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:27:29.879235 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:27:29.879248 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:27:31.801565 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:27:31.834205 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:27:31.834245 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:27:31.834260 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:27:31.840728 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:27:31.842771 2024] [ssl:warn] [pid 2852] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:27:31.842931 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:27:31.842944 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:27:32.086685 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:27:32.119727 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:27:32.119770 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:27:32.119787 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:27:32.127547 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:27:32.129267 2024] [ssl:warn] [pid 2852] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:27:32.129368 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:27:32.129374 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:28:37.220591 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:28:37.258310 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:28:37.258356 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:28:37.258370 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:28:37.267127 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:28:37.269310 2024] [ssl:warn] [pid 2852] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:28:37.269447 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:28:37.269457 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:28:37.435139 2024] [mpm_prefork:notice] [pid 2852] AH00171: Graceful restart requested, doing restart
+[Thu Jun 27 16:28:37.471411 2024] [so:warn] [pid 2852] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:28:37.471454 2024] [so:warn] [pid 2852] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:28:37.471470 2024] [so:warn] [pid 2852] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:28:37.478988 2024] [lbmethod_heartbeat:notice] [pid 2852] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:28:37.480832 2024] [ssl:warn] [pid 2852] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:28:37.480985 2024] [mpm_prefork:notice] [pid 2852] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:28:37.480995 2024] [core:notice] [pid 2852] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:31:16.872564 2024] [cgi:error] [pid 3945] [client 141.98.83.197:41754] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 16:31:17.153231 2024] [cgi:error] [pid 3921] [client 141.98.83.197:41756] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 16:33:44.106340 2024] [mpm_prefork:notice] [pid 2852] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 16:33:51.584880 2024] [core:notice] [pid 4206] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 16:33:51.608989 2024] [suexec:notice] [pid 4206] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 16:33:51.632554 2024] [ssl:warn] [pid 4206] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:33:51.649826 2024] [so:warn] [pid 4206] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:33:51.649876 2024] [so:warn] [pid 4206] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:33:51.649885 2024] [so:warn] [pid 4206] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:33:51.653941 2024] [lbmethod_heartbeat:notice] [pid 4206] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:33:51.655253 2024] [ssl:warn] [pid 4206] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:33:51.659694 2024] [mpm_prefork:notice] [pid 4206] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:33:51.659731 2024] [core:notice] [pid 4206] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:53:48.457105 2024] [mpm_prefork:notice] [pid 4206] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 16:56:49.315374 2024] [core:notice] [pid 4588] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 16:56:49.336920 2024] [suexec:notice] [pid 4588] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 16:56:49.381618 2024] [ssl:warn] [pid 4588] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:56:49.399330 2024] [so:warn] [pid 4588] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:56:49.399361 2024] [so:warn] [pid 4588] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:56:49.399370 2024] [so:warn] [pid 4588] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:56:49.403558 2024] [lbmethod_heartbeat:notice] [pid 4588] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:56:49.405177 2024] [ssl:warn] [pid 4588] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:56:49.410345 2024] [mpm_prefork:notice] [pid 4588] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:56:49.410388 2024] [core:notice] [pid 4588] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:58:08.671728 2024] [mpm_prefork:notice] [pid 4588] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 16:58:09.749012 2024] [core:notice] [pid 4609] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 16:58:09.750124 2024] [suexec:notice] [pid 4609] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 16:58:09.751502 2024] [ssl:warn] [pid 4609] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:58:09.769940 2024] [so:warn] [pid 4609] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 16:58:09.769969 2024] [so:warn] [pid 4609] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 16:58:09.769977 2024] [so:warn] [pid 4609] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 16:58:09.774186 2024] [lbmethod_heartbeat:notice] [pid 4609] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 16:58:09.775560 2024] [ssl:warn] [pid 4609] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 16:58:09.780679 2024] [mpm_prefork:notice] [pid 4609] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 16:58:09.780734 2024] [core:notice] [pid 4609] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 16:59:22.550598 2024] [proxy:error] [pid 4619] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 16:59:22.550693 2024] [proxy:error] [pid 4619] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 16:59:22.550713 2024] [proxy_http:error] [pid 4619] [client 185.191.127.212:36202] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:10:02.058687 2024] [proxy:error] [pid 4611] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 17:10:02.058794 2024] [proxy:error] [pid 4611] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:10:02.058820 2024] [proxy_http:error] [pid 4611] [client 167.94.146.50:52690] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:10:06.511373 2024] [proxy:error] [pid 4620] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 17:10:06.511471 2024] [proxy:error] [pid 4620] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:10:06.511487 2024] [proxy_http:error] [pid 4620] [client 167.94.146.50:40918] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:14:06.943864 2024] [mpm_prefork:notice] [pid 4609] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 17:14:08.381633 2024] [core:notice] [pid 5040] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 17:14:08.419204 2024] [suexec:notice] [pid 5040] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 17:14:08.463121 2024] [ssl:warn] [pid 5040] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:14:08.480191 2024] [so:warn] [pid 5040] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 17:14:08.480217 2024] [so:warn] [pid 5040] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 17:14:08.480235 2024] [so:warn] [pid 5040] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 17:14:08.484141 2024] [lbmethod_heartbeat:notice] [pid 5040] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 17:14:08.485595 2024] [ssl:warn] [pid 5040] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:14:08.490270 2024] [mpm_prefork:notice] [pid 5040] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 17:14:08.490305 2024] [core:notice] [pid 5040] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 17:15:03.207570 2024] [proxy:error] [pid 5041] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 17:15:03.208332 2024] [proxy:error] [pid 5041] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:15:03.208376 2024] [proxy_http:error] [pid 5041] [client 141.98.83.197:47058] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:20:39.261615 2024] [proxy:error] [pid 5042] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:8888 (34.23.233.23) failed
+[Thu Jun 27 17:20:39.261715 2024] [proxy:error] [pid 5042] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:20:39.261735 2024] [proxy_http:error] [pid 5042] [client 47.128.53.252:34730] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:21:24.340957 2024] [mpm_prefork:notice] [pid 5040] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 17:21:25.678135 2024] [core:notice] [pid 5365] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 17:21:25.682573 2024] [suexec:notice] [pid 5365] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 17:21:25.711609 2024] [ssl:warn] [pid 5365] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:21:25.728787 2024] [so:warn] [pid 5365] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 17:21:25.728814 2024] [so:warn] [pid 5365] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 17:21:25.728822 2024] [so:warn] [pid 5365] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 17:21:25.733125 2024] [lbmethod_heartbeat:notice] [pid 5365] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 17:21:25.734474 2024] [ssl:warn] [pid 5365] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:21:25.738875 2024] [mpm_prefork:notice] [pid 5365] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 17:21:25.738908 2024] [core:notice] [pid 5365] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 17:22:14.873527 2024] [proxy:error] [pid 5370] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 17:22:14.873627 2024] [proxy:error] [pid 5370] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:22:14.873643 2024] [proxy_http:error] [pid 5370] [client 162.142.125.193:40250] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:22:18.102257 2024] [proxy:error] [pid 5371] (13)Permission denied: AH00957: HTTPS: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Thu Jun 27 17:22:18.102346 2024] [proxy:error] [pid 5371] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Thu Jun 27 17:22:18.102362 2024] [proxy_http:error] [pid 5371] [client 162.142.125.193:40256] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Thu Jun 27 17:47:32.670166 2024] [mpm_prefork:notice] [pid 5365] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 17:47:34.056785 2024] [core:notice] [pid 5753] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 17:47:34.057943 2024] [suexec:notice] [pid 5753] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 17:47:34.059406 2024] [ssl:warn] [pid 5753] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:47:34.078105 2024] [so:warn] [pid 5753] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 17:47:34.078133 2024] [so:warn] [pid 5753] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 17:47:34.078141 2024] [so:warn] [pid 5753] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 17:47:34.082228 2024] [lbmethod_heartbeat:notice] [pid 5753] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 17:47:34.083621 2024] [ssl:warn] [pid 5753] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 17:47:34.089377 2024] [mpm_prefork:notice] [pid 5753] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 17:47:34.089433 2024] [core:notice] [pid 5753] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 18:42:57.904647 2024] [mpm_prefork:notice] [pid 5753] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 18:42:59.231817 2024] [core:notice] [pid 7284] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 18:42:59.273325 2024] [suexec:notice] [pid 7284] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 18:42:59.320978 2024] [ssl:warn] [pid 7284] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 18:42:59.339415 2024] [so:warn] [pid 7284] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 18:42:59.339460 2024] [so:warn] [pid 7284] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 18:42:59.339470 2024] [so:warn] [pid 7284] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 18:42:59.343966 2024] [lbmethod_heartbeat:notice] [pid 7284] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 18:42:59.345326 2024] [ssl:warn] [pid 7284] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 18:42:59.350932 2024] [mpm_prefork:notice] [pid 7284] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 18:42:59.350972 2024] [core:notice] [pid 7284] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 18:46:19.642691 2024] [cgi:error] [pid 7295] [client 185.191.127.212:37622] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 19:39:02.879103 2024] [mpm_prefork:notice] [pid 7284] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 19:39:04.250618 2024] [core:notice] [pid 10289] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 19:39:04.283313 2024] [suexec:notice] [pid 10289] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 19:39:04.312221 2024] [ssl:warn] [pid 10289] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 19:39:04.329809 2024] [so:warn] [pid 10289] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 19:39:04.329852 2024] [so:warn] [pid 10289] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 19:39:04.329862 2024] [so:warn] [pid 10289] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 19:39:04.334142 2024] [lbmethod_heartbeat:notice] [pid 10289] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 19:39:04.335490 2024] [ssl:warn] [pid 10289] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 19:39:04.341723 2024] [mpm_prefork:notice] [pid 10289] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 19:39:04.341766 2024] [core:notice] [pid 10289] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 20:05:39.508131 2024] [cgi:error] [pid 10446] [client 141.98.83.197:49936] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 20:05:39.793331 2024] [cgi:error] [pid 10292] [client 141.98.83.197:49942] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 20:18:20.917396 2024] [cgi:error] [pid 10293] [client 185.191.127.212:52988] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 20:56:30.832209 2024] [cgi:error] [pid 10787] [client 185.191.127.212:52244] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 21:08:02.206476 2024] [mpm_prefork:notice] [pid 10289] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 21:08:03.621558 2024] [core:notice] [pid 12973] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 21:08:03.659953 2024] [suexec:notice] [pid 12973] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 21:08:03.702445 2024] [ssl:warn] [pid 12973] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 21:08:03.721959 2024] [so:warn] [pid 12973] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 21:08:03.721986 2024] [so:warn] [pid 12973] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 21:08:03.721994 2024] [so:warn] [pid 12973] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 21:08:03.726372 2024] [lbmethod_heartbeat:notice] [pid 12973] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 21:08:03.727738 2024] [ssl:warn] [pid 12973] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 21:08:03.734466 2024] [mpm_prefork:notice] [pid 12973] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 21:08:03.734512 2024] [core:notice] [pid 12973] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 21:13:54.692746 2024] [mpm_prefork:notice] [pid 12973] AH00170: caught SIGWINCH, shutting down gracefully
+[Thu Jun 27 21:13:55.935229 2024] [core:notice] [pid 13251] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Thu Jun 27 21:13:55.954328 2024] [suexec:notice] [pid 13251] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Thu Jun 27 21:13:55.986058 2024] [ssl:warn] [pid 13251] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 21:13:56.006711 2024] [so:warn] [pid 13251] AH01574: module proxy_module is already loaded, skipping
+[Thu Jun 27 21:13:56.006736 2024] [so:warn] [pid 13251] AH01574: module proxy_http_module is already loaded, skipping
+[Thu Jun 27 21:13:56.006744 2024] [so:warn] [pid 13251] AH01574: module rewrite_module is already loaded, skipping
+[Thu Jun 27 21:13:56.010812 2024] [lbmethod_heartbeat:notice] [pid 13251] AH02282: No slotmem from mod_heartmonitor
+[Thu Jun 27 21:13:56.012202 2024] [ssl:warn] [pid 13251] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Thu Jun 27 21:13:56.016633 2024] [mpm_prefork:notice] [pid 13251] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Thu Jun 27 21:13:56.016672 2024] [core:notice] [pid 13251] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Thu Jun 27 22:03:50.846164 2024] [cgi:error] [pid 13261] [client 141.98.83.197:55634] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 22:03:51.347399 2024] [cgi:error] [pid 13259] [client 141.98.83.197:55638] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 22:13:53.119765 2024] [cgi:error] [pid 13259] [client 185.191.127.212:50362] script not found or unable to stat: /var/www/cgi-bin/luci
+[Thu Jun 27 23:00:33.661817 2024] [mpm_prefork:notice] [pid 13251] AH00169: caught SIGTERM, shutting down
+[Fri Jun 28 06:50:33.472061 2024] [core:notice] [pid 5031] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 06:50:33.492730 2024] [suexec:notice] [pid 5031] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 06:50:33.534171 2024] [ssl:warn] [pid 5031] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:50:33.551460 2024] [so:warn] [pid 5031] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 06:50:33.551488 2024] [so:warn] [pid 5031] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 06:50:33.551497 2024] [so:warn] [pid 5031] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 06:50:33.551506 2024] [so:warn] [pid 5031] AH01574: module ssl_module is already loaded, skipping
+[Fri Jun 28 06:50:33.554191 2024] [core:crit] [pid 5031] (22)Invalid argument: AH00069: make_sock: for address [::]:443, apr_socket_opt_set: (IPV6_V6ONLY)
+(98)Address already in use: AH00072: make_sock: could not bind to address [::]:443
+(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:443
+[Fri Jun 28 06:50:33.554262 2024] [mpm_prefork:alert] [pid 5031] no listening sockets available, shutting down
+[Fri Jun 28 06:50:33.554265 2024] [:emerg] [pid 5031] AH00019: Unable to open logs, exiting
+[Fri Jun 28 06:52:27.872532 2024] [core:notice] [pid 5142] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 06:52:27.873799 2024] [suexec:notice] [pid 5142] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 06:52:27.875174 2024] [ssl:warn] [pid 5142] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:52:27.893817 2024] [so:warn] [pid 5142] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 06:52:27.893861 2024] [so:warn] [pid 5142] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 06:52:27.893871 2024] [so:warn] [pid 5142] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 06:52:27.893880 2024] [so:warn] [pid 5142] AH01574: module ssl_module is already loaded, skipping
+[Fri Jun 28 06:52:27.896884 2024] [core:crit] [pid 5142] (22)Invalid argument: AH00069: make_sock: for address [::]:443, apr_socket_opt_set: (IPV6_V6ONLY)
+(98)Address already in use: AH00072: make_sock: could not bind to address [::]:443
+(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:443
+[Fri Jun 28 06:52:27.897070 2024] [mpm_prefork:alert] [pid 5142] no listening sockets available, shutting down
+[Fri Jun 28 06:52:27.897074 2024] [:emerg] [pid 5142] AH00019: Unable to open logs, exiting
+[Fri Jun 28 06:53:01.874464 2024] [core:notice] [pid 5162] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 06:53:01.875518 2024] [suexec:notice] [pid 5162] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 06:53:01.876828 2024] [ssl:warn] [pid 5162] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:53:01.894905 2024] [so:warn] [pid 5162] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 06:53:01.894934 2024] [so:warn] [pid 5162] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 06:53:01.894943 2024] [so:warn] [pid 5162] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 06:53:01.894951 2024] [so:warn] [pid 5162] AH01574: module ssl_module is already loaded, skipping
+[Fri Jun 28 06:53:01.897835 2024] [core:crit] [pid 5162] (22)Invalid argument: AH00069: make_sock: for address [::]:443, apr_socket_opt_set: (IPV6_V6ONLY)
+(98)Address already in use: AH00072: make_sock: could not bind to address [::]:443
+(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:443
+[Fri Jun 28 06:53:01.897934 2024] [mpm_prefork:alert] [pid 5162] no listening sockets available, shutting down
+[Fri Jun 28 06:53:01.897937 2024] [:emerg] [pid 5162] AH00019: Unable to open logs, exiting
+[Fri Jun 28 06:53:55.752254 2024] [core:notice] [pid 5196] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 06:53:55.753534 2024] [suexec:notice] [pid 5196] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 06:53:55.754922 2024] [ssl:warn] [pid 5196] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:53:55.772353 2024] [so:warn] [pid 5196] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 06:53:55.772378 2024] [so:warn] [pid 5196] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 06:53:55.772387 2024] [so:warn] [pid 5196] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 06:53:55.772395 2024] [so:warn] [pid 5196] AH01574: module ssl_module is already loaded, skipping
+[Fri Jun 28 06:53:55.775320 2024] [core:crit] [pid 5196] (22)Invalid argument: AH00069: make_sock: for address [::]:443, apr_socket_opt_set: (IPV6_V6ONLY)
+(98)Address already in use: AH00072: make_sock: could not bind to address [::]:443
+(98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:443
+[Fri Jun 28 06:53:55.775419 2024] [mpm_prefork:alert] [pid 5196] no listening sockets available, shutting down
+[Fri Jun 28 06:53:55.775426 2024] [:emerg] [pid 5196] AH00019: Unable to open logs, exiting
+[Fri Jun 28 06:58:25.663061 2024] [core:notice] [pid 5263] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 06:58:25.664285 2024] [suexec:notice] [pid 5263] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 06:58:25.665642 2024] [ssl:warn] [pid 5263] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:58:25.682884 2024] [so:warn] [pid 5263] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 06:58:25.682917 2024] [so:warn] [pid 5263] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 06:58:25.682925 2024] [so:warn] [pid 5263] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 06:58:25.687294 2024] [lbmethod_heartbeat:notice] [pid 5263] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 06:58:25.688648 2024] [ssl:warn] [pid 5263] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 06:58:25.695758 2024] [mpm_prefork:notice] [pid 5263] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 06:58:25.695799 2024] [core:notice] [pid 5263] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 07:10:37.468360 2024] [mpm_prefork:notice] [pid 5263] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 07:10:38.803013 2024] [core:notice] [pid 5686] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 07:10:38.804103 2024] [suexec:notice] [pid 5686] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 07:10:38.804241 2024] [ssl:emerg] [pid 5686] AH02240: Server should be SSL-aware but has no certificate configured [Hint: SSLCertificateFile] ((null):0)
+[Fri Jun 28 07:10:38.804248 2024] [ssl:emerg] [pid 5686] AH02312: Fatal error initialising mod_ssl, exiting.
+[Fri Jun 28 07:11:50.818389 2024] [core:notice] [pid 5790] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 07:11:50.819820 2024] [suexec:notice] [pid 5790] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 07:11:50.821355 2024] [ssl:warn] [pid 5790] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 07:11:50.840595 2024] [so:warn] [pid 5790] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 07:11:50.840621 2024] [so:warn] [pid 5790] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 07:11:50.840629 2024] [so:warn] [pid 5790] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 07:11:50.845225 2024] [lbmethod_heartbeat:notice] [pid 5790] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 07:11:50.846712 2024] [ssl:warn] [pid 5790] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 07:11:50.854440 2024] [mpm_prefork:notice] [pid 5790] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 07:11:50.854483 2024] [core:notice] [pid 5790] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 07:12:36.878178 2024] [cgi:error] [pid 5793] [client 185.191.127.212:44172] script not found or unable to stat: /var/www/cgi-bin/luci
+[Fri Jun 28 07:17:43.591937 2024] [proxy:error] [pid 5795] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:17:43.592005 2024] [proxy:error] [pid 5795] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:17:43.592026 2024] [proxy_http:error] [pid 5795] [client 211.36.140.25:12797] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:17:50.431015 2024] [proxy:error] [pid 5793] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:17:50.431096 2024] [proxy:error] [pid 5793] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:17:50.431106 2024] [proxy_http:error] [pid 5793] [client 211.36.140.38:18619] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:21:00.772190 2024] [mpm_prefork:notice] [pid 5790] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 07:21:02.129833 2024] [core:notice] [pid 6069] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 07:21:02.130905 2024] [suexec:notice] [pid 6069] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 07:21:02.132229 2024] [ssl:warn] [pid 6069] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 07:21:02.149489 2024] [so:warn] [pid 6069] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 07:21:02.149514 2024] [so:warn] [pid 6069] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 07:21:02.149522 2024] [so:warn] [pid 6069] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 07:21:02.153600 2024] [lbmethod_heartbeat:notice] [pid 6069] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 07:21:02.155017 2024] [ssl:warn] [pid 6069] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 07:21:02.160691 2024] [mpm_prefork:notice] [pid 6069] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 07:21:02.160734 2024] [core:notice] [pid 6069] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 07:22:17.602756 2024] [proxy:error] [pid 6070] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:22:17.602812 2024] [proxy:error] [pid 6070] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:22:17.602869 2024] [proxy_http:error] [pid 6070] [client 106.102.11.39:21862] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:23:33.285208 2024] [proxy:error] [pid 6077] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:23:33.285286 2024] [proxy:error] [pid 6077] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:23:33.285301 2024] [proxy_http:error] [pid 6077] [client 106.102.11.39:23955] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:24:19.924330 2024] [proxy:error] [pid 6072] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:24:19.924394 2024] [proxy:error] [pid 6072] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:24:19.924413 2024] [proxy_http:error] [pid 6072] [client 106.102.11.39:32493] AH01114: HTTP: failed to make connection to backend: localhost, referer: http://localhost:3000/
+[Fri Jun 28 07:24:34.522290 2024] [proxy:error] [pid 6071] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:24:34.522351 2024] [proxy:error] [pid 6071] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:24:34.522371 2024] [proxy_http:error] [pid 6071] [client 106.102.11.39:57714] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:30:24.035363 2024] [proxy:error] [pid 6072] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:30:24.035451 2024] [proxy:error] [pid 6072] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:30:24.035462 2024] [proxy_http:error] [pid 6072] [client 106.102.11.39:64821] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 07:42:27.023865 2024] [proxy:error] [pid 6074] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 07:42:27.023995 2024] [proxy:error] [pid 6074] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 07:42:27.024019 2024] [proxy_http:error] [pid 6074] [client 106.102.11.39:8599] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:02:57.729831 2024] [mpm_prefork:notice] [pid 6069] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 08:02:59.190758 2024] [core:notice] [pid 7306] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 08:02:59.205458 2024] [suexec:notice] [pid 7306] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 08:02:59.249180 2024] [ssl:warn] [pid 7306] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:02:59.266105 2024] [so:warn] [pid 7306] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 08:02:59.266132 2024] [so:warn] [pid 7306] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 08:02:59.266141 2024] [so:warn] [pid 7306] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 08:02:59.270233 2024] [lbmethod_heartbeat:notice] [pid 7306] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 08:02:59.271691 2024] [ssl:warn] [pid 7306] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:02:59.283274 2024] [mpm_prefork:notice] [pid 7306] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 08:02:59.283311 2024] [core:notice] [pid 7306] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 08:05:20.422882 2024] [proxy:error] [pid 7311] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:05:20.422967 2024] [proxy:error] [pid 7311] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:05:20.422988 2024] [proxy_http:error] [pid 7311] [client 106.102.11.39:55008] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:06:25.597632 2024] [proxy:error] [pid 7418] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:06:25.597722 2024] [proxy:error] [pid 7418] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:06:25.597736 2024] [proxy_http:error] [pid 7418] [client 106.102.11.39:14618] AH01114: HTTP: failed to make connection to backend: localhost, referer: http://localhost:3000/
+[Fri Jun 28 08:06:40.965618 2024] [proxy:error] [pid 7419] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:06:40.965716 2024] [proxy:error] [pid 7419] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:06:40.965741 2024] [proxy_http:error] [pid 7419] [client 106.102.11.39:39915] AH01114: HTTP: failed to make connection to backend: localhost, referer: http://localhost:3000/
+[Fri Jun 28 08:07:13.299569 2024] [proxy:error] [pid 7421] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:07:13.299661 2024] [proxy:error] [pid 7421] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:07:13.299678 2024] [proxy_http:error] [pid 7421] [client 211.36.140.100:30829] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:15:09.427300 2024] [proxy:error] [pid 7422] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:15:09.427400 2024] [proxy:error] [pid 7422] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:15:09.427422 2024] [proxy_http:error] [pid 7422] [client 106.102.11.39:63244] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:18:25.299663 2024] [proxy:error] [pid 7309] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:18:25.299745 2024] [proxy:error] [pid 7309] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:18:25.299769 2024] [proxy_http:error] [pid 7309] [client 106.102.11.39:50595] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:19:35.379792 2024] [proxy:error] [pid 7308] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:19:35.379908 2024] [proxy:error] [pid 7308] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:19:35.379931 2024] [proxy_http:error] [pid 7308] [client 106.102.11.39:43776] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:38:59.489773 2024] [cgi:error] [pid 7418] [client 185.191.127.212:34038] script not found or unable to stat: /var/www/cgi-bin/luci
+[Fri Jun 28 08:45:24.237205 2024] [mpm_prefork:notice] [pid 7306] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 08:45:25.557477 2024] [core:notice] [pid 8335] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 08:45:25.570639 2024] [suexec:notice] [pid 8335] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 08:45:25.626266 2024] [ssl:warn] [pid 8335] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:45:25.643756 2024] [so:warn] [pid 8335] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 08:45:25.643785 2024] [so:warn] [pid 8335] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 08:45:25.643802 2024] [so:warn] [pid 8335] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 08:45:25.648148 2024] [lbmethod_heartbeat:notice] [pid 8335] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 08:45:25.649826 2024] [ssl:warn] [pid 8335] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:45:25.655046 2024] [mpm_prefork:notice] [pid 8335] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 08:45:25.655090 2024] [core:notice] [pid 8335] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 08:46:37.968459 2024] [proxy:error] [pid 8337] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:46:37.968534 2024] [proxy:error] [pid 8337] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:46:37.968552 2024] [proxy_http:error] [pid 8337] [client 106.102.11.39:27807] AH01114: HTTP: failed to make connection to backend: localhost, referer: https://www.junghomun.com/user/login
+[Fri Jun 28 08:49:26.937902 2024] [proxy:error] [pid 8341] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:49:26.938003 2024] [proxy:error] [pid 8341] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:49:26.938023 2024] [proxy_http:error] [pid 8341] [client 106.102.11.39:35720] AH01114: HTTP: failed to make connection to backend: localhost, referer: http://localhost:3000/
+[Fri Jun 28 08:51:44.325754 2024] [proxy:error] [pid 8342] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 08:51:44.325873 2024] [proxy:error] [pid 8342] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 08:51:44.325892 2024] [proxy_http:error] [pid 8342] [client 106.102.11.39:24471] AH01114: HTTP: failed to make connection to backend: localhost, referer: http://localhost:3000/
+[Fri Jun 28 08:58:20.653163 2024] [mpm_prefork:notice] [pid 8335] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 08:58:22.024981 2024] [core:notice] [pid 8534] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 08:58:22.026132 2024] [suexec:notice] [pid 8534] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 08:58:22.027603 2024] [ssl:warn] [pid 8534] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:58:22.045532 2024] [so:warn] [pid 8534] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 08:58:22.045560 2024] [so:warn] [pid 8534] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 08:58:22.045568 2024] [so:warn] [pid 8534] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 08:58:22.049695 2024] [lbmethod_heartbeat:notice] [pid 8534] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 08:58:22.051138 2024] [ssl:warn] [pid 8534] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 08:58:22.055398 2024] [mpm_prefork:notice] [pid 8534] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 08:58:22.055434 2024] [core:notice] [pid 8534] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 09:02:57.351167 2024] [proxy:error] [pid 8535] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:02:57.352073 2024] [proxy:error] [pid 8535] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:02:57.352108 2024] [proxy_http:error] [pid 8535] [client 34.23.233.23:12506] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:03:12.734823 2024] [proxy:error] [pid 8597] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:03:12.734934 2024] [proxy:error] [pid 8597] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:03:12.734948 2024] [proxy_http:error] [pid 8597] [client 34.23.233.23:12510] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:06:08.248196 2024] [cgi:error] [pid 8598] [client 185.191.127.212:46036] script not found or unable to stat: /var/www/cgi-bin/luci
+[Fri Jun 28 09:10:48.441582 2024] [mpm_prefork:notice] [pid 8534] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 09:10:49.525151 2024] [core:notice] [pid 9334] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 09:10:49.547757 2024] [suexec:notice] [pid 9334] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 09:10:49.586223 2024] [ssl:warn] [pid 9334] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:10:49.604571 2024] [so:warn] [pid 9334] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 09:10:49.604597 2024] [so:warn] [pid 9334] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 09:10:49.604605 2024] [so:warn] [pid 9334] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 09:10:49.608587 2024] [lbmethod_heartbeat:notice] [pid 9334] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 09:10:49.609999 2024] [ssl:warn] [pid 9334] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:10:49.617400 2024] [mpm_prefork:notice] [pid 9334] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 09:10:49.617438 2024] [core:notice] [pid 9334] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 09:10:58.255213 2024] [proxy:error] [pid 9335] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:10:58.255299 2024] [proxy:error] [pid 9335] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:10:58.255312 2024] [proxy_http:error] [pid 9335] [client 34.23.233.23:13520] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:11:16.419021 2024] [proxy:error] [pid 9337] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:11:16.419109 2024] [proxy:error] [pid 9337] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:11:16.419141 2024] [proxy_http:error] [pid 9337] [client 34.23.233.23:13534] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:11:28.463574 2024] [proxy:error] [pid 9339] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:11:28.463663 2024] [proxy:error] [pid 9339] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:11:28.463677 2024] [proxy_http:error] [pid 9339] [client 34.23.233.23:13536] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:14:50.230735 2024] [proxy:error] [pid 9338] (13)Permission denied: AH00957: HTTP: attempt to connect to 127.0.0.1:4000 (localhost) failed
+[Fri Jun 28 09:14:50.230825 2024] [proxy:error] [pid 9338] AH00959: ap_proxy_connect_backend disabling worker for (localhost) for 60s
+[Fri Jun 28 09:14:50.230858 2024] [proxy_http:error] [pid 9338] [client 34.23.233.23:13552] AH01114: HTTP: failed to make connection to backend: localhost
+[Fri Jun 28 09:15:16.291086 2024] [mpm_prefork:notice] [pid 9334] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 09:15:17.441958 2024] [core:notice] [pid 9511] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 09:15:17.443048 2024] [suexec:notice] [pid 9511] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 09:15:17.444415 2024] [ssl:warn] [pid 9511] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:15:17.463072 2024] [so:warn] [pid 9511] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 09:15:17.463099 2024] [so:warn] [pid 9511] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 09:15:17.463107 2024] [so:warn] [pid 9511] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 09:15:17.467585 2024] [lbmethod_heartbeat:notice] [pid 9511] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 09:15:17.469189 2024] [ssl:warn] [pid 9511] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:15:17.475327 2024] [mpm_prefork:notice] [pid 9511] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 09:15:17.475398 2024] [core:notice] [pid 9511] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 09:15:19.417357 2024] [proxy:error] [pid 9512] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:15:19.417437 2024] [proxy:error] [pid 9512] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:15:19.417455 2024] [proxy_http:error] [pid 9512] [client 34.23.233.23:13560] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Fri Jun 28 09:18:14.477339 2024] [mpm_prefork:notice] [pid 9511] AH00170: caught SIGWINCH, shutting down gracefully
+[Fri Jun 28 09:18:15.559160 2024] [core:notice] [pid 9535] SELinux policy enabled; httpd running as context system_u:system_r:httpd_t:s0
+[Fri Jun 28 09:18:15.560190 2024] [suexec:notice] [pid 9535] AH01232: suEXEC mechanism enabled (wrapper: /usr/sbin/suexec)
+[Fri Jun 28 09:18:15.561524 2024] [ssl:warn] [pid 9535] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:18:15.578585 2024] [so:warn] [pid 9535] AH01574: module proxy_module is already loaded, skipping
+[Fri Jun 28 09:18:15.578610 2024] [so:warn] [pid 9535] AH01574: module proxy_http_module is already loaded, skipping
+[Fri Jun 28 09:18:15.578618 2024] [so:warn] [pid 9535] AH01574: module rewrite_module is already loaded, skipping
+[Fri Jun 28 09:18:15.582557 2024] [lbmethod_heartbeat:notice] [pid 9535] AH02282: No slotmem from mod_heartmonitor
+[Fri Jun 28 09:18:15.583888 2024] [ssl:warn] [pid 9535] AH02292: Init: Name-based SSL virtual hosts only work for clients with TLS server name indication support (RFC 4366)
+[Fri Jun 28 09:18:15.590073 2024] [mpm_prefork:notice] [pid 9535] AH00163: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips configured -- resuming normal operations
+[Fri Jun 28 09:18:15.590112 2024] [core:notice] [pid 9535] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Fri Jun 28 09:18:18.242646 2024] [proxy:error] [pid 9536] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:18:18.242729 2024] [proxy:error] [pid 9536] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:18:18.242748 2024] [proxy_http:error] [pid 9536] [client 34.23.233.23:13572] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
+[Fri Jun 28 09:18:30.720506 2024] [proxy:error] [pid 9539] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:18:30.720586 2024] [proxy:error] [pid 9539] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:18:30.720603 2024] [proxy_http:error] [pid 9539] [client 211.36.140.77:52286] AH01114: HTTP: failed to make connection to backend: 34.23.233.23, referer: https://shell.cloud.google.com/
+[Fri Jun 28 09:18:33.269627 2024] [proxy:error] [pid 9538] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:18:33.269739 2024] [proxy:error] [pid 9538] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:18:33.269757 2024] [proxy_http:error] [pid 9538] [client 106.102.11.39:39827] AH01114: HTTP: failed to make connection to backend: 34.23.233.23, referer: https://shell.cloud.google.com/
+[Fri Jun 28 09:18:47.997625 2024] [proxy:error] [pid 9540] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:18:47.997712 2024] [proxy:error] [pid 9540] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:18:47.997730 2024] [proxy_http:error] [pid 9540] [client 106.102.11.39:62760] AH01114: HTTP: failed to make connection to backend: 34.23.233.23, referer: https://shell.cloud.google.com/
+[Fri Jun 28 09:21:14.109379 2024] [proxy:error] [pid 9536] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:21:14.109435 2024] [proxy:error] [pid 9536] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:21:14.109444 2024] [proxy_http:error] [pid 9536] [client 106.102.11.39:57618] AH01114: HTTP: failed to make connection to backend: 34.23.233.23, referer: https://shell.cloud.google.com/
+[Fri Jun 28 09:21:18.912648 2024] [proxy:error] [pid 9539] (13)Permission denied: AH00957: HTTP: attempt to connect to 34.23.233.23:4000 (34.23.233.23) failed
+[Fri Jun 28 09:21:18.912701 2024] [proxy:error] [pid 9539] AH00959: ap_proxy_connect_backend disabling worker for (34.23.233.23) for 60s
+[Fri Jun 28 09:21:18.912712 2024] [proxy_http:error] [pid 9539] [client 34.23.233.23:13770] AH01114: HTTP: failed to make connection to backend: 34.23.233.23
