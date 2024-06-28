@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import morgan from "morgan";
 
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
 import { router as exerciseDashRouter } from "./src/router/exercise/exerciseDashRouter.js";
@@ -75,6 +76,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(morgan('dev'));
 app.use((req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
