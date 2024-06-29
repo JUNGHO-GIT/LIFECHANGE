@@ -27,8 +27,8 @@
     ]
   },
   "scripts": {
-    "start": "node logTime.cjs start",
-    "build": "node logTime.cjs build",
+    "start": "react-scripts start",
+    "build": "cross-env GENERATE_SOURCEMAP=false craco build",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {

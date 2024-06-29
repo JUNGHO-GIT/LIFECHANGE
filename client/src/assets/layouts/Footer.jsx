@@ -33,11 +33,11 @@ export const Footer = ({
   // 7. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     strings?.second === "data" ? (
-      <Paper className={"flex-wrapper p-sticky bottom-0vh radius border shadow-none"}>
+      <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
         {btnNode()}
       </Paper>
     ) : (
-      <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none over-x-auto"}>
+      <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
         {filterNode()}
         {btnNode()}
       </Paper>
