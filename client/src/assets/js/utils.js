@@ -31,7 +31,7 @@ export const log = (name, data) => {
   }, 2);
 
   // 로그 출력
-  console.log(JSON.stringify(`${name} : ${jsonString}`, null, 2));
+  console.log(`${name} : ${jsonString}`);
 
   // 캐시 클리어
   cache.clear();

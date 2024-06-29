@@ -128,7 +128,7 @@ export const ExerciseGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -140,7 +140,7 @@ export const ExerciseGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
@@ -151,7 +151,7 @@ export const ExerciseGoalSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).slice(1, -1));
+      alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
@@ -161,7 +161,7 @@ export const ExerciseGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -173,7 +173,7 @@ export const ExerciseGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {

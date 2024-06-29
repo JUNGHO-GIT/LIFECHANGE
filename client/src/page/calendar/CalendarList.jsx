@@ -86,7 +86,7 @@ export const CalendarList = () => {
       }));
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 

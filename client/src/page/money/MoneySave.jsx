@@ -177,7 +177,7 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -188,7 +188,7 @@ export const MoneySave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
@@ -199,7 +199,7 @@ export const MoneySave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).slice(1, -1));
+      alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
@@ -209,7 +209,7 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -220,7 +220,7 @@ export const MoneySave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {

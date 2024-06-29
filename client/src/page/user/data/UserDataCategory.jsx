@@ -104,7 +104,7 @@ export const UserDataCategory = () => {
       });
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -119,15 +119,15 @@ export const UserDataCategory = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       navigate(0);
@@ -238,7 +238,7 @@ export const UserDataCategory = () => {
         ];
         // 하나만 남았을 때 삭제 시도 시 경고
         if (newCategory1.length <= 1) {
-          alert(JSON.stringify("마지막 항목은 삭제할 수 없습니다."));
+          alert("마지막 항목은 삭제할 수 없습니다.");
           return prev;
         }
 
@@ -260,7 +260,7 @@ export const UserDataCategory = () => {
         ];
         // 하나만 남았을 때 삭제 시도 시 경고
         if (currentTitles.length <= 2) {
-          alert(JSON.stringify("마지막 항목은 삭제할 수 없습니다."));
+          alert("마지막 항목은 삭제할 수 없습니다.");
           return prev;
         }
 

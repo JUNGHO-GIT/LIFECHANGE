@@ -8,6 +8,6 @@ export const useScrollTop = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(JSON.stringify(`scroll-top activated : ${pathname}`, null, 2));
+    console.log(`scroll-top activated : ${pathname}`);
   }, [pathname]);
 };

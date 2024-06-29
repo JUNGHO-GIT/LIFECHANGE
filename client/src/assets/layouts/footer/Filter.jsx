@@ -3,7 +3,8 @@
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
-import {Picker, PopUp, Div, Img} from "../../../import/ImportComponents.jsx";
+import {log} from "../../../import/ImportLogics.jsx";
+import {Picker, Div} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -69,15 +70,15 @@ export const Filter = ({
     // 1. calendar
     if (strings?.first === "calendar") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }
@@ -99,7 +100,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -110,7 +111,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }
@@ -125,11 +126,11 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "find" && strings?.third === "list") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "find" && strings?.third === "save") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
@@ -140,7 +141,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -151,7 +152,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }
@@ -173,7 +174,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -184,7 +185,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }
@@ -206,7 +207,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -217,7 +218,7 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }
@@ -232,11 +233,11 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "data" && strings?.third === "category") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -247,15 +248,15 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "login" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
       else if (strings?.second === "signup" && strings?.third === "") {
-        console.log(JSON.stringify(("btn : null").slice(1, -1), null, 2));
+        log("filter", null);
         return null
       }
     }

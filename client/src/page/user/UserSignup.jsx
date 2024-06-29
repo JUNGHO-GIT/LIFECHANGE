@@ -42,14 +42,14 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 
@@ -61,16 +61,16 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         setIsVerified(true);
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         setIsVerified(false);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 
@@ -82,11 +82,11 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         navigate("/user/login");
       }
       else if (res.data.status === "duplicated") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -94,7 +94,7 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "fail") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -102,11 +102,11 @@ export const UserSignup = () => {
         }));
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
   };
 

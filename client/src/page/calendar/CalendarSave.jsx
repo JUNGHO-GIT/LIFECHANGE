@@ -92,7 +92,7 @@ export const CalendarSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -127,7 +127,7 @@ export const CalendarSave = () => {
       }));
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -162,7 +162,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -173,18 +173,18 @@ export const CalendarSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).slice(1, -1));
+      alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
@@ -194,7 +194,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -205,11 +205,11 @@ export const CalendarSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 

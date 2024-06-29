@@ -68,7 +68,7 @@ export const UserDataDetail = () => {
       });
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -83,16 +83,16 @@ export const UserDataDetail = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         navigate(SEND.toDataCategory);
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         sessionStorage.setItem("dataCategory", JSON.stringify(OBJECT_DEF.dataCategory));
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 

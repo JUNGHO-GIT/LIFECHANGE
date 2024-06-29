@@ -98,7 +98,7 @@ export const FoodSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -133,7 +133,7 @@ export const FoodSave = () => {
       }));
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -193,7 +193,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -204,18 +204,18 @@ export const FoodSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).slice(1, -1));
+      alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
@@ -225,7 +225,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -236,11 +236,11 @@ export const FoodSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     });
   };
 

@@ -84,7 +84,7 @@ export const SleepGoalSave = () => {
       setEXIST(res.data.result || []);
     })
     .catch((err) => {
-      console.error(JSON.stringify(err, null, 2));
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -127,7 +127,7 @@ export const SleepGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -139,7 +139,7 @@ export const SleepGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
@@ -150,7 +150,7 @@ export const SleepGoalSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).slice(1, -1));
+      alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
@@ -160,7 +160,7 @@ export const SleepGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -172,7 +172,7 @@ export const SleepGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).slice(1, -1));
+        alert(res.data.msg);
       }
     })
     .catch((err) => {

@@ -244,8 +244,8 @@ export const save = {
     const insertResult = await Exercise.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -263,8 +263,8 @@ export const save = {
     const insertResult = await ExerciseGoal.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -282,8 +282,8 @@ export const save = {
     const insertResult = await Food.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -301,8 +301,8 @@ export const save = {
     const insertResult = await FoodGoal.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -320,8 +320,8 @@ export const save = {
     const insertResult = await Money.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -339,8 +339,8 @@ export const save = {
     const insertResult = await MoneyGoal.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -358,8 +358,8 @@ export const save = {
     const insertResult = await Sleep.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   },
@@ -377,8 +377,8 @@ export const save = {
     const insertResult = await SleepGoal.insertMany(OBJECT_param);
 
     // 로그
-    console.log(JSON.stringify(`Deleted documents : ${deleteResult.deletedCount}`));
-    console.log(JSON.stringify(`Inserted documents : ${insertResult.length}`));
+    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
+    console.log(`Inserted documents : ${insertResult.length}`);
 
     return insertResult;
   }

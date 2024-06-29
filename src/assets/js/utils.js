@@ -18,5 +18,22 @@ export const calcDate = (startTime, endTime) => {
 
 // 2-1. log ----------------------------------------------------------------------------------------
 export const log = (name, data) => {
-  console.log(JSON.stringify(`${name} : ${data}`, null, 2));
+  const cache = new Set();
+
+  // 순환 참조 발견
+  const jsonString = JSON.stringify(data, (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (cache.has(value)) {
+        return "[Circular]";
+      }
+      cache.add(value);
+    }
+    return value;
+  }, 2);
+
+  // 로그 출력
+  console.log(`${name} : ${jsonString}`);
+
+  // 캐시 클리어
+  cache.clear();
 };

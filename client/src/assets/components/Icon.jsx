@@ -30,7 +30,7 @@ export const Icons = ({ name, onClick, ...props }) => {
       IconComponent = importCode[name];
     }
     else {
-      console.log(JSON.stringify(`Icon '${name}' not found!`, null, 2));
+      console.log(`Icon '${name}' not found!`);
       return null;
     }
   }
