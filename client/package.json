@@ -27,11 +27,14 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "gcloud": "powershell -Command \"(Get-Content .env) -replace '^(REACT_APP_URL = .*)', ('# Updated on ' + (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') + [System.Environment]::NewLine + 'REACT_APP_URL = https://www.junghomun.com') | Set-Content .env\" && react-scripts build && del build.tar.gz && tar -zcvf build.tar.gz build && gsutil rm gs://jungho-bucket/JPAGE/SERVER/build.tar.gz && gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz && powershell -Command \"(Get-Content .env) -replace '^(REACT_APP_URL = .*)', ('# Updated on ' + (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') + [System.Environment]::NewLine + 'REACT_APP_URL = http://localhost:4000') | Set-Content .env\" && del build.tar.gz && powershell -Command \"ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 'sudo sh /client.sh'\""
+    "start-react": "node logTime.cjs start-react",
+    "start-craco": "node logTime.cjs start-craco",
+    "build-react": "node logTime.cjs build-react",
+    "build-craco": "node logTime.cjs build-craco",
+    "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fullcalendar/core": "^6.1.13",
@@ -44,6 +47,8 @@
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
+    "esbuild": "^0.21.5",
+    "esbuild-loader": "^4.2.0",
     "fullcalendar": "^6.1.13",
     "history": "^5.3.0",
     "material-ui-popup-state": "^5.1.2",
@@ -61,6 +66,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/react": "^15.0.7",
     "@types/numeral": "^2.0.5",
+    "cross-env": "^7.0.3",
     "jest": "^28.1.3",
     "typescript": "^4.9.5"
   }

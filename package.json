@@ -12,7 +12,7 @@
     "upgrade": "npm update --save",
     "fetch": "git fetch --all && git reset --hard origin/master",
     "push": "git add . && git commit -m 'update' && git push origin master",
-    "gcloud": "powershell -Command \"ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 'sudo sh /server.sh'\""
+    "gcloud": "node gcloud.cjs"
 
   },
   "dependencies": {
