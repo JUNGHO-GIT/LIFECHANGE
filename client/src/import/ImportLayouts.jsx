@@ -5,7 +5,6 @@ import {TopNav} from "../assets/layouts/TopNav.jsx";
 import {Footer} from "../assets/layouts/Footer.jsx";
 import {BottomNav} from "../assets/layouts/BottomNav.jsx";
 import {Loading} from "../assets/layouts/Loading.jsx";
-import {Banner} from "../assets/layouts/Banner.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -13,6 +12,5 @@ export {
   TopNav,
   Footer,
   BottomNav,
-  Loading,
-  Banner
+  Loading
 };
