@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Div, Img} from "../../import/ImportComponents.jsx";
+import {Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
 import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
