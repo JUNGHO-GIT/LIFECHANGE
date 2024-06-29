@@ -11,7 +11,7 @@ const updateEnvFile = (url) => {
 
 // build project
 const buildProject = () => {
-  const command = 'react-scripts build';
+  const command = 'cross-env GENERATE_SOURCEMAP=false craco build';
   execSync(command, { stdio: 'inherit' });
 };
 
