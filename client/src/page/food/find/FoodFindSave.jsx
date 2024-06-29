@@ -166,7 +166,7 @@ export const FoodFindSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -177,7 +177,7 @@ export const FoodFindSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {

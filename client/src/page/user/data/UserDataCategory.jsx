@@ -119,11 +119,11 @@ export const UserDataCategory = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {

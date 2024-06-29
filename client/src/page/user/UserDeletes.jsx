@@ -64,11 +64,11 @@ export const UserDeletes = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         navigate("/user/login");
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         navigate(0);
       }
     })

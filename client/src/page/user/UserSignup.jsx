@@ -42,10 +42,10 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {
@@ -61,11 +61,11 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         setIsVerified(true);
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         setIsVerified(false);
       }
     })
@@ -82,11 +82,11 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         navigate("/user/login");
       }
       else if (res.data.status === "duplicated") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -94,7 +94,7 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "fail") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -102,7 +102,7 @@ export const UserSignup = () => {
         }));
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {

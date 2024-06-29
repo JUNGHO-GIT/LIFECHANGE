@@ -42,7 +42,7 @@ export const UserLogin = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         if (isChecked) {
           localStorage.setItem("sessionId", userId);
         }
@@ -62,7 +62,7 @@ export const UserLogin = () => {
         navigate("/calendar/list");
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         sessionStorage.setItem("sessionId", "");
       }
     })

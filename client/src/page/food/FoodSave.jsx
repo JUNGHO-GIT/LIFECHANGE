@@ -193,7 +193,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -204,7 +204,7 @@ export const FoodSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {
@@ -215,7 +215,7 @@ export const FoodSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).replace(/\"/g, ""));
+      alert(JSON.stringify((translate("noData"))).slice(1, -1));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
@@ -225,7 +225,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -236,7 +236,7 @@ export const FoodSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {

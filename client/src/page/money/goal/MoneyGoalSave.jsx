@@ -123,7 +123,7 @@ export const MoneyGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -135,7 +135,7 @@ export const MoneyGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {
@@ -146,7 +146,7 @@ export const MoneyGoalSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
     if (OBJECT._id === "") {
-      alert(JSON.stringify((translate("noData"))).replace(/\"/g, ""));
+      alert(JSON.stringify((translate("noData"))).slice(1, -1));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
@@ -156,7 +156,7 @@ export const MoneyGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -168,7 +168,7 @@ export const MoneyGoalSave = () => {
         });
       }
       else {
-        alert(JSON.stringify(res.data.msg).replace(/\"/g, ""));
+        alert(JSON.stringify(res.data.msg).slice(1, -1));
       }
     })
     .catch((err) => {
