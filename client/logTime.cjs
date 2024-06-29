@@ -3,13 +3,11 @@
 const { exec } = require('child_process');
 
 const commandMap = {
-  'start-react': 'react-scripts start',
-  'start-craco': 'cross-env GENERATE_SOURCEMAP=false craco start',
-  'build-react': 'react-scripts build',
-  'build-craco': 'cross-env GENERATE_SOURCEMAP=false craco build'
+  'start': 'cross-env GENERATE_SOURCEMAP=false craco start',
+  'build': 'cross-env GENERATE_SOURCEMAP=false craco build'
 };
 
-// 'start-react', 'start-craco', 'build-react', 'build-craco'
+// 'start', 'build'
 const commandKey = process.argv[2];
 const command = commandMap[commandKey];
 
