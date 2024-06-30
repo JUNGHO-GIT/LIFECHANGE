@@ -42,7 +42,6 @@ export const UserLogin = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         if (isChecked) {
           localStorage.setItem("sessionId", userId);
         }

@@ -177,7 +177,6 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,
@@ -209,7 +208,6 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,

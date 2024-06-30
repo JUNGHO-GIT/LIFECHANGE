@@ -221,7 +221,6 @@ export const UserDataList = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,

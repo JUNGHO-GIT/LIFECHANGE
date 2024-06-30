@@ -126,7 +126,6 @@ export const FoodGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -159,7 +158,6 @@ export const FoodGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",

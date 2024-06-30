@@ -166,7 +166,6 @@ export const FoodFindSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateStart: DATE.dateStart,

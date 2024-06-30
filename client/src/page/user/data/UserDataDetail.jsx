@@ -83,7 +83,6 @@ export const UserDataDetail = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         navigate(SEND.toDataCategory);
       }
       else {

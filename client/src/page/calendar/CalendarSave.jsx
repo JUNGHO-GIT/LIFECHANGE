@@ -162,7 +162,6 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -194,7 +193,6 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
