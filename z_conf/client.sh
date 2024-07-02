@@ -12,7 +12,7 @@ else
 fi
 
 # rm
-rm -rf build build.tar.gz
+rm -rf build.tar.gz
 status=$?
 if [ $status -eq 0 ]; then
   echo "rm : success"
@@ -28,6 +28,8 @@ if [ $status -eq 0 ]; then
   echo "wget : success"
 else
   echo "wget : fail"
+  exit $status
+fi
 
 # tar
 tar -zxvf build.tar.gz
@@ -36,6 +38,16 @@ if [ $status -eq 0 ]; then
   echo "tar : success"
 else
   echo "tar : fail"
+  exit $status
+fi
+
+# rm
+rm -rf build.tar.gz
+status=$?
+if [ $status -eq 0 ]; then
+  echo "rm : success"
+else
+  echo "rm : fail"
   exit $status
 fi
 
