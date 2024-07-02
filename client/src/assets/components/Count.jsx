@@ -1,6 +1,6 @@
 // Count.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
+import {React} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {PopUp, Img, Div, Icons} from "../../import/ImportComponents.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
@@ -12,9 +12,7 @@ export const Count = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname;
 
   // 2. countNode ----------------------------------------------------------------------------------
   const countNode = () => (

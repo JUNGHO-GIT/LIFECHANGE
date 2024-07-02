@@ -2,16 +2,9 @@
 
 const { execSync } = require('child_process');
 
-// update env file
-const updateEnvFile = (url) => {
-  const date = new Date().toISOString().replace('T', ' ').substring(0, 19);
-  const command = `powershell -Command "(Get-Content .env) -replace '^(REACT_APP_URL = .*)', ('# Updated on ${date}' + [System.Environment]::NewLine + 'REACT_APP_URL = ${url}') | Set-Content .env"`;
-  execSync(command, { stdio: 'inherit' });
-};
-
 // build project
 const buildProject = () => {
-  const command = 'cross-env GENERATE_SOURCEMAP=false craco build';
+  const command = 'npm run build';
   execSync(command, { stdio: 'inherit' });
 };
 
@@ -42,11 +35,9 @@ const runRemoteScript = () => {
 };
 
 // execute all steps
-updateEnvFile('https://www.junghomun.com');
 buildProject();
 deleteBuildTar();
 compressBuild();
 uploadToGCS();
-updateEnvFile('http://localhost:4000');
 deleteBuildTar();
 runRemoteScript();
