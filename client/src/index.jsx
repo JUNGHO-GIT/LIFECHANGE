@@ -1,4 +1,14 @@
-// index.jsx
+// App.jsx
+
+import React from "react";
+import {useLocation} from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
+import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
+import {useRoot} from "./assets/hooks/useRoot.jsx";
+import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import "./index.css";
 import "moment/locale/ko";
@@ -10,301 +20,117 @@ import "./assets/css/Components.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 
-import React, { Suspense, lazy } from "react";
-import { useLocation } from "react-router-dom";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useScrollTop } from "./assets/hooks/useScrollTop.jsx";
-import { useEnhancedTouch } from "./assets/hooks/useEnhancedTouch.jsx";
-import { useRoot } from "./assets/hooks/useRoot.jsx";
-import { LanguageProvider } from "./assets/hooks/useLanguageProvider.jsx";
-import CssBaseline from "@mui/material/CssBaseline";
+import {Header} from "./import/ImportLayouts.jsx";
+import {TopNav} from "./import/ImportLayouts.jsx";
+import {BottomNav} from "./import/ImportLayouts.jsx";
 
-// Lazy loading components -------------------------------------------------------------------------
-const Header = lazy(() => (
-  import("./import/ImportLayouts.jsx").then(module => ({
-    default: module.Header
-  }))
-));
-const TopNav = lazy(() => (
-  import("./import/ImportLayouts.jsx").then(module => ({
-    default: module.TopNav
-  }))
-));
-const BottomNav = lazy(() => (
-  import("./import/ImportLayouts.jsx").then(module => ({
-    default: module.BottomNav
-  }))
-));
+import {CalendarList} from "./page/calendar/CalendarList.jsx";
+import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
-const CalendarList = lazy(() => (
-  import("./page/calendar/CalendarList.jsx").then(module => ({
-    default: module.CalendarList
-  }))
-));
-const CalendarSave = lazy(() => (
-  import("./page/calendar/CalendarSave.jsx").then(module => ({
-    default: module.CalendarSave
-  }))
-));
+import {ExerciseDash} from "./page/exercise/dash/ExerciseDash.jsx";
+import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
+import {ExerciseGoalList} from "./page/exercise/goal/ExerciseGoalList.jsx";
+import {ExerciseGoalSave} from "./page/exercise/goal/ExerciseGoalSave.jsx";
+import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
+import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
 
-const ExerciseDash = lazy(() => (
-  import("./page/exercise/dash/ExerciseDash.jsx").then(module => ({
-    default: module.ExerciseDash
-  }))
-));
-const ExerciseDiff = lazy(() => (
-  import("./page/exercise/diff/ExerciseDiffList.jsx").then(module => ({
-    default: module.ExerciseDiff
-  }))
-));
-const ExerciseGoalList = lazy(() => (
-  import("./page/exercise/goal/ExerciseGoalList.jsx").then(module => ({
-    default: module.ExerciseGoalList
-  }))
-));
-const ExerciseGoalSave = lazy(() => (
-  import("./page/exercise/goal/ExerciseGoalSave.jsx").then(module => ({
-    default: module.ExerciseGoalSave
-  }))
-));
-const ExerciseList = lazy(() => (
-  import("./page/exercise/ExerciseList.jsx").then(module => ({
-    default: module.ExerciseList
-  }))
-));
-const ExerciseSave = lazy(() => (
-  import("./page/exercise/ExerciseSave.jsx").then(module => ({
-    default: module.ExerciseSave
-  }))
-));
+import {FoodDash} from "./page/food/dash/FoodDash.jsx";
+import {FoodDiff} from "./page/food/diff/FoodDiffList.jsx";
+import {FoodFindList} from "./page/food/find/FoodFindList.jsx";
+import {FoodFindSave} from "./page/food/find/FoodFindSave.jsx";
+import {FoodGoalList} from "./page/food/goal/FoodGoalList.jsx";
+import {FoodGoalSave} from "./page/food/goal/FoodGoalSave.jsx";
+import {FoodList} from "./page/food/FoodList.jsx";
+import {FoodSave} from "./page/food/FoodSave.jsx";
 
-const FoodDash = lazy(() => (
-  import("./page/food/dash/FoodDash.jsx").then(module => ({
-    default: module.FoodDash
-  }))
-));
-const FoodDiff = lazy(() => (
-  import("./page/food/diff/FoodDiffList.jsx").then(module => ({
-    default: module.FoodDiff
-  }))
-));
-const FoodFindList = lazy(() => (
-  import("./page/food/find/FoodFindList.jsx").then(module => ({
-    default: module.FoodFindList
-  }))
-));
-const FoodFindSave = lazy(() => (
-  import("./page/food/find/FoodFindSave.jsx").then(module => ({
-    default: module.FoodFindSave
-  }))
-));
-const FoodGoalList = lazy(() => (
-  import("./page/food/goal/FoodGoalList.jsx").then(module => ({
-    default: module.FoodGoalList
-  }))
-));
-const FoodGoalSave = lazy(() => (
-  import("./page/food/goal/FoodGoalSave.jsx").then(module => ({
-    default: module.FoodGoalSave
-  }))
-));
-const FoodList = lazy(() => (
-  import("./page/food/FoodList.jsx").then(module => ({
-    default: module.FoodList
-  }))
-));
-const FoodSave = lazy(() => (
-  import("./page/food/FoodSave.jsx").then(module => ({
-    default: module.FoodSave
-  }))
-));
+import {MoneyDash} from "./page/money/dash/MoneyDash.jsx";
+import {MoneyDiff} from "./page/money/diff/MoneyDiffList.jsx";
+import {MoneyGoalList} from "./page/money/goal/MoneyGoalList.jsx";
+import {MoneyGoalSave} from "./page/money/goal/MoneyGoalSave.jsx";
+import {MoneyList} from "./page/money/MoneyList.jsx";
+import {MoneySave} from "./page/money/MoneySave.jsx";
 
-const MoneyDash = lazy(() => (
-  import("./page/money/dash/MoneyDash.jsx").then(module => ({
-    default: module.MoneyDash
-  }))
-));
-const MoneyDiff = lazy(() => (
-  import("./page/money/diff/MoneyDiffList.jsx").then(module => ({
-    default: module.MoneyDiff
-  }))
-));
-const MoneyGoalList = lazy(() => (
-  import("./page/money/goal/MoneyGoalList.jsx").then(module => ({
-    default: module.MoneyGoalList
-  }))
-));
-const MoneyGoalSave = lazy(() => (
-  import("./page/money/goal/MoneyGoalSave.jsx").then(module => ({
-    default: module.MoneyGoalSave
-  }))
-));
-const MoneyList = lazy(() => (
-  import("./page/money/MoneyList.jsx").then(module => ({
-    default: module.MoneyList
-  }))
-));
-const MoneySave = lazy(() => (
-  import("./page/money/MoneySave.jsx").then(module => ({
-    default: module.MoneySave
-  }))
-));
+import {SleepDash} from "./page/sleep/dash/SleepDash.jsx";
+import {SleepDiff} from "./page/sleep/diff/SleepDiffList.jsx";
+import {SleepGoalList} from "./page/sleep/goal/SleepGoalList.jsx";
+import {SleepGoalSave} from "./page/sleep/goal/SleepGoalSave.jsx";
+import {SleepList} from "./page/sleep/SleepList.jsx";
+import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
-const SleepDash = lazy(() => (
-  import("./page/sleep/dash/SleepDash.jsx").then(module => ({
-    default: module.SleepDash
-  }))
-));
-const SleepDiff = lazy(() => (
-  import("./page/sleep/diff/SleepDiffList.jsx").then(module => ({
-    default: module.SleepDiff
-  }))
-));
-const SleepGoalList = lazy(() => (
-  import("./page/sleep/goal/SleepGoalList.jsx").then(module => ({
-    default: module.SleepGoalList
-  }))
-));
-const SleepGoalSave = lazy(() => (
-  import("./page/sleep/goal/SleepGoalSave.jsx").then(module => ({
-    default: module.SleepGoalSave
-  }))
-));
-const SleepList = lazy(() => (
-  import("./page/sleep/SleepList.jsx").then(module => ({
-    default: module.SleepList
-  }))
-));
-const SleepSave = lazy(() => (
-  import("./page/sleep/SleepSave.jsx").then(module => ({
-    default: module.SleepSave
-  }))
-));
-
-const UserDataCategory = lazy(() => (
-  import("./page/user/data/UserDataCategory.jsx").then(module => ({
-    default: module.UserDataCategory
-  }))
-));
-const UserDataDetail = lazy(() => (
-  import("./page/user/data/UserDataDetail.jsx").then(module => ({
-    default: module.UserDataDetail
-  }))
-));
-const UserDataList = lazy(() => (
-  import("./page/user/data/UserDataList.jsx").then(module => ({
-    default: module.UserDataList
-  }))
-));
-const UserSetting = lazy(() => (
-  import("./page/user/UserSetting.jsx").then(module => ({
-    default: module.UserSetting
-  }))
-));
-const UserDeletes = lazy(() => (
-  import("./page/user/UserDeletes.jsx").then(module => ({
-    default: module.UserDeletes
-  }))
-));
-const UserInfo = lazy(() => (
-  import("./page/user/UserInfo.jsx").then(module => ({
-    default: module.UserInfo
-  }))
-));
-const UserSignup = lazy(() => (
-  import("./page/user/UserSignup.jsx").then(module => ({
-    default: module.UserSignup
-  }))
-));
-const UserLogin = lazy(() => (
-  import("./page/user/UserLogin.jsx").then(module => ({
-    default: module.UserLogin
-  }))
-));
+import {UserDataCategory} from "./page/user/data/UserDataCategory.jsx";
+import {UserDataDetail} from "./page/user/data/UserDataDetail.jsx";
+import {UserDataList} from "./page/user/data/UserDataList.jsx";
+import {UserSetting} from "./page/user/UserSetting.jsx";
+import {UserDeletes} from "./page/user/UserDeletes.jsx";
+import {UserInfo} from "./page/user/UserInfo.jsx";
+import {UserSignup} from "./page/user/UserSignup.jsx";
+import {UserLogin} from "./page/user/UserLogin.jsx";
 
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/list" element={<CalendarList />} />
-      <Route path="/save" element={<CalendarSave />} />
-    </Routes>
-  </Suspense>
+  <Routes>
+    <Route path="/list" element={<CalendarList />} />
+    <Route path="/save" element={<CalendarSave />} />
+  </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
-const Exercise = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/dash/list" element={<ExerciseDash />} />
-      <Route path="/diff/list" element={<ExerciseDiff />} />
-      <Route path="/goal/list" element={<ExerciseGoalList />} />
-      <Route path="/goal/save" element={<ExerciseGoalSave />} />
-      <Route path="/list" element={<ExerciseList />} />
-      <Route path="/save" element={<ExerciseSave />} />
-    </Routes>
-  </Suspense>
+const Exercise = () =>  (
+  <Routes>
+    <Route path="/dash/list" element={<ExerciseDash />} />
+    <Route path="/diff/list" element={<ExerciseDiff />} />
+    <Route path="/goal/list" element={<ExerciseGoalList />} />
+    <Route path="/goal/save" element={<ExerciseGoalSave />} />
+    <Route path="/list" element={<ExerciseList />} />
+    <Route path="/save" element={<ExerciseSave />} />
+  </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
 const Food = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/dash/list" element={<FoodDash />} />
-      <Route path="/diff/list" element={<FoodDiff />} />
-      <Route path="/find/list" element={<FoodFindList />} />
-      <Route path="/find/save" element={<FoodFindSave />} />
-      <Route path="/goal/list" element={<FoodGoalList />} />
-      <Route path="/goal/save" element={<FoodGoalSave />} />
-      <Route path="/list" element={<FoodList />} />
-      <Route path="/save" element={<FoodSave />} />
-    </Routes>
-  </Suspense>
+  <Routes>
+    <Route path="/dash/list" element={<FoodDash />} />
+    <Route path="/diff/list" element={<FoodDiff />} />
+    <Route path="/find/list" element={<FoodFindList />} />
+    <Route path="/find/save" element={<FoodFindSave />} />
+    <Route path="/goal/list" element={<FoodGoalList />} />
+    <Route path="/goal/save" element={<FoodGoalSave />} />
+    <Route path="/list" element={<FoodList />} />
+    <Route path="/save" element={<FoodSave />} />
+  </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
-const Money = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/dash/list" element={<MoneyDash />} />
-      <Route path="/diff/list" element={<MoneyDiff />} />
-      <Route path="/goal/list" element={<MoneyGoalList />} />
-      <Route path="/goal/save" element={<MoneyGoalSave />} />
-      <Route path="/list" element={<MoneyList />} />
-      <Route path="/save" element={<MoneySave />} />
-    </Routes>
-  </Suspense>
+const Money = () =>  (
+  <Routes>
+    <Route path="/dash/list" element={<MoneyDash />} />
+    <Route path="/diff/list" element={<MoneyDiff />} />
+    <Route path="/goal/list" element={<MoneyGoalList />} />
+    <Route path="/goal/save" element={<MoneyGoalSave />} />
+    <Route path="/list" element={<MoneyList />} />
+    <Route path="/save" element={<MoneySave />} />
+  </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
 const Sleep = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/dash/list" element={<SleepDash />} />
-      <Route path="/diff/list" element={<SleepDiff />} />
-      <Route path="/goal/list" element={<SleepGoalList />} />
-      <Route path="/goal/save" element={<SleepGoalSave />} />
-      <Route path="/list" element={<SleepList />} />
-      <Route path="/save" element={<SleepSave />} />
-    </Routes>
-  </Suspense>
+  <Routes>
+    <Route path="/dash/list" element={<SleepDash />} />
+    <Route path="/diff/list" element={<SleepDiff />} />
+    <Route path="/goal/list" element={<SleepGoalList />} />
+    <Route path="/goal/save" element={<SleepGoalSave />} />
+    <Route path="/list" element={<SleepList />} />
+    <Route path="/save" element={<SleepSave />} />
+  </Routes>
 );
-
 // -------------------------------------------------------------------------------------------------
 const User = () => (
-  <Suspense>
-    <Routes>
-      <Route path="/data/category" element={<UserDataCategory />} />
-      <Route path="/data/detail" element={<UserDataDetail />} />
-      <Route path="/data/list" element={<UserDataList />} />
-      <Route path="/setting" element={<UserSetting />} />
-      <Route path="/info" element={<UserInfo />} />
-      <Route path="/deletes" element={<UserDeletes />} />
-      <Route path="/signup" element={<UserSignup />} />
-      <Route path="/login" element={<UserLogin />} />
-    </Routes>
-  </Suspense>
+  <Routes>
+    <Route path="/data/category" element={<UserDataCategory />} />
+    <Route path="/data/detail" element={<UserDataDetail />} />
+    <Route path="/data/list" element={<UserDataList />} />
+    <Route path="/setting" element={<UserSetting />} />
+    <Route path="/info" element={<UserInfo />} />
+    <Route path="/deletes" element={<UserDeletes />} />
+    <Route path="/signup" element={<UserSignup />} />
+    <Route path="/login" element={<UserLogin />} />
+  </Routes>
 );
 
 // -------------------------------------------------------------------------------------------------
@@ -327,16 +153,8 @@ const App = () => {
 
   return (
     <div className={"App"}>
-      {!noneHeader && (
-        <Suspense>
-          <Header />
-        </Suspense>
-      )}
-      {!noneTop && (
-        <Suspense>
-          <TopNav />
-        </Suspense>
-      )}
+      {!noneHeader && <Header />}
+      {!noneTop && <TopNav />}
       <Routes>
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/exercise/*" element={<Exercise />} />
@@ -345,11 +163,7 @@ const App = () => {
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
       </Routes>
-      {!noneBottom && (
-        <Suspense>
-          <BottomNav />
-        </Suspense>
-      )}
+      {!noneBottom && <BottomNav />}
     </div>
   );
 };

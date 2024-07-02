@@ -30,6 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "analyze": "npx cra-bundle-analyzer",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
