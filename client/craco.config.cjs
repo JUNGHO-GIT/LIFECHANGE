@@ -11,8 +11,8 @@ module.exports = {
         use: {
           loader: 'esbuild-loader',
           options: {
-            loader: 'jsx', // if using JSX
-            target: 'es2015' // Syntax to compile to (e.g. es2015, es2017)
+            loader: 'jsx',
+            target: 'es2015'
           }
         }
       });
@@ -27,7 +27,6 @@ module.exports = {
             },
             compress: {
               ecma: 5,
-              warnings: false,
               comparisons: false,
               inline: 2,
             },

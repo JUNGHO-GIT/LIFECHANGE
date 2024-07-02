@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
+import { router as basicRouter } from "./src/router/basic/basicRouter.js";
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
 import { router as exerciseDashRouter } from "./src/router/exercise/exerciseDashRouter.js";
 import { router as exerciseDiffRouter } from "./src/router/exercise/exerciseDiffRouter.js";
@@ -51,6 +52,7 @@ function startServer(httpPort, httpsPort) {
       console.log(`HTTP 서버가 포트 ${httpPort}에서 실행 중입니다.`);
     });
     httpServer.on('error', (error) => {
+      // @ts-ignore
       if (error?.code === 'EADDRINUSE') {
         console.log(`${httpPort} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
         startServer(httpPort + 1);
@@ -83,6 +85,7 @@ app.use((req, res, next) => {
 });
 
 // -------------------------------------------------------------------------------------------------
+app.use("/api/basic", basicRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/exercise/dash", exerciseDashRouter);
 app.use("/api/exercise/diff", exerciseDiffRouter);

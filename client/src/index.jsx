@@ -1,14 +1,4 @@
-// App.jsx
-
-import React from "react";
-import {useLocation} from "react-router-dom";
-import ReactDOM from "react-dom/client";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
-import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
-import {useRoot} from "./assets/hooks/useRoot.jsx";
-import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
-import CssBaseline from "@mui/material/CssBaseline";
+// index.jsx
 
 import "./index.css";
 import "moment/locale/ko";
@@ -19,6 +9,16 @@ import "./assets/css/Mui.css";
 import "./assets/css/Components.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
+
+import React from "react";
+import {useLocation} from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
+import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
+import {useRoot} from "./assets/hooks/useRoot.jsx";
+import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import {Header} from "./import/ImportLayouts.jsx";
 import {TopNav} from "./import/ImportLayouts.jsx";
