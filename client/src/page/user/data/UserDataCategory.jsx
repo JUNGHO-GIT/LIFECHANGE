@@ -318,7 +318,7 @@ export const UserDataCategory = () => {
                         <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
                           handlerRename("part", index);
                         }} />
-                        <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
+                        <Icons name={"TbTrash"} className={"w-14 h-14 red"} onClick={() => {
                           handlerRemove("part", index);
                         }} />
                       </Div>
@@ -333,7 +333,7 @@ export const UserDataCategory = () => {
                   <Div className={"d-center"} onClick={() => {
                     handlerAdd("part");
                   }}>
-                    <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
+                    <Icons name={"TbPlus"} className={"w-14 h-14"} onClick={() => {}} />
                   </Div>
                 </TableCell>
               </TableRow>
@@ -373,7 +373,7 @@ export const UserDataCategory = () => {
                           <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
                             handlerRename("title", index);
                           }} />
-                          <Icons name={"BiTrash"} className={"w-14 h-14 red"} onClick={() => {
+                          <Icons name={"TbTrash"} className={"w-14 h-14 red"} onClick={() => {
                             handlerRemove("title", index);
                           }} />
                         </Div>
@@ -388,7 +388,7 @@ export const UserDataCategory = () => {
                     <Div className={"d-center"} onClick={() => {
                       handlerAdd("title");
                     }}>
-                      <Icons name={"BiPlus"} className={"w-14 h-14"} onClick={() => {}} />
+                      <Icons name={"TbPlus"} className={"w-14 h-14"} onClick={() => {}} />
                     </Div>
                   </TableCell>
                 </TableRow>

@@ -225,7 +225,7 @@ const UserLogin = lazy(() => (
 
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/list" element={<CalendarList />} />
       <Route path="/save" element={<CalendarSave />} />
@@ -235,7 +235,7 @@ const Calendar = () => (
 
 // -------------------------------------------------------------------------------------------------
 const Exercise = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/dash/list" element={<ExerciseDash />} />
       <Route path="/diff/list" element={<ExerciseDiff />} />
@@ -249,7 +249,7 @@ const Exercise = () => (
 
 // -------------------------------------------------------------------------------------------------
 const Food = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/dash/list" element={<FoodDash />} />
       <Route path="/diff/list" element={<FoodDiff />} />
@@ -265,7 +265,7 @@ const Food = () => (
 
 // -------------------------------------------------------------------------------------------------
 const Money = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/dash/list" element={<MoneyDash />} />
       <Route path="/diff/list" element={<MoneyDiff />} />
@@ -279,7 +279,7 @@ const Money = () => (
 
 // -------------------------------------------------------------------------------------------------
 const Sleep = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/dash/list" element={<SleepDash />} />
       <Route path="/diff/list" element={<SleepDiff />} />
@@ -293,7 +293,7 @@ const Sleep = () => (
 
 // -------------------------------------------------------------------------------------------------
 const User = () => (
-  <Suspense fallback={null}>
+  <Suspense>
     <Routes>
       <Route path="/data/category" element={<UserDataCategory />} />
       <Route path="/data/detail" element={<UserDataDetail />} />
@@ -328,12 +328,12 @@ const App = () => {
   return (
     <div className={"App"}>
       {!noneHeader && (
-        <Suspense fallback={null}>
+        <Suspense>
           <Header />
         </Suspense>
       )}
       {!noneTop && (
-        <Suspense fallback={null}>
+        <Suspense>
           <TopNav />
         </Suspense>
       )}
@@ -346,7 +346,7 @@ const App = () => {
         <Route path="/user/*" element={<User />} />
       </Routes>
       {!noneBottom && (
-        <Suspense fallback={null}>
+        <Suspense>
           <BottomNav />
         </Suspense>
       )}
