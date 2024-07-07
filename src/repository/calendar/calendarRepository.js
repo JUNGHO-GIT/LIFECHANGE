@@ -1,4 +1,4 @@
-// calendarGoalRepository.js
+// calendarRepository.js
 
 import mongoose from "mongoose";
 import {Calendar} from "../../schema/calendar/Calendar.js";

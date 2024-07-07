@@ -1,4 +1,4 @@
-// exerciseGoalRepository.js
+// exerciseRepository.js
 
 import mongoose from "mongoose";
 import {Exercise} from "../../schema/exercise/Exercise.js";
