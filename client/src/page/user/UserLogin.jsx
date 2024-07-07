@@ -49,6 +49,10 @@ export const UserLogin = () => {
           localStorage.setItem("sessionId", "");
         }
         sessionStorage.setItem("sessionId", userId);
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          userId: userId,
+          isAdmin: res.data.result.admin === "admin"
+        }));
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
         if (res.data.result.admin === "admin") {
