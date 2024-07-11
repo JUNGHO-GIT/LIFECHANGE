@@ -98,7 +98,7 @@ export const Time = ({
           label={translateStr}
           size={"small"}
           variant={"outlined"}
-          className={"w-76vw"}
+          className={"w-86vw"}
           value={OBJECT?.[`${extra}`]}
           InputProps={{
             readOnly: true,
@@ -137,7 +137,7 @@ export const Time = ({
           onChange={(e) => {
             setOBJECT((prev) => ({
               ...prev,
-              [`${firstStr}_section`]: prev[`${firstStr}_section`].map((item, idx) => (
+              [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
                 idx === i ? {
                   ...item,
                   [`${extra}`]: moment(e).format("HH:mm")

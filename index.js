@@ -7,7 +7,6 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
-import { router as basicRouter } from "./src/router/basic/basicRouter.js";
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
 import { router as exerciseDashRouter } from "./src/router/exercise/exerciseDashRouter.js";
 import { router as exerciseDiffRouter } from "./src/router/exercise/exerciseDiffRouter.js";
@@ -85,7 +84,6 @@ app.use((req, res, next) => {
 });
 
 // -------------------------------------------------------------------------------------------------
-app.use("/api/basic", basicRouter);
 app.use("/api/calendar", calendarRouter);
 app.use("/api/exercise/dash", exerciseDashRouter);
 app.use("/api/exercise/diff", exerciseDiffRouter);

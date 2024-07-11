@@ -1,4 +1,4 @@
-// ImportLogics.jsx
+// ImportUtils.jsx
 
 import {dataArray} from "../assets/js/dataArray.js";
 import {handlerY} from "../assets/js/dashFormatter.js";

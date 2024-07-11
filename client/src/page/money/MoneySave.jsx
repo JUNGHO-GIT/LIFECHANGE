@@ -1,13 +1,13 @@
 // MoneySave.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {PopUp, Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
+import {Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {money2} from "../../import/ImportImages.jsx";
 
@@ -91,7 +91,7 @@ export const MoneySave = () => {
       setLOADING(false);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -109,10 +109,15 @@ export const MoneySave = () => {
       },
     })
     .then((res) => {
-      setOBJECT((prev) => ({
-        ...prev,
-        ...res.data.result || OBJECT_DEF
-      }));
+      // 첫번째 객체를 제외하고 데이터 추가
+      setOBJECT((prev) => {
+        if (prev.length === 1 && prev[0]?._id === "") {
+          return res.data.result;
+        }
+        else {
+          return {...prev, ...res.data.result};
+        }
+      });
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -121,7 +126,7 @@ export const MoneySave = () => {
       }));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -168,8 +173,73 @@ export const MoneySave = () => {
 
   },[COUNT?.newSectionCnt]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef(OBJECT?.money_section?.map(() => ({
+    money_part_idx: createRef(),
+    money_title_idx: createRef(),
+    money_amount: createRef()
+  })));
+  const [ERRORS, setERRORS] = useState(OBJECT?.money_section?.map(() => ({
+    money_part_idx: false,
+    money_title_idx: false,
+    money_amount: false
+  })));
+  useEffect(() => {
+    REFS.current = OBJECT?.money_section?.map((_, idx) => REFS?.current[idx] || {
+      money_part_idx: createRef(),
+      money_title_idx: createRef(),
+      money_amount: createRef()
+    });
+  }, [OBJECT?.money_section.length]);
+  const validate = (OBJECT) => {
+    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
+    let foundError = false;
+
+    // 초기 에러 상태에서 모든 필드를 false로 설정
+    const initialErrors = OBJECT?.money_section?.map(() => ({
+      money_part_idx: false,
+      money_title_idx: false,
+      money_amount: false,
+    }));
+
+    for (let idx = 0; idx < OBJECT?.money_section.length; idx++) {
+      const section = OBJECT?.money_section[idx];
+      // 오류가 있는 항목만 업데이트
+      if (section.money_part_idx === 0) {
+        alert(translate("errorMoneyPart"));
+        REFS?.current[idx]?.money_part_idx.current.focus();
+        initialErrors[idx].money_part_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.money_title_idx === 0) {
+        alert(translate("errorMoneyTitle"));
+        REFS?.current[idx]?.money_title_idx.current.focus();
+        initialErrors[idx].money_title_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.money_amount === 0) {
+        alert(translate("errorMoneyAmount"));
+        REFS?.current[idx]?.money_amount.current.focus();
+        initialErrors[idx].money_amount = true;
+        foundError = true;
+        break;
+      }
+    }
+    // 업데이트된 에러 상태를 설정
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -179,6 +249,7 @@ export const MoneySave = () => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -191,25 +262,26 @@ export const MoneySave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -222,7 +294,7 @@ export const MoneySave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
@@ -267,7 +339,7 @@ export const MoneySave = () => {
             size={"small"}
             value={numeral(OBJECT?.money_total_income).format('0,0')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -289,7 +361,7 @@ export const MoneySave = () => {
             size={"small"}
             value={numeral(OBJECT?.money_total_expense).format('0,0')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -303,6 +375,7 @@ export const MoneySave = () => {
             }}
           />
         </Div>
+        <Br20/>
       </Card>
     );
     // 7-3. table
@@ -338,16 +411,16 @@ export const MoneySave = () => {
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.money_section[i]?.money_part_idx}
+              inputRef={REFS?.current[i]?.money_part_idx}
+              error={ERRORS[i]?.money_part_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  money_section: prev.money_section.map((item, idx) => (
+                  money_section: prev.money_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       money_part_idx: newIndex,
@@ -375,10 +448,10 @@ export const MoneySave = () => {
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.money_section[i]?.money_title_idx}
+              inputRef={REFS?.current[i]?.money_title_idx}
+              error={ERRORS[i]?.money_title_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newTitleIdx = Number(e.target.value);
@@ -386,7 +459,7 @@ export const MoneySave = () => {
                 if (newTitleIdx >= 0 && newTitleVal) {
                   setOBJECT((prev) => ({
                     ...prev,
-                    money_section: prev.money_section.map((item, idx) => (
+                    money_section: prev.money_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         money_title_idx: newTitleIdx,
@@ -413,8 +486,10 @@ export const MoneySave = () => {
               label={translate("amount")}
               size={"small"}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}
+              inputRef={REFS?.current[i]?.money_amount}
+              error={ERRORS[i]?.money_amount}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -433,7 +508,7 @@ export const MoneySave = () => {
                 const limitedValue = Math.min(Number(rawValue), 9999999999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  money_section: prev.money_section.map((item, idx) => (
+                  money_section: prev.money_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       money_amount: limitedValue
@@ -457,7 +532,7 @@ export const MoneySave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.money_section.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.money_section?.map((_, i) => tableFragment(i))
         )
       );
     };

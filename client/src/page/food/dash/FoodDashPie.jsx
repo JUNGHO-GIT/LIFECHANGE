@@ -541,7 +541,7 @@ export const FoodDashPie = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["kcal", "nut"].map((key, index) => (
+          ["kcal", "nut"]?.map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {

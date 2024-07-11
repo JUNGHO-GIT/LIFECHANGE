@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, moment} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportLogics.jsx";
+import {log} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../../import/ImportMuis.jsx";
@@ -95,7 +95,7 @@ export const UserDataCategory = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -232,8 +232,8 @@ export const UserDataCategory = () => {
     if (type === "part") {
       setOBJECT((prev) => {
         const newCategory1 = [
-          ...prev.dataCategory[dataType].slice(0, index),
-          ...prev.dataCategory[dataType].slice(index + 1)
+          ...prev.dataCategory[dataType]?.slice(0, index),
+          ...prev.dataCategory[dataType]?.slice(index + 1)
         ];
         // 하나만 남았을 때 삭제 시도 시 경고
         if (newCategory1.length <= 1) {

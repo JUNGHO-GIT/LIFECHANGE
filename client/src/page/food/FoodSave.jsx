@@ -1,10 +1,10 @@
 // FoodSave.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../import/ImportComponents.jsx";
@@ -96,6 +96,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
       console.error(err);
@@ -118,7 +119,7 @@ export const FoodSave = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -142,14 +143,14 @@ export const FoodSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const totals = OBJECT?.food_section?.reduce((acc, current) => {
+    const totals = OBJECT?.food_section?.reduce((acc, cur) => {
       return {
-        totalKcal: acc.totalKcal + Number(current.food_kcal),
-        totalFat: acc.totalFat + Number(current.food_fat),
-        totalCarb: acc.totalCarb + Number(current.food_carb),
-        totalProtein: acc.totalProtein + Number(current.food_protein),
+        totalKcal: acc.totalKcal + Number(cur.food_kcal),
+        totalFat: acc.totalFat + Number(cur.food_fat),
+        totalCarb: acc.totalCarb + Number(cur.food_carb),
+        totalProtein: acc.totalProtein + Number(cur.food_protein),
       };
-    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
+    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0});
 
     setOBJECT((prev) => ({
       ...prev,
@@ -184,8 +185,133 @@ export const FoodSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef(OBJECT?.food_section?.map(() => ({
+    food_part_idx: createRef(),
+    food_count: createRef(),
+    food_gram: createRef(),
+    food_title: createRef(),
+    food_kcal: createRef(),
+    food_carb: createRef(),
+    food_protein: createRef(),
+    food_fat: createRef(),
+  })));
+  const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
+    food_part_idx: false,
+    food_count: false,
+    food_gram: false,
+    food_title: false,
+    food_kcal: false,
+    food_carb: false,
+    food_protein: false,
+    food_fat: false,
+  })));
+  useEffect(() => {
+    REFS.current = OBJECT?.food_section?.map((_, idx) => REFS?.current[idx] || {
+      food_part_idx: createRef(),
+      food_count: createRef(),
+      food_gram: createRef(),
+      food_title: createRef(),
+      food_kcal: createRef(),
+      food_carb: createRef(),
+      food_protein: createRef(),
+      food_fat: createRef(),
+    });
+  }, [OBJECT?.food_section.length]);
+  const validate = (OBJECT) => {
+    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
+    let foundError = false;
+
+    // 초기 에러 상태에서 모든 필드를 false로 설정
+    const initialErrors = OBJECT?.food_section?.map(() => ({
+      food_part_idx: false,
+      food_count: false,
+      food_gram: false,
+      food_title: false,
+      food_kcal: false,
+      food_carb: false,
+      food_protein: false,
+      food_fat: false,
+    }));
+
+    for (let idx = 0; idx < OBJECT?.food_section.length; idx++) {
+      const section = OBJECT?.food_section[idx];
+      // 오류가 있는 항목만 업데이트
+      if (section.food_part_idx === 0) {
+        alert(translate("errorFoodPart"));
+        REFS?.current[idx]?.food_part_idx.current.focus();
+        initialErrors[idx].food_part_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_count === 0) {
+        alert(translate("errorFoodCount"));
+        REFS?.current[idx]?.food_count.current.focus();
+        initialErrors[idx].food_count = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_gram === 0) {
+        alert(translate("errorFoodGram"));
+        REFS?.current[idx]?.food_gram.current.focus();
+        initialErrors[idx].food_gram = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_title === "") {
+        alert(translate("errorFoodTitle"));
+        REFS?.current[idx]?.food_title.current.focus();
+        initialErrors[idx].food_title = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_kcal === 0) {
+        alert(translate("errorFoodKcal"));
+        REFS?.current[idx]?.food_kcal.current.focus();
+        initialErrors[idx].food_kcal = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_carb === 0) {
+        alert(translate("errorFoodCarb"));
+        REFS?.current[idx]?.food_carb.current.focus();
+        initialErrors[idx].food_carb = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_protein === 0) {
+        alert(translate("errorFoodProtein"));
+        REFS?.current[idx]?.food_protein.current.focus();
+        initialErrors[idx].food_protein = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.food_fat === 0) {
+        alert(translate("errorFoodFat"));
+        REFS?.current[idx]?.food_fat.current.focus();
+        initialErrors[idx].food_fat = true;
+        foundError = true;
+        break;
+      }
+    }
+    // 업데이트된 에러 상태를 설정
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -195,6 +321,7 @@ export const FoodSave = () => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -213,19 +340,20 @@ export const FoodSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -241,7 +369,6 @@ export const FoodSave = () => {
       console.error(err);
     });
   };
-
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
@@ -284,7 +411,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -306,7 +433,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -328,7 +455,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -350,7 +477,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -385,7 +512,7 @@ export const FoodSave = () => {
             />
             <Delete
               id={OBJECT?._id}
-              sectionId={OBJECT?.food_section[i]._id}
+              sectionId={OBJECT?.food_section[i]?._id}
               index={i}
               handlerDelete={handlerDelete}
             />
@@ -399,22 +526,21 @@ export const FoodSave = () => {
               label={translate("part")}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
-              defaultValue={1}
               value={OBJECT?.food_section[i]?.food_part_idx}
+              inputRef={REFS?.current[i]?.food_part_idx}
+              error={ERRORS[i]?.food_part_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section.map((item, idx) => (
+                  food_section: prev.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_part_idx: newIndex,
-                      food_part_val: foodArray[newIndex]?.food_part
+                      food_part_val: foodArray[newIndex]?.food_part,
                     } : item
                   ))
                 }));
@@ -434,13 +560,13 @@ export const FoodSave = () => {
                 label={translate("foodCount")}
                 size={"small"}
                 type={"text"}
-                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
+                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+                inputRef={REFS?.current[i]?.food_count}
+                error={ERRORS[i]?.food_count}
                 InputProps={{
-                  readOnly: false,
-                  startAdornment: null,
-                  endAdornment: null,
+                  readOnly: false
                 }}
                 onChange={(e) => {
                   const newCount = Number(e.target.value);
@@ -455,7 +581,7 @@ export const FoodSave = () => {
                   }
                   setOBJECT((prev) => ({
                     ...prev,
-                    food_section: prev.food_section.map((item, idx) => (
+                    food_section: prev.food_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         food_count: newCount,
@@ -474,12 +600,13 @@ export const FoodSave = () => {
                 label={translate("gram")}
                 size={"small"}
                 type={"text"}
-                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
+                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+                inputRef={REFS?.current[i]?.food_gram}
+                error={ERRORS[i]?.food_gram}
                 InputProps={{
                   readOnly: false,
-                  startAdornment: null,
                   endAdornment: (
                     translate("g")
                   )
@@ -497,7 +624,7 @@ export const FoodSave = () => {
                   }
                   setOBJECT((prev) => ({
                     ...prev,
-                    food_section: prev.food_section.map((item, idx) => (
+                    food_section: prev.food_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         food_gram: newGram,
@@ -516,15 +643,15 @@ export const FoodSave = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
-              label={translate("foodTitle")}
               size={"small"}
-              value={OBJECT?.food_section[i]?.food_title || " "}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
+              label={translate("foodTitle")}
+              value={OBJECT?.food_section[i]?.food_title || " "}
+              inputRef={REFS?.current[i]?.food_title}
+              error={ERRORS[i]?.food_title}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
             />
           </Div>
@@ -534,9 +661,11 @@ export const FoodSave = () => {
               select={false}
               label={translate("kcal")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}
+              inputRef={REFS?.current[i]?.food_kcal}
+              error={ERRORS[i]?.food_kcal}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -553,9 +682,11 @@ export const FoodSave = () => {
               select={false}
               label={translate("carb")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}
+              inputRef={REFS?.current[i]?.food_carb}
+              error={ERRORS[i]?.food_carb}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -575,9 +706,11 @@ export const FoodSave = () => {
               select={false}
               label={translate("protein")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}
+              inputRef={REFS?.current[i]?.food_protein}
+              error={ERRORS[i]?.food_protein}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -594,9 +727,11 @@ export const FoodSave = () => {
               select={false}
               label={translate("fat")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}
+              inputRef={REFS?.current[i]?.food_fat}
+              error={ERRORS[i]?.food_fat}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -615,7 +750,7 @@ export const FoodSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.food_section.map((_, i) => (tableFragment(i)))
+          LOADING ? loadingFragment() : OBJECT?.food_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

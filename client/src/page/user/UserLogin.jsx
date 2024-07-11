@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {percent, log} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportUtils";
 import {Div, Br10, Br20, Img, Hr20, Hr30, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
@@ -93,12 +93,10 @@ export const UserLogin = () => {
             type={"text"}
             size={"small"}
             label={translate("id")}
-            className={"w-76vw"}
+            className={"w-86vw"}
             value={userId}
             InputProps={{
-              readOnly: false,
-              startAdornment: null,
-              endAdornment: null,
+              readOnly: false
             }}
             onChange={(e) => {
               setUserId(e.target.value);
@@ -111,11 +109,9 @@ export const UserLogin = () => {
             size={"small"}
             label={translate("pw")}
             value={userPw}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: false,
-              startAdornment: null,
-              endAdornment: null,
             }}
             onChange={(e) => {
               setUserPw(e.target.value);
@@ -171,7 +167,6 @@ export const UserLogin = () => {
             startAdornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),
-            endAdornment: null,
           }}
         />
       </Div>

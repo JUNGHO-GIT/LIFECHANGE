@@ -101,7 +101,7 @@ export const ExerciseList = () => {
       setIsExpanded(res.data.result.map((_, index) => (index)));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);

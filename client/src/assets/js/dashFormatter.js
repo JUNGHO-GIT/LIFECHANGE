@@ -12,28 +12,28 @@ export const handlerY = (
 
   if (type === "sleep") {
     maxValue = Math.max(...value?.map((item) => (
-      Math.max(...array.map((key) => item[key]))
+      Math.max(...array?.map((key) => item[key]))
     )));
     topValue = 24;
     tickInterval = 1;
   }
   else if (type === "money") {
     maxValue = Math.max(...value?.map((item) => (
-      Math.max(...array.map((key) => item[key]))
+      Math.max(...array?.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 100;
   }
   else if (type === "food") {
     maxValue = Math.max(...value?.map((item) => (
-      Math.max(...array.map((key) => item[key]))
+      Math.max(...array?.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10
   }
   else if (type === "exercise") {
     maxValue = Math.max(...value?.map((item) => (
-      Math.max(...array.map((key) => item[key]))
+      Math.max(...array?.map((key) => item[key]))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10

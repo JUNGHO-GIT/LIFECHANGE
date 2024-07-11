@@ -35,7 +35,7 @@ export const Memo = ({
             const newContent = e.target.value;
             setOBJECT((prev) => ({
               ...prev,
-              [`${firstStr}_section`]: prev[`${firstStr}_section`].map((item, idx) => (
+              [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
                 idx === i ? {
                   ...item,
                   [`${extra}`]: newContent
@@ -59,7 +59,6 @@ export const Memo = ({
             startAdornment: (
               <Img src={calendar3} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);

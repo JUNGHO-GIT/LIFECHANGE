@@ -92,7 +92,7 @@ export const SleepList = () => {
       setIsExpanded(res.data.result.map((_, index) => (index)));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -167,7 +167,7 @@ export const SleepList = () => {
                 <Br10 />
                 <Div className={"d-left"}>
                   <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_section[0].sleep_bedTime}
+                    {item.sleep_section[0]?.sleep_bedTime}
                   </Div>
                   <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                     {translate("hm")}
@@ -185,7 +185,7 @@ export const SleepList = () => {
                 <Br10 />
                 <Div className={"d-left"}>
                   <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_section[0].sleep_wakeTime}
+                    {item.sleep_section[0]?.sleep_wakeTime}
                   </Div>
                   <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                     {translate("hm")}
@@ -203,7 +203,7 @@ export const SleepList = () => {
                 <Br10 />
                 <Div className={"d-left"}>
                   <Div className={"fs-1-0rem fw-bold"}>
-                    {item.sleep_section[0].sleep_sleepTime}
+                    {item.sleep_section[0]?.sleep_sleepTime}
                   </Div>
                   <Div className={"fs-0-7rem dark fw-normal ms-10"}>
                     {translate("hm")}

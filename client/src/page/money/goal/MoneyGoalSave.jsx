@@ -1,10 +1,10 @@
 // MoneyGoalSave.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {percent} from "../../../import/ImportLogics.jsx";
+import {percent} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -78,9 +78,10 @@ export const MoneyGoalSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -107,7 +108,7 @@ export const MoneyGoalSave = () => {
       }));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -138,19 +139,19 @@ export const MoneyGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
@@ -170,7 +171,7 @@ export const MoneyGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
@@ -239,7 +240,7 @@ export const MoneyGoalSave = () => {
               size={"small"}
               label={`${translate("goalIncome")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -272,7 +273,7 @@ export const MoneyGoalSave = () => {
               size={"small"}
               label={`${translate("goalExpense")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
               InputProps={{
                 readOnly: false,

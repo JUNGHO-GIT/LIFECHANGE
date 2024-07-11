@@ -1,10 +1,10 @@
 // FoodGoalSave.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {percent} from "../../../import/ImportLogics.jsx";
+import {percent} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -81,9 +81,10 @@ export const FoodGoalSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -110,7 +111,7 @@ export const FoodGoalSave = () => {
       }));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -141,19 +142,19 @@ export const FoodGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
@@ -173,7 +174,7 @@ export const FoodGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
@@ -243,7 +244,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalKcal")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -276,7 +277,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalCarb")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -309,7 +310,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalProtein")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -342,7 +343,7 @@ export const FoodGoalSave = () => {
               size={"small"}
               label={`${translate("goalFat")} (${translate("total")})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
               InputProps={{
                 readOnly: false,

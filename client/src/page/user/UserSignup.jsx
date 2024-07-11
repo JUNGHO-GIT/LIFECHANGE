@@ -181,7 +181,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("pw")}
             value={OBJECT.user_pw}
-            className={"w-76vw"}
+            className={"w-86vw"}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -196,7 +196,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("pwConfirm")}
             value={pwConfirm}
-            className={"w-76vw"}
+            className={"w-86vw"}
             onChange={(e) => (
               setPwConfirm(e.target.value)
             )}
@@ -217,7 +217,7 @@ export const UserSignup = () => {
               }))
             )}
           >
-            {[translate("N"), translate("M"), translate("F")].map((item, i) => (
+            {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
               <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
                 {item}
               </MenuItem>
@@ -326,7 +326,6 @@ export const UserSignup = () => {
             startAdornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),
-            endAdornment: null,
           }}
         />
       </Div>

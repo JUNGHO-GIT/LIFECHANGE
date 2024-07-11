@@ -2,7 +2,7 @@
 
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {log} from "../../../import/ImportLogics.jsx";
+import {log} from "../../../import/ImportUtils.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, MenuItem, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
@@ -74,8 +74,6 @@ export const Btn = ({
         value={objects?.PAGING?.query}
         InputProps={{
           readOnly: false,
-          startAdornment: null,
-          endAdornment: null,
           className: "h-min0 h-30",
         }}
         onChange={(e) => {

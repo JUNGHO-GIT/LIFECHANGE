@@ -28,8 +28,6 @@ export const TopNav = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
-  const type = secondStr.charAt(0).toUpperCase() + secondStr.slice(1);
-  const goal = thirdStr.charAt(0).toUpperCase() + thirdStr.slice(1);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [value, setValue] = useState("diff/list");
@@ -47,7 +45,7 @@ export const TopNav = () => {
   // 3. logic --------------------------------------------------------------------------------------
   const makeIcon = (part, className, text, popTrigger) => {
 
-    const classType = text === "N" ? "d-none" : "fs-0-7rem ms-5";
+    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-bold ms-5";
 
     if (
       parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
@@ -74,7 +72,8 @@ export const TopNav = () => {
         }}>
           <Img src={smile2} className={className} />
           <Div className={classType}>
-          {percent?.[`${part}`]?.average?.score}</Div>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -88,7 +87,8 @@ export const TopNav = () => {
         }}>
           <Img src={smile3} className={className} />
           <Div className={classType}>
-          {percent?.[`${part}`]?.average?.score}</Div>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -102,7 +102,8 @@ export const TopNav = () => {
         }}>
           <Img src={smile4} className={className} />
           <Div className={classType}>
-          {percent?.[`${part}`]?.average?.score}</Div>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -116,7 +117,8 @@ export const TopNav = () => {
         }}>
           <Img src={smile5} className={className} />
           <Div className={classType}>
-          {percent?.[`${part}`]?.average?.score}</Div>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -127,7 +129,8 @@ export const TopNav = () => {
         }}>
           <Img src={smile3} className={className} />
           <Div className={classType}>
-          {percent?.[`${part}`]?.average?.score}</Div>
+            {percent?.[`${part}`]?.average?.score}
+          </Div>
         </Div>
       );
     }
@@ -142,7 +145,7 @@ export const TopNav = () => {
       contents={({closePopup}) => (
       <Div className={"d-column p-10"}>
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+          <Div className={"fs-0-8rem fw-bold"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
         </Div>
         <Br20 />
         <Div className={"d-center"}>

@@ -16,7 +16,7 @@ export const Count = ({
 
   // 2. countNode ----------------------------------------------------------------------------------
   const countNode = () => (
-    <Div className={"d-center"}>
+    <Div className={"w-100p d-center"}>
       <PopUp
         type={"alert"}
         position={"bottom"}
@@ -32,7 +32,7 @@ export const Count = ({
             label={translate("count")}
             variant={"outlined"}
             size={"small"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             value={COUNT.newSectionCnt}
             InputProps={{
               readOnly: true,

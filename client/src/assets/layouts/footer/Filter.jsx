@@ -3,7 +3,7 @@
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportLogics.jsx";
+import {log} from "../../../import/ImportUtils.jsx";
 import {Picker, Div} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
 
@@ -35,7 +35,7 @@ export const Filter = ({
             sort: e.target.value
           }))
         )}>
-        {["asc", "desc"].map((item) => (
+        {["asc", "desc"]?.map((item) => (
           <MenuItem key={item} value={item} selected={objects?.PAGING?.sort === item}>
             <Div className={"fs-0-6rem"}>
               {translate(item)}

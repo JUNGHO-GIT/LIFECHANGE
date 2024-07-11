@@ -59,7 +59,7 @@ export const UserDataDetail = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -113,7 +113,7 @@ export const UserDataDetail = () => {
             size={"small"}
             label={translate("id")}
             value={OBJECT?.user_id}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -125,7 +125,7 @@ export const UserDataDetail = () => {
             size={"small"}
             label={translate("regDt")}
             value={OBJECT?.user_regDt.split("T")[0]}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -140,7 +140,7 @@ export const UserDataDetail = () => {
               OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
               translate("female") : translate("unknown")
             }
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -152,7 +152,7 @@ export const UserDataDetail = () => {
             size={"small"}
             label={translate("age")}
             value={OBJECT?.user_age}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -166,7 +166,6 @@ export const UserDataDetail = () => {
             value={numeral(OBJECT?.user_height).format("0,0")}
             InputProps={{
               readOnly: true,
-              startAdornment: null,
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("cm")}
@@ -183,7 +182,6 @@ export const UserDataDetail = () => {
             value={numeral(OBJECT?.user_weight).format("0,0")}
             InputProps={{
               readOnly: true,
-              startAdornment: null,
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("kg")}
@@ -200,7 +198,6 @@ export const UserDataDetail = () => {
             value={numeral(totalProperty).format("0,0")}
             InputProps={{
               readOnly: true,
-              startAdornment: null,
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}

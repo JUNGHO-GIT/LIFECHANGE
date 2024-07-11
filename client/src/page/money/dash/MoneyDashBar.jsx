@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportLogics";
+import {handlerY} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -81,14 +81,14 @@ export const MoneyDashBar = () => {
           />
           <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
-          <ReferenceLine y={OBJECT_TODAY[0].goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
+          <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
           <Bar dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {

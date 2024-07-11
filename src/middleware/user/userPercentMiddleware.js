@@ -481,8 +481,8 @@ export const percent = async (object) => {
     let sumPercent = 0;
     let count = 0;
     for (const key in object) {
-      sumScore += parseFloat(object[key].score);
-      sumPercent += parseFloat(object[key].percent);
+      sumScore += parseFloat(object[key]?.score);
+      sumPercent += parseFloat(object[key]?.percent);
       count++;
     }
     if (count === 0) {
@@ -523,9 +523,9 @@ export const percent = async (object) => {
     count: 0,
   };
 
-  ["exercise", "food", "money", "sleep"].forEach(category => {
-    total.score += parseFloat(newObject[category].average.score);
-    total.percent += parseFloat(newObject[category].average.percent);
+  ["exercise", "food", "money", "sleep"]?.forEach(category => {
+    total.score += parseFloat(newObject[category]?.average.score);
+    total.percent += parseFloat(newObject[category]?.average.percent);
     total.count++;
   });
 

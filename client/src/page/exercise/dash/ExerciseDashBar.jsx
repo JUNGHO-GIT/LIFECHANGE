@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY, log} from "../../../import/ImportLogics.jsx";
+import {handlerY, log} from "../../../import/ImportUtils.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -104,14 +104,14 @@ export const ExerciseDashBar = () => {
           />
           <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
           />
-          <ReferenceLine y={OBJECT_TODAY[0].goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
+          <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
           <Bar dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -190,7 +190,7 @@ export const ExerciseDashBar = () => {
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -269,7 +269,7 @@ export const ExerciseDashBar = () => {
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {

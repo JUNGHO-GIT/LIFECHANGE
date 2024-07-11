@@ -1,12 +1,13 @@
 // useDeveloperMode.jsx
 
 import {React, useState, createContext, useContext} from "../../import/ImportReacts.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 
 // -------------------------------------------------------------------------------------------------
 const defaultDeveloperModeContext = {
   isDeveloperMode: false,
   toggleDeveloperMode: () => {},
-  log: (message) => {}
+  activeLog: (message) => {},
 };
 
 // 1. useDeveloperMode -----------------------------------------------------------------------------
@@ -27,15 +28,15 @@ export const DeveloperModeProvider = (
   };
 
   // 1-6. log
-  const log = (message) => {
+  const activeLog = (message) => {
     if (isDeveloperMode) {
-      console.log(message);
+      log("DeveloperModeProvider activated", message);
     }
   };
 
   // return
   return (
-    <DeveloperModeContext.Provider value={{ isDeveloperMode, toggleDeveloperMode, log }}>
+    <DeveloperModeContext.Provider value={{ isDeveloperMode, toggleDeveloperMode, activeLog }}>
       {children}
     </DeveloperModeContext.Provider>
   );

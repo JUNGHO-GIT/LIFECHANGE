@@ -125,7 +125,7 @@ export const CalendarList = () => {
     );
     const unActiveLine = (calendarForDates) => (
       calendarForDates?.map((calendar) =>
-        calendar.calendar_section.map((section) => (
+        calendar.calendar_section?.map((section) => (
           <Div key={calendar._id} className={"calendar-unfilled"}>
             <span className={"calendar-category"}>{section.calendar_title}</span>
           </Div>

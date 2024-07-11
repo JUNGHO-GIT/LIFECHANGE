@@ -131,7 +131,7 @@ export const FoodFindList = () => {
         sectionArray.push(OBJECT[index]);
       }
       else {
-        sectionArray = sectionArray.filter(item => item.food_title !== OBJECT[index].food_title);
+        sectionArray = sectionArray.filter(item => item.food_title !== OBJECT[index]?.food_title);
       }
     });
 

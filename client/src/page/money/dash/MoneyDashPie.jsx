@@ -541,7 +541,7 @@ export const MoneyDashPie = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["income", "expense"].map((key, index) => (
+          ["income", "expense"]?.map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
                 if (LINE === key) {

@@ -1,10 +1,10 @@
 // SleepSave.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportUtils";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
@@ -66,9 +66,6 @@ export const SleepSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useTime(OBJECT, setOBJECT, PATH, "real");
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     await axios.get(`${URL_OBJECT}/exist`, {
@@ -83,6 +80,7 @@ export const SleepSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
       console.error(err);
@@ -105,7 +103,7 @@ export const SleepSave = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -144,8 +142,73 @@ export const SleepSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
+    sleep_bedTime: createRef(),
+    sleep_wakeTime: createRef(),
+    sleep_sleepTime: createRef(),
+  })));
+  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
+    sleep_part_idx: false,
+    sleep_title_idx: false,
+    sleep_amount: false
+  })));
+  useEffect(() => {
+    REFS.current = OBJECT?.sleep_section?.map((_, idx) => REFS?.current[idx] || {
+      sleep_bedTime: createRef(),
+      sleep_wakeTime: createRef(),
+      sleep_sleepTime: createRef(),
+    });
+  }, [OBJECT?.sleep_section.length]);
+  const validate = (OBJECT) => {
+    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
+    let foundError = false;
+
+    // 초기 에러 상태에서 모든 필드를 false로 설정
+    const initialErrors = OBJECT?.sleep_section?.map(() => ({
+      sleep_bedTime: false,
+      sleep_wakeTime: false,
+      sleep_sleepTime: false,
+    }));
+
+    for (let idx = 0; idx < OBJECT?.sleep_section.length; idx++) {
+      const section = OBJECT?.sleep_section[idx];
+      // 오류가 있는 항목만 업데이트
+      if (section.sleep_bedTime === "00:00") {
+        alert(translate("errorSleepBedTime"));
+        REFS?.current[idx]?.sleep_bedTime.current.focus();
+        initialErrors[idx].sleep_bedTime = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.sleep_wakeTime === "00:00") {
+        alert(translate("errorSleepWakeTime"));
+        REFS?.current[idx]?.sleep_wakeTime.current.focus();
+        initialErrors[idx].sleep_wakeTime = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.sleep_sleepTime === "00:00") {
+        alert(translate("errorSleepSleepTime"));
+        REFS?.current[idx]?.sleep_sleepTime.current.focus();
+        initialErrors[idx].sleep_sleepTime = true;
+        foundError = true;
+        break;
+      }
+    }
+    // 업데이트된 에러 상태를 설정
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -155,6 +218,7 @@ export const SleepSave = () => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -173,19 +237,20 @@ export const SleepSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -233,7 +298,6 @@ export const SleepSave = () => {
         />
       </Card>
     );
-    // 7-2. total
     // 7-3. table
     const tableSection = () => {
       const loadingFragment = () => (
@@ -252,7 +316,7 @@ export const SleepSave = () => {
             />
             <Delete
               id={OBJECT?._id}
-              sectionId={OBJECT?.sleep_section[i]._id}
+              sectionId={OBJECT?.sleep_section[i]?._id}
               index={i}
               handlerDelete={handlerDelete}
             />
@@ -289,7 +353,7 @@ export const SleepSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.sleep_section.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.sleep_section?.map((_, i) => tableFragment(i))
         )
       );
     };

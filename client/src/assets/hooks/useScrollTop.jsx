@@ -1,6 +1,7 @@
 // useScrollTop.jsx
 
 import {React, useEffect, useLocation} from "../../import/ImportReacts.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useScrollTop = () => {
@@ -8,6 +9,6 @@ export const useScrollTop = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(`scroll-top activated : ${pathname}`);
+    log("scroll-top activated", pathname);
   }, [pathname]);
 };

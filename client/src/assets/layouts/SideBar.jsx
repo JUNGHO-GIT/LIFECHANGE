@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {dataArray} from "../../import/ImportLogics";
+import {dataArray} from "../../import/ImportUtils";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Button, Collapse, SwipeableDrawer} from "../../import/ImportMuis.jsx";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis.jsx";

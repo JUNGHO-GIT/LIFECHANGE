@@ -35,19 +35,19 @@ export const Picker = ({
   // 1. common -------------------------------------------------------------------------------------
   const dateStr1 =
   (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
-    "w-50vw"
+    "w-55vw"
   ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "w-50vw"
+    "w-55vw"
   ) : (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
     "w-80vw"
   ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "w-50vw"
+    "w-55vw"
   ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
-    "w-50vw"
+    "w-55vw"
   ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
     "w-80vw"
   ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-50vw"
+    "w-55vw"
   ) : "";
 
   // 1. common -------------------------------------------------------------------------------------
@@ -80,8 +80,6 @@ export const Picker = ({
         InputProps={{
           readOnly: false,
           className: selectStr,
-          startAdornment: null,
-          endAdornment: null
         }}
         onChange={(e) => {
           if (e.target.value === "day") {
@@ -126,7 +124,7 @@ export const Picker = ({
           }
         }}
       >
-        {["day", "week", "month", "year", "select"].map((item) => (
+        {["day", "week", "month", "year", "select"]?.map((item) => (
           <MenuItem key={item} value={item} selected={item === DATE.dateType}>
             {translate(item)}
           </MenuItem>
@@ -234,7 +232,6 @@ export const Picker = ({
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);
@@ -349,7 +346,6 @@ export const Picker = ({
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);
@@ -437,7 +433,6 @@ export const Picker = ({
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);
@@ -525,7 +520,6 @@ export const Picker = ({
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);
@@ -630,7 +624,6 @@ export const Picker = ({
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
-            endAdornment: null
           }}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);

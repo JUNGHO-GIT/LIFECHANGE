@@ -1,9 +1,10 @@
 // CalendarSave.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
+import {percent, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
@@ -37,8 +38,8 @@ export const CalendarSave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -75,6 +76,12 @@ export const CalendarSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  useEffect(() => {
+    console.log("===================================");
+    log("OBJECT", OBJECT);
+    console.log("===================================");
+  }, [OBJECT]);
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -90,6 +97,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
       console.error(err);
@@ -112,7 +120,7 @@ export const CalendarSave = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -153,8 +161,85 @@ export const CalendarSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef(OBJECT?.calendar_section?.map(() => ({
+    calendar_part_idx: createRef(),
+    calendar_color: createRef(),
+    calendar_title: createRef(),
+    calendar_content: createRef()
+  })));
+  const [ERRORS, setERRORS] = useState(OBJECT?.calendar_section?.map(() => ({
+    calendar_part_idx: false,
+    calendar_color: false,
+    calendar_title: false,
+    calendar_content: false
+  })));
+  useEffect(() => {
+    REFS.current = OBJECT?.calendar_section?.map((_, idx) => REFS?.current[idx] || {
+      calendar_part_idx: createRef(),
+      calendar_color: createRef(),
+      calendar_title: createRef(),
+      calendar_content: createRef()
+    });
+  }, [OBJECT?.calendar_section.length]);
+  const validate = (OBJECT) => {
+    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
+    let foundError = false;
+
+    // 초기 에러 상태에서 모든 필드를 false로 설정
+    const initialErrors = OBJECT?.calendar_section?.map(() => ({
+      calendar_part_idx: false,
+      calendar_color: false,
+      calendar_title: false,
+      calendar_content: false
+    }));
+
+    for (let idx = 0; idx < OBJECT?.calendar_section.length; idx++) {
+      const section = OBJECT?.calendar_section[idx];
+      // 오류가 있는 항목만 업데이트
+      if (section.calendar_part_idx === 0) {
+        alert(translate("errorCalendarPart"));
+        REFS?.current[idx]?.calendar_part_idx.current.focus();
+        initialErrors[idx].calendar_part_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.calendar_title === "") {
+        alert(translate("errorCalendarTitle"));
+        REFS?.current[idx]?.calendar_title.current.focus();
+        initialErrors[idx].calendar_title = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.calendar_color === "") {
+        alert(translate("errorCalendarColor"));
+        REFS?.current[idx]?.calendar_color.current.focus();
+        initialErrors[idx].calendar_color = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.calendar_content === "") {
+        alert(translate("errorCalendarContent"));
+        REFS?.current[idx]?.calendar_content.current.focus();
+        initialErrors[idx].calendar_content = true;
+        foundError = true;
+        break;
+      }
+    }
+    // 업데이트된 에러 상태를 설정
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -182,13 +267,13 @@ export const CalendarSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
@@ -252,103 +337,135 @@ export const CalendarSave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border shadow-none p-20"} key={i}>
-          <Div className={"d-column"}>
-            <Div className={"d-between"}>
-              <Badge
-                badgeContent={i + 1}
-                color={"primary"}
-                showZero={true}
-              />
-              <Delete
-                id={OBJECT?._id}
-                sectionId={OBJECT?.calendar_section[i]?._id}
-                index={i}
-                handlerDelete={handlerDelete}
-              />
-            </Div>
-            <Br40/>
-            <Div className={"d-left"}>
-              <TextField
-                select={true}
-                type={"text"}
-                size={"small"}
-                label={translate("color")}
-                variant={"outlined"}
-                className={"w-76vw"}
-                value={OBJECT?.calendar_section[i]?.calendar_color}
-                InputProps={{
-                  readOnly: false,
-                  startAdornment: null,
-                  endAdornment: null
-                }}
-                onChange={(e) => {
-                  const newColor = e.target.value;
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_color: newColor
-                      } : item
-                    ))
-                  }));
-                }}
-              >
-                {colors.map((item, idx) => (
-                  <MenuItem key={idx} value={item}>
-                    <span className={`${item}`}>●</span>
-                    <span className={"ms-10"}>{item}</span>
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <TextField
-                select={false}
-                type={"text"}
-                size={"small"}
-                label={translate("calendarTitle")}
-                variant={"outlined"}
-                className={"w-76vw"}
-                value={OBJECT?.calendar_section[i]?.calendar_title}
-                InputProps={{
-                  readOnly: false,
-                  startAdornment: (
-                    <Img src={calendar2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: null
-                }}
-                onChange={(e) => {
-                  const newTitle = e.target.value;
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    calendar_section: prev.calendar_section.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        calendar_title: newTitle
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            </Div>
-            <Br20/>
-            <Div className={"d-center"}>
-              <Memo
-                OBJECT={OBJECT}
-                setOBJECT={setOBJECT}
-                extra={"calendar_content"}
-                i={i}
-              />
-            </Div>
-            <Br20/>
+          <Div className={"d-between"}>
+            <Badge
+              badgeContent={i + 1}
+              color={"primary"}
+              showZero={true}
+            />
+            <Delete
+              id={OBJECT?._id}
+              sectionId={OBJECT?.calendar_section[i]?._id}
+              index={i}
+              handlerDelete={handlerDelete}
+            />
           </Div>
+          <Br40/>
+          <Div className={"d-center"}>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-40vw me-3vw"}
+              label={translate("part")}
+              value={OBJECT?.calendar_section[i]?.calendar_part_idx}
+              inputRef={REFS?.current[i]?.calendar_part_idx}
+              error={ERRORS[i]?.calendar_part_idx}
+              InputProps={{
+                readOnly: false,
+              }}
+              onChange={(e) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_part_idx: newIndex,
+                      calendar_part_val: calendarArray[newIndex - 1]?.calendar_part_val
+                    } : item
+                  ))
+                }));
+              }}
+            >
+              {calendarArray.map((item, idx) => (
+                <MenuItem key={idx} value={item.calendar_part_idx}>
+                  {item.calendar_part_val}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={translate("color")}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              value={OBJECT?.calendar_section[i]?.calendar_color}
+              inputRef={REFS?.current[i]?.calendar_color}
+              error={ERRORS[i]?.calendar_color}
+              InputProps={{
+                readOnly: false,
+              }}
+              onChange={(e) => {
+                const newColor = e.target.value;
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_color: newColor
+                    } : item
+                  ))
+                }));
+              }}
+            >
+              {colors.map((item, idx) => (
+                <MenuItem key={idx} value={item}>
+                  <span className={`${item}`}>●</span>
+                  <span className={"ms-10"}>{item}</span>
+                </MenuItem>
+              ))}
+            </TextField>
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-86vw"}
+              label={translate("calendarTitle")}
+              value={OBJECT?.calendar_section[i]?.calendar_title}
+              inputRef={REFS?.current[i]?.calendar_title}
+              error={ERRORS[i]?.calendar_title}
+              InputProps={{
+                readOnly: false,
+                startAdornment: (
+                  <Img src={calendar2} className={"w-16 h-16"} />
+                ),
+              }}
+              onChange={(e) => {
+                const newTitle = e.target.value;
+                setOBJECT((prev) => ({
+                  ...prev,
+                  calendar_section: prev.calendar_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      calendar_title: newTitle
+                    } : item
+                  ))
+                }));
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <Memo
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              extra={"calendar_content"}
+              i={i}
+            />
+          </Div>
+          <Br20/>
         </Card>
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.calendar_section.map((_, i) => (tableFragment(i)))
+          LOADING ? loadingFragment() : OBJECT?.calendar_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

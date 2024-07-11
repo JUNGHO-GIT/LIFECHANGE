@@ -1,10 +1,10 @@
 // ExerciseSave.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportLogics";
+import {percent, log} from "../../import/ImportUtils";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
@@ -95,6 +95,7 @@ export const ExerciseSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
       console.error(err);
@@ -117,7 +118,7 @@ export const ExerciseSave = () => {
     .then((res) => {
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
-        if (prev.length === 1 && prev[0]._id === "") {
+        if (prev.length === 1 && prev[0]?._id === "") {
           return res.data.result;
         }
         else {
@@ -149,7 +150,7 @@ export const ExerciseSave = () => {
     let totalVolume = 0;
     let totalTime = 0;
 
-    const updatedSections = OBJECT?.exercise_section.map((section) => {
+    const updatedSections = OBJECT?.exercise_section?.map((section) => {
       const {exercise_set, exercise_rep, exercise_kg} = section;
       const sectionVolume = exercise_set * exercise_rep * exercise_kg;
 
@@ -199,8 +200,108 @@ export const ExerciseSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef(OBJECT?.exercise_section?.map(() => ({
+    exercise_part_idx: createRef(),
+    exercise_title_idx: createRef(),
+    exercise_set: createRef(),
+    exercise_rep: createRef(),
+    exercise_kg: createRef(),
+    exercise_cardio: createRef()
+  })));
+  const [ERRORS, setERRORS] = useState(OBJECT?.exercise_section?.map(() => ({
+    exercise_part_idx: false,
+    exercise_title_idx: false,
+    exercise_set: false,
+    exercise_rep: false,
+    exercise_kg: false,
+    exercise_cardio: false
+  })));
+  useEffect(() => {
+    REFS.current = OBJECT?.exercise_section?.map((_, idx) => REFS?.current[idx] || {
+      exercise_part_idx: createRef(),
+      exercise_title_idx: createRef(),
+      exercise_set: createRef(),
+      exercise_rep: createRef(),
+      exercise_kg: createRef(),
+      exercise_cardio: createRef()
+    });
+  }, [OBJECT?.exercise_section.length]);
+  const validate = (OBJECT) => {
+    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
+    let foundError = false;
+
+    // 초기 에러 상태에서 모든 필드를 false로 설정
+    const initialErrors = OBJECT?.exercise_section?.map(() => ({
+      exercise_part_idx: false,
+      exercise_title_idx: false,
+      exercise_set: false,
+      exercise_rep: false,
+      exercise_kg: false,
+      exercise_cardio: false
+    }));
+
+    for (let idx = 0; idx < OBJECT?.exercise_section.length; idx++) {
+      const section = OBJECT?.exercise_section[idx];
+      if (section.exercise_part_idx === 0) {
+        alert(translate("errorExercisePart"));
+        REFS?.current[idx]?.exercise_part_idx.current.focus();
+        initialErrors[idx].exercise_part_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      else if (section.exercise_title_idx === 0) {
+        alert(translate("errorExerciseTitle"));
+        REFS?.current[idx]?.exercise_title_idx.current.focus();
+        initialErrors[idx].exercise_title_idx = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      if (section.exercise_set === 0) {
+        alert(translate("errorExerciseSet"));
+        REFS?.current[idx]?.exercise_set.current.focus();
+        initialErrors[idx].exercise_set = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      if (section.exercise_rep === 0) {
+        alert(translate("errorExerciseRep"));
+        REFS?.current[idx]?.exercise_rep.current.focus();
+        initialErrors[idx].exercise_rep = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      if (section.exercise_kg === 0) {
+        alert(translate("errorExerciseKg"));
+        REFS?.current[idx]?.exercise_kg.current.focus();
+        initialErrors[idx].exercise_kg = true;
+        foundError = true;
+        break;
+      }
+      // 오류가 있는 항목만 업데이트
+      if (section.exercise_cardio === "00:00") {
+        alert(translate("errorExerciseCardio"));
+        REFS?.current[idx]?.exercise_cardio.current.focus();
+        initialErrors[idx].exercise_cardio = true;
+        foundError = true;
+        break;
+      }
+    }
+    // 업데이트된 에러 상태를 설정
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -210,6 +311,7 @@ export const ExerciseSave = () => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -228,19 +330,20 @@ export const ExerciseSave = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -298,7 +401,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format('0,0')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -320,7 +423,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -343,7 +446,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             onChange={(e) => {
               const regex = /,/g;
               const match = e.target.value.match(regex);
@@ -404,14 +507,12 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_section[i]?.exercise_part_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
+                  exercise_section: prev.exercise_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       exercise_part_idx: newIndex,
@@ -441,8 +542,6 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_section[i]?.exercise_title_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newTitleIdx = Number(e.target.value);
@@ -450,7 +549,7 @@ export const ExerciseSave = () => {
                 if (newTitleIdx >= 0 && newTitleVal) {
                   setOBJECT((prev) => ({
                     ...prev,
-                    exercise_section: prev.exercise_section.map((item, idx) => (
+                    exercise_section: prev.exercise_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         exercise_title_idx: newTitleIdx,
@@ -497,7 +596,7 @@ export const ExerciseSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
+                  exercise_section: prev.exercise_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       exercise_set: limitedValue
@@ -531,7 +630,7 @@ export const ExerciseSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
+                  exercise_section: prev.exercise_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       exercise_rep: limitedValue
@@ -568,7 +667,7 @@ export const ExerciseSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  exercise_section: prev.exercise_section.map((item, idx) => (
+                  exercise_section: prev.exercise_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       exercise_kg: limitedValue
@@ -589,7 +688,7 @@ export const ExerciseSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.exercise_section.map((_, i) => (tableFragment(i)))
+          LOADING ? loadingFragment() : OBJECT?.exercise_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

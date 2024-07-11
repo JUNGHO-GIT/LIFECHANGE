@@ -2,6 +2,7 @@
 
 import {React, useState, useEffect, useCallback} from "../../import/ImportReacts.jsx";
 import {createContext, useContext} from "../../import/ImportReacts.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 
 // -------------------------------------------------------------------------------------------------
 // @ts-ignore
@@ -13,7 +14,7 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     sessionStorage.setItem('lang', lang);
-    console.log(`LanguageProvider : ${lang}`);
+    log("LanguageProvider", lang);
   }, [lang]);
 
   return (
@@ -364,6 +365,19 @@ export const useTranslate = () => {
     M: {ko: "남성", en: "Male"},
     F: {ko: "여성", en: "Female"},
     N: {ko: "선택하지 않음", en: "Unknown"},
+
+    // error alert
+    errorFoodPart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
+    errorFoodTitle: {ko: "식품명을 입력해주세요", en: "Please enter Food"},
+    errorFoodCount: {ko: "수량을 입력해주세요", en: "Please enter Count"},
+    errorFoodGram: {ko: "그램을 입력해주세요", en: "Please enter Gram"},
+    errorFoodKcal: {ko: "칼로리를 입력해주세요", en: "Please enter Kcal"},
+    errorFoodCarb: {ko: "탄수화물을 입력해주세요", en: "Please enter Carb"},
+    errorFoodProtein: {ko: "단백질을 입력해주세요", en: "Please enter Protein"},
+    errorFoodFat: {ko: "지방을 입력해주세요", en: "Please enter Fat"},
+    errorMoneyPart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
+    errorMoneyTitle: {ko: "분류2를 선택해주세요", en: "Please select Title"},
+    errorMoneyAmount: {ko: "금액을 입력해주세요", en: "Please enter Amount"},
   };
 
   const translate = useCallback((key, className) => {

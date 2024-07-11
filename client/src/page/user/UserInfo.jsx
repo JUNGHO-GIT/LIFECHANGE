@@ -43,7 +43,7 @@ export const UserInfo = () => {
       setOBJECT(res.data.result);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);

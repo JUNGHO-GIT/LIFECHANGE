@@ -76,12 +76,12 @@ export const list = async (
     // 1. 중첩괄호 처리
     const regex1 = /([(])(\s*)([가-힣a-zA-Z0-9'"!? ]+)(\s*)([(][a-zA-Z0-9'"!? ]+?[)])([)])/;
     const match = param.match(regex1);
-    const firstResult = match ? match[3].trim() : param;
+    const firstResult = match ? match[3]?.trim() : param;
 
     // 2. 괄호 처리
     const regex2 = /([(])(\s*)([가-힣a-zA-Z0-9'"!? ]+)(\s*)([)])/;
     const match2 = firstResult.match(regex2);
-    const secondResult = match2 ? match2[3].trim() : firstResult;
+    const secondResult = match2 ? match2[3]?.trim() : firstResult;
 
     return secondResult;
   };

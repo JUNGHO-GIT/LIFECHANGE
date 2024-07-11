@@ -1,11 +1,11 @@
 // FoodFindSave.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportLogics.jsx";
+import {log} from "../../../import/ImportUtils.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {percent} from "../../../import/ImportLogics.jsx";
+import {percent} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -94,6 +94,7 @@ export const FoodFindSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
       console.error(err);
@@ -168,6 +169,7 @@ export const FoodFindSave = () => {
       if (res.data.status === "success") {
         percent();
         Object.assign(SEND, {
+          dateType: "",
           dateStart: DATE.dateStart,
           dateEnd: DATE.dateEnd
         });
@@ -246,7 +248,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -268,7 +270,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -290,7 +292,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -312,7 +314,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -347,7 +349,7 @@ export const FoodFindSave = () => {
             />
             <Delete
               id={OBJECT?._id}
-              sectionId={OBJECT?.food_section[i]._id}
+              sectionId={OBJECT?.food_section[i]?._id}
               index={i}
               handlerDelete={handlerDelete}
             />
@@ -364,18 +366,16 @@ export const FoodFindSave = () => {
               value={OBJECT?.food_section[i]?.food_part_idx}
               InputProps={{
                 readOnly: false,
-                startAdornment: null,
-                endAdornment: null
               }}
               onChange={(e) => {
                 const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section.map((item, idx) => (
+                  food_section: prev.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_part_idx: newPart,
-                      food_part_val: foodArray[newPart].food_part,
+                      food_part_val: foodArray[newPart]?.food_part,
                     } : item
                   ))
                 }));
@@ -399,9 +399,7 @@ export const FoodFindSave = () => {
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
                 InputProps={{
-                  readOnly: false,
-                  startAdornment: null,
-                  endAdornment: null,
+                  readOnly: false
                 }}
                 onChange={(e) => {
                   const newCount = Number(e.target.value);
@@ -416,7 +414,7 @@ export const FoodFindSave = () => {
                   }
                   setOBJECT((prev) => ({
                     ...prev,
-                    food_section: prev.food_section.map((item, idx) => (
+                    food_section: prev.food_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         food_count: newCount,
@@ -440,7 +438,6 @@ export const FoodFindSave = () => {
                 className={"w-40vw ms-3vw"}
                 InputProps={{
                   readOnly: false,
-                  startAdornment: null,
                   endAdornment: (
                     translate("g")
                   )
@@ -458,7 +455,7 @@ export const FoodFindSave = () => {
                   }
                   setOBJECT((prev) => ({
                     ...prev,
-                    food_section: prev.food_section.map((item, idx) => (
+                    food_section: prev.food_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
                         food_gram: newGram,
@@ -481,11 +478,9 @@ export const FoodFindSave = () => {
               size={"small"}
               value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
-              className={"w-76vw"}
+              className={"w-86vw"}
               InputProps={{
                 readOnly: true,
-                startAdornment: null,
-                endAdornment: null
               }}
             />
           </Div>
@@ -576,7 +571,7 @@ export const FoodFindSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.food_section.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.food_section?.map((_, i) => tableFragment(i))
         )
       );
     };

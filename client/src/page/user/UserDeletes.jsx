@@ -48,7 +48,7 @@ export const UserDeletes = () => {
       setOBJECT(res.data.result);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -72,7 +72,7 @@ export const UserDeletes = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
@@ -94,7 +94,7 @@ export const UserDeletes = () => {
             size={"small"}
             label={translate("id")}
             value={sessionId}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -106,7 +106,7 @@ export const UserDeletes = () => {
             size={"small"}
             label={translate("signupDate")}
             value={OBJECT.date}
-            className={"w-76vw"}
+            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}

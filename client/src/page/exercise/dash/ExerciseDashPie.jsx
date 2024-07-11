@@ -393,7 +393,7 @@ export const ExerciseDashPie = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["부위", "운동"].map((key, index) => (
+          ["부위", "운동"]?.map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {

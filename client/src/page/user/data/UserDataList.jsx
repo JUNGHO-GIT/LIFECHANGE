@@ -205,7 +205,7 @@ export const UserDataList = () => {
       }));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -232,7 +232,7 @@ export const UserDataList = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       navigate(0);

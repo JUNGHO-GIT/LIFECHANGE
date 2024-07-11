@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportLogics";
+import {handlerY} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -109,7 +109,7 @@ export const FoodDashLine = () => {
           activeDot={{r: 6}}/>
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -186,7 +186,7 @@ export const FoodDashLine = () => {
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -258,7 +258,7 @@ export const FoodDashLine = () => {
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -335,7 +335,7 @@ export const FoodDashLine = () => {
           />
           <Tooltip
             labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0].payload.date : '';
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
               return `${date}`;
             }}
             formatter={(value, name, props) => {
@@ -406,7 +406,7 @@ export const FoodDashLine = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["kcal", "nut"].map((key, index) => (
+          ["kcal", "nut"]?.map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                   if (LINE === key) {

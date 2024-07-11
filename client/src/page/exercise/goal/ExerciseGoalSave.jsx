@@ -1,10 +1,10 @@
 // ExerciseGoalSave.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../../import/ImportHooks.jsx";
-import {percent} from "../../../import/ImportLogics.jsx";
+import {percent} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -83,9 +83,10 @@ export const ExerciseGoalSave = () => {
     })
     .then((res) => {
       setEXIST(res.data.result || []);
+      setLOADING(false);
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -112,7 +113,7 @@ export const ExerciseGoalSave = () => {
       }));
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     })
     .finally(() => {
       setLOADING(false);
@@ -143,19 +144,19 @@ export const ExerciseGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDeletes = async () => {
-    if (OBJECT._id === "") {
+    if (OBJECT?._id === "") {
       alert(translate("noData"));
       return;
     }
     await axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
-      _id: OBJECT._id,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
@@ -175,7 +176,7 @@ export const ExerciseGoalSave = () => {
       }
     })
     .catch((err) => {
-      console.error("err", err);
+      console.error(err);
     });
   };
 
@@ -244,7 +245,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={`${translate("goalCount")} (${translate("total")})`}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -276,7 +277,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={`${translate("goalVolume")} (${translate("total")})`}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
               InputProps={{
                 readOnly: false,
@@ -317,7 +318,7 @@ export const ExerciseGoalSave = () => {
               type={"text"}
               size={"small"}
               label={translate("goalWeight")}
-              className={"w-76vw"}
+              className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
               InputProps={{
                 readOnly: false,
