@@ -33,8 +33,8 @@ export const MoneySave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [EXIST, setEXIST] = useState([""]);
   const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -177,7 +177,7 @@ export const MoneySave = () => {
   const REFS = useRef(OBJECT?.money_section?.map(() => ({
     money_part_idx: createRef(),
     money_title_idx: createRef(),
-    money_amount: createRef()
+    money_amount: createRef(),
   })));
   const [ERRORS, setERRORS] = useState(OBJECT?.money_section?.map(() => ({
     money_part_idx: false,
@@ -185,45 +185,46 @@ export const MoneySave = () => {
     money_amount: false
   })));
   useEffect(() => {
-    REFS.current = OBJECT?.money_section?.map((_, idx) => REFS?.current[idx] || {
-      money_part_idx: createRef(),
-      money_title_idx: createRef(),
-      money_amount: createRef()
-    });
+    REFS.current = OBJECT?.money_section?.map((_, idx) => ({
+      money_part_idx: REFS.current[idx]?.money_part_idx || createRef(),
+      money_title_idx: REFS.current[idx]?.money_title_idx || createRef(),
+      money_amount: REFS.current[idx]?.money_amount || createRef(),
+    }));
   }, [OBJECT?.money_section.length]);
   const validate = (OBJECT) => {
-    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
     let foundError = false;
-
-    // 초기 에러 상태에서 모든 필드를 false로 설정
     const initialErrors = OBJECT?.money_section?.map(() => ({
       money_part_idx: false,
       money_title_idx: false,
       money_amount: false,
     }));
-
     for (let idx = 0; idx < OBJECT?.money_section.length; idx++) {
       const section = OBJECT?.money_section[idx];
-      // 오류가 있는 항목만 업데이트
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
       if (section.money_part_idx === 0) {
         alert(translate("errorMoneyPart"));
-        REFS?.current[idx]?.money_part_idx.current.focus();
+        refsCurrentIdx.money_part_idx.current
+        && refsCurrentIdx.money_part_idx.current.focus();
         initialErrors[idx].money_part_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.money_title_idx === 0) {
         alert(translate("errorMoneyTitle"));
-        REFS?.current[idx]?.money_title_idx.current.focus();
+        refsCurrentIdx.money_title_idx.current
+        && refsCurrentIdx.money_title_idx.current.focus();
         initialErrors[idx].money_title_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.money_amount === 0) {
         alert(translate("errorMoneyAmount"));
-        REFS?.current[idx]?.money_amount.current.focus();
+        refsCurrentIdx.money_amount.current
+        && refsCurrentIdx.money_amount.current.focus();
         initialErrors[idx].money_amount = true;
         foundError = true;
         break;
@@ -407,9 +408,9 @@ export const MoneySave = () => {
               select={true}
               type={"text"}
               size={"small"}
-              label={translate("part")}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
+              label={translate("part")}
               value={OBJECT?.money_section[i]?.money_part_idx}
               inputRef={REFS?.current[i]?.money_part_idx}
               error={ERRORS[i]?.money_part_idx}
@@ -432,7 +433,7 @@ export const MoneySave = () => {
                 }));
               }}
             >
-              {moneyArray.map((item, idx) => (
+              {moneyArray?.map((item, idx) => (
                 <MenuItem key={idx} value={idx}>
                   <Div className={"fs-0-8rem"}>
                     {translate(item.money_part)}

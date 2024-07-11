@@ -118,8 +118,71 @@ export const FoodGoalSave = () => {
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    food_goal_kcal: createRef(),
+    food_goal_carb: createRef(),
+    food_goal_protein: createRef(),
+    food_goal_fat: createRef(),
+  });
+
+  const [ERRORS, setERRORS] = useState({
+    food_goal_kcal: false,
+    food_goal_carb: false,
+    food_goal_protein: false,
+    food_goal_fat: false,
+  });
+
+  // validate 함수
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = {
+      food_goal_kcal: false,
+      food_goal_carb: false,
+      food_goal_protein: false,
+      food_goal_fat: false,
+    };
+
+    const refsCurrent = REFS?.current;
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+
+    if (OBJECT.food_goal_kcal === 0) {
+      alert(translate("errorFoodGoalKcal"));
+      refsCurrent.food_goal_kcal.current?.focus();
+      initialErrors.food_goal_kcal = true;
+      foundError = true;
+    }
+    else if (OBJECT.food_goal_carb === 0) {
+      alert(translate("errorFoodGoalCarb"));
+      refsCurrent.food_goal_carb.current?.focus();
+      initialErrors.food_goal_carb = true;
+      foundError = true;
+    }
+    else if (OBJECT.food_goal_protein === 0) {
+      alert(translate("errorFoodGoalProtein"));
+      refsCurrent.food_goal_protein.current?.focus();
+      initialErrors.food_goal_protein = true;
+      foundError = true;
+    }
+    else if (OBJECT.food_goal_fat === 0) {
+      alert(translate("errorFoodGoalFat"));
+      refsCurrent.food_goal_fat.current?.focus();
+      initialErrors.food_goal_fat = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -212,7 +275,6 @@ export const FoodGoalSave = () => {
         />
       </Card>
     );
-    // 7-2. total
     // 7-3. table
     const tableSection = () => {
       const loadingFragment = () => (
@@ -246,6 +308,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
+              inputRef={REFS.current.food_goal_kcal}
+              error={ERRORS.food_goal_kcal}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -279,6 +343,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
+              inputRef={REFS.current.food_goal_carb}
+              error={ERRORS.food_goal_carb}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -312,6 +378,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
+              inputRef={REFS.current.food_goal_protein}
+              error={ERRORS.food_goal_protein}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -345,6 +413,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
+              inputRef={REFS.current.food_goal_fat}
+              error={ERRORS.food_goal_fat}
               InputProps={{
                 readOnly: false,
                 startAdornment: (

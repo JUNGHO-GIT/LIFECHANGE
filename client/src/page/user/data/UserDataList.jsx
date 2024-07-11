@@ -95,7 +95,8 @@ export const UserDataList = () => {
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_title: "",
+      food_name: "",
+      food_brand: "",
       food_count: 0,
       food_serv: "회",
       food_gram:  0,
@@ -213,10 +214,10 @@ export const UserDataList = () => {
   }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async (type_param) => {
+  const flowDummy = async () => {
     await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: sessionId,
-      PART: type_param,
+      PART: PART,
       count: COUNT?.inputCnt
     })
     .then((res) => {
@@ -229,14 +230,15 @@ export const UserDataList = () => {
           ...prev,
           page: 1
         }));
+        navigate(0);
+      }
+      else {
+        alert(res.data.msg);
       }
     })
     .catch((err) => {
       console.error(err);
     })
-    .finally(() => {
-      navigate(0);
-    });
   };
 
   // 6. table --------------------------------------------------------------------------------------
@@ -678,7 +680,7 @@ export const UserDataList = () => {
         setPAGING, setCOUNT, setPART
       }}
       handlers={{
-        navigate, flowSave
+        navigate, flowDummy
       }}
     />
   );

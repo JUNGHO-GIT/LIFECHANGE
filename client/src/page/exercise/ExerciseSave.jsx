@@ -207,7 +207,6 @@ export const ExerciseSave = () => {
     exercise_set: createRef(),
     exercise_rep: createRef(),
     exercise_kg: createRef(),
-    exercise_cardio: createRef()
   })));
   const [ERRORS, setERRORS] = useState(OBJECT?.exercise_section?.map(() => ({
     exercise_part_idx: false,
@@ -215,78 +214,69 @@ export const ExerciseSave = () => {
     exercise_set: false,
     exercise_rep: false,
     exercise_kg: false,
-    exercise_cardio: false
   })));
   useEffect(() => {
-    REFS.current = OBJECT?.exercise_section?.map((_, idx) => REFS?.current[idx] || {
-      exercise_part_idx: createRef(),
-      exercise_title_idx: createRef(),
-      exercise_set: createRef(),
-      exercise_rep: createRef(),
-      exercise_kg: createRef(),
-      exercise_cardio: createRef()
-    });
+    REFS.current = OBJECT?.exercise_section?.map((_, idx) => ({
+      exercise_part_idx: REFS.current[idx]?.exercise_part_idx || createRef(),
+      exercise_title_idx: REFS.current[idx]?.exercise_title_idx || createRef(),
+      exercise_set: REFS.current[idx]?.exercise_set || createRef(),
+      exercise_rep: REFS.current[idx]?.exercise_rep || createRef(),
+      exercise_kg: REFS.current[idx]?.exercise_kg || createRef(),
+    }));
   }, [OBJECT?.exercise_section.length]);
   const validate = (OBJECT) => {
-    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
     let foundError = false;
-
-    // 초기 에러 상태에서 모든 필드를 false로 설정
     const initialErrors = OBJECT?.exercise_section?.map(() => ({
       exercise_part_idx: false,
       exercise_title_idx: false,
       exercise_set: false,
       exercise_rep: false,
       exercise_kg: false,
-      exercise_cardio: false
     }));
-
     for (let idx = 0; idx < OBJECT?.exercise_section.length; idx++) {
       const section = OBJECT?.exercise_section[idx];
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
       if (section.exercise_part_idx === 0) {
         alert(translate("errorExercisePart"));
-        REFS?.current[idx]?.exercise_part_idx.current.focus();
+        refsCurrentIdx.exercise_part_idx.current
+        && refsCurrentIdx.exercise_part_idx.current.focus();
         initialErrors[idx].exercise_part_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.exercise_title_idx === 0) {
         alert(translate("errorExerciseTitle"));
-        REFS?.current[idx]?.exercise_title_idx.current.focus();
+        refsCurrentIdx.exercise_title_idx.current
+        && refsCurrentIdx.exercise_title_idx.current.focus();
         initialErrors[idx].exercise_title_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
-      if (section.exercise_set === 0) {
+      else if (section.exercise_set === 0) {
         alert(translate("errorExerciseSet"));
-        REFS?.current[idx]?.exercise_set.current.focus();
+        refsCurrentIdx.exercise_set.current
+        && refsCurrentIdx.exercise_set.current.focus();
         initialErrors[idx].exercise_set = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
-      if (section.exercise_rep === 0) {
+      else if (section.exercise_rep === 0) {
         alert(translate("errorExerciseRep"));
-        REFS?.current[idx]?.exercise_rep.current.focus();
+        refsCurrentIdx.exercise_rep.current
+        && refsCurrentIdx.exercise_rep.current.focus();
         initialErrors[idx].exercise_rep = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
-      if (section.exercise_kg === 0) {
+      else if (section.exercise_kg === 0) {
         alert(translate("errorExerciseKg"));
-        REFS?.current[idx]?.exercise_kg.current.focus();
+        refsCurrentIdx.exercise_kg.current
+        && refsCurrentIdx.exercise_kg.current.focus();
         initialErrors[idx].exercise_kg = true;
-        foundError = true;
-        break;
-      }
-      // 오류가 있는 항목만 업데이트
-      if (section.exercise_cardio === "00:00") {
-        alert(translate("errorExerciseCardio"));
-        REFS?.current[idx]?.exercise_cardio.current.focus();
-        initialErrors[idx].exercise_cardio = true;
         foundError = true;
         break;
       }
@@ -505,6 +495,8 @@ export const ExerciseSave = () => {
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+              inputRef={REFS.current[i]?.exercise_part_idx}
+              error={ERRORS[i]?.exercise_part_idx}
               InputProps={{
                 readOnly: false,
               }}
@@ -524,7 +516,7 @@ export const ExerciseSave = () => {
                 }));
               }}
             >
-              {exerciseArray.map((item, idx) => (
+              {exerciseArray?.map((item, idx) => (
                 <MenuItem key={idx} value={idx}>
                   <Div className={"fs-0-8rem"}>
                     {translate(item.exercise_part)}
@@ -540,6 +532,8 @@ export const ExerciseSave = () => {
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+              inputRef={REFS.current[i]?.exercise_title_idx}
+              error={ERRORS[i]?.exercise_title_idx}
               InputProps={{
                 readOnly: false,
               }}
@@ -578,6 +572,8 @@ export const ExerciseSave = () => {
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}
+              inputRef={REFS.current[i]?.exercise_set}
+              error={ERRORS[i]?.exercise_set}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -612,6 +608,8 @@ export const ExerciseSave = () => {
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_rep}
+              inputRef={REFS.current[i]?.exercise_rep}
+              error={ERRORS[i]?.exercise_rep}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -649,6 +647,8 @@ export const ExerciseSave = () => {
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_kg}
+              inputRef={REFS.current[i]?.exercise_kg}
+              error={ERRORS[i]?.exercise_kg}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -679,6 +679,9 @@ export const ExerciseSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              // todo
+              /* REFS={REFS}
+              ERRORS={ERRORS} */
               extra={"exercise_cardio"}
               i={i}
             />

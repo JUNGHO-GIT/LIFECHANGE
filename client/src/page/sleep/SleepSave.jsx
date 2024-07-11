@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportUtils";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
@@ -149,31 +149,31 @@ export const SleepSave = () => {
     sleep_sleepTime: createRef(),
   })));
   const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
-    sleep_part_idx: false,
-    sleep_title_idx: false,
-    sleep_amount: false
+    sleep_bedTime: false,
+    sleep_wakeTime: false,
+    sleep_sleepTime: false,
   })));
   useEffect(() => {
-    REFS.current = OBJECT?.sleep_section?.map((_, idx) => REFS?.current[idx] || {
-      sleep_bedTime: createRef(),
-      sleep_wakeTime: createRef(),
-      sleep_sleepTime: createRef(),
-    });
+    REFS.current = OBJECT?.sleep_section?.map((_, idx) => ({
+      sleep_bedTime: REFS.current[idx]?.sleep_bedTime || createRef(),
+      sleep_wakeTime: REFS.current[idx]?.sleep_wakeTime || createRef(),
+      sleep_sleepTime: REFS.current[idx]?.sleep_sleepTime || createRef(),
+    }));
   }, [OBJECT?.sleep_section.length]);
   const validate = (OBJECT) => {
-    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
     let foundError = false;
-
-    // 초기 에러 상태에서 모든 필드를 false로 설정
     const initialErrors = OBJECT?.sleep_section?.map(() => ({
       sleep_bedTime: false,
       sleep_wakeTime: false,
       sleep_sleepTime: false,
     }));
-
     for (let idx = 0; idx < OBJECT?.sleep_section.length; idx++) {
       const section = OBJECT?.sleep_section[idx];
-      // 오류가 있는 항목만 업데이트
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
       if (section.sleep_bedTime === "00:00") {
         alert(translate("errorSleepBedTime"));
         REFS?.current[idx]?.sleep_bedTime.current.focus();
@@ -181,7 +181,6 @@ export const SleepSave = () => {
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.sleep_wakeTime === "00:00") {
         alert(translate("errorSleepWakeTime"));
         REFS?.current[idx]?.sleep_wakeTime.current.focus();
@@ -189,7 +188,6 @@ export const SleepSave = () => {
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.sleep_sleepTime === "00:00") {
         alert(translate("errorSleepSleepTime"));
         REFS?.current[idx]?.sleep_sleepTime.current.focus();
@@ -326,6 +324,9 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              // todo
+              /* REFS={REFS?.current[i]?.sleep_bedTime}
+              ERRORS={ERRORS[i]?.sleep_bedTime} */
               extra={"sleep_bedTime"}
               i={i}
             />
@@ -335,6 +336,9 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              // todo
+              /* REFS={REFS?.current[i]?.sleep_wakeTime}
+              ERRORS={ERRORS[i]?.sleep_wakeTime} */
               extra={"sleep_wakeTime"}
               i={i}
             />
@@ -344,6 +348,9 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              // todo
+              /* REFS={REFS?.current[i]?.sleep_sleepTime}
+              ERRORS={ERRORS[i]?.sleep_sleepTime} */
               extra={"sleep_sleepTime"}
               i={i}
             />

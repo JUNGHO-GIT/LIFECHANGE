@@ -33,8 +33,8 @@ export const FoodSave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [EXIST, setEXIST] = useState([""]);
   const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -69,7 +69,8 @@ export const FoodSave = () => {
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_title: "",
+      food_name: "",
+      food_brand: "",
       food_count: 0,
       food_serv: "회",
       food_gram: 0,
@@ -166,7 +167,8 @@ export const FoodSave = () => {
     const defaultSection = {
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_title: "",
+      food_name: "",
+      food_brand: "",
       food_count: 0,
       food_serv: "회",
       food_gram: 0,
@@ -190,7 +192,7 @@ export const FoodSave = () => {
     food_part_idx: createRef(),
     food_count: createRef(),
     food_gram: createRef(),
-    food_title: createRef(),
+    food_name: createRef(),
     food_kcal: createRef(),
     food_carb: createRef(),
     food_protein: createRef(),
@@ -200,106 +202,108 @@ export const FoodSave = () => {
     food_part_idx: false,
     food_count: false,
     food_gram: false,
-    food_title: false,
+    food_name: false,
     food_kcal: false,
     food_carb: false,
     food_protein: false,
     food_fat: false,
   })));
   useEffect(() => {
-    REFS.current = OBJECT?.food_section?.map((_, idx) => REFS?.current[idx] || {
-      food_part_idx: createRef(),
-      food_count: createRef(),
-      food_gram: createRef(),
-      food_title: createRef(),
-      food_kcal: createRef(),
-      food_carb: createRef(),
-      food_protein: createRef(),
-      food_fat: createRef(),
-    });
+    REFS.current = OBJECT?.food_section?.map((_, idx) => ({
+      food_part_idx: REFS.current[idx]?.food_part_idx || createRef(),
+      food_count: REFS.current[idx]?.food_count || createRef(),
+      food_gram: REFS.current[idx]?.food_gram || createRef(),
+      food_name: REFS.current[idx]?.food_name || createRef(),
+      food_kcal: REFS.current[idx]?.food_kcal || createRef(),
+      food_carb: REFS.current[idx]?.food_carb || createRef(),
+      food_protein: REFS.current[idx]?.food_protein || createRef(),
+      food_fat: REFS.current[idx]?.food_fat || createRef(),
+    }));
   }, [OBJECT?.food_section.length]);
   const validate = (OBJECT) => {
-    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
     let foundError = false;
-
-    // 초기 에러 상태에서 모든 필드를 false로 설정
     const initialErrors = OBJECT?.food_section?.map(() => ({
       food_part_idx: false,
       food_count: false,
       food_gram: false,
-      food_title: false,
+      food_name: false,
       food_kcal: false,
       food_carb: false,
       food_protein: false,
       food_fat: false,
     }));
-
     for (let idx = 0; idx < OBJECT?.food_section.length; idx++) {
       const section = OBJECT?.food_section[idx];
-      // 오류가 있는 항목만 업데이트
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
       if (section.food_part_idx === 0) {
         alert(translate("errorFoodPart"));
-        REFS?.current[idx]?.food_part_idx.current.focus();
+        refsCurrentIdx.food_part_idx.current
+        && refsCurrentIdx.food_part_idx.current.focus();
         initialErrors[idx].food_part_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_count === 0) {
         alert(translate("errorFoodCount"));
-        REFS?.current[idx]?.food_count.current.focus();
+        refsCurrentIdx.food_count.current
+        && refsCurrentIdx.food_count.current.focus();
         initialErrors[idx].food_count = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_gram === 0) {
         alert(translate("errorFoodGram"));
-        REFS?.current[idx]?.food_gram.current.focus();
+        refsCurrentIdx.food_gram.current
+        && refsCurrentIdx.food_gram.current.focus();
         initialErrors[idx].food_gram = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
-      else if (section.food_title === "") {
-        alert(translate("errorFoodTitle"));
-        REFS?.current[idx]?.food_title.current.focus();
-        initialErrors[idx].food_title = true;
+      else if (section.food_name === "") {
+        alert(translate("errorFoodName"));
+        refsCurrentIdx.food_name.current
+        && refsCurrentIdx.food_name.current.focus();
+        initialErrors[idx].food_name = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_kcal === 0) {
         alert(translate("errorFoodKcal"));
-        REFS?.current[idx]?.food_kcal.current.focus();
+        refsCurrentIdx.food_kcal.current
+        && refsCurrentIdx.food_kcal.current.focus();
         initialErrors[idx].food_kcal = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_carb === 0) {
         alert(translate("errorFoodCarb"));
-        REFS?.current[idx]?.food_carb.current.focus();
+        refsCurrentIdx.food_carb.current
+        && refsCurrentIdx.food_carb.current.focus();
         initialErrors[idx].food_carb = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_protein === 0) {
         alert(translate("errorFoodProtein"));
-        REFS?.current[idx]?.food_protein.current.focus();
+        refsCurrentIdx.food_protein.current
+        && refsCurrentIdx.food_protein.current.focus();
         initialErrors[idx].food_protein = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.food_fat === 0) {
         alert(translate("errorFoodFat"));
-        REFS?.current[idx]?.food_fat.current.focus();
+        refsCurrentIdx.food_fat.current
+        && refsCurrentIdx.food_fat.current.focus();
         initialErrors[idx].food_fat = true;
         foundError = true;
         break;
       }
+
     }
     // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
@@ -546,7 +550,7 @@ export const FoodSave = () => {
                 }));
               }}
             >
-              {foodArray.map((item, idx) => (
+              {foodArray?.map((item, idx) => (
                 <MenuItem key={idx} value={idx}>
                   <Div className={"fs-0-8rem"}>
                     {translate(item.food_part)}
@@ -646,10 +650,24 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-86vw"}
-              label={translate("foodTitle")}
-              value={OBJECT?.food_section[i]?.food_title || " "}
-              inputRef={REFS?.current[i]?.food_title}
-              error={ERRORS[i]?.food_title}
+              label={translate("foodName")}
+              value={OBJECT?.food_section[i]?.food_name || " "}
+              inputRef={REFS?.current[i]?.food_name}
+              error={ERRORS[i]?.food_name}
+              InputProps={{
+                readOnly: false,
+              }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-86vw"}
+              label={translate("foodBrand")}
+              value={OBJECT?.food_section[i]?.food_brand || " "}
               InputProps={{
                 readOnly: false,
               }}

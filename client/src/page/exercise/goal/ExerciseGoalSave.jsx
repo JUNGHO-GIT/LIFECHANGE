@@ -120,8 +120,62 @@ export const ExerciseGoalSave = () => {
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    exercise_goal_count: createRef(),
+    exercise_goal_volume: createRef(),
+    exercise_goal_weight: createRef(),
+  });
+
+  const [ERRORS, setERRORS] = useState({
+    exercise_goal_count: false,
+    exercise_goal_volume: false,
+    exercise_goal_weight: false,
+  });
+
+  // validate 함수
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = {
+      exercise_goal_count: false,
+      exercise_goal_volume: false,
+      exercise_goal_weight: false,
+    };
+
+    const refsCurrent = REFS?.current;
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+
+    if (OBJECT.exercise_goal_count === 0) {
+      alert(translate("errorExerciseGoalCount"));
+      refsCurrent.exercise_goal_count.current?.focus();
+      initialErrors.exercise_goal_count = true;
+      foundError = true;
+    }
+    else if (OBJECT.exercise_goal_volume === 0) {
+      alert(translate("errorExerciseGoalVolume"));
+      refsCurrent.exercise_goal_volume.current?.focus();
+      initialErrors.exercise_goal_volume = true;
+      foundError = true;
+    }
+    else if (OBJECT.exercise_goal_weight === 0) {
+      alert(translate("errorExerciseGoalWeight"));
+      refsCurrent.exercise_goal_weight.current?.focus();
+      initialErrors.exercise_goal_weight = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -247,6 +301,8 @@ export const ExerciseGoalSave = () => {
               label={`${translate("goalCount")} (${translate("total")})`}
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
+              inputRef={REFS?.current?.exercise_goal_count}
+              error={ERRORS?.exercise_goal_count}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -279,6 +335,8 @@ export const ExerciseGoalSave = () => {
               label={`${translate("goalVolume")} (${translate("total")})`}
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
+              inputRef={REFS.current.exercise_goal_volume}
+              error={ERRORS.exercise_goal_volume}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -304,15 +362,6 @@ export const ExerciseGoalSave = () => {
           </Div>
           <Br20/>
           <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              extra={"exercise_goal_cardio"}
-              i={i}
-            />
-          </Div>
-          <Br20/>
-          <Div className={"d-center"}>
             <TextField
               select={false}
               type={"text"}
@@ -320,6 +369,8 @@ export const ExerciseGoalSave = () => {
               label={translate("goalWeight")}
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
+              inputRef={REFS.current.exercise_goal_weight}
+              error={ERRORS.exercise_goal_weight}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -341,6 +392,18 @@ export const ExerciseGoalSave = () => {
                   exercise_goal_weight: limitedValue
                 }));
               }}
+            />
+          </Div>
+          <Br20/>
+          <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              // todo
+              /* REFS={REFS}
+              ERRORS={ERRORS} */
+              extra={"exercise_goal_cardio"}
+              i={i}
             />
           </Div>
           <Br20/>

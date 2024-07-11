@@ -2,6 +2,7 @@
 
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {moment} from "../../../import/ImportLibs.jsx";
 import {log} from "../../../import/ImportUtils.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, MenuItem, Card, TablePagination} from "../../../import/ImportMuis.jsx";
@@ -16,51 +17,76 @@ export const Btn = ({
 
   // 1. go
   const btnGoToFind = () => (
-    <Button size={"small"} color={"success"} variant={"contained"} className={"me-5"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        dateType: objects?.DATE.dateType,
-        dateStart: objects?.DATE.dateStart,
-        dateEnd: objects?.DATE.dateEnd
-      });
-      handlers.navigate(objects?.SEND.toFind, {
-        state: objects?.SEND,
-      });
-    }}>
+    <Button
+      size={"small"}
+      color={"success"}
+      variant={"contained"}
+      className={"me-5"}
+      onClick={() => {
+        Object.assign(objects?.SEND, {
+          dateType: objects?.DATE.dateType,
+          dateStart: objects?.DATE.dateStart,
+          dateEnd: objects?.DATE.dateEnd
+        });
+        handlers.navigate(objects?.SEND.toFind, {
+          state: objects?.SEND,
+        });
+      }}
+    >
       {translate("goToFind")}
     </Button>
   );
   const btnGoToFindSave = () => (
-    <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
-      Object.assign(objects?.SEND, {
-        dateType: objects?.DATE.dateType,
-        dateStart: objects?.DATE.dateStart,
-        dateEnd: objects?.DATE.dateEnd
-      });
-      handlers.navigate(objects?.SEND.toSave, {
-        state: objects?.SEND,
-      });
-    }}>
+    <Button
+      size={"small"}
+      color={"primary"}
+      variant={"contained"}
+      className={"me-5"}
+      onClick={() => {
+        Object.assign(objects?.SEND, {
+          dateType: objects?.DATE.dateType,
+          dateStart: objects?.DATE.dateStart,
+          dateEnd: objects?.DATE.dateEnd
+        });
+        handlers.navigate(objects?.SEND.toSave, {
+          state: objects?.SEND,
+        });
+      }}
+    >
       {translate("goToFindSave")}
     </Button>
   );
 
   // 3. flow
   const btnFlowSave = () => (
-    <Button size={"small"} color={"primary"} variant={"contained"} className={"me-5"} onClick={() => {
-      handlers.flowSave();
-      Object.keys(sessionStorage).forEach((key) => {
-        if (key.includes("foodSection") || key.includes("PAGING")) {
-          sessionStorage.removeItem(key);
-        }
-      });
-    }}>
+    <Button
+      size={"small"}
+      color={"primary"}
+      variant={"contained"}
+      className={"me-5"}
+      onClick={() => {
+        handlers.flowSave();
+        handlers.flowSave();
+        Object.keys(sessionStorage).forEach((key) => {
+          if (key.includes("foodSection") || key.includes("PAGING")) {
+            sessionStorage.removeItem(key);
+          }
+        });
+      }}
+    >
       {translate("flowSave")}
     </Button>
   );
   const btnFlowDeletes = () => (
-    <Button size={"small"} color={"error"} variant={"contained"} className={"me-5"} onClick={() => {
-      handlers.flowDeletes();
-    }}>
+    <Button
+      size={"small"}
+      color={"error"}
+      variant={"contained"}
+      className={"me-5"}
+      onClick={() => {
+        handlers.flowDeletes();
+      }}
+    >
       {translate("flowDeletes")}
     </Button>
   );
@@ -124,7 +150,7 @@ export const Btn = ({
         select={true}
         type={"text"}
         size={"small"}
-        className={"me-2"}
+        className={"me-3vw"}
         variant={"outlined"}
         value={objects?.PART}
         InputProps={{
@@ -183,8 +209,23 @@ export const Btn = ({
           }));
         }}
       />
-      <Button size={"small"} className={"ms-5"} color={"success"} variant={"contained"}
-      onClick={() => (handlers.flowSave(objects.PART))}>
+      <Button
+        size={"small"}
+        color={"primary"}
+        variant={"contained"}
+        className={"ms-3vw fs-0-7rem"}
+        style={{
+          lineHeight: "1.4",
+          padding: "3px 9px",
+          textTransform: "none",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+        onClick={() => {
+          handlers.flowDummy();
+        }}
+      >
         {translate("flowDummy")}
       </Button>
     </Div>

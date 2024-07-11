@@ -60,7 +60,7 @@ export const CalendarList = () => {
     calendar_section: [{
       _id: "",
       calendar_part_idx: 0,
-      calendar_part_val: "일정",
+      calendar_part_val: "all",
       calendar_title : "",
       calendar_color: "#000000",
       calendar_content: ""

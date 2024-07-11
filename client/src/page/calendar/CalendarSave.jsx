@@ -38,8 +38,8 @@ export const CalendarSave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [EXIST, setEXIST] = useState([""]);
   const [LOADING, setLOADING] = useState(false);
+  const [EXIST, setEXIST] = useState([""]);
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -63,12 +63,11 @@ export const CalendarSave = () => {
     _id: "",
     calendar_number: 0,
     calendar_dummy: false,
-    calendar_dateType: "",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{
       calendar_part_idx: 0,
-      calendar_part_val: "일정",
+      calendar_part_val: "all",
       calendar_color: "black",
       calendar_title : "",
       calendar_content: ""
@@ -146,7 +145,7 @@ export const CalendarSave = () => {
   useEffect(() => {
     const defaultSection = {
       calendar_part_idx: 0,
-      calendar_part_val: "일정",
+      calendar_part_val: "all",
       calendar_title: "",
       calendar_color: "black",
       calendar_content: ""
@@ -166,65 +165,55 @@ export const CalendarSave = () => {
     calendar_part_idx: createRef(),
     calendar_color: createRef(),
     calendar_title: createRef(),
-    calendar_content: createRef()
   })));
   const [ERRORS, setERRORS] = useState(OBJECT?.calendar_section?.map(() => ({
     calendar_part_idx: false,
     calendar_color: false,
     calendar_title: false,
-    calendar_content: false
   })));
   useEffect(() => {
-    REFS.current = OBJECT?.calendar_section?.map((_, idx) => REFS?.current[idx] || {
-      calendar_part_idx: createRef(),
-      calendar_color: createRef(),
-      calendar_title: createRef(),
-      calendar_content: createRef()
-    });
+    REFS.current = OBJECT?.calendar_section.map((_, idx) => ({
+      calendar_part_idx: REFS.current[idx]?.calendar_part_idx || createRef(),
+      calendar_color: REFS.current[idx]?.calendar_color || createRef(),
+      calendar_title: REFS.current[idx]?.calendar_title || createRef(),
+    }));
   }, [OBJECT?.calendar_section.length]);
   const validate = (OBJECT) => {
-    // 첫 번째 오류를 찾았는지 여부를 추적하는 플래그
     let foundError = false;
-
-    // 초기 에러 상태에서 모든 필드를 false로 설정
     const initialErrors = OBJECT?.calendar_section?.map(() => ({
       calendar_part_idx: false,
       calendar_color: false,
       calendar_title: false,
-      calendar_content: false
     }));
 
     for (let idx = 0; idx < OBJECT?.calendar_section.length; idx++) {
       const section = OBJECT?.calendar_section[idx];
-      // 오류가 있는 항목만 업데이트
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
       if (section.calendar_part_idx === 0) {
         alert(translate("errorCalendarPart"));
-        REFS?.current[idx]?.calendar_part_idx.current.focus();
+        refsCurrentIdx.calendar_part_idx.current
+        && refsCurrentIdx.calendar_part_idx.current.focus();
         initialErrors[idx].calendar_part_idx = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.calendar_title === "") {
         alert(translate("errorCalendarTitle"));
-        REFS?.current[idx]?.calendar_title.current.focus();
+        refsCurrentIdx.calendar_title.current
+        && refsCurrentIdx.calendar_title.current.focus();
         initialErrors[idx].calendar_title = true;
         foundError = true;
         break;
       }
-      // 오류가 있는 항목만 업데이트
       else if (section.calendar_color === "") {
         alert(translate("errorCalendarColor"));
-        REFS?.current[idx]?.calendar_color.current.focus();
+        refsCurrentIdx.calendar_color.current
+        && refsCurrentIdx.calendar_color.current.focus();
         initialErrors[idx].calendar_color = true;
-        foundError = true;
-        break;
-      }
-      // 오류가 있는 항목만 업데이트
-      else if (section.calendar_content === "") {
-        alert(translate("errorCalendarContent"));
-        REFS?.current[idx]?.calendar_content.current.focus();
-        initialErrors[idx].calendar_content = true;
         foundError = true;
         break;
       }
@@ -373,15 +362,17 @@ export const CalendarSave = () => {
                     idx === i ? {
                       ...item,
                       calendar_part_idx: newIndex,
-                      calendar_part_val: calendarArray[newIndex - 1]?.calendar_part_val
+                      calendar_part_val: calendarArray[newIndex]?.calendar_part
                     } : item
                   ))
                 }));
               }}
             >
-              {calendarArray.map((item, idx) => (
-                <MenuItem key={idx} value={item.calendar_part_idx}>
-                  {item.calendar_part_val}
+              {calendarArray?.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  <Div className={"fs-0-8rem"}>
+                    {translate(item.calendar_part)}
+                  </Div>
                 </MenuItem>
               ))}
             </TextField>

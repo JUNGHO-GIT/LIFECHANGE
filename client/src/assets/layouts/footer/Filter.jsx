@@ -1,6 +1,6 @@
 // Filter.jsx
 
-import {React, useLocation} from "../../../import/ImportReacts.jsx";
+import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
 import {log} from "../../../import/ImportUtils.jsx";
@@ -9,7 +9,7 @@ import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx"
 
 // -------------------------------------------------------------------------------------------------
 export const Filter = ({
-  strings, objects, functions, handlers
+  strings, objects, functions
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ export const Filter = ({
         label={translate("sort")}
         variant={"outlined"}
         value={objects?.PAGING?.sort || "asc"}
-        className={"w-20vw me-3"}
+        className={"w-23vw me-3vw"}
         InputProps={{
           className: "h-min0 h-4vh"
         }}
@@ -50,15 +50,27 @@ export const Filter = ({
         setEXIST={functions?.setEXIST}
       />
       {/** 오늘 **/}
-      <Button size={"small"} color={"primary"} variant={"contained"} className={"ms-5"}
-      style={{lineHeight: "1.4", padding: "3px 9px"}} onClick={() => {
-        functions?.setDATE((prev) => ({
-          ...prev,
-          dateType: "",
-          dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-          dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-        }));
-      }}>
+      <Button
+        size={"small"}
+        color={"primary"}
+        variant={"contained"}
+        className={"ms-3vw fs-0-7rem"}
+        style={{
+          lineHeight: "1.4",
+          padding: "3px 9px",
+          textTransform: "none",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+        onClick={() => {
+          functions?.setDATE((prev) => ({
+            ...prev,
+            dateType: "",
+            dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+            dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+          }));
+        }}>
         {translate("today")}
       </Button>
     </Div>

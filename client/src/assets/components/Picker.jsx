@@ -34,37 +34,69 @@ export const Picker = ({
 
   // 1. common -------------------------------------------------------------------------------------
   const dateStr1 =
+  // 1-1. goal list
   (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
-    "w-55vw"
-  ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "w-55vw"
-  ) : (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
-    "w-80vw"
-  ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "w-55vw"
-  ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
-    "w-55vw"
-  ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-80vw"
-  ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-55vw"
-  ) : "";
+    "w-46vw"
+  ) :
+  // 1-2. diff list
+  (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
+    "w-46vw"
+  ) :
+  // 1-3. list
+  (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
+    "w-46vw"
+  ) :
+  // 1-4. find save
+  (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
+    "w-86vw"
+  ) :
+  // 1-5. goal save
+  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
+    "w-46vw"
+  ) :
+  // 1-6. calendar save
+  (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "w-46vw"
+  ) :
+  // 1-7. save
+  (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "w-86vw"
+  ) :
+  // none
+  "";
 
   // 1. common -------------------------------------------------------------------------------------
   const dateStr2 =
+  // 1-1. goal list
   (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
+  ) :
+  // 1-2. diff list
+  (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
+  ) :
+  // 1-3. list
+  (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
     "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
+  ) :
+  // 1-4. find save
+  (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
     "h-min40 fs-0-8rem pointer"
-  ) : (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
+  ) :
+  // 1-5. goal save
+  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
     "h-min40 fs-0-8rem pointer"
-  ) : (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
+  ) :
+  // 1-6. calendar save
+  (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
     "h-min40 fs-0-8rem pointer"
-  ) : "";
+  ) :
+  // 1-7. save
+  (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
+    "h-min40 fs-0-8rem pointer"
+  ) :
+  // none
+  "";
 
   // 1. type ---------------------------------------------------------------------------------------
   const typeNode = () => (
@@ -76,7 +108,7 @@ export const Picker = ({
         size={"small"}
         value={DATE.dateType || ""}
         variant={"outlined"}
-        className={"w-20vw me-3"}
+        className={"w-26vw me-3vw"}
         InputProps={{
           readOnly: false,
           className: selectStr,

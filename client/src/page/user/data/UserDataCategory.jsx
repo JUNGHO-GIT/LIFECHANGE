@@ -27,7 +27,7 @@ export const UserDataCategory = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const dataCategoryArray = ["exercise", "food", "money", "sleep"];
+  const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -128,9 +128,6 @@ export const UserDataCategory = () => {
     .catch((err) => {
       console.error(err);
     })
-    .finally(() => {
-      navigate(0);
-    });
   };
 
   // 4-1. handler ----------------------------------------------------------------------------------
@@ -418,7 +415,7 @@ export const UserDataCategory = () => {
                 </TableRow>
               </TableHead>
               <TableBody className={"table-tbody"}>
-                {dataCategoryArray.map((item, index) => (
+                {dataCategoryArray?.map((item, index) => (
                   <TableRow key={index} className={"table-tbody-tr border-top"}>
                     <TableCell className={`${dataType === item ? "bg-light" : ""}`}>
                       <Div className={"d-center"}>

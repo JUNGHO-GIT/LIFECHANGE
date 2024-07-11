@@ -120,7 +120,7 @@ export const UserSignup = () => {
       const tableFragment = (i) => (
         <Div className={"d-column"} key={i}>
           {/** section 1 **/}
-          <Div className={"d-center w-76vw"}>
+          <Div className={"d-center w-86vw"}>
             <TextField
               select={false}
               type={"text"}
@@ -149,7 +149,7 @@ export const UserSignup = () => {
             </Button>
           </Div>
           <Br10 />
-          <Div className={"d-center w-76vw"}>
+          <Div className={"d-center w-86vw"}>
             <TextField
               select={false}
               type={"text"}
@@ -209,7 +209,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("gender")}
             value={OBJECT.user_gender || "N"}
-            className={"w-76vw text-left"}
+            className={"w-86vw text-left"}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -231,7 +231,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("age")}
             value={OBJECT.user_age}
-            className={"w-76vw text-left"}
+            className={"w-86vw text-left"}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -253,7 +253,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("height")}
             value={OBJECT.user_height}
-            className={"w-76vw text-left"}
+            className={"w-86vw text-left"}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -275,7 +275,7 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("weight")}
             value={OBJECT.user_weight}
-            className={"w-76vw text-left"}
+            className={"w-86vw text-left"}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -298,7 +298,7 @@ export const UserSignup = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-76vw"}>
+      <Div className={"d-center w-86vw"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -314,7 +314,7 @@ export const UserSignup = () => {
     );
     // 7-4. google
     const googleSection = () => (
-      <Div className={"d-center w-76vw"}>
+      <Div className={"d-center w-86vw"}>
         <TextField
           select={false}
           type={"text"}
@@ -332,7 +332,7 @@ export const UserSignup = () => {
     );
     // 7-5. login
     const loginSection = () => (
-      <Div className={"d-center w-76vw fs-0-8rem"}>
+      <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/login");

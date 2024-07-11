@@ -69,7 +69,7 @@ const schema = new mongoose.Schema({
       default: "",
       required: false,
     },
-    food_title : {
+    food_name : {
       type: String,
       default: "",
       required: false,

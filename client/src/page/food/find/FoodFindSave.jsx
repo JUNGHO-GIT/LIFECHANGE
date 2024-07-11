@@ -67,7 +67,8 @@ export const FoodFindSave = () => {
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_title: "",
+      food_name: "",
+      food_brand: "",
       food_count: 0,
       food_serv: "회",
       food_gram:  0,
@@ -381,7 +382,7 @@ export const FoodFindSave = () => {
                 }));
               }}
             >
-              {foodArray.map((item, idx) => (
+              {foodArray?.map((item, idx) => (
                 <MenuItem key={idx} value={idx}>
                   <Div className={"fs-0-8rem"}>
                     {translate(item.food_part)}
@@ -474,9 +475,9 @@ export const FoodFindSave = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
-              label={translate("foodTitle")}
+              label={translate("foodName")}
               size={"small"}
-              value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+              value={`${OBJECT?.food_section[i]?.food_name} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
               className={"w-86vw"}
               InputProps={{

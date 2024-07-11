@@ -120,7 +120,6 @@ export const login = async (
     adminResult = "user";
   }
 
-
   return {
     result: finalResult,
     admin: adminResult

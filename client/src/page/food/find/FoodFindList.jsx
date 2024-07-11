@@ -63,7 +63,7 @@ export const FoodFindList = () => {
     food_perNumber: 1,
     food_part_idx: 1,
     food_part_val: "breakfast",
-    food_title: "",
+    food_name: "",
     food_brand: "",
     food_count: 0,
     food_serv: "",
@@ -99,7 +99,7 @@ export const FoodFindList = () => {
     }
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item) => (
-      sectionArray.some((sectionItem) => sectionItem.food_title === item.food_title)
+      sectionArray.some((sectionItem) => sectionItem.food_name === item.food_name)
     ));
     setCheckedQueries({
       ...checkedQueries,
@@ -131,14 +131,14 @@ export const FoodFindList = () => {
         sectionArray.push(OBJECT[index]);
       }
       else {
-        sectionArray = sectionArray.filter(item => item.food_title !== OBJECT[index]?.food_title);
+        sectionArray = sectionArray.filter(item => item.food_name !== OBJECT[index]?.food_name);
       }
     });
 
     // sectionArray 중복 제거
     sectionArray = sectionArray.filter((el, index, self) => {
       return index === self.findIndex((t) => (
-        t.food_title === el.food_title
+        t.food_name === el.food_name
       ));
     });
 
@@ -225,11 +225,11 @@ export const FoodFindList = () => {
                   />
                   {/** 10자 넘어가면 ... 처리 */}
                   {isExpanded.includes(index) ? (
-                    item.food_title
+                    item.food_name
                   ) : (
-                    item.food_title.length > 10 ?
-                    `${item.food_title.substring(0, 10)}...` :
-                    item.food_title
+                    item.food_name.length > 10 ?
+                    `${item.food_name.substring(0, 10)}...` :
+                    item.food_name
                   )}
                 </Div>
                 <Div className={"d-center"}>

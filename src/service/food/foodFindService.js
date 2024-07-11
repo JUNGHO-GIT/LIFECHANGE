@@ -140,7 +140,7 @@ export const list = async (
         food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
         food_part_idx: 1,
         food_part_val: "breakfast",
-        food_title: titleElement,
+        food_name: titleElement,
         food_brand: brandElement,
         food_count: nutritionElement.count,
         food_serv: nutritionElement.serv,

@@ -52,12 +52,12 @@ export const UserLogin = () => {
         if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
           window.ReactNativeWebView.postMessage(JSON.stringify({
             userId: userId,
-            isAdmin: res.data.result.admin === "admin"
+            isAdmin: res.data.admin === "admin"
           }));
         }
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
-        if (res.data.result.admin === "admin") {
+        if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }
         else {
@@ -139,7 +139,7 @@ export const UserLogin = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-76vw"}>
+      <Div className={"d-center w-86vw"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -155,7 +155,7 @@ export const UserLogin = () => {
     );
     // 7-4. google
     const googleSection = () => (
-      <Div className={"d-center w-76vw"}>
+      <Div className={"d-center w-86vw"}>
         <TextField
           select={false}
           type={"text"}
@@ -173,7 +173,7 @@ export const UserLogin = () => {
     );
     // 7-5. signup
     const signupSection = () => (
-      <Div className={"d-center w-76vw fs-0-8rem"}>
+      <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");

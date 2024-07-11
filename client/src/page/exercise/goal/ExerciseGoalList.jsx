@@ -8,7 +8,7 @@ import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
-import {exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5} from "../../../import/ImportImages.jsx";
+import {exercise2, exercise3_1, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalList = () => {
@@ -155,6 +155,27 @@ export const ExerciseGoalList = () => {
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold dark"}>
+                    <Img src={exercise2} className={"w-15 h-15"} />
+                  </Div>
+                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                    {translate("count")}
+                  </Div>
+                  <Div className={"fs-0-9rem fw-normal dark"}>
+                    {translate("goal")}
+                  </Div>
+                </Div>
+                <Br10 />
+                <Div className={"d-left"}>
+                  <Div className={"fs-1-0rem fw-bold"}>
+                    {item.exercise_goal_count}
+                  </Div>
+                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                    {translate("c")}
+                  </Div>
+                </Div>
+                <Hr30 />
                 <Div className={"d-left"}>
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />

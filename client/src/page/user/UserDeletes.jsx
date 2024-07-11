@@ -114,7 +114,7 @@ export const UserDeletes = () => {
           <Br20 />
           <TextArea
             readOnly={false}
-            className={"w-76vw h-10vh border shadow-none p-10 pointer"}
+            className={"w-86vw h-10vh border shadow-none p-10 pointer"}
             value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
           />
         </Div>
@@ -125,7 +125,7 @@ export const UserDeletes = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-76vw"}>
+      <Div className={"d-center w-86vw"}>
         <Button
           size={"small"}
           color={"error"}

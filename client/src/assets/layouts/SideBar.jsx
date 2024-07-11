@@ -68,7 +68,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
           <Img src={logo3} />
         </Div>
         <List role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>
-          {dataArray.map((item, index) => (
+          {dataArray?.map((item, index) => (
             <Div key={index}>
               <ListItemButton
                 key={index}

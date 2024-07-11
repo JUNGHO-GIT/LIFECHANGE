@@ -119,8 +119,62 @@ export const SleepGoalSave = () => {
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    sleep_goal_bedTime: createRef(),
+    sleep_goal_wakeTime: createRef(),
+    sleep_goal_sleepTime: createRef(),
+  });
+
+  const [ERRORS, setERRORS] = useState({
+    sleep_goal_bedTime: false,
+    sleep_goal_wakeTime: false,
+    sleep_goal_sleepTime: false,
+  });
+
+  // validate 함수
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = {
+      sleep_goal_bedTime: false,
+      sleep_goal_wakeTime: false,
+      sleep_goal_sleepTime: false,
+    };
+
+    const refsCurrent = REFS?.current;
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+
+    if (OBJECT.sleep_goal_bedTime === "00:00") {
+      alert(translate("errorSleepGoalBedTime"));
+      refsCurrent.sleep_goal_bedTime.current?.focus();
+      initialErrors.sleep_goal_bedTime = true;
+      foundError = true;
+    }
+    else if (OBJECT.sleep_goal_wakeTime === "00:00") {
+      alert(translate("errorSleepGoalWakeTime"));
+      refsCurrent.sleep_goal_wakeTime.current?.focus();
+      initialErrors.sleep_goal_wakeTime = true;
+      foundError = true;
+    }
+    else if (OBJECT.sleep_goal_sleepTime === "00:00") {
+      alert(translate("errorSleepGoalSleepTime"));
+      refsCurrent.sleep_goal_sleepTime.current?.focus();
+      initialErrors.sleep_goal_sleepTime = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -212,7 +266,6 @@ export const SleepGoalSave = () => {
         />
       </Card>
     );
-    // 7-2. total
     // 7-3. table
     const tableSection = () => {
       const loadingFragment = () => (
@@ -241,6 +294,8 @@ export const SleepGoalSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_goal_bedTime"}
               i={i}
             />
@@ -250,6 +305,8 @@ export const SleepGoalSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_goal_wakeTime"}
               i={i}
             />
@@ -259,6 +316,8 @@ export const SleepGoalSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_goal_sleepTime"}
               i={i}
             />

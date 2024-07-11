@@ -109,7 +109,8 @@ export const useTranslate = () => {
     food: {ko: "식사", en: "food"},
     finance: {ko: "금융", en: "Finance"},
     foodCount: {ko: "회", en: "Count"},
-    foodTitle: {ko: "식품명", en: "Food"},
+    foodName: {ko: "식품명", en: "Food"},
+    foodBrand: {ko: "브랜드", en: "Brand"},
 
     // g
     g: {ko: "g", en: "g"},
@@ -240,6 +241,7 @@ export const useTranslate = () => {
     saveId: {ko: "아이디 저장", en: "Save ID"},
     savings: {ko: "저축", en: "Savings"},
     snack: {ko: "간식", en: "Snack"},
+    schedule: {ko: "일정", en: "Schedule"},
 
     // t
     trend: {ko: "추이", en: "Trend"},
@@ -366,7 +368,15 @@ export const useTranslate = () => {
     F: {ko: "여성", en: "Female"},
     N: {ko: "선택하지 않음", en: "Unknown"},
 
-    // error alert
+    // error (exercise)
+    errorExercisePart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
+    errorExerciseTitle: {ko: "분류2를 선택해주세요", en: "Please select Title"},
+    errorExerciseCount: {ko: "횟수를 입력해주세요", en: "Please enter Count"},
+    errorExerciseSet: {ko: "세트를 입력해주세요", en: "Please enter Set"},
+    errorExerciseRep: {ko: "횟수를 입력해주세요", en: "Please enter Rep"},
+    errorExerciseKg: {ko: "무게를 입력해주세요", en: "Please enter Kg"},
+
+    // error (food)
     errorFoodPart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
     errorFoodTitle: {ko: "식품명을 입력해주세요", en: "Please enter Food"},
     errorFoodCount: {ko: "수량을 입력해주세요", en: "Please enter Count"},
@@ -375,9 +385,22 @@ export const useTranslate = () => {
     errorFoodCarb: {ko: "탄수화물을 입력해주세요", en: "Please enter Carb"},
     errorFoodProtein: {ko: "단백질을 입력해주세요", en: "Please enter Protein"},
     errorFoodFat: {ko: "지방을 입력해주세요", en: "Please enter Fat"},
+
+    // error (calendar)
+    errorCalendarPart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
+    errorCalendarColor: {ko: "색상을 선택해주세요", en: "Please select Color"},
+    errorCalendarTitle: {ko: "제목을 입력해주세요", en: "Please enter Title"},
+    errorCalendarContent: {ko: "내용을 입력해주세요", en: "Please enter Content"},
+
+    // error (money)
     errorMoneyPart: {ko: "분류1을 선택해주세요", en: "Please select Part"},
     errorMoneyTitle: {ko: "분류2를 선택해주세요", en: "Please select Title"},
     errorMoneyAmount: {ko: "금액을 입력해주세요", en: "Please enter Amount"},
+
+    // error (sleep)
+    errorSleepBedTime: {ko: "취침시간을 입력해주세요", en: "Please enter Bed Time"},
+    errorSleepWakeTime: {ko: "기상시간을 입력해주세요", en: "Please enter Wake Time"},
+    errorSleepSleepTime: {ko: "수면시간을 입력해주세요", en: "Please enter Sleep Time"},
   };
 
   const translate = useCallback((key, className) => {

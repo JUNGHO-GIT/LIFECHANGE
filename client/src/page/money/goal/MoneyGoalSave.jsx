@@ -115,8 +115,53 @@ export const MoneyGoalSave = () => {
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    money_goal_income: createRef(),
+    money_goal_expense: createRef(),
+  });
+
+  const [ERRORS, setERRORS] = useState({
+    money_goal_income: false,
+    money_goal_expense: false,
+  });
+
+  // validate 함수
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = {
+      money_goal_income: false,
+      money_goal_expense: false,
+    };
+
+    const refsCurrent = REFS?.current;
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+
+    if (OBJECT.money_goal_income === 0) {
+      alert(translate("errorMoneyGoalIncome"));
+      refsCurrent.money_goal_income.current?.focus();
+      initialErrors.money_goal_income = true;
+      foundError = true;
+    }
+    else if (OBJECT.money_goal_expense === 0) {
+      alert(translate("errorMoneyGoalExpense"));
+      refsCurrent.money_goal_expense.current?.focus();
+      initialErrors.money_goal_expense = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -242,6 +287,8 @@ export const MoneyGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
+              inputRef={REFS.current.money_goal_income}
+              error={ERRORS.money_goal_income}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -275,6 +322,8 @@ export const MoneyGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
+              inputRef={REFS.current.money_goal_expense}
+              error={ERRORS.money_goal_expense}
               InputProps={{
                 readOnly: false,
                 startAdornment: (

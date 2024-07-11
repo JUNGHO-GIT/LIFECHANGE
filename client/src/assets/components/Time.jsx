@@ -10,7 +10,7 @@ import {sleep2, sleep3, sleep4, exercise4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Time = ({
-  OBJECT, setOBJECT, extra, i
+  OBJECT, setOBJECT, REFS, ERRORS, extra, i
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -67,6 +67,10 @@ export const Time = ({
     }
   }
 
+  console.log("REFS : " + JSON.stringify(REFS, null, 2));
+  console.log("ERRORS : " + JSON.stringify(ERRORS, null, 2));
+  console.log("extra : " + JSON.stringify(extra, null, 2));
+
   // 2. goalNode -----------------------------------------------------------------------------------
   const goalNode = () => (
     <PopUp
@@ -100,6 +104,9 @@ export const Time = ({
           variant={"outlined"}
           className={"w-86vw"}
           value={OBJECT?.[`${extra}`]}
+          // todo
+          /* inputRef={REFS}
+          error={ERRORS} */
           InputProps={{
             readOnly: true,
             startAdornment: (
@@ -155,8 +162,11 @@ export const Time = ({
           label={translate(translateStr)}
           size={"small"}
           variant={"outlined"}
-          className={`${firstStr === "sleep" ? "w-76vw" : "w-40vw ms-3vw"}`}
+          className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+          // todo
+          /* inputRef={REFS}
+          error={ERRORS} */
           InputProps={{
             readOnly: true,
             startAdornment: (

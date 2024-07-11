@@ -69,7 +69,8 @@ export const FoodList = () => {
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_title: "",
+      food_name: "",
+      food_brand: "",
       food_count: 0,
       food_serv: "회",
       food_gram:  0,
