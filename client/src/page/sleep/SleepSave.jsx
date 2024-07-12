@@ -2,8 +2,8 @@
 
 import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate, useTime} from "../../import/ImportHooks.jsx";
 import {moment, axios} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportUtils";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
@@ -64,6 +64,9 @@ export const SleepSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -146,18 +149,15 @@ export const SleepSave = () => {
   const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: createRef(),
     sleep_wakeTime: createRef(),
-    sleep_sleepTime: createRef(),
   })));
   const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: false,
     sleep_wakeTime: false,
-    sleep_sleepTime: false,
   })));
   useEffect(() => {
     REFS.current = OBJECT?.sleep_section?.map((_, idx) => ({
-      sleep_bedTime: REFS.current[idx]?.sleep_bedTime || createRef(),
-      sleep_wakeTime: REFS.current[idx]?.sleep_wakeTime || createRef(),
-      sleep_sleepTime: REFS.current[idx]?.sleep_sleepTime || createRef(),
+      sleep_bedTime: REFS?.current[idx]?.sleep_bedTime || createRef(),
+      sleep_wakeTime: REFS?.current[idx]?.sleep_wakeTime || createRef(),
     }));
   }, [OBJECT?.sleep_section.length]);
   const validate = (OBJECT) => {
@@ -165,7 +165,6 @@ export const SleepSave = () => {
     const initialErrors = OBJECT?.sleep_section?.map(() => ({
       sleep_bedTime: false,
       sleep_wakeTime: false,
-      sleep_sleepTime: false,
     }));
     for (let idx = 0; idx < OBJECT?.sleep_section.length; idx++) {
       const section = OBJECT?.sleep_section[idx];
@@ -176,22 +175,15 @@ export const SleepSave = () => {
       }
       if (section.sleep_bedTime === "00:00") {
         alert(translate("errorSleepBedTime"));
-        REFS?.current[idx]?.sleep_bedTime.current.focus();
+        REFS?.current[idx]?.sleep_bedTime?.current?.focus();
         initialErrors[idx].sleep_bedTime = true;
         foundError = true;
         break;
       }
       else if (section.sleep_wakeTime === "00:00") {
         alert(translate("errorSleepWakeTime"));
-        REFS?.current[idx]?.sleep_wakeTime.current.focus();
+        REFS?.current[idx]?.sleep_wakeTime?.current?.focus();
         initialErrors[idx].sleep_wakeTime = true;
-        foundError = true;
-        break;
-      }
-      else if (section.sleep_sleepTime === "00:00") {
-        alert(translate("errorSleepSleepTime"));
-        REFS?.current[idx]?.sleep_sleepTime.current.focus();
-        initialErrors[idx].sleep_sleepTime = true;
         foundError = true;
         break;
       }
@@ -324,9 +316,8 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              // todo
-              /* REFS={REFS?.current[i]?.sleep_bedTime}
-              ERRORS={ERRORS[i]?.sleep_bedTime} */
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_bedTime"}
               i={i}
             />
@@ -336,9 +327,8 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              // todo
-              /* REFS={REFS?.current[i]?.sleep_wakeTime}
-              ERRORS={ERRORS[i]?.sleep_wakeTime} */
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_wakeTime"}
               i={i}
             />
@@ -348,9 +338,8 @@ export const SleepSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              // todo
-              /* REFS={REFS?.current[i]?.sleep_sleepTime}
-              ERRORS={ERRORS[i]?.sleep_sleepTime} */
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"sleep_sleepTime"}
               i={i}
             />

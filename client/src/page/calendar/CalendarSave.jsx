@@ -75,12 +75,6 @@ export const CalendarSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  useEffect(() => {
-    console.log("===================================");
-    log("OBJECT", OBJECT);
-    console.log("===================================");
-  }, [OBJECT]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -173,9 +167,9 @@ export const CalendarSave = () => {
   })));
   useEffect(() => {
     REFS.current = OBJECT?.calendar_section.map((_, idx) => ({
-      calendar_part_idx: REFS.current[idx]?.calendar_part_idx || createRef(),
-      calendar_color: REFS.current[idx]?.calendar_color || createRef(),
-      calendar_title: REFS.current[idx]?.calendar_title || createRef(),
+      calendar_part_idx: REFS?.current[idx]?.calendar_part_idx || createRef(),
+      calendar_color: REFS?.current[idx]?.calendar_color || createRef(),
+      calendar_title: REFS?.current[idx]?.calendar_title || createRef(),
     }));
   }, [OBJECT?.calendar_section.length]);
   const validate = (OBJECT) => {
@@ -196,7 +190,7 @@ export const CalendarSave = () => {
       if (section.calendar_part_idx === 0) {
         alert(translate("errorCalendarPart"));
         refsCurrentIdx.calendar_part_idx.current
-        && refsCurrentIdx.calendar_part_idx.current.focus();
+        && refsCurrentIdx.calendar_part_idx?.current?.focus();
         initialErrors[idx].calendar_part_idx = true;
         foundError = true;
         break;
@@ -204,7 +198,7 @@ export const CalendarSave = () => {
       else if (section.calendar_title === "") {
         alert(translate("errorCalendarTitle"));
         refsCurrentIdx.calendar_title.current
-        && refsCurrentIdx.calendar_title.current.focus();
+        && refsCurrentIdx.calendar_title?.current?.focus();
         initialErrors[idx].calendar_title = true;
         foundError = true;
         break;
@@ -212,7 +206,7 @@ export const CalendarSave = () => {
       else if (section.calendar_color === "") {
         alert(translate("errorCalendarColor"));
         refsCurrentIdx.calendar_color.current
-        && refsCurrentIdx.calendar_color.current.focus();
+        && refsCurrentIdx.calendar_color?.current?.focus();
         initialErrors[idx].calendar_color = true;
         foundError = true;
         break;

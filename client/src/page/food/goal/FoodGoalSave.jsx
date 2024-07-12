@@ -308,8 +308,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-              inputRef={REFS.current.food_goal_kcal}
-              error={ERRORS.food_goal_kcal}
+              inputRef={REFS?.current?.food_goal_kcal}
+              error={ERRORS?.food_goal_kcal}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -343,8 +343,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-              inputRef={REFS.current.food_goal_carb}
-              error={ERRORS.food_goal_carb}
+              inputRef={REFS?.current?.food_goal_carb}
+              error={ERRORS?.food_goal_carb}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -378,8 +378,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-              inputRef={REFS.current.food_goal_protein}
-              error={ERRORS.food_goal_protein}
+              inputRef={REFS?.current?.food_goal_protein}
+              error={ERRORS?.food_goal_protein}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -413,8 +413,8 @@ export const FoodGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-              inputRef={REFS.current.food_goal_fat}
-              error={ERRORS.food_goal_fat}
+              inputRef={REFS?.current?.food_goal_fat}
+              error={ERRORS?.food_goal_fat}
               InputProps={{
                 readOnly: false,
                 startAdornment: (

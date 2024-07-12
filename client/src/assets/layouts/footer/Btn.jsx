@@ -236,11 +236,9 @@ export const Btn = ({
     // 1. calendar
     if (strings?.first === "calendar") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -256,11 +254,9 @@ export const Btn = ({
     // 2. exercise
     else if (strings?.first === "exercise") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
@@ -272,7 +268,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -288,7 +283,6 @@ export const Btn = ({
     // 3. food
     else if (strings?.first === "food") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "find" && strings?.third === "list") {
@@ -309,7 +303,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
@@ -321,7 +314,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -337,11 +329,9 @@ export const Btn = ({
     // 4. money
     else if (strings?.first === "money") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
@@ -353,7 +343,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -369,11 +358,9 @@ export const Btn = ({
     // 5. sleep
     else if (strings?.first === "sleep") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
@@ -385,7 +372,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -401,7 +387,6 @@ export const Btn = ({
     // 6. user
     else if (strings?.first === "user") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "data" && strings?.third === "list") {
@@ -419,7 +404,6 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
@@ -431,11 +415,9 @@ export const Btn = ({
         );
       }
       else if (strings?.second === "login" && strings?.third === "") {
-        log("btn", null);
         return null
       }
       else if (strings?.second === "signup" && strings?.third === "") {
-        log("btn", null);
         return null
       }
     }

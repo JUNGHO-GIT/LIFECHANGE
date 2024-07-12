@@ -335,8 +335,8 @@ export const ExerciseGoalSave = () => {
               label={`${translate("goalVolume")} (${translate("total")})`}
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-              inputRef={REFS.current.exercise_goal_volume}
-              error={ERRORS.exercise_goal_volume}
+              inputRef={REFS?.current?.exercise_goal_volume}
+              error={ERRORS?.exercise_goal_volume}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -369,8 +369,8 @@ export const ExerciseGoalSave = () => {
               label={translate("goalWeight")}
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
-              inputRef={REFS.current.exercise_goal_weight}
-              error={ERRORS.exercise_goal_weight}
+              inputRef={REFS?.current?.exercise_goal_weight}
+              error={ERRORS?.exercise_goal_weight}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -399,9 +399,8 @@ export const ExerciseGoalSave = () => {
             <Time
               OBJECT={OBJECT}
               setOBJECT={setOBJECT}
-              // todo
-              /* REFS={REFS}
-              ERRORS={ERRORS} */
+              REFS={REFS}
+              ERRORS={ERRORS}
               extra={"exercise_goal_cardio"}
               i={i}
             />

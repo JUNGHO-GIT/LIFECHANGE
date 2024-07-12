@@ -2,12 +2,11 @@
 
 import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useTime} from "../../../import/ImportHooks.jsx";
 import {moment, axios} from "../../../import/ImportLibs.jsx";
-import {useTime} from "../../../import/ImportHooks.jsx";
 import {percent} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Img, Br20, Br40} from "../../../import/ImportComponents.jsx";
+import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge} from "../../../import/ImportMuis.jsx";
 
@@ -123,13 +122,11 @@ export const SleepGoalSave = () => {
   const REFS = useRef({
     sleep_goal_bedTime: createRef(),
     sleep_goal_wakeTime: createRef(),
-    sleep_goal_sleepTime: createRef(),
   });
 
   const [ERRORS, setERRORS] = useState({
     sleep_goal_bedTime: false,
     sleep_goal_wakeTime: false,
-    sleep_goal_sleepTime: false,
   });
 
   // validate 함수
@@ -138,7 +135,6 @@ export const SleepGoalSave = () => {
     const initialErrors = {
       sleep_goal_bedTime: false,
       sleep_goal_wakeTime: false,
-      sleep_goal_sleepTime: false,
     };
 
     const refsCurrent = REFS?.current;
@@ -157,12 +153,6 @@ export const SleepGoalSave = () => {
       alert(translate("errorSleepGoalWakeTime"));
       refsCurrent.sleep_goal_wakeTime.current?.focus();
       initialErrors.sleep_goal_wakeTime = true;
-      foundError = true;
-    }
-    else if (OBJECT.sleep_goal_sleepTime === "00:00") {
-      alert(translate("errorSleepGoalSleepTime"));
-      refsCurrent.sleep_goal_sleepTime.current?.focus();
-      initialErrors.sleep_goal_sleepTime = true;
       foundError = true;
     }
 

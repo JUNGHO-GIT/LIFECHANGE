@@ -287,8 +287,8 @@ export const MoneyGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
-              inputRef={REFS.current.money_goal_income}
-              error={ERRORS.money_goal_income}
+              inputRef={REFS?.current?.money_goal_income}
+              error={ERRORS?.money_goal_income}
               InputProps={{
                 readOnly: false,
                 startAdornment: (
@@ -322,8 +322,8 @@ export const MoneyGoalSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-              inputRef={REFS.current.money_goal_expense}
-              error={ERRORS.money_goal_expense}
+              inputRef={REFS?.current?.money_goal_expense}
+              error={ERRORS?.money_goal_expense}
               InputProps={{
                 readOnly: false,
                 startAdornment: (

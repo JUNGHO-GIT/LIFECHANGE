@@ -186,9 +186,9 @@ export const MoneySave = () => {
   })));
   useEffect(() => {
     REFS.current = OBJECT?.money_section?.map((_, idx) => ({
-      money_part_idx: REFS.current[idx]?.money_part_idx || createRef(),
-      money_title_idx: REFS.current[idx]?.money_title_idx || createRef(),
-      money_amount: REFS.current[idx]?.money_amount || createRef(),
+      money_part_idx: REFS?.current[idx]?.money_part_idx || createRef(),
+      money_title_idx: REFS?.current[idx]?.money_title_idx || createRef(),
+      money_amount: REFS?.current[idx]?.money_amount || createRef(),
     }));
   }, [OBJECT?.money_section.length]);
   const validate = (OBJECT) => {
@@ -208,7 +208,7 @@ export const MoneySave = () => {
       if (section.money_part_idx === 0) {
         alert(translate("errorMoneyPart"));
         refsCurrentIdx.money_part_idx.current
-        && refsCurrentIdx.money_part_idx.current.focus();
+        && refsCurrentIdx.money_part_idx?.current?.focus();
         initialErrors[idx].money_part_idx = true;
         foundError = true;
         break;
@@ -216,7 +216,7 @@ export const MoneySave = () => {
       else if (section.money_title_idx === 0) {
         alert(translate("errorMoneyTitle"));
         refsCurrentIdx.money_title_idx.current
-        && refsCurrentIdx.money_title_idx.current.focus();
+        && refsCurrentIdx.money_title_idx?.current?.focus();
         initialErrors[idx].money_title_idx = true;
         foundError = true;
         break;
@@ -224,7 +224,7 @@ export const MoneySave = () => {
       else if (section.money_amount === 0) {
         alert(translate("errorMoneyAmount"));
         refsCurrentIdx.money_amount.current
-        && refsCurrentIdx.money_amount.current.focus();
+        && refsCurrentIdx.money_amount?.current?.focus();
         initialErrors[idx].money_amount = true;
         foundError = true;
         break;

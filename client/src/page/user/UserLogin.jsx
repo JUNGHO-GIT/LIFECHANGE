@@ -1,6 +1,7 @@
 // UserLogin.jsx
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {createRef, useRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportUtils";
@@ -16,9 +17,7 @@ export const UserLogin = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const navigate = useNavigate();
-  const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname;
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isChecked, setIsChecked] = useState(false);
@@ -34,8 +33,52 @@ export const UserLogin = () => {
     }
   }, []);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    user_id: createRef(),
+    user_pw: createRef(),
+  });
+
+  const [ERRORS, setERRORS] = useState({
+    user_id: false,
+    user_pw: false,
+  });
+
+  // validate 함수
+  const validate = (user_id, user_pw) => {
+    let foundError = false;
+    const initialErrors = {
+      user_id: false,
+      user_pw: false,
+    };
+    const refsCurrent = REFS?.current;
+
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+    if (userId === "" || !userId) {
+      alert(translate("errorUserId"));
+      refsCurrent.user_id.current?.focus();
+      initialErrors.user_id = true;
+      foundError = true;
+    }
+    else if (userPw === "" || !userPw) {
+      alert(translate("errorUserPw"));
+      refsCurrent.user_pw.current?.focus();
+      initialErrors.user_pw = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(userId, userPw)) {
+      return;
+    }
     await axios.post (`${URL_OBJECT}/login`, {
       user_id: userId,
       user_pw: userPw,
@@ -95,6 +138,8 @@ export const UserLogin = () => {
             label={translate("id")}
             className={"w-86vw"}
             value={userId}
+            inputRef={REFS.current.user_id}
+            error={ERRORS.user_id}
             InputProps={{
               readOnly: false
             }}
@@ -110,6 +155,8 @@ export const UserLogin = () => {
             label={translate("pw")}
             value={userPw}
             className={"w-86vw"}
+            inputRef={REFS.current.user_pw}
+            error={ERRORS.user_pw}
             InputProps={{
               readOnly: false,
             }}

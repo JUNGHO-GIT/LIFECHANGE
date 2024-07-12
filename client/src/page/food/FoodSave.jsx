@@ -210,14 +210,14 @@ export const FoodSave = () => {
   })));
   useEffect(() => {
     REFS.current = OBJECT?.food_section?.map((_, idx) => ({
-      food_part_idx: REFS.current[idx]?.food_part_idx || createRef(),
-      food_count: REFS.current[idx]?.food_count || createRef(),
-      food_gram: REFS.current[idx]?.food_gram || createRef(),
-      food_name: REFS.current[idx]?.food_name || createRef(),
-      food_kcal: REFS.current[idx]?.food_kcal || createRef(),
-      food_carb: REFS.current[idx]?.food_carb || createRef(),
-      food_protein: REFS.current[idx]?.food_protein || createRef(),
-      food_fat: REFS.current[idx]?.food_fat || createRef(),
+      food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
+      food_count: REFS?.current[idx]?.food_count || createRef(),
+      food_gram: REFS?.current[idx]?.food_gram || createRef(),
+      food_name: REFS?.current[idx]?.food_name || createRef(),
+      food_kcal: REFS?.current[idx]?.food_kcal || createRef(),
+      food_carb: REFS?.current[idx]?.food_carb || createRef(),
+      food_protein: REFS?.current[idx]?.food_protein || createRef(),
+      food_fat: REFS?.current[idx]?.food_fat || createRef(),
     }));
   }, [OBJECT?.food_section.length]);
   const validate = (OBJECT) => {
@@ -242,7 +242,7 @@ export const FoodSave = () => {
       if (section.food_part_idx === 0) {
         alert(translate("errorFoodPart"));
         refsCurrentIdx.food_part_idx.current
-        && refsCurrentIdx.food_part_idx.current.focus();
+        && refsCurrentIdx.food_part_idx?.current?.focus();
         initialErrors[idx].food_part_idx = true;
         foundError = true;
         break;
@@ -250,7 +250,7 @@ export const FoodSave = () => {
       else if (section.food_count === 0) {
         alert(translate("errorFoodCount"));
         refsCurrentIdx.food_count.current
-        && refsCurrentIdx.food_count.current.focus();
+        && refsCurrentIdx.food_count?.current?.focus();
         initialErrors[idx].food_count = true;
         foundError = true;
         break;
@@ -258,7 +258,7 @@ export const FoodSave = () => {
       else if (section.food_gram === 0) {
         alert(translate("errorFoodGram"));
         refsCurrentIdx.food_gram.current
-        && refsCurrentIdx.food_gram.current.focus();
+        && refsCurrentIdx.food_gram?.current?.focus();
         initialErrors[idx].food_gram = true;
         foundError = true;
         break;
@@ -266,7 +266,7 @@ export const FoodSave = () => {
       else if (section.food_name === "") {
         alert(translate("errorFoodName"));
         refsCurrentIdx.food_name.current
-        && refsCurrentIdx.food_name.current.focus();
+        && refsCurrentIdx.food_name?.current?.focus();
         initialErrors[idx].food_name = true;
         foundError = true;
         break;
@@ -274,7 +274,7 @@ export const FoodSave = () => {
       else if (section.food_kcal === 0) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current
-        && refsCurrentIdx.food_kcal.current.focus();
+        && refsCurrentIdx.food_kcal?.current?.focus();
         initialErrors[idx].food_kcal = true;
         foundError = true;
         break;
@@ -282,7 +282,7 @@ export const FoodSave = () => {
       else if (section.food_carb === 0) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current
-        && refsCurrentIdx.food_carb.current.focus();
+        && refsCurrentIdx.food_carb?.current?.focus();
         initialErrors[idx].food_carb = true;
         foundError = true;
         break;
@@ -290,7 +290,7 @@ export const FoodSave = () => {
       else if (section.food_protein === 0) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current
-        && refsCurrentIdx.food_protein.current.focus();
+        && refsCurrentIdx.food_protein?.current?.focus();
         initialErrors[idx].food_protein = true;
         foundError = true;
         break;
@@ -298,7 +298,7 @@ export const FoodSave = () => {
       else if (section.food_fat === 0) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current
-        && refsCurrentIdx.food_fat.current.focus();
+        && refsCurrentIdx.food_fat?.current?.focus();
         initialErrors[idx].food_fat = true;
         foundError = true;
         break;

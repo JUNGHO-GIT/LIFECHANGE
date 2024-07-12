@@ -1,6 +1,6 @@
 // Time.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useLocation, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {PopUp, Img, Div} from "../../import/ImportComponents.jsx";
@@ -67,9 +67,16 @@ export const Time = ({
     }
   }
 
-  console.log("REFS : " + JSON.stringify(REFS, null, 2));
-  console.log("ERRORS : " + JSON.stringify(ERRORS, null, 2));
-  console.log("extra : " + JSON.stringify(extra, null, 2));
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    // 1. sleep
+    if (firstStr === "sleep" && secondStr !== "goal") {
+      REFS.current = OBJECT?.sleep_section?.map((_, idx) => ({
+        sleep_bedTime: REFS?.current[idx]?.sleep_bedTime || createRef(),
+        sleep_wakeTime: REFS?.current[idx]?.sleep_wakeTime || createRef(),
+      }));
+    }
+  }, [OBJECT]);
 
   // 2. goalNode -----------------------------------------------------------------------------------
   const goalNode = () => (
@@ -104,9 +111,8 @@ export const Time = ({
           variant={"outlined"}
           className={"w-86vw"}
           value={OBJECT?.[`${extra}`]}
-          // todo
-          /* inputRef={REFS}
-          error={ERRORS} */
+          inputRef={REFS?.current?.[`${extra}`]}
+          error={ERRORS?.[`${extra}`]}
           InputProps={{
             readOnly: true,
             startAdornment: (
@@ -164,9 +170,8 @@ export const Time = ({
           variant={"outlined"}
           className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-          // todo
-          /* inputRef={REFS}
-          error={ERRORS} */
+          inputRef={REFS?.current?.[i]?.[`${extra}`]}
+          error={ERRORS?.[i]?.[`${extra}`]}
           InputProps={{
             readOnly: true,
             startAdornment: (

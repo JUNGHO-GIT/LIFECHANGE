@@ -82,15 +82,12 @@ export const Filter = ({
     // 1. calendar
     if (strings?.first === "calendar") {
       if (strings?.second === "diff" && strings?.third === "list") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
@@ -112,7 +109,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -123,7 +119,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
@@ -138,11 +133,9 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "find" && strings?.third === "list") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "find" && strings?.third === "save") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "goal" && strings?.third === "list") {
@@ -153,7 +146,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -164,7 +156,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
@@ -186,7 +177,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -197,7 +187,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
@@ -219,7 +208,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "goal" && strings?.third === "save") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -230,7 +218,6 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
@@ -245,11 +232,9 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "data" && strings?.third === "list") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "data" && strings?.third === "category") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "list" && strings?.third === "") {
@@ -260,15 +245,12 @@ export const Filter = ({
         );
       }
       else if (strings?.second === "save" && strings?.third === "") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "login" && strings?.third === "") {
-        log("filter", null);
         return null
       }
       else if (strings?.second === "signup" && strings?.third === "") {
-        log("filter", null);
         return null
       }
     }
