@@ -88,7 +88,9 @@ export const ExerciseGoalList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 열림 설정
-      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded(res.data.result.map((_, index) => (index)));
+      // Accordion 초기값 닫힘 설정
+      setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);

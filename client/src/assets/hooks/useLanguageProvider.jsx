@@ -100,6 +100,8 @@ export const useTranslate = () => {
     findList: {ko: "찾기", en: "Find"},
     flowDefault: {ko: "기본값", en: "Default"},
     flowDummy: {ko: "추가", en: "Insert"},
+    flowDummySave: {ko: "추가", en: "Insert"},
+    flowDummyDeletes: {ko: "삭제", en: "Delete"},
     flowDeletes: {ko: "삭제", en: "Delete"},
     flowFind: {ko: "찾기", en: "Find"},
     flowLogin: {ko: "로그인", en: "Login"},

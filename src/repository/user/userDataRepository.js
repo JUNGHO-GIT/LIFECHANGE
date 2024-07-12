@@ -217,7 +217,7 @@ export const list = {
 
 // 2-1. detail -------------------------------------------------------------------------------------
 export const detail = async (
-  user_id_param, _id_param
+  user_id_param
 ) => {
 
   const finalResult = await User.findOne({
@@ -231,197 +231,279 @@ export const detail = async (
 // 3-1. save ---------------------------------------------------------------------------------------
 export const save = {
 
-  saveExercise: async (
+  // 1-1. exerciseGoal
+  deletesExerciseGoal: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
-    const deleteResult = await Exercise.deleteMany({
-      user_id: user_id_param,
-      exercise_dummy: true
-    });
-
-    // 데이터 삽입
-    const insertResult = await Exercise.insertMany(OBJECT_param);
-
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
-
-    return insertResult;
-  },
-
-  saveExerciseGoal: async (
-    user_id_param, OBJECT_param
-  ) => {
-    // 일단 전체 데이터 삭제
     const deleteResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
       exercise_goal_dummy: true
     });
 
-    // 데이터 삽입
+    console.log(`ExerciseGoal - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
+
+  // 1-2. exerciseGoal
+  saveExerciseGoal: async (
+    user_id_param, OBJECT_param
+  ) => {
     const insertResult = await ExerciseGoal.insertMany(OBJECT_param);
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
-
+    console.log(`ExerciseGoal - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveFood: async (
+  // 1-3. exercise
+  deletesExercise: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
-    const deleteResult = await Food.deleteMany({
+    const deleteResult = await Exercise.deleteMany({
       user_id: user_id_param,
-      food_dummy: true
+      exercise_dummy: true
     });
 
-    // 데이터 삽입
-    const insertResult = await Food.insertMany(OBJECT_param);
+    console.log(`Exercise - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
+  // 1-4. exercise
+  saveExercise: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const insertResult = await Exercise.insertMany(OBJECT_param);
 
+    console.log(`Exercise - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveFoodGoal: async (
+  // 2-1. foodGoal
+  deletesFoodGoal: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
     const deleteResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
       food_goal_dummy: true
     });
 
-    // 데이터 삽입
+    console.log(`FoodGoal - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
+
+  // 2-2. foodGoal
+  saveFoodGoal: async (
+    user_id_param, OBJECT_param
+  ) => {
     const insertResult = await FoodGoal.insertMany(OBJECT_param);
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
-
+    console.log(`FoodGoal - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveMoney: async (
+  // 2-3. food
+  deletesFood: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
-    const deleteResult = await Money.deleteMany({
+    const deleteResult = await Food.deleteMany({
       user_id: user_id_param,
-      money_dummy: true
+      food_dummy: true
     });
 
-    // 데이터 삽입
-    const insertResult = await Money.insertMany(OBJECT_param);
+    console.log(`Food - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
+  // 2-4. food
+  saveFood: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const insertResult = await Food.insertMany(OBJECT_param);
 
+    console.log(`Food - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveMoneyGoal: async (
+  // 3-1. moneyGoal
+  deletesMoneyGoal: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
     const deleteResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
       money_goal_dummy: true
     });
 
-    // 데이터 삽입
+    console.log(`MoneyGoal - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
+
+  // 3-2. moneyGoal
+  saveMoneyGoal: async (
+    user_id_param, OBJECT_param
+  ) => {
     const insertResult = await MoneyGoal.insertMany(OBJECT_param);
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
-
+    console.log(`MoneyGoal - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveSleep: async (
+  // 3-3. money
+  deletesMoney: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
-    const deleteResult = await Sleep.deleteMany({
+    const deleteResult = await Money.deleteMany({
       user_id: user_id_param,
-      sleep_dummy: true
+      money_dummy: true
     });
 
-    // 데이터 삽입
-    const insertResult = await Sleep.insertMany(OBJECT_param);
+    console.log(`Money - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
+  // 3-4. money
+  saveMoney: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const insertResult = await Money.insertMany(OBJECT_param);
 
+    console.log(`Money - Inserted documents: ${insertResult.length}`);
     return insertResult;
   },
 
-  saveSleepGoal: async (
+  // 4-1. sleepGoal
+  deletesSleepGoal: async (
     user_id_param, OBJECT_param
   ) => {
-    // 일단 전체 데이터 삭제
     const deleteResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
       sleep_goal_dummy: true
     });
 
-    // 데이터 삽입
+    console.log(`SleepGoal - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
+
+  // 4-2. sleepGoal
+  saveSleepGoal: async (
+    user_id_param, OBJECT_param
+  ) => {
     const insertResult = await SleepGoal.insertMany(OBJECT_param);
 
-    // 로그
-    console.log(`Deleted documents : ${deleteResult.deletedCount}`);
-    console.log(`Inserted documents : ${insertResult.length}`);
-
+    console.log(`SleepGoal - Inserted documents: ${insertResult.length}`);
     return insertResult;
-  }
+  },
+
+  // 4-3. sleep
+  deletesSleep: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const deleteResult = await Sleep.deleteMany({
+      user_id: user_id_param,
+      sleep_dummy: true
+    });
+
+    console.log(`Sleep - Deleted documents: ${deleteResult.deletedCount}`);
+    return deleteResult;
+  },
+
+  // 4-4. sleep
+  saveSleep: async (
+    user_id_param, OBJECT_param
+  ) => {
+    const insertResult = await Sleep.insertMany(OBJECT_param);
+
+    console.log(`Sleep - Inserted documents: ${insertResult.length}`);
+    return insertResult;
+  },
 };
 
-// 4-1. deletes ------------------------------------------------------------------------------------
+// 4. deletes --------------------------------------------------------------------------------------
 export const deletes = {
 
-  deletes: async (
-    user_id_param, _id_param
+  // 1. exerciseGoal
+  exerciseGoal: async (
+    user_id_param
   ) => {
-    const updateResult = await User.updateOne(
-      {user_id: user_id_param,
-        _id: !_id_param ? {$exists:true} : _id_param
-      },
-      {$pull: {
-        user_section: {
-          _id: !_id_param ? {$exists:true} : _id_param
-        },
-      },
-      $set: {
-        user_updateDt: newDate,
-      }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
-    )
-    .lean();
-
-    let finalResult = null;
-    if (updateResult.modifiedCount > 0) {
-      const doc = await User.findOne({
-        user_id: user_id_param
-      })
-      .lean();
-
-      if (doc) {
-        finalResult = await User.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-    };
+    const finalResult = await ExerciseGoal.deleteMany({
+      user_id: user_id_param,
+      exercise_goal_dummy: true
+    });
     return finalResult;
-  }
+  },
+
+  // 2. exercise
+  exercise: async (
+    user_id_param
+  ) => {
+    const finalResult = await Exercise.deleteMany({
+      user_id: user_id_param,
+      exercise_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 3. foodGoal
+  foodGoal: async (
+    user_id_param
+  ) => {
+    const finalResult = await FoodGoal.deleteMany({
+      user_id: user_id_param,
+      food_goal_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 4. food
+  food: async (
+    user_id_param
+  ) => {
+    const finalResult = await Food.deleteMany({
+      user_id: user_id_param,
+      food_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 5. moneyGoal
+  moneyGoal: async (
+    user_id_param
+  ) => {
+    const finalResult = await MoneyGoal.deleteMany({
+      user_id: user_id_param,
+      money_goal_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 6. money
+  money: async (
+    user_id_param
+  ) => {
+    const finalResult = await Money.deleteMany({
+      user_id: user_id_param,
+      money_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 7. sleepGoal
+  sleepGoal: async (
+    user_id_param
+  ) => {
+    const finalResult = await SleepGoal.deleteMany({
+      user_id: user_id_param,
+      sleep_goal_dummy: true
+    });
+    return finalResult;
+  },
+
+  // 8. sleep
+  sleep: async (
+    user_id_param
+  ) => {
+    const finalResult = await Sleep.deleteMany({
+      user_id: user_id_param,
+      sleep_dummy: true
+    });
+    return finalResult;
+  },
 };

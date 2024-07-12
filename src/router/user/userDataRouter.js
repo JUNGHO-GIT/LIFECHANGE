@@ -133,7 +133,8 @@ router.post("/save", async (req, res) => {
 router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.deletes (
-      req.body.user_id
+      req.body.user_id,
+      req.body.PART,
     );
     if (result) {
       res.json({

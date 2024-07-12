@@ -222,10 +222,29 @@ export const Btn = ({
           textOverflow: "ellipsis"
         }}
         onClick={() => {
-          handlers.flowDummy();
+          handlers.flowDummySave();
         }}
       >
         {translate("flowDummy")}
+      </Button>
+      <Button
+        size={"small"}
+        color={"error"}
+        variant={"contained"}
+        className={"ms-3vw fs-0-7rem"}
+        style={{
+          lineHeight: "1.4",
+          padding: "3px 9px",
+          textTransform: "none",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+        onClick={() => {
+          handlers.flowDummyDeletes();
+        }}
+      >
+        {translate("flowDummyDeletes")}
       </Button>
     </Div>
   );

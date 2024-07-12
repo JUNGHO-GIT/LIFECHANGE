@@ -145,7 +145,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        exercise_goal_number: i + insertCount,
+        exercise_goal_number: (i+1) + insertCount,
         exercise_goal_dummy: true,
         exercise_goal_dateType: "day",
         exercise_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -158,6 +158,9 @@ export const save = async (
         exercise_goal_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesExerciseGoal(
+      user_id_param, OBJECT
+    );
     await repository.save.saveExerciseGoal(
       user_id_param, OBJECT
     );
@@ -196,7 +199,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        exercise_number: i + insertCount,
+        exercise_number: (i+1) + insertCount,
         exercise_dummy: true,
         exercise_dateType: "day",
         exercise_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -209,6 +212,9 @@ export const save = async (
         exercise_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesExercise(
+      user_id_param, OBJECT
+    );
     await repository.save.saveExercise(
       user_id_param, OBJECT
     );
@@ -221,7 +227,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        food_goal_number: i + insertCount,
+        food_goal_number: (i+1) + insertCount,
         food_goal_dummy: true,
         food_goal_dateType: "day",
         food_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -234,6 +240,9 @@ export const save = async (
         food_goal_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesFoodGoal(
+      user_id_param, OBJECT
+    );
     await repository.save.saveFoodGoal(
       user_id_param, OBJECT
     );
@@ -281,7 +290,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        food_number: i + insertCount,
+        food_number: (i+1) + insertCount,
         food_dummy: true,
         food_dateType: "day",
         food_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -296,6 +305,9 @@ export const save = async (
       };
     }
     );
+    await repository.save.deletesFood(
+      user_id_param, OBJECT
+    );
     await repository.save.saveFood(
       user_id_param, OBJECT
     );
@@ -308,7 +320,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        money_goal_number: i + insertCount,
+        money_goal_number: (i+1) + insertCount,
         money_goal_dummy: true,
         money_goal_dateType: "day",
         money_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -319,6 +331,9 @@ export const save = async (
         money_goal_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesMoneyGoal(
+      user_id_param, OBJECT
+    );
     await repository.save.saveMoneyGoal(
       user_id_param, OBJECT
     );
@@ -354,7 +369,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        money_number: i + insertCount,
+        money_number: (i+1) + insertCount,
         money_dummy: true,
         money_dateType: "day",
         money_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -366,6 +381,9 @@ export const save = async (
         money_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesMoney(
+      user_id_param, OBJECT
+    );
     await repository.save.saveMoney(
       user_id_param, OBJECT
     );
@@ -378,7 +396,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        sleep_goal_number: i + insertCount,
+        sleep_goal_number: (i+1) + insertCount,
         sleep_goal_dummy: true,
         sleep_goal_dateType: "day",
         sleep_goal_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -390,6 +408,9 @@ export const save = async (
         sleep_goal_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesSleepGoal(
+      user_id_param, OBJECT
+    );
     await repository.save.saveSleepGoal(
       user_id_param, OBJECT
     );
@@ -410,7 +431,7 @@ export const save = async (
       return {
         _id: new mongodb.ObjectId(),
         user_id: user_id_param,
-        sleep_number: i + insertCount,
+        sleep_number: (i+1) + insertCount,
         sleep_dummy: true,
         sleep_dateType: "day",
         sleep_dateStart: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -420,6 +441,9 @@ export const save = async (
         sleep_updateDt: Date.now(),
       };
     });
+    await repository.save.deletesSleep(
+      user_id_param, OBJECT
+    );
     await repository.save.saveSleep(
       user_id_param, OBJECT
     );
@@ -435,12 +459,79 @@ export const save = async (
 
 // 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (
-  user_id_param, _id_param
+  user_id_param, PART_param
 ) => {
 
-  const finalResult = await repository.deletes.deletes(
-    user_id_param, _id_param
-  );
+  let finalResult = String("");
+  let secondStr = String(PART_param);
 
-  return finalResult
-};
+  // 1. exerciseGoal
+  if (secondStr === "exerciseGoal") {
+    await repository.deletes.exerciseGoal(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 2. exercise
+  else if (secondStr === "exercise") {
+    await repository.deletes.exercise(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 3. foodGoal
+  else if (secondStr === "foodGoal") {
+    await repository.deletes.foodGoal(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 4. food
+  else if (secondStr === "food") {
+    await repository.deletes.food(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 5. moneyGoal
+  else if (secondStr === "moneyGoal") {
+    await repository.deletes.moneyGoal(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 6. money
+  else if (secondStr === "money") {
+    await repository.deletes.money(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 7. sleepGoal
+  else if (secondStr === "sleepGoal") {
+    await repository.deletes.sleepGoal(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  // 8. sleep
+  else if (secondStr === "sleep") {
+    await repository.deletes.sleep(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
+  else {
+    finalResult = "fail";
+  }
+
+  return finalResult;
+}

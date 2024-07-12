@@ -214,11 +214,40 @@ export const UserDataList = () => {
   }, [sessionId, PAGING.sort, PAGING.page, PART]);
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummy = async () => {
+  const flowDummySave = async () => {
     await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: sessionId,
       PART: PART,
       count: COUNT?.inputCnt
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        setCOUNT((prev) => ({
+          ...prev,
+          inputCnt: 0,
+        }));
+        setPAGING((prev) => ({
+          ...prev,
+          page: 1
+        }));
+        navigate(0);
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  };
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowDummyDeletes = async (id) => {
+    await axios.delete(`${URL_OBJECT}/data/deletes`, {
+      data: {
+        user_id: sessionId,
+        PART: PART
+      }
     })
     .then((res) => {
       if (res.data.status === "success") {
@@ -680,7 +709,7 @@ export const UserDataList = () => {
         setPAGING, setCOUNT, setPART
       }}
       handlers={{
-        navigate, flowDummy
+        navigate, flowDummySave, flowDummyDeletes
       }}
     />
   );
