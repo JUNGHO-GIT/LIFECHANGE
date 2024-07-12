@@ -77,6 +77,22 @@ export const ExerciseSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.exercise_section?.map(() => ({
+    exercise_part_idx: false,
+    exercise_title_idx: false,
+    exercise_set: false,
+    exercise_rep: false,
+    exercise_kg: false,
+  })));
+  const REFS = useRef(OBJECT?.exercise_section?.map(() => ({
+    exercise_part_idx: createRef(),
+    exercise_title_idx: createRef(),
+    exercise_set: createRef(),
+    exercise_rep: createRef(),
+    exercise_kg: createRef(),
+  })));
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
@@ -200,21 +216,7 @@ export const ExerciseSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef(OBJECT?.exercise_section?.map(() => ({
-    exercise_part_idx: createRef(),
-    exercise_title_idx: createRef(),
-    exercise_set: createRef(),
-    exercise_rep: createRef(),
-    exercise_kg: createRef(),
-  })));
-  const [ERRORS, setERRORS] = useState(OBJECT?.exercise_section?.map(() => ({
-    exercise_part_idx: false,
-    exercise_title_idx: false,
-    exercise_set: false,
-    exercise_rep: false,
-    exercise_kg: false,
-  })));
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     REFS.current = OBJECT?.exercise_section?.map((_, idx) => ({
       exercise_part_idx: REFS?.current[idx]?.exercise_part_idx || createRef(),
@@ -224,6 +226,8 @@ export const ExerciseSave = () => {
       exercise_kg: REFS?.current[idx]?.exercise_kg || createRef(),
     }));
   }, [OBJECT?.exercise_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.exercise_section?.map(() => ({
@@ -281,7 +285,6 @@ export const ExerciseSave = () => {
         break;
       }
     }
-    // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
 
     return !foundError;

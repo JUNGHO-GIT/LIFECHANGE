@@ -9,7 +9,7 @@ import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
-import {exercise2, exercise3_1, exercise3_2, exercise3_3, exercise5} from "../../../import/ImportImages.jsx";
+import {exercise2, exercise3_1, exercise5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalSave = () => {
@@ -64,6 +64,18 @@ export const ExerciseGoalSave = () => {
     exercise_goal_weight: 0,
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    exercise_goal_count: false,
+    exercise_goal_volume: false,
+    exercise_goal_weight: false,
+  });
+  const REFS = useRef({
+    exercise_goal_count: createRef(),
+    exercise_goal_volume: createRef(),
+    exercise_goal_weight: createRef(),
+  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -121,19 +133,6 @@ export const ExerciseGoalSave = () => {
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef({
-    exercise_goal_count: createRef(),
-    exercise_goal_volume: createRef(),
-    exercise_goal_weight: createRef(),
-  });
-
-  const [ERRORS, setERRORS] = useState({
-    exercise_goal_count: false,
-    exercise_goal_volume: false,
-    exercise_goal_weight: false,
-  });
-
-  // validate 함수
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = {

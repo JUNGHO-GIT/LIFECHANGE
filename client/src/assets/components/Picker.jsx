@@ -202,8 +202,11 @@ export const Picker = ({
                       }}
                     }}
                   >
-                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                      day={day} selected={isSelected}
+                     <PickersDay
+                      {...other}
+                      day={day}
+                      selected={isSelected}
+                      outsideCurrentMonth={outsideCurrentMonth}
                       onDaySelect={(day) => {
                         setDATE((prev={}) => ({
                           ...prev,
@@ -216,7 +219,10 @@ export const Picker = ({
                 )
               },
               previousIconButton: (props) => (
-                <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                   setDATE((prev = {}) => {
                     const newDateStart = moment(prev.dateStart).subtract(1, "month");
                     const newDateEnd = newDateStart.clone().endOf('month');
@@ -231,7 +237,10 @@ export const Picker = ({
                 </Button>
               ),
               nextIconButton: (props) => (
-                <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                   setDATE((prev = {}) => {
                     const newDateStart = moment(prev.dateStart).add(1, "month");
                     const newDateEnd = newDateStart.clone().endOf('month');
@@ -314,8 +323,11 @@ export const Picker = ({
                     }
                   }
                   return (
-                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                      day={day} selected={isSelected}
+                     <PickersDay
+                      {...other}
+                      day={day}
+                      selected={isSelected}
+                      outsideCurrentMonth={outsideCurrentMonth}
                       style={{
                         borderRadius: borderRadius,
                         boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
@@ -331,7 +343,10 @@ export const Picker = ({
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).subtract(1, "week").startOf("isoWeek");
                       const newDateEnd = newDateStart.clone().endOf("isoWeek");
@@ -346,7 +361,10 @@ export const Picker = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).add(1, "week").startOf("isoWeek");
                       const newDateEnd = newDateStart.clone().endOf("isoWeek");
@@ -412,13 +430,19 @@ export const Picker = ({
                   const {outsideCurrentMonth, day, ...other} = props;
                   const isSelected = moment(day).date() === 1;
                   return (
-                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                      day={day} selected={isSelected}
+                    <PickersDay
+                      {...other}
+                      day={day}
+                      selected={isSelected}
+                      outsideCurrentMonth={outsideCurrentMonth}
                     />
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).subtract(1, "month");
                       const newDateEnd = newDateStart.clone().endOf('month');
@@ -433,7 +457,10 @@ export const Picker = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).add(1, "month");
                       const newDateEnd = newDateStart.clone().endOf('month');
@@ -499,13 +526,19 @@ export const Picker = ({
                   const {outsideCurrentMonth, day, ...other} = props;
                   const isSelected = moment(day).month() === 0 && moment(day).date() === 1;
                   return (
-                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                      day={day} selected={isSelected}
+                     <PickersDay
+                      {...other}
+                      day={day}
+                      selected={isSelected}
+                      outsideCurrentMonth={outsideCurrentMonth}
                     />
                   )
                 },
                 previousIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).subtract(1, "year");
                       const newDateEnd = newDateStart.clone().endOf('year');
@@ -520,7 +553,10 @@ export const Picker = ({
                   </Button>
                 ),
                 nextIconButton: (props) => (
-                  <Button {...props} className={"fs-1-4rem"} onClick={() => {
+                  <Button
+                    {...props}
+                    className={"fs-1-4rem"}
+                    onClick={() => {
                     setDATE((prev = {}) => {
                       const newDateStart = moment(prev.dateStart).add(1, "year");
                       const newDateEnd = newDateStart.clone().endOf('year');
@@ -607,8 +643,11 @@ export const Picker = ({
                     }
                   }
                   return (
-                    <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth}
-                      day={day} selected={isSelected}
+                     <PickersDay
+                      {...other}
+                      day={day}
+                      selected={isSelected}
+                      outsideCurrentMonth={outsideCurrentMonth}
                       style={{
                         borderRadius: borderRadius,
                         backgroundColor: backgroundColor,

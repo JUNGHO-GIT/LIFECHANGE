@@ -32,10 +32,10 @@ export const CalendarSave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const sessionId = sessionStorage.getItem("sessionId");
   const colors = [
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
-  const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -74,6 +74,18 @@ export const CalendarSave = () => {
     }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.calendar_section?.map(() => ({
+    calendar_part_idx: false,
+    calendar_color: false,
+    calendar_title: false,
+  })));
+  const REFS = useRef(OBJECT?.calendar_section?.map(() => ({
+    calendar_part_idx: createRef(),
+    calendar_color: createRef(),
+    calendar_title: createRef(),
+  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -154,17 +166,7 @@ export const CalendarSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef(OBJECT?.calendar_section?.map(() => ({
-    calendar_part_idx: createRef(),
-    calendar_color: createRef(),
-    calendar_title: createRef(),
-  })));
-  const [ERRORS, setERRORS] = useState(OBJECT?.calendar_section?.map(() => ({
-    calendar_part_idx: false,
-    calendar_color: false,
-    calendar_title: false,
-  })));
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     REFS.current = OBJECT?.calendar_section.map((_, idx) => ({
       calendar_part_idx: REFS?.current[idx]?.calendar_part_idx || createRef(),
@@ -172,6 +174,8 @@ export const CalendarSave = () => {
       calendar_title: REFS?.current[idx]?.calendar_title || createRef(),
     }));
   }, [OBJECT?.calendar_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.calendar_section?.map(() => ({
@@ -212,7 +216,6 @@ export const CalendarSave = () => {
         break;
       }
     }
-    // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
 
     return !foundError;

@@ -65,6 +65,16 @@ export const SleepSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
+    sleep_bedTime: false,
+    sleep_wakeTime: false,
+  })));
+  const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
+    sleep_bedTime: createRef(),
+    sleep_wakeTime: createRef(),
+  })));
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
 
@@ -145,21 +155,15 @@ export const SleepSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
-    sleep_bedTime: createRef(),
-    sleep_wakeTime: createRef(),
-  })));
-  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
-    sleep_bedTime: false,
-    sleep_wakeTime: false,
-  })));
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     REFS.current = OBJECT?.sleep_section?.map((_, idx) => ({
       sleep_bedTime: REFS?.current[idx]?.sleep_bedTime || createRef(),
       sleep_wakeTime: REFS?.current[idx]?.sleep_wakeTime || createRef(),
     }));
   }, [OBJECT?.sleep_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.sleep_section?.map(() => ({
@@ -188,7 +192,6 @@ export const SleepSave = () => {
         break;
       }
     }
-    // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
 
     return !foundError;

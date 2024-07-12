@@ -63,6 +63,16 @@ export const MoneyGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    money_goal_income: false,
+    money_goal_expense: false,
+  });
+  const REFS = useRef({
+    money_goal_income: createRef(),
+    money_goal_expense: createRef(),
+  });
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -116,17 +126,6 @@ export const MoneyGoalSave = () => {
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef({
-    money_goal_income: createRef(),
-    money_goal_expense: createRef(),
-  });
-
-  const [ERRORS, setERRORS] = useState({
-    money_goal_income: false,
-    money_goal_expense: false,
-  });
-
-  // validate 함수
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = {

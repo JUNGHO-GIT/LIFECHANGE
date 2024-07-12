@@ -73,6 +73,18 @@ export const MoneySave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.money_section?.map(() => ({
+    money_part_idx: false,
+    money_title_idx: false,
+    money_amount: false
+  })));
+  const REFS = useRef(OBJECT?.money_section?.map(() => ({
+    money_part_idx: createRef(),
+    money_title_idx: createRef(),
+    money_amount: createRef(),
+  })));
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -173,17 +185,7 @@ export const MoneySave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef(OBJECT?.money_section?.map(() => ({
-    money_part_idx: createRef(),
-    money_title_idx: createRef(),
-    money_amount: createRef(),
-  })));
-  const [ERRORS, setERRORS] = useState(OBJECT?.money_section?.map(() => ({
-    money_part_idx: false,
-    money_title_idx: false,
-    money_amount: false
-  })));
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     REFS.current = OBJECT?.money_section?.map((_, idx) => ({
       money_part_idx: REFS?.current[idx]?.money_part_idx || createRef(),
@@ -191,6 +193,8 @@ export const MoneySave = () => {
       money_amount: REFS?.current[idx]?.money_amount || createRef(),
     }));
   }, [OBJECT?.money_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.money_section?.map(() => ({
@@ -230,7 +234,6 @@ export const MoneySave = () => {
         break;
       }
     }
-    // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
 
     return !foundError;

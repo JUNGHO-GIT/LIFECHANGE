@@ -66,7 +66,6 @@ export const Btn = ({
       className={"me-5"}
       onClick={() => {
         handlers.flowSave();
-        handlers.flowSave();
         Object.keys(sessionStorage).forEach((key) => {
           if (key.includes("foodSection") || key.includes("PAGING")) {
             sessionStorage.removeItem(key);

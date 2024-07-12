@@ -66,6 +66,20 @@ export const FoodGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    food_goal_kcal: false,
+    food_goal_carb: false,
+    food_goal_protein: false,
+    food_goal_fat: false,
+  });
+  const REFS = useRef({
+    food_goal_kcal: createRef(),
+    food_goal_carb: createRef(),
+    food_goal_protein: createRef(),
+    food_goal_fat: createRef(),
+  });
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -119,21 +133,6 @@ export const FoodGoalSave = () => {
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef({
-    food_goal_kcal: createRef(),
-    food_goal_carb: createRef(),
-    food_goal_protein: createRef(),
-    food_goal_fat: createRef(),
-  });
-
-  const [ERRORS, setERRORS] = useState({
-    food_goal_kcal: false,
-    food_goal_carb: false,
-    food_goal_protein: false,
-    food_goal_fat: false,
-  });
-
-  // validate 함수
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = {

@@ -82,6 +82,28 @@ export const FoodSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
+    food_part_idx: false,
+    food_count: false,
+    food_gram: false,
+    food_name: false,
+    food_kcal: false,
+    food_carb: false,
+    food_protein: false,
+    food_fat: false,
+  })));
+  const REFS = useRef(OBJECT?.food_section?.map(() => ({
+    food_part_idx: createRef(),
+    food_count: createRef(),
+    food_gram: createRef(),
+    food_name: createRef(),
+    food_kcal: createRef(),
+    food_carb: createRef(),
+    food_protein: createRef(),
+    food_fat: createRef(),
+  })));
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -187,27 +209,7 @@ export const FoodSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef(OBJECT?.food_section?.map(() => ({
-    food_part_idx: createRef(),
-    food_count: createRef(),
-    food_gram: createRef(),
-    food_name: createRef(),
-    food_kcal: createRef(),
-    food_carb: createRef(),
-    food_protein: createRef(),
-    food_fat: createRef(),
-  })));
-  const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
-    food_part_idx: false,
-    food_count: false,
-    food_gram: false,
-    food_name: false,
-    food_kcal: false,
-    food_carb: false,
-    food_protein: false,
-    food_fat: false,
-  })));
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     REFS.current = OBJECT?.food_section?.map((_, idx) => ({
       food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
@@ -220,6 +222,8 @@ export const FoodSave = () => {
       food_fat: REFS?.current[idx]?.food_fat || createRef(),
     }));
   }, [OBJECT?.food_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.food_section?.map(() => ({
@@ -305,7 +309,6 @@ export const FoodSave = () => {
       }
 
     }
-    // 업데이트된 에러 상태를 설정
     setERRORS(initialErrors);
 
     return !foundError;

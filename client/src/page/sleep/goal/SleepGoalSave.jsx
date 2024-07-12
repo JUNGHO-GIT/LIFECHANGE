@@ -63,6 +63,16 @@ export const SleepGoalSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    sleep_goal_bedTime: false,
+    sleep_goal_wakeTime: false,
+  });
+  const REFS = useRef({
+    sleep_goal_bedTime: createRef(),
+    sleep_goal_wakeTime: createRef(),
+  });
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "goal");
 
@@ -119,17 +129,6 @@ export const SleepGoalSave = () => {
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef({
-    sleep_goal_bedTime: createRef(),
-    sleep_goal_wakeTime: createRef(),
-  });
-
-  const [ERRORS, setERRORS] = useState({
-    sleep_goal_bedTime: false,
-    sleep_goal_wakeTime: false,
-  });
-
-  // validate 함수
   const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = {
@@ -142,7 +141,6 @@ export const SleepGoalSave = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-
     if (OBJECT.sleep_goal_bedTime === "00:00") {
       alert(translate("errorSleepGoalBedTime"));
       refsCurrent.sleep_goal_bedTime.current?.focus();

@@ -24,6 +24,16 @@ export const UserLogin = () => {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    user_id: false,
+    user_pw: false,
+  });
+  const REFS = useRef({
+    user_id: createRef(),
+    user_pw: createRef(),
+  });
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     const sessionId = localStorage.getItem("sessionId");
@@ -34,17 +44,6 @@ export const UserLogin = () => {
   }, []);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const REFS = useRef({
-    user_id: createRef(),
-    user_pw: createRef(),
-  });
-
-  const [ERRORS, setERRORS] = useState({
-    user_id: false,
-    user_pw: false,
-  });
-
-  // validate 함수
   const validate = (user_id, user_pw) => {
     let foundError = false;
     const initialErrors = {
@@ -57,13 +56,13 @@ export const UserLogin = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    if (userId === "" || !userId) {
+    if (user_id === "" || !user_id) {
       alert(translate("errorUserId"));
       refsCurrent.user_id.current?.focus();
       initialErrors.user_id = true;
       foundError = true;
     }
-    else if (userPw === "" || !userPw) {
+    else if (user_pw === "" || !user_pw) {
       alert(translate("errorUserPw"));
       refsCurrent.user_pw.current?.focus();
       initialErrors.user_pw = true;
@@ -92,7 +91,9 @@ export const UserLogin = () => {
           localStorage.setItem("sessionId", "");
         }
         sessionStorage.setItem("sessionId", userId);
+        // @ts-ignore
         if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+          // @ts-ignore
           window.ReactNativeWebView.postMessage(JSON.stringify({
             userId: userId,
             isAdmin: res.data.admin === "admin"
