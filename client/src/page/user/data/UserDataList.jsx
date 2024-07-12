@@ -230,7 +230,10 @@ export const UserDataList = () => {
           ...prev,
           page: 1
         }));
-        navigate(0);
+        // 1초뒤
+        setTimeout(() => {
+          navigate(0);
+        }, 1000);
       }
       else {
         alert(res.data.msg);
@@ -242,11 +245,11 @@ export const UserDataList = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDeletes = async (id) => {
+  const flowDummyDeletes = async (part) => {
     await axios.delete(`${URL_OBJECT}/data/deletes`, {
       data: {
         user_id: sessionId,
-        PART: PART
+        PART: (!part || part === "") ? PART : part
       }
     })
     .then((res) => {
@@ -259,7 +262,10 @@ export const UserDataList = () => {
           ...prev,
           page: 1
         }));
-        navigate(0);
+        // 1초뒤
+        setTimeout(() => {
+          navigate(0);
+        }, 1000);
       }
       else {
         alert(res.data.msg);
@@ -269,6 +275,8 @@ export const UserDataList = () => {
       console.error(err);
     })
   };
+
+  //
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {

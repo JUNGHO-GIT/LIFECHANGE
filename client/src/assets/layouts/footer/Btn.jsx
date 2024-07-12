@@ -246,6 +246,25 @@ export const Btn = ({
       >
         {translate("flowDummyDeletes")}
       </Button>
+      <Button
+        size={"small"}
+        color={"warning"}
+        variant={"contained"}
+        className={"ms-3vw fs-0-7rem"}
+        style={{
+          lineHeight: "1.4",
+          padding: "3px 9px",
+          textTransform: "none",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+        onClick={() => {
+          handlers.flowDummyDeletes("all");
+        }}
+      >
+        {translate("flowDummyDeletesAll")}
+      </Button>
     </Div>
   );
 

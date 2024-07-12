@@ -419,6 +419,46 @@ export const save = {
 // 4. deletes --------------------------------------------------------------------------------------
 export const deletes = {
 
+  // 0. all
+  all: async (
+    user_id_param
+  ) => {
+    const finalResult = (
+      await ExerciseGoal.deleteMany({
+        user_id: user_id_param,
+        exercise_goal_dummy: true
+      }),
+      await Exercise.deleteMany({
+        user_id: user_id_param,
+        exercise_dummy: true
+      }),
+      await FoodGoal.deleteMany({
+        user_id: user_id_param,
+        food_goal_dummy: true
+      }),
+      await Food.deleteMany({
+        user_id: user_id_param,
+        food_dummy: true
+      }),
+      await MoneyGoal.deleteMany({
+        user_id: user_id_param,
+        money_goal_dummy: true
+      }),
+      await Money.deleteMany({
+        user_id: user_id_param,
+        money_dummy: true
+      }),
+      await SleepGoal.deleteMany({
+        user_id: user_id_param,
+        sleep_goal_dummy: true
+      }),
+      await Sleep.deleteMany({
+        user_id: user_id_param,
+        sleep_dummy: true
+      })
+    )
+  },
+
   // 1. exerciseGoal
   exerciseGoal: async (
     user_id_param

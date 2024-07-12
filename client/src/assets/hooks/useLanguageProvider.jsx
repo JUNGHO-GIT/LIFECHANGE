@@ -102,6 +102,7 @@ export const useTranslate = () => {
     flowDummy: {ko: "추가", en: "Insert"},
     flowDummySave: {ko: "추가", en: "Insert"},
     flowDummyDeletes: {ko: "삭제", en: "Delete"},
+    flowDummyDeletesAll: {ko: "전체삭제", en: "Delete All"},
     flowDeletes: {ko: "삭제", en: "Delete"},
     flowFind: {ko: "찾기", en: "Find"},
     flowLogin: {ko: "로그인", en: "Login"},

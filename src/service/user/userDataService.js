@@ -465,8 +465,16 @@ export const deletes = async (
   let finalResult = String("");
   let secondStr = String(PART_param);
 
+  // 0. all
+  if (secondStr === "all") {
+    await repository.deletes.all(
+      user_id_param
+    );
+    finalResult = "success";
+  }
+
   // 1. exerciseGoal
-  if (secondStr === "exerciseGoal") {
+  else if (secondStr === "exerciseGoal") {
     await repository.deletes.exerciseGoal(
       user_id_param
     );
