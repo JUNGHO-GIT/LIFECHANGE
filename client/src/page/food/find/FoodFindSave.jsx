@@ -3,9 +3,8 @@
 import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportUtils.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {percent} from "../../../import/ImportUtils.jsx";
+import {percent, log} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -71,7 +70,7 @@ export const FoodFindSave = () => {
       food_brand: "",
       food_count: 0,
       food_serv: "회",
-      food_gram:  0,
+      food_gram: 0,
       food_kcal: 0,
       food_fat: 0,
       food_carb: 0,
@@ -79,6 +78,28 @@ export const FoodFindSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
+    food_part_idx: false,
+    food_count: false,
+    food_gram: false,
+    food_name: false,
+    food_kcal: false,
+    food_carb: false,
+    food_protein: false,
+    food_fat: false,
+  })));
+  const REFS = useRef(OBJECT?.food_section?.map(() => ({
+    food_part_idx: createRef(),
+    food_count: createRef(),
+    food_gram: createRef(),
+    food_name: createRef(),
+    food_kcal: createRef(),
+    food_carb: createRef(),
+    food_protein: createRef(),
+    food_fat: createRef(),
+  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -105,7 +126,7 @@ export const FoodFindSave = () => {
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-3 useEffect ---------------------------------------------------------------------------------
+  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
@@ -136,19 +157,14 @@ export const FoodFindSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const totals = OBJECT?.food_section?.reduce((acc, current) => {
+    const totals = OBJECT?.food_section?.reduce((acc, cur) => {
       return {
-        totalKcal: acc.totalKcal + Number(current.food_kcal),
-        totalFat: acc.totalFat + Number(current.food_fat),
-        totalCarb: acc.totalCarb + Number(current.food_carb),
-        totalProtein: acc.totalProtein + Number(current.food_protein),
+        totalKcal: acc.totalKcal + Number(cur.food_kcal),
+        totalFat: acc.totalFat + Number(cur.food_fat),
+        totalCarb: acc.totalCarb + Number(cur.food_carb),
+        totalProtein: acc.totalProtein + Number(cur.food_protein),
       };
-    }, {
-      totalKcal: 0,
-      totalFat: 0,
-      totalCarb: 0,
-      totalProtein: 0
-    });
+    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0});
 
     setOBJECT((prev) => ({
       ...prev,
@@ -159,8 +175,124 @@ export const FoodFindSave = () => {
     }));
   }, [OBJECT?.food_section]);
 
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    REFS.current = OBJECT?.food_section?.map((_, idx) => ({
+      food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
+      food_count: REFS?.current[idx]?.food_count || createRef(),
+      food_gram: REFS?.current[idx]?.food_gram || createRef(),
+      food_name: REFS?.current[idx]?.food_name || createRef(),
+      food_kcal: REFS?.current[idx]?.food_kcal || createRef(),
+      food_carb: REFS?.current[idx]?.food_carb || createRef(),
+      food_protein: REFS?.current[idx]?.food_protein || createRef(),
+      food_fat: REFS?.current[idx]?.food_fat || createRef(),
+    }));
+  }, [OBJECT?.food_section.length]);
+
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = OBJECT?.food_section?.map(() => ({
+      food_part_idx: false,
+      food_count: false,
+      food_gram: false,
+      food_name: false,
+      food_kcal: false,
+      food_carb: false,
+      food_protein: false,
+      food_fat: false,
+    }));
+
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
+    for (let idx = 0; idx < OBJECT?.food_section.length; idx++) {
+      const section = OBJECT?.food_section[idx];
+      const refsCurrentIdx = REFS?.current[idx];
+      if (!refsCurrentIdx) {
+        console.warn('Ref is undefined, skipping validation for index:', idx);
+        continue;
+      }
+      else if (!section.food_part_idx || section.food_part_idx === 0) {
+        alert(translate("errorFoodPart"));
+        refsCurrentIdx.food_part_idx.current &&
+        refsCurrentIdx.food_part_idx?.current?.focus();
+        initialErrors[idx].food_part_idx = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_count || section.food_count === 0) {
+        alert(translate("errorFoodCount"));
+        refsCurrentIdx.food_count.current &&
+        refsCurrentIdx.food_count?.current?.focus();
+        initialErrors[idx].food_count = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_gram || section.food_gram === 0) {
+        alert(translate("errorFoodGram"));
+        refsCurrentIdx.food_gram.current &&
+        refsCurrentIdx.food_gram?.current?.focus();
+        initialErrors[idx].food_gram = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_name || section.food_name === "") {
+        alert(translate("errorFoodName"));
+        refsCurrentIdx.food_name.current &&
+        refsCurrentIdx.food_name?.current?.focus();
+        initialErrors[idx].food_name = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_kcal || section.food_kcal === 0) {
+        alert(translate("errorFoodKcal"));
+        refsCurrentIdx.food_kcal.current &&
+        refsCurrentIdx.food_kcal?.current?.focus();
+        initialErrors[idx].food_kcal = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_carb || section.food_carb === 0) {
+        alert(translate("errorFoodCarb"));
+        refsCurrentIdx.food_carb.current &&
+        refsCurrentIdx.food_carb?.current?.focus();
+        initialErrors[idx].food_carb = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_protein || section.food_protein === 0) {
+        alert(translate("errorFoodProtein"));
+        refsCurrentIdx.food_protein.current &&
+        refsCurrentIdx.food_protein?.current?.focus();
+        initialErrors[idx].food_protein = true;
+        foundError = true;
+        break;
+      }
+      else if (!section.food_fat || section.food_fat === 0) {
+        alert(translate("errorFoodFat"));
+        refsCurrentIdx.food_fat.current &&
+        refsCurrentIdx.food_fat?.current?.focus();
+        initialErrors[idx].food_fat = true;
+        foundError = true;
+        break;
+      }
+
+    }
+    setERRORS(initialErrors);
+
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post(`${URL_OBJECT}/find/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
@@ -366,6 +498,8 @@ export const FoodFindSave = () => {
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.food_section[i]?.food_part_idx}
+              inputRef={REFS?.current[i]?.food_part_idx}
+              error={ERRORS[i]?.food_part_idx}
               InputProps={{
                 readOnly: false,
               }}
@@ -397,9 +531,11 @@ export const FoodFindSave = () => {
                 label={translate("foodCount")}
                 size={"small"}
                 type={"text"}
-                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
+                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+                inputRef={REFS?.current[i]?.food_count}
+                error={ERRORS[i]?.food_count}
                 InputProps={{
                   readOnly: false
                 }}
@@ -435,9 +571,11 @@ export const FoodFindSave = () => {
                 label={translate("gram")}
                 size={"small"}
                 type={"text"}
-                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
+                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
+                inputRef={REFS?.current[i]?.food_gram}
+                error={ERRORS[i]?.food_gram}
                 InputProps={{
                   readOnly: false,
                   endAdornment: (
@@ -478,11 +616,13 @@ export const FoodFindSave = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
-              label={translate("foodName")}
               size={"small"}
-              value={`${OBJECT?.food_section[i]?.food_name} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               variant={"outlined"}
               className={"w-86vw"}
+              label={translate("foodName")}
+              value={`${OBJECT?.food_section[i]?.food_name} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+              inputRef={REFS?.current[i]?.food_name}
+              error={ERRORS[i]?.food_name}
               InputProps={{
                 readOnly: true,
               }}
@@ -494,9 +634,11 @@ export const FoodFindSave = () => {
               select={false}
               label={translate("kcal")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0.00')}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
+              inputRef={REFS?.current[i]?.food_kcal}
+              error={ERRORS[i]?.food_kcal}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -513,9 +655,11 @@ export const FoodFindSave = () => {
               select={false}
               label={translate("carb")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0.00')}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
+              inputRef={REFS?.current[i]?.food_carb}
+              error={ERRORS[i]?.food_carb}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -535,9 +679,11 @@ export const FoodFindSave = () => {
               select={false}
               label={translate("protein")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0.00')}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
+              inputRef={REFS?.current[i]?.food_protein}
+              error={ERRORS[i]?.food_protein}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -554,9 +700,11 @@ export const FoodFindSave = () => {
               select={false}
               label={translate("fat")}
               size={"small"}
-              value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0.00')}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
+              value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
+              inputRef={REFS?.current[i]?.food_fat}
+              error={ERRORS[i]?.food_fat}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -575,7 +723,7 @@ export const FoodFindSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.food_section?.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.food_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

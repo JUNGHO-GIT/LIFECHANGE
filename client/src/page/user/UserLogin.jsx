@@ -56,14 +56,16 @@ export const UserLogin = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    if (user_id === "" || !user_id) {
+    else if (user_id === "" || !user_id) {
       alert(translate("errorUserId"));
+      refsCurrent.user_id.current &&
       refsCurrent.user_id.current?.focus();
       initialErrors.user_id = true;
       foundError = true;
     }
     else if (user_pw === "" || !user_pw) {
       alert(translate("errorUserPw"));
+      refsCurrent.user_pw.current &&
       refsCurrent.user_pw.current?.focus();
       initialErrors.user_pw = true;
       foundError = true;

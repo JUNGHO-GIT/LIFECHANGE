@@ -237,6 +237,13 @@ export const ExerciseSave = () => {
       exercise_rep: false,
       exercise_kg: false,
     }));
+
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     for (let idx = 0; idx < OBJECT?.exercise_section.length; idx++) {
       const section = OBJECT?.exercise_section[idx];
       const refsCurrentIdx = REFS?.current[idx];
@@ -246,40 +253,40 @@ export const ExerciseSave = () => {
       }
       else if (!section.exercise_part_idx || section.exercise_part_idx === 0) {
         alert(translate("errorExercisePart"));
-        refsCurrentIdx.exercise_part_idx.current
-        && refsCurrentIdx.exercise_part_idx?.current?.focus();
+        refsCurrentIdx.exercise_part_idx.current &&
+        refsCurrentIdx.exercise_part_idx?.current?.focus();
         initialErrors[idx].exercise_part_idx = true;
         foundError = true;
         break;
       }
       else if (!section.exercise_title_idx || section.exercise_title_idx === 0) {
         alert(translate("errorExerciseTitle"));
-        refsCurrentIdx.exercise_title_idx.current
-        && refsCurrentIdx.exercise_title_idx?.current?.focus();
+        refsCurrentIdx.exercise_title_idx.current &&
+        refsCurrentIdx.exercise_title_idx?.current?.focus();
         initialErrors[idx].exercise_title_idx = true;
         foundError = true;
         break;
       }
       else if (!section.exercise_set || section.exercise_set === 0) {
         alert(translate("errorExerciseSet"));
-        refsCurrentIdx.exercise_set.current
-        && refsCurrentIdx.exercise_set?.current?.focus();
+        refsCurrentIdx.exercise_set.current &&
+        refsCurrentIdx.exercise_set?.current?.focus();
         initialErrors[idx].exercise_set = true;
         foundError = true;
         break;
       }
       else if (!section.exercise_rep || section.exercise_rep === 0) {
         alert(translate("errorExerciseRep"));
-        refsCurrentIdx.exercise_rep.current
-        && refsCurrentIdx.exercise_rep?.current?.focus();
+        refsCurrentIdx.exercise_rep.current &&
+        refsCurrentIdx.exercise_rep?.current?.focus();
         initialErrors[idx].exercise_rep = true;
         foundError = true;
         break;
       }
       else if (!section.exercise_kg || section.exercise_kg === 0) {
         alert(translate("errorExerciseKg"));
-        refsCurrentIdx.exercise_kg.current
-        && refsCurrentIdx.exercise_kg?.current?.focus();
+        refsCurrentIdx.exercise_kg.current &&
+        refsCurrentIdx.exercise_kg?.current?.focus();
         initialErrors[idx].exercise_kg = true;
         foundError = true;
         break;

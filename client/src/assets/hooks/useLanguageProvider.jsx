@@ -90,17 +90,19 @@ export const useTranslate = () => {
     dinner: {ko: "저녁", en: "Dinner"},
 
     // e
-    empty: {ko: "데이터가 없습니다", en: "No data"},
     Empty: {ko: "Empty", en: "Empty"},
+    empty: {ko: "데이터가 없습니다", en: "No data"},
     exercise: {ko: "운동", en: "exercise"},
     expense: {ko: "지출", en: "Expense"},
     entertainment: {ko: "유흥", en: "Entertainment"},
+    errorCount: {ko: "항목을 추가해주세요", en: "Please add an item"},
 
     // f
     female: {ko: "여성", en: "Female"},
     fat: {ko: "지방", en: "Fat"},
     find: {ko: "찾기", en: "Find"},
     findList: {ko: "찾기", en: "Find"},
+    findMore: {ko: "더 찾기", en: "Find More"},
     flowDefault: {ko: "기본값", en: "Default"},
     flowDummy: {ko: "추가", en: "Insert"},
     flowDummySave: {ko: "추가", en: "Insert"},

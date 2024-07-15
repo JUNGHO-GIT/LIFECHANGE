@@ -141,26 +141,34 @@ export const ExerciseGoalSave = () => {
       exercise_goal_weight: false,
     };
 
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     const refsCurrent = REFS?.current;
     if (!refsCurrent) {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-
-    if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === 0) {
+    else if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === 0) {
       alert(translate("errorExerciseGoalCount"));
+      refsCurrent.exercise_goal_count.current &&
       refsCurrent.exercise_goal_count.current?.focus();
       initialErrors.exercise_goal_count = true;
       foundError = true;
     }
     else if (!OBJECT.exercise_goal_volume || OBJECT.exercise_goal_volume === 0) {
       alert(translate("errorExerciseGoalVolume"));
+      refsCurrent.exercise_goal_volume.current &&
       refsCurrent.exercise_goal_volume.current?.focus();
       initialErrors.exercise_goal_volume = true;
       foundError = true;
     }
     else if (!OBJECT.exercise_goal_weight || OBJECT.exercise_goal_weight === 0) {
       alert(translate("errorExerciseGoalWeight"));
+      refsCurrent.exercise_goal_weight.current &&
       refsCurrent.exercise_goal_weight.current?.focus();
       initialErrors.exercise_goal_weight = true;
       foundError = true;

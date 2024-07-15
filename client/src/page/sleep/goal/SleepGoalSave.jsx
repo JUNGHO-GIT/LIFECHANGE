@@ -136,19 +136,27 @@ export const SleepGoalSave = () => {
       sleep_goal_wakeTime: false,
     };
 
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     const refsCurrent = REFS?.current;
     if (!refsCurrent) {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    if (OBJECT.sleep_goal_bedTime === "00:00") {
+    else if (OBJECT.sleep_goal_bedTime === "00:00") {
       alert(translate("errorSleepGoalBedTime"));
+      refsCurrent.sleep_goal_bedTime.current &&
       refsCurrent.sleep_goal_bedTime.current?.focus();
       initialErrors.sleep_goal_bedTime = true;
       foundError = true;
     }
     else if (OBJECT.sleep_goal_wakeTime === "00:00") {
       alert(translate("errorSleepGoalWakeTime"));
+      refsCurrent.sleep_goal_wakeTime.current &&
       refsCurrent.sleep_goal_wakeTime.current?.focus();
       initialErrors.sleep_goal_wakeTime = true;
       foundError = true;

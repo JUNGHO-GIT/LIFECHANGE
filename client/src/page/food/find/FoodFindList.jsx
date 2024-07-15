@@ -221,7 +221,6 @@ export const FoodFindList = () => {
                     size={"small"}
                     style={{
                       marginLeft: "-10px",
-                      marginRight: "15px",
                     }}
                     checked={
                       !! (
@@ -245,83 +244,85 @@ export const FoodFindList = () => {
                       ) : item.food_name}
                     </Div>
                   )}
-                </Div>
-                <Div className={"d-center"}>
                   <Div className={"fs-0-8rem dark d-left ms-20"}>
                     {item.food_brand}
                   </Div>
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("kcal")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("kcal")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_kcal).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("k")}
-                  </Div>
-                </Div>
-                <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food3} className={"w-15 h-15"} />
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("carb")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_carb).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_kcal).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("k")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food4} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food3} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("carb")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("protein")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_protein).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_carb).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food5} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food4} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("protein")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("fat")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_protein).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_fat).format("0,0")}
+                <Hr30 />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food5} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("fat")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_fat).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
               </AccordionDetails>

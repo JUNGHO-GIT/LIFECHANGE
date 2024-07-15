@@ -94,8 +94,8 @@ export const MoneyList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -138,18 +138,22 @@ export const MoneyList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Icons name={"TbSearch"} className={"w-18 h-18 black ms-n10 me-15"} onClick={(e) => {
-                    e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.money_dateType,
-                      dateStart: item.money_dateStart,
-                      dateEnd: item.money_dateEnd,
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }} />
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.money_dateType,
+                        dateStart: item.money_dateStart,
+                        dateEnd: item.money_dateEnd,
+                      });
+                      navigate(SEND.toSave, {
+                        state: SEND
+                      });
+                    }}
+                  />
                   {item.money_dateStart === item.money_dateEnd ? (
                     <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
                       e.stopPropagation();
@@ -161,46 +165,48 @@ export const MoneyList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
                       <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("income")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("income")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-7rem dark fw-500 me-10"}>
-                    {translate("currency")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_total_income).format("0,0")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-0-7rem dark fw-500 me-10"}>
+                      {translate("currency")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.money_total_income).format("0,0")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("expense")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("expense")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-7rem dark fw-500 me-10"}>
-                    {translate("currency")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_total_expense).format("0,0")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-0-7rem dark fw-500 me-10"}>
+                      {translate("currency")}
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.money_total_expense).format("0,0")}
+                    </Div>
                   </Div>
                 </Div>
               </AccordionDetails>

@@ -89,8 +89,8 @@ export const SleepList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -133,18 +133,22 @@ export const SleepList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Icons name={"TbSearch"} className={"w-18 h-18 black ms-n10 me-15"} onClick={(e) => {
-                    e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.sleep_dateType,
-                      dateStart: item.sleep_dateStart,
-                      dateEnd: item.sleep_dateEnd,
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }} />
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.sleep_dateType,
+                        dateStart: item.sleep_dateStart,
+                        dateEnd: item.sleep_dateEnd,
+                      });
+                      navigate(SEND.toSave, {
+                        state: SEND
+                      });
+                    }}
+                  />
                   {item.sleep_dateStart === item.sleep_dateEnd ? (
                     <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
                       e.stopPropagation();
@@ -156,67 +160,69 @@ export const SleepList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
                       <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={sleep2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={sleep2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("bedTime")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    {translate("bedTime")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {item.sleep_section[0]?.sleep_bedTime}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("hm")}
-                  </Div>
-                </Div>
-                <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={sleep3} className={"w-15 h-15"} />
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    {translate("wakeTime")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {item.sleep_section[0]?.sleep_wakeTime}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("hm")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.sleep_section[0]?.sleep_bedTime}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("hm")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={sleep4} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={sleep3} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("wakeTime")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    {translate("sleepTime")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.sleep_section[0]?.sleep_wakeTime}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("hm")}
+                    </Div>
                   </Div>
                 </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {item.sleep_section[0]?.sleep_sleepTime}
+                <Hr30 />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={sleep4} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("sleepTime")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("hm")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.sleep_section[0]?.sleep_sleepTime}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("hm")}
+                    </Div>
                   </Div>
                 </Div>
-
               </AccordionDetails>
             </Accordion>
           </Card>

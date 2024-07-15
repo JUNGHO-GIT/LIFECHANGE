@@ -184,6 +184,12 @@ export const CalendarSave = () => {
       calendar_title: false,
     }));
 
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     for (let idx = 0; idx < OBJECT?.calendar_section.length; idx++) {
       const section = OBJECT?.calendar_section[idx];
       const refsCurrentIdx = REFS?.current[idx];
@@ -193,24 +199,24 @@ export const CalendarSave = () => {
       }
       else if (!section.calendar_part_idx || section.calendar_part_idx === 0) {
         alert(translate("errorCalendarPart"));
-        refsCurrentIdx.calendar_part_idx.current
-        && refsCurrentIdx.calendar_part_idx?.current?.focus();
+        refsCurrentIdx.calendar_part_idx.current &&
+        refsCurrentIdx.calendar_part_idx?.current?.focus();
         initialErrors[idx].calendar_part_idx = true;
         foundError = true;
         break;
       }
       else if (!section.calendar_title || section.calendar_title === "") {
         alert(translate("errorCalendarTitle"));
-        refsCurrentIdx.calendar_title.current
-        && refsCurrentIdx.calendar_title?.current?.focus();
+        refsCurrentIdx.calendar_title.current &&
+        refsCurrentIdx.calendar_title?.current?.focus();
         initialErrors[idx].calendar_title = true;
         foundError = true;
         break;
       }
       else if (!section.calendar_color || section.calendar_color === "") {
         alert(translate("errorCalendarColor"));
-        refsCurrentIdx.calendar_color.current
-        && refsCurrentIdx.calendar_color?.current?.focus();
+        refsCurrentIdx.calendar_color.current &&
+        refsCurrentIdx.calendar_color?.current?.focus();
         initialErrors[idx].calendar_color = true;
         foundError = true;
         break;

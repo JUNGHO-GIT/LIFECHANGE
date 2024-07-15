@@ -1,7 +1,6 @@
 // Picker.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
-import {useLocation} from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {PopUp, Div, Img, Br20} from "../../import/ImportComponents.jsx";
@@ -24,7 +23,6 @@ export const Picker = ({
   const isDiffList = secondStr === "diff" && thirdStr === "list";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
-  const isFindList = secondStr === "find" && thirdStr === "list";
   const isFindSave = secondStr === "find" && thirdStr === "save";
   const isList = secondStr === "list" && thirdStr === "";
   const isSave = secondStr === "save" && thirdStr === "";
@@ -34,7 +32,7 @@ export const Picker = ({
     (isDiffList || isGoalList || isList) ? (
       "h-min0 h-4vh fs-0-7rem pointer"
     )
-    : (isGoalSave || isSave) ? (
+    : (isGoalSave || isSave || isFindSave) ? (
       "h-min40 fs-0-8rem pointer"
     )
     : "";
@@ -44,7 +42,7 @@ export const Picker = ({
     (isDiffList || isGoalList || isList) ? (
       "w-46vw"
     )
-    : (isGoalSave || isSave) ? (
+    : (isGoalSave || isSave || isFindSave) ? (
       "w-86vw"
     )
     : "";
@@ -54,7 +52,7 @@ export const Picker = ({
     (isDiffList || isGoalList || isList) ? (
       "h-min0 h-4vh fs-0-7rem pointer"
     )
-    : (isGoalSave || isSave) ? (
+    : (isGoalSave || isSave || isFindSave) ? (
       "h-min40 fs-0-8rem pointer"
     )
     : "";
@@ -688,7 +686,7 @@ export const Picker = ({
   return (
     <>
       {(isDiffList || isGoalList || isList) && listNode()}
-      {(isGoalSave || isSave) && saveNode()}
+      {(isGoalSave || isSave || isFindSave) && saveNode()}
     </>
   );
 };

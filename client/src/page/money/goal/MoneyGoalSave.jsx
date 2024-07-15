@@ -133,20 +133,27 @@ export const MoneyGoalSave = () => {
       money_goal_expense: false,
     };
 
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     const refsCurrent = REFS?.current;
     if (!refsCurrent) {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-
-    if (!OBJECT.money_goal_income || OBJECT.money_goal_income === 0) {
+    else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === 0) {
       alert(translate("errorMoneyGoalIncome"));
+      refsCurrent.money_goal_income.current &&
       refsCurrent.money_goal_income.current?.focus();
       initialErrors.money_goal_income = true;
       foundError = true;
     }
     else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === 0) {
       alert(translate("errorMoneyGoalExpense"));
+      refsCurrent.money_goal_expense.current &&
       refsCurrent.money_goal_expense.current?.focus();
       initialErrors.money_goal_expense = true;
       foundError = true;

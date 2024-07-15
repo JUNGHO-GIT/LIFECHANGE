@@ -1,6 +1,6 @@
 // Count.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {PopUp, Img, Div, Icons} from "../../import/ImportComponents.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
@@ -12,7 +12,12 @@ export const Count = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const location = useLocation();
   const {translate} = useTranslate();
+  const PATH = location?.pathname;
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
+  const isFindSave = secondStr === "find" && thirdStr === "save";
 
   // 2. countNode ----------------------------------------------------------------------------------
   const countNode = () => (
@@ -37,31 +42,37 @@ export const Count = ({
             InputProps={{
               readOnly: true,
               startAdornment: (
-              <Img src={common2} className={"w-16 h-16"} />
+                <Img src={common2} className={"w-16 h-16"} />
               ),
               endAdornment: (
-              <Div className={"d-center me-n10"}>
-                <Icons name={"TbMinus"} className={"w-20 h-20 black"} onClick={(e) => {
-                  COUNT.newSectionCnt > COUNT.sectionCnt ? (
-                    setCOUNT((prev) => ({
-                      ...prev,
-                      newSectionCnt: prev.newSectionCnt - 1
-                    }))
-                  ) : (
-                    popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                  )
-                }}/>
-                <Icons name={"TbPlus"} className={"w-20 h-20 black"} onClick={(e) => {
-                  COUNT.newSectionCnt < limit ? (
-                    setCOUNT((prev) => ({
-                      ...prev,
-                      newSectionCnt: prev.newSectionCnt + 1
-                    }))
-                  ) : (
-                    popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
-                  )
-                }}/>
-              </Div>
+                <Div className={"d-center me-n10"}>
+                  <Icons name={"TbMinus"} className={"w-20 h-20 black"} onClick={(e) => {
+                    if (isFindSave) {
+                      return
+                    }
+                    COUNT.newSectionCnt > COUNT.sectionCnt ? (
+                      setCOUNT((prev) => ({
+                        ...prev,
+                        newSectionCnt: prev.newSectionCnt - 1
+                      }))
+                    ) : (
+                      popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    )
+                  }}/>
+                  <Icons name={"TbPlus"} className={"w-20 h-20 black"} onClick={(e) => {
+                    if (isFindSave) {
+                      return
+                    }
+                    COUNT.newSectionCnt < limit ? (
+                      setCOUNT((prev) => ({
+                        ...prev,
+                        newSectionCnt: prev.newSectionCnt + 1
+                      }))
+                    ) : (
+                      popTrigger.openPopup(e.currentTarget.closest('.MuiInputBase-root'))
+                    )
+                  }}/>
+                </Div>
               )
             }}
           />

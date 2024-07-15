@@ -102,8 +102,8 @@ export const ExerciseDiff = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -158,7 +158,7 @@ export const ExerciseDiff = () => {
                         e.stopPropagation();
                       }}>
                         <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
                         <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
@@ -166,120 +166,129 @@ export const ExerciseDiff = () => {
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={exercise3_1} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={exercise3_1} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("volume")}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-10"}>
+                      {translate("diff")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("volume")}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark"}>
-                    {translate("diff")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.exercise_goal_volume).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.exercise_total_volume).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
-                    {numeral(item.exercise_diff_volume).format("0,0")}
-                  </Div>
-                </Div>
-                <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={exercise4} className={"w-15 h-15"} />
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("cardio")}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark"}>
-                    {translate("diff")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {item.exercise_goal_cardio}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {item.exercise_total_cardio}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
-                    {item.exercise_diff_cardio}
+                  <Div className={"d-column"}>
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("goal")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.exercise_goal_volume).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("real")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.exercise_total_volume).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("diff")}
+                      </Div>
+                      <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
+                        {numeral(item.exercise_diff_volume).format("0,0")}
+                      </Div>
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={exercise5} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={exercise4} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("cardio")}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-10"}>
+                      {translate("diff")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("weight")}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark"}>
-                    {translate("diff")}
+                  <Div className={"d-column"}>
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("goal")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {item.exercise_goal_cardio}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("real")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {item.exercise_total_cardio}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("diff")}
+                      </Div>
+                      <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
+                        {item.exercise_diff_cardio}
+                      </Div>
+                    </Div>
                   </Div>
                 </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("goal")}
+                <Hr30 />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={exercise5} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("weight")}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-10"}>
+                      {translate("diff")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.exercise_goal_weight).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.exercise_body_weight).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
-                    {numeral(item.exercise_diff_weight).format("0,0")}
+                  <Div className={"d-column"}>
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("goal")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.exercise_goal_weight).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("real")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.exercise_body_weight).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("diff")}
+                      </Div>
+                      <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
+                        {numeral(item.exercise_diff_weight).format("0,0")}
+                      </Div>
+                    </Div>
                   </Div>
                 </Div>
               </AccordionDetails>

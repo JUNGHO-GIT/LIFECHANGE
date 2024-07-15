@@ -170,6 +170,13 @@ export const SleepSave = () => {
       sleep_bedTime: false,
       sleep_wakeTime: false,
     }));
+
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     for (let idx = 0; idx < OBJECT?.sleep_section.length; idx++) {
       const section = OBJECT?.sleep_section[idx];
       const refsCurrentIdx = REFS?.current[idx];
@@ -179,6 +186,7 @@ export const SleepSave = () => {
       }
       else if (!section.sleep_bedTime || section.sleep_bedTime === "00:00") {
         alert(translate("errorSleepBedTime"));
+        REFS?.current[idx]?.sleep_bedTime?.current &&
         REFS?.current[idx]?.sleep_bedTime?.current?.focus();
         initialErrors[idx].sleep_bedTime = true;
         foundError = true;
@@ -186,6 +194,7 @@ export const SleepSave = () => {
       }
       else if (!section.sleep_wakeTime || section.sleep_wakeTime === "00:00") {
         alert(translate("errorSleepWakeTime"));
+        REFS?.current[idx]?.sleep_wakeTime?.current &&
         REFS?.current[idx]?.sleep_wakeTime?.current?.focus();
         initialErrors[idx].sleep_wakeTime = true;
         foundError = true;
@@ -193,7 +202,6 @@ export const SleepSave = () => {
       }
     }
     setERRORS(initialErrors);
-
     return !foundError;
   };
 
@@ -354,7 +362,7 @@ export const SleepSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.sleep_section?.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.sleep_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

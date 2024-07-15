@@ -63,9 +63,9 @@ export const FoodSave = () => {
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
-    food_total_fat: 0,
     food_total_carb: 0,
     food_total_protein: 0,
+    food_total_fat: 0,
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
@@ -246,6 +246,13 @@ export const FoodSave = () => {
       food_protein: false,
       food_fat: false,
     }));
+
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     for (let idx = 0; idx < OBJECT?.food_section.length; idx++) {
       const section = OBJECT?.food_section[idx];
       const refsCurrentIdx = REFS?.current[idx];
@@ -255,64 +262,64 @@ export const FoodSave = () => {
       }
       else if (!section.food_part_idx || section.food_part_idx === 0) {
         alert(translate("errorFoodPart"));
-        refsCurrentIdx.food_part_idx.current
-        && refsCurrentIdx.food_part_idx?.current?.focus();
+        refsCurrentIdx.food_part_idx.current &&
+        refsCurrentIdx.food_part_idx?.current?.focus();
         initialErrors[idx].food_part_idx = true;
         foundError = true;
         break;
       }
       else if (!section.food_count || section.food_count === 0) {
         alert(translate("errorFoodCount"));
-        refsCurrentIdx.food_count.current
-        && refsCurrentIdx.food_count?.current?.focus();
+        refsCurrentIdx.food_count.current &&
+        refsCurrentIdx.food_count?.current?.focus();
         initialErrors[idx].food_count = true;
         foundError = true;
         break;
       }
       else if (!section.food_gram || section.food_gram === 0) {
         alert(translate("errorFoodGram"));
-        refsCurrentIdx.food_gram.current
-        && refsCurrentIdx.food_gram?.current?.focus();
+        refsCurrentIdx.food_gram.current &&
+        refsCurrentIdx.food_gram?.current?.focus();
         initialErrors[idx].food_gram = true;
         foundError = true;
         break;
       }
       else if (!section.food_name || section.food_name === "") {
         alert(translate("errorFoodName"));
-        refsCurrentIdx.food_name.current
-        && refsCurrentIdx.food_name?.current?.focus();
+        refsCurrentIdx.food_name.current &&
+        refsCurrentIdx.food_name?.current?.focus();
         initialErrors[idx].food_name = true;
         foundError = true;
         break;
       }
       else if (!section.food_kcal || section.food_kcal === 0) {
         alert(translate("errorFoodKcal"));
-        refsCurrentIdx.food_kcal.current
-        && refsCurrentIdx.food_kcal?.current?.focus();
+        refsCurrentIdx.food_kcal.current &&
+        refsCurrentIdx.food_kcal?.current?.focus();
         initialErrors[idx].food_kcal = true;
         foundError = true;
         break;
       }
       else if (!section.food_carb || section.food_carb === 0) {
         alert(translate("errorFoodCarb"));
-        refsCurrentIdx.food_carb.current
-        && refsCurrentIdx.food_carb?.current?.focus();
+        refsCurrentIdx.food_carb.current &&
+        refsCurrentIdx.food_carb?.current?.focus();
         initialErrors[idx].food_carb = true;
         foundError = true;
         break;
       }
       else if (!section.food_protein || section.food_protein === 0) {
         alert(translate("errorFoodProtein"));
-        refsCurrentIdx.food_protein.current
-        && refsCurrentIdx.food_protein?.current?.focus();
+        refsCurrentIdx.food_protein.current &&
+        refsCurrentIdx.food_protein?.current?.focus();
         initialErrors[idx].food_protein = true;
         foundError = true;
         break;
       }
       else if (!section.food_fat || section.food_fat === 0) {
         alert(translate("errorFoodFat"));
-        refsCurrentIdx.food_fat.current
-        && refsCurrentIdx.food_fat?.current?.focus();
+        refsCurrentIdx.food_fat.current &&
+        refsCurrentIdx.food_fat?.current?.focus();
         initialErrors[idx].food_fat = true;
         foundError = true;
         break;
@@ -391,10 +398,13 @@ export const FoodSave = () => {
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
+    // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
       food_section: prev.food_section.filter((_, idx) => (idx !== index))
     }));
+
+    // COUNT 설정
     setCOUNT((prev) => ({
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
@@ -480,8 +490,8 @@ export const FoodSave = () => {
               startAdornment: (
                 <Img src={food4} className={"w-16 h-16"} />
               ),
-               endAdornment: (
-                <Div className={"fs-0-8rem"}>
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
               )
@@ -536,7 +546,7 @@ export const FoodSave = () => {
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br40/>
+          <Br40 />
           <Div className={"d-center"}>
             <TextField
               select={true}
@@ -552,14 +562,14 @@ export const FoodSave = () => {
                 readOnly: false,
               }}
               onChange={(e) => {
-                const newIndex = Number(e.target.value);
+                const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_part_idx: newIndex,
-                      food_part_val: foodArray[newIndex]?.food_part,
+                      food_part_idx: newPart,
+                      food_part_val: foodArray[newPart]?.food_part,
                     } : item
                   ))
                 }));

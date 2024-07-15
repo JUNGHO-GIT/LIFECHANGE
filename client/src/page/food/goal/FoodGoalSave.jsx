@@ -142,32 +142,41 @@ export const FoodGoalSave = () => {
       food_goal_fat: false,
     };
 
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     const refsCurrent = REFS?.current;
     if (!refsCurrent) {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-
-    if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === 0) {
+    else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === 0) {
       alert(translate("errorFoodGoalKcal"));
+      refsCurrent.food_goal_kcal.current &&
       refsCurrent.food_goal_kcal.current?.focus();
       initialErrors.food_goal_kcal = true;
       foundError = true;
     }
     else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === 0) {
       alert(translate("errorFoodGoalCarb"));
+      refsCurrent.food_goal_carb.current &&
       refsCurrent.food_goal_carb.current?.focus();
       initialErrors.food_goal_carb = true;
       foundError = true;
     }
     else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === 0) {
       alert(translate("errorFoodGoalProtein"));
+      refsCurrent.food_goal_protein.current &&
       refsCurrent.food_goal_protein.current?.focus();
       initialErrors.food_goal_protein = true;
       foundError = true;
     }
     else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === 0) {
       alert(translate("errorFoodGoalFat"));
+      refsCurrent.food_goal_fat.current &&
       refsCurrent.food_goal_fat.current?.focus();
       initialErrors.food_goal_fat = true;
       foundError = true;

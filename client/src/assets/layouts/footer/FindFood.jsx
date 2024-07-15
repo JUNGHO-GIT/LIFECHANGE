@@ -1,16 +1,21 @@
-// FoodFind.jsx
+// FindFood.jsx
 
-import {React} from "../../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodFind = ({
+export const FindFood = ({
   strings, objects, functions, handlers
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const location = useLocation();
   const {translate} = useTranslate();
+  const PATH = location?.pathname;
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
 
   // 2. query --------------------------------------------------------------------------------------
   const queryNode = () => (
@@ -89,7 +94,7 @@ export const FoodFind = ({
     </Button>
   );
 
-  // 6. pagination ---------------------------------------------------------------------------------
+  // 5. pagination ---------------------------------------------------------------------------------
   const paginationNode = () => (
     <TablePagination
       rowsPerPageOptions={[10]}
@@ -122,20 +127,87 @@ export const FoodFind = ({
     />
   );
 
-  // 7. foodFind -----------------------------------------------------------------------------------
-  const foodFindNode = () => (
+  // 6. save ---------------------------------------------------------------------------------------
+  const saveNode = () => (
+    <Button
+      size={"small"}
+      color={"primary"}
+      variant={"contained"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.8rem"
+      }}
+      onClick={() => {
+        handlers.flowSave();
+        Object.keys(sessionStorage).forEach((key) => {
+          if (key.includes("foodSection") || key.includes("PAGING")) {
+            sessionStorage.removeItem(key);
+          }
+        });
+      }}
+    >
+      {translate("save")}
+    </Button>
+  );
+
+  // 6. more ---------------------------------------------------------------------------------------
+  const moreNode = () => (
+    <Button
+      size={"small"}
+      color={"success"}
+      variant={"contained"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.8rem"
+      }}
+      onClick={() => {
+        Object.assign(objects?.SEND, {
+          dateType: objects?.DATE.dateType,
+          dateStart: objects?.DATE.dateStart,
+          dateEnd: objects?.DATE.dateEnd
+        });
+        handlers.navigate(objects?.SEND.toFind, {
+          state: objects?.SEND,
+        });
+      }}
+    >
+      {translate("findMore")}
+    </Button>
+  );
+
+  // 7. findFood -----------------------------------------------------------------------------------
+  const findFoodNode = () => (
     <Card className={"block-wrapper d-row h-8vh w-100p shadow-none over-x-auto"}>
-      {queryNode()}
-      {findNode()}
-      {doneNode()}
-      {paginationNode()}
+      {(firstStr === "food" && secondStr === "find" && thirdStr === "save") ? (
+        <>
+          {saveNode()}
+          {moreNode()}
+        </>
+      ) : (
+        <>
+          {queryNode()}
+          {findNode()}
+          {doneNode()}
+          {paginationNode()}
+        </>
+      )}
     </Card>
   );
 
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {foodFindNode()}
+      {findFoodNode()}
     </>
   );
 };

@@ -3,7 +3,7 @@
 import {React}from "../../import/ImportReacts.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {Dummy} from "./footer/Dummy.jsx";
-import {FoodFind} from "./footer/FoodFind.jsx";
+import {FindFood} from "./footer/FindFood.jsx";
 import {SaveDelete} from "./footer/SaveDelete";
 import {ListFilter} from "./footer/ListFilter.jsx";
 
@@ -44,9 +44,9 @@ export const Footer = ({
     />
   );
 
-  // 4. foodFind -----------------------------------------------------------------------------------
-  const foodFindNode = () => (
-    <FoodFind
+  // 4. findFood -----------------------------------------------------------------------------------
+  const findFoodNode = () => (
+    <FindFood
       strings={strings}
       objects={objects}
       functions={functions}
@@ -83,17 +83,10 @@ export const Footer = ({
         </Paper>
       )
     }
-    else if (isFindList) {
+    else if (isFindList || isFindSave) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
-          {foodFindNode()}
-        </Paper>
-      )
-    }
-    else if (isFindSave) {
-      return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
-          {saveDeleteNode()}
+          {findFoodNode()}
         </Paper>
       )
     }

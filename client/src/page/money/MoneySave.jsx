@@ -202,6 +202,13 @@ export const MoneySave = () => {
       money_title_idx: false,
       money_amount: false,
     }));
+
+    if (COUNT.newSectionCnt === 0) {
+      alert(translate("errorCount"));
+      foundError = true;
+      return;
+    }
+
     for (let idx = 0; idx < OBJECT?.money_section.length; idx++) {
       const section = OBJECT?.money_section[idx];
       const refsCurrentIdx = REFS?.current[idx];
@@ -211,24 +218,24 @@ export const MoneySave = () => {
       }
       else if (!section.money_part_idx || section.money_part_idx === 0) {
         alert(translate("errorMoneyPart"));
-        refsCurrentIdx.money_part_idx.current
-        && refsCurrentIdx.money_part_idx?.current?.focus();
+        refsCurrentIdx.money_part_idx.current &&
+        refsCurrentIdx.money_part_idx?.current?.focus();
         initialErrors[idx].money_part_idx = true;
         foundError = true;
         break;
       }
       else if (!section.money_title_idx || section.money_title_idx === 0) {
         alert(translate("errorMoneyTitle"));
-        refsCurrentIdx.money_title_idx.current
-        && refsCurrentIdx.money_title_idx?.current?.focus();
+        refsCurrentIdx.money_title_idx.current &&
+        refsCurrentIdx.money_title_idx?.current?.focus();
         initialErrors[idx].money_title_idx = true;
         foundError = true;
         break;
       }
       else if (!section.money_amount || section.money_amount === 0) {
         alert(translate("errorMoneyAmount"));
-        refsCurrentIdx.money_amount.current
-        && refsCurrentIdx.money_amount?.current?.focus();
+        refsCurrentIdx.money_amount.current &&
+        refsCurrentIdx.money_amount?.current?.focus();
         initialErrors[idx].money_amount = true;
         foundError = true;
         break;
@@ -538,7 +545,7 @@ export const MoneySave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.money_section?.map((_, i) => tableFragment(i))
+          LOADING ? loadingFragment() : OBJECT?.money_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

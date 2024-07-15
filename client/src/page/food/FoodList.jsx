@@ -101,8 +101,8 @@ export const FoodList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -145,18 +145,22 @@ export const FoodList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Icons name={"TbSearch"} className={"w-18 h-18 black ms-n10 me-15"} onClick={(e) => {
-                    e.stopPropagation();
-                    Object.assign(SEND, {
-                      id: item._id,
-                      dateType: item.food_dateType,
-                      dateStart: item.food_dateStart,
-                      dateEnd: item.food_dateEnd,
-                    });
-                    navigate(SEND.toSave, {
-                      state: SEND
-                    });
-                  }} />
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.food_dateType,
+                        dateStart: item.food_dateStart,
+                        dateEnd: item.food_dateEnd,
+                      });
+                      navigate(SEND.toSave, {
+                        state: SEND
+                      });
+                    }}
+                  />
                   {item.food_dateStart === item.food_dateEnd ? (
                     <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
                       e.stopPropagation();
@@ -168,82 +172,86 @@ export const FoodList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
                       <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("kcal")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("kcal")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_total_kcal).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("k")}
-                  </Div>
-                </Div>
-                <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food3} className={"w-15 h-15"} />
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("carb")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_total_carb).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_kcal).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("k")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food4} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food3} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("carb")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("protein")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_total_protein).format("0,0")}
-                  </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_carb).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={food5} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food4} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("protein")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("fat")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_protein).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.food_total_fat).format("0,0")}
+                <Hr30 />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={food5} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("fat")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
-                    {translate("g")}
+                  <Div className={"d-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_fat).format("0,0")}
+                    </Div>
+                    <Div className={"fs-0-7rem dark fw-500 ms-10"}>
+                      {translate("g")}
+                    </Div>
                   </Div>
                 </Div>
               </AccordionDetails>

@@ -94,8 +94,8 @@ export const MoneyDiff = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -150,7 +150,7 @@ export const MoneyDiff = () => {
                         e.stopPropagation();
                       }}>
                         <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
                         <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
@@ -158,81 +158,87 @@ export const MoneyDiff = () => {
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("income")}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-10"}>
+                      {translate("diff")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("income")}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark"}>
-                    {translate("diff")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_goal_income).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_total_income).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
-                    {numeral(item.money_diff_income).format("0,0")}
+                  <Div className={"d-column"}>
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("goal")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.money_goal_income).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("real")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.money_total_income).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("diff")}
+                      </Div>
+                      <Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
+                        {numeral(item.money_diff_income).format("0,0")}
+                      </Div>
+                    </Div>
                   </Div>
                 </Div>
                 <Hr30 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-600 dark"}>
-                    <Img src={money2} className={"w-15 h-15"} />
+                <Div className={"d-between"}>
+                  <Div className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      <Img src={money2} className={"w-15 h-15"} />
+                    </Div>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("expense")}
+                    </Div>
+                    <Div className={"fs-0-9rem fw-500 dark ms-10"}>
+                      {translate("diff")}
+                    </Div>
                   </Div>
-                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
-                    {translate("expense")}
-                  </Div>
-                  <Div className={"fs-0-9rem fw-500 dark"}>
-                    {translate("diff")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("goal")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_goal_expense).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("real")}
-                  </Div>
-                  <Div className={"fs-1-0rem fw-600"}>
-                    {numeral(item.money_total_expense).format("0,0")}
-                  </Div>
-                </Div>
-                <Br10 />
-                <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                    {translate("diff")}
-                  </Div>
-                  <Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
-                    {numeral(item.money_diff_expense).format("0,0")}
+                  <Div className={"d-column"}>
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("goal")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.money_goal_expense).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("real")}
+                      </Div>
+                      <Div className={"fs-1-0rem fw-600"}>
+                        {numeral(item.money_total_expense).format("0,0")}
+                      </Div>
+                    </Div>
+                    <Br10 />
+                    <Div className={"d-right"}>
+                      <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                        {translate("diff")}
+                      </Div>
+                      <Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
+                        {numeral(item.money_diff_expense).format("0,0")}
+                      </Div>
+                    </Div>
                   </Div>
                 </Div>
               </AccordionDetails>
