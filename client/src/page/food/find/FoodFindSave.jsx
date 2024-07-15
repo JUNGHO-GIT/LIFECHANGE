@@ -111,7 +111,7 @@ export const FoodFindSave = () => {
     let sectionArray = [];
     let section = sessionStorage.getItem("foodSection");
 
-    // sectionArray 초기화
+    // sectionArray 설정
     if (section) {
       sectionArray = JSON.parse(section);
     }
@@ -168,6 +168,7 @@ export const FoodFindSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -224,7 +225,7 @@ export const FoodFindSave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -241,7 +242,7 @@ export const FoodFindSave = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -341,7 +342,7 @@ export const FoodFindSave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -440,7 +441,9 @@ export const FoodFindSave = () => {
                 InputProps={{
                   readOnly: false,
                   endAdornment: (
-                    translate("g")
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
                   )
                 }}
                 onChange={(e) => {

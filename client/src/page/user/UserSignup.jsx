@@ -42,6 +42,7 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
       }
       else {
         alert(res.data.msg);
@@ -80,6 +81,7 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         navigate("/user/login");
       }
       else if (res.data.status === "duplicated") {

@@ -1,7 +1,5 @@
 // exerciseDiffMiddleware.js
 
-import {log} from "../../assets/js/utils.js";
-
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {
 

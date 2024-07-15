@@ -193,7 +193,7 @@ export const FoodFindList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border shadow-none p-10"} key={"empty"}>
+        <Card className={"border radius shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
             {translate("empty")}
           </Div>
@@ -201,18 +201,28 @@ export const FoodFindList = () => {
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
-                <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
-                  setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
-                }}/>
+                <Icons
+                  name={"TbChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e) => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
               }>
                 <Div className={"d-center"}>
                   <Checkbox
                     key={`check-${index}`}
                     color={"primary"}
                     size={"small"}
+                    style={{
+                      marginLeft: "-10px",
+                      marginRight: "15px",
+                    }}
                     checked={
                       !! (
                         checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
@@ -225,11 +235,15 @@ export const FoodFindList = () => {
                   />
                   {/** 10자 넘어가면 ... 처리 */}
                   {isExpanded.includes(index) ? (
-                    item.food_name
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {item.food_name}
+                    </Div>
                   ) : (
-                    item.food_name.length > 10 ?
-                    `${item.food_name.substring(0, 10)}...` :
-                    item.food_name
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {item.food_name.length > 10 ? (
+                        `${item.food_name.substring(0, 10)}...`
+                      ) : item.food_name}
+                    </Div>
                   )}
                 </Div>
                 <Div className={"d-center"}>
@@ -240,73 +254,73 @@ export const FoodFindList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("kcal")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.food_kcal).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("k")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("carb")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.food_carb).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("g")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("protein")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.food_protein).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("g")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("fat")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.food_fat).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("g")}
                   </Div>
                 </Div>

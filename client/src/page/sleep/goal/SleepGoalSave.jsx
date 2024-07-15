@@ -170,6 +170,7 @@ export const SleepGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -202,6 +203,7 @@ export const SleepGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -239,7 +241,7 @@ export const SleepGoalSave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -263,7 +265,7 @@ export const SleepGoalSave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}

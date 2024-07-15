@@ -578,32 +578,32 @@ export const MoneyDashPie = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartIncomeToday()}
         </Card>
       );
       const dashFragment2 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartExpenseToday()}
         </Card>
       );
       const dashFragment3 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartIncomeWeek()}
         </Card>
       );
       const dashFragment4 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartExpenseWeek()}
         </Card>
       );
       const dashFragment5 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartIncomeMonth()}
         </Card>
       );
       const dashFragment6 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartExpenseMonth()}
         </Card>
       );

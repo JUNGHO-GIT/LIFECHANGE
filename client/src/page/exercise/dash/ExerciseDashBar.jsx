@@ -355,17 +355,17 @@ export const ExerciseDashBar = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartToday()}
         </Card>
       );
       const dashFragment2 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartWeek()}
         </Card>
       );
       const dashFragment3 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartMonth()}
         </Card>
       );

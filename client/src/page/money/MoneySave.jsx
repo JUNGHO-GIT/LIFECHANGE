@@ -209,7 +209,7 @@ export const MoneySave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (!section.money_part_idx || section.money_part_idx === 0) {
+      else if (!section.money_part_idx || section.money_part_idx === 0) {
         alert(translate("errorMoneyPart"));
         refsCurrentIdx.money_part_idx.current
         && refsCurrentIdx.money_part_idx?.current?.focus();
@@ -251,6 +251,7 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -283,6 +284,7 @@ export const MoneySave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -318,7 +320,7 @@ export const MoneySave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -335,13 +337,13 @@ export const MoneySave = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalIncome")}
             size={"small"}
-            value={numeral(OBJECT?.money_total_income).format('0,0')}
+            value={numeral(OBJECT?.money_total_income).format("0,0")}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -363,7 +365,7 @@ export const MoneySave = () => {
             select={false}
             label={translate("totalExpense")}
             size={"small"}
-            value={numeral(OBJECT?.money_total_expense).format('0,0')}
+            value={numeral(OBJECT?.money_total_expense).format("0,0")}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -391,7 +393,7 @@ export const MoneySave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -491,7 +493,7 @@ export const MoneySave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-86vw"}
-              value={numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}
+              value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
               inputRef={REFS?.current[i]?.money_amount}
               error={ERRORS[i]?.money_amount}
               InputProps={{

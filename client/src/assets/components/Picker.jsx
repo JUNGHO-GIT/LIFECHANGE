@@ -24,6 +24,8 @@ export const Picker = ({
   const isDiffList = secondStr === "diff" && thirdStr === "list";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
+  const isFindList = secondStr === "find" && thirdStr === "list";
+  const isFindSave = secondStr === "find" && thirdStr === "save";
   const isList = secondStr === "list" && thirdStr === "";
   const isSave = secondStr === "save" && thirdStr === "";
 
@@ -134,7 +136,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
       <Div className={"d-column"}>
-        <Div className={"d-center fs-1-2rem fw-bold"}>
+        <Div className={"d-center fs-1-2rem fw-600"}>
           {translate("viewDay")}
         </Div>
         <Br20 />
@@ -249,7 +251,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-bold"}>
+          <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewWeek")}
           </Div>
           <Br20 />
@@ -372,7 +374,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-bold"}>
+          <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewMonth")}
           </Div>
           <Br20 />
@@ -468,7 +470,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-bold"}>
+          <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewYear")}
           </Div>
           <Br20 />
@@ -564,7 +566,7 @@ export const Picker = ({
       direction={"center"}
       contents={({ closePopup }) => (
         <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-bold"}>
+          <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewSelect")}
           </Div>
           <Br20 />

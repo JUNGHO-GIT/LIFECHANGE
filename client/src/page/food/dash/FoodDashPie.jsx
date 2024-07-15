@@ -578,32 +578,32 @@ export const FoodDashPie = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalToday()}
         </Card>
       );
       const dashFragment2 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartNutToday()}
         </Card>
       );
       const dashFragment3 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalWeek()}
         </Card>
       );
       const dashFragment4 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartNutWeek()}
         </Card>
       );
       const dashFragment5 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalMonth()}
         </Card>
       );
       const dashFragment6 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartNutMonth()}
         </Card>
       );

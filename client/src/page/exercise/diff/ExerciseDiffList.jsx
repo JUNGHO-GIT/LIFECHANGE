@@ -101,9 +101,8 @@ export const ExerciseDiff = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
-      // Accordion 초기값 열림 설정
+      // Accordion 초기값 설정
       // setIsExpanded(res.data.result.map((_, index) => (index)));
-      // Accordion 초기값 닫힘 설정
       setIsExpanded([]);
     })
     .catch((err) => {
@@ -125,7 +124,7 @@ export const ExerciseDiff = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border shadow-none p-10"} key={"empty"}>
+        <Card className={"border radius shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
             {translate("empty")}
           </Div>
@@ -133,145 +132,153 @@ export const ExerciseDiff = () => {
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
-                <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
-                  setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
-                }}/>
+                <Icons
+                  name={"TbChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e) => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
               }>
-                <Div className={"d-column"} onClick={(e) => {e.stopPropagation();}}>
-                  {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
-                    <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
-                      <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
-                    </Div>
-                  )}
+                <Div className={"d-center"}>
+                  <Div className={"fs-1-1rem fw-600 d-left"}>
+                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
+                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                        e.stopPropagation();
+                      }}>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                      </Div>
+                    ) : (
+                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                        e.stopPropagation();
+                      }}>
+                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                        <Div className={"ms-3vw me-3vw"}> ~ </Div>
+                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
+                      </Div>
+                    )}
+                  </Div>
                 </Div>
               </AccordionSummary>
               <AccordionDetails>
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("volume")}
                   </Div>
-                  <Div className={"fs-0-9rem fw-normal dark"}>
+                  <Div className={"fs-0-9rem fw-500 dark"}>
                     {translate("diff")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("goal")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_goal_volume).format("0,0")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("real")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_total_volume).format("0,0")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("diff")}
                   </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_volume_color}`}>
+                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
                     {numeral(item.exercise_diff_volume).format("0,0")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("cardio")}
                   </Div>
-                  <Div className={"fs-0-9rem fw-normal dark"}>
+                  <Div className={"fs-0-9rem fw-500 dark"}>
                     {translate("diff")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("goal")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {item.exercise_goal_cardio}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("real")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {item.exercise_total_cardio}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("diff")}
                   </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_cardio_color}`}>
+                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
                     {item.exercise_diff_cardio}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("weight")}
                   </Div>
-                  <Div className={"fs-0-9rem fw-normal dark"}>
+                  <Div className={"fs-0-9rem fw-500 dark"}>
                     {translate("diff")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("goal")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_goal_weight).format("0,0")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("real")}
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_body_weight).format("0,0")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-0-8rem fw-normal dark me-10"}>
+                  <Div className={"fs-0-8rem fw-500 dark me-10"}>
                     {translate("diff")}
                   </Div>
-                  <Div className={`fs-1-0rem fw-bold ${item.exercise_diff_weight_color}`}>
+                  <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
                     {numeral(item.exercise_diff_weight).format("0,0")}
                   </Div>
                 </Div>

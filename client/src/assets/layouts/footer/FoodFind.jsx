@@ -2,8 +2,7 @@
 
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, Card} from "../../../import/ImportMuis.jsx";
+import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodFind = ({
@@ -19,7 +18,7 @@ export const FoodFind = ({
       select={false}
       size={"small"}
       variant={"outlined"}
-      className={"w-20vw"}
+      className={"w-20vw me-3vw"}
       value={objects?.PAGING?.query}
       InputProps={{
         readOnly: false,
@@ -40,7 +39,15 @@ export const FoodFind = ({
       size={"small"}
       color={"primary"}
       variant={"contained"}
-      className={"ms-3vw me-3vw"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.8rem"
+      }}
       onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
@@ -57,9 +64,16 @@ export const FoodFind = ({
   const doneNode = () => (
     <Button
       size={"small"}
-      color={"primary"}
+      color={"success"}
       variant={"contained"}
-      className={"ms-3vw me-3vw"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        fontSize: "0.8rem"
+      }}
       onClick={() => {
         Object.assign(objects?.SEND, {
           dateType: objects?.DATE.dateType,
@@ -75,12 +89,46 @@ export const FoodFind = ({
     </Button>
   );
 
+  // 6. pagination ---------------------------------------------------------------------------------
+  const paginationNode = () => (
+    <TablePagination
+      rowsPerPageOptions={[10]}
+      component={"div"}
+      labelRowsPerPage={""}
+      count={objects?.COUNT.totalCnt}
+      rowsPerPage={10}
+      page={Math.max(0, objects?.PAGING.page - 1)}
+      showFirstButton={true}
+      showLastButton={true}
+      style={{
+        width: "50vw",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: "5vw"
+      }}
+      onPageChange={(event, newPage) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          page: newPage + 1
+        }));
+      }}
+      onRowsPerPageChange={(event) => {
+        functions.setPAGING((prev) => ({
+          ...prev,
+          limit: parseInt(event.target.value, 10)
+        }));
+      }}
+    />
+  );
+
   // 7. foodFind -----------------------------------------------------------------------------------
   const foodFindNode = () => (
-    <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
+    <Card className={"block-wrapper d-row h-8vh w-100p shadow-none over-x-auto"}>
       {queryNode()}
       {findNode()}
       {doneNode()}
+      {paginationNode()}
     </Card>
   );
 

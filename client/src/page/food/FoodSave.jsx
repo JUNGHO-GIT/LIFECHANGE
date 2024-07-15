@@ -140,6 +140,16 @@ export const FoodSave = () => {
       },
     })
     .then((res) => {
+      // 저장된 데이터 없는경우 찾기페이지로 리다이렉트
+      if (!res.data.result || res.data.result.length === 0) {
+        navigate("/food/find/list", {
+          state: {
+            dateType: "day",
+            dateStart: moment().format("YYYY-MM-DD"),
+            dateEnd: moment().format("YYYY-MM-DD"),
+          }
+        });
+      }
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
         if (prev.length === 1 && prev[0]?._id === "") {
@@ -243,7 +253,7 @@ export const FoodSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (!section.food_part_idx || section.food_part_idx === 0) {
+      else if (!section.food_part_idx || section.food_part_idx === 0) {
         alert(translate("errorFoodPart"));
         refsCurrentIdx.food_part_idx.current
         && refsCurrentIdx.food_part_idx?.current?.focus();
@@ -326,6 +336,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -358,6 +369,7 @@ export const FoodSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -393,7 +405,7 @@ export const FoodSave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -410,7 +422,7 @@ export const FoodSave = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -510,7 +522,7 @@ export const FoodSave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -615,7 +627,9 @@ export const FoodSave = () => {
                 InputProps={{
                   readOnly: false,
                   endAdornment: (
-                    translate("g")
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
                   )
                 }}
                 onChange={(e) => {
@@ -684,7 +698,7 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
-              value={numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}
+              value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
               inputRef={REFS?.current[i]?.food_kcal}
               error={ERRORS[i]?.food_kcal}
               InputProps={{
@@ -705,7 +719,7 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
-              value={numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}
+              value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
               inputRef={REFS?.current[i]?.food_carb}
               error={ERRORS[i]?.food_carb}
               InputProps={{
@@ -729,7 +743,7 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
-              value={numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}
+              value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
               inputRef={REFS?.current[i]?.food_protein}
               error={ERRORS[i]?.food_protein}
               InputProps={{
@@ -750,7 +764,7 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
-              value={numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}
+              value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
               inputRef={REFS?.current[i]?.food_fat}
               error={ERRORS[i]?.food_fat}
               InputProps={{

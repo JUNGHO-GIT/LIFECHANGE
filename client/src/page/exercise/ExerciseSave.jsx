@@ -244,7 +244,7 @@ export const ExerciseSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (!section.exercise_part_idx || section.exercise_part_idx === 0) {
+      else if (!section.exercise_part_idx || section.exercise_part_idx === 0) {
         alert(translate("errorExercisePart"));
         refsCurrentIdx.exercise_part_idx.current
         && refsCurrentIdx.exercise_part_idx?.current?.focus();
@@ -302,6 +302,7 @@ export const ExerciseSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -334,6 +335,7 @@ export const ExerciseSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         percent();
         Object.assign(SEND, {
           dateType: "",
@@ -369,7 +371,7 @@ export const ExerciseSave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -386,13 +388,13 @@ export const ExerciseSave = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalVolume")}
             size={"small"}
-            value={numeral(OBJECT?.exercise_total_volume).format('0,0')}
+            value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
             variant={"outlined"}
             className={"w-86vw"}
             InputProps={{
@@ -437,7 +439,7 @@ export const ExerciseSave = () => {
             label={translate("weight")}
             type={"text"}
             size={"small"}
-            value={numeral(OBJECT?.exercise_body_weight).format('0,0')}
+            value={numeral(OBJECT?.exercise_body_weight).format("0,0")}
             variant={"outlined"}
             className={"w-86vw"}
             onChange={(e) => {
@@ -474,7 +476,7 @@ export const ExerciseSave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -574,7 +576,7 @@ export const ExerciseSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
-              value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')}
+              value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
               inputRef={REFS.current[i]?.exercise_set}
               error={ERRORS[i]?.exercise_set}
               InputProps={{

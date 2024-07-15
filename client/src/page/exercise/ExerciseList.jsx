@@ -97,9 +97,8 @@ export const ExerciseList = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
-      // Accordion 초기값 열림 설정
+      // Accordion 초기값 설정
       // setIsExpanded(res.data.result.map((_, index) => (index)));
-      // Accordion 초기값 닫힘 설정
       setIsExpanded([]);
     })
     .catch((err) => {
@@ -121,7 +120,7 @@ export const ExerciseList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border shadow-none p-10"} key={"empty"}>
+        <Card className={"border radius shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
             {translate("empty")}
           </Div>
@@ -129,12 +128,18 @@ export const ExerciseList = () => {
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border shadow-none p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
-                <Icons name={"TbChevronDown"} className={"w-18 h-18 black"} onClick={(e) => {
-                  setIsExpanded(isExpanded.includes(index) ? isExpanded.filter((el) => el !== index) : [...isExpanded, index]);
-                }}/>
+                <Icons
+                  name={"TbChevronDown"}
+                  className={"w-18 h-18 black"}
+                  onClick={(e) => {
+                    setIsExpanded(isExpanded.includes(index)
+                    ? isExpanded.filter((el) => el !== index)
+                    : [...isExpanded, index]
+                  )}}
+                />
               }>
                 <Div className={"d-center"}>
                   <Icons name={"TbSearch"} className={"w-18 h-18 black ms-n10 me-15"} onClick={(e) => {
@@ -150,13 +155,13 @@ export const ExerciseList = () => {
                     });
                   }} />
                   {item.exercise_dateStart === item.exercise_dateEnd ? (
-                    <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
                     </Div>
                   ) : (
-                    <Div className={"d-left fs-1-4rem fw-bolder"} onClick={(e) => {
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
@@ -168,55 +173,55 @@ export const ExerciseList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("volume")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_total_volume).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("vol")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("cardio")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {item.exercise_total_cardio}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("hm")}
                   </Div>
                 </Div>
                 <Hr30 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold dark"}>
+                  <Div className={"fs-1-0rem fw-600 dark"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
+                  <Div className={"fs-1-0rem fw-600 dark me-3vw"}>
                     {translate("weight")}
                   </Div>
                 </Div>
                 <Br10 />
                 <Div className={"d-left"}>
-                  <Div className={"fs-1-0rem fw-bold"}>
+                  <Div className={"fs-1-0rem fw-600"}>
                     {numeral(item.exercise_body_weight).format("0,0")}
                   </Div>
-                  <Div className={"fs-0-7rem dark fw-normal ms-10"}>
+                  <Div className={"fs-0-7rem dark fw-500 ms-10"}>
                     {translate("kg")}
                   </Div>
                 </Div>

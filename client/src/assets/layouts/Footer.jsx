@@ -3,7 +3,6 @@
 import {React}from "../../import/ImportReacts.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {Dummy} from "./footer/Dummy.jsx";
-import {FoodPaging} from "./footer/FoodPaging.jsx";
 import {FoodFind} from "./footer/FoodFind.jsx";
 import {SaveDelete} from "./footer/SaveDelete";
 import {ListFilter} from "./footer/ListFilter.jsx";
@@ -15,19 +14,15 @@ export const Footer = ({
 
   // 1. common -------------------------------------------------------------------------------------
   const isCalendar = strings?.first === "calendar";
-  const isExercise = strings?.first === "exercise";
-  const isFood = strings?.first === "food";
-  const isMoney = strings?.first === "money";
-  const isSleep = strings?.first === "sleep";
-  const isUser = strings?.first === "user";
   const isDiffList = strings?.second === "diff" && strings?.third === "list";
   const isGoalList = strings?.second === "goal" && strings?.third === "list";
   const isGoalSave = strings?.second === "goal" && strings?.third === "save";
   const isList = strings?.second === "list" && strings?.third === "";
   const isSave = strings?.second === "save" && strings?.third === "";
-  const isData = strings?.second === "data" && strings?.third !== "list";
   const isDummy = strings?.second === "data" && strings?.third === "list";
   const isCategory = strings?.second === "data" && strings?.third === "category";
+  const isFindList = strings?.second === "find" && strings?.third === "list";
+  const isFindSave = strings?.second === "find" && strings?.third === "save";
 
   // 2. listFilter ---------------------------------------------------------------------------------
   const listFilterNode = () => (
@@ -59,16 +54,6 @@ export const Footer = ({
     />
   );
 
-  // 5. foodPaging ---------------------------------------------------------------------------------
-  const foodPagingNode = () => (
-    <FoodPaging
-      strings={strings}
-      objects={objects}
-      functions={functions}
-      handlers={handlers}
-    />
-  );
-
   // 6. dummy --------------------------------------------------------------------------------------
   const dummyNode = () => (
     <Dummy
@@ -86,28 +71,42 @@ export const Footer = ({
     }
     else if (!isCalendar && (isDiffList || isGoalList || isList)) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
           {listFilterNode()}
         </Paper>
       )
     }
     else if (isDummy) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none over-x-auto"}>
+        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
           {dummyNode()}
+        </Paper>
+      )
+    }
+    else if (isFindList) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
+          {foodFindNode()}
+        </Paper>
+      )
+    }
+    else if (isFindSave) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
+          {saveDeleteNode()}
         </Paper>
       )
     }
     else if (isGoalSave || isSave) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
           {saveDeleteNode()}
         </Paper>
       )
     }
     else if (isCategory) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none over-x-auto"}>
+        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
           {saveDeleteNode()}
         </Paper>
       )

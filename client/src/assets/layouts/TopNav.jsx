@@ -45,7 +45,7 @@ export const TopNav = () => {
   // 3. logic --------------------------------------------------------------------------------------
   const makeIcon = (part, className, text, popTrigger) => {
 
-    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-bold ms-3vw";
+    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-600 ms-3vw";
 
     if (
       parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
@@ -145,7 +145,7 @@ export const TopNav = () => {
       contents={({closePopup}) => (
       <Div className={"d-column p-10"}>
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem fw-bold"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+          <Div className={"fs-0-8rem fw-600"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
         </Div>
         <Br20 />
         <Div className={"d-center"}>
@@ -184,7 +184,7 @@ export const TopNav = () => {
         </Div>
         <Br20 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-6rem fw-normal"}>
+          <Div className={"fs-0-6rem fw-500"}>
             {translate("score")}
           </Div>
         </Div>
@@ -209,21 +209,21 @@ export const TopNav = () => {
       contents={({closePopup}) => (
         <Div className={"w-max75vw h-max65vh border d-column p-20"}>
           <Div className={"d-center"}>
-            <Div className={"fs-1-0rem fw-normal"}>
+            <Div className={"fs-1-0rem fw-500"}>
               {dateStart}
             </Div>
-            <Div className={"fs-0-7rem fw-normal ms-10 me-10"}>
+            <Div className={"fs-0-7rem fw-500 ms-10 me-10"}>
               ~
             </Div>
-            <Div className={"fs-1-0rem fw-normal"}>
+            <Div className={"fs-1-0rem fw-500"}>
               {dateEnd}
             </Div>
           </Div>
           <Br20/>
           <Div className={"d-center"}>
             <Img src={money2} className={"w-16 h-16"} />
-            <Div className={"fs-1-4rem fw-bold"}>
-              {numeral(totalProperty).format('0,0')}
+            <Div className={"fs-1-4rem fw-600"}>
+              {numeral(totalProperty).format("0,0")}
             </Div>
           </Div>
           <Br20/>
@@ -234,7 +234,7 @@ export const TopNav = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-50vw"}
-              value={numeral(totalIncome).format('0,0')}
+              value={numeral(totalIncome).format("0,0")}
               InputProps={{
                 readOnly: true,
                 startAdornment: (
@@ -256,7 +256,7 @@ export const TopNav = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-50vw"}
-              value={numeral(totalExpense).format('0,0')}
+              value={numeral(totalExpense).format("0,0")}
               InputProps={{
                 readOnly: true,
                 startAdornment: (

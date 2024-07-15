@@ -18,7 +18,15 @@ export const SaveDelete = ({
       size={"small"}
       color={"primary"}
       variant={"contained"}
-      className={"me-3vw"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.8rem"
+      }}
       onClick={() => {
         handlers.flowSave();
         Object.keys(sessionStorage).forEach((key) => {
@@ -38,7 +46,14 @@ export const SaveDelete = ({
       size={"small"}
       color={"error"}
       variant={"contained"}
-      className={"me-3vw"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        fontSize: "0.8rem"
+      }}
       onClick={() => {
         handlers.flowDeletes();
       }}

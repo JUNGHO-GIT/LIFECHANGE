@@ -92,14 +92,15 @@ export const Dummy = ({
       size={"small"}
       color={"primary"}
       variant={"contained"}
-      className={"me-2vw fs-0-7rem"}
       style={{
         lineHeight: "1.4",
         padding: "3px 9px",
         textTransform: "none",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.7rem"
       }}
       onClick={() => {
         handlers.flowDummySave();
@@ -115,14 +116,15 @@ export const Dummy = ({
       size={"small"}
       color={"error"}
       variant={"contained"}
-      className={"me-2vw fs-0-7rem"}
       style={{
         lineHeight: "1.4",
         padding: "3px 9px",
         textTransform: "none",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.7rem"
       }}
       onClick={() => {
         handlers.flowDummyDelete();
@@ -138,14 +140,15 @@ export const Dummy = ({
       size={"small"}
       color={"warning"}
       variant={"contained"}
-      className={"fs-0-7rem"}
       style={{
         lineHeight: "1.4",
         padding: "3px 9px",
         textTransform: "none",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.7rem"
       }}
       onClick={() => {
         handlers.flowDummyDelete("all");

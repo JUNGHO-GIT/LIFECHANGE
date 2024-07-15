@@ -433,22 +433,22 @@ export const FoodDashAvg = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalMonth()}
         </Card>
       );
       const dashFragment3 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalYear()}
         </Card>
       );
       const dashFragment2 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartNutMonth()}
         </Card>
       );
       const dashFragment4 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartNutYear()}
         </Card>
       );

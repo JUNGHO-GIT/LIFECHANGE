@@ -222,6 +222,7 @@ export const UserDataDummy = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,
@@ -230,10 +231,7 @@ export const UserDataDummy = () => {
           ...prev,
           page: 1
         }));
-        // 1초뒤
-        setTimeout(() => {
-          navigate(0);
-        }, 1000);
+        navigate(0);
       }
       else {
         alert(res.data.msg);
@@ -254,6 +252,7 @@ export const UserDataDummy = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,
@@ -262,10 +261,7 @@ export const UserDataDummy = () => {
           ...prev,
           page: 1
         }));
-        // 1초뒤
-        setTimeout(() => {
-          navigate(0);
-        }, 1000);
+        navigate(0);
       }
       else {
         alert(res.data.msg);
@@ -275,8 +271,6 @@ export const UserDataDummy = () => {
       console.error(err);
     })
   };
-
-  //
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -289,7 +283,7 @@ export const UserDataDummy = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border shadow-none p-10"} key={"empty"}>
+        <Card className={"border radius shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
             {translate("empty")}
           </Div>
@@ -417,16 +411,16 @@ export const UserDataDummy = () => {
                       )}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.food_goal_kcal).format('0,0')}
+                      {numeral(item.food_goal_kcal).format("0,0")}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.food_goal_carb).format('0,0')}
+                      {numeral(item.food_goal_carb).format("0,0")}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.food_goal_protein).format('0,0')}
+                      {numeral(item.food_goal_protein).format("0,0")}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.food_goal_fat).format('0,0')}
+                      {numeral(item.food_goal_fat).format("0,0")}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -551,10 +545,10 @@ export const UserDataDummy = () => {
                       )}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.money_total_income).format('0,0')}
+                      {numeral(item.money_total_income).format("0,0")}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.money_total_expense).format('0,0')}
+                      {numeral(item.money_total_expense).format("0,0")}
                     </TableCell>
                   </TableRow>
                 ))}

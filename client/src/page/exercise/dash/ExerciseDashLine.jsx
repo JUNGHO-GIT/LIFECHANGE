@@ -435,22 +435,22 @@ export const ExerciseDashLine = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartVolumeWeek()}
         </Card>
       );
       const dashFragment2 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartVolumeMonth()}
         </Card>
       );
       const dashFragment3 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartCardioWeek()}
         </Card>
       );
       const dashFragment4 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartCardioMonth()}
         </Card>
       );

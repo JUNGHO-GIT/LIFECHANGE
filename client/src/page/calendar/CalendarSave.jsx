@@ -191,7 +191,7 @@ export const CalendarSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (!section.calendar_part_idx || section.calendar_part_idx === 0) {
+      else if (!section.calendar_part_idx || section.calendar_part_idx === 0) {
         alert(translate("errorCalendarPart"));
         refsCurrentIdx.calendar_part_idx.current
         && refsCurrentIdx.calendar_part_idx?.current?.focus();
@@ -233,6 +233,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -264,6 +265,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
+        alert(res.data.msg);
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -298,7 +300,7 @@ export const CalendarSave = () => {
   const tableNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border shadow-none p-20"}>
+      <Card className={"border radius shadow-none p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -322,7 +324,7 @@ export const CalendarSave = () => {
         />
       );
       const tableFragment = (i) => (
-        <Card className={"border shadow-none p-20"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}

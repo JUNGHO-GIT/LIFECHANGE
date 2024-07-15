@@ -174,7 +174,7 @@ export const MoneyDashBar = () => {
         />
       );
       const dashFragment1 = (i) => (
-        <Card className={"border shadow-none p-10"} key={i}>
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartToday()}
         </Card>
       );
