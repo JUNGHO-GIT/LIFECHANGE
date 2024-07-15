@@ -18,7 +18,7 @@
 }
 .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
   text-overflow: clip !important;
-  font-size: 0.9rem !important;
+  font-size: 0.9rem;
 }
 .MuiPopover-paper {
   z-index: 100000 !important;

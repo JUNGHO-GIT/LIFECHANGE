@@ -79,10 +79,6 @@ export const FoodGoalSave = () => {
     food_goal_protein: createRef(),
     food_goal_fat: createRef(),
   });
-  
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -152,25 +148,25 @@ export const FoodGoalSave = () => {
       return;
     }
 
-    if (OBJECT.food_goal_kcal === 0) {
+    if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === 0) {
       alert(translate("errorFoodGoalKcal"));
       refsCurrent.food_goal_kcal.current?.focus();
       initialErrors.food_goal_kcal = true;
       foundError = true;
     }
-    else if (OBJECT.food_goal_carb === 0) {
+    else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === 0) {
       alert(translate("errorFoodGoalCarb"));
       refsCurrent.food_goal_carb.current?.focus();
       initialErrors.food_goal_carb = true;
       foundError = true;
     }
-    else if (OBJECT.food_goal_protein === 0) {
+    else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === 0) {
       alert(translate("errorFoodGoalProtein"));
       refsCurrent.food_goal_protein.current?.focus();
       initialErrors.food_goal_protein = true;
       foundError = true;
     }
-    else if (OBJECT.food_goal_fat === 0) {
+    else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === 0) {
       alert(translate("errorFoodGoalFat"));
       refsCurrent.food_goal_fat.current?.focus();
       initialErrors.food_goal_fat = true;
@@ -453,7 +449,7 @@ export const FoodGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

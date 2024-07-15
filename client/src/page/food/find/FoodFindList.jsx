@@ -243,7 +243,7 @@ export const FoodFindList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("kcal")}
                   </Div>
                 </Div>
@@ -261,7 +261,7 @@ export const FoodFindList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("carb")}
                   </Div>
                 </Div>
@@ -279,7 +279,7 @@ export const FoodFindList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("protein")}
                   </Div>
                 </Div>
@@ -297,7 +297,7 @@ export const FoodFindList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("fat")}
                   </Div>
                 </Div>
@@ -324,7 +324,7 @@ export const FoodFindList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

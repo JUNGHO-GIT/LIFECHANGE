@@ -152,7 +152,7 @@ export const FoodDiff = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
+                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
                       <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
@@ -163,7 +163,7 @@ export const FoodDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("kcal")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -202,7 +202,7 @@ export const FoodDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("carb")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -241,7 +241,7 @@ export const FoodDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("protein")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -280,7 +280,7 @@ export const FoodDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("fat")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -328,7 +328,7 @@ export const FoodDiff = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

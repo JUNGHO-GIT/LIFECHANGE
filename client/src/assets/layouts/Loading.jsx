@@ -29,7 +29,7 @@ export const Loading = ({
         setHeight("h-min50vh");
       }
       else {
-        setHeight("h-min67vh");
+        setHeight("h-min75vh");
       }
     }
   }, [secondStr]);

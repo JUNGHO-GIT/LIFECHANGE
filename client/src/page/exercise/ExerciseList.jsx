@@ -160,7 +160,7 @@ export const ExerciseList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
+                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
                       <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
@@ -171,7 +171,7 @@ export const ExerciseList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("volume")}
                   </Div>
                 </Div>
@@ -189,7 +189,7 @@ export const ExerciseList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("cardio")}
                   </Div>
                 </Div>
@@ -207,7 +207,7 @@ export const ExerciseList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("weight")}
                   </Div>
                 </Div>
@@ -234,7 +234,7 @@ export const ExerciseList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

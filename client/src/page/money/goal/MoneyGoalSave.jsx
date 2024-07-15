@@ -139,13 +139,13 @@ export const MoneyGoalSave = () => {
       return;
     }
 
-    if (OBJECT.money_goal_income === 0) {
+    if (!OBJECT.money_goal_income || OBJECT.money_goal_income === 0) {
       alert(translate("errorMoneyGoalIncome"));
       refsCurrent.money_goal_income.current?.focus();
       initialErrors.money_goal_income = true;
       foundError = true;
     }
-    else if (OBJECT.money_goal_expense === 0) {
+    else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === 0) {
       alert(translate("errorMoneyGoalExpense"));
       refsCurrent.money_goal_expense.current?.focus();
       initialErrors.money_goal_expense = true;
@@ -358,7 +358,7 @@ export const MoneyGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

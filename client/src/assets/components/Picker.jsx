@@ -21,82 +21,41 @@ export const Picker = ({
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const isDiffList = secondStr === "diff" && thirdStr === "list";
+  const isGoalList = secondStr === "goal" && thirdStr === "list";
+  const isGoalSave = secondStr === "goal" && thirdStr === "save";
+  const isList = secondStr === "list" && thirdStr === "";
+  const isSave = secondStr === "save" && thirdStr === "";
 
-  // 1. common -------------------------------------------------------------------------------------
-  const selectStr =
-  (secondStr === "goal" && thirdStr === "list") ||
-  (secondStr === "list" && thirdStr === "") ? (
-    "h-min0 h-4vh fs-0-7rem pointer"
-  ) : (secondStr === "goal" && thirdStr === "save") ||
-  (secondStr === "save" && thirdStr === "") ? (
-    "h-min40 fs-0-8rem pointer"
-  ) : "pointer";
+  // 2. type ---------------------------------------------------------------------------------------
+  const typeStr =
+    (isDiffList || isGoalList || isList) ? (
+      "h-min0 h-4vh fs-0-7rem pointer"
+    )
+    : (isGoalSave || isSave) ? (
+      "h-min40 fs-0-8rem pointer"
+    )
+    : "";
 
-  // 1. common -------------------------------------------------------------------------------------
-  const dateStr1 =
-  // 1-1. goal list
-  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
-    "w-46vw"
-  ) :
-  // 1-2. diff list
-  (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "w-46vw"
-  ) :
-  // 1-3. list
-  (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "w-46vw"
-  ) :
-  // 1-4. find save
-  (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
-    "w-86vw"
-  ) :
-  // 1-5. goal save
-  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
-    "w-46vw"
-  ) :
-  // 1-6. calendar save
-  (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-46vw"
-  ) :
-  // 1-7. save
-  (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "w-86vw"
-  ) :
-  // none
-  "";
+  // 3. width --------------------------------------------------------------------------------------
+  const widthStr =
+    (isDiffList || isGoalList || isList) ? (
+      "w-46vw"
+    )
+    : (isGoalSave || isSave) ? (
+      "w-86vw"
+    )
+    : "";
 
-  // 1. common -------------------------------------------------------------------------------------
-  const dateStr2 =
-  // 1-1. goal list
-  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "list") ? (
-    "h-min0 h-4vh fs-0-7rem pointer"
-  ) :
-  // 1-2. diff list
-  (firstStr !== "calendar" && secondStr === "diff" && thirdStr === "list") ? (
-    "h-min0 h-4vh fs-0-7rem pointer"
-  ) :
-  // 1-3. list
-  (firstStr !== "calendar" && secondStr === "list" && thirdStr === "") ? (
-    "h-min0 h-4vh fs-0-7rem pointer"
-  ) :
-  // 1-4. find save
-  (firstStr !== "calendar" && secondStr === "find" && thirdStr === "save") ? (
-    "h-min40 fs-0-8rem pointer"
-  ) :
-  // 1-5. goal save
-  (firstStr !== "calendar" && secondStr === "goal" && thirdStr === "save") ? (
-    "h-min40 fs-0-8rem pointer"
-  ) :
-  // 1-6. calendar save
-  (firstStr === "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "h-min40 fs-0-8rem pointer"
-  ) :
-  // 1-7. save
-  (firstStr !== "calendar" && secondStr === "save" && thirdStr === "") ? (
-    "h-min40 fs-0-8rem pointer"
-  ) :
-  // none
-  "";
+  // 4. inner --------------------------------------------------------------------------------------
+  const innerStr =
+    (isDiffList || isGoalList || isList) ? (
+      "h-min0 h-4vh fs-0-7rem pointer"
+    )
+    : (isGoalSave || isSave) ? (
+      "h-min40 fs-0-8rem pointer"
+    )
+    : "";
 
   // 1. type ---------------------------------------------------------------------------------------
   const typeNode = () => (
@@ -111,7 +70,7 @@ export const Picker = ({
         className={"w-26vw me-3vw"}
         InputProps={{
           readOnly: false,
-          className: selectStr,
+          className: typeStr
         }}
         onChange={(e) => {
           if (e.target.value === "day") {
@@ -266,10 +225,10 @@ export const Picker = ({
           label={translate("date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
-          className={dateStr1}
+          className={widthStr}
           InputProps={{
             readOnly: true,
-            className: dateStr2,
+            className: innerStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -388,11 +347,11 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={dateStr1}
+          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          className={widthStr}
           InputProps={{
             readOnly: true,
-            className: dateStr2,
+            className: innerStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -484,11 +443,11 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={dateStr1}
+          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          className={widthStr}
           InputProps={{
             readOnly: true,
-            className: dateStr2,
+            className: innerStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -580,11 +539,11 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={dateStr1}
+          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          className={widthStr}
           InputProps={{
             readOnly: true,
-            className: dateStr2,
+            className: innerStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -687,11 +646,11 @@ export const Picker = ({
           size={"small"}
           label={translate("duration")}
           variant={"outlined"}
-          value={`${DATE.dateStart}~${DATE.dateEnd}`}
-          className={dateStr1}
+          value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          className={widthStr}
           InputProps={{
             readOnly: true,
-            className: dateStr2,
+            className: innerStr,
             startAdornment: (
               <Img src={common1} className={"w-16 h-16"} />
             ),
@@ -715,28 +674,19 @@ export const Picker = ({
   const saveNode = () => (
     <Div className={"d-center"}>
       {typeNode()}
-      {DATE.dateType === "day" ? (
-        daySection()
-      ) : DATE.dateType === "week" ? (
-        weekSection()
-      ) : DATE.dateType === "month" ? (
-        monthSection()
-      ) : DATE.dateType === "year" ? (
-        yearSection()
-      ) : DATE.dateType === "select" ? (
-        selectSection()
-      ) : null}
+      {DATE.dateType === "day" && daySection()}
+      {DATE.dateType === "week" && weekSection()}
+      {DATE.dateType === "month" && monthSection()}
+      {DATE.dateType === "year" && yearSection()}
+      {DATE.dateType === "select" && selectSection()}
     </Div>
   );
 
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {secondStr === "list" || thirdStr === "list" ? (
-        listNode()
-      ) : secondStr === "save" || thirdStr === "save" ? (
-        saveNode()
-      ) : null}
+      {(isDiffList || isGoalList || isList) && listNode()}
+      {(isGoalSave || isSave) && saveNode()}
     </>
   );
 };

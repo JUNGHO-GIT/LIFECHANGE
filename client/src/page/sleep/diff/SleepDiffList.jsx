@@ -148,7 +148,7 @@ export const SleepDiff = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
+                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
                       <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
@@ -159,7 +159,7 @@ export const SleepDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("bedTime")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -198,7 +198,7 @@ export const SleepDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("wakeTime")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -237,7 +237,7 @@ export const SleepDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("sleepTime")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -285,7 +285,7 @@ export const SleepDiff = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

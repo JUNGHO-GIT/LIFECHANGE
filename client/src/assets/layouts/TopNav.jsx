@@ -45,7 +45,7 @@ export const TopNav = () => {
   // 3. logic --------------------------------------------------------------------------------------
   const makeIcon = (part, className, text, popTrigger) => {
 
-    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-bold ms-5";
+    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-bold ms-3vw";
 
     if (
       parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
@@ -149,35 +149,35 @@ export const TopNav = () => {
         </Div>
         <Br20 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-5"}>
+          <Div className={"fs-0-8rem me-3vw"}>
             {translate("total")}
           </Div>
           {makeIcon("total", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-5"}>
+          <Div className={"fs-0-8rem me-3vw"}>
             {translate("exercise")}
           </Div>
           {makeIcon("exercise", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-5"}>
+          <Div className={"fs-0-8rem me-3vw"}>
             {translate("food")}
           </Div>
           {makeIcon("food", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-5"}>
+          <Div className={"fs-0-8rem me-3vw"}>
             {translate("money")}
           </Div>
           {makeIcon("money", "w-max5vw h-max5vh")}
         </Div>
         <Br10 />
         <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-5"}>
+          <Div className={"fs-0-8rem me-3vw"}>
             {translate("sleep")}
           </Div>
           {makeIcon("sleep", "w-max5vw h-max5vh")}

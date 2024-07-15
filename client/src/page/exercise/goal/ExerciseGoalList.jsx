@@ -150,7 +150,7 @@ export const ExerciseGoalList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
+                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
                       <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
@@ -161,7 +161,7 @@ export const ExerciseGoalList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("count")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -182,7 +182,7 @@ export const ExerciseGoalList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("volume")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -203,7 +203,7 @@ export const ExerciseGoalList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("cardio")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -224,7 +224,7 @@ export const ExerciseGoalList = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("weight")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -255,7 +255,7 @@ export const ExerciseGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

@@ -244,7 +244,7 @@ export const ExerciseSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (section.exercise_part_idx === 0) {
+      if (!section.exercise_part_idx || section.exercise_part_idx === 0) {
         alert(translate("errorExercisePart"));
         refsCurrentIdx.exercise_part_idx.current
         && refsCurrentIdx.exercise_part_idx?.current?.focus();
@@ -252,7 +252,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (section.exercise_title_idx === 0) {
+      else if (!section.exercise_title_idx || section.exercise_title_idx === 0) {
         alert(translate("errorExerciseTitle"));
         refsCurrentIdx.exercise_title_idx.current
         && refsCurrentIdx.exercise_title_idx?.current?.focus();
@@ -260,7 +260,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (section.exercise_set === 0) {
+      else if (!section.exercise_set || section.exercise_set === 0) {
         alert(translate("errorExerciseSet"));
         refsCurrentIdx.exercise_set.current
         && refsCurrentIdx.exercise_set?.current?.focus();
@@ -268,7 +268,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (section.exercise_rep === 0) {
+      else if (!section.exercise_rep || section.exercise_rep === 0) {
         alert(translate("errorExerciseRep"));
         refsCurrentIdx.exercise_rep.current
         && refsCurrentIdx.exercise_rep?.current?.focus();
@@ -276,7 +276,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (section.exercise_kg === 0) {
+      else if (!section.exercise_kg || section.exercise_kg === 0) {
         alert(translate("errorExerciseKg"));
         refsCurrentIdx.exercise_kg.current
         && refsCurrentIdx.exercise_kg?.current?.focus();
@@ -700,7 +700,7 @@ export const ExerciseSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}
           {tableSection()}

@@ -135,7 +135,7 @@ export const UserDeletes = () => {
             flowSave();
           }}
         >
-          {translate("deletes")}
+          {translate("userDeletes")}
         </Button>
       </Div>
     );

@@ -145,7 +145,7 @@ export const MoneyDiff = () => {
                         e.stopPropagation();
                       }}>
                         <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div>~</Div>
+                        <Div className={"ms-3vw me-3vw"}> ~ </Div>
                         <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                       </Div>
                     )}
@@ -157,7 +157,7 @@ export const MoneyDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("income")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -196,7 +196,7 @@ export const MoneyDiff = () => {
                   <Div className={"fs-1-0rem fw-bold dark"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Div>
-                  <Div className={"fs-1-0rem fw-bold dark me-5"}>
+                  <Div className={"fs-1-0rem fw-bold dark me-3vw"}>
                     {translate("expense")}
                   </Div>
                   <Div className={"fs-0-9rem fw-normal dark"}>
@@ -244,7 +244,7 @@ export const MoneyDiff = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

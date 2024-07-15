@@ -209,7 +209,7 @@ export const MoneySave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (section.money_part_idx === 0) {
+      if (!section.money_part_idx || section.money_part_idx === 0) {
         alert(translate("errorMoneyPart"));
         refsCurrentIdx.money_part_idx.current
         && refsCurrentIdx.money_part_idx?.current?.focus();
@@ -217,7 +217,7 @@ export const MoneySave = () => {
         foundError = true;
         break;
       }
-      else if (section.money_title_idx === 0) {
+      else if (!section.money_title_idx || section.money_title_idx === 0) {
         alert(translate("errorMoneyTitle"));
         refsCurrentIdx.money_title_idx.current
         && refsCurrentIdx.money_title_idx?.current?.focus();
@@ -225,7 +225,7 @@ export const MoneySave = () => {
         foundError = true;
         break;
       }
-      else if (section.money_amount === 0) {
+      else if (!section.money_amount || section.money_amount === 0) {
         alert(translate("errorMoneyAmount"));
         refsCurrentIdx.money_amount.current
         && refsCurrentIdx.money_amount?.current?.focus();
@@ -543,7 +543,7 @@ export const MoneySave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}
           {tableSection()}

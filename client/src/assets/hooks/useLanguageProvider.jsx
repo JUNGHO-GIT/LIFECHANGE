@@ -61,6 +61,10 @@ export const useTranslate = () => {
     color: {ko: "색상", en: "Color"},
 
     // d
+    done: {ko: "완료", en: "Done"},
+    delete: {ko: "삭제", en: "Delete"},
+    deletes: {ko: "삭제", en: "Delete"},
+    deletesAll: {ko: "전체삭제", en: "Delete All"},
     dashBar: {ko: "목표", en: "Goal"},
     dashPie: {ko: "비율", en: "Proportion"},
     dashLine: {ko: "추이", en: "Trend"},
@@ -78,7 +82,6 @@ export const useTranslate = () => {
     dateStart: {ko: "시작일", en: "Start Date"},
     dateType: {ko: "유형", en: "Type"},
     day: {ko: "일별", en: "Day"},
-    deletes: {ko: "회원탈퇴", en: "Delete"},
     desc: {ko: "내림차순", en: "Desc"},
     diff: {ko: "비교", en: "Diff"},
     diffList: {ko: "비교", en: "Comparison"},
@@ -264,6 +267,7 @@ export const useTranslate = () => {
 
     // u
     unknown: {ko: "선택하지 않음", en: "Unknown"},
+    userDeletes: {ko: "회원탈퇴", en: "Withdrawal"},
 
     // v
     verify: {ko: "인증", en: "Verify"},
@@ -407,8 +411,8 @@ export const useTranslate = () => {
     errorCalendarContent: {ko: "내용을 입력해주세요", en: "Please enter Content"},
 
     // error (money - goal)
-    errorMoneyGoalIncome: {ko: "목표 수입을 입력해주세요", en: "Please enter Goal Income"},
-    errorMoneyGoalExpense: {ko: "목표 지출을 입력해주세요", en: "Please enter Goal Expense"},
+    errorMoneyGoalIncome: {ko: "수입 목표를 입력해주세요", en: "Please enter Goal Income"},
+    errorMoneyGoalExpense: {ko: "지출 목표를 입력해주세요", en: "Please enter Goal Expense"},
 
     // error (money)
     errorMoneyPart: {ko: "대분류를 선택해주세요", en: "Please select Part"},
@@ -417,8 +421,8 @@ export const useTranslate = () => {
 
     // error (sleep - goal)
     errorSleepGoalBedTime: {ko: "취침시간 목표를 입력해주세요", en: "Please enter Goal Bed Time"},
-    errorSleepGoalWakeTime: {ko: "기상시간 목표 입력해주세요", en: "Please enter Goal Wake Time"},
-    errorSleepGoalSleepTime: {ko: "수면시간 목표 입력해주세요", en: "Please enter Goal Sleep Time"},
+    errorSleepGoalWakeTime: {ko: "기상시간 목표를 입력해주세요", en: "Please enter Goal Wake Time"},
+    errorSleepGoalSleepTime: {ko: "수면시간 목표를 입력해주세요", en: "Please enter Goal Sleep Time"},
 
     // error (sleep)
     errorSleepBedTime: {ko: "취침시간을 입력해주세요", en: "Please enter Bed Time"},

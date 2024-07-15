@@ -1,4 +1,4 @@
-// UserDataList.jsx
+// UserDataDummy.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
@@ -10,7 +10,7 @@ import {Paper, TableContainer, Table, Card} from "../../../import/ImportMuis.jsx
 import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDataList = () => {
+export const UserDataDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -319,7 +319,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -366,7 +366,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -411,7 +411,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -459,7 +459,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -505,7 +505,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -545,7 +545,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -586,7 +586,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -630,7 +630,7 @@ export const UserDataList = () => {
                       ) : (
                         <>
                           <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                          <Div>~</Div>
+                          <Div className={"ms-3vw me-3vw"}> ~ </Div>
                           <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
                         </>
                       )}
@@ -695,7 +695,7 @@ export const UserDataList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

@@ -68,7 +68,7 @@ export const dataArray = [
     title: "User",
     items: [
       {to: "/user/data/category", label: "UserDataCategory"},
-      {to: "/user/data/list", label: "UserDataList"},
+      {to: "/user/data/list", label: "UserDataDummy"},
     ]
   }
 ];

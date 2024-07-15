@@ -1,18 +1,37 @@
 // Footer.jsx
 
 import {React}from "../../import/ImportReacts.jsx";
-import {Filter} from "./footer/Filter.jsx";
-import {Btn} from "./footer/Btn.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
+import {Dummy} from "./footer/Dummy.jsx";
+import {FoodPaging} from "./footer/FoodPaging.jsx";
+import {FoodFind} from "./footer/FoodFind.jsx";
+import {SaveDelete} from "./footer/SaveDelete";
+import {ListFilter} from "./footer/ListFilter.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Footer = ({
   strings, objects, functions, handlers
 }) => {
 
-  // 6. filterNode ---------------------------------------------------------------------------------
-  const filterNode = () => (
-    <Filter
+  // 1. common -------------------------------------------------------------------------------------
+  const isCalendar = strings?.first === "calendar";
+  const isExercise = strings?.first === "exercise";
+  const isFood = strings?.first === "food";
+  const isMoney = strings?.first === "money";
+  const isSleep = strings?.first === "sleep";
+  const isUser = strings?.first === "user";
+  const isDiffList = strings?.second === "diff" && strings?.third === "list";
+  const isGoalList = strings?.second === "goal" && strings?.third === "list";
+  const isGoalSave = strings?.second === "goal" && strings?.third === "save";
+  const isList = strings?.second === "list" && strings?.third === "";
+  const isSave = strings?.second === "save" && strings?.third === "";
+  const isData = strings?.second === "data" && strings?.third !== "list";
+  const isDummy = strings?.second === "data" && strings?.third === "list";
+  const isCategory = strings?.second === "data" && strings?.third === "category";
+
+  // 2. listFilter ---------------------------------------------------------------------------------
+  const listFilterNode = () => (
+    <ListFilter
       strings={strings}
       objects={objects}
       functions={functions}
@@ -20,9 +39,39 @@ export const Footer = ({
     />
   );
 
-  // 6. btnNode ------------------------------------------------------------------------------------
-  const btnNode = () => (
-    <Btn
+  // 3. saveDelete ---------------------------------------------------------------------------------
+  const saveDeleteNode = () => (
+    <SaveDelete
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 4. foodFind -----------------------------------------------------------------------------------
+  const foodFindNode = () => (
+    <FoodFind
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 5. foodPaging ---------------------------------------------------------------------------------
+  const foodPagingNode = () => (
+    <FoodPaging
+      strings={strings}
+      objects={objects}
+      functions={functions}
+      handlers={handlers}
+    />
+  );
+
+  // 6. dummy --------------------------------------------------------------------------------------
+  const dummyNode = () => (
+    <Dummy
       strings={strings}
       objects={objects}
       functions={functions}
@@ -31,23 +80,47 @@ export const Footer = ({
   );
 
   // 7. footer -------------------------------------------------------------------------------------
-  const footerNode = () => (
-    strings?.second === "data" ? (
-      <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
-        {btnNode()}
-      </Paper>
-    ) : (
-      <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
-        {filterNode()}
-        {btnNode()}
-      </Paper>
-    )
-  );
+  const footerNode = () => {
+    if (isCalendar && (isDiffList || isGoalList || isList)) {
+      return null
+    }
+    else if (!isCalendar && (isDiffList || isGoalList || isList)) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
+          {listFilterNode()}
+        </Paper>
+      )
+    }
+    else if (isDummy) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none over-x-auto"}>
+          {dummyNode()}
+        </Paper>
+      )
+    }
+    else if (isGoalSave || isSave) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none over-x-auto"}>
+          {saveDeleteNode()}
+        </Paper>
+      )
+    }
+    else if (isCategory) {
+      return (
+        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none over-x-auto"}>
+          {saveDeleteNode()}
+        </Paper>
+      )
+    }
+    else {
+      return null
+    }
+  };
 
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-    {footerNode()}
+      {footerNode()}
     </>
   );
 };

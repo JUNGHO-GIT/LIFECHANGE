@@ -151,7 +151,7 @@ export const SleepList = () => {
                       e.stopPropagation();
                     }}>
                       <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div>~</Div>
+                      <Div className={"ms-3vw me-3vw"}> ~ </Div>
                       <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
                     </Div>
                   )}
@@ -226,7 +226,7 @@ export const SleepList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>

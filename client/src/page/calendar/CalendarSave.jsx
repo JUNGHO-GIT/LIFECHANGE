@@ -191,7 +191,7 @@ export const CalendarSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (section.calendar_part_idx === 0) {
+      if (!section.calendar_part_idx || section.calendar_part_idx === 0) {
         alert(translate("errorCalendarPart"));
         refsCurrentIdx.calendar_part_idx.current
         && refsCurrentIdx.calendar_part_idx?.current?.focus();
@@ -199,7 +199,7 @@ export const CalendarSave = () => {
         foundError = true;
         break;
       }
-      else if (section.calendar_title === "") {
+      else if (!section.calendar_title || section.calendar_title === "") {
         alert(translate("errorCalendarTitle"));
         refsCurrentIdx.calendar_title.current
         && refsCurrentIdx.calendar_title?.current?.focus();
@@ -207,7 +207,7 @@ export const CalendarSave = () => {
         foundError = true;
         break;
       }
-      else if (section.calendar_color === "") {
+      else if (!section.calendar_color || section.calendar_color === "") {
         alert(translate("errorCalendarColor"));
         refsCurrentIdx.calendar_color.current
         && refsCurrentIdx.calendar_color?.current?.focus();
@@ -460,7 +460,7 @@ export const CalendarSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

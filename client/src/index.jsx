@@ -59,7 +59,7 @@ import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
 import {UserDataCategory} from "./page/user/data/UserDataCategory.jsx";
 import {UserDataDetail} from "./page/user/data/UserDataDetail.jsx";
-import {UserDataList} from "./page/user/data/UserDataList.jsx";
+import {UserDataDummy} from "./page/user/data/UserDataDummy.jsx";
 import {UserSetting} from "./page/user/UserSetting.jsx";
 import {UserDeletes} from "./page/user/UserDeletes.jsx";
 import {UserInfo} from "./page/user/UserInfo.jsx";
@@ -124,7 +124,7 @@ const User = () => (
   <Routes>
     <Route path="/data/category" element={<UserDataCategory />} />
     <Route path="/data/detail" element={<UserDataDetail />} />
-    <Route path="/data/list" element={<UserDataList />} />
+    <Route path="/data/list" element={<UserDataDummy />} />
     <Route path="/setting" element={<UserSetting />} />
     <Route path="/info" element={<UserInfo />} />
     <Route path="/deletes" element={<UserDeletes />} />

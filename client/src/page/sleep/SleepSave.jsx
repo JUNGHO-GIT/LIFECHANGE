@@ -177,14 +177,14 @@ export const SleepSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (section.sleep_bedTime === "00:00") {
+      if (!section.sleep_bedTime || section.sleep_bedTime === "00:00") {
         alert(translate("errorSleepBedTime"));
         REFS?.current[idx]?.sleep_bedTime?.current?.focus();
         initialErrors[idx].sleep_bedTime = true;
         foundError = true;
         break;
       }
-      else if (section.sleep_wakeTime === "00:00") {
+      else if (!section.sleep_wakeTime || section.sleep_wakeTime === "00:00") {
         alert(translate("errorSleepWakeTime"));
         REFS?.current[idx]?.sleep_wakeTime?.current?.focus();
         initialErrors[idx].sleep_wakeTime = true;
@@ -359,7 +359,7 @@ export const SleepSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

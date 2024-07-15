@@ -103,10 +103,6 @@ export const FoodSave = () => {
     food_protein: createRef(),
     food_fat: createRef(),
   })));
-  
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -247,10 +243,7 @@ export const FoodSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (
-        !section.food_part_idx ||
-        section.food_part_idx === 0
-      ) {
+      if (!section.food_part_idx || section.food_part_idx === 0) {
         alert(translate("errorFoodPart"));
         refsCurrentIdx.food_part_idx.current
         && refsCurrentIdx.food_part_idx?.current?.focus();
@@ -258,10 +251,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (
-        !section.food_count ||
-        section.food_count === 0
-      ) {
+      else if (!section.food_count || section.food_count === 0) {
         alert(translate("errorFoodCount"));
         refsCurrentIdx.food_count.current
         && refsCurrentIdx.food_count?.current?.focus();
@@ -269,7 +259,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_gram === 0) {
+      else if (!section.food_gram || section.food_gram === 0) {
         alert(translate("errorFoodGram"));
         refsCurrentIdx.food_gram.current
         && refsCurrentIdx.food_gram?.current?.focus();
@@ -277,7 +267,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_name === "") {
+      else if (!section.food_name || section.food_name === "") {
         alert(translate("errorFoodName"));
         refsCurrentIdx.food_name.current
         && refsCurrentIdx.food_name?.current?.focus();
@@ -285,10 +275,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (
-        !section.food_kcal ||
-        section.food_kcal === 0
-      ) {
+      else if (!section.food_kcal || section.food_kcal === 0) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current
         && refsCurrentIdx.food_kcal?.current?.focus();
@@ -296,7 +283,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_carb === 0) {
+      else if (!section.food_carb || section.food_carb === 0) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current
         && refsCurrentIdx.food_carb?.current?.focus();
@@ -304,7 +291,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_protein === 0) {
+      else if (!section.food_protein || section.food_protein === 0) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current
         && refsCurrentIdx.food_protein?.current?.focus();
@@ -312,7 +299,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_fat === 0) {
+      else if (!section.food_fat || section.food_fat === 0) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current
         && refsCurrentIdx.food_fat?.current?.focus();
@@ -791,7 +778,7 @@ export const FoodSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min67vh"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}
           {tableSection()}
