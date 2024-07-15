@@ -103,6 +103,10 @@ export const FoodSave = () => {
     food_protein: createRef(),
     food_fat: createRef(),
   })));
+  
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -243,7 +247,10 @@ export const FoodSave = () => {
         console.warn('Ref is undefined, skipping validation for index:', idx);
         continue;
       }
-      if (section.food_part_idx === 0) {
+      if (
+        !section.food_part_idx ||
+        section.food_part_idx === 0
+      ) {
         alert(translate("errorFoodPart"));
         refsCurrentIdx.food_part_idx.current
         && refsCurrentIdx.food_part_idx?.current?.focus();
@@ -251,7 +258,10 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_count === 0) {
+      else if (
+        !section.food_count ||
+        section.food_count === 0
+      ) {
         alert(translate("errorFoodCount"));
         refsCurrentIdx.food_count.current
         && refsCurrentIdx.food_count?.current?.focus();
@@ -275,7 +285,10 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (section.food_kcal === 0) {
+      else if (
+        !section.food_kcal ||
+        section.food_kcal === 0
+      ) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current
         && refsCurrentIdx.food_kcal?.current?.focus();

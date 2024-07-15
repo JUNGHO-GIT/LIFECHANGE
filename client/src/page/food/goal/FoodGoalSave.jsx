@@ -79,6 +79,10 @@ export const FoodGoalSave = () => {
     food_goal_protein: createRef(),
     food_goal_fat: createRef(),
   });
+  
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {

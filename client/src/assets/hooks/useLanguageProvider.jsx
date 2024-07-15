@@ -372,9 +372,9 @@ export const useTranslate = () => {
     N: {ko: "선택하지 않음", en: "Unknown"},
 
     // error (exercise - goal)
-    errorExerciseGoalCount: {ko: "목표 횟수를 입력해주세요", en: "Please enter Goal Count"},
-    errorExerciseGoalVolume: {ko: "목표 볼륨을 입력해주세요", en: "Please enter Goal Volume"},
-    errorExerciseGoalWeight: {ko: "목표 체중을 입력해주세요", en: "Please enter Goal Weight"},
+    errorExerciseGoalCount: {ko: "횟수 목표를 입력해주세요", en: "Please enter Goal Count"},
+    errorExerciseGoalVolume: {ko: "볼륨 목표를 입력해주세요", en: "Please enter Goal Volume"},
+    errorExerciseGoalWeight: {ko: "체중 목표를 입력해주세요", en: "Please enter Goal Weight"},
 
     // error (exercise)
     errorExercisePart: {ko: "대분류를 선택해주세요", en: "Please select Part"},
@@ -385,10 +385,10 @@ export const useTranslate = () => {
     errorExerciseKg: {ko: "무게를 입력해주세요", en: "Please enter Kg"},
 
     // error (food - goal)
-    errorFoodGoalKcal : {ko: "목표 칼로리를 입력해주세요", en: "Please enter Goal Kcal"},
-    errorFoodGoalCarb : {ko: "목표 탄수화물을 입력해주세요", en: "Please enter Goal Carb"},
-    errorFoodGoalProtein : {ko: "목표 단백질을 입력해주세요", en: "Please enter Goal Protein"},
-    errorFoodGoalFat : {ko: "목표 지방을 입력해주세요", en: "Please enter Goal Fat"},
+    errorFoodGoalKcal : {ko: "칼로리 목표를 입력해주세요", en: "Please enter Goal Kcal"},
+    errorFoodGoalCarb : {ko: "탄수화물 목표를 입력해주세요", en: "Please enter Goal Carb"},
+    errorFoodGoalProtein : {ko: "단백질 목표를 입력해주세요", en: "Please enter Goal Protein"},
+    errorFoodGoalFat : {ko: "지방 목표를 입력해주세요", en: "Please enter Goal Fat"},
 
     // error (food)
     errorFoodPart: {ko: "대분류를 선택해주세요", en: "Please select Part"},
@@ -416,9 +416,9 @@ export const useTranslate = () => {
     errorMoneyAmount: {ko: "금액을 입력해주세요", en: "Please enter Amount"},
 
     // error (sleep - goal)
-    errorSleepGoalBedTime: {ko: "목표 취침시간을 입력해주세요", en: "Please enter Goal Bed Time"},
-    errorSleepGoalWakeTime: {ko: "목표 기상시간을 입력해주세요", en: "Please enter Goal Wake Time"},
-    errorSleepGoalSleepTime: {ko: "목표 수면시간을 입력해주세요", en: "Please enter Goal Sleep Time"},
+    errorSleepGoalBedTime: {ko: "취침시간 목표를 입력해주세요", en: "Please enter Goal Bed Time"},
+    errorSleepGoalWakeTime: {ko: "기상시간 목표 입력해주세요", en: "Please enter Goal Wake Time"},
+    errorSleepGoalSleepTime: {ko: "수면시간 목표 입력해주세요", en: "Please enter Goal Sleep Time"},
 
     // error (sleep)
     errorSleepBedTime: {ko: "취침시간을 입력해주세요", en: "Please enter Bed Time"},
