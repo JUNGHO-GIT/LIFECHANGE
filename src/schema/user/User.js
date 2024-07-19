@@ -26,12 +26,12 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
-  user_gender: {
+  user_age: {
     type : String,
     default: "",
     required : false
   },
-  user_age: {
+  user_gender: {
     type : String,
     default: "",
     required : false

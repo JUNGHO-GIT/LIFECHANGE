@@ -435,6 +435,10 @@ export const useTranslate = () => {
     // error (user)
     errorUserId: {ko: "아이디를 입력해주세요", en: "Please enter ID"},
     errorUserPw: {ko: "비밀번호를 입력해주세요", en: "Please enter PW"},
+    errorUserAge: {ko: "나이를 입력해주세요", en: "Please enter Age"},
+    errorUserGender: {ko: "성별을 선택해주세요", en: "Please select Gender"},
+    errorUserHeight: {ko: "키를 입력해주세요", en: "Please enter Height"},
+    errorUserWeight: {ko: "체중을 입력해주세요", en: "Please enter Weight"},
   };
 
   const translate = useCallback((key, className) => {

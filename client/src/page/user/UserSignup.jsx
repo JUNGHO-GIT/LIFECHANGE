@@ -1,6 +1,6 @@
 // UserSignup.jsx
 
-import {React, useState, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
@@ -29,11 +29,94 @@ export const UserSignup = () => {
     user_id: "",
     user_pw: "",
     user_age: "",
+    user_gender: "",
     user_height: "",
     user_weight: "",
     user_image: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    user_id: false,
+    user_pw: false,
+    user_age: false,
+    user_gender: false,
+    user_height: false,
+    user_weight: false,
+  });
+  const REFS = useRef({
+    user_id: createRef(),
+    user_pw: createRef(),
+    user_age: createRef(),
+    user_gender: createRef(),
+    user_height: createRef(),
+    user_weight: createRef(),
+  });
+
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const validate = (OBJECT) => {
+    let foundError = false;
+    const initialErrors = {
+      user_id: false,
+      user_pw: false,
+      user_age: false,
+      user_gender: false,
+      user_height: false,
+      user_weight: false,
+    };
+    const refsCurrent = REFS?.current;
+
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+    else if (OBJECT.user_id === "" || !OBJECT.user_id) {
+      alert(translate("errorUserId"));
+      refsCurrent.user_id.current &&
+      refsCurrent.user_id.current?.focus();
+      initialErrors.user_id = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_pw === "" || !OBJECT.user_pw) {
+      alert(translate("errorUserPw"));
+      refsCurrent.user_pw.current &&
+      refsCurrent.user_pw.current?.focus();
+      initialErrors.user_pw = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_age === "" || !OBJECT.user_age) {
+      alert(translate("errorUserAge"));
+      refsCurrent.user_age.current &&
+      refsCurrent.user_age.current?.focus();
+      initialErrors.user_age = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
+      alert(translate("errorUserGender"));
+      refsCurrent.user_gender.current &&
+      refsCurrent.user_gender.current?.focus();
+      initialErrors.user_gender = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_height === "" || !OBJECT.user_height) {
+      alert(translate("errorUserHeight"));
+      refsCurrent.user_height.current &&
+      refsCurrent.user_height.current?.focus();
+      initialErrors.user_height = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
+      alert(translate("errorUserWeight"));
+      refsCurrent.user_weight.current &&
+      refsCurrent.user_weight.current?.focus();
+      initialErrors.user_weight = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSend = async () => {
@@ -75,6 +158,9 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    if (!validate(OBJECT)) {
+      return;
+    }
     await axios.post (`${URL_OBJECT}/signup`, {
       user_id: OBJECT.user_id,
       OBJECT: OBJECT
@@ -130,6 +216,8 @@ export const UserSignup = () => {
               label={`${translate("id")} (email)`}
               value={OBJECT.user_id}
               className={"w-66vw me-10"}
+              inputRef={REFS.current.user_id}
+              error={ERRORS.user_id}
               onChange={(e) => (
                 setOBJECT((prev) => ({
                   ...prev,
@@ -184,6 +272,8 @@ export const UserSignup = () => {
             label={translate("pw")}
             value={OBJECT.user_pw}
             className={"w-86vw"}
+            inputRef={REFS.current.user_pw}
+            error={ERRORS.user_pw}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -212,6 +302,8 @@ export const UserSignup = () => {
             label={translate("gender")}
             value={OBJECT.user_gender || "N"}
             className={"w-86vw text-left"}
+            inputRef={REFS.current.user_gender}
+            error={ERRORS.user_gender}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -234,6 +326,8 @@ export const UserSignup = () => {
             label={translate("age")}
             value={OBJECT.user_age}
             className={"w-86vw text-left"}
+            inputRef={REFS.current.user_age}
+            error={ERRORS.user_age}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -256,6 +350,8 @@ export const UserSignup = () => {
             label={translate("height")}
             value={OBJECT.user_height}
             className={"w-86vw text-left"}
+            inputRef={REFS.current.user_height}
+            error={ERRORS.user_height}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
@@ -278,6 +374,8 @@ export const UserSignup = () => {
             label={translate("weight")}
             value={OBJECT.user_weight}
             className={"w-86vw text-left"}
+            inputRef={REFS.current.user_weight}
+            error={ERRORS.user_weight}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
