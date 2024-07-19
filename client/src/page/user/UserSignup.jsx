@@ -18,16 +18,16 @@ export const UserSignup = () => {
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [pwConfirm, setPwConfirm] = useState("");
   const [clientCode, setClientCode] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
     user_number: 0,
     user_id: "",
+    user_id_verified: false,
     user_pw: "",
+    user_pw_verified: "",
     user_age: "",
     user_gender: "",
     user_height: "",
@@ -39,7 +39,9 @@ export const UserSignup = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState({
     user_id: false,
+    user_id_verified: false,
     user_pw: false,
+    user_pw_verified: false,
     user_age: false,
     user_gender: false,
     user_height: false,
@@ -47,7 +49,9 @@ export const UserSignup = () => {
   });
   const REFS = useRef({
     user_id: createRef(),
+    user_id_verified: createRef(),
     user_pw: createRef(),
+    user_pw_verified: createRef(),
     user_age: createRef(),
     user_gender: createRef(),
     user_height: createRef(),
@@ -59,7 +63,9 @@ export const UserSignup = () => {
     let foundError = false;
     const initialErrors = {
       user_id: false,
+      user_id_verified: false,
       user_pw: false,
+      user_pw_verified: false,
       user_age: false,
       user_gender: false,
       user_height: false,
@@ -78,11 +84,32 @@ export const UserSignup = () => {
       initialErrors.user_id = true;
       foundError = true;
     }
+    else if (OBJECT.user_id.indexOf("@") === -1) {
+      alert(translate("errorUserIdAt"));
+      refsCurrent.user_id.current &&
+      refsCurrent.user_id.current?.focus();
+      initialErrors.user_id = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_id_verified === false || !OBJECT.user_id_verified) {
+      alert(translate("errorUserIdVerified"));
+      refsCurrent.user_id_verified.current &&
+      refsCurrent.user_id_verified.current?.focus();
+      initialErrors.user_id_verified = true;
+      foundError = true;
+    }
     else if (OBJECT.user_pw === "" || !OBJECT.user_pw) {
       alert(translate("errorUserPw"));
       refsCurrent.user_pw.current &&
       refsCurrent.user_pw.current?.focus();
       initialErrors.user_pw = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_pw_verified === false || !OBJECT.user_pw_verified) {
+      alert(translate("errorUserPwVerified"));
+      refsCurrent.user_pw_verified.current &&
+      refsCurrent.user_pw_verified.current?.focus();
+      initialErrors.user_pw_verified = true;
       foundError = true;
     }
     else if (OBJECT.user_age === "" || !OBJECT.user_age) {
@@ -144,11 +171,18 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        setIsVerified(true);
+        alert(res.data.msg);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: true
+        }));
       }
       else {
         alert(res.data.msg);
-        setIsVerified(false);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: false
+        }));
       }
     })
     .catch((err) => {
@@ -232,7 +266,10 @@ export const UserSignup = () => {
               variant={"contained"}
               onClick={() => {
                 flowSend();
-                setIsVerified(false);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  user_id_verified: false
+                }));
               }}
             >
               {translate("send")}
@@ -247,6 +284,8 @@ export const UserSignup = () => {
               label={translate("verify")}
               value={clientCode}
               className={"w-66vw me-10"}
+              inputRef={REFS.current.user_id_verified}
+              error={ERRORS.user_id_verified}
               onChange={(e) => (
                 setClientCode(e.target.value)
               )}
@@ -256,7 +295,7 @@ export const UserSignup = () => {
               color={"primary"}
               className={"w-20vw"}
               variant={"contained"}
-              disabled={isVerified}
+              disabled={OBJECT.user_id_verified}
               onClick={() => {
                 flowVerify();
               }}
@@ -286,11 +325,16 @@ export const UserSignup = () => {
             select={false}
             type={"password"}
             size={"small"}
-            label={translate("pwConfirm")}
-            value={pwConfirm}
+            label={translate("pwVerified")}
+            value={OBJECT.user_pw_verified}
             className={"w-86vw"}
+            inputRef={REFS.current.user_pw_verified}
+            error={ERRORS.user_pw_verified}
             onChange={(e) => (
-              setPwConfirm(e.target.value)
+              setOBJECT((prev) => ({
+                ...prev,
+                user_pw_verified: e.target.value
+              }))
             )}
           />
           <Hr40 />
@@ -430,8 +474,8 @@ export const UserSignup = () => {
         />
       </Div>
     );
-    // 7-5. login
-    const loginSection = () => (
+    // 7-5. toLogin
+    const toLoginSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
@@ -453,7 +497,7 @@ export const UserSignup = () => {
           <Br10 />
           {googleSection()}
           <Hr40 />
-          {loginSection()}
+          {toLoginSection()}
         </Div>
       </Paper>
     );

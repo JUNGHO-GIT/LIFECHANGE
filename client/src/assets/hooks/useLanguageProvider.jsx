@@ -220,7 +220,7 @@ export const useTranslate = () => {
     property: {ko: "자산", en: "Property"},
     protein: {ko: "단백질", en: "Protein"},
     pw: {ko: "비밀번호", en: "PW"},
-    pwConfirm: {ko: "비밀번호 확인", en: "PW Confirm"},
+    pwVerified: {ko: "비밀번호 확인", en: "PW Confirm"},
     proportion: {ko: "비율", en: "Proportion"},
 
     // q
@@ -434,6 +434,8 @@ export const useTranslate = () => {
 
     // error (user)
     errorUserId: {ko: "아이디를 입력해주세요", en: "Please enter ID"},
+    errorUserIdVerified: {ko: "이메일 인증을 완료해주세요", en: "Please complete email verification"},
+    errorUserIdAt: {ko: "아이디는 이메일 형식으로 입력해주세요", en: "Please enter ID in email format"},
     errorUserPw: {ko: "비밀번호를 입력해주세요", en: "Please enter PW"},
     errorUserAge: {ko: "나이를 입력해주세요", en: "Please enter Age"},
     errorUserGender: {ko: "성별을 선택해주세요", en: "Please select Gender"},
