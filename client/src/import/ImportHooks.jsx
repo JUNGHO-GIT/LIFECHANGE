@@ -5,6 +5,7 @@ import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
 import {useLanguage} from "../assets/hooks/useLanguageProvider.jsx";
 import {useTranslate} from "../assets/hooks/useLanguageProvider.jsx";
+import {useValidate} from "../assets/hooks/useValidate.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -12,5 +13,6 @@ export {
   useStorage,
   useDeveloperMode,
   useLanguage,
-  useTranslate
+  useTranslate,
+  useValidate
 };

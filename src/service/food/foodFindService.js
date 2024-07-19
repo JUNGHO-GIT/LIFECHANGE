@@ -28,12 +28,12 @@ export const exist = async (
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (
-  user_id_param, PAGING_param, DATE_param
+  user_id_param, PAGING_param
 ) => {
 
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
   const query = PAGING_param.query;
-  const page = PAGING_param.page;
+  const page = PAGING_param.page === 0 ? "" : PAGING_param.page;
 
   let finalResult = [];
   let serv = "";

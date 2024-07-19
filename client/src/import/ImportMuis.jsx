@@ -43,7 +43,7 @@ import {
 
 // s
 import {
-  Select, Snackbar, SnackbarContent, Switch
+  Select, Snackbar, SnackbarContent, Switch, SpeedDial, SpeedDialAction, SpeedDialIcon
 } from "@mui/material";
 
 // t
@@ -109,7 +109,7 @@ export {
   Pagination, Paper, Popover, Popper,
 
   // s
-  Select, Snackbar, SnackbarContent, Switch,
+  Select, Snackbar, SnackbarContent, Switch, SpeedDial, SpeedDialAction, SpeedDialIcon,
 
   // t
   Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, TabScrollButton, TextField, Toolbar, Tooltip, Tabs, Tab, tabsClasses,

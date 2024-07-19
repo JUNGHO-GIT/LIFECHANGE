@@ -101,8 +101,7 @@ export const FindFood = ({
       component={"div"}
       labelRowsPerPage={""}
       count={objects?.COUNT.totalCnt}
-      rowsPerPage={10}
-      page={Math.max(0, objects?.PAGING.page - 1)}
+      page={objects?.PAGING.page}
       showFirstButton={true}
       showLastButton={true}
       style={{
@@ -112,10 +111,11 @@ export const FindFood = ({
         alignItems: "center",
         marginLeft: "5vw"
       }}
+      rowsPerPage={10}
       onPageChange={(event, newPage) => {
         functions.setPAGING((prev) => ({
           ...prev,
-          page: newPage + 1
+          page: newPage
         }));
       }}
       onRowsPerPageChange={(event) => {

@@ -3,8 +3,9 @@
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
-import {Picker, Div} from "../../../import/ImportComponents.jsx";
+import {Picker, Div, Br10, PopUp} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
+
 
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = ({
@@ -60,14 +61,15 @@ export const ListFilter = ({
       size={"small"}
       color={"primary"}
       variant={"contained"}
-      className={"ms-3vw fs-0-7rem"}
+      className={"ms-3vw"}
       style={{
         lineHeight: "1.4",
         padding: "3px 9px",
         textTransform: "none",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        fontSize: "0.7rem"
       }}
       onClick={() => {
         functions?.setDATE((prev) => ({
@@ -84,7 +86,7 @@ export const ListFilter = ({
 
   // 7. filter -------------------------------------------------------------------------------------
   const filterNode = () => (
-    <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
+    <Card className={"block-wrapper d-row h-8vh shadow-none"}>
       {sortNode()}
       {pickerNode()}
       {todayNode()}

@@ -388,7 +388,6 @@ export const MoneySave = () => {
             }}
           />
         </Div>
-        <Br20/>
       </Card>
     );
     // 7-3. table

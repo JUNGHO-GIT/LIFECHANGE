@@ -520,7 +520,6 @@ export const FoodSave = () => {
             }}
           />
         </Div>
-        <Br20/>
       </Card>
     );
     // 7-3. table

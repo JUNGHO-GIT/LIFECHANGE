@@ -38,7 +38,7 @@ export const FoodFindList = () => {
     `PAGING(${PATH})`, {
     sort: "asc",
     query: "",
-    page: 1,
+    page: 0,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -153,7 +153,6 @@ export const FoodFindList = () => {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
-        DATE: DATE
       },
     })
     .then((res) => {
@@ -232,15 +231,15 @@ export const FoodFindList = () => {
                       handlerCheckboxChange(index);
                     }}
                   />
-                  {/** 10자 넘어가면 ... 처리 */}
+                  {/** 15자 넘어가면 ... 처리 */}
                   {isExpanded.includes(index) ? (
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {item.food_name}
                     </Div>
                   ) : (
                     <Div className={"fs-1-0rem fw-600 dark"}>
-                      {item.food_name.length > 10 ? (
-                        `${item.food_name.substring(0, 10)}...`
+                      {item.food_name.length > 15 ? (
+                        `${item.food_name.substring(0, 15)}...`
                       ) : item.food_name}
                     </Div>
                   )}

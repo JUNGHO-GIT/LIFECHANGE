@@ -254,6 +254,8 @@ export const useTranslate = () => {
     // t
     trend: {ko: "추이", en: "Trend"},
     today: {ko: "오늘", en: "Today"},
+    thisWeek: {ko: "이번주", en: "This Week"},
+    thisMonth: {ko: "이번달", en: "This Month"},
     title: {ko: "소분류", en: "Title"},
     total: {ko: "총합", en: "total"},
     totalCount: {ko: "총 횟수", en: "Total Count"},

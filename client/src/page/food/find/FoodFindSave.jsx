@@ -225,21 +225,27 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_count || section.food_count === 0) {
-        alert(translate("errorFoodCount"));
-        refsCurrentIdx.food_count.current &&
-        refsCurrentIdx.food_count?.current?.focus();
-        initialErrors[idx].food_count = true;
-        foundError = true;
-        break;
+      // food_count만 있는경우
+      else if (section.food_count && section.food_gram === 0) {
+        if (!section.food_count || section.food_count === 0) {
+          alert(translate("errorFoodCount"));
+          refsCurrentIdx.food_count.current &&
+          refsCurrentIdx.food_count?.current?.focus();
+          initialErrors[idx].food_count = true;
+          foundError = true;
+          break;
+        }
       }
-      else if (!section.food_gram || section.food_gram === 0) {
-        alert(translate("errorFoodGram"));
-        refsCurrentIdx.food_gram.current &&
-        refsCurrentIdx.food_gram?.current?.focus();
-        initialErrors[idx].food_gram = true;
-        foundError = true;
-        break;
+      // food_gram만 있는경우
+      else if (section.food_gram && section.food_count === 0) {
+        if (!section.food_gram || section.food_gram === 0) {
+          alert(translate("errorFoodGram"));
+          refsCurrentIdx.food_gram.current &&
+          refsCurrentIdx.food_gram?.current?.focus();
+          initialErrors[idx].food_gram = true;
+          foundError = true;
+          break;
+        }
       }
       else if (!section.food_name || section.food_name === "") {
         alert(translate("errorFoodName"));
@@ -462,7 +468,6 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Br20/>
       </Card>
     );
     // 7-3. table

@@ -100,10 +100,9 @@ export const ExerciseDiff = () => {
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
-      }));
-      // Accordion 초기값 설정
-      setIsExpanded(res.data.result.map((_, index) => (index)));
-      // setIsExpanded([]);
+      }));// Accordion 초기값 설정
+      // setIsExpanded(res.data.result.map((_, index) => (index)));
+      setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);

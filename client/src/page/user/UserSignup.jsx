@@ -2,7 +2,7 @@
 
 import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {axios, numeral} from "../../import/ImportLibs.jsx";
+import {axios} from "../../import/ImportLibs.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, MenuItem} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
