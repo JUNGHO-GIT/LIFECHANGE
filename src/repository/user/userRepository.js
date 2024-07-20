@@ -136,8 +136,9 @@ export const save = {
     user_id_param, OBJECT_param
   ) => {
     const finalResult = await User.create({
-      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
+      user_google: OBJECT_param.user_google,
       user_pw: OBJECT_param.user_pw,
       user_image: OBJECT_param.user_image,
       dataCategory: OBJECT_param.dataCategory,

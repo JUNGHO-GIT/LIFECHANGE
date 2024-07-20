@@ -15,7 +15,9 @@ export const UserLogin = () => {
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
+  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
+  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
   const {translate} = useTranslate();
 
@@ -123,6 +125,22 @@ export const UserLogin = () => {
     })
   };
 
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowGoogle = async () => {
+    await axios.get (`${URL_GOOGLE}/login`)
+    .then((res) => {
+      if (res.data.status === "success") {
+        window.location.href = res.data.url;
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  };
+
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. title
@@ -218,6 +236,9 @@ export const UserLogin = () => {
             startAdornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),
+          }}
+          onClick={() => {
+            flowGoogle();
           }}
         />
       </Div>

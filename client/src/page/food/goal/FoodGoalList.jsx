@@ -265,7 +265,7 @@ export const FoodGoalList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-30"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

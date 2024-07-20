@@ -38,6 +38,7 @@ export const UserDataDetail = () => {
   const OBJECT_DEF = {
     _id: "",
     user_id: "",
+    user_google: false,
     user_number: 0,
     user_gender: "",
     user_age: "",

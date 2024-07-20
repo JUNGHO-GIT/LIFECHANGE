@@ -13,7 +13,9 @@ export const UserSignup = () => {
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
+  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
+  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
   const {translate} = useTranslate();
 
@@ -59,7 +61,11 @@ export const UserSignup = () => {
   });
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT) => {
+  const validate = (OBJECT, extra) => {
+    const validateEmail = (email) => {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    };
     let foundError = false;
     const initialErrors = {
       user_id: false,
@@ -77,68 +83,101 @@ export const UserSignup = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    else if (OBJECT.user_id === "" || !OBJECT.user_id) {
-      alert(translate("errorUserId"));
-      refsCurrent.user_id.current &&
-      refsCurrent.user_id.current?.focus();
-      initialErrors.user_id = true;
-      foundError = true;
+
+    if (extra === "send") {
+      if (OBJECT.user_id === "" || !OBJECT.user_id) {
+        alert(translate("errorUserId"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
+      else if (validateEmail(OBJECT.user_id) === false) {
+        alert(translate("errorUserIdAt"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
     }
-    else if (OBJECT.user_id.indexOf("@") === -1) {
-      alert(translate("errorUserIdAt"));
-      refsCurrent.user_id.current &&
-      refsCurrent.user_id.current?.focus();
-      initialErrors.user_id = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_id_verified === false || !OBJECT.user_id_verified) {
-      alert(translate("errorUserIdVerified"));
-      refsCurrent.user_id_verified.current &&
-      refsCurrent.user_id_verified.current?.focus();
-      initialErrors.user_id_verified = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_pw === "" || !OBJECT.user_pw) {
-      alert(translate("errorUserPw"));
-      refsCurrent.user_pw.current &&
-      refsCurrent.user_pw.current?.focus();
-      initialErrors.user_pw = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_pw_verified === false || !OBJECT.user_pw_verified) {
-      alert(translate("errorUserPwVerified"));
-      refsCurrent.user_pw_verified.current &&
-      refsCurrent.user_pw_verified.current?.focus();
-      initialErrors.user_pw_verified = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_age === "" || !OBJECT.user_age) {
-      alert(translate("errorUserAge"));
-      refsCurrent.user_age.current &&
-      refsCurrent.user_age.current?.focus();
-      initialErrors.user_age = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
-      alert(translate("errorUserGender"));
-      refsCurrent.user_gender.current &&
-      refsCurrent.user_gender.current?.focus();
-      initialErrors.user_gender = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_height === "" || !OBJECT.user_height) {
-      alert(translate("errorUserHeight"));
-      refsCurrent.user_height.current &&
-      refsCurrent.user_height.current?.focus();
-      initialErrors.user_height = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
-      alert(translate("errorUserWeight"));
-      refsCurrent.user_weight.current &&
-      refsCurrent.user_weight.current?.focus();
-      initialErrors.user_weight = true;
-      foundError = true;
+    else {
+      if (OBJECT.user_id === "" || !OBJECT.user_id) {
+        alert(translate("errorUserId"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
+      else if (validateEmail(OBJECT.user_id) === false) {
+        alert(translate("errorUserIdAt"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_id === "" || !OBJECT.user_id) {
+        alert(translate("errorUserId"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_id.indexOf("@") === -1) {
+        alert(translate("errorUserIdAt"));
+        refsCurrent.user_id.current &&
+        refsCurrent.user_id.current?.focus();
+        initialErrors.user_id = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_id_verified === false || !OBJECT.user_id_verified) {
+        alert(translate("errorUserIdVerified"));
+        refsCurrent.user_id_verified.current &&
+        refsCurrent.user_id_verified.current?.focus();
+        initialErrors.user_id_verified = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_pw === "" || !OBJECT.user_pw) {
+        alert(translate("errorUserPw"));
+        refsCurrent.user_pw.current &&
+        refsCurrent.user_pw.current?.focus();
+        initialErrors.user_pw = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_pw_verified === false || !OBJECT.user_pw_verified) {
+        alert(translate("errorUserPwVerified"));
+        refsCurrent.user_pw_verified.current &&
+        refsCurrent.user_pw_verified.current?.focus();
+        initialErrors.user_pw_verified = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_age === "" || !OBJECT.user_age) {
+        alert(translate("errorUserAge"));
+        refsCurrent.user_age.current &&
+        refsCurrent.user_age.current?.focus();
+        initialErrors.user_age = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
+        alert(translate("errorUserGender"));
+        refsCurrent.user_gender.current &&
+        refsCurrent.user_gender.current?.focus();
+        initialErrors.user_gender = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_height === "" || !OBJECT.user_height) {
+        alert(translate("errorUserHeight"));
+        refsCurrent.user_height.current &&
+        refsCurrent.user_height.current?.focus();
+        initialErrors.user_height = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
+        alert(translate("errorUserWeight"));
+        refsCurrent.user_weight.current &&
+        refsCurrent.user_weight.current?.focus();
+        initialErrors.user_weight = true;
+        foundError = true;
+      }
     }
 
     setERRORS(initialErrors);
@@ -147,6 +186,9 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSend = async () => {
+    if (!validate(OBJECT, "send")) {
+      return;
+    }
     await axios.post (`${URL_OBJECT}/send`, {
       user_id: OBJECT.user_id
     })
@@ -192,7 +234,7 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, "save")) {
       return;
     }
     await axios.post (`${URL_OBJECT}/signup`, {
@@ -219,6 +261,22 @@ export const UserSignup = () => {
           user_id: "",
           user_pw: "",
         }));
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  };
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowGoogle = async () => {
+    await axios.get (`${URL_GOOGLE}/login`)
+    .then((res) => {
+      if (res.data.status === "success") {
+        window.location.href = res.data.url;
       }
       else {
         alert(res.data.msg);
@@ -463,13 +521,16 @@ export const UserSignup = () => {
           select={false}
           type={"text"}
           size={"small"}
-          value={translate("googleSignup")}
+          value={translate("googleLogin")}
           className={"w-100p bg-white"}
           InputProps={{
             readOnly: true,
             startAdornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),
+          }}
+          onClick={() => {
+            flowGoogle();
           }}
         />
       </Div>

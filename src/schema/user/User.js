@@ -15,6 +15,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  user_google: {
+    type: Boolean,
+    default: false,
+    required: false
+  },
   user_pw : {
     type : String,
     default: "",

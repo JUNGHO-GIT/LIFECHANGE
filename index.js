@@ -3,6 +3,7 @@
 import cors from "cors";
 import mongoose from "mongoose";
 import express from "express";
+import session from "express-session";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -28,6 +29,7 @@ import { router as sleepGoalRouter } from "./src/router/sleep/sleepGoalRouter.js
 import { router as userPercentRouter } from "./src/router/user/userPercentRouter.js";
 import { router as userDataRouter } from "./src/router/user/userDataRouter.js";
 import { router as userRouter } from "./src/router/user/userRouter.js";
+import { router as googleRouter } from "./src/router/google/googleRouter.js";
 
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
@@ -68,6 +70,7 @@ function startServer(httpPort, httpsPort) {
 startServer(httpPort, httpsPort);
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
+// app.use(morgan('dev'));
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT"],
@@ -77,7 +80,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-// app.use(morgan('dev'));
 app.use((req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
@@ -105,3 +107,4 @@ app.use("/api/sleep", sleepRouter);
 app.use("/api/user/percent", userPercentRouter);
 app.use("/api/user/data", userDataRouter);
 app.use("/api/user", userRouter);
+app.use("/api/google", googleRouter);
