@@ -40,6 +40,8 @@ export const useTranslate = () => {
     alreadyId: {ko: "아이디가 있는 경우", en: "Already have an Account"},
     amount: {ko: "금액", en: "Amount"},
     avg: {ko: "평균값", en: "Avg"},
+    analyze: {ko: "분석", en: "Analyze"},
+    analyzeTabs: {ko: "분석", en: "Analyze"},
 
     // b
     brand: {ko: "브랜드", en: "Brand"},
@@ -132,6 +134,7 @@ export const useTranslate = () => {
     goToSave: {ko: "저장", en: "Save"},
     goToSignup: {ko: "회원가입", en: "Signup"},
     goal: {ko: "목표", en: "Goal"},
+    goalTabs: {ko: "목표", en: "Goal"},
     goalCardio: {ko: "유산소 목표", en: "Cardio Goals"},
     goalCarb: {ko: "탄수화물 목표", en: "Carb Goals"},
     goalCount: {ko: "횟수 목표", en: "Count Goals"},
@@ -230,6 +233,9 @@ export const useTranslate = () => {
     // r
     r: {ko: "rep", en: "rep"},
     real: {ko: "실제", en: "Real"},
+    realTabs: {ko: "실제", en: "Real"},
+    realList: {ko: "리스트(실제)", en: "List"},
+    realSave: {ko: "저장(실제)", en: "Save"},
     rep: {ko: "횟수", en: "Rep"},
     regDt: {ko: "가입일", en: "Signup Date"},
 

@@ -223,7 +223,7 @@ export const MoneyList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"block-wrapper h-120vh"}>
           {tableSection()}
         </Div>
       </Paper>
