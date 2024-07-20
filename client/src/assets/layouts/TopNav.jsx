@@ -4,7 +4,8 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {TextField, Tabs, Tab, tabsClasses, Paper, Card, Menu, MenuItem} from "../../import/ImportMuis.jsx";
+import {TextField, Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
+import {Card, Menu, MenuItem} from "../../import/ImportMuis.jsx";
 import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 import {money2, money4} from "../../import/ImportImages.jsx";
@@ -32,11 +33,10 @@ export const TopNav = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [value, setValue] = useState("analyzeTabs");
   const [selectedTab, setSelectedTab] = useState(value);
-  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  const [selectedMenuItem, setSelectedMenuItem] = useState("dash/list");
   const [anchorAnalyze, setAnchorAnalyze] = useState(null);
   const [anchorGoal, setAnchorGoal] = useState(null);
   const [anchorReal, setAnchorReal] = useState(null);
-
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -455,7 +455,7 @@ export const TopNav = () => {
         </Menu>
       </>
     );
-  
+
   // 6. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => (
     <Tabs

@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+    "fetch": "git fetch --all && git reset --hard origin/master",
     "push": "git add . && git commit -m 'update' && git push origin master",
     "gcloud": "node gcloud.cjs"
   },
