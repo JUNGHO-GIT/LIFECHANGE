@@ -24,7 +24,7 @@ import calendar1 from "../assets/images/calendar1.webp";
 import calendar2 from "../assets/images/calendar2.webp";
 import calendar3 from "../assets/images/calendar3.webp";
 
-import dashboard1 from "../assets/images/dashboard1.webp";
+import today1 from "../assets/images/today1.webp";
 
 import exercise1 from "../assets/images/exercise1.webp";
 import exercise2 from "../assets/images/exercise2.webp";
@@ -62,7 +62,7 @@ export {
   smile1, smile2, smile3, smile4, smile5,
   flag1, flag2,
   common1, common2, common3_1, common3_2, common4, common5,
-  calendar1, calendar2, calendar3, dashboard1,
+  calendar1, calendar2, calendar3, today1,
   exercise1, exercise2, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5,
   food1, food2, food3, food4, food5,
   money1, money2, money3, money4,

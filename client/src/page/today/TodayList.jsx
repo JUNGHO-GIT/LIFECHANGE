@@ -1,4 +1,4 @@
-// DashList.jsx
+// TodayList.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
@@ -14,7 +14,7 @@ import {money2} from "../../import/ImportImages.jsx";
 import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const DashList = () => {
+export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";

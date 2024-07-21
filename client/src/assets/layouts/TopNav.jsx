@@ -44,7 +44,7 @@ export const TopNav = () => {
     if (firstStr === "calendar") {
       setValue("list");
     }
-    else if (firstStr === "dash") {
+    else if (firstStr === "today") {
       setValue("diff/list");
     }
     else {
@@ -297,7 +297,7 @@ export const TopNav = () => {
 
   // 6. tabs ---------------------------------------------------------------------------------------
   const tabsNode = () => (
-    (firstStr === "dash") ? (
+    (firstStr === "today") ? (
       <Tabs
         value={value}
         variant={"scrollable"}

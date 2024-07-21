@@ -27,9 +27,9 @@ import {BottomNav} from "./import/ImportLayouts.jsx";
 import {CalendarList} from "./page/calendar/CalendarList.jsx";
 import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
-import {DashDiffList} from "./page/dash/DashDiffList.jsx";
-import {DashGoalList} from "./page/dash/DashGoalList.jsx";
-import {DashList} from "./page/dash/DashList.jsx";
+import {TodayDiffList} from "./page/today/TodayDiffList.jsx";
+import {TodayGoalList} from "./page/today/TodayGoalList.jsx";
+import {TodayList} from "./page/today/TodayList.jsx";
 
 import {ExerciseChart} from "./page/exercise/chart/ExerciseChart.jsx";
 import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
@@ -80,11 +80,11 @@ const Calendar = () => (
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
-const Dash = () => (
+const Today = () => (
   <Routes>
-    <Route path="/diff/list" element={<DashDiffList />} />
-    <Route path="/goal/list" element={<DashGoalList />} />
-    <Route path="/list" element={<DashList />} />
+    <Route path="/diff/list" element={<TodayDiffList />} />
+    <Route path="/goal/list" element={<TodayGoalList />} />
+    <Route path="/list" element={<TodayList />} />
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
@@ -181,7 +181,7 @@ const App = () => {
       {!noneTop && <TopNav />}
       <Routes>
         <Route path="/calendar/*" element={<Calendar />} />
-        <Route path="/dash/*" element={<Dash />} />
+        <Route path="/today/*" element={<Today />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />
         <Route path="/money/*" element={<Money />} />

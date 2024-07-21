@@ -1,11 +1,11 @@
-// DashDiffList.jsx
+// TodayGoalList.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br20, Br30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Div, Hr30, Br30, Br20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
 import {exercise2, exercise3_1, exercise4, exercise5} from "../../import/ImportImages.jsx";
@@ -14,7 +14,7 @@ import {money2} from "../../import/ImportImages.jsx";
 import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const DashDiffList = () => {
+export const TodayGoalList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -85,53 +85,25 @@ export const DashDiffList = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
-    exercise_goal_number: 0,
-    exercise_goal_dummy: "N",
-    exercise_goal_dateStart: "0000-00-00",
-    exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: 0,
-    exercise_goal_volume: 0,
-    exercise_goal_weight: 0,
-    exercise_goal_cardio: "00:00",
-    exercise_dateStart: "0000-00-00",
-    exercise_dateEnd: "0000-00-00",
-    exercise_total_count: 0,
-    exercise_total_volume: 0,
-    exercise_body_weight: 0,
-    exercise_total_cardio: "00:00",
-    exercise_diff_count: 0,
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: 0,
-    exercise_diff_weight: 0,
-    exercise_diff_count_color: "",
-    exercise_diff_cardio_color: "",
-    exercise_diff_volume_color: "",
-    exercise_diff_weight_color: "",
+    exercise_goal_goal_number: 0,
+    exercise_goal_goal_dummy: "N",
+    exercise_goal_goal_dateStart: "0000-00-00",
+    exercise_goal_goal_dateEnd: "0000-00-00",
+    exercise_goal_goal_count: 0,
+    exercise_goal_goal_volume: 0,
+    exercise_goal_goal_weight: 0,
+    exercise_goal_goal_cardio: "00:00"
   }];
   const OBJECT_FOOD_DEF = [{
     _id: "",
-    food_goal_number: 0,
-    food_goal_dummy: "N",
-    food_goal_dateStart: "0000-00-00",
-    food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: 0,
-    food_goal_carb: 0,
-    food_goal_protein: 0,
-    food_goal_fat: 0,
-    food_dateStart: "0000-00-00",
-    food_dateEnd: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
-    food_diff_kcal: 0,
-    food_diff_carb: 0,
-    food_diff_protein: 0,
-    food_diff_fat: 0,
-    food_diff_kcal_color: "",
-    food_diff_carb_color: "",
-    food_diff_protein_color: "",
-    food_diff_fat_color: "",
+    food_goal_goal_number: 0,
+    food_goal_goal_dummy: "N",
+    food_goal_goal_dateStart: "0000-00-00",
+    food_goal_goal_dateEnd: "0000-00-00",
+    food_goal_goal_kcal: 0,
+    food_goal_goal_carb: 0,
+    food_goal_goal_protein: 0,
+    food_goal_goal_fat: 0
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
@@ -140,15 +112,7 @@ export const DashDiffList = () => {
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: 0,
-    money_goal_expense: 0,
-    money_dateStart: "0000-00-00",
-    money_dateEnd: "0000-00-00",
-    money_total_income: 0,
-    money_total_expense: 0,
-    money_diff_income: 0,
-    money_diff_expense: 0,
-    money_diff_income_color: "",
-    money_diff_expense_color: "",
+    money_goal_expense: 0
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",
@@ -159,17 +123,6 @@ export const DashDiffList = () => {
     sleep_goal_bedTime: "00:00",
     sleep_goal_wakeTime: "00:00",
     sleep_goal_sleepTime: "00:00",
-    sleep_dateStart: "0000-00-00",
-    sleep_dateEnd: "0000-00-00",
-    sleep_bedTime: "00:00",
-    sleep_wakeTime: "00:00",
-    sleep_sleepTime: "00:00",
-    sleep_diff_bedTime: "00:00",
-    sleep_diff_wakeTime: "00:00",
-    sleep_diff_time: "00:00",
-    sleep_diff_bedTime_color: "",
-    sleep_diff_wakeTime_color: "",
-    sleep_diff_time_color: ""
   }];
   const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
   const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
@@ -206,28 +159,28 @@ export const DashDiffList = () => {
     const fetchAllData = async () => {
       await Promise.all([
         fetchData(
-          `${URL_EXERCISE}/diff/list`,
+          `${URL_EXERCISE}/goal/list`,
           setOBJECT_EXERCISE,
           setCOUNT_EXERCISE,
           OBJECT_EXERCISE_DEF,
           setIsExpandedExercise
         ),
         fetchData(
-          `${URL_FOOD}/diff/list`,
+          `${URL_FOOD}/goal/list`,
           setOBJECT_FOOD,
           setCOUNT_FOOD,
           OBJECT_FOOD_DEF,
           setIsExpandedFood
         ),
         fetchData(
-          `${URL_MONEY}/diff/list`,
+          `${URL_MONEY}/goal/list`,
           setOBJECT_MONEY,
           setCOUNT_MONEY,
           OBJECT_MONEY_DEF,
           setIsExpandedMoney
         ),
         fetchData(
-          `${URL_SLEEP}/diff/list`,
+          `${URL_SLEEP}/goal/list`,
           setOBJECT_SLEEP,
           setCOUNT_SLEEP,
           OBJECT_SLEEP_DEF,
@@ -276,24 +229,38 @@ export const DashDiffList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Div className={"fs-1-1rem fw-600 d-left"}>
-                    {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.exercise_goal_dateType,
+                        dateStart: item.exercise_goal_dateStart,
+                        dateEnd: item.exercise_goal_dateEnd,
+                      });
+                      navigate(SEND.toExercise, {
+                        state: SEND
+                      });
+                    }}
+                  />
+                  {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
                       <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("exercise")}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                        <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </Div>
+                    </Div>
+                  ) : (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.exercise_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
+                      <Div>{item.exercise_goal_dateEnd?.substring(5, 10)}</Div>
+                    </Div>
+                  )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -307,41 +274,12 @@ export const DashDiffList = () => {
                       {translate("exerciseCount")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_goal_count).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_total_count).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_count_color}`}>
-                      {numeral(item.exercise_diff_count).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("c")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("c")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("c")}
                     </Div>
@@ -358,41 +296,12 @@ export const DashDiffList = () => {
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_goal_volume).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_total_volume).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
-                      {numeral(item.exercise_diff_volume).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("vol")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("vol")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("vol")}
                     </Div>
@@ -409,41 +318,12 @@ export const DashDiffList = () => {
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.exercise_goal_cardio}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.exercise_total_cardio}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
-                      {item.exercise_diff_cardio}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -460,41 +340,12 @@ export const DashDiffList = () => {
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_goal_weight).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_body_weight).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
-                      {numeral(item.exercise_diff_weight).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("kg")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("kg")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("kg")}
                     </Div>
@@ -544,24 +395,38 @@ export const DashDiffList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Div className={"fs-1-1rem fw-600 d-left"}>
-                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.food_goal_dateType,
+                        dateStart: item.food_goal_dateStart,
+                        dateEnd: item.food_goal_dateEnd,
+                      });
+                      navigate(SEND.toFood, {
+                        state: SEND
+                      });
+                    }}
+                  />
+                  {item.food_goal_dateStart === item.food_goal_dateEnd ? (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
                       <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("food")}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                        <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </Div>
+                    </Div>
+                  ) : (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.food_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
+                      <Div>{item.food_goal_dateEnd?.substring(5, 10)}</Div>
+                    </Div>
+                  )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -575,41 +440,12 @@ export const DashDiffList = () => {
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_kcal).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.food_total_kcal).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_kcal_color}`}>
-                      {numeral(item.food_diff_kcal).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("k")}
                     </Div>
@@ -626,41 +462,12 @@ export const DashDiffList = () => {
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_carb).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.food_total_carb).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_carb_color}`}>
-                      {numeral(item.food_diff_carb).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -677,41 +484,12 @@ export const DashDiffList = () => {
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.food_goal_protein).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.food_total_protein).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_protein_color}`}>
-                      {numeral(item.food_diff_protein).format("0,0")}
+                      {item.food_goal_protein}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -728,41 +506,12 @@ export const DashDiffList = () => {
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_fat).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.food_total_fat).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_fat_color}`}>
-                      {numeral(item.food_diff_fat).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -812,24 +561,38 @@ export const DashDiffList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Div className={"fs-1-1rem fw-600 d-left"}>
-                    {item.money_goal_dateStart === item.money_goal_dateEnd ? (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.money_goal_dateType,
+                        dateStart: item.money_goal_dateStart,
+                        dateEnd: item.money_goal_dateEnd,
+                      });
+                      navigate(SEND.toMoney, {
+                        state: SEND
+                      });
+                    }}
+                  />
+                  {item.money_goal_dateStart === item.money_goal_dateEnd ? (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
                       <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("money")}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                        <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </Div>
+                    </Div>
+                  ) : (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
+                      <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
+                    </Div>
+                  )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -843,41 +606,12 @@ export const DashDiffList = () => {
                       {translate("income")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_income).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.money_total_income).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
-                      {numeral(item.money_diff_income).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>
@@ -894,41 +628,12 @@ export const DashDiffList = () => {
                       {translate("expense")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_expense).format("0,0")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.money_total_expense).format("0,0")}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
-                      {numeral(item.money_diff_expense).format("0,0")}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>
@@ -978,24 +683,38 @@ export const DashDiffList = () => {
                 />
               }>
                 <Div className={"d-center"}>
-                  <Div className={"fs-1-1rem fw-600 d-left"}>
-                    {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                  <Icons
+                    name={"TbSearch"}
+                    className={"w-18 h-18 black ms-n10 me-15"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      Object.assign(SEND, {
+                        id: item._id,
+                        dateType: item.sleep_goal_dateType,
+                        dateStart: item.sleep_goal_dateStart,
+                        dateEnd: item.sleep_goal_dateEnd,
+                      });
+                      navigate(SEND.toSleep, {
+                        state: SEND
+                      });
+                    }}
+                  />
+                  {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
                       <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("sleep")}</Div>
-                      </Div>
-                    ) : (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                        <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </Div>
+                    </Div>
+                  ) : (
+                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      <Div>{item.sleep_goal_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
+                      <Div>{item.sleep_goal_dateEnd?.substring(5, 10)}</Div>
+                    </Div>
+                  )}
                 </Div>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -1009,41 +728,12 @@ export const DashDiffList = () => {
                       {translate("bedTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_bedTime}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_bedTime}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_bedTime_color}`}>
-                      {item.sleep_diff_bedTime}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -1060,48 +750,19 @@ export const DashDiffList = () => {
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_wakeTime}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_wakeTime}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
-                      {item.sleep_diff_wakeTime}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
                   </Grid>
                 </Grid>
-                {/** row 3 **/}
                 <Hr30 />
+                {/** row 3 **/}
                 <Grid container spacing={1}>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
@@ -1111,41 +772,12 @@ export const DashDiffList = () => {
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_sleepTime}
                     </Div>
-                    <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_sleepTime}
-                    </Div>
-                    <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_time_color}`}>
-                      {item.sleep_diff_time}
-                    </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>

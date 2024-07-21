@@ -6,7 +6,7 @@ import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
-import {calendar1, dashboard1} from "../../import/ImportImages.jsx";
+import {calendar1, today1} from "../../import/ImportImages.jsx";
 import {exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ export const BottomNav = () => {
   const firstStr = PATH?.split("/")[1] || "";
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [value, setValue] = useState("dash");
+  const [value, setValue] = useState("today");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -80,12 +80,12 @@ export const BottomNav = () => {
         }}
       />
       <BottomNavigationAction
-        label={translate("dash")}
-        value={"dash"}
-        icon={<Img src={dashboard1} className={"w-16 h-16 m-0"} />}
+        label={translate("today")}
+        value={"today"}
+        icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
-          setValue("dash");
-          navigate("dash/diff/list", {
+          setValue("today");
+          navigate("today/diff/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
