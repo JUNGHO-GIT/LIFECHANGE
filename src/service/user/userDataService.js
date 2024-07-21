@@ -130,6 +130,19 @@ export const detail = async (
   return finalResult
 };
 
+// 2-2. update -------------------------------------------------------------------------------------
+export const update = async (
+  user_id_param, OBJECT_param
+) => {
+
+  let finalResult = await repository.update(
+    user_id_param, OBJECT_param
+  );
+
+  return finalResult;
+};
+
+
 // 3-1. save ---------------------------------------------------------------------------------------
 export const save = async (
   user_id_param, PART_param, count_param

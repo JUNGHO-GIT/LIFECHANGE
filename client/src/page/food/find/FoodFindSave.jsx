@@ -82,8 +82,6 @@ export const FoodFindSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
     food_part_idx: false,
-    food_count: false,
-    food_gram: false,
     food_name: false,
     food_kcal: false,
     food_carb: false,
@@ -92,39 +90,12 @@ export const FoodFindSave = () => {
   })));
   const REFS = useRef(OBJECT?.food_section?.map(() => ({
     food_part_idx: createRef(),
-    food_count: createRef(),
-    food_gram: createRef(),
     food_name: createRef(),
     food_kcal: createRef(),
     food_carb: createRef(),
     food_protein: createRef(),
     food_fat: createRef(),
   })));
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
-    setLOADING(true);
-    await axios.get(`${URL_OBJECT}/exist`, {
-      params: {
-        user_id: sessionId,
-        DATE: {
-          dateType: "",
-          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
-          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
-        },
-      },
-    })
-    .then((res) => {
-      setEXIST(res.data.result || []);
-      setLOADING(false);
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      setLOADING(false);
-    });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -180,8 +151,6 @@ export const FoodFindSave = () => {
   useEffect(() => {
     REFS.current = OBJECT?.food_section?.map((_, idx) => ({
       food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
-      food_count: REFS?.current[idx]?.food_count || createRef(),
-      food_gram: REFS?.current[idx]?.food_gram || createRef(),
       food_name: REFS?.current[idx]?.food_name || createRef(),
       food_kcal: REFS?.current[idx]?.food_kcal || createRef(),
       food_carb: REFS?.current[idx]?.food_carb || createRef(),
@@ -195,8 +164,6 @@ export const FoodFindSave = () => {
     let foundError = false;
     const initialErrors = OBJECT?.food_section?.map(() => ({
       food_part_idx: false,
-      food_count: false,
-      food_gram: false,
       food_name: false,
       food_kcal: false,
       food_carb: false,
@@ -225,28 +192,6 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      // food_count만 있는경우
-      else if (section.food_count && section.food_gram === 0) {
-        if (!section.food_count || section.food_count === 0) {
-          alert(translate("errorFoodCount"));
-          refsCurrentIdx.food_count.current &&
-          refsCurrentIdx.food_count?.current?.focus();
-          initialErrors[idx].food_count = true;
-          foundError = true;
-          break;
-        }
-      }
-      // food_gram만 있는경우
-      else if (section.food_gram && section.food_count === 0) {
-        if (!section.food_gram || section.food_gram === 0) {
-          alert(translate("errorFoodGram"));
-          refsCurrentIdx.food_gram.current &&
-          refsCurrentIdx.food_gram?.current?.focus();
-          initialErrors[idx].food_gram = true;
-          foundError = true;
-          break;
-        }
-      }
       else if (!section.food_name || section.food_name === "") {
         alert(translate("errorFoodName"));
         refsCurrentIdx.food_name.current &&
@@ -255,7 +200,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_kcal || section.food_kcal === 0) {
+      else if (!section.food_kcal) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current &&
         refsCurrentIdx.food_kcal?.current?.focus();
@@ -263,7 +208,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_carb || section.food_carb === 0) {
+      else if (!section.food_carb) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current &&
         refsCurrentIdx.food_carb?.current?.focus();
@@ -271,7 +216,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_protein || section.food_protein === 0) {
+      else if (!section.food_protein) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current &&
         refsCurrentIdx.food_protein?.current?.focus();
@@ -279,7 +224,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_fat || section.food_fat === 0) {
+      else if (!section.food_fat) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current &&
         refsCurrentIdx.food_fat?.current?.focus();
@@ -287,7 +232,6 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-
     }
     setERRORS(initialErrors);
 
@@ -539,8 +483,6 @@ export const FoodFindSave = () => {
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
                 value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
-                inputRef={REFS?.current[i]?.food_count}
-                error={ERRORS[i]?.food_count}
                 InputProps={{
                   readOnly: false
                 }}
@@ -579,8 +521,6 @@ export const FoodFindSave = () => {
                 variant={"outlined"}
                 className={"w-40vw ms-3vw"}
                 value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
-                inputRef={REFS?.current[i]?.food_gram}
-                error={ERRORS[i]?.food_gram}
                 InputProps={{
                   readOnly: false,
                   endAdornment: (
@@ -734,7 +674,7 @@ export const FoodFindSave = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-30"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
         <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}

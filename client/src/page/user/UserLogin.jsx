@@ -39,9 +39,10 @@ export const UserLogin = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const sessionId = localStorage.getItem("sessionId");
-    if (sessionId) {
-      setUserId(sessionId);
+    const localId = localStorage.getItem("localId");
+    const isGoogle = localStorage.getItem("isGoogle");
+    if (localId && isGoogle === "false") {
+      setUserId(localId);
       setIsChecked(true);
     }
   }, []);
@@ -91,10 +92,10 @@ export const UserLogin = () => {
       if (res.data.status === "success") {
         alert(res.data.msg);
         if (isChecked) {
-          localStorage.setItem("sessionId", userId);
+          localStorage.setItem("localId", userId);
         }
         else {
-          localStorage.setItem("sessionId", "");
+          localStorage.setItem("localId", "");
         }
         sessionStorage.setItem("sessionId", userId);
         // @ts-ignore
@@ -107,6 +108,7 @@ export const UserLogin = () => {
         }
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("isLogin", "true");
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }
@@ -234,6 +236,7 @@ export const UserLogin = () => {
           className={"w-100p bg-white pointer"}
           InputProps={{
             readOnly: true,
+            className: "pointer",
             startAdornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),

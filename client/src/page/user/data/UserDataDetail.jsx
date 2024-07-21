@@ -1,11 +1,13 @@
 // UserDataDetail.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../../import/ImportLibs.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {Div, Br30, Br20, Img, Hr40, Hr20} from "../../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, Avatar} from "../../../import/ImportMuis.jsx";
+import {log} from "../../../import/ImportUtils.jsx";
+import {Footer} from "../../../import/ImportLayouts.jsx";
+import {Div, Br30, Br20, Br10} from "../../../import/ImportComponents.jsx";
+import {Paper, TextField, Avatar, MenuItem} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDataDetail = () => {
@@ -19,9 +21,10 @@ export const UserDataDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -31,7 +34,7 @@ export const UserDataDetail = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCategory: "/user/data/category",
+    toUpdate: "/user/data/update",
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -48,6 +51,20 @@ export const UserDataDetail = () => {
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const [ERRORS, setERRORS] = useState({
+    user_age: false,
+    user_gender: false,
+    user_height: false,
+    user_weight: false,
+  });
+  const REFS = useRef({
+    user_age: createRef(),
+    user_gender: createRef(),
+    user_height: createRef(),
+    user_weight: createRef(),
+  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -76,20 +93,70 @@ export const UserDataDetail = () => {
     });
   })()}, [sessionId]);
 
+  // 2-4. validate ---------------------------------------------------------------------------------
+  const validate = (OBJECT, extra) => {
+    let foundError = false;
+    const initialErrors = {
+      user_age: false,
+      user_gender: false,
+      user_height: false,
+      user_weight: false,
+    };
+    const refsCurrent = REFS?.current;
+
+    if (!refsCurrent) {
+      console.warn('Ref is undefined, skipping validation');
+      return;
+    }
+    else if (OBJECT.user_age === "" || !OBJECT.user_age) {
+      alert(translate("errorUserAge"));
+      refsCurrent.user_age.current &&
+      refsCurrent.user_age.current?.focus();
+      initialErrors.user_age = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
+      alert(translate("errorUserGender"));
+      refsCurrent.user_gender.current &&
+      refsCurrent.user_gender.current?.focus();
+      initialErrors.user_gender = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_height === "" || !OBJECT.user_height) {
+      alert(translate("errorUserHeight"));
+      refsCurrent.user_height.current &&
+      refsCurrent.user_height.current?.focus();
+      initialErrors.user_height = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
+      alert(translate("errorUserWeight"));
+      refsCurrent.user_weight.current &&
+      refsCurrent.user_weight.current?.focus();
+      initialErrors.user_weight = true;
+      foundError = true;
+    }
+
+    setERRORS(initialErrors);
+    return !foundError;
+  };
+
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios.post(`${URL_OBJECT}/save`, {
+    if (!validate(OBJECT)) {
+      return;
+    }
+    await axios.post(`${URL_OBJECT}/data/update`, {
       user_id: sessionId,
-      OBJECT: OBJECT
+      OBJECT: OBJECT,
     })
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        navigate(SEND.toDataCategory);
+        navigate(0);
       }
       else {
         alert(res.data.msg);
-        sessionStorage.setItem("dataCategory", JSON.stringify(OBJECT_DEF.dataCategory));
       }
     })
     .catch((err) => {
@@ -133,80 +200,102 @@ export const UserDataDetail = () => {
             }}
           />
           <Br20 />
+          {/** section 2 **/}
           <TextField
-            select={false}
+            select={true}
             type={"text"}
             size={"small"}
             label={translate("gender")}
-            value={
-              OBJECT?.user_gender === "M" ? translate("male") : OBJECT?.user_gender === "F" ?
-              translate("female") : translate("unknown")
-            }
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <Br20 />
+            value={OBJECT.user_gender}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_gender}
+            error={ERRORS.user_gender}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_gender: e.target.value
+              }))
+            )}
+          >
+            {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
+              <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 1 ~ 100 **/}
           <TextField
-            select={false}
+            select={true}
             type={"text"}
             size={"small"}
             label={translate("age")}
-            value={OBJECT?.user_age}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <Br20 />
+            value={OBJECT.user_age}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_age}
+            error={ERRORS.user_age}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_age: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 100}, (v, i) => i + 1).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 100cm ~ 200cm **/}
           <TextField
-            select={false}
+            select={true}
             type={"text"}
             size={"small"}
             label={translate("height")}
-            value={numeral(OBJECT?.user_height).format("0,0")}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("cm")}
-                </Div>
-              )
-            }}
-          />
-          <Br20 />
+            value={OBJECT.user_height}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_height}
+            error={ERRORS.user_height}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_height: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {`${item} cm`}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
+          {/** 30kg ~ 200kg **/}
           <TextField
-            select={false}
+            select={true}
             type={"text"}
             size={"small"}
             label={translate("weight")}
-            value={numeral(OBJECT?.user_weight).format("0,0")}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("kg")}
-                </Div>
-              )
-            }}
-          />
-          <Br20 />
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("property")}
-            value={numeral(totalProperty).format("0,0")}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-          />
+            value={OBJECT.user_weight}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_weight}
+            error={ERRORS.user_weight}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_weight: e.target.value
+              }))
+            )}
+          >
+            {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
+              <MenuItem key={i} value={item}>
+                {`${item} kg`}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Br10 />
         </Div>
       );
       return (
@@ -215,18 +304,39 @@ export const UserDataDetail = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min85vh"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-60"}>
+        <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
       </Paper>
     );
   };
 
+  // 9. footer -------------------------------------------------------------------------------------
+  const footerNode = () => (
+    <Footer
+      strings={{
+        first: firstStr,
+        second: secondStr,
+        third: thirdStr,
+      }}
+      objects={{
+        SEND
+      }}
+      functions={{
+        setSEND
+      }}
+      handlers={{
+        navigate, flowSave
+      }}
+    />
+  );
+
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}
+      {footerNode()}
     </>
   );
 };

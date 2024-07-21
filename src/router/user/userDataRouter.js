@@ -97,6 +97,37 @@ router.get("/detail", async (req, res) => {
   }
 });
 
+// 3. update ---------------------------------------------------------------------------------------
+router.post("/update", async (req, res) => {
+  try {
+    let result = await service.update (
+      req.body.user_id,
+      req.body.OBJECT
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "수정 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "수정 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
 // 3-1. save ---------------------------------------------------------------------------------------
 router.post("/save", async (req, res) => {
   try {
@@ -139,13 +170,13 @@ router.delete("/deletes", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "삭제 성공"
+        msg: "탈퇴 성공"
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "삭제 실패"
+        msg: "탈퇴 실패"
       });
     }
   }

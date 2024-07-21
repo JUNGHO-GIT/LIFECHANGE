@@ -38,7 +38,7 @@ const schema = new mongoose.Schema({
   },
   user_gender: {
     type : String,
-    default: "",
+    default: "N",
     required : false
   },
   user_height: {

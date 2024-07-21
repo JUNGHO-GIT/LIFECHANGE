@@ -276,6 +276,7 @@ export const useTranslate = () => {
     transportation: {ko: "교통", en: "Transportation"},
 
     // u
+    update: {ko: "수정", en: "Update"},
     unknown: {ko: "선택하지 않음", en: "Unknown"},
     userDeletes: {ko: "회원탈퇴", en: "Withdrawal"},
 
@@ -406,7 +407,7 @@ export const useTranslate = () => {
 
     // error (food)
     errorFoodPart: {ko: "대분류를 선택해주세요", en: "Please select Part"},
-    errorFoodTitle: {ko: "식품명을 입력해주세요", en: "Please enter Food"},
+    errorFoodName: {ko: "식품명을 입력해주세요", en: "Please enter Food"},
     errorFoodCount: {ko: "수량을 입력해주세요", en: "Please enter Count"},
     errorFoodGram: {ko: "용량을 입력해주세요", en: "Please enter Gram"},
     errorFoodCountOrGram: {ko: "수량 또는 용량을 입력해주세요", en: "Please enter Count or Gram"},

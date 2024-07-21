@@ -1,14 +1,13 @@
-// AuthPage.jsx
+// AuthGoogle.jsx
 
-import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {React, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {percent, log} from "../../import/ImportUtils.jsx";
+import {percent} from "../../import/ImportUtils.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const AuthPage = () => {
+export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -21,9 +20,12 @@ export const AuthPage = () => {
     await axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res) => {
       if (res.data.status === "success") {
+        localStorage.setItem("localId", res.data.googleId);
+        localStorage.setItem("isGoogle", "true");
         sessionStorage.setItem("sessionId", res.data.googleId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("isLogin", "true");
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }

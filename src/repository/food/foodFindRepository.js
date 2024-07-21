@@ -100,10 +100,11 @@ export const save = {
         food_total_carb: OBJECT_param.food_total_carb,
         food_total_protein: OBJECT_param.food_total_protein,
         food_total_fat: OBJECT_param.food_total_fat,
-        food_section: OBJECT_param.food_section,
-        food_updateDt: newDate,
-      }},
-      {upsert: true, new: true}
+        food_updateDt: new Date(),
+      },
+      $push: {
+        food_section: { $each: OBJECT_param.food_section }
+      }}
     )
     .lean();
     return finalResult;

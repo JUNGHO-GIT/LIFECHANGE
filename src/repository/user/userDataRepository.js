@@ -228,6 +228,28 @@ export const detail = async (
   return finalResult;
 };
 
+// 2-2. update -------------------------------------------------------------------------------------
+export const update = async (
+  user_id_param, OBJECT_param
+) => {
+
+  const finalResult = await User.findOneAndUpdate({
+    user_id: user_id_param,
+  }, {
+    $set: {
+      user_gender: OBJECT_param.user_gender,
+      user_age: OBJECT_param.user_age,
+      user_height: OBJECT_param.user_height,
+      user_weight: OBJECT_param.user_weight,
+      user_image: OBJECT_param.user_image,
+    },
+  }, {
+    new: true,
+  });
+
+  return finalResult;
+};
+
 // 3-1. save ---------------------------------------------------------------------------------------
 export const save = {
 

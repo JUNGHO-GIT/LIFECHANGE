@@ -66,7 +66,7 @@ import {UserInfo} from "./page/user/UserInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
 
-import {AuthPage} from "./page/auth/AuthPage.jsx";
+import {AuthGoogle} from "./page/auth/AuthGoogle.jsx";
 
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
@@ -138,7 +138,7 @@ const User = () => (
 // -------------------------------------------------------------------------------------------------
 const Auth = () => (
   <Routes>
-    <Route path="/page" element={<AuthPage />} />
+    <Route path="/google" element={<AuthGoogle />} />
   </Routes>
 );
 
@@ -148,7 +148,7 @@ const App = () => {
   const noneHeader = (
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
-    location.pathname === "/auth/page"
+    location.pathname === "/auth/google"
   );
   const noneTop = (
     location.pathname.indexOf("/user") > -1 ||

@@ -244,7 +244,7 @@ export const ExerciseList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-30"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

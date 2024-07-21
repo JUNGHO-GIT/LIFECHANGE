@@ -85,8 +85,6 @@ export const FoodSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
     food_part_idx: false,
-    food_count: false,
-    food_gram: false,
     food_name: false,
     food_kcal: false,
     food_carb: false,
@@ -95,8 +93,6 @@ export const FoodSave = () => {
   })));
   const REFS = useRef(OBJECT?.food_section?.map(() => ({
     food_part_idx: createRef(),
-    food_count: createRef(),
-    food_gram: createRef(),
     food_name: createRef(),
     food_kcal: createRef(),
     food_carb: createRef(),
@@ -140,16 +136,6 @@ export const FoodSave = () => {
       },
     })
     .then((res) => {
-      // 저장된 데이터 없는경우 찾기페이지로 리다이렉트
-      if (!res.data.result || res.data.result.length === 0) {
-        navigate("/food/find/list", {
-          state: {
-            dateType: "day",
-            dateStart: moment().format("YYYY-MM-DD"),
-            dateEnd: moment().format("YYYY-MM-DD"),
-          }
-        });
-      }
       // 첫번째 객체를 제외하고 데이터 추가
       setOBJECT((prev) => {
         if (prev.length === 1 && prev[0]?._id === "") {
@@ -223,8 +209,6 @@ export const FoodSave = () => {
   useEffect(() => {
     REFS.current = OBJECT?.food_section?.map((_, idx) => ({
       food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
-      food_count: REFS?.current[idx]?.food_count || createRef(),
-      food_gram: REFS?.current[idx]?.food_gram || createRef(),
       food_name: REFS?.current[idx]?.food_name || createRef(),
       food_kcal: REFS?.current[idx]?.food_kcal || createRef(),
       food_carb: REFS?.current[idx]?.food_carb || createRef(),
@@ -238,8 +222,6 @@ export const FoodSave = () => {
     let foundError = false;
     const initialErrors = OBJECT?.food_section?.map(() => ({
       food_part_idx: false,
-      food_count: false,
-      food_gram: false,
       food_name: false,
       food_kcal: false,
       food_carb: false,
@@ -268,22 +250,6 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_count || section.food_count === 0) {
-        alert(translate("errorFoodCount"));
-        refsCurrentIdx.food_count.current &&
-        refsCurrentIdx.food_count?.current?.focus();
-        initialErrors[idx].food_count = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.food_gram || section.food_gram === 0) {
-        alert(translate("errorFoodGram"));
-        refsCurrentIdx.food_gram.current &&
-        refsCurrentIdx.food_gram?.current?.focus();
-        initialErrors[idx].food_gram = true;
-        foundError = true;
-        break;
-      }
       else if (!section.food_name || section.food_name === "") {
         alert(translate("errorFoodName"));
         refsCurrentIdx.food_name.current &&
@@ -292,7 +258,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_kcal || section.food_kcal === 0) {
+      else if (!section.food_kcal) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current &&
         refsCurrentIdx.food_kcal?.current?.focus();
@@ -300,7 +266,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_carb || section.food_carb === 0) {
+      else if (!section.food_carb) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current &&
         refsCurrentIdx.food_carb?.current?.focus();
@@ -308,7 +274,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_protein || section.food_protein === 0) {
+      else if (!section.food_protein) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current &&
         refsCurrentIdx.food_protein?.current?.focus();
@@ -316,7 +282,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_fat || section.food_fat === 0) {
+      else if (!section.food_fat) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current &&
         refsCurrentIdx.food_fat?.current?.focus();
@@ -440,7 +406,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -453,16 +419,13 @@ export const FoodSave = () => {
               )
             }}
           />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalCarb")}
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -484,7 +447,7 @@ export const FoodSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -497,16 +460,13 @@ export const FoodSave = () => {
               )
             }}
           />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalFat")}
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -582,92 +542,33 @@ export const FoodSave = () => {
                 </MenuItem>
               ))}
             </TextField>
-            {(OBJECT?.food_section[i]?.food_gram === 0) ? (
-              <TextField
-                select={false}
-                label={translate("foodCount")}
-                size={"small"}
-                type={"text"}
-                variant={"outlined"}
-                className={"w-40vw ms-3vw"}
-                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
-                inputRef={REFS?.current[i]?.food_count}
-                error={ERRORS[i]?.food_count}
-                InputProps={{
-                  readOnly: false
-                }}
-                onChange={(e) => {
-                  const newCount = Number(e.target.value);
-                  if (newCount > 9999) {
-                    return;
-                  }
-                  if (isNaN(newCount) || newCount < 0) {
-                    return;
-                  }
-                  else if (newCount === 0) {
-                    return;
-                  }
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        food_count: newCount,
-                        food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
-                        food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
-                        food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
-                        food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            ) : (
-              <TextField
-                select={false}
-                label={translate("gram")}
-                size={"small"}
-                type={"text"}
-                variant={"outlined"}
-                className={"w-40vw ms-3vw"}
-                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
-                inputRef={REFS?.current[i]?.food_gram}
-                error={ERRORS[i]?.food_gram}
-                InputProps={{
-                  readOnly: false,
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                  )
-                }}
-                onChange={(e) => {
-                  const newGram = Number(e.target.value);
-                  if (newGram > 9999) {
-                    return;
-                  }
-                  if (isNaN(newGram) || newGram < 0) {
-                    return;
-                  }
-                  else if (newGram === 0) {
-                    return;
-                  }
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        food_gram: newGram,
-                        food_kcal: Number(((newGram * item.food_kcal) / item.food_gram).toFixed(2)),
-                        food_fat: Number(((newGram * item.food_fat) / item.food_gram).toFixed(2)),
-                        food_carb: Number(((newGram * item.food_carb) / item.food_gram).toFixed(2)),
-                        food_protein: Number(((newGram * item.food_protein) / item.food_gram).toFixed(2)),
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            )}
+            <TextField
+              select={false}
+              label={translate("foodCount")}
+              size={"small"}
+              type={"text"}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 99999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_count: limitedValue,
+                    } : item
+                  ))
+                }));
+              }}
+            />
           </Div>
           <Br20/>
           <Div className={"d-center"}>
@@ -683,19 +584,16 @@ export const FoodSave = () => {
               InputProps={{
                 readOnly: false,
               }}
-            />
-          </Div>
-          <Br20/>
-          <Div className={"d-center"}>
-            <TextField
-              select={false}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-86vw"}
-              label={translate("foodBrand")}
-              value={OBJECT?.food_section[i]?.food_brand || " "}
-              InputProps={{
-                readOnly: false,
+              onChange={(e) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_name: e.target.value,
+                    } : item
+                  ))
+                }));
               }}
             />
           </Div>
@@ -721,6 +619,21 @@ export const FoodSave = () => {
                   </Div>
                 )
               }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 99999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_kcal: limitedValue,
+                    } : item
+                  ))
+                }));
+              }}
             />
             <TextField
               select={false}
@@ -741,6 +654,21 @@ export const FoodSave = () => {
                     {translate("g")}
                   </Div>
                 )
+              }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 99999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_carb: limitedValue,
+                    } : item
+                  ))
+                }));
               }}
             />
           </Div>
@@ -766,6 +694,21 @@ export const FoodSave = () => {
                   </Div>
                 )
               }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 99999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_protein: limitedValue,
+                    } : item
+                  ))
+                }));
+              }}
             />
             <TextField
               select={false}
@@ -787,6 +730,21 @@ export const FoodSave = () => {
                   </Div>
                 )
               }}
+              onChange={(e) => {
+                const regex = /,/g;
+                const match = e.target.value.match(regex);
+                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
+                const limitedValue = Math.min(Number(rawValue), 99999);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_fat: limitedValue,
+                    } : item
+                  ))
+                }));
+              }}
             />
           </Div>
           <Br20/>
@@ -800,7 +758,7 @@ export const FoodSave = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-30"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
         <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}

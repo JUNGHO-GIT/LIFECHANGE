@@ -4,7 +4,7 @@ import {React}from "../../import/ImportReacts.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {Dummy} from "./footer/Dummy.jsx";
 import {FindFood} from "./footer/FindFood.jsx";
-import {SaveDelete} from "./footer/SaveDelete";
+import {Btn} from "./footer/Btn.jsx";
 import {ListFilter} from "./footer/ListFilter.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -21,6 +21,7 @@ export const Footer = ({
   const isSave = strings?.second === "save" && strings?.third === "";
   const isDummy = strings?.second === "data" && strings?.third === "list";
   const isCategory = strings?.second === "data" && strings?.third === "category";
+  const isDetail = strings?.second === "data" && strings?.third === "detail";
   const isFindList = strings?.second === "find" && strings?.third === "list";
   const isFindSave = strings?.second === "find" && strings?.third === "save";
 
@@ -34,9 +35,9 @@ export const Footer = ({
     />
   );
 
-  // 3. saveDelete ---------------------------------------------------------------------------------
-  const saveDeleteNode = () => (
-    <SaveDelete
+  // 3. btn ---------------------------------------------------------------------------------
+  const btnNode = () => (
+    <Btn
       strings={strings}
       objects={objects}
       functions={functions}
@@ -93,14 +94,14 @@ export const Footer = ({
     else if (isGoalSave || isSave) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
-          {saveDeleteNode()}
+          {btnNode()}
         </Paper>
       )
     }
-    else if (isCategory) {
+    else if (isCategory || isDetail) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
-          {saveDeleteNode()}
+          {btnNode()}
         </Paper>
       )
     }

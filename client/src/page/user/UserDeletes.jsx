@@ -3,6 +3,8 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
+import {moment} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
@@ -18,9 +20,6 @@ export const UserDeletes = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -29,17 +28,23 @@ export const UserDeletes = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
-    version: "",
-    date: "",
-    github: "",
-    license: ""
+    _id: "",
+    user_id: "",
+    user_google: false,
+    user_number: 0,
+    user_gender: "",
+    user_age: "",
+    user_height: "",
+    user_weight: "",
+    user_image: "",
+    user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/info`, {
+    axios.get(`${URL_OBJECT}/data/detail`, {
       params: {
         user_id: sessionId,
       },
@@ -94,7 +99,7 @@ export const UserDeletes = () => {
             type={"text"}
             size={"small"}
             label={translate("id")}
-            value={sessionId}
+            value={OBJECT.user_id}
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
@@ -106,7 +111,7 @@ export const UserDeletes = () => {
             type={"text"}
             size={"small"}
             label={translate("signupDate")}
-            value={OBJECT.date}
+            value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
             className={"w-86vw"}
             InputProps={{
               readOnly: true,
@@ -116,7 +121,7 @@ export const UserDeletes = () => {
           <TextArea
             readOnly={false}
             className={"w-86vw h-10vh border shadow-none p-10 pointer"}
-            value={`삭제 후에는 복구가 불가능합니다.\n정말로 삭제하시겠습니까?`}
+            value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
           />
         </Div>
       );

@@ -403,7 +403,7 @@ export const ExerciseSave = () => {
             size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -416,16 +416,13 @@ export const ExerciseSave = () => {
               )
             }}
           />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalCardio")}
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -708,7 +705,7 @@ export const ExerciseSave = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-30"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
         <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}

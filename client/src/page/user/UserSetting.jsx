@@ -121,6 +121,7 @@ export const UserSetting = () => {
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
                       sessionStorage.clear()
+                      sessionStorage.setItem("isLogin", "false")
                       navigate("/")
                     }} />
                   </TableCell>
@@ -128,7 +129,7 @@ export const UserSetting = () => {
                 {/** deletes **/}
                 <TableRow>
                   <TableCell className={"w-90vw p-15 red"}>
-                    {translate("deletes")}
+                    {translate("userDeletes")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {

@@ -39,172 +39,171 @@ export const TopNav = () => {
   const [anchorReal, setAnchorReal] = useState(null);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  // 페이지 변경시 초기화
   useEffect(() => {
-      if (thirdStr !== "") {
-        setValue(`${secondStr}/${thirdStr}`);
+    setValue("analyzeTabs");
+    setSelectedTab("analyzeTabs");
+    setSelectedMenuItem("dashList");
+    setAnchorAnalyze(null);
+    setAnchorGoal(null);
+    setAnchorReal(null);
+  }, [firstStr]);
+
+  // 4. smileNode ----------------------------------------------------------------------------------
+  const smileNode = () => {
+    const makeIcon = (part, className, text, popTrigger) => {
+      const classType = text === "N" ? "d-none" : "fs-0-7rem fw-600 ms-3vw";
+      if (
+        parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
+        parseFloat(percent?.[`${part}`]?.average?.score) <= 1
+      ) {
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile1} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
+      }
+      else if (
+        parseFloat(percent?.[`${part}`]?.average?.score) > 1 &&
+        parseFloat(percent?.[`${part}`]?.average?.score) <= 2
+      ) {
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile2} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
+      }
+      else if (
+        parseFloat(percent?.[`${part}`]?.average?.score) > 2 &&
+        parseFloat(percent?.[`${part}`]?.average?.score) <= 3
+      ) {
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile3} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
+      }
+      else if (
+        parseFloat(percent?.[`${part}`]?.average?.score) > 3 &&
+        parseFloat(percent?.[`${part}`]?.average?.score) <= 4
+      ) {
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile4} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
+      }
+      else if (
+        parseFloat(percent?.[`${part}`]?.average?.score) > 4 &&
+        parseFloat(percent?.[`${part}`]?.average?.score) <= 5
+      ) {
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile5} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
       }
       else {
-        setValue(secondStr);
+        return (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}>
+            <Img src={smile3} className={className} />
+            <Div className={classType}>
+              {percent?.[`${part}`]?.average?.score}
+            </Div>
+          </Div>
+        );
       }
-  }, [secondStr, thirdStr]);
-
-  // 3. logic --------------------------------------------------------------------------------------
-  const makeIcon = (part, className, text, popTrigger) => {
-
-    const classType = text === "N" ? "d-none" : "fs-0-7rem fw-600 ms-3vw";
-
-    if (
-      parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
-      parseFloat(percent?.[`${part}`]?.average?.score) <= 1
-    ) {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile1} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
+    };
+    return (
+      <PopUp
+        type={"dropdown"}
+        position={"bottom"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Div className={"d-column p-10"}>
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem fw-600"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
+            </Div>
+            <Br20 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem me-3vw"}>
+                {translate("total")}
+              </Div>
+              {makeIcon("total", "w-max5vw h-max5vh")}
+            </Div>
+            <Br10 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem me-3vw"}>
+                {translate("exercise")}
+              </Div>
+              {makeIcon("exercise", "w-max5vw h-max5vh")}
+            </Div>
+            <Br10 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem me-3vw"}>
+                {translate("food")}
+              </Div>
+              {makeIcon("food", "w-max5vw h-max5vh")}
+            </Div>
+            <Br10 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem me-3vw"}>
+                {translate("money")}
+              </Div>
+              {makeIcon("money", "w-max5vw h-max5vh")}
+            </Div>
+            <Br10 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-8rem me-3vw"}>
+                {translate("sleep")}
+              </Div>
+              {makeIcon("sleep", "w-max5vw h-max5vh")}
+            </Div>
+            <Br20 />
+            <Div className={"d-center"}>
+              <Div className={"fs-0-6rem fw-500"}>
+                {translate("score")}
+              </Div>
+            </Div>
           </Div>
-        </Div>
-      );
-    }
-    else if (
-      parseFloat(percent?.[`${part}`]?.average?.score) > 1 &&
-      parseFloat(percent?.[`${part}`]?.average?.score) <= 2
-    ) {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile2} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
-          </Div>
-        </Div>
-      );
-    }
-    else if (
-      parseFloat(percent?.[`${part}`]?.average?.score) > 2 &&
-      parseFloat(percent?.[`${part}`]?.average?.score) <= 3
-    ) {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile3} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
-          </Div>
-        </Div>
-      );
-    }
-    else if (
-      parseFloat(percent?.[`${part}`]?.average?.score) > 3 &&
-      parseFloat(percent?.[`${part}`]?.average?.score) <= 4
-    ) {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile4} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
-          </Div>
-        </Div>
-      );
-    }
-    else if (
-      parseFloat(percent?.[`${part}`]?.average?.score) > 4 &&
-      parseFloat(percent?.[`${part}`]?.average?.score) <= 5
-    ) {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile5} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
-          </Div>
-        </Div>
-      );
-    }
-    else {
-      return (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-        }}>
-          <Img src={smile3} className={className} />
-          <Div className={classType}>
-            {percent?.[`${part}`]?.average?.score}
-          </Div>
-        </Div>
-      );
-    }
+        )}>
+        {(popTrigger={}) => (
+          firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
+            makeIcon("total", "w-max25 h-max25  ms-3vw", "N", popTrigger)
+          ) : (
+            makeIcon(part.toLowerCase(), "w-max25 h-max25 ms-3vw", "N", popTrigger)
+          )
+        )}
+      </PopUp>
+    );
   };
-
-  // 5. smileNode ----------------------------------------------------------------------------------
-  const smileNode = () => (
-    <PopUp
-      type={"dropdown"}
-      position={"bottom"}
-      direction={"center"}
-      contents={({closePopup}) => (
-      <Div className={"d-column p-10"}>
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem fw-600"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-3vw"}>
-            {translate("total")}
-          </Div>
-          {makeIcon("total", "w-max5vw h-max5vh")}
-        </Div>
-        <Br10 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-3vw"}>
-            {translate("exercise")}
-          </Div>
-          {makeIcon("exercise", "w-max5vw h-max5vh")}
-        </Div>
-        <Br10 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-3vw"}>
-            {translate("food")}
-          </Div>
-          {makeIcon("food", "w-max5vw h-max5vh")}
-        </Div>
-        <Br10 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-3vw"}>
-            {translate("money")}
-          </Div>
-          {makeIcon("money", "w-max5vw h-max5vh")}
-        </Div>
-        <Br10 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-8rem me-3vw"}>
-            {translate("sleep")}
-          </Div>
-          {makeIcon("sleep", "w-max5vw h-max5vh")}
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Div className={"fs-0-6rem fw-500"}>
-            {translate("score")}
-          </Div>
-        </Div>
-      </Div>
-      )}>
-      {(popTrigger={}) => (
-        firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
-          makeIcon("total", "w-max25 h-max25", "N", popTrigger)
-        ) : (
-          makeIcon(part.toLowerCase(), "w-max25 h-max25", "N", popTrigger)
-        )
-      )}
-    </PopUp>
-  );
 
   // 5. property -----------------------------------------------------------------------------------
   const propertyNode = () => (
@@ -282,188 +281,104 @@ export const TopNav = () => {
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          <Img src={money4} className={"w-max25 h-max25"} />
+          <Img src={money4} className={"w-max25 h-max25 ms-3vw"} />
         </Div>
       )}
     </PopUp>
   );
 
-  // 6. calendar -----------------------------------------------------------------------------------
-  const calendarNode = () => (
-    <Tabs
-      value={value}
-      variant={"scrollable"}
-      selectionFollowsFocus={true}
-      scrollButtons={false}
-      sx={{
-        [`& .${tabsClasses.scrollButtons}`]: {
-          '&.Mui-disabled': { opacity: 0.3 },
-        },
-      }}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-        navigate(`${firstStr}/${newValue}`, {
-          state: {
-            dateType: "day",
-            dateStart: moment().format("YYYY-MM-DD"),
-            dateEnd: moment().format("YYYY-MM-DD")
-          }
-        });
-      }}>
-      <Tab
-        label={translate("list")}
-        value={"list"}
-        onClick={() => {
-          setValue("list");
-        }}
-      />
-      <Tab
-        label={translate("save")}
-        value={"save"}
-        onClick={() => {
-          setValue("save");
-        }}
-      />
-    </Tabs>
-  );
-
-  // 6. default ------------------------------------------------------------------------------------
-  const defaultNode = () => (
-    <>
+  // 6. tabs ---------------------------------------------------------------------------------------
+  const tabsNode = () => (
+    (firstStr === "calendar") ? (
       <Tabs
-        value={selectedTab}
+        value={value}
         variant={"scrollable"}
         selectionFollowsFocus={true}
         scrollButtons={false}
         sx={{
-          [`& .MuiTabs-scrollButtons`]: {
-            "&.Mui-disabled": { opacity: 0.3 },
+          [`& .${tabsClasses.scrollButtons}`]: {
+            '&.Mui-disabled': { opacity: 0.3 },
           },
         }}
         onChange={(event, newValue) => {
-          setSelectedTab(newValue);
-        }}
-      >
+          setValue(newValue);
+          navigate(`${firstStr}/${newValue}`, {
+            state: {
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }
+          });
+        }}>
         <Tab
-          label={translate("analyzeTabs")}
-          value={"analyzeTabs"}
-          onClick={(e) => {
-            setAnchorAnalyze(e.currentTarget);
+          label={translate("list")}
+          value={"list"}
+          onClick={() => {
+            setValue("list");
           }}
         />
         <Tab
-          label={translate("goalTabs")}
-          value={"goalTabs"}
-          onClick={(e) => {
-            setAnchorGoal(e.currentTarget);
-          }}
-        />
-        <Tab
-          label={translate("realTabs")}
-          value={"realTabs"}
-          onClick={(e) => {
-            setAnchorReal(e.currentTarget);
+          label={translate("save")}
+          value={"save"}
+          onClick={() => {
+            setValue("save");
           }}
         />
       </Tabs>
-      <Menu
-        anchorEl={anchorAnalyze}
-        open={Boolean(anchorAnalyze)}
-        onClose={() => setAnchorAnalyze(null)}
-      >
-        <MenuItem
-          selected={selectedMenuItem === "dashList"}
-          onClick={() => {
-            setAnchorAnalyze(null);
-            setSelectedTab("analyzeTabs");
-            setSelectedMenuItem("dashList");
-            setValue("analyzeTabs");
-            navigate(`${firstStr}/dash/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
+    ) : (
+      <>
+        <Tabs
+          value={selectedTab}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
+          }}
+          onChange={(event, newValue) => {
+            setSelectedTab(newValue);
           }}
         >
-          {translate("dashList")}
-        </MenuItem>
-        <MenuItem
-          selected={selectedMenuItem === "diffList"}
-          onClick={() => {
-            setAnchorAnalyze(null);
-            setSelectedTab("analyzeTabs");
-            setSelectedMenuItem("diffList");
-            setValue("analyzeTabs");
-            navigate(`${firstStr}/diff/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          <Tab
+            label={translate("analyzeTabs")}
+            value={"analyzeTabs"}
+            onClick={(e) => {
+              // @ts-ignore
+              setAnchorAnalyze(e.currentTarget);
+            }}
+          />
+          <Tab
+            label={translate("goalTabs")}
+            value={"goalTabs"}
+            onClick={(e) => {
+              // @ts-ignore
+              setAnchorGoal(e.currentTarget);
+            }}
+          />
+          <Tab
+            label={translate("realTabs")}
+            value={"realTabs"}
+            onClick={(e) => {
+              // @ts-ignore
+              setAnchorReal(e.currentTarget);
+            }}
+          />
+        </Tabs>
+        <Menu
+          anchorEl={anchorAnalyze}
+          open={Boolean(anchorAnalyze)}
+          onClose={() => setAnchorAnalyze(null)}
         >
-          {translate("diffList")}
-        </MenuItem>
-      </Menu>
-      <Menu
-        anchorEl={anchorGoal}
-        open={Boolean(anchorGoal)}
-        onClose={() => setAnchorGoal(null)}
-      >
-        <MenuItem
-          selected={selectedMenuItem === "goalList"}
-          onClick={() => {
-            setAnchorGoal(null);
-            setSelectedTab("goalTabs");
-            setSelectedMenuItem("goalList");
-            setValue("goalTabs");
-            navigate(`${firstStr}/goal/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        >
-          {translate("list")}
-        </MenuItem>
-        <MenuItem
-          selected={selectedMenuItem === "goalSave"}
-          onClick={() => {
-            setAnchorGoal(null);
-            setSelectedTab("goalTabs");
-            setSelectedMenuItem("goalSave");
-            setValue("goalTabs");
-            navigate(`${firstStr}/goal/save`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        >
-          {translate("save")}
-        </MenuItem>
-      </Menu>
-      <Menu
-        anchorEl={anchorReal}
-        open={Boolean(anchorReal)}
-        onClose={() => setAnchorReal(null)}
-      >
-        {firstStr === "food" && (
           <MenuItem
-            selected={selectedMenuItem === "findList"}
+            selected={selectedMenuItem === "dashList"}
             onClick={() => {
-              setAnchorReal(null);
-              setSelectedTab("realTabs");
-              setSelectedMenuItem("findList");
-              setValue("realTabs");
-              navigate(`${firstStr}/find/list`, {
+              setAnchorAnalyze(null);
+              setSelectedTab("analyzeTabs");
+              setSelectedMenuItem("dashList");
+              setValue("analyzeTabs");
+              navigate(`${firstStr}/dash/list`, {
                 state: {
                   dateType: "day",
                   dateStart: moment().format("YYYY-MM-DD"),
@@ -472,56 +387,147 @@ export const TopNav = () => {
               });
             }}
           >
-            {translate("findList")}
+            {translate("dashList")}
           </MenuItem>
-        )}
-        <MenuItem
-          selected={selectedMenuItem === "realList"}
-          onClick={() => {
-            setAnchorReal(null);
-            setSelectedTab("realTabs");
-            setSelectedMenuItem("realList");
-            setValue("realTabs");
-            navigate(`${firstStr}/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          <MenuItem
+            selected={selectedMenuItem === "diffList"}
+            onClick={() => {
+              setAnchorAnalyze(null);
+              setSelectedTab("analyzeTabs");
+              setSelectedMenuItem("diffList");
+              setValue("analyzeTabs");
+              navigate(`${firstStr}/diff/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("diffList")}
+          </MenuItem>
+        </Menu>
+        <Menu
+          anchorEl={anchorGoal}
+          open={Boolean(anchorGoal)}
+          onClose={() => setAnchorGoal(null)}
         >
-          {translate("list")}
-        </MenuItem>
-        <MenuItem
-          selected={selectedMenuItem === "realSave"}
-          onClick={() => {
-            setAnchorReal(null);
-            setSelectedTab("realTabs");
-            setSelectedMenuItem("realSave");
-            setValue("realTabs");
-            navigate(`${firstStr}/save`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          <MenuItem
+            selected={selectedMenuItem === "goalList"}
+            onClick={() => {
+              setAnchorGoal(null);
+              setSelectedTab("goalTabs");
+              setSelectedMenuItem("goalList");
+              setValue("goalTabs");
+              navigate(`${firstStr}/goal/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("list")}
+          </MenuItem>
+          <MenuItem
+            selected={selectedMenuItem === "goalSave"}
+            onClick={() => {
+              setAnchorGoal(null);
+              setSelectedTab("goalTabs");
+              setSelectedMenuItem("goalSave");
+              setValue("goalTabs");
+              navigate(`${firstStr}/goal/save`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("save")}
+          </MenuItem>
+        </Menu>
+        <Menu
+          anchorEl={anchorReal}
+          open={Boolean(anchorReal)}
+          onClose={() => setAnchorReal(null)}
         >
-          {translate("save")}
-        </MenuItem>
-      </Menu>
-    </>
+          {firstStr === "food" && (
+            <MenuItem
+              selected={selectedMenuItem === "findList"}
+              onClick={() => {
+                setAnchorReal(null);
+                setSelectedTab("realTabs");
+                setSelectedMenuItem("findList");
+                setValue("realTabs");
+                navigate(`${firstStr}/find/list`, {
+                  state: {
+                    dateType: "day",
+                    dateStart: moment().format("YYYY-MM-DD"),
+                    dateEnd: moment().format("YYYY-MM-DD"),
+                  },
+                });
+              }}
+            >
+              {translate("findList")}
+            </MenuItem>
+          )}
+          <MenuItem
+            selected={selectedMenuItem === "realList"}
+            onClick={() => {
+              setAnchorReal(null);
+              setSelectedTab("realTabs");
+              setSelectedMenuItem("realList");
+              setValue("realTabs");
+              navigate(`${firstStr}/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("list")}
+          </MenuItem>
+          <MenuItem
+            selected={selectedMenuItem === "realSave"}
+            onClick={() => {
+              setAnchorReal(null);
+              setSelectedTab("realTabs");
+              setSelectedMenuItem("realSave");
+              setValue("realTabs");
+              navigate(`${firstStr}/save`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("save")}
+          </MenuItem>
+        </Menu>
+      </>
+    )
   );
 
   // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-        {smileNode()}
-        {propertyNode()}
-        {firstStr === "calendar" ? calendarNode() : defaultNode()}
+        <Div className={"d-center"}>
+          {smileNode()}
+          {propertyNode()}
+        </Div>
+        <Div className={"d-center mx-auto ms-6vw"}>
+          {tabsNode()}
+        </Div>
+        <Div className={"me-auto"}></Div>
       </Card>
     </Paper>
   );

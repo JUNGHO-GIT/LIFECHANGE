@@ -25,12 +25,6 @@ export const createUser = async (
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
     user_google: "Y",
-    user_pw: "",
-    user_age: "",
-    user_gender: "",
-    user_height: "",
-    user_weight: "",
-    user_image: "",
     user_regDt: newDate,
     user_updateDt: "",
   });

@@ -14,9 +14,7 @@ export const CalendarList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
-  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname;

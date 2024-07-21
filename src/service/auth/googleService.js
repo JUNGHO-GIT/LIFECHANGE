@@ -53,7 +53,7 @@ export const callback = async (code_param) => {
 
     return {
       status: "success",
-      url: `${URL}/auth/page`,
+      url: `${URL}/auth/google`,
     };
 
   }

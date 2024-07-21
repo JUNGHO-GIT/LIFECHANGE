@@ -1,11 +1,11 @@
-// SaveDelete.jsx
+// Btn.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Button, Card} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const SaveDelete = ({
+export const Btn = ({
   strings, objects, functions, handlers
 }) => {
 
@@ -62,9 +62,11 @@ export const SaveDelete = ({
     </Button>
   );
 
-  // 7. saveDelete ---------------------------------------------------------------------------------
-  const saveDeleteNode = () => {
-    if (strings?.second === "data" && strings?.third === "category") {
+  // 7. btn ---------------------------------------------------------------------------------
+  const btnNode = () => {
+    if (strings?.second === "data" && (
+      strings?.third === "category" || strings?.third === "detail"
+    )) {
       return (
         <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
           {btnSave()}
@@ -84,7 +86,7 @@ export const SaveDelete = ({
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {saveDeleteNode()}
+      {btnNode()}
     </>
   );
 };
