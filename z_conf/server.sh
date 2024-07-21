@@ -21,6 +21,16 @@ else
   exit $status
 fi
 
+# npm install
+npm install
+status=$?
+if [ $status -eq 0 ]; then
+  echo "npm install : success"
+else
+  echo "npm install : fail"
+  exit $status
+fi
+
 # pm2 restart
 pm2 restart all
 pm2 save
