@@ -38,6 +38,9 @@
 .MuiAccordionSummary-root.Mui-expanded {
   min-height: 0px !important;
 }
+.MuiGrid-item {
+  padding: 0px 0px 0px 0px !important;
+}
 
 /** top *******************************************************************************************/
 .MuiTab-root.Mui-selected {
@@ -54,13 +57,21 @@
 }
 .MuiBottomNavigationAction-root {
   background-color: transparent !important;
-  min-width: 18vw !important;
+  min-width: 14vw !important;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
   color: #006ab3 !important;
   font-weight: bold !important;
   text-decoration: none !important;
   scale: 1.2 !important;
+}
+.MuiBottomNavigationAction-label {
+  line-height: 1.4 !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 0.7rem !important;
 }
 
 /** typography ************************************************************************************/

@@ -49,7 +49,7 @@ export const useTranslate = () => {
     bedTime: {ko: "취침", en: "Bed"},
 
     // c
-    c: {ko: "count", en: "count"},
+    c: {ko: "cnt", en: "cnt"},
     cm: {ko: "cm", en: "cm"},
     carb: {ko: "탄수화물", en: "Carb"},
     calendar: {ko: "일정", en: "calendar"},
@@ -67,17 +67,17 @@ export const useTranslate = () => {
     delete: {ko: "삭제", en: "Delete"},
     deletes: {ko: "삭제", en: "Delete"},
     deletesAll: {ko: "전체삭제", en: "Delete All"},
-    dashBar: {ko: "목표", en: "Goal"},
-    dashPie: {ko: "비율", en: "Proportion"},
-    dashLine: {ko: "추이", en: "Trend"},
-    dashAvg: {ko: "평균", en: "Average"},
+    chartBar: {ko: "목표", en: "Goal"},
+    chartPie: {ko: "비율", en: "Proportion"},
+    chartLine: {ko: "추이", en: "Trend"},
+    chartAvg: {ko: "평균", en: "Average"},
     dataCategory: {ko: "카테고리", en: "Category"},
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
     dataCategory3: {ko: "분류 3", en: "Category 3"},
     dataDetail: {ko: "회원정보", en: "Information"},
     dataList: {ko: "데이터 리스트", en: "Data List"},
-    dashList: {ko: "통계", en: "Statistics"},
+    chartList: {ko: "통계", en: "Statistics"},
     date: {ko: "날짜", en: "Date"},
     data: {ko: "데이터", en: "Data"},
     dateEnd: {ko: "종료일", en: "End Date"},
@@ -90,6 +90,7 @@ export const useTranslate = () => {
     duration: {ko: "기간", en: "Duration"},
     dignity: {ko: "품위", en: "Dignity"},
     dinner: {ko: "저녁", en: "Dinner"},
+    dash: {ko: "대시보드", en: "Dashboard"},
 
     // e
     Empty: {ko: "Empty", en: "Empty"},
@@ -98,6 +99,7 @@ export const useTranslate = () => {
     expense: {ko: "지출", en: "Expense"},
     entertainment: {ko: "유흥", en: "Entertainment"},
     errorCount: {ko: "항목을 추가해주세요", en: "Please add an item"},
+    exerciseCount: {ko: "횟수", en: "Count"},
 
     // f
     female: {ko: "여성", en: "Female"},

@@ -6,7 +6,6 @@ import {moment} from "../../../import/ImportLibs.jsx";
 import {Picker, Div, Br10, PopUp} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
 
-
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = ({
   strings, objects, functions, handlers

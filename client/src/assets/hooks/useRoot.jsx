@@ -1,7 +1,6 @@
 // useRoot.jsx
 
 import {useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
@@ -19,7 +18,7 @@ export const useRoot = () => {
         navigate("/user/login");
       }
       else if (location.pathname === '/' && sessionId) {
-        navigate("/calendar/list");
+        navigate("/dash/diff/list");
       }
     }
   }, [location, navigate, sessionId]);

@@ -5,8 +5,8 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {Div, Hr30, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
@@ -84,7 +84,8 @@ export const MoneyGoalList = () => {
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
-      }));// Accordion 초기값 설정
+      }));
+      // Accordion 초기값 설정
       // setIsExpanded(res.data.result.map((_, index) => (index)));
       setIsExpanded([]);
     })
@@ -162,50 +163,50 @@ export const MoneyGoalList = () => {
                   )}
                 </Div>
               </AccordionSummary>
-              <AccordionDetails>
-                <Div className={"d-between"}>
-                  <Div className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      <Img src={money2} className={"w-15 h-15"} />
-                    </Div>
+              <AccordionDetails><Br10 />
+                {/** row 1 **/}
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center"}>
+                    <Img src={money2} className={"w-15 h-15"} />
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("income")}
                     </Div>
-                    <Div className={"fs-0-9rem fw-500 dark"}>
-                      {translate("goal")}
-                    </Div>
-                  </Div>
-                  <Div className={"d-right"}>
-                    <Div className={"fs-0-7rem dark fw-500 me-10"}>
-                      {translate("currency")}
-                    </Div>
+                  </Grid>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_income).format("0,0")}
                     </Div>
-                  </Div>
-                </Div>
-                <Hr30 />
-                <Div className={"d-between"}>
-                  <Div className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      <Img src={money2} className={"w-15 h-15"} />
+                  </Grid>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
                     </Div>
+                  </Grid>
+                </Grid>
+                <Hr30 />
+                {/** row 2 **/}
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center"}>
+                    <Img src={money2} className={"w-15 h-15"} />
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("expense")}
                     </Div>
-                    <Div className={"fs-0-9rem fw-500 dark"}>
-                      {translate("goal")}
-                    </Div>
-                  </Div>
-                  <Div className={"d-right"}>
-                    <Div className={"fs-0-7rem dark fw-500 me-10"}>
-                      {translate("currency")}
-                    </Div>
+                  </Grid>
+                  <Grid item xs={6} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_expense).format("0,0")}
                     </Div>
-                  </Div>
-                </Div>
+                  </Grid>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                  </Grid>
+                </Grid>
               </AccordionDetails>
             </Accordion>
           </Card>

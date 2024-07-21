@@ -7,7 +7,7 @@ import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Hr10, Hr30, Br10, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
-import {Paper, Card} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -92,7 +92,8 @@ export const MoneyDiff = () => {
         totalCnt: res.data.totalCnt || 0,
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
-      }));// Accordion 초기값 설정
+      }));
+      // Accordion 초기값 설정
       // setIsExpanded(res.data.result.map((_, index) => (index)));
       setIsExpanded([]);
     })
@@ -156,7 +157,7 @@ export const MoneyDiff = () => {
                   </Div>
                 </Div>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails><Br10 />
                 <Div className={"d-between"}>
                 <Div className={"d-center"}>
                   <Div className={"fs-1-0rem fw-600 dark"}>

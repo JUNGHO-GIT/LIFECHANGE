@@ -33,7 +33,7 @@ export const AuthGoogle = () => {
           sessionStorage.setItem("isAdmin", "false");
         }
         percent();
-        navigate("/calendar/list");
+        navigate("/dash/diff/list");
       }
     })
     .catch((err) => {

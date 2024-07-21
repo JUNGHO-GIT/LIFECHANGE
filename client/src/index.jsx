@@ -14,7 +14,7 @@ import "./index.css";
 import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";
-import "./assets/css/Dash.css";
+import "./assets/css/Chart.css";
 import "./assets/css/Mui.css";
 import "./assets/css/Components.css";
 import "./assets/css/Core.css";
@@ -27,14 +27,18 @@ import {BottomNav} from "./import/ImportLayouts.jsx";
 import {CalendarList} from "./page/calendar/CalendarList.jsx";
 import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
-import {ExerciseDash} from "./page/exercise/dash/ExerciseDash.jsx";
+import {DashDiffList} from "./page/dash/DashDiffList.jsx";
+import {DashGoalList} from "./page/dash/DashGoalList.jsx";
+import {DashList} from "./page/dash/DashList.jsx";
+
+import {ExerciseChart} from "./page/exercise/chart/ExerciseChart.jsx";
 import {ExerciseDiff} from "./page/exercise/diff/ExerciseDiffList.jsx";
 import {ExerciseGoalList} from "./page/exercise/goal/ExerciseGoalList.jsx";
 import {ExerciseGoalSave} from "./page/exercise/goal/ExerciseGoalSave.jsx";
 import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
 import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
 
-import {FoodDash} from "./page/food/dash/FoodDash.jsx";
+import {FoodChart} from "./page/food/chart/FoodChart.jsx";
 import {FoodDiff} from "./page/food/diff/FoodDiffList.jsx";
 import {FoodFindList} from "./page/food/find/FoodFindList.jsx";
 import {FoodFindSave} from "./page/food/find/FoodFindSave.jsx";
@@ -43,14 +47,14 @@ import {FoodGoalSave} from "./page/food/goal/FoodGoalSave.jsx";
 import {FoodList} from "./page/food/FoodList.jsx";
 import {FoodSave} from "./page/food/FoodSave.jsx";
 
-import {MoneyDash} from "./page/money/dash/MoneyDash.jsx";
+import {MoneyChart} from "./page/money/chart/MoneyChart.jsx";
 import {MoneyDiff} from "./page/money/diff/MoneyDiffList.jsx";
 import {MoneyGoalList} from "./page/money/goal/MoneyGoalList.jsx";
 import {MoneyGoalSave} from "./page/money/goal/MoneyGoalSave.jsx";
 import {MoneyList} from "./page/money/MoneyList.jsx";
 import {MoneySave} from "./page/money/MoneySave.jsx";
 
-import {SleepDash} from "./page/sleep/dash/SleepDash.jsx";
+import {SleepChart} from "./page/sleep/chart/SleepChart.jsx";
 import {SleepDiff} from "./page/sleep/diff/SleepDiffList.jsx";
 import {SleepGoalList} from "./page/sleep/goal/SleepGoalList.jsx";
 import {SleepGoalSave} from "./page/sleep/goal/SleepGoalSave.jsx";
@@ -76,9 +80,17 @@ const Calendar = () => (
   </Routes>
 );
 // -------------------------------------------------------------------------------------------------
+const Dash = () => (
+  <Routes>
+    <Route path="/diff/list" element={<DashDiffList />} />
+    <Route path="/goal/list" element={<DashGoalList />} />
+    <Route path="/list" element={<DashList />} />
+  </Routes>
+);
+// -------------------------------------------------------------------------------------------------
 const Exercise = () =>  (
   <Routes>
-    <Route path="/dash/list" element={<ExerciseDash />} />
+    <Route path="/chart/list" element={<ExerciseChart />} />
     <Route path="/diff/list" element={<ExerciseDiff />} />
     <Route path="/goal/list" element={<ExerciseGoalList />} />
     <Route path="/goal/save" element={<ExerciseGoalSave />} />
@@ -89,7 +101,7 @@ const Exercise = () =>  (
 // -------------------------------------------------------------------------------------------------
 const Food = () => (
   <Routes>
-    <Route path="/dash/list" element={<FoodDash />} />
+    <Route path="/chart/list" element={<FoodChart />} />
     <Route path="/diff/list" element={<FoodDiff />} />
     <Route path="/find/list" element={<FoodFindList />} />
     <Route path="/find/save" element={<FoodFindSave />} />
@@ -102,7 +114,7 @@ const Food = () => (
 // -------------------------------------------------------------------------------------------------
 const Money = () =>  (
   <Routes>
-    <Route path="/dash/list" element={<MoneyDash />} />
+    <Route path="/chart/list" element={<MoneyChart />} />
     <Route path="/diff/list" element={<MoneyDiff />} />
     <Route path="/goal/list" element={<MoneyGoalList />} />
     <Route path="/goal/save" element={<MoneyGoalSave />} />
@@ -113,7 +125,7 @@ const Money = () =>  (
 // -------------------------------------------------------------------------------------------------
 const Sleep = () => (
   <Routes>
-    <Route path="/dash/list" element={<SleepDash />} />
+    <Route path="/chart/list" element={<SleepChart />} />
     <Route path="/diff/list" element={<SleepDiff />} />
     <Route path="/goal/list" element={<SleepGoalList />} />
     <Route path="/goal/save" element={<SleepGoalSave />} />
@@ -169,6 +181,7 @@ const App = () => {
       {!noneTop && <TopNav />}
       <Routes>
         <Route path="/calendar/*" element={<Calendar />} />
+        <Route path="/dash/*" element={<Dash />} />
         <Route path="/exercise/*" element={<Exercise />} />
         <Route path="/food/*" element={<Food />} />
         <Route path="/money/*" element={<Money />} />

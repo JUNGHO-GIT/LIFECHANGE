@@ -33,7 +33,7 @@ export const TopNav = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [value, setValue] = useState("analyzeTabs");
   const [selectedTab, setSelectedTab] = useState(value);
-  const [selectedMenuItem, setSelectedMenuItem] = useState("dashList");
+  const [selectedMenuItem, setSelectedMenuItem] = useState("chartList");
   const [anchorAnalyze, setAnchorAnalyze] = useState(null);
   const [anchorGoal, setAnchorGoal] = useState(null);
   const [anchorReal, setAnchorReal] = useState(null);
@@ -41,12 +41,20 @@ export const TopNav = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
   useEffect(() => {
-    setValue("analyzeTabs");
-    setSelectedTab("analyzeTabs");
-    setSelectedMenuItem("dashList");
-    setAnchorAnalyze(null);
-    setAnchorGoal(null);
-    setAnchorReal(null);
+    if (firstStr === "calendar") {
+      setValue("list");
+    }
+    else if (firstStr === "dash") {
+      setValue("diff/list");
+    }
+    else {
+      setValue("analyzeTabs");
+      setSelectedTab("analyzeTabs");
+      setSelectedMenuItem("chartList");
+      setAnchorAnalyze(null);
+      setAnchorGoal(null);
+      setAnchorReal(null);
+    }
   }, [firstStr]);
 
   // 4. smileNode ----------------------------------------------------------------------------------
@@ -289,7 +297,50 @@ export const TopNav = () => {
 
   // 6. tabs ---------------------------------------------------------------------------------------
   const tabsNode = () => (
-    (firstStr === "calendar") ? (
+    (firstStr === "dash") ? (
+      <Tabs
+        value={value}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .${tabsClasses.scrollButtons}`]: {
+            '&.Mui-disabled': { opacity: 0.3 },
+          },
+        }}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          navigate(`${firstStr}/${newValue}`, {
+            state: {
+              dateType: "day",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }
+          });
+        }}>
+        <Tab
+          label={translate("diff")}
+          value={"diff/list"}
+          onClick={() => {
+            setValue("diff/list");
+          }}
+        />
+        <Tab
+          label={translate("goal")}
+          value={"goal/list"}
+          onClick={() => {
+            setValue("goal/list");
+          }}
+        />
+        <Tab
+          label={translate("real")}
+          value={"list"}
+          onClick={() => {
+            setValue("list");
+          }}
+        />
+      </Tabs>
+    ) : (firstStr === "calendar") ? (
       <Tabs
         value={value}
         variant={"scrollable"}
@@ -372,13 +423,13 @@ export const TopNav = () => {
           onClose={() => setAnchorAnalyze(null)}
         >
           <MenuItem
-            selected={selectedMenuItem === "dashList"}
+            selected={selectedMenuItem === "chartList"}
             onClick={() => {
               setAnchorAnalyze(null);
               setSelectedTab("analyzeTabs");
-              setSelectedMenuItem("dashList");
+              setSelectedMenuItem("chartList");
               setValue("analyzeTabs");
-              navigate(`${firstStr}/dash/list`, {
+              navigate(`${firstStr}/chart/list`, {
                 state: {
                   dateType: "day",
                   dateStart: moment().format("YYYY-MM-DD"),
@@ -387,7 +438,7 @@ export const TopNav = () => {
               });
             }}
           >
-            {translate("dashList")}
+            {translate("chartList")}
           </MenuItem>
           <MenuItem
             selected={selectedMenuItem === "diffList"}

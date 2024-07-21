@@ -24,7 +24,7 @@ export const PopUp = ({...props}) => {
       padding: "6px 6px 6px 6px",
     };
   }
-  else if (props.type === "dash") {
+  else if (props.type === "chart") {
     popupStyle = {
       display: "flex",
       flexDirection: "column",

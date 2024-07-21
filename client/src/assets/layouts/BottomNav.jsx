@@ -6,7 +6,8 @@ import {moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
-import {calendar1, exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
+import {calendar1, dashboard1} from "../../import/ImportImages.jsx";
+import {exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
@@ -19,7 +20,7 @@ export const BottomNav = () => {
   const firstStr = PATH?.split("/")[1] || "";
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [value, setValue] = useState("calendar");
+  const [value, setValue] = useState("dash");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -54,7 +55,7 @@ export const BottomNav = () => {
         icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("exercise");
-          navigate("exercise/dash/list", {
+          navigate("exercise/chart/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -69,7 +70,22 @@ export const BottomNav = () => {
         icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("food");
-          navigate("food/dash/list", {
+          navigate("food/chart/list", {
+            state: {
+              dateType: "",
+              dateStart: moment().format("YYYY-MM-DD"),
+              dateEnd: moment().format("YYYY-MM-DD")
+            }
+          });
+        }}
+      />
+      <BottomNavigationAction
+        label={translate("dash")}
+        value={"dash"}
+        icon={<Img src={dashboard1} className={"w-16 h-16 m-0"} />}
+        onClick={() => {
+          setValue("dash");
+          navigate("dash/diff/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -99,7 +115,7 @@ export const BottomNav = () => {
         icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("money");
-          navigate("money/dash/list", {
+          navigate("money/chart/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -114,7 +130,7 @@ export const BottomNav = () => {
         icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("sleep");
-          navigate("sleep/dash/list", {
+          navigate("sleep/chart/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),

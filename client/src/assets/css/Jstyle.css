@@ -10148,6 +10148,29 @@
 .fw-bold   {font-weight: bold !important;}
 .fw-bolder {font-weight: bolder !important;}
 
+/** 7-4. font (line height) **********************************************************************/
+.lh-1-0 {line-height: 1.0 !important;}
+.lh-1-1 {line-height: 1.1 !important;}
+.lh-1-2 {line-height: 1.2 !important;}
+.lh-1-3 {line-height: 1.3 !important;}
+.lh-1-4 {line-height: 1.4 !important;}
+.lh-1-5 {line-height: 1.5 !important;}
+.lh-1-6 {line-height: 1.6 !important;}
+.lh-1-7 {line-height: 1.7 !important;}
+.lh-1-8 {line-height: 1.8 !important;}
+.lh-1-9 {line-height: 1.9 !important;}
+.lh-2-0 {line-height: 2.0 !important;}
+.lh-2-1 {line-height: 2.1 !important;}
+.lh-2-2 {line-height: 2.2 !important;}
+.lh-2-3 {line-height: 2.3 !important;}
+.lh-2-4 {line-height: 2.4 !important;}
+.lh-2-5 {line-height: 2.5 !important;}
+.lh-2-6 {line-height: 2.6 !important;}
+.lh-2-7 {line-height: 2.7 !important;}
+.lh-2-8 {line-height: 2.8 !important;}
+.lh-2-9 {line-height: 2.9 !important;}
+.lh-3-0 {line-height: 3.0 !important;}
+
 /** 8-1. z-index **********************************************************************************/
 .z-000 {z-index: 000 !important;}
 .z-100 {z-index: 100 !important;}
@@ -10272,6 +10295,18 @@
 .align-right {
   display: flex !important;
   align-items: flex-end !important;
+}
+.justify-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+.justify-left {
+  display: flex !important;
+  justify-content: flex-start !important;
+}
+.justify-right {
+  display: flex !important;
+  justify-content: flex-end !important;
 }
 .d-none {
   display: none !important;

@@ -14,7 +14,7 @@ export const dataArray = [
     icon: "LuDumbbell",
     title: "Exercise",
     items: [
-      {to: "/exercise/dash", label: "ExerciseDash"},
+      {to: "/exercise/chart", label: "ExerciseChart"},
       {to: "/exercise/diff", label: "ExerciseDiff"},
       {to: "/exercise/list", label: "ExerciseList"},
       {to: "/exercise/goal/list", label: "ExerciseGoalList"},
@@ -27,7 +27,7 @@ export const dataArray = [
     icon: "BiBowlHot",
     title: "Food",
     items: [
-      {to: "/food/dash", label: "FoodDash"},
+      {to: "/food/chart", label: "FoodChart"},
       {to: "/food/diff", label: "FoodDiff"},
       {to: "/food/find", label: "FoodFindList"},
       {to: "/food/list", label: "FoodList"},
@@ -41,7 +41,7 @@ export const dataArray = [
     icon: "TbPigMoney",
     title: "Money",
     items: [
-      {to: "/money/dash", label: "MoneyDash"},
+      {to: "/money/chart", label: "MoneyChart"},
       {to: "/money/diff", label: "MoneyDiff"},
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/goal/list", label: "MoneyGoalList"},
@@ -54,7 +54,7 @@ export const dataArray = [
     icon: "TbMoon",
     title: "Sleep",
     items: [
-      {to: "/sleep/dash", label: "SleepDash"},
+      {to: "/sleep/chart", label: "SleepChart"},
       {to: "/sleep/diff", label: "SleepDiff"},
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/goal/list", label: "SleepGoalList"},
