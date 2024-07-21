@@ -129,7 +129,7 @@ export const save = {
     const finalResult = await Calendar.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      calendar_dummy: false,
+      calendar_dummy: "N",
       calendar_dateType: dateType_param,
       calendar_dateStart: dateStart_param,
       calendar_dateEnd: dateEnd_param,

@@ -57,7 +57,7 @@ export const ExerciseSave = () => {
   const OBJECT_DEF = {
     _id: "",
     exercise_number: 0,
-    exercise_dummy: false,
+    exercise_dummy: "N",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,

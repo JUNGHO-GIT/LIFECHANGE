@@ -141,7 +141,7 @@ export const save = {
     const finalResult = await MoneyGoal.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      money_goal_dummy: false,
+      money_goal_dummy: "N",
       money_goal_dateType: dateType_param,
       money_goal_dateStart: dateStart_param,
       money_goal_dateEnd: dateEnd_param,

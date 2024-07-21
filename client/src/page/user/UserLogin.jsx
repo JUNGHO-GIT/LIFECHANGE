@@ -5,7 +5,7 @@ import {createRef, useRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportUtils";
-import {Div, Br10, Br20, Img, Hr20, Hr30, Hr40} from "../../import/ImportComponents.jsx";
+import {Div, Br10, Img, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
@@ -19,6 +19,7 @@ export const UserLogin = () => {
   const URL_OBJECT = URL + SUBFIX;
   const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
+  const location = useLocation();
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -106,6 +107,7 @@ export const UserLogin = () => {
         }
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("isLogin", "true");
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }
@@ -230,7 +232,7 @@ export const UserLogin = () => {
           type={"text"}
           size={"small"}
           value={translate("googleLogin")}
-          className={"w-100p bg-white"}
+          className={"w-100p bg-white pointer"}
           InputProps={{
             readOnly: true,
             startAdornment: (

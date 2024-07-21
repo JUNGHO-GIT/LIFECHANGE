@@ -11,8 +11,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   exercise_dummy: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "N",
     required: false
   },
   exercise_number: {

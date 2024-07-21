@@ -1,7 +1,7 @@
 // googleRouter.js
 
 import express from "express";
-import * as service from "../../service/google/googleService.js";
+import * as service from "../../service/auth/googleService.js";
 export const router = express.Router();
 import dotenv from 'dotenv';
 dotenv.config();
@@ -47,6 +47,34 @@ router.get("/callback", async (req, res) => {
       res.json({
         status: "fail",
         msg: "콜백 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 3. afterCallback --------------------------------------------------------------------------------
+router.get("/afterCallback", async (req, res) => {
+  try {
+    let result = await service.afterCallback();
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "구글로그인 정보 세션 저장 성공",
+        result: result.result,
+        googleId: result.googleId,
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "구글로그인 정보 세션 저장 실패"
       });
     }
   }

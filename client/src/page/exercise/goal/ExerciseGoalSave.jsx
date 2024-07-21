@@ -55,7 +55,7 @@ export const ExerciseGoalSave = () => {
   const OBJECT_DEF = {
     _id: "",
     exercise_goal_number: 0,
-    exercise_goal_dummy: false,
+    exercise_goal_dummy: "N",
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
     exercise_goal_count: 0,

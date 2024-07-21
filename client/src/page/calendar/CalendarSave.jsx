@@ -62,7 +62,7 @@ export const CalendarSave = () => {
   const OBJECT_DEF = {
     _id: "",
     calendar_number: 0,
-    calendar_dummy: false,
+    calendar_dummy: "N",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{

@@ -11,8 +11,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   food_dummy: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "N",
     required: false
   },
   food_number: {

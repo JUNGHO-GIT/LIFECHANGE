@@ -29,7 +29,7 @@ import { router as sleepGoalRouter } from "./src/router/sleep/sleepGoalRouter.js
 import { router as userPercentRouter } from "./src/router/user/userPercentRouter.js";
 import { router as userDataRouter } from "./src/router/user/userDataRouter.js";
 import { router as userRouter } from "./src/router/user/userRouter.js";
-import { router as googleRouter } from "./src/router/google/googleRouter.js";
+import { router as googleRouter } from "./src/router/auth/googleRouter.js";
 
 // -------------------------------------------------------------------------------------------------
 dotenv.config();

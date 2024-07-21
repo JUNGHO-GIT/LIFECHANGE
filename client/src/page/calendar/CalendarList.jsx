@@ -14,7 +14,9 @@ export const CalendarList = () => {
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
+  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
+  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname;
@@ -53,7 +55,7 @@ export const CalendarList = () => {
   const OBJECT_DEF = [{
     _id: "",
     calendar_number: 0,
-    calendar_dummy: false,
+    calendar_dummy: "N",
     calendar_dateType: "",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",

@@ -16,8 +16,8 @@ const schema = new mongoose.Schema({
     required: true
   },
   user_google: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "N",
     required: false
   },
   user_pw : {

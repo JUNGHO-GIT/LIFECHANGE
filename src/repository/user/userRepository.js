@@ -77,6 +77,7 @@ export const signup = {
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
+      user_google: false,
       user_pw: OBJECT_param.user_pw,
       user_age: OBJECT_param.user_age,
       user_gender: OBJECT_param.user_gender,

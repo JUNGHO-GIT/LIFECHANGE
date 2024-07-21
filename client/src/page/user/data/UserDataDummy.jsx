@@ -42,7 +42,7 @@ export const UserDataDummy = () => {
   const OBJECT_EXERCISE_GOAL_DEF = [{
     _id: "",
     exercise_goal_number: 0,
-    exercise_goal_dummy: false,
+    exercise_goal_dummy: "N",
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
     exercise_goal_count: 0,
@@ -53,7 +53,7 @@ export const UserDataDummy = () => {
   const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
-    exercise_dummy: false,
+    exercise_dummy: "N",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: 0,
@@ -74,7 +74,7 @@ export const UserDataDummy = () => {
   const OBJECT_FOOD_GOAL_DEF = [{
     _id: "",
     food_goal_number: 0,
-    food_goal_dummy: false,
+    food_goal_dummy: "N",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
     food_goal_kcal: 0,
@@ -85,7 +85,7 @@ export const UserDataDummy = () => {
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
-    food_dummy: false,
+    food_dummy: "N",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: 0,
@@ -109,7 +109,7 @@ export const UserDataDummy = () => {
   const OBJECT_MONEY_GOAL_DEF = [{
     _id: "",
     money_goal_number: 0,
-    money_goal_dummy: false,
+    money_goal_dummy: "N",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: 0,
@@ -118,7 +118,7 @@ export const UserDataDummy = () => {
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
-    money_dummy: false,
+    money_dummy: "N",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: 0,
@@ -135,7 +135,7 @@ export const UserDataDummy = () => {
   const OBJECT_SLEEP_GOAL_DEF = [{
     _id: "",
     sleep_goal_number: 0,
-    sleep_goal_dummy: false,
+    sleep_goal_dummy: "N",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
@@ -145,7 +145,7 @@ export const UserDataDummy = () => {
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
-    sleep_dummy: false,
+    sleep_dummy: "N",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{

@@ -69,7 +69,7 @@ export const save = {
     const finalResult = await Food.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      food_dummy: false,
+      food_dummy: "N",
       food_dateType: dateType_param,
       food_dateStart: dateStart_param,
       food_dateEnd: dateEnd_param,

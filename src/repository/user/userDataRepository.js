@@ -237,7 +237,7 @@ export const save = {
   ) => {
     const deleteResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
-      exercise_goal_dummy: true
+      exercise_goal_dummy: "Y"
     });
 
     console.log(`ExerciseGoal - Deleted documents: ${deleteResult.deletedCount}`);
@@ -260,7 +260,7 @@ export const save = {
   ) => {
     const deleteResult = await Exercise.deleteMany({
       user_id: user_id_param,
-      exercise_dummy: true
+      exercise_dummy: "Y"
     });
 
     console.log(`Exercise - Deleted documents: ${deleteResult.deletedCount}`);
@@ -283,7 +283,7 @@ export const save = {
   ) => {
     const deleteResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
-      food_goal_dummy: true
+      food_goal_dummy: "Y"
     });
 
     console.log(`FoodGoal - Deleted documents: ${deleteResult.deletedCount}`);
@@ -306,7 +306,7 @@ export const save = {
   ) => {
     const deleteResult = await Food.deleteMany({
       user_id: user_id_param,
-      food_dummy: true
+      food_dummy: "Y"
     });
 
     console.log(`Food - Deleted documents: ${deleteResult.deletedCount}`);
@@ -329,7 +329,7 @@ export const save = {
   ) => {
     const deleteResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
-      money_goal_dummy: true
+      money_goal_dummy: "Y"
     });
 
     console.log(`MoneyGoal - Deleted documents: ${deleteResult.deletedCount}`);
@@ -352,7 +352,7 @@ export const save = {
   ) => {
     const deleteResult = await Money.deleteMany({
       user_id: user_id_param,
-      money_dummy: true
+      money_dummy: "Y"
     });
 
     console.log(`Money - Deleted documents: ${deleteResult.deletedCount}`);
@@ -375,7 +375,7 @@ export const save = {
   ) => {
     const deleteResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
-      sleep_goal_dummy: true
+      sleep_goal_dummy: "Y"
     });
 
     console.log(`SleepGoal - Deleted documents: ${deleteResult.deletedCount}`);
@@ -398,7 +398,7 @@ export const save = {
   ) => {
     const deleteResult = await Sleep.deleteMany({
       user_id: user_id_param,
-      sleep_dummy: true
+      sleep_dummy: "Y"
     });
 
     console.log(`Sleep - Deleted documents: ${deleteResult.deletedCount}`);
@@ -426,35 +426,35 @@ export const deletes = {
     const finalResult = (
       await ExerciseGoal.deleteMany({
         user_id: user_id_param,
-        exercise_goal_dummy: true
+        exercise_goal_dummy: "Y"
       }),
       await Exercise.deleteMany({
         user_id: user_id_param,
-        exercise_dummy: true
+        exercise_dummy: "Y"
       }),
       await FoodGoal.deleteMany({
         user_id: user_id_param,
-        food_goal_dummy: true
+        food_goal_dummy: "Y"
       }),
       await Food.deleteMany({
         user_id: user_id_param,
-        food_dummy: true
+        food_dummy: "Y"
       }),
       await MoneyGoal.deleteMany({
         user_id: user_id_param,
-        money_goal_dummy: true
+        money_goal_dummy: "Y"
       }),
       await Money.deleteMany({
         user_id: user_id_param,
-        money_dummy: true
+        money_dummy: "Y"
       }),
       await SleepGoal.deleteMany({
         user_id: user_id_param,
-        sleep_goal_dummy: true
+        sleep_goal_dummy: "Y"
       }),
       await Sleep.deleteMany({
         user_id: user_id_param,
-        sleep_dummy: true
+        sleep_dummy: "Y"
       })
     )
   },
@@ -465,7 +465,7 @@ export const deletes = {
   ) => {
     const finalResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
-      exercise_goal_dummy: true
+      exercise_goal_dummy: "Y"
     });
     return finalResult;
   },
@@ -476,7 +476,7 @@ export const deletes = {
   ) => {
     const finalResult = await Exercise.deleteMany({
       user_id: user_id_param,
-      exercise_dummy: true
+      exercise_dummy: "Y"
     });
     return finalResult;
   },
@@ -487,7 +487,7 @@ export const deletes = {
   ) => {
     const finalResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
-      food_goal_dummy: true
+      food_goal_dummy: "Y"
     });
     return finalResult;
   },
@@ -498,7 +498,7 @@ export const deletes = {
   ) => {
     const finalResult = await Food.deleteMany({
       user_id: user_id_param,
-      food_dummy: true
+      food_dummy: "Y"
     });
     return finalResult;
   },
@@ -509,7 +509,7 @@ export const deletes = {
   ) => {
     const finalResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
-      money_goal_dummy: true
+      money_goal_dummy: "Y"
     });
     return finalResult;
   },
@@ -520,7 +520,7 @@ export const deletes = {
   ) => {
     const finalResult = await Money.deleteMany({
       user_id: user_id_param,
-      money_dummy: true
+      money_dummy: "Y"
     });
     return finalResult;
   },
@@ -531,7 +531,7 @@ export const deletes = {
   ) => {
     const finalResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
-      sleep_goal_dummy: true
+      sleep_goal_dummy: "Y"
     });
     return finalResult;
   },
@@ -542,7 +542,7 @@ export const deletes = {
   ) => {
     const finalResult = await Sleep.deleteMany({
       user_id: user_id_param,
-      sleep_dummy: true
+      sleep_dummy: "Y"
     });
     return finalResult;
   },

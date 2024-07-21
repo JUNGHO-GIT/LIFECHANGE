@@ -141,7 +141,7 @@ export const save = {
     const finalResult = await ExerciseGoal.create({
       user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
-      exercise_goal_dummy: false,
+      exercise_goal_dummy: "N",
       exercise_goal_dateType: dateType_param,
       exercise_goal_dateStart: dateStart_param,
       exercise_goal_dateEnd: dateEnd_param,

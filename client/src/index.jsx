@@ -66,6 +66,8 @@ import {UserInfo} from "./page/user/UserInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
 
+import {AuthPage} from "./page/auth/AuthPage.jsx";
+
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
   <Routes>
@@ -134,17 +136,27 @@ const User = () => (
 );
 
 // -------------------------------------------------------------------------------------------------
+const Auth = () => (
+  <Routes>
+    <Route path="/auth" element={<AuthPage />} />
+  </Routes>
+);
+
+// -------------------------------------------------------------------------------------------------
 const App = () => {
   const location = useLocation();
   const noneHeader = (
     location.pathname === "/user/login" ||
-    location.pathname === "/user/signup"
+    location.pathname === "/user/signup" ||
+    location.pathname === "/auth"
   );
   const noneTop = (
-    location.pathname.indexOf("/user") > -1
+    location.pathname.indexOf("/user") > -1 ||
+    location.pathname.indexOf("/auth") > -1
   );
   const noneBottom = (
-    location.pathname.indexOf("/user") > -1
+    location.pathname.indexOf("/user") > -1 ||
+    location.pathname.indexOf("/auth") > -1
   );
 
   useRoot();
@@ -162,6 +174,7 @@ const App = () => {
         <Route path="/money/*" element={<Money />} />
         <Route path="/sleep/*" element={<Sleep />} />
         <Route path="/user/*" element={<User />} />
+        <Route path="/auth/*" element={<Auth />} />
       </Routes>
       {!noneBottom && <BottomNav />}
     </div>
