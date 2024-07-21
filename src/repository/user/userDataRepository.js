@@ -479,6 +479,7 @@ export const deletes = {
         sleep_dummy: "Y"
       })
     )
+    return finalResult;
   },
 
   // 1. exerciseGoal

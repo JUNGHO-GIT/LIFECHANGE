@@ -110,7 +110,7 @@ export const Dummy = ({
     </Button>
   );
 
-  // 5. delete -------------------------------------------------------------------------------------
+  // 6. delete -------------------------------------------------------------------------------------
   const deleteNode = () => (
     <Button
       size={"small"}
@@ -127,7 +127,7 @@ export const Dummy = ({
         fontSize: "0.7rem"
       }}
       onClick={() => {
-        handlers.flowDummyDelete();
+        handlers.flowDummyDeletes();
       }}
     >
       {translate("deletes")}
@@ -151,7 +151,7 @@ export const Dummy = ({
         fontSize: "0.7rem"
       }}
       onClick={() => {
-        handlers.flowDummyDelete("all");
+        handlers.flowDummyDeletes("all");
       }}
     >
       {translate("deletesAll")}

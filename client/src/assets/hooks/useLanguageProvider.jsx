@@ -242,6 +242,7 @@ export const useTranslate = () => {
     // s
     s: {ko: "set", en: "set"},
     save: {ko: "저장", en: "Save"},
+    saveAll: {ko: "전체저장", en: "Save All"},
     score: {ko: "* 평균점수 : 1.00 ~ 5.00", en: "* Average score : 1.00 ~ 5.00"},
     select: {ko: "선택별", en: "Select"},
     serv: {ko: "1회 제공량", en: "Serving"},

@@ -241,13 +241,13 @@ router.delete("/deletes", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "삭제 성공"
+        msg: "탈퇴 성공"
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "삭제 실패"
+        msg: "탈퇴 실패"
       });
     }
   }
