@@ -53,7 +53,7 @@ export const callback = async (code_param) => {
 
     return {
       status: "success",
-      url: `${URL}/auth`,
+      url: `${URL}/auth/page`,
     };
 
   }
@@ -70,7 +70,9 @@ export const afterCallback = async () => {
     return null;
   }
 
-  let finalResult;
+  let finalResult = null;
+  let adminResult = null;
+
   const googleId = session.googleId;
   const findResult = await repository.findUser(googleId);
 
@@ -81,9 +83,17 @@ export const afterCallback = async () => {
     finalResult = findResult;
   }
 
+  if (googleId === process.env.ADMIN_ID) {
+    adminResult = "admin";
+  }
+  else {
+    adminResult = "user";
+  }
+
   return {
     status: "success",
     result: finalResult,
+    admin: adminResult,
     googleId: googleId
   };
 }

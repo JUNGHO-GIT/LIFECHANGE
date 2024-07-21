@@ -107,7 +107,6 @@ export const UserLogin = () => {
         }
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
-        sessionStorage.setItem("isLogin", "true");
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }

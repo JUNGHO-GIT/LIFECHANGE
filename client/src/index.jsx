@@ -138,7 +138,7 @@ const User = () => (
 // -------------------------------------------------------------------------------------------------
 const Auth = () => (
   <Routes>
-    <Route path="/auth" element={<AuthPage />} />
+    <Route path="/page" element={<AuthPage />} />
   </Routes>
 );
 
@@ -148,7 +148,7 @@ const App = () => {
   const noneHeader = (
     location.pathname === "/user/login" ||
     location.pathname === "/user/signup" ||
-    location.pathname === "/auth"
+    location.pathname === "/auth/page"
   );
   const noneTop = (
     location.pathname.indexOf("/user") > -1 ||

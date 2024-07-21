@@ -68,6 +68,7 @@ router.get("/afterCallback", async (req, res) => {
         status: "success",
         msg: "구글로그인 정보 세션 저장 성공",
         result: result.result,
+        admin: result.admin,
         googleId: result.googleId,
       });
     }

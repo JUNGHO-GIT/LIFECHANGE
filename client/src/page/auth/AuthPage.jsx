@@ -2,11 +2,10 @@
 
 import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading} from "../../import/ImportLayouts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {percent, log} from "../../import/ImportUtils.jsx";
-import {Div, Hr40} from "../../import/ImportComponents.jsx";
-import {Paper, Card, TextField} from "../../import/ImportMuis.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthPage = () => {
@@ -16,19 +15,13 @@ export const AuthPage = () => {
   const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
-  const {translate} = useTranslate();
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [googleId, setGoogleId] = useState("");
-  const [LOADING, setLOADING] = useState(false);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     await axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res) => {
       if (res.data.status === "success") {
-        setGoogleId(res.data.googleId);
-        sessionStorage.setItem("sessionId", googleId);
+        sessionStorage.setItem("sessionId", res.data.googleId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
         if (res.data.admin === "admin") {
@@ -48,26 +41,10 @@ export const AuthPage = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-1. title
-    const titleSection = () => (
-      <Div className={"d-center fs-2-0rem"}>
-        {translate("login")}
-      </Div>
-    );
     // 7-2. table
     const tableSection = () => {
       const tableFragment = (i) => (
         <Div className={"d-column"} key={i}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("id")}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: false
-            }}
-          />
         </Div>
       );
       return (
@@ -77,9 +54,7 @@ export const AuthPage = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column"}>
-          {titleSection()}
-          <Hr40 />
+        <Div className={"block-wrapper d-column h-min85vh"}>
           {tableSection()}
         </Div>
       </Paper>
