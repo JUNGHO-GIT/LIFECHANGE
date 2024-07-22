@@ -40,7 +40,7 @@ export const UserInfo = () => {
       },
     })
     .then(res => {
-      setOBJECT(res.data.result);
+      setOBJECT(res.data.result || OBJECT_DEF);
     })
     .catch((err) => {
       console.error(err);

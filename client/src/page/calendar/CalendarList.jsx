@@ -1,6 +1,6 @@
 // CalendarList.jsx
 
-import {React, useState, useEffect, useRef, useMemo} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
@@ -18,6 +18,7 @@ export const CalendarList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname;
+  const {translate} = useTranslate();
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -33,6 +34,7 @@ export const CalendarList = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
@@ -53,14 +55,14 @@ export const CalendarList = () => {
   const OBJECT_DEF = [{
     _id: "",
     calendar_number: 0,
-    calendar_dummy: "N",
+    calendar_dummy: false,
     calendar_dateType: "",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{
       _id: "",
       calendar_part_idx: 0,
-      calendar_part_val: "all",
+      calendar_part_val: "일정",
       calendar_title : "",
       calendar_color: "#000000",
       calendar_content: ""
@@ -70,6 +72,7 @@ export const CalendarList = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
+    setLOADING(true);
     await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
@@ -88,26 +91,10 @@ export const CalendarList = () => {
     .catch((err) => {
       console.error(err);
     })
+    .finally(() => {
+      setLOADING(false);
+    });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
-  
-  // useMemo를 사용하여 필터링 결과 캐싱
-  const filteredCalendarDates = useMemo(() => {
-    return OBJECT.filter(calendar => dateInRange(new Date(), calendar.calendar_dateStart, calendar.calendar_dateEnd));
-  }, [OBJECT, DATE.dateStart, DATE.dateEnd]);
-  
-  const onActiveStartDateChange = ({
-    activeStartDate
-  }) => {
-    const newStart = moment(activeStartDate).startOf('month').format("YYYY-MM-DD");
-    const newEnd = moment(activeStartDate).endOf('month').format("YYYY-MM-DD");
-    if (DATE.dateStart !== newStart || DATE.dateEnd !== newEnd) {
-      setDATE(prev => ({
-        ...prev,
-        dateStart: newStart,
-        dateEnd: newEnd,
-      }));
-    }
-  };
 
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
@@ -134,7 +121,9 @@ export const CalendarList = () => {
                 dateStart: calendar.calendar_dateStart,
                 dateEnd: calendar.calendar_dateEnd,
               });
-              navigate(SEND.toSave, { state: SEND });
+              navigate(SEND.toSave, {
+                state: SEND
+              });
             }}
           >
             <span className={"calendar-category"}>{section.calendar_title}</span>
@@ -144,7 +133,7 @@ export const CalendarList = () => {
     );
     const unActiveLine = (calendarForDates) => (
       calendarForDates?.map((calendar) =>
-        calendar.calendar_section?.map((section) => (
+        calendar.calendar_section.map((section) => (
           <Div key={calendar._id} className={"calendar-unfilled"}>
             <span className={"calendar-category"}>{section.calendar_title}</span>
           </Div>
@@ -153,12 +142,18 @@ export const CalendarList = () => {
     );
     // 7-3. table
     const tableSection = () => {
+      const loadingFragment = () => (
+        <Loading
+          LOADING={LOADING}
+          setLOADING={setLOADING}
+        />
+      );
       const tableFragment = (i) => (
         <Calendar
           key={`${i}`}
           locale={"ko"}
           view={"month"}
-          value={new Date()}
+          value={new Date(DATE.dateStart)}
           onClickDay={undefined}
           showNavigation={true}
           showNeighboringMonth={true}
@@ -173,13 +168,21 @@ export const CalendarList = () => {
           formatYear={(locale, date) => moment(date).format("YYYY")}
           formatLongDate={(locale, date) => moment(date).format("YYYY-MM-DD")}
           formatMonthYear={(locale, date) => moment(date).format("YYYY-MM")}
-          // (월 화 수 목 금 토 일) 한글로 표시
           formatShortWeekday={(locale, date) => {
             const day = moment(date).format("d");
-            const week = ["일", "월", "화", "수", "목", "금", "토"];
+            const week = [
+              translate("sun"), translate("mon"), translate("tue"), translate("wed"),
+              translate("thu"), translate("fri"), translate("sat")
+            ];
             return week[day];
           }}
-          onActiveStartDateChange={onActiveStartDateChange}
+          onActiveStartDateChange={({ activeStartDate, value, view }) => {
+            setDATE((prev) => ({
+              ...prev,
+              dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD"),
+            }));
+          }}
           tileClassName={({ date, view }) => {
             const calendarForDates = OBJECT.filter((calendar) => (
               dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
@@ -196,13 +199,13 @@ export const CalendarList = () => {
         />
       );
       return (
-        tableFragment(0)
+        LOADING ? loadingFragment() : tableFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-60"}>
-        <Div className={"block-wrapper h-min75vh"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
+        <Div className={"block-wrapper h-min76vh"}>
           {tableSection()}
         </Div>
       </Paper>
