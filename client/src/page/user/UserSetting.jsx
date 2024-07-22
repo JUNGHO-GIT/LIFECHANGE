@@ -149,7 +149,7 @@ export const UserSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-row h-min87vh"}>
+        <Div className={"block-wrapper d-row h-min80vh"}>
           {tableSection()}
         </Div>
       </Paper>

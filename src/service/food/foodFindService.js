@@ -121,7 +121,7 @@ export const list = async (
     return {
       count: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
       serv: (serv.match(/[^\d]+$/) || [""])[0],
-      gram: gram || 0,
+      gram: gram ? gram : 0,
       kcal: matches ? matches[5] : 0,
       fat: matches ? matches[9] :0,
       carb: matches ? matches[13] : 0,
@@ -152,6 +152,8 @@ export const list = async (
       });
     });
   });
+  
+  console.log(JSON.stringify(finalResult, null, 2));
 
   return {
     totalCnt: totalCnt,

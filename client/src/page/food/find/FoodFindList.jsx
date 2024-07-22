@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
+import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, Checkbox} from "../../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
@@ -248,7 +248,7 @@ export const FoodFindList = () => {
                   </Div>
                 </Div>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails>
                 <Div className={"d-between"}>
                   <Div className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
@@ -337,7 +337,7 @@ export const FoodFindList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

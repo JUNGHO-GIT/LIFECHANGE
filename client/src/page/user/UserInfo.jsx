@@ -109,7 +109,7 @@ export const UserInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min85vh"}>
+        <Div className={"block-wrapper d-column h-min80vh"}>
           {imageSection()}
           <Br40 />
           {tableSection()}
