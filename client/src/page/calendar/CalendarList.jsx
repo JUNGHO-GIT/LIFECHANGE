@@ -89,6 +89,25 @@ export const CalendarList = () => {
       console.error(err);
     })
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  
+  // useMemo를 사용하여 필터링 결과 캐싱
+  const filteredCalendarDates = useMemo(() => {
+    return OBJECT.filter(calendar => dateInRange(new Date(), calendar.calendar_dateStart, calendar.calendar_dateEnd));
+  }, [OBJECT, DATE.dateStart, DATE.dateEnd]);
+  
+  const onActiveStartDateChange = ({
+    activeStartDate
+  }) => {
+    const newStart = moment(activeStartDate).startOf('month').format("YYYY-MM-DD");
+    const newEnd = moment(activeStartDate).endOf('month').format("YYYY-MM-DD");
+    if (DATE.dateStart !== newStart || DATE.dateEnd !== newEnd) {
+      setDATE(prev => ({
+        ...prev,
+        dateStart: newStart,
+        dateEnd: newEnd,
+      }));
+    }
+  };
 
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
@@ -160,13 +179,7 @@ export const CalendarList = () => {
             const week = ["일", "월", "화", "수", "목", "금", "토"];
             return week[day];
           }}
-          onActiveStartDateChange={({ activeStartDate, value, view }) => {
-            setDATE((prev = {}) => ({
-              ...prev,
-              dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD"),
-            }));
-          }}
+          onActiveStartDateChange={onActiveStartDateChange}
           tileClassName={({ date, view }) => {
             const calendarForDates = OBJECT.filter((calendar) => (
               dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
