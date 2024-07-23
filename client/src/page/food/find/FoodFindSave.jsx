@@ -332,7 +332,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -345,16 +345,13 @@ export const FoodFindSave = () => {
               )
             }}
           />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalCarb")}
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -376,7 +373,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -389,16 +386,13 @@ export const FoodFindSave = () => {
               )
             }}
           />
-        </Div>
-        <Br20/>
-        <Div className={"d-center"}>
           <TextField
             select={false}
             label={translate("totalFat")}
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-86vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (

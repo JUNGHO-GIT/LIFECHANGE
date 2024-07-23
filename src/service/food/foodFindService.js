@@ -152,8 +152,6 @@ export const list = async (
       });
     });
   });
-  
-  console.log(JSON.stringify(finalResult, null, 2));
 
   return {
     totalCnt: totalCnt,

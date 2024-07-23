@@ -24,7 +24,7 @@ export const FindFood = ({
       select={false}
       size={"small"}
       variant={"outlined"}
-      className={"w-20vw me-2vw"}
+      className={"w-30vw me-2vw"}
       value={objects?.PAGING?.query}
       InputProps={{
         readOnly: false,
@@ -43,7 +43,7 @@ export const FindFood = ({
   const findNode = () => (
     <Icons
       name={"TbSearch"}
-      className={"w-18 h-18 black"}
+      className={"w-20 h-20 black"}
       onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
@@ -58,7 +58,7 @@ export const FindFood = ({
   const doneNode = () => (
     <Icons
       name={"TbCheckBox"}
-      className={"w-18 h-18 black"}
+      className={"w-20 h-20 black"}
       onClick={() => {
         Object.assign(objects?.SEND, {
           dateType: objects?.DATE.dateType,
@@ -83,11 +83,11 @@ export const FindFood = ({
       showFirstButton={true}
       showLastButton={true}
       style={{
-        width: "50vw",
+        width: "40vw",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginLeft: "5vw"
+        marginLeft: "3vw"
       }}
       rowsPerPage={10}
       onPageChange={(event, newPage) => {
