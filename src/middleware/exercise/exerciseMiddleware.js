@@ -1,6 +1,6 @@
 // exerciseMiddleware.js
 
-import {strToDecimal, decimalToStr} from "../../assets/js/date.js";
+import {strToDecimal, decimalToStr} from "../../assets/js/utils.js";
 
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (object) => {

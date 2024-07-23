@@ -176,8 +176,6 @@ export const save = async (
     user_id_param, "", dateType, dateStart, dateEnd
   );
 
-  console.log("findResult: ", JSON.stringify(findResult, null, 2));
-
   if (!findResult) {
     finalResult = await repository.save.create(
       user_id_param, OBJECT_param, dateType, dateStart, dateEnd

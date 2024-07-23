@@ -87,8 +87,8 @@ export const SleepGoalList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -243,7 +243,7 @@ export const SleepGoalList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

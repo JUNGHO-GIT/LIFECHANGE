@@ -2,7 +2,8 @@
 
 import * as repository from "../../repository/food/foodChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {intFormat, koreanDate} from "../../assets/js/date.js";
+import {intFormat} from "../../assets/js/utils.js";
+import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";

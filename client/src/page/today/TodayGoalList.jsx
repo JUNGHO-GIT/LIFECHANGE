@@ -149,7 +149,7 @@ export const TodayGoalList = () => {
           newSectionCnt: res.data.sectionCnt || 0,
         }));
         // Accordion 초기값 설정
-        //setIsExpanded([]);
+        //// setIsExpanded([]);
         setIsExpanded(res.data.result.map((_, index) => (index)));
       }
       catch (err) {
@@ -796,7 +796,7 @@ export const TodayGoalList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
         <Div className={"block-wrapper h-min75vh"}>
           {exerciseSection()}
           <Br30 />

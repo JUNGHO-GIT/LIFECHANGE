@@ -81,7 +81,6 @@ export const SleepList = () => {
       },
     })
     .then((res) => {
-      alert(JSON.stringify(res.data.result, null, 2))
       setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
       setCOUNT((prev) => ({
         ...prev,
@@ -90,8 +89,8 @@ export const SleepList = () => {
         newSectionCnt: res.data.sectionCnt || 0
       }));
       // Accordion 초기값 설정
-      // setIsExpanded(res.data.result.map((_, index) => (index)));
-      setIsExpanded([]);
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -151,10 +150,11 @@ export const SleepList = () => {
                     }}
                   />
                   {item.sleep_dateStart === item.sleep_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                    <Div className={"d-left"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"fs-1-2rem fw-600"}>{item.sleep_dateStart?.substring(5, 10)}</Div>
+                      <Div className={"fs-1-0rem dark fw-500 ms-10"}>{moment(item.sleep_dateStart).format("ddd")}</Div>
                     </Div>
                   ) : (
                     <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
@@ -246,7 +246,7 @@ export const SleepList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>
