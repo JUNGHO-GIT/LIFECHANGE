@@ -14,7 +14,7 @@ export const Dummy = ({
   const {translate} = useTranslate();
 
   // 2. type ---------------------------------------------------------------------------------------
-  const typeNode = () => (
+  const partNode = () => (
     <TextField
       select={true}
       type={"text"}
@@ -161,7 +161,7 @@ export const Dummy = ({
   // 7. dummy --------------------------------------------------------------------------------------
   const dummyNode = () => (
     <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-      {typeNode()}
+      {partNode()}
       {countNode()}
       {saveNode()}
       {deleteNode()}

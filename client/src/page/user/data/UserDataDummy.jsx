@@ -215,6 +215,7 @@ export const UserDataDummy = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummySave = async () => {
+    const previousPART = PART;
     await axios.post(`${URL_OBJECT}/data/save`, {
       user_id: sessionId,
       PART: PART,
@@ -232,6 +233,8 @@ export const UserDataDummy = () => {
           page: 1
         }));
         navigate(0);
+        // 저장 이후 PART 값을 복원
+        setPART(previousPART);
       }
       else {
         alert(res.data.msg);
@@ -243,11 +246,12 @@ export const UserDataDummy = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowDummyDeletes = async (part) => {
+  const flowDummyDeletes = async () => {
+    const previousPART = PART; 
     await axios.delete(`${URL_OBJECT}/data/deletes`, {
       data: {
         user_id: sessionId,
-        PART: (!part || part === "") ? PART : part
+        PART: PART,
       }
     })
     .then((res) => {
@@ -262,6 +266,8 @@ export const UserDataDummy = () => {
           page: 1
         }));
         navigate(0);
+        // 저장 이후 PART 값을 복원
+        setPART(previousPART);
       }
       else {
         alert(res.data.msg);
