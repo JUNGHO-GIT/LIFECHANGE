@@ -58,8 +58,8 @@ export const pieToday = async (
   const dateStart = koreanDate;
   const dateEnd = koreanDate;
 
-  let sumNight = 0;
-  let sumMorning = 0;
+  let sumBedTime = 0;
+  let sumWakeTime = 0;
   let sumTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
@@ -84,21 +84,21 @@ export const pieToday = async (
   }
   else {
     findResult.forEach((data, index) => {
-      sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-      sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+      sumBedTime += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+      sumWakeTime += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
       sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
       countRecords++;
     });
-    totalSleep = sumNight + sumMorning + sumTime;
+    totalSleep = sumBedTime + sumWakeTime + sumTime;
 
     finalResult = [
       {
         name: "bedTime",
-        value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
+        value: totalSleep > 0 ? Math.round(sumBedTime / totalSleep * 100) : 0
       },
       {
         name: "wakeTime",
-        value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
+        value: totalSleep > 0 ? Math.round(sumWakeTime / totalSleep * 100) : 0
       },
       {
         name: "sleepTime",
@@ -118,8 +118,8 @@ export const pieWeek = async (
   const dateStart = curWeekStart.format("YYYY-MM-DD");
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  let sumNight = 0;
-  let sumMorning = 0;
+  let sumBedTime = 0;
+  let sumWakeTime = 0;
   let sumTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
@@ -131,21 +131,21 @@ export const pieWeek = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-    sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumBedTime += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumWakeTime += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
     sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords++;
   });
-  totalSleep = sumNight + sumMorning + sumTime;
+  totalSleep = sumBedTime + sumWakeTime + sumTime;
 
   finalResult = [
     {
       name: "bedTime",
-      value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
+      value: totalSleep > 0 ? Math.round(sumBedTime / totalSleep * 100) : 0
     },
     {
       name: "wakeTime",
-      value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
+      value: totalSleep > 0 ? Math.round(sumWakeTime / totalSleep * 100) : 0
     },
     {
       name: "sleepTime",
@@ -164,8 +164,8 @@ export const pieMonth = async (
   const dateStart = curMonthStart.format("YYYY-MM-DD");
   const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  let sumNight = 0;
-  let sumMorning = 0;
+  let sumBedTime = 0;
+  let sumWakeTime = 0;
   let sumTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
@@ -177,21 +177,21 @@ export const pieMonth = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumNight += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-    sumMorning += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumBedTime += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumWakeTime += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
     sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords++;
   });
-  totalSleep = sumNight + sumMorning + sumTime;
+  totalSleep = sumBedTime + sumWakeTime + sumTime;
 
   finalResult = [
     {
       name: "bedTime",
-      value: totalSleep > 0 ? Math.round(sumNight / totalSleep * 100) : 0
+      value: totalSleep > 0 ? Math.round(sumBedTime / totalSleep * 100) : 0
     },
     {
       name: "wakeTime",
-      value: totalSleep > 0 ? Math.round(sumMorning / totalSleep * 100) : 0
+      value: totalSleep > 0 ? Math.round(sumWakeTime / totalSleep * 100) : 0
     },
     {
       name: "sleepTime",
@@ -308,8 +308,8 @@ export const avgMonth = async (
     return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
   });
 
-  let sumNight = Array(5).fill(0);
-  let sumMorning = Array(5).fill(0);
+  let sumBedTime = Array(5).fill(0);
+  let sumWakeTime = Array(5).fill(0);
   let sumTime = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
@@ -325,8 +325,8 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumNight[weekNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-      sumMorning[weekNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+      sumBedTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+      sumWakeTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
       sumTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
       countRecords[weekNum]++;
     }
@@ -338,8 +338,8 @@ export const avgMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      bedTime: timeFormat(sumNight[index] / countRecords[index]),
-      wakeTime: timeFormat(sumMorning[index] / countRecords[index]),
+      bedTime: timeFormat(sumBedTime[index] / countRecords[index]),
+      wakeTime: timeFormat(sumWakeTime[index] / countRecords[index]),
       sleepTime: timeFormat(sumTime[index] / countRecords[index]),
     });
   });
@@ -365,8 +365,8 @@ export const avgYear = async (
     return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
   });
 
-  let sumNight = Array(12).fill(0);
-  let sumMorning = Array(12).fill(0);
+  let sumBedTime = Array(12).fill(0);
+  let sumWakeTime = Array(12).fill(0);
   let sumTime = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
@@ -379,8 +379,8 @@ export const avgYear = async (
   findResult.forEach((data, index) => {
     const sleepDate = new Date(data.sleep_dateStart);
     const monthNum = sleepDate.getMonth();
-    sumNight[monthNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-    sumMorning[monthNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumBedTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumWakeTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
     sumTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
     countRecords[monthNum]++;
   });
@@ -391,8 +391,8 @@ export const avgYear = async (
     finalResult.push({
       name: data,
       date: date[index],
-      bedTime: timeFormat(sumNight[index] / countRecords[index]),
-      wakeTime: timeFormat(sumMorning[index] / countRecords[index]),
+      bedTime: timeFormat(sumBedTime[index] / countRecords[index]),
+      wakeTime: timeFormat(sumWakeTime[index] / countRecords[index]),
       sleepTime: timeFormat(sumTime[index] / countRecords[index]),
     });
   });

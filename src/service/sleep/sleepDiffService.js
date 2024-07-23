@@ -30,10 +30,10 @@ export const list = async (
       user_id_param, dateType, dateStart, dateEnd
     );
 
-    const sleepNight = listReal.reduce((acc, curr) => (
+    const bedTime = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_bedTime)
     ), 0);
-    const sleepMorning = listReal.reduce((acc, curr) => (
+    const wakeTime = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_wakeTime)
     ), 0);
     const sleepTime = listReal.reduce((acc, curr) => (
@@ -42,8 +42,8 @@ export const list = async (
 
     return {
       ...goal,
-      sleep_bedTime: decimalToStr(sleepNight),
-      sleep_wakeTime: decimalToStr(sleepMorning),
+      sleep_bedTime: decimalToStr(bedTime),
+      sleep_wakeTime: decimalToStr(wakeTime),
       sleep_sleepTime: decimalToStr(sleepTime)
     };
   }));
