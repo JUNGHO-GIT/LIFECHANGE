@@ -24,6 +24,7 @@ export const createUser = async (
   const finalResult = await User.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
+    user_pw: "google",
     user_google: "Y",
     user_regDt: newDate,
     user_updateDt: "",

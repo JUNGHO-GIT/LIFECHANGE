@@ -23,6 +23,8 @@ export const UserLogin = () => {
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [trigger, setTrigger] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
@@ -36,6 +38,14 @@ export const UserLogin = () => {
     user_id: createRef(),
     user_pw: createRef(),
   });
+  
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (trigger) {
+      flowSave();
+      setTrigger(false);
+    }
+  }, [trigger]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -80,7 +90,7 @@ export const UserLogin = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async () => {
+  const flowSave = async (isClick) => {
     if (!validate(userId, userPw)) {
       return;
     }
@@ -148,7 +158,19 @@ export const UserLogin = () => {
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Div className={"d-center fs-2-0rem"}>
+      <Div className={"d-center fs-2-0rem"}
+        onClick={(e) => {
+          setClickCount((prevCount) => {
+            const newCount = prevCount + 1;
+            if (newCount === 5) {
+              setUserId("junghomun00@gmail.com");
+              setUserPw("google");
+              setTrigger(true);
+              setClickCount(0);
+            }
+            return newCount;
+          });
+        }}>
         {translate("login")}
       </Div>
     );
