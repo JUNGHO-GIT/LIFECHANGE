@@ -2,6 +2,7 @@
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {Icons} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ export const FindFood = ({
       select={false}
       size={"small"}
       variant={"outlined"}
-      className={"w-20vw me-3vw"}
+      className={"w-20vw me-2vw"}
       value={objects?.PAGING?.query}
       InputProps={{
         readOnly: false,
@@ -40,19 +41,9 @@ export const FindFood = ({
 
   // 3. find ---------------------------------------------------------------------------------------
   const findNode = () => (
-    <Button
-      size={"small"}
-      color={"primary"}
-      variant={"contained"}
-      style={{
-        padding: "4px 10px",
-        textTransform: "none",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        marginRight: "2vw",
-        fontSize: "0.8rem"
-      }}
+    <Icons
+      name={"TbSearch"}
+      className={"w-18 h-18 black"}
       onClick={async () => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
@@ -60,25 +51,14 @@ export const FindFood = ({
           page: 0
         }));
       }}
-    >
-      {translate("find")}
-    </Button>
+    />
   );
 
   // 4. done ---------------------------------------------------------------------------------------
   const doneNode = () => (
-    <Button
-      size={"small"}
-      color={"success"}
-      variant={"contained"}
-      style={{
-        padding: "4px 10px",
-        textTransform: "none",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        fontSize: "0.8rem"
-      }}
+    <Icons
+      name={"TbCheckBox"}
+      className={"w-18 h-18 black"}
       onClick={() => {
         Object.assign(objects?.SEND, {
           dateType: objects?.DATE.dateType,
@@ -89,9 +69,7 @@ export const FindFood = ({
           state: objects?.SEND,
         });
       }}
-    >
-      {translate("done")}
-    </Button>
+    />
   );
 
   // 5. pagination ---------------------------------------------------------------------------------
@@ -181,7 +159,7 @@ export const FindFood = ({
         });
       }}
     >
-      {translate("findMore")}
+      {translate("find")}
     </Button>
   );
 
@@ -190,8 +168,8 @@ export const FindFood = ({
     <Card className={"block-wrapper d-row h-8vh w-100p shadow-none over-x-auto"}>
       {(firstStr === "food" && secondStr === "find" && thirdStr === "save") ? (
         <>
-          {saveNode()}
           {moreNode()}
+          {saveNode()}
         </>
       ) : (
         <>

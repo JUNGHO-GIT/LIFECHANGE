@@ -12,7 +12,32 @@ export const Btn = ({
   // 1. common -------------------------------------------------------------------------------------
   const {translate} = useTranslate();
 
-  // 2. save ---------------------------------------------------------------------------------------
+  // 2. goto find ----------------------------------------------------------------------------------
+  const btnGotoFind = () => (
+    <Button
+      size={"small"}
+      color={"success"}
+      variant={"contained"}
+      style={{
+        padding: "4px 10px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        marginRight: "2vw",
+        fontSize: "0.8rem"
+      }}
+      onClick={() => {
+        handlers.navigate(objects?.SEND.toFind, {
+          state: objects?.SEND,
+        });
+      }}
+    >
+      {translate("find")}
+    </Button>
+  );
+
+  // 3. save ---------------------------------------------------------------------------------------
   const btnSave = () => (
     <Button
       size={"small"}
@@ -40,7 +65,7 @@ export const Btn = ({
     </Button>
   );
 
-  // 3. delete -------------------------------------------------------------------------------------
+  // 4. delete -------------------------------------------------------------------------------------
   const btnDeletes = () => (
     <Button
       size={"small"}
@@ -61,32 +86,8 @@ export const Btn = ({
       {translate("delete")}
     </Button>
   );
-  
-    // 3. delete -------------------------------------------------------------------------------------
-  const btnGotoFind = () => (
-    <Button
-      size={"small"}
-      color={"success"}
-      variant={"contained"}
-      style={{
-        padding: "4px 10px",
-        textTransform: "none",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        fontSize: "0.8rem"
-      }}
-      onClick={() => {
-        handlers.navigate(objects?.SEND.toFind, {
-          state: objects?.SEND,
-        });
-      }}
-    >
-      {translate("findMore")}
-    </Button>
-  );
 
-  // 7. btn ---------------------------------------------------------------------------------
+  // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
     if (
       (strings?.second === "data" && strings?.third === "category") ||
@@ -99,10 +100,13 @@ export const Btn = ({
       );
     }
     else if (strings?.first === "food" && strings?.second === "save") {
+      return (
         <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
+          {btnGotoFind()}
           {btnSave()}
           {btnDeletes()}
         </Card>
+      );
     }
     else {
       return (
