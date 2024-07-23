@@ -137,25 +137,43 @@ export const MoneyDiffList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Div className={"fs-1-1rem fw-600 d-left"}>
-                    {item.money_goal_dateStart === item.money_goal_dateEnd ? (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("money")}
                       </Div>
-                    ) : (
-                      <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                        e.stopPropagation();
-                      }}>
-                        <Div>{item.money_goal_dateStart?.substring(5, 10)}</Div>
-                        <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                        <Div>{item.money_goal_dateEnd?.substring(5, 10)}</Div>
-                      </Div>
-                    )}
-                  </Div>
-                </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
+                      e.stopPropagation();
+                    }}>
+                      {item.money_goal_dateStart === item.money_goal_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_goal_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.money_goal_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_goal_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_goal_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
+                    </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}

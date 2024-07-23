@@ -132,42 +132,56 @@ export const SleepList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Icons
-                    name={"TbSearch"}
-                    className={"w-18 h-18 black ms-n10 me-15"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.sleep_dateType,
-                        dateStart: item.sleep_dateStart,
-                        dateEnd: item.sleep_dateEnd,
-                      });
-                      navigate(SEND.toSave, {
-                        state: SEND
-                      });
-                    }}
-                  />
-                  {item.sleep_dateStart === item.sleep_dateEnd ? (
-                    <Div className={"d-left"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div className={"fs-1-2rem fw-600"}>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"fs-1-0rem dark fw-500 ms-10"}>{moment(item.sleep_dateStart).format("ddd")}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Icons
+                      name={"TbSearch"}
+                      className={"w-18 h-18 black"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.sleep_dateType,
+                          dateStart: item.sleep_dateStart,
+                          dateEnd: item.sleep_dateEnd,
+                        });
+                        navigate(SEND.toSave, {
+                          state: SEND
+                        });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                      <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                      {item.sleep_dateStart === item.sleep_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.sleep_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
                     </Div>
-                  )}
-                </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 /><Br20 />
+              <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container spacing={1}>
                   <Grid item xs={2} className={"d-column align-center"}>

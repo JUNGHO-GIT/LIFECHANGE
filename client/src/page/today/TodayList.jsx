@@ -261,40 +261,54 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Icons
-                    name={"TbSearch"}
-                    className={"w-18 h-18 black ms-n10 me-15"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.exercise_dateType,
-                        dateStart: item.exercise_dateStart,
-                        dateEnd: item.exercise_dateEnd,
-                      });
-                      navigate(SEND.toExercise, {
-                        state: SEND
-                      });
-                    }}
-                  />
-                  {item.exercise_dateStart === item.exercise_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("exercise")}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Icons
+                      name={"TbSearch"}
+                      className={"w-18 h-18 black"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.exercise_dateType,
+                          dateStart: item.exercise_dateStart,
+                          dateEnd: item.exercise_dateEnd,
+                        });
+                        navigate(SEND.toExercise, {
+                          state: SEND
+                        });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.exercise_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                      <Div>{item.exercise_dateEnd?.substring(5, 10)}</Div>
+                      {item.exercise_dateStart === item.exercise_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.exercise_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.exercise_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.exercise_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.exercise_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
                     </Div>
-                  )}
-                </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
@@ -405,40 +419,54 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Icons
-                    name={"TbSearch"}
-                    className={"w-18 h-18 black ms-n10 me-15"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.food_dateType,
-                        dateStart: item.food_dateStart,
-                        dateEnd: item.food_dateEnd,
-                      });
-                      navigate(SEND.toFood, {
-                        state: SEND
-                      });
-                    }}
-                  />
-                  {item.food_dateStart === item.food_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("food")}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Icons
+                      name={"TbSearch"}
+                      className={"w-18 h-18 black"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.food_dateType,
+                          dateStart: item.food_dateStart,
+                          dateEnd: item.food_dateEnd,
+                        });
+                        navigate(SEND.toFood, {
+                          state: SEND
+                        });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.food_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                      <Div>{item.food_dateEnd?.substring(5, 10)}</Div>
+                      {item.food_dateStart === item.food_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.food_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.food_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.food_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.food_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
                     </Div>
-                  )}
-                </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
@@ -571,40 +599,54 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Icons
-                    name={"TbSearch"}
-                    className={"w-18 h-18 black ms-n10 me-15"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.money_dateType,
-                        dateStart: item.money_dateStart,
-                        dateEnd: item.money_dateEnd,
-                      });
-                      navigate(SEND.toMoney, {
-                        state: SEND
-                      });
-                    }}
-                  />
-                  {item.money_dateStart === item.money_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("money")}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Icons
+                      name={"TbSearch"}
+                      className={"w-18 h-18 black"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.money_dateType,
+                          dateStart: item.money_dateStart,
+                          dateEnd: item.money_dateEnd,
+                        });
+                        navigate(SEND.toMoney, {
+                          state: SEND
+                        });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.money_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                      <Div>{item.money_dateEnd?.substring(5, 10)}</Div>
+                      {item.money_dateStart === item.money_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.money_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.money_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
                     </Div>
-                  )}
-                </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
@@ -693,40 +735,54 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Div className={"d-center"}>
-                  <Icons
-                    name={"TbSearch"}
-                    className={"w-18 h-18 black ms-n10 me-15"}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      Object.assign(SEND, {
-                        id: item._id,
-                        dateType: item.sleep_dateType,
-                        dateStart: item.sleep_dateStart,
-                        dateEnd: item.sleep_dateEnd,
-                      });
-                      navigate(SEND.toSleep, {
-                        state: SEND
-                      });
-                    }}
-                  />
-                  {item.sleep_dateStart === item.sleep_dateEnd ? (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"fs-1-0rem fw-600 dark ms-2vw"}>{translate("sleep")}</Div>
-                    </Div>
-                  ) : (
-                    <Div className={"d-left fs-1-2rem fw-600"} onClick={(e) => {
+                <Grid container spacing={1}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                    <Icons
+                      name={"TbSearch"}
+                      className={"w-18 h-18 black"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        Object.assign(SEND, {
+                          id: item._id,
+                          dateType: item.sleep_dateType,
+                          dateStart: item.sleep_dateStart,
+                          dateEnd: item.sleep_dateEnd,
+                        });
+                        navigate(SEND.toSleep, {
+                          state: SEND
+                        });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
-                      <Div>{item.sleep_dateStart?.substring(5, 10)}</Div>
-                      <Div className={"ms-1vw me-1vw"}> ~ </Div>
-                      <Div>{item.sleep_dateEnd?.substring(5, 10)}</Div>
+                      {item.sleep_dateStart === item.sleep_dateEnd ? (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.sleep_dateStart).format("ddd")}
+                          </Div>
+                        </>
+                      ) : (
+                        <>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateStart?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                            ~
+                          </Div>
+                          <Div className={"fs-1-2rem fw-600"}>
+                            {item.sleep_dateEnd?.substring(5, 10)}
+                          </Div>
+                        </>
+                      )}
                     </Div>
-                  )}
-                </Div>
+                  </Grid>
+                </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
