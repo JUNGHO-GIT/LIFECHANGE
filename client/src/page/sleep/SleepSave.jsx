@@ -293,7 +293,7 @@ export const SleepSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20/>
+        <Br20 />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -324,7 +324,7 @@ export const SleepSave = () => {
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br40 />
+          <Br20 />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -357,7 +357,6 @@ export const SleepSave = () => {
               i={i}
             />
           </Div>
-          <Br20 />
         </Card>
       );
       return (

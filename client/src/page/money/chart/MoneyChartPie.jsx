@@ -5,7 +5,7 @@ import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {common3_1} from "../../../import/ImportImages.jsx";
@@ -508,7 +508,7 @@ export const MoneyChartPie = () => {
     </ResponsiveContainer>
   );
 
-  // 7. chart ---------------------------------------------------------------------------------------
+  // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
     const headSection = () => {
@@ -562,11 +562,17 @@ export const MoneyChartPie = () => {
         </PopUp>
       );
       return (
-        <Div className={"d-center mt-n10"}>
-          <Div className={"ms-0"}>{selectSection1()}</Div>
-          <Div className={"ms-auto"}>{titleSection()}</Div>
-          <Div className={"ms-auto me-0"}>{selectSection2()}</Div>
-        </Div>
+        <Grid container spacing={1}>
+          <Grid item xs={3} className={"d-column align-left"}>
+            {selectSection1()}
+          </Grid>
+          <Grid item xs={6} className={"d-column align-center"}>
+            {titleSection()}
+          </Grid>
+          <Grid item xs={3} className={"d-column align-right"}>
+            {selectSection2()}
+          </Grid>
+        </Grid>
       );
     };
     // 7-2. chart
@@ -628,10 +634,10 @@ export const MoneyChartPie = () => {
     }
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
           {headSection()}
-          <Br20/>
+          <Br20 />
           {chartSection()}
         </Div>
       </Paper>

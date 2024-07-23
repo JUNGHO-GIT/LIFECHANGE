@@ -5,6 +5,7 @@ import {MoneyChartBar} from "./MoneyChartBar.jsx";
 import {MoneyChartPie} from "./MoneyChartPie.jsx";
 import {MoneyChartLine} from "./MoneyChartLine.jsx";
 import {MoneyChartAvg} from "./MoneyChartAvg.jsx";
+import {Br40} from "../../../import/ImportComponents.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyChart = () => {
@@ -16,6 +17,7 @@ export const MoneyChart = () => {
       {MoneyChartPie()}
       {MoneyChartLine()}
       {MoneyChartAvg()}
+      <Br40 />
     </>
   );
 };

@@ -269,7 +269,7 @@ export const ExerciseGoalSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20/>
+        <Br20 />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -301,7 +301,7 @@ export const ExerciseGoalSave = () => {
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br40/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -335,7 +335,7 @@ export const ExerciseGoalSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -369,7 +369,7 @@ export const ExerciseGoalSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -403,7 +403,7 @@ export const ExerciseGoalSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -414,7 +414,6 @@ export const ExerciseGoalSave = () => {
               i={i}
             />
           </Div>
-          <Br20/>
         </Card>
       );
       return (

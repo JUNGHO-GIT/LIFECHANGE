@@ -41,6 +41,9 @@
 .MuiGrid-item {
   padding: 0px 0px 0px 0px !important;
 }
+.MuiGrid-root {
+  margin: 0px 0px 0px 0px !important;
+}
 
 /** top *******************************************************************************************/
 .MuiTab-root.Mui-selected {

@@ -4,9 +4,9 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {TextField, Tabs, Tab, tabsClasses, Paper} from "../../import/ImportMuis.jsx";
+import {TextField, Tabs, Tab, tabsClasses, Paper, Grid} from "../../import/ImportMuis.jsx";
 import {Card, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {PopUp, Div, Img, Br10, Br20, Br40} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br10, Br20} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 import {money2, money4} from "../../import/ImportImages.jsx";
 
@@ -43,9 +43,6 @@ export const TopNav = () => {
   useEffect(() => {
     if (firstStr === "calendar") {
       setValue("list");
-    }
-    else if (firstStr === "today") {
-      setValue("diff/list");
     }
     else {
       setValue("analyzeTabs");
@@ -232,14 +229,14 @@ export const TopNav = () => {
               {dateEnd}
             </Div>
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <Img src={money2} className={"w-16 h-16"} />
             <Div className={"fs-1-4rem fw-600"}>
               {numeral(totalProperty).format("0,0")}
             </Div>
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -261,7 +258,7 @@ export const TopNav = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -298,84 +295,136 @@ export const TopNav = () => {
   // 6. tabs ---------------------------------------------------------------------------------------
   const tabsNode = () => (
     (firstStr === "today") ? (
-      <Tabs
-        value={value}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .${tabsClasses.scrollButtons}`]: {
-            '&.Mui-disabled': { opacity: 0.3 },
-          },
-        }}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          navigate(`${firstStr}/${newValue}`, {
-            state: {
-              dateType: "day",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
+      <>
+        <Tabs
+          value={value}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .${tabsClasses.scrollButtons}`]: {
+              '&.Mui-disabled': { opacity: 0.3 },
+            },
+          }}
+          onChange={(event, newValue) => {
+            if (newValue === "analyzeTabs") {
+              setSelectedTab(newValue);
             }
-          });
-        }}>
-        <Tab
-          label={translate("diff")}
-          value={"diff/list"}
-          onClick={() => {
-            setValue("diff/list");
-          }}
-        />
-        <Tab
-          label={translate("goal")}
-          value={"goal/list"}
-          onClick={() => {
-            setValue("goal/list");
-          }}
-        />
-        <Tab
-          label={translate("real")}
-          value={"list"}
-          onClick={() => {
-            setValue("list");
-          }}
-        />
-      </Tabs>
+            else {
+              setValue(newValue);
+              navigate(`${firstStr}/${newValue}`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD")
+                }
+              });
+            }
+          }}>
+          <Tab
+            label={translate("analyzeTabs")}
+            value={"analyzeTabs"}
+            onClick={(e) => {
+              // @ts-ignore
+              setAnchorAnalyze(e.currentTarget);
+            }}
+          />
+          <Tab
+            label={translate("goal")}
+            value={"goal/list"}
+            onClick={() => {
+              setValue("goal/list");
+            }}
+          />
+          <Tab
+            label={translate("real")}
+            value={"list"}
+            onClick={() => {
+              setValue("list");
+            }}
+          />
+        </Tabs>
+        <Menu
+          anchorEl={anchorAnalyze}
+          open={Boolean(anchorAnalyze)}
+          onClose={() => setAnchorAnalyze(null)}
+        >
+          <MenuItem
+            selected={selectedMenuItem === "chartList"}
+            onClick={() => {
+              setAnchorAnalyze(null);
+              setSelectedTab("analyzeTabs");
+              setSelectedMenuItem("chartList");
+              setValue("analyzeTabs");
+              navigate(`${firstStr}/chart/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("chartList")}
+          </MenuItem>
+          <MenuItem
+            selected={selectedMenuItem === "diffList"}
+            onClick={() => {
+              setAnchorAnalyze(null);
+              setSelectedTab("analyzeTabs");
+              setSelectedMenuItem("diffList");
+              setValue("analyzeTabs");
+              navigate(`${firstStr}/diff/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
+            }}
+          >
+            {translate("diffList")}
+          </MenuItem>
+        </Menu>
+      </>
     ) : (firstStr === "calendar") ? (
-      <Tabs
-        value={value}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .${tabsClasses.scrollButtons}`]: {
-            '&.Mui-disabled': { opacity: 0.3 },
-          },
-        }}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          navigate(`${firstStr}/${newValue}`, {
-            state: {
-              dateType: "day",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}>
-        <Tab
-          label={translate("list")}
-          value={"list"}
-          onClick={() => {
-            setValue("list");
+      <>
+        <Tabs
+          value={value}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .${tabsClasses.scrollButtons}`]: {
+              '&.Mui-disabled': { opacity: 0.3 },
+            },
           }}
-        />
-        <Tab
-          label={translate("save")}
-          value={"save"}
-          onClick={() => {
-            setValue("save");
-          }}
-        />
-      </Tabs>
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            navigate(`${firstStr}/${newValue}`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD")
+              }
+            });
+          }}>
+          <Tab
+            label={translate("list")}
+            value={"list"}
+            onClick={() => {
+              setValue("list");
+            }}
+          />
+          <Tab
+            label={translate("save")}
+            value={"save"}
+            onClick={() => {
+              setValue("save");
+            }}
+          />
+        </Tabs>
+      </>
     ) : (
       <>
         <Tabs
@@ -571,14 +620,17 @@ export const TopNav = () => {
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-        <Div className={"d-center"}>
-          {smileNode()}
-          {propertyNode()}
-        </Div>
-        <Div className={"d-center mx-auto ms-6vw"}>
-          {tabsNode()}
-        </Div>
-        <Div className={"me-auto"}></Div>
+        <Grid container spacing={1}>
+          <Grid item xs={1} className={"d-center"}>
+            {smileNode()}
+          </Grid>
+          <Grid item xs={10} className={"d-center"}>
+            {tabsNode()}
+          </Grid>
+          <Grid item xs={1} className={"d-center"}>
+            {propertyNode()}
+          </Grid>
+        </Grid>
       </Card>
     </Paper>
   );

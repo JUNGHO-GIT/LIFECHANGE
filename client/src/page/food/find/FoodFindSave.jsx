@@ -314,7 +314,7 @@ export const FoodFindSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20/>
+        <Br20 />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -365,7 +365,7 @@ export const FoodFindSave = () => {
             }}
           />
         </Div>
-        <Br20/>
+        <Br20 />
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -431,7 +431,7 @@ export const FoodFindSave = () => {
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br40 />
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={true}
@@ -551,7 +551,7 @@ export const FoodFindSave = () => {
               />
             )}
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -567,7 +567,7 @@ export const FoodFindSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -612,7 +612,7 @@ export const FoodFindSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -657,7 +657,6 @@ export const FoodFindSave = () => {
               }}
             />
           </Div>
-          <Br20/>
         </Card>
       );
       return (

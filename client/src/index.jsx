@@ -27,6 +27,7 @@ import {BottomNav} from "./import/ImportLayouts.jsx";
 import {CalendarList} from "./page/calendar/CalendarList.jsx";
 import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
 
+import {TodayChart} from "./page/today/chart/TodayChart.jsx";
 import {TodayDiffList} from "./page/today/TodayDiffList.jsx";
 import {TodayGoalList} from "./page/today/TodayGoalList.jsx";
 import {TodayList} from "./page/today/TodayList.jsx";
@@ -82,6 +83,7 @@ const Calendar = () => (
 // -------------------------------------------------------------------------------------------------
 const Today = () => (
   <Routes>
+    <Route path="/chart/list" element={<TodayChart />} />
     <Route path="/diff/list" element={<TodayDiffList />} />
     <Route path="/goal/list" element={<TodayGoalList />} />
     <Route path="/list" element={<TodayList />} />

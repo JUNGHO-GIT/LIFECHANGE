@@ -1,4 +1,4 @@
-// FoodChartBar.jsx
+// TodayChartFood.jsx
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
@@ -13,7 +13,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {common3_1} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodChartBar = () => {
+export const TodayChartFood = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -216,23 +216,23 @@ export const FoodChartBar = () => {
     const headSection = () => {
       const titleSection = () => (
         <Div className={"d-center fs-0-9rem"}>
-          {translate("chartBar")}
+          {translate("food")}
         </Div>
       );
       const selectSection1 = () => (
         <Div className={"d-center"}>
           <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          variant={"outlined"}
-          value={SECTION}
-          onChange={(e) => (
-            setSECTION(e.target.value)
-          )}
-        >
-          <MenuItem value={"today"}>{translate("today")}</MenuItem>
-        </TextField>
+            select={true}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            value={SECTION}
+            onChange={(e) => (
+              setSECTION(e.target.value)
+            )}
+          >
+            <MenuItem value={"today"}>{translate("today")}</MenuItem>
+          </TextField>
         </Div>
       );
       const selectSection2 = () => (

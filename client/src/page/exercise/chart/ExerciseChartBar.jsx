@@ -6,7 +6,7 @@ import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {handlerY, log} from "../../../import/ImportUtils.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
 import {Bar, Scatter, ComposedChart, ReferenceLine, Line} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_2} from "../../../import/ImportImages.jsx";
@@ -308,7 +308,7 @@ export const ExerciseChartBar = () => {
     );
   };
 
-  // 7. chart ---------------------------------------------------------------------------------------
+  // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
     const headSection = () => {
@@ -381,10 +381,10 @@ export const ExerciseChartBar = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min40vh"}>
           {headSection()}
-          <Br20/>
+          <Br20 />
           {chartSection()}
         </Div>
       </Paper>

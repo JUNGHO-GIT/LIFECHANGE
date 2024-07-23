@@ -85,7 +85,7 @@ export const BottomNav = () => {
         icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("today");
-          navigate("today/diff/list", {
+          navigate("today/chart/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),

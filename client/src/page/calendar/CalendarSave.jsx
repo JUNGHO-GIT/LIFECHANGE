@@ -313,7 +313,7 @@ export const CalendarSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20/>
+        <Br20 />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -344,7 +344,7 @@ export const CalendarSave = () => {
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br40/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={true}
@@ -415,7 +415,7 @@ export const CalendarSave = () => {
               ))}
             </TextField>
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <TextField
               select={false}
@@ -447,7 +447,7 @@ export const CalendarSave = () => {
               }}
             />
           </Div>
-          <Br20/>
+          <Br20 />
           <Div className={"d-center"}>
             <Memo
               OBJECT={OBJECT}
@@ -456,7 +456,6 @@ export const CalendarSave = () => {
               i={i}
             />
           </Div>
-          <Br20/>
         </Card>
       );
       return (
