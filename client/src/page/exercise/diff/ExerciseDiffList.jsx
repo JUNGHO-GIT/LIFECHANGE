@@ -11,7 +11,7 @@ import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3_1, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseDiff = () => {
+export const ExerciseDiffList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -94,7 +94,7 @@ export const ExerciseDiff = () => {
       },
     })
     .then((res) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

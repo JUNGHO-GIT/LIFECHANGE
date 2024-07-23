@@ -450,7 +450,7 @@ export const percent = async (object) => {
         score: "1.00",
         percent: "0.00",
       },
-      diff_time: {
+      diff_sleepTime: {
         score: "1.00",
         percent: "0.00",
       },
@@ -468,7 +468,7 @@ export const percent = async (object) => {
         object?.sleep?.sleep_wakeTime,
         "wakeTime"
       ),
-      diff_time: diffSleep(
+      diff_sleepTime: diffSleep(
         object?.sleepGoal?.sleep_goal_sleepTime,
         object?.sleep?.sleep_sleepTime,
         "sleepTime"

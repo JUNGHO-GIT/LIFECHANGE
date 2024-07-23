@@ -21,7 +21,7 @@ export const exist = {
         calendar_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           calendar_dateType: dateType_param
         }),
       }},
@@ -90,7 +90,7 @@ export const detail = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         calendar_dateType: dateType_param
       }),
     })
@@ -114,7 +114,7 @@ export const save = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         calendar_dateType: dateType_param
       }),
     })
@@ -177,7 +177,7 @@ export const deletes = {
       calendar_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         calendar_dateType: dateType_param
       }),
     })

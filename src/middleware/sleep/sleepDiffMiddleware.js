@@ -120,7 +120,7 @@ export const list = async (object) => {
       sleep_diff_wakeTime: compareTime(
         item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
-      sleep_diff_time: compareTime(
+      sleep_diff_sleepTime: compareTime(
         item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
       sleep_diff_bedTime_color: makeColor(
@@ -129,7 +129,7 @@ export const list = async (object) => {
       sleep_diff_wakeTime_color: makeColor(
         item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
-      sleep_diff_time_color: makeColor(
+      sleep_diff_sleepTime_color: makeColor(
         item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
     });

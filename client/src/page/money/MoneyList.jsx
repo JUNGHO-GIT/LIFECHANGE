@@ -86,7 +86,7 @@ export const MoneyList = () => {
       },
     })
     .then((res) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

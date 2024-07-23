@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           exercise_dateType: dateType_param
         }),
       }},
@@ -55,6 +55,9 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param,
       },
+      ...(dateType_param === "" ? {} : {
+        exercise_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -75,6 +78,9 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
+        ...(dateType_param === ""? {} : {
+          exercise_dateType: dateType_param
+        }),
       }},
       {$project: {
         exercise_dateType: 1,
@@ -106,7 +112,7 @@ export const detail = {
       exercise_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_dateType: dateType_param
       }),
     })
@@ -130,7 +136,7 @@ export const save = {
       exercise_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_dateType: dateType_param
       }),
     })
@@ -198,7 +204,7 @@ export const deletes = {
       exercise_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_dateType: dateType_param
       }),
     })
@@ -219,7 +225,7 @@ export const deletes = {
         exercise_dateEnd: {
           $eq: dateEnd_param,
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           exercise_dateType: dateType_param
         }),
       },

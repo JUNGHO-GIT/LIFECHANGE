@@ -11,7 +11,7 @@ import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {sleep2, sleep3, sleep4} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepDiff = () => {
+export const SleepDiffList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -72,10 +72,10 @@ export const SleepDiff = () => {
     sleep_sleepTime: "00:00",
     sleep_diff_bedTime: "00:00",
     sleep_diff_wakeTime: "00:00",
-    sleep_diff_time: "00:00",
+    sleep_diff_sleepTime: "00:00",
     sleep_diff_bedTime_color: "",
     sleep_diff_wakeTime_color: "",
-    sleep_diff_time_color: ""
+    sleep_diff_sleepTime_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -90,7 +90,8 @@ export const SleepDiff = () => {
       },
     })
     .then((res) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      alert(JSON.stringify(res.data.result, null, 2))
+      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -296,8 +297,8 @@ export const SleepDiff = () => {
                       {item.sleep_sleepTime}
                     </Div>
                     <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_time_color}`}>
-                      {item.sleep_diff_time}
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
+                      {item.sleep_diff_sleepTime}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>

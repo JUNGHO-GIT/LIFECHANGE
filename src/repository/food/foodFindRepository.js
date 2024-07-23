@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           food_dateType: dateType_param
         }),
       }},
@@ -54,7 +54,7 @@ export const save = {
       food_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         food_dateType: dateType_param
       })
     })

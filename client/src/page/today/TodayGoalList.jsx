@@ -35,7 +35,7 @@ export const TodayGoalList = () => {
   // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "",
+      dateType: "day",
       dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }

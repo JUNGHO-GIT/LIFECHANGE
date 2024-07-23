@@ -54,6 +54,9 @@ export const list = {
       sleep_goal_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "" ? {} : {
+        sleep_goal_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -72,6 +75,9 @@ export const list = {
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === ""? {} : {
+          sleep_goal_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,

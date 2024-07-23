@@ -11,7 +11,7 @@ import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const MoneyDiff = () => {
+export const MoneyDiffList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -86,7 +86,7 @@ export const MoneyDiff = () => {
       },
     })
     .then((res) => {
-      setOBJECT(res.data.result || OBJECT_DEF);
+      setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

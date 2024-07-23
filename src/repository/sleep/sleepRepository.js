@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           sleep_dateType: dateType_param
         }),
       }},
@@ -56,6 +56,9 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
+      ...(dateType_param === "" ? {} : {
+        sleep_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -76,6 +79,9 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
+        ...(dateType_param === ""? {} : {
+          sleep_dateType: dateType_param
+        }),
       }},
       {$unwind: "$sleep_section"},
       {$project: {
@@ -113,7 +119,7 @@ export const detail = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -137,7 +143,7 @@ export const save = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -200,7 +206,7 @@ export const deletes = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -221,7 +227,7 @@ export const deletes = {
         sleep_dateEnd: {
           $eq: dateEnd_param,
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           sleep_dateType: dateType_param
         }),
       },

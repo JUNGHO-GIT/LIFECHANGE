@@ -18,6 +18,9 @@ export const list = {
       sleep_goal_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "" ? {} : {
+        sleep_goal_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -36,6 +39,9 @@ export const list = {
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === "" ? {} : {
+          sleep_goal_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
@@ -49,6 +55,7 @@ export const list = {
       {$sort: {sleep_goal_dateStart: sort_param}},
       {$skip: Number(page_param - 1)},
     ]);
+
     return finalResult;
   },
 
@@ -67,6 +74,9 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
+        ...(dateType_param === "" ? {} : {
+          sleep_dateType: dateType_param
+        }),
       }},
       {$unwind: "$sleep_section"},
       {$project: {

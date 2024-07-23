@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "전체" ? {} : {
+        ...(dateType_param === ""? {} : {
           exercise_goal_dateType: dateType_param
         }),
       }},
@@ -53,6 +53,9 @@ export const list = {
       exercise_goal_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "" ? {} : {
+        exercise_goal_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -71,6 +74,9 @@ export const list = {
         exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === ""? {} : {
+          exercise_goal_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
@@ -104,7 +110,7 @@ export const detail = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_goal_dateType: dateType_param
       }),
     });
@@ -127,7 +133,7 @@ export const save = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_goal_dateType: dateType_param
       }),
     });
@@ -196,7 +202,7 @@ export const deletes = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         exercise_goal_dateType: dateType_param
       }),
     })

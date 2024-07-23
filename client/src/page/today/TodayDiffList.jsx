@@ -35,7 +35,7 @@ export const TodayDiffList = () => {
   // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      dateType: "",
+      dateType: "day",
       dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
@@ -166,10 +166,10 @@ export const TodayDiffList = () => {
     sleep_sleepTime: "00:00",
     sleep_diff_bedTime: "00:00",
     sleep_diff_wakeTime: "00:00",
-    sleep_diff_time: "00:00",
+    sleep_diff_sleepTime: "00:00",
     sleep_diff_bedTime_color: "",
     sleep_diff_wakeTime_color: "",
-    sleep_diff_time_color: ""
+    sleep_diff_sleepTime_color: ""
   }];
   const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
   const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
@@ -188,7 +188,7 @@ export const TodayDiffList = () => {
             DATE: DATE,
           },
         });
-        setObject(res.data.result || objectDef);
+        setObject(res.data.result && res.data.result.length > 0 ? res.data.result : objectDef);
         setCount((prev) => ({
           ...prev,
           totalCnt: res.data.totalCnt || 0,
@@ -234,12 +234,10 @@ export const TodayDiffList = () => {
           setIsExpandedSleep
         ),
       ]);
-
       setLOADING(false);
     };
-
     fetchAllData();
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -1133,8 +1131,8 @@ export const TodayDiffList = () => {
                       {item.sleep_sleepTime}
                     </Div>
                     <Br10 />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_time_color}`}>
-                      {item.sleep_diff_time}
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
+                      {item.sleep_diff_sleepTime}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>

@@ -18,6 +18,9 @@ export const list = {
       money_goal_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "" ? {} : {
+        money_goal_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -36,6 +39,9 @@ export const list = {
         money_goal_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === ""? {} : {
+          money_goal_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
@@ -66,6 +72,9 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
+        ...(dateType_param === ""? {} : {
+          money_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,

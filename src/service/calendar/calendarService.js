@@ -8,7 +8,7 @@ export const exist = async (
   user_id_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -29,7 +29,7 @@ export const list = async (
   user_id_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -52,7 +52,7 @@ export const detail = async (
   user_id_param, _id_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -73,7 +73,7 @@ export const save = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -101,7 +101,7 @@ export const deletes = async (
   user_id_param, _id_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType === "" ? "전체" : DATE_param.dateType;
+  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 

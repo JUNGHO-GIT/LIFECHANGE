@@ -50,6 +50,9 @@ export const list = {
       food_goal_dateEnd: {
         $gte: dateStart_param,
       },
+      ...(dateType_param === "" ? {} : {
+        food_goal_dateType: dateType_param
+      }),
     });
     return finalResult;
   },
@@ -68,6 +71,9 @@ export const list = {
         food_goal_dateEnd: {
           $gte: dateStart_param,
         },
+        ...(dateType_param === ""? {} : {
+          food_goal_dateType: dateType_param
+        }),
       }},
       {$project: {
         _id: 1,
@@ -101,7 +107,7 @@ export const detail = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         food_goal_dateType: dateType_param
       }),
     })
@@ -124,7 +130,7 @@ export const save = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         food_goal_dateType: dateType_param
       }),
     })
@@ -192,7 +198,7 @@ export const deletes = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "전체" ? {} : {
+      ...(dateType_param === ""? {} : {
         food_goal_dateType: dateType_param
       }),
     })
