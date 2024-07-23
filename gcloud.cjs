@@ -1,8 +1,7 @@
-// gcloud.cjs
-
 const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
+const os = require('os'); // OS 모듈을 불러옵니다.
 
 // env 파일 수정하기
 const modifyEnv = () => {
@@ -15,8 +14,8 @@ const modifyEnv = () => {
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}\n`;
-  });
+    return `${acc}${key}=${envConfig[key]}${os.EOL}`; // OS에 맞는 줄바꿈 문자를 사용합니다.
+  }, '');
 
   writeFileSync('.env', newEnvFile);
 };
@@ -26,7 +25,7 @@ const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
   execSync('git commit -m "update"', { stdio: 'inherit' });
   execSync('git push origin master', { stdio: 'inherit' });
-}
+};
 
 // run script on server
 const runRemoteScript = () => {
@@ -45,8 +44,8 @@ const restoreEnv = () => {
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}\n`;
-  });
+    return `${acc}${key}=${envConfig[key]}${os.EOL}`; // OS에 맞는 줄바꿈 문자를 사용합니다.
+  }, '');
 
   writeFileSync('.env', newEnvFile);
 };
