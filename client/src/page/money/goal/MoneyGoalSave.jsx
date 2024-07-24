@@ -272,11 +272,15 @@ export const MoneyGoalSave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
+          <Div className={"d-between"}><Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor: "#1976d2",
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -298,7 +302,6 @@ export const MoneyGoalSave = () => {
               inputRef={REFS?.current?.money_goal_income}
               error={ERRORS?.money_goal_income}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
@@ -333,7 +336,6 @@ export const MoneyGoalSave = () => {
               inputRef={REFS?.current?.money_goal_expense}
               error={ERRORS?.money_goal_expense}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),

@@ -481,11 +481,26 @@ export const ExerciseSave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
+          <Div className={"d-between"}><Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor:
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 0 ? '#1976d2' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 1 ? '#4CAF50' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 2 ? '#FFC107' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 3 ? '#FF5722' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 4 ? '#673AB7' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 5 ? '#3F51B5' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 6 ? '#2196F3' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 7 ? '#009688' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 8 ? '#CDDC39' :
+                    OBJECT?.exercise_section[i]?.exercise_part_idx === 9 ? '#FFEB3B' :
+                    '#9E9E9E',
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -578,7 +593,6 @@ export const ExerciseSave = () => {
               inputRef={REFS.current[i]?.exercise_set}
               error={ERRORS[i]?.exercise_set}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise3_1} className={"w-16 h-16"} />
                 ),
@@ -614,7 +628,6 @@ export const ExerciseSave = () => {
               inputRef={REFS.current[i]?.exercise_rep}
               error={ERRORS[i]?.exercise_rep}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise3_2} className={"w-16 h-16"} />
                 ),
@@ -653,7 +666,6 @@ export const ExerciseSave = () => {
               inputRef={REFS.current[i]?.exercise_kg}
               error={ERRORS[i]?.exercise_kg}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise3_3} className={"w-16 h-16"} />
                 ),

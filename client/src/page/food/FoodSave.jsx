@@ -46,7 +46,7 @@ export const FoodSave = () => {
     dateEnd: "0000-00-00",
     toList:"/food/list",
     toSave:"/food/save",
-    toFind:"/food/find/list",
+    toFind:"/food/find",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -152,6 +152,33 @@ export const FoodSave = () => {
         sectionCnt: res.data.sectionCnt || 0,
         newSectionCnt: res.data.sectionCnt || 0
       }));
+
+      // 스토리지 데이터 가져오기
+      let sectionArray = [];
+      let section = sessionStorage.getItem("foodSection");
+
+      // sectionArray 설정
+      if (section) {
+        sectionArray = JSON.parse(section);
+      }
+      else {
+        sectionArray = [];
+      }
+
+      // 기존 food_section 데이터와 병합하여 OBJECT 재설정
+      setOBJECT((prev) => {
+        let mergedFoodSection = prev.food_section ? [...prev.food_section, ...sectionArray] : sectionArray;
+        return {
+          ...prev,
+          food_section: mergedFoodSection
+        };
+      });
+
+      // 병합된 데이터를 바탕으로 COUNT 재설정
+      setCOUNT((prev) => ({
+        ...prev,
+        newSectionCnt: prev.newSectionCnt + sectionArray.length
+      }));
     })
     .catch((err) => {
       console.error(err);
@@ -251,7 +278,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_name || section.food_name === "") {
+      else if (!section.food_name || section.food_name === "" || section.food_name === " ") {
         alert(translate("errorFoodName"));
         refsCurrentIdx.food_name.current &&
         refsCurrentIdx.food_name?.current?.focus();
@@ -364,6 +391,24 @@ export const FoodSave = () => {
 
   // 4-3. handler ----------------------------------------------------------------------------------
   const handlerDelete = (index) => {
+    // 스토리지 데이터 가져오기
+    let sectionArray = [];
+    let section = sessionStorage.getItem("foodSection");
+
+    // sectionArray 초기화
+    if (section) {
+      sectionArray = JSON.parse(section);
+    }
+    else {
+      sectionArray = [];
+    }
+
+    // sectionArray 삭제
+    sectionArray.splice(index, 1);
+
+    // 스토리지 데이터 설정
+    sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
+
     // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
@@ -404,7 +449,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("totalKcal")}
             size={"small"}
-            value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
+            value={numeral(OBJECT?.food_total_kcal).format('0,0')}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
@@ -423,7 +468,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("totalCarb")}
             size={"small"}
-            value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
+            value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
@@ -445,7 +490,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("totalProtein")}
             size={"small"}
-            value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
+            value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
             variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
@@ -464,7 +509,7 @@ export const FoodSave = () => {
             select={false}
             label={translate("totalFat")}
             size={"small"}
-            value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
+            value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
             variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
@@ -495,8 +540,24 @@ export const FoodSave = () => {
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor:
+                    OBJECT?.food_section[i]?.food_part_idx === 0 ? '#1976d2' :
+                    OBJECT?.food_section[i]?.food_part_idx === 1 ? '#4CAF50' :
+                    OBJECT?.food_section[i]?.food_part_idx === 2 ? '#FFC107' :
+                    OBJECT?.food_section[i]?.food_part_idx === 3 ? '#FF5722' :
+                    OBJECT?.food_section[i]?.food_part_idx === 4 ? '#673AB7' :
+                    OBJECT?.food_section[i]?.food_part_idx === 5 ? '#3F51B5' :
+                    OBJECT?.food_section[i]?.food_part_idx === 6 ? '#2196F3' :
+                    OBJECT?.food_section[i]?.food_part_idx === 7 ? '#009688' :
+                    OBJECT?.food_section[i]?.food_part_idx === 8 ? '#CDDC39' :
+                    OBJECT?.food_section[i]?.food_part_idx === 9 ? '#FFEB3B' :
+                    '#9E9E9E',
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -603,18 +664,39 @@ export const FoodSave = () => {
               select={false}
               size={"small"}
               variant={"outlined"}
-              className={"w-86vw"}
+              className={"w-40vw me-3vw"}
               label={translate("foodName")}
-              value={`${OBJECT?.food_section[i]?.food_name} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+              value={OBJECT?.food_section[i]?.food_name}
               inputRef={REFS?.current[i]?.food_name}
               error={ERRORS[i]?.food_name}
               onChange={(e) => {
+                const newVal = String(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_name: e.target.value,
+                      food_name: newVal,
+                    } : item
+                  ))
+                }));
+              }}
+            />
+            <TextField
+              select={false}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-40vw ms-3vw"}
+              label={translate("brand")}
+              value={OBJECT?.food_section[i]?.food_brand}
+              onChange={(e) => {
+                const newVal = String(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_brand: newVal,
                     } : item
                   ))
                 }));
@@ -633,7 +715,6 @@ export const FoodSave = () => {
               inputRef={REFS?.current[i]?.food_kcal}
               error={ERRORS[i]?.food_kcal}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={food2} className={"w-16 h-16"} />
                 ),
@@ -669,7 +750,6 @@ export const FoodSave = () => {
               inputRef={REFS?.current[i]?.food_carb}
               error={ERRORS[i]?.food_carb}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={food3} className={"w-16 h-16"} />
                 ),
@@ -708,7 +788,6 @@ export const FoodSave = () => {
               inputRef={REFS?.current[i]?.food_protein}
               error={ERRORS[i]?.food_protein}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={food4} className={"w-16 h-16"} />
                 ),
@@ -744,7 +823,6 @@ export const FoodSave = () => {
               inputRef={REFS?.current[i]?.food_fat}
               error={ERRORS[i]?.food_fat}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={food5} className={"w-16 h-16"} />
                 ),

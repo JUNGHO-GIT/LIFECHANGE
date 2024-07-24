@@ -1,4 +1,4 @@
-// FindFood.jsx
+// FindFilter.jsx
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
@@ -6,7 +6,7 @@ import {Icons} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const FindFood = ({
+export const FindFilter = ({
   strings, objects, functions, handlers
 }) => {
 

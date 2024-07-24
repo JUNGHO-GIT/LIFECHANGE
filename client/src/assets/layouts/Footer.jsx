@@ -3,7 +3,7 @@
 import {React}from "../../import/ImportReacts.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {Dummy} from "./footer/Dummy.jsx";
-import {FindFood} from "./footer/FindFood.jsx";
+import {FindFilter} from "./footer/FindFilter.jsx";
 import {Btn} from "./footer/Btn.jsx";
 import {ListFilter} from "./footer/ListFilter.jsx";
 
@@ -14,6 +14,8 @@ export const Footer = ({
 
   // 1. common -------------------------------------------------------------------------------------
   const isCalendar = strings?.first === "calendar";
+  const isFind = strings?.second === "find";
+
   const isDiffList = strings?.second === "diff" && strings?.third === "list";
   const isGoalList = strings?.second === "goal" && strings?.third === "list";
   const isGoalSave = strings?.second === "goal" && strings?.third === "save";
@@ -22,8 +24,6 @@ export const Footer = ({
   const isDummy = strings?.second === "data" && strings?.third === "list";
   const isCategory = strings?.second === "data" && strings?.third === "category";
   const isDetail = strings?.second === "data" && strings?.third === "detail";
-  const isFindList = strings?.second === "find" && strings?.third === "list";
-  const isFindSave = strings?.second === "find" && strings?.third === "save";
 
   // 2. listFilter ---------------------------------------------------------------------------------
   const listFilterNode = () => (
@@ -47,7 +47,7 @@ export const Footer = ({
 
   // 4. findFood -----------------------------------------------------------------------------------
   const findFoodNode = () => (
-    <FindFood
+    <FindFilter
       strings={strings}
       objects={objects}
       functions={functions}
@@ -84,7 +84,7 @@ export const Footer = ({
         </Paper>
       )
     }
-    else if (isFindList || isFindSave) {
+    else if (isFind) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
           {findFoodNode()}

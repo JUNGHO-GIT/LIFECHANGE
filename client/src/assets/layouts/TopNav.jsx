@@ -563,7 +563,7 @@ export const TopNav = () => {
                 setSelectedTab("realTabs");
                 setSelectedMenuItem("findList");
                 setValue("realTabs");
-                navigate(`${firstStr}/find/list`, {
+                navigate(`${firstStr}/find`, {
                   state: {
                     dateType: "day",
                     dateStart: moment().format("YYYY-MM-DD"),

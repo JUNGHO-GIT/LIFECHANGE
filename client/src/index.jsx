@@ -41,10 +41,9 @@ import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
 
 import {FoodChart} from "./page/food/chart/FoodChart.jsx";
 import {FoodDiffList} from "./page/food/diff/FoodDiffList.jsx";
-import {FoodFindList} from "./page/food/find/FoodFindList.jsx";
-import {FoodFindSave} from "./page/food/find/FoodFindSave.jsx";
 import {FoodGoalList} from "./page/food/goal/FoodGoalList.jsx";
 import {FoodGoalSave} from "./page/food/goal/FoodGoalSave.jsx";
+import {FoodFind} from "./page/food/FoodFind.jsx";
 import {FoodList} from "./page/food/FoodList.jsx";
 import {FoodSave} from "./page/food/FoodSave.jsx";
 
@@ -105,10 +104,9 @@ const Food = () => (
   <Routes>
     <Route path="/chart/list" element={<FoodChart />} />
     <Route path="/diff/list" element={<FoodDiffList />} />
-    <Route path="/find/list" element={<FoodFindList />} />
-    <Route path="/find/save" element={<FoodFindSave />} />
     <Route path="/goal/list" element={<FoodGoalList />} />
     <Route path="/goal/save" element={<FoodGoalSave />} />
+    <Route path="/find" element={<FoodFind />} />
     <Route path="/list" element={<FoodList />} />
     <Route path="/save" element={<FoodSave />} />
   </Routes>

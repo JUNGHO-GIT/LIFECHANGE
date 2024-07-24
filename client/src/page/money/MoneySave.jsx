@@ -397,11 +397,26 @@ export const MoneySave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
+          <Div className={"d-between"}><Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor:
+                    OBJECT?.money_section[i]?.money_part_idx === 0 ? '#1976d2' :
+                    OBJECT?.money_section[i]?.money_part_idx === 1 ? '#4CAF50' :
+                    OBJECT?.money_section[i]?.money_part_idx === 2 ? '#FFC107' :
+                    OBJECT?.money_section[i]?.money_part_idx === 3 ? '#FF5722' :
+                    OBJECT?.money_section[i]?.money_part_idx === 4 ? '#673AB7' :
+                    OBJECT?.money_section[i]?.money_part_idx === 5 ? '#3F51B5' :
+                    OBJECT?.money_section[i]?.money_part_idx === 6 ? '#2196F3' :
+                    OBJECT?.money_section[i]?.money_part_idx === 7 ? '#009688' :
+                    OBJECT?.money_section[i]?.money_part_idx === 8 ? '#CDDC39' :
+                    OBJECT?.money_section[i]?.money_part_idx === 9 ? '#FFEB3B' :
+                    '#9E9E9E',
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -494,7 +509,6 @@ export const MoneySave = () => {
               inputRef={REFS?.current[i]?.money_amount}
               error={ERRORS[i]?.money_amount}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),

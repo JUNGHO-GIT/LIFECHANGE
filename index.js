@@ -3,7 +3,6 @@
 import cors from "cors";
 import mongoose from "mongoose";
 import express from "express";
-import session from "express-session";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -15,7 +14,6 @@ import { router as exerciseRouter } from "./src/router/exercise/exerciseRouter.j
 import { router as exerciseGoalRouter } from "./src/router/exercise/exerciseGoalRouter.js";
 import { router as foodChartRouter } from "./src/router/food/foodChartRouter.js";
 import { router as foodDiffRouter } from "./src/router/food/foodDiffRouter.js";
-import { router as foodFindRouter } from "./src/router/food/foodFindRouter.js";
 import { router as foodRouter } from "./src/router/food/foodRouter.js";
 import { router as foodGoalRouter } from "./src/router/food/foodGoalRouter.js";
 import { router as moneyChartRouter } from "./src/router/money/moneyChartRouter.js";
@@ -93,7 +91,6 @@ app.use("/api/exercise/goal", exerciseGoalRouter);
 app.use("/api/exercise", exerciseRouter);
 app.use("/api/food/chart", foodChartRouter);
 app.use("/api/food/diff", foodDiffRouter);
-app.use("/api/food/find", foodFindRouter);
 app.use("/api/food/goal", foodGoalRouter);
 app.use("/api/food", foodRouter);
 app.use("/api/money/chart", moneyChartRouter);

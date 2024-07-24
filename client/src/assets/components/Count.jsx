@@ -16,8 +16,7 @@ export const Count = ({
   const {translate} = useTranslate();
   const PATH = location?.pathname;
   const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const isFindSave = secondStr === "find" && thirdStr === "save";
+  const isFind = secondStr === "find";
 
   // 2. countNode ----------------------------------------------------------------------------------
   const countNode = () => (
@@ -47,7 +46,7 @@ export const Count = ({
               endAdornment: (
                 <Div className={"d-center me-n10"}>
                   <Icons name={"TbMinus"} className={"w-20 h-20 black"} onClick={(e) => {
-                    if (isFindSave) {
+                    if (isFind) {
                       return
                     }
                     COUNT.newSectionCnt > COUNT.sectionCnt ? (
@@ -60,7 +59,7 @@ export const Count = ({
                     )
                   }}/>
                   <Icons name={"TbPlus"} className={"w-20 h-20 black"} onClick={(e) => {
-                    if (isFindSave) {
+                    if (isFind) {
                       return
                     }
                     COUNT.newSectionCnt < limit ? (

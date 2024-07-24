@@ -331,11 +331,26 @@ export const CalendarSave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
+          <Div className={"d-between"}><Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor:
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
+                    OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
+                    '#9E9E9E',
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -422,7 +437,6 @@ export const CalendarSave = () => {
               inputRef={REFS?.current[i]?.calendar_title}
               error={ERRORS[i]?.calendar_title}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={calendar2} className={"w-16 h-16"} />
                 ),

@@ -1,18 +1,18 @@
-// FoodFindList.jsx
+// FoodFind.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportUtils.jsx";
-import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, Checkbox, Grid} from "../../../import/ImportMuis.jsx";
-import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
-import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
+import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Paper, Card, Checkbox, Grid} from "../../import/ImportMuis.jsx";
+import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
+import {food2, food3, food4, food5} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodFindList = () => {
+export const FoodFind = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -51,7 +51,7 @@ export const FoodFindList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toSave:"/food/find/save",
+    toSave:"/food/save",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -152,15 +152,17 @@ export const FoodFindList = () => {
 
     // sessionStorage에 저장
     sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
+
   }, [checkedQueries, PAGING.page, PAGING.query, OBJECT]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/find/list`, {
+    await axios.get(`${URL_OBJECT}/find`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
+        DATE: DATE,
       },
     })
     .then((res) => {

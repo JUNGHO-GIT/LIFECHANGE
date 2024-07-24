@@ -288,11 +288,15 @@ export const ExerciseGoalSave = () => {
       );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
+          <Div className={"d-between"}><Badge
               badgeContent={i + 1}
-              color={"primary"}
               showZero={true}
+              sx={{
+                '& .MuiBadge-badge': {
+                  color: '#ffffff',
+                  backgroundColor: "#1976d2",
+                }
+              }}
             />
             <Delete
               id={OBJECT?._id}
@@ -313,7 +317,6 @@ export const ExerciseGoalSave = () => {
               inputRef={REFS?.current?.exercise_goal_count}
               error={ERRORS?.exercise_goal_count}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise2} className={"w-16 h-16"} />
                 ),
@@ -347,7 +350,6 @@ export const ExerciseGoalSave = () => {
               inputRef={REFS?.current?.exercise_goal_volume}
               error={ERRORS?.exercise_goal_volume}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise3_1} className={"w-16 h-16"} />
                 ),
@@ -381,7 +383,6 @@ export const ExerciseGoalSave = () => {
               inputRef={REFS?.current?.exercise_goal_weight}
               error={ERRORS?.exercise_goal_weight}
               InputProps={{
-                readOnly: false,
                 startAdornment: (
                   <Img src={exercise5} className={"w-16 h-16"} />
                 ),

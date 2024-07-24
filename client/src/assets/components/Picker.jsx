@@ -24,16 +24,16 @@ export const Picker = ({
   const isDiffList = secondStr === "diff" && thirdStr === "list";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
-  const isFindSave = secondStr === "find" && thirdStr === "save";
   const isList = secondStr === "list" && thirdStr === "";
   const isSave = secondStr === "save" && thirdStr === "";
+  const isFind  = secondStr === "find";
 
   // 2. type ---------------------------------------------------------------------------------------
   const typeStr =
     (isDiffList || isGoalList || isList) ? (
       "h-min0 h-4vh fs-0-7rem pointer"
     )
-    : (isGoalSave || isSave || isFindSave) ? (
+    : (isGoalSave || isSave || isFind) ? (
       "h-min40 fs-0-8rem pointer"
     )
     : "";
@@ -43,7 +43,7 @@ export const Picker = ({
     (isDiffList || isGoalList || isList) ? (
       "w-46vw"
     )
-    : (isGoalSave || isSave || isFindSave) ? (
+    : (isGoalSave || isSave || isFind) ? (
       "w-86vw"
     )
     : "";
@@ -53,7 +53,7 @@ export const Picker = ({
     (isDiffList || isGoalList || isList) ? (
       "h-min0 h-4vh fs-0-7rem pointer"
     )
-    : (isGoalSave || isSave || isFindSave) ? (
+    : (isGoalSave || isSave || isFind) ? (
       "h-min40 fs-0-8rem pointer"
     )
     : "";
@@ -687,7 +687,7 @@ export const Picker = ({
   return (
     <>
       {(isDiffList || isGoalList || isList) && listNode()}
-      {(isGoalSave || isSave || isFindSave) && saveNode()}
+      {(isGoalSave || isSave || isFind) && saveNode()}
     </>
   );
 };

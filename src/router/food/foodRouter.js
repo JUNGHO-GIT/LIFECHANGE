@@ -36,10 +36,44 @@ router.get("/exist", async (req, res) => {
   }
 });
 
-// 1-1. list ---------------------------------------------------------------------------------------
+// 1-1. list (리스트는 gte lte) --------------------------------------------------------------------
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
+      req.query.user_id,
+      req.query.PAGING,
+      req.query.DATE
+    );
+    if (result && result.result) {
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "조회 실패",
+        totalCnt: 0,
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 1-2. find ---------------------------------------------------------------------------------------
+router.get("/find", async (req, res) => {
+  try {
+    let result = await service.find (
       req.query.user_id,
       req.query.PAGING,
       req.query.DATE
