@@ -438,7 +438,7 @@ export const TopNav = () => {
             },
           }}
           onChange={(event, newValue) => {
-            setSelectedTab(newValue);
+            // setSelectedTab(newValue);
           }}
         >
           <Tab

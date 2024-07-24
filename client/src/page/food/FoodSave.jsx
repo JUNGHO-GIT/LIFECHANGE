@@ -554,16 +554,26 @@ export const FoodSave = () => {
                 readOnly: false
               }}
               onChange={(e) => {
-                const regex = /,/g;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999);
+                const newCount = Number(e.target.value);
+                if (newCount > 9999) {
+                  return;
+                }
+                if (isNaN(newCount) || newCount < 0) {
+                  return;
+                }
+                else if (newCount === 0) {
+                  return;
+                }
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_count: limitedValue,
+                      food_count: newCount,
+                      food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
+                      food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
+                      food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
+                      food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
                     } : item
                   ))
                 }));
