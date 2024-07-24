@@ -126,21 +126,28 @@ export const FoodFindList = () => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const pageChecked = checkedQueries[queryKey] || [];
 
-    // 체크된 항목들 sectionArray에 추가 또는 제거
-    pageChecked.forEach((el, index) => {
-      if (el) {
-        sectionArray.push(OBJECT[index]);
+    // 체크된 항목들만 sectionArray에 추가 또는 제거
+    OBJECT.forEach((item, index) => {
+      if (pageChecked[index]) {
+        if (!sectionArray.some((i) => (
+          i.food_gram === item.food_gram &&
+          i.food_kcal === item.food_kcal &&
+          i.food_carb === item.food_carb &&
+          i.food_protein === item.food_protein &&
+          i.food_fat === item.food_fat
+        ))) {
+          sectionArray.push(item);
+        }
       }
       else {
-        sectionArray = sectionArray.filter(item => item.food_name !== OBJECT[index]?.food_name);
+        sectionArray = sectionArray.filter((i) => !(
+          i.food_gram === item.food_gram &&
+          i.food_kcal === item.food_kcal &&
+          i.food_carb === item.food_carb &&
+          i.food_protein === item.food_protein &&
+          i.food_fat === item.food_fat
+        ));
       }
-    });
-
-    // sectionArray 중복 제거
-    sectionArray = sectionArray.filter((el, index, self) => {
-      return index === self.findIndex((t) => (
-        t.food_name === el.food_name
-      ));
     });
 
     // sessionStorage에 저장

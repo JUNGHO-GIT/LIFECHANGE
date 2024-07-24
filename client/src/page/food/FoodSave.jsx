@@ -23,7 +23,6 @@ export const FoodSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType;
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
@@ -36,7 +35,7 @@ export const FoodSave = () => {
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [DATE, setDATE] = useState({
-    dateType: location_dateType,
+    dateType: "day",
     dateStart: location_dateStart,
     dateEnd: location_dateEnd
   });
@@ -145,6 +144,8 @@ export const FoodSave = () => {
           return {...prev, ...res.data.result};
         }
       });
+
+      // 카운트 설정
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
@@ -604,7 +605,7 @@ export const FoodSave = () => {
               variant={"outlined"}
               className={"w-86vw"}
               label={translate("foodName")}
-              value={OBJECT?.food_section[i]?.food_name || " "}
+              value={`${OBJECT?.food_section[i]?.food_name} (${OBJECT?.food_section[i]?.food_brand || ""})`}
               inputRef={REFS?.current[i]?.food_name}
               error={ERRORS[i]?.food_name}
               onChange={(e) => {

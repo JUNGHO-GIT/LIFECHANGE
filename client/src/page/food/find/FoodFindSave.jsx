@@ -208,6 +208,30 @@ export const FoodFindSave = () => {
     }));
   }, [OBJECT?.food_section]);
 
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    const defaultSection = {
+      food_part_idx: 1,
+      food_part_val: "breakfast",
+      food_name: "",
+      food_brand: "",
+      food_count: 0,
+      food_serv: "회",
+      food_gram: 0,
+      food_kcal: 0,
+      food_fat: 0,
+      food_carb: 0,
+      food_protein: 0,
+    };
+    let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
+      idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
+    );
+    setOBJECT((prev) => ({
+      ...prev,
+      food_section: updatedSection
+    }));
+
+  },[COUNT?.newSectionCnt]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -308,6 +332,39 @@ export const FoodFindSave = () => {
     await axios.post(`${URL_OBJECT}/find/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
+      DATE: DATE,
+    })
+    .then((res) => {
+      if (res.data.status === "success") {
+        alert(res.data.msg);
+        percent();
+        Object.assign(SEND, {
+          dateType: "",
+          dateStart: DATE.dateStart,
+          dateEnd: DATE.dateEnd
+        });
+        navigate(SEND.toList, {
+          state: SEND
+        });
+      }
+      else {
+        alert(res.data.msg);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  };
+
+  // 3. flow ---------------------------------------------------------------------------------------
+  const flowDeletes = async () => {
+    if (OBJECT?._id === "") {
+      alert(translate("noData"));
+      return;
+    }
+    await axios.post(`${URL_OBJECT}/deletes`, {
+      user_id: sessionId,
+      _id: OBJECT?._id,
       DATE: DATE,
     })
     .then((res) => {
@@ -505,9 +562,6 @@ export const FoodFindSave = () => {
               value={OBJECT?.food_section[i]?.food_part_idx}
               inputRef={REFS?.current[i]?.food_part_idx}
               error={ERRORS[i]?.food_part_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -729,7 +783,7 @@ export const FoodFindSave = () => {
         setDATE, setSEND, setCOUNT, setEXIST
       }}
       handlers={{
-        navigate, flowSave
+        navigate, flowSave, flowDeletes
       }}
     />
   );
