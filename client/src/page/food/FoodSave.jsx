@@ -35,6 +35,11 @@ export const FoodSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
+  const [DATE, setDATE] = useState({
+    dateType: location_dateType,
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd
+  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -48,11 +53,6 @@ export const FoodSave = () => {
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
-  });
-  const [DATE, setDATE] = useState({
-    dateType: location_dateType,
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -258,7 +258,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_kcal) {
+      else if (section.food_kcal === undefined || section.food_kcal === null) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current &&
         refsCurrentIdx.food_kcal?.current?.focus();
@@ -266,7 +266,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_carb) {
+      else if (section.food_carb === undefined || section.food_carb === null) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current &&
         refsCurrentIdx.food_carb?.current?.focus();
@@ -274,7 +274,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_protein) {
+      else if (section.food_protein === undefined || section.food_protein === null) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current &&
         refsCurrentIdx.food_protein?.current?.focus();
@@ -282,7 +282,7 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_fat) {
+      else if (section.food_fat === undefined || section.food_fat === null) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current &&
         refsCurrentIdx.food_fat?.current?.focus();
@@ -290,7 +290,6 @@ export const FoodSave = () => {
         foundError = true;
         break;
       }
-
     }
     setERRORS(initialErrors);
 
@@ -517,9 +516,6 @@ export const FoodSave = () => {
               value={OBJECT?.food_section[i]?.food_part_idx}
               inputRef={REFS?.current[i]?.food_part_idx}
               error={ERRORS[i]?.food_part_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -548,7 +544,7 @@ export const FoodSave = () => {
               size={"small"}
               type={"text"}
               variant={"outlined"}
-              className={"w-40vw ms-3vw"}
+              className={"w-20vw ms-3vw"}
               value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
               InputProps={{
                 readOnly: false
@@ -579,6 +575,26 @@ export const FoodSave = () => {
                 }));
               }}
             />
+            <TextField
+              select={false}
+              label={translate("gram")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-20vw ms-3vw"}
+              value={OBJECT?.food_section[i]?.food_gram}
+              onChange={(e) => {
+                const newGram = Number(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_gram: newGram,
+                    } : item
+                  ))
+                }));
+              }}
+            />
           </Div>
           <Br20 />
           <Div className={"d-center"}>
@@ -591,9 +607,6 @@ export const FoodSave = () => {
               value={OBJECT?.food_section[i]?.food_name || " "}
               inputRef={REFS?.current[i]?.food_name}
               error={ERRORS[i]?.food_name}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 setOBJECT((prev) => ({
                   ...prev,

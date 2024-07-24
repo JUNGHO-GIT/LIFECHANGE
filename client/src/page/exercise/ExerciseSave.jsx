@@ -506,9 +506,6 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_section[i]?.exercise_part_idx}
               inputRef={REFS.current[i]?.exercise_part_idx}
               error={ERRORS[i]?.exercise_part_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -543,9 +540,6 @@ export const ExerciseSave = () => {
               value={OBJECT?.exercise_section[i]?.exercise_title_idx}
               inputRef={REFS.current[i]?.exercise_title_idx}
               error={ERRORS[i]?.exercise_title_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newTitleIdx = Number(e.target.value);
                 const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];

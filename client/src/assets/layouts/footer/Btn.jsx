@@ -28,6 +28,11 @@ export const Btn = ({
         fontSize: "0.8rem"
       }}
       onClick={() => {
+        Object.assign(objects?.SEND, {
+          dateType: objects?.DATE.dateType,
+          dateStart: objects?.DATE.dateStart,
+          dateEnd: objects?.DATE.dateEnd
+        });
         handlers.navigate(objects?.SEND.toFind, {
           state: objects?.SEND,
         });

@@ -339,7 +339,7 @@ export const TodayChartExercise = () => {
         <Img src={common3_2} className={"w-24 h-24"} />
       );
       return (
-        <Grid container spacing={1}>
+        <Grid container>
           <Grid item xs={3} className={"d-column align-left"}>
             {selectSection1()}
           </Grid>

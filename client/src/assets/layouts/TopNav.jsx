@@ -26,8 +26,6 @@ export const TopNav = () => {
   const dateEnd = property?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -37,6 +35,7 @@ export const TopNav = () => {
   const [anchorAnalyze, setAnchorAnalyze] = useState(null);
   const [anchorGoal, setAnchorGoal] = useState(null);
   const [anchorReal, setAnchorReal] = useState(null);
+  const [smileIcon, setSmileIcon] = useState("");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
@@ -200,7 +199,8 @@ export const TopNav = () => {
           </Div>
         )}>
         {(popTrigger={}) => (
-          firstStr === "" || firstStr === "calendar" || firstStr === "user" ? (
+          firstStr === "" || firstStr === "calendar" ||
+          firstStr === "user" || firstStr === "today" ? (
             makeIcon("total", "w-max25 h-max25  ms-3vw", "N", popTrigger)
           ) : (
             makeIcon(part.toLowerCase(), "w-max25 h-max25 ms-3vw", "N", popTrigger)
@@ -620,7 +620,7 @@ export const TopNav = () => {
   const topNavNode = () => (
     <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-        <Grid container spacing={1}>
+        <Grid container>
           <Grid item xs={1} className={"d-center"}>
             {smileNode()}
           </Grid>

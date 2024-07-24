@@ -23,6 +23,8 @@ export const FoodFindSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateStart = location?.state?.dateStart;
+  const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
@@ -32,24 +34,24 @@ export const FoodFindSave = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
+  const [DATE, setDATE] = useState({
+    dateType: "day",
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd
+  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toList:"/food/list",
-    toFind:"/food/find/list",
     toSave:"/food/find/save",
+    toFind:"/food/find/list",
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
-  });
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -98,33 +100,93 @@ export const FoodFindSave = () => {
   })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    // 스토리지 데이터 가져오기
-    let sectionArray = [];
-    let section = sessionStorage.getItem("foodSection");
+  useEffect(() => {(async () => {
+    setLOADING(true);
+    await axios.get(`${URL_OBJECT}/exist`, {
+      params: {
+        user_id: sessionId,
+        DATE: {
+          dateType: "",
+          dateStart: moment(DATE.dateStart).startOf("month").format("YYYY-MM-DD"),
+          dateEnd: moment(DATE.dateEnd).endOf("month").format("YYYY-MM-DD")
+        },
+      },
+    })
+    .then((res) => {
+      setEXIST(res.data.result || []);
+      setLOADING(false);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-    // sectionArray 설정
-    if (section) {
-      sectionArray = JSON.parse(section);
-    }
-    else {
-      sectionArray = [];
-    }
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {(async () => {
+    setLOADING(true);
+    await axios.get(`${URL_OBJECT}/detail`, {
+      params: {
+        user_id: sessionId,
+        _id: "",
+        DATE: DATE,
+      },
+    })
+    .then((res) => {
+      // 첫번째 객체를 제외하고 데이터 추가
+      setOBJECT((prev) => {
+        if (prev.length === 1 && prev[0]?._id === "") {
+          return res.data.result;
+        }
+        else {
+          return {...prev, ...res.data.result};
+        }
+      });
 
-    // OBJECT 설정
-    setOBJECT((prev) => ({
-      ...prev,
-      food_section: sectionArray,
-    }));
-    setCOUNT((prev) => ({
-      ...prev,
-      sectionCnt: sectionArray.length,
-      newSectionCnt: sectionArray.length,
-    }));
+      // 카운트 설정
+      setCOUNT((prev) => ({
+        ...prev,
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0,
+        newSectionCnt: res.data.sectionCnt || 0
+      }));
 
-    setLOADING(false);
+      // 스토리지 데이터 가져오기
+      let sectionArray = [];
+      let section = sessionStorage.getItem("foodSection");
 
-  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
+      // sectionArray 설정
+      if (section) {
+        sectionArray = JSON.parse(section);
+      }
+      else {
+        sectionArray = [];
+      }
+
+      // 기존 food_section 데이터와 병합하여 OBJECT 재설정
+      setOBJECT((prev) => {
+        let mergedFoodSection = prev.food_section ? [...prev.food_section, ...sectionArray] : sectionArray;
+        return {
+          ...prev,
+          food_section: mergedFoodSection
+        };
+      });
+
+      // 병합된 데이터를 바탕으로 COUNT 재설정
+      setCOUNT((prev) => ({
+        ...prev,
+        newSectionCnt: prev.newSectionCnt + sectionArray.length
+      }));
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -200,7 +262,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_kcal) {
+      else if (section.food_kcal === undefined || section.food_kcal === null) {
         alert(translate("errorFoodKcal"));
         refsCurrentIdx.food_kcal.current &&
         refsCurrentIdx.food_kcal?.current?.focus();
@@ -208,7 +270,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_carb) {
+      else if (section.food_carb === undefined || section.food_carb === null) {
         alert(translate("errorFoodCarb"));
         refsCurrentIdx.food_carb.current &&
         refsCurrentIdx.food_carb?.current?.focus();
@@ -216,7 +278,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_protein) {
+      else if (section.food_protein === undefined || section.food_protein === null) {
         alert(translate("errorFoodProtein"));
         refsCurrentIdx.food_protein.current &&
         refsCurrentIdx.food_protein?.current?.focus();
@@ -224,7 +286,7 @@ export const FoodFindSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.food_fat) {
+      else if (section.food_fat === undefined || section.food_fat === null) {
         alert(translate("errorFoodFat"));
         refsCurrentIdx.food_fat.current &&
         refsCurrentIdx.food_fat?.current?.focus();
@@ -332,7 +394,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0.00')}
             variant={"outlined"}
-            className={"w-40vw ms-3vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -351,7 +413,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.00')}
             variant={"outlined"}
-            className={"w-40vw me-3vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -373,7 +435,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.00')}
             variant={"outlined"}
-            className={"w-40vw ms-3vw"}
+            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -392,7 +454,7 @@ export const FoodFindSave = () => {
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.00')}
             variant={"outlined"}
-            className={"w-40vw me-3vw"}
+            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
               startAdornment: (
@@ -468,88 +530,63 @@ export const FoodFindSave = () => {
                 </MenuItem>
               ))}
             </TextField>
-            {(OBJECT?.food_section[i]?.food_gram === 0) ? (
-              <TextField
-                select={false}
-                label={translate("foodCount")}
-                size={"small"}
-                type={"text"}
-                variant={"outlined"}
-                className={"w-40vw ms-3vw"}
-                value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
-                InputProps={{
-                  readOnly: false
-                }}
-                onChange={(e) => {
-                  const newCount = Number(e.target.value);
-                  if (newCount > 9999) {
-                    return;
-                  }
-                  if (isNaN(newCount) || newCount < 0) {
-                    return;
-                  }
-                  else if (newCount === 0) {
-                    return;
-                  }
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        food_count: newCount,
-                        food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
-                        food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
-                        food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
-                        food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            ) : (
-              <TextField
-                select={false}
-                label={translate("gram")}
-                size={"small"}
-                type={"text"}
-                variant={"outlined"}
-                className={"w-40vw ms-3vw"}
-                value={Math.min(OBJECT?.food_section[i]?.food_gram, 9999)}
-                InputProps={{
-                  readOnly: false,
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("g")}
-                    </Div>
-                  )
-                }}
-                onChange={(e) => {
-                  const newGram = Number(e.target.value);
-                  if (newGram > 9999) {
-                    return;
-                  }
-                  if (isNaN(newGram) || newGram < 0) {
-                    return;
-                  }
-                  else if (newGram === 0) {
-                    return;
-                  }
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    food_section: prev.food_section?.map((item, idx) => (
-                      idx === i ? {
-                        ...item,
-                        food_gram: newGram,
-                        food_kcal: Number(((newGram * item.food_kcal) / item.food_gram).toFixed(2)),
-                        food_fat: Number(((newGram * item.food_fat) / item.food_gram).toFixed(2)),
-                        food_carb: Number(((newGram * item.food_carb) / item.food_gram).toFixed(2)),
-                        food_protein: Number(((newGram * item.food_protein) / item.food_gram).toFixed(2)),
-                      } : item
-                    ))
-                  }));
-                }}
-              />
-            )}
+            <TextField
+              select={false}
+              label={translate("foodCount")}
+              size={"small"}
+              type={"text"}
+              variant={"outlined"}
+              className={"w-20vw ms-3vw"}
+              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
+              InputProps={{
+                readOnly: false
+              }}
+              onChange={(e) => {
+                const newCount = Number(e.target.value);
+                if (newCount > 9999) {
+                  return;
+                }
+                if (isNaN(newCount) || newCount < 0) {
+                  return;
+                }
+                else if (newCount === 0) {
+                  return;
+                }
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_count: newCount,
+                      food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
+                      food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
+                      food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
+                      food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
+                    } : item
+                  ))
+                }));
+              }}
+            />
+            <TextField
+              select={false}
+              label={translate("gram")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-20vw ms-3vw"}
+              value={OBJECT?.food_section[i]?.food_gram}
+              onChange={(e) => {
+                const newGram = Number(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  food_section: prev.food_section?.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      food_gram: newGram,
+                    } : item
+                  ))
+                }));
+              }}
+            />
           </Div>
           <Br20 />
           <Div className={"d-center"}>

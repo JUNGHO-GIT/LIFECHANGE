@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br20, Br30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
@@ -29,17 +29,10 @@ export const TodayDiffList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateStart = location?.state?.dateStart;
+  const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
   const sessionId = sessionStorage.getItem("sessionId");
-
-  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      dateType: "day",
-      dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    }
-  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpandedExercise, setIsExpandedExercise] = useState([0]);
@@ -47,6 +40,11 @@ export const TodayDiffList = () => {
   const [isExpandedMoney, setIsExpandedMoney] = useState([0]);
   const [isExpandedSleep, setIsExpandedSleep] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd,
+  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -273,7 +271,7 @@ export const TodayDiffList = () => {
                   )}}
                 />
               }>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
@@ -313,7 +311,7 @@ export const TodayDiffList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise2} className={"w-15 h-15"} />
                   </Grid>
@@ -364,7 +362,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
@@ -415,7 +413,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -466,7 +464,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
@@ -558,7 +556,7 @@ export const TodayDiffList = () => {
                   )}}
                 />
               }>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
@@ -598,7 +596,7 @@ export const TodayDiffList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
@@ -649,7 +647,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
@@ -700,7 +698,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
@@ -751,7 +749,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
@@ -843,7 +841,7 @@ export const TodayDiffList = () => {
                   )}}
                 />
               }>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
@@ -883,7 +881,7 @@ export const TodayDiffList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -934,7 +932,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -1026,7 +1024,7 @@ export const TodayDiffList = () => {
                   )}}
                 />
               }>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
@@ -1066,7 +1064,7 @@ export const TodayDiffList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -1117,7 +1115,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -1168,7 +1166,7 @@ export const TodayDiffList = () => {
                 </Grid>
                 {/** row 3 **/}
                 <Hr30 />
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>

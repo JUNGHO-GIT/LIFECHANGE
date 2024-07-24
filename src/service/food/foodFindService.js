@@ -144,11 +144,11 @@ export const list = async (
         food_brand: brandElement,
         food_count: nutritionElement.count,
         food_serv: nutritionElement.serv,
-        food_gram: nutritionElement.gram,
-        food_kcal: nutritionElement.kcal,
-        food_fat: nutritionElement.fat,
-        food_carb: nutritionElement.carb,
-        food_protein: nutritionElement.protein,
+        food_gram: nutritionElement.gram === 0 ? 0.1 : nutritionElement.gram,
+        food_kcal: nutritionElement.kcal === 0 ? 1 : nutritionElement.kcal,
+        food_fat: nutritionElement.fat === 0 ? 0.1 : nutritionElement.fat,
+        food_carb: nutritionElement.carb === 0 ? 0.1 : nutritionElement.carb,
+        food_protein: nutritionElement.protein === 0 ? 0.1 : nutritionElement.protein,
       });
     });
   });
@@ -169,7 +169,6 @@ export const save = async (
   const dateEnd = DATE_param.dateEnd;
 
   let finalResult = null;
-
   const findResult = await repository.save.detail(
     user_id_param, "", dateType, dateStart, dateEnd
   );

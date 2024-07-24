@@ -39,7 +39,7 @@ export const list = {
         money_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === ""? {} : {
+        ...(dateType_param === "" ? {} : {
           money_goal_dateType: dateType_param
         }),
       }},
@@ -72,7 +72,7 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === ""? {} : {
+        ...(dateType_param === "" ? {} : {
           money_dateType: dateType_param
         }),
       }},

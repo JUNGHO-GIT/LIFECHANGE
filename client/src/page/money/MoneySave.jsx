@@ -422,9 +422,6 @@ export const MoneySave = () => {
               value={OBJECT?.money_section[i]?.money_part_idx}
               inputRef={REFS?.current[i]?.money_part_idx}
               error={ERRORS[i]?.money_part_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -459,9 +456,6 @@ export const MoneySave = () => {
               value={OBJECT?.money_section[i]?.money_title_idx}
               inputRef={REFS?.current[i]?.money_title_idx}
               error={ERRORS[i]?.money_title_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newTitleIdx = Number(e.target.value);
                 const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];

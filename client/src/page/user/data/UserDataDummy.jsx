@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useStorage, useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
@@ -247,7 +247,7 @@ export const UserDataDummy = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummyDeletes = async () => {
-    const previousPART = PART; 
+    const previousPART = PART;
     await axios.delete(`${URL_OBJECT}/data/deletes`, {
       data: {
         user_id: sessionId,

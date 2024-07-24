@@ -80,11 +80,11 @@ export const save = async (
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
+  let finalResult = null;
   const findResult = await repository.save.detail(
     user_id_param, "", dateType, dateStart, dateEnd
   );
 
-  let finalResult = null;
   if (!findResult) {
     finalResult = await repository.save.create(
       user_id_param, OBJECT_param, dateType, dateStart, dateEnd

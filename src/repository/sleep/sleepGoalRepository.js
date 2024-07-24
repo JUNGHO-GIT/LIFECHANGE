@@ -75,7 +75,7 @@ export const list = {
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === ""? {} : {
+        ...(dateType_param === "" ? {} : {
           sleep_goal_dateType: dateType_param
         }),
       }},

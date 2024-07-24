@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
-import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -19,22 +19,20 @@ export const CalendarList = () => {
   const location = useLocation();
   const PATH = location?.pathname;
   const {translate} = useTranslate();
+  const location_dateStart = location?.state?.dateStart;
+  const location_dateEnd = location?.state?.dateEnd;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      dateType: "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
-    }
-  );
-
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd,
+  });
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",

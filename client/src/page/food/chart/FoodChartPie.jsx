@@ -136,7 +136,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_KCAL_TODAY[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}kcal`}
+        {translate(OBJECT_KCAL_TODAY[index]?.name).length > 10
+          ? translate(OBJECT_KCAL_TODAY[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_KCAL_TODAY[index]?.name)
+        }
       </text>
     );
   };
@@ -153,7 +156,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_NUT_TODAY[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}g`}
+        {translate(OBJECT_NUT_TODAY[index]?.name).length > 10
+          ? translate(OBJECT_NUT_TODAY[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_NUT_TODAY[index]?.name)
+        }
       </text>
     );
   }
@@ -170,7 +176,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_KCAL_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}kcal`}
+        {translate(OBJECT_KCAL_WEEK[index]?.name).length > 10
+          ? translate(OBJECT_KCAL_WEEK[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_KCAL_WEEK[index]?.name)
+        }
       </text>
     );
   }
@@ -187,7 +196,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_NUT_WEEK[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}g`}
+        {translate(OBJECT_NUT_WEEK[index]?.name).length > 10
+          ? translate(OBJECT_NUT_WEEK[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_NUT_WEEK[index]?.name)
+        }
       </text>
     );
   }
@@ -204,7 +216,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_KCAL_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}kcal`}
+        {translate(OBJECT_KCAL_MONTH[index]?.name).length > 10
+          ? translate(OBJECT_KCAL_MONTH[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_KCAL_MONTH[index]?.name)
+        }
       </text>
     );
   }
@@ -221,7 +236,10 @@ export const FoodChartPie = () => {
     return (
       <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
       className={"fs-0-6rem"}>
-        {`${translate(OBJECT_NUT_MONTH[index]?.name).substring(0, 5)} ${Number(value).toLocaleString()}g`}
+        {translate(OBJECT_NUT_MONTH[index]?.name).length > 10
+          ? translate(OBJECT_NUT_MONTH[index]?.name).substring(0, 10) + "..."
+          : translate(OBJECT_NUT_MONTH[index]?.name)
+        }
       </text>
     );
   }
@@ -562,7 +580,7 @@ export const FoodChartPie = () => {
         </PopUp>
       );
       return (
-        <Grid container spacing={1}>
+        <Grid container>
           <Grid item xs={3} className={"d-column align-left"}>
             {selectSection1()}
           </Grid>

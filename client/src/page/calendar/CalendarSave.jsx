@@ -356,9 +356,6 @@ export const CalendarSave = () => {
               value={OBJECT?.calendar_section[i]?.calendar_part_idx}
               inputRef={REFS?.current[i]?.calendar_part_idx}
               error={ERRORS[i]?.calendar_part_idx}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -391,9 +388,6 @@ export const CalendarSave = () => {
               value={OBJECT?.calendar_section[i]?.calendar_color}
               inputRef={REFS?.current[i]?.calendar_color}
               error={ERRORS[i]?.calendar_color}
-              InputProps={{
-                readOnly: false,
-              }}
               onChange={(e) => {
                 const newColor = e.target.value;
                 setOBJECT((prev) => ({

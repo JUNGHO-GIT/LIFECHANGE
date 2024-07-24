@@ -38,7 +38,7 @@ export const UserLogin = () => {
     user_id: createRef(),
     user_pw: createRef(),
   });
-  
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (trigger) {
@@ -126,7 +126,7 @@ export const UserLogin = () => {
           sessionStorage.setItem("isAdmin", "false");
         }
         percent();
-        navigate("/calendar/list");
+        navigate("/today/diff/list");
       }
       else {
         alert(res.data.msg);

@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Br10} from "../../import/ImportComponents.jsx";
@@ -21,24 +21,22 @@ export const ExerciseList = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_dateStart = location?.state?.dateStart;
+  const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      dateType: "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
-    }
-  );
-
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: location_dateStart,
+    dateEnd: location_dateEnd,
+  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -81,9 +79,9 @@ export const ExerciseList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
+  useEffect(() => {(async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/list`, {
+    await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
@@ -108,7 +106,7 @@ export const ExerciseList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateEnd]);
+  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -142,7 +140,7 @@ export const ExerciseList = () => {
                   )}}
                 />
               }>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Icons
                       name={"TbSearch"}
@@ -193,7 +191,7 @@ export const ExerciseList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
@@ -215,7 +213,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -237,7 +235,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={2} className={"d-column align-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>

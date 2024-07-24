@@ -39,7 +39,7 @@ export const list = {
         food_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === ""? {} : {
+        ...(dateType_param === "" ? {} : {
           food_goal_dateType: dateType_param
         }),
       }},
@@ -74,7 +74,7 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param,
         },
-        ...(dateType_param === ""? {} : {
+        ...(dateType_param === "" ? {} : {
           food_dateType: dateType_param
         }),
       }},
