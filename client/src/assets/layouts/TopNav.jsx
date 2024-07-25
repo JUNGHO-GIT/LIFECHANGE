@@ -360,6 +360,7 @@ export const TopNav = () => {
             label={translate("analyzeTabs")}
             value={"analyzeTabs"}
             onClick={(e) => {
+              // @ts-ignore
               setAnchorAnalyze(e.currentTarget);
             }}
           />
@@ -494,6 +495,7 @@ export const TopNav = () => {
             label={translate("analyzeTabs")}
             value={"analyzeTabs"}
             onClick={(e) => {
+              // @ts-ignore
               setAnchorAnalyze(e.currentTarget);
             }}
           />
@@ -501,6 +503,7 @@ export const TopNav = () => {
             label={translate("goalTabs")}
             value={"goalTabs"}
             onClick={(e) => {
+              // @ts-ignore
               setAnchorGoal(e.currentTarget);
             }}
           />
@@ -508,6 +511,7 @@ export const TopNav = () => {
             label={translate("realTabs")}
             value={"realTabs"}
             onClick={(e) => {
+              // @ts-ignore
               setAnchorReal(e.currentTarget);
             }}
           />
