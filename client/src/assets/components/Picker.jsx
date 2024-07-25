@@ -162,7 +162,7 @@ export const Picker = ({
                       }}
                     }}
                   >
-                     <PickersDay
+                    <PickersDay
                       {...other}
                       day={day}
                       selected={isSelected}
@@ -173,6 +173,11 @@ export const Picker = ({
                           dateStart: moment(day).format("YYYY-MM-DD"),
                           dateEnd: moment(day).format("YYYY-MM-DD")
                         }));
+                        Object.keys(sessionStorage).forEach((key) => {
+                          if (key.includes("foodSection")) {
+                            sessionStorage.removeItem(key);
+                          }
+                        });
                       }}
                     />
                   </Badge>
@@ -183,7 +188,7 @@ export const Picker = ({
                     {...props}
                     className={"fs-1-4rem"}
                     onClick={() => {
-                  setDATE((prev = {}) => {
+                    setDATE((prev = {}) => {
                     const newDateStart = moment(prev.dateStart).subtract(1, "month");
                     const newDateEnd = newDateStart.clone().endOf('month');
                     return {
@@ -201,7 +206,7 @@ export const Picker = ({
                     {...props}
                     className={"fs-1-4rem"}
                     onClick={() => {
-                  setDATE((prev = {}) => {
+                    setDATE((prev = {}) => {
                     const newDateStart = moment(prev.dateStart).add(1, "month");
                     const newDateEnd = newDateStart.clone().endOf('month');
                     return {

@@ -23,7 +23,6 @@ export const FoodSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const location_isSession = location?.state?.isSession;
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
@@ -33,7 +32,6 @@ export const FoodSave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [isSession, setIsSession] = useState(false);
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [DATE, setDATE] = useState({
@@ -55,7 +53,7 @@ export const FoodSave = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
-  
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
@@ -82,7 +80,10 @@ export const FoodSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-  
+  // const {val: OBJECT, set: setOBJECT} = useStorage(
+  //   `OBJECT(${PATH})`, OBJECT_DEF
+  // );
+
   // 2-2. useState -------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
     food_part_idx: false,
@@ -99,43 +100,7 @@ export const FoodSave = () => {
     food_carb: createRef(),
     food_protein: createRef(),
     food_fat: createRef(),
-  })))
-  
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  const newWindowRef = useRef(null);
-  const timerRef = useRef(null);
-  useEffect(() => {
-    // 이전 타이머를 지우고 새 타이머 설정
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    timerRef.current = setTimeout(() => {
-      if (newWindowRef.current) {
-        newWindowRef.current.close();
-      }
-
-      const jsonStr = JSON.stringify(OBJECT, null, 2);
-      newWindowRef.current = window.open("", "_blank", "width=600,height=400");
-
-      if (newWindowRef.current) {
-        newWindowRef.current.document.write("<pre>" + jsonStr + "</pre>");
-        newWindowRef.current.document.close();
-      } else {
-        alert("Unable to open new window. Please check your browser's popup settings.");
-      }
-    }, 500); // 500ms 동안 추가 변경이 없으면 실행
-
-    // 컴포넌트 언마운트 시 타이머와 창 정리
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      if (newWindowRef.current) {
-        newWindowRef.current.close();
-      }
-    };
-  }, [OBJECT]);
+  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -205,7 +170,9 @@ export const FoodSave = () => {
 
       // 기존 food_section 데이터와 병합하여 OBJECT 재설정
       setOBJECT((prev) => {
-        let mergedFoodSection = prev.food_section ? [...prev.food_section, ...sectionArray] : sectionArray;
+        let mergedFoodSection = prev?.food_section
+          ? [...prev.food_section, ...sectionArray]
+          : sectionArray;
         return {
           ...prev,
           food_section: mergedFoodSection
@@ -215,7 +182,7 @@ export const FoodSave = () => {
       // 병합된 데이터를 바탕으로 COUNT 재설정
       setCOUNT((prev) => ({
         ...prev,
-        newSectionCnt: prev.newSectionCnt + sectionArray.length
+        newSectionCnt: prev?.newSectionCnt + sectionArray.length
       }));
     })
     .catch((err) => {
@@ -235,7 +202,12 @@ export const FoodSave = () => {
         totalCarb: acc.totalCarb + Number(cur.food_carb),
         totalProtein: acc.totalProtein + Number(cur.food_protein),
       };
-    }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0});
+    }, {
+      totalKcal: 0,
+      totalFat: 0,
+      totalCarb: 0,
+      totalProtein: 0
+    });
 
     setOBJECT((prev) => ({
       ...prev,
@@ -251,8 +223,8 @@ export const FoodSave = () => {
     const defaultSection = {
       food_part_idx: 1,
       food_part_val: "breakfast",
-      food_name: "",
-      food_brand: "",
+      food_name: " ",
+      food_brand: " ",
       food_count: 0,
       food_serv: "회",
       food_gram: 0,
@@ -450,13 +422,13 @@ export const FoodSave = () => {
     // OBJECT 설정
     setOBJECT((prev) => ({
       ...prev,
-      food_section: prev.food_section.filter((_, idx) => (idx !== index))
+      food_section: prev?.food_section.filter((_, idx) => (idx !== index))
     }));
 
     // COUNT 설정
     setCOUNT((prev) => ({
       ...prev,
-      newSectionCnt: prev.newSectionCnt - 1,
+      newSectionCnt: prev?.newSectionCnt - 1,
     }));
   };
 
@@ -620,7 +592,7 @@ export const FoodSave = () => {
                 const newPart = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_part_idx: newPart,
@@ -662,7 +634,7 @@ export const FoodSave = () => {
                 }
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_count: newCount,
@@ -686,7 +658,7 @@ export const FoodSave = () => {
                 const newGram = Number(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_gram: newGram,
@@ -711,7 +683,7 @@ export const FoodSave = () => {
                 const newVal = String(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_name: newVal,
@@ -731,7 +703,7 @@ export const FoodSave = () => {
                 const newVal = String(e.target.value);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_brand: newVal,
@@ -769,7 +741,7 @@ export const FoodSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 99999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_kcal: limitedValue,
@@ -804,7 +776,7 @@ export const FoodSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 99999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_carb: limitedValue,
@@ -842,7 +814,7 @@ export const FoodSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 99999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_protein: limitedValue,
@@ -877,7 +849,7 @@ export const FoodSave = () => {
                 const limitedValue = Math.min(Number(rawValue), 99999);
                 setOBJECT((prev) => ({
                   ...prev,
-                  food_section: prev.food_section?.map((item, idx) => (
+                  food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
                       food_fat: limitedValue,

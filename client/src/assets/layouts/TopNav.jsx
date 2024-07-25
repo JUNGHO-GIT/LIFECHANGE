@@ -3,6 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {TextField, Tabs, Tab, tabsClasses, Paper, Grid} from "../../import/ImportMuis.jsx";
 import {Card, Menu, MenuItem} from "../../import/ImportMuis.jsx";
@@ -26,32 +27,81 @@ export const TopNav = () => {
   const dateEnd = property?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
   const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [value, setValue] = useState("analyzeTabs");
-  const [selectedTab, setSelectedTab] = useState(value);
+  const [selectedTab, setSelectedTab] = useState("analyzeTabs");
   const [selectedMenuItem, setSelectedMenuItem] = useState("chartList");
   const [anchorAnalyze, setAnchorAnalyze] = useState(null);
   const [anchorGoal, setAnchorGoal] = useState(null);
   const [anchorReal, setAnchorReal] = useState(null);
-  const [smileIcon, setSmileIcon] = useState("");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
   useEffect(() => {
+    // 1. calendar
     if (firstStr === "calendar") {
-      setValue("list");
+      if (secondStr === "list") {
+        setSelectedTab("listTabs");
+      }
+      else if (secondStr === "save") {
+        setSelectedTab("saveTabs");
+      }
     }
-    else {
-      setValue("analyzeTabs");
-      setSelectedTab("analyzeTabs");
-      setSelectedMenuItem("chartList");
-      setAnchorAnalyze(null);
-      setAnchorGoal(null);
-      setAnchorReal(null);
+    // 2. today
+    else if (firstStr === "today") {
+      if (secondStr === "chart" && thirdStr === "list") {
+        setSelectedTab("analyzeTabs");
+        setSelectedMenuItem("chartList");
+      }
+      else if (secondStr === "diff" && thirdStr === "list") {
+        setSelectedTab("analyzeTabs");
+        setSelectedMenuItem("diffList");
+      }
+      else if (secondStr === "goal" && thirdStr === "list") {
+        setSelectedTab("goalTabs");
+        setSelectedMenuItem("goalList");
+      }
+      else if (secondStr === "list") {
+        setSelectedTab("realTabs");
+        setSelectedMenuItem("realList");
+      }
     }
-  }, [firstStr]);
+    // 3. exercise, food, money, sleep
+    else if (
+      firstStr === "exercise" ||
+      firstStr === "food" ||
+      firstStr === "money" ||
+      firstStr === "sleep"
+    ) {
+      if (secondStr === "chart" && thirdStr === "list") {
+        setSelectedTab("analyzeTabs");
+        setSelectedMenuItem("chartList");
+      }
+      else if (secondStr === "diff" && thirdStr === "list") {
+        setSelectedTab("analyzeTabs");
+        setSelectedMenuItem("diffList");
+      }
+      else if (secondStr === "goal" && thirdStr === "list") {
+        setSelectedTab("goalTabs");
+        setSelectedMenuItem("goalList");
+      }
+      else if (secondStr === "goal" && thirdStr === "save") {
+        setSelectedTab("goalTabs");
+        setSelectedMenuItem("goalSave");
+      }
+      else if (secondStr === "list") {
+        setSelectedTab("realTabs");
+        setSelectedMenuItem("realList");
+      }
+      else if (secondStr === "save") {
+        setSelectedTab("realTabs");
+        setSelectedMenuItem("realSave");
+      }
+    }
+  }, [firstStr, secondStr, thirdStr]);
 
   // 4. smileNode ----------------------------------------------------------------------------------
   const smileNode = () => {
@@ -297,7 +347,7 @@ export const TopNav = () => {
     (firstStr === "today") ? (
       <>
         <Tabs
-          value={value}
+          value={selectedTab}
           variant={"scrollable"}
           selectionFollowsFocus={true}
           scrollButtons={false}
@@ -305,42 +355,40 @@ export const TopNav = () => {
             [`& .${tabsClasses.scrollButtons}`]: {
               '&.Mui-disabled': { opacity: 0.3 },
             },
-          }}
-          onChange={(event, newValue) => {
-            if (newValue === "analyzeTabs") {
-              setSelectedTab(newValue);
-            }
-            else {
-              setValue(newValue);
-              navigate(`${firstStr}/${newValue}`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD")
-                }
-              });
-            }
           }}>
           <Tab
             label={translate("analyzeTabs")}
             value={"analyzeTabs"}
             onClick={(e) => {
-              // @ts-ignore
               setAnchorAnalyze(e.currentTarget);
             }}
           />
           <Tab
-            label={translate("goal")}
-            value={"goal/list"}
-            onClick={() => {
-              setValue("goal/list");
+            label={translate("goalTabs")}
+            value={"goalTabs"}
+            onClick={(e) => {
+              setSelectedTab("goalTabs");
+              navigate(`${firstStr}/goal/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
             }}
           />
           <Tab
-            label={translate("real")}
-            value={"list"}
-            onClick={() => {
-              setValue("list");
+            label={translate("realTabs")}
+            value={"realTabs"}
+            onClick={(e) => {
+              setSelectedTab("realTabs");
+              navigate(`${firstStr}/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
             }}
           />
         </Tabs>
@@ -352,10 +400,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "chartList"}
             onClick={() => {
-              setAnchorAnalyze(null);
               setSelectedTab("analyzeTabs");
               setSelectedMenuItem("chartList");
-              setValue("analyzeTabs");
+              setAnchorAnalyze(null);
               navigate(`${firstStr}/chart/list`, {
                 state: {
                   dateType: "day",
@@ -370,10 +417,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "diffList"}
             onClick={() => {
-              setAnchorAnalyze(null);
               setSelectedTab("analyzeTabs");
               setSelectedMenuItem("diffList");
-              setValue("analyzeTabs");
+              setAnchorAnalyze(null);
               navigate(`${firstStr}/diff/list`, {
                 state: {
                   dateType: "day",
@@ -387,10 +433,11 @@ export const TopNav = () => {
           </MenuItem>
         </Menu>
       </>
-    ) : (firstStr === "calendar") ? (
+    )
+    : (firstStr === "calendar") ? (
       <>
         <Tabs
-          value={value}
+          value={selectedTab}
           variant={"scrollable"}
           selectionFollowsFocus={true}
           scrollButtons={false}
@@ -398,34 +445,39 @@ export const TopNav = () => {
             [`& .${tabsClasses.scrollButtons}`]: {
               '&.Mui-disabled': { opacity: 0.3 },
             },
-          }}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            navigate(`${firstStr}/${newValue}`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD")
-              }
-            });
           }}>
           <Tab
-            label={translate("list")}
-            value={"list"}
-            onClick={() => {
-              setValue("list");
+            label={translate("listTabs")}
+            value={"listTabs"}
+            onClick={(e) => {
+              setSelectedTab("listTabs");
+              navigate(`${firstStr}/list`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
             }}
           />
           <Tab
-            label={translate("save")}
-            value={"save"}
-            onClick={() => {
-              setValue("save");
+            label={translate("saveTabs")}
+            value={"saveTabs"}
+            onClick={(e) => {
+              setSelectedTab("saveTabs");
+              navigate(`${firstStr}/save`, {
+                state: {
+                  dateType: "day",
+                  dateStart: moment().format("YYYY-MM-DD"),
+                  dateEnd: moment().format("YYYY-MM-DD"),
+                },
+              });
             }}
           />
         </Tabs>
       </>
-    ) : (
+    )
+    : (
       <>
         <Tabs
           value={selectedTab}
@@ -437,15 +489,11 @@ export const TopNav = () => {
               "&.Mui-disabled": { opacity: 0.3 },
             },
           }}
-          onChange={(event, newValue) => {
-            // setSelectedTab(newValue);
-          }}
         >
           <Tab
             label={translate("analyzeTabs")}
             value={"analyzeTabs"}
             onClick={(e) => {
-              // @ts-ignore
               setAnchorAnalyze(e.currentTarget);
             }}
           />
@@ -453,7 +501,6 @@ export const TopNav = () => {
             label={translate("goalTabs")}
             value={"goalTabs"}
             onClick={(e) => {
-              // @ts-ignore
               setAnchorGoal(e.currentTarget);
             }}
           />
@@ -461,7 +508,6 @@ export const TopNav = () => {
             label={translate("realTabs")}
             value={"realTabs"}
             onClick={(e) => {
-              // @ts-ignore
               setAnchorReal(e.currentTarget);
             }}
           />
@@ -474,10 +520,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "chartList"}
             onClick={() => {
-              setAnchorAnalyze(null);
               setSelectedTab("analyzeTabs");
               setSelectedMenuItem("chartList");
-              setValue("analyzeTabs");
+              setAnchorAnalyze(null);
               navigate(`${firstStr}/chart/list`, {
                 state: {
                   dateType: "day",
@@ -492,10 +537,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "diffList"}
             onClick={() => {
-              setAnchorAnalyze(null);
               setSelectedTab("analyzeTabs");
               setSelectedMenuItem("diffList");
-              setValue("analyzeTabs");
+              setAnchorAnalyze(null);
               navigate(`${firstStr}/diff/list`, {
                 state: {
                   dateType: "day",
@@ -516,10 +560,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "goalList"}
             onClick={() => {
-              setAnchorGoal(null);
               setSelectedTab("goalTabs");
               setSelectedMenuItem("goalList");
-              setValue("goalTabs");
+              setAnchorGoal(null);
               navigate(`${firstStr}/goal/list`, {
                 state: {
                   dateType: "day",
@@ -534,10 +577,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "goalSave"}
             onClick={() => {
-              setAnchorGoal(null);
               setSelectedTab("goalTabs");
               setSelectedMenuItem("goalSave");
-              setValue("goalTabs");
+              setAnchorGoal(null);
               navigate(`${firstStr}/goal/save`, {
                 state: {
                   dateType: "day",
@@ -559,10 +601,9 @@ export const TopNav = () => {
             <MenuItem
               selected={selectedMenuItem === "findList"}
               onClick={() => {
-                setAnchorReal(null);
                 setSelectedTab("realTabs");
                 setSelectedMenuItem("findList");
-                setValue("realTabs");
+                setAnchorReal(null);
                 navigate(`${firstStr}/find`, {
                   state: {
                     dateType: "day",
@@ -578,10 +619,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "realList"}
             onClick={() => {
-              setAnchorReal(null);
               setSelectedTab("realTabs");
               setSelectedMenuItem("realList");
-              setValue("realTabs");
+              setAnchorReal(null);
               navigate(`${firstStr}/list`, {
                 state: {
                   dateType: "day",
@@ -596,10 +636,9 @@ export const TopNav = () => {
           <MenuItem
             selected={selectedMenuItem === "realSave"}
             onClick={() => {
-              setAnchorReal(null);
               setSelectedTab("realTabs");
               setSelectedMenuItem("realSave");
-              setValue("realTabs");
+              setAnchorReal(null);
               navigate(`${firstStr}/save`, {
                 state: {
                   dateType: "day",
