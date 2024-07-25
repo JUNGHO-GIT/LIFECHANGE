@@ -61,6 +61,7 @@ export const FindFilter = ({
       className={"w-20 h-20 black"}
       onClick={() => {
         Object.assign(objects?.SEND, {
+          isSession: true,
           dateType: objects?.DATE.dateType,
           dateStart: objects?.DATE.dateStart,
           dateEnd: objects?.DATE.dateEnd

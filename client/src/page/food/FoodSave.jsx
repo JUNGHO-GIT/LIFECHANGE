@@ -3,7 +3,7 @@
 import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
@@ -23,6 +23,7 @@ export const FoodSave = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
+  const location_isSession = location?.state?.isSession;
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
@@ -32,6 +33,7 @@ export const FoodSave = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [isSession, setIsSession] = useState(false);
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
   const [DATE, setDATE] = useState({
@@ -53,7 +55,7 @@ export const FoodSave = () => {
     sectionCnt: 0,
     newSectionCnt: 0
   });
-
+  
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
     _id: "",
@@ -80,8 +82,8 @@ export const FoodSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
+  
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
     food_part_idx: false,
     food_name: false,
@@ -97,7 +99,43 @@ export const FoodSave = () => {
     food_carb: createRef(),
     food_protein: createRef(),
     food_fat: createRef(),
-  })));
+  })))
+  
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  const newWindowRef = useRef(null);
+  const timerRef = useRef(null);
+  useEffect(() => {
+    // 이전 타이머를 지우고 새 타이머 설정
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    timerRef.current = setTimeout(() => {
+      if (newWindowRef.current) {
+        newWindowRef.current.close();
+      }
+
+      const jsonStr = JSON.stringify(OBJECT, null, 2);
+      newWindowRef.current = window.open("", "_blank", "width=600,height=400");
+
+      if (newWindowRef.current) {
+        newWindowRef.current.document.write("<pre>" + jsonStr + "</pre>");
+        newWindowRef.current.document.close();
+      } else {
+        alert("Unable to open new window. Please check your browser's popup settings.");
+      }
+    }, 500); // 500ms 동안 추가 변경이 없으면 실행
+
+    // 컴포넌트 언마운트 시 타이머와 창 정리
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      if (newWindowRef.current) {
+        newWindowRef.current.close();
+      }
+    };
+  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {

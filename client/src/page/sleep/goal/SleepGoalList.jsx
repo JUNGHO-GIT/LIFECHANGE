@@ -165,11 +165,17 @@ export const SleepGoalList = () => {
                           <Div className={"fs-1-2rem fw-600"}>
                             {item.sleep_goal_dateStart?.substring(5, 10)}
                           </Div>
-                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.sleep_goal_dateStart).format("ddd")}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                             ~
                           </Div>
                           <Div className={"fs-1-2rem fw-600"}>
                             {item.sleep_goal_dateEnd?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.food_dateEnd).format("ddd")}
                           </Div>
                         </>
                       )}

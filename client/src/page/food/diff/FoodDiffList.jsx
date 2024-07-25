@@ -147,7 +147,7 @@ export const FoodDiffList = () => {
                   <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("food")}
+                        {translate("food")} 
                       </Div>
                     </Div>
                   </Grid>
@@ -169,11 +169,17 @@ export const FoodDiffList = () => {
                           <Div className={"fs-1-2rem fw-600"}>
                             {item.food_goal_dateStart?.substring(5, 10)}
                           </Div>
-                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.food_goal_dateStart).format("ddd")}
+                          </Div>
+                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                             ~
                           </Div>
                           <Div className={"fs-1-2rem fw-600"}>
                             {item.food_goal_dateEnd?.substring(5, 10)}
+                          </Div>
+                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                            {moment(item.food_goal_dateEnd).format("ddd")}
                           </Div>
                         </>
                       )}

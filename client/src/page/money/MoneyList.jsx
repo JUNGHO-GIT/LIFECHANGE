@@ -172,7 +172,7 @@ export const MoneyList = () => {
                           <Div className={"fs-1-2rem fw-600"}>
                             {item.money_dateStart?.substring(5, 10)}
                           </Div>
-                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                             ~
                           </Div>
                           <Div className={"fs-1-2rem fw-600"}>
