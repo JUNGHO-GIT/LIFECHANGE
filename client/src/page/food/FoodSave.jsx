@@ -74,15 +74,15 @@ export const FoodSave = () => {
       food_serv: "회",
       food_gram: 0,
       food_kcal: 0,
-      food_fat: 0,
       food_carb: 0,
       food_protein: 0,
+      food_fat: 0,
+      food_carb_percent: 0,
+      food_protein_percent: 0,
+      food_fat_percent: 0,
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-  // const {val: OBJECT, set: setOBJECT} = useStorage(
-  //   `OBJECT(${PATH})`, OBJECT_DEF
-  // );
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
@@ -192,6 +192,29 @@ export const FoodSave = () => {
       setLOADING(false);
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    const updatedFoodSection 
+    = OBJECT.food_section.map(section => {
+      if (section.food_kcal > 0) {
+        return {
+          ...section,
+          food_carb_percent: (section.food_carb * 4 / section.food_kcal) * 100,
+          food_protein_percent: (section.food_protein * 4 / section.food_kcal) * 100,
+          food_fat_percent: (section.food_fat * 9 / section.food_kcal) * 100,
+        };
+      }
+      else {
+        return section;
+      }
+    });
+
+    setOBJECT((prev) => ({
+        ...prev,
+        food_section: updatedFoodSection
+    }));
+  }, [OBJECT.food_section]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
