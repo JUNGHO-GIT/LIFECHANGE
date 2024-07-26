@@ -184,6 +184,7 @@ export const useTranslate = () => {
     language: {ko: "언어", en: "Language"},
     lastLogin: {ko: "최근 로그인", en: "Last Login"},
     list: {ko: "리스트", en: "List"},
+    listTabs: {ko: "리스트", en: "List"},
     login: {ko: "로그인", en: "Login"},
     logout: {ko: "로그아웃", en: "Logout"},
     lunch: {ko: "점심", en: "Lunch"},
@@ -242,6 +243,7 @@ export const useTranslate = () => {
     // s
     s: {ko: "set", en: "set"},
     save: {ko: "저장", en: "Save"},
+    saveTabs: {ko: "저장", en: "Save"},
     saveAll: {ko: "전체저장", en: "Save All"},
     score: {ko: "* 평균점수 : 1.00 ~ 5.00", en: "* Average score : 1.00 ~ 5.00"},
     select: {ko: "선택별", en: "Select"},

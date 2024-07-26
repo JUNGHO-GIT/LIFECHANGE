@@ -2,7 +2,7 @@
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {Icons} from "../../../import/ImportComponents.jsx";
+import {Icons, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -36,6 +36,15 @@ export const FindFilter = ({
           query: e.target.value
         }));
       }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          handlers.flowFind();
+          functions?.setPAGING((prev) => ({
+            ...prev,
+            page: 0
+          }));
+        }
+      }}
     />
   );
 
@@ -44,7 +53,7 @@ export const FindFilter = ({
     <Icons
       name={"TbSearch"}
       className={"w-20 h-20 black"}
-      onClick={async () => {
+      onClick={() => {
         handlers.flowFind();
         functions?.setPAGING((prev) => ({
           ...prev,

@@ -334,7 +334,7 @@ export const SleepGoalSave = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
         <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {tableSection()}

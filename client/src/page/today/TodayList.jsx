@@ -4,8 +4,8 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br30, Br20, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Div, Hr30, Br30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
 import {exercise3_1, exercise4, exercise5} from "../../import/ImportImages.jsx";
@@ -32,6 +32,9 @@ export const TodayList = () => {
   const location_dateStart = location?.state?.dateStart;
   const location_dateEnd = location?.state?.dateEnd;
   const PATH = location?.pathname;
+  const firstStr = PATH?.split("/")[1] || "";
+  const secondStr = PATH?.split("/")[2] || "";
+  const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -875,10 +878,31 @@ export const TodayList = () => {
     );
   };
 
+  // 9. footer -------------------------------------------------------------------------------------
+  const footerNode = () => (
+    <Footer
+      strings={{
+        first: firstStr,
+        second: secondStr,
+        third: thirdStr,
+      }}
+      objects={{
+        DATE, SEND
+      }}
+      functions={{
+        setDATE, setSEND
+      }}
+      handlers={{
+        navigate
+      }}
+    />
+  );
+
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {tableNode()}
+      {footerNode()}
     </>
   );
 };

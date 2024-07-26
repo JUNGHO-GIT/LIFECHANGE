@@ -192,10 +192,10 @@ export const FoodSave = () => {
       setLOADING(false);
     });
   })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
-  
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const updatedFoodSection 
+    const updatedFoodSection
     = OBJECT.food_section.map(section => {
       if (section.food_kcal > 0) {
         return {
@@ -255,6 +255,9 @@ export const FoodSave = () => {
       food_fat: 0,
       food_carb: 0,
       food_protein: 0,
+      food_carb_percent: 0,
+      food_protein_percent: 0,
+      food_fat_percent: 0,
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
       idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
@@ -892,7 +895,7 @@ export const FoodSave = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-50"}>
+      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
         <Div className={"block-wrapper h-min75vh"}>
           {dateCountSection()}
           {totalSection()}
