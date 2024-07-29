@@ -33,8 +33,8 @@ export const MoneyList = () => {
   const [LOADING, setLOADING] = useState(false);
   const [DATE, setDATE] = useState({
     dateType: "",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd,
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
   const [SEND, setSEND] = useState({
     id: "",

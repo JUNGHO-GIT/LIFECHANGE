@@ -44,8 +44,8 @@ export const UserDataCategory = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd,
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
   const [idx, setIdx] = useState({
     category1Idx: 0,

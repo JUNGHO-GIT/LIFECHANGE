@@ -31,7 +31,7 @@ export const FindFilter = ({
         className: "h-min0 h-30",
       }}
       onChange={(e) => {
-        functions?.setPAGING((prev={}) => ({
+        functions?.setPAGING((prev) => ({
           ...prev,
           query: e.target.value
         }));
@@ -43,6 +43,7 @@ export const FindFilter = ({
             ...prev,
             page: 0
           }));
+          window.scrollTo(0, 0);
         }
       }}
     />
@@ -59,6 +60,7 @@ export const FindFilter = ({
           ...prev,
           page: 0
         }));
+        window.scrollTo(0, 0);
       }}
     />
   );

@@ -28,7 +28,7 @@ export const ListFilter = ({
         className: "h-min0 h-4vh"
       }}
       onChange={(e) => (
-        functions?.setPAGING((prev={}) => ({
+        functions?.setPAGING((prev) => ({
           ...prev,
           sort: e.target.value
         }))

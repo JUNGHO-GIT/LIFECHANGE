@@ -75,7 +75,7 @@ export const Picker = ({
         }}
         onChange={(e) => {
           if (e.target.value === "day") {
-            setDATE((prev={}) => ({
+            setDATE((prev) => ({
               ...prev,
               dateType: "day",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -83,7 +83,7 @@ export const Picker = ({
             }));
           }
           else if (e.target.value === "week") {
-            setDATE((prev={}) => ({
+            setDATE((prev) => ({
               ...prev,
               dateType: "week",
               dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
@@ -91,7 +91,7 @@ export const Picker = ({
             }));
           }
           else if (e.target.value === "month") {
-            setDATE((prev={}) => ({
+            setDATE((prev) => ({
               ...prev,
               dateType: "month",
               dateStart: moment().startOf("month").format("YYYY-MM-DD"),
@@ -99,7 +99,7 @@ export const Picker = ({
             }));
           }
           else if (e.target.value === "year") {
-            setDATE((prev={}) => ({
+            setDATE((prev) => ({
               ...prev,
               dateType: "year",
               dateStart: moment().startOf("year").format("YYYY-MM-DD"),
@@ -107,7 +107,7 @@ export const Picker = ({
             }));
           }
           else if (e.target.value === "select") {
-            setDATE((prev={}) => ({
+            setDATE((prev) => ({
               ...prev,
               dateType: "select",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -168,7 +168,7 @@ export const Picker = ({
                       selected={isSelected}
                       outsideCurrentMonth={outsideCurrentMonth}
                       onDaySelect={(day) => {
-                        setDATE((prev={}) => ({
+                        setDATE((prev) => ({
                           ...prev,
                           dateStart: moment(day).format("YYYY-MM-DD"),
                           dateEnd: moment(day).format("YYYY-MM-DD")
@@ -298,7 +298,7 @@ export const Picker = ({
                         boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
                       }}
                       onDaySelect={(day) => {
-                        setDATE((prev={}) => ({
+                        setDATE((prev) => ({
                           ...prev,
                           dateStart: moment(day).startOf("isoWeek").format("YYYY-MM-DD"),
                           dateEnd: moment(day).endOf("isoWeek").format("YYYY-MM-DD")
@@ -624,14 +624,14 @@ export const Picker = ({
                           DATE.dateEnd ||
                           moment(day).isBefore(DATE.dateStart)
                         ) {
-                          setDATE((prev={}) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: moment(day).format("YYYY-MM-DD"),
                             dateEnd: ""
                           }));
                         }
                         else {
-                          setDATE((prev={}) => ({
+                          setDATE((prev) => ({
                             ...prev,
                             dateStart: prev.dateStart,
                             dateEnd: moment(day).format("YYYY-MM-DD")

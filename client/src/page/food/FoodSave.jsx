@@ -3,10 +3,10 @@
 import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
 import {percent, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
+import {Div, Br20} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../import/ImportImages.jsx";
@@ -36,8 +36,8 @@ export const FoodSave = () => {
   const [EXIST, setEXIST] = useState([""]);
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
   const [SEND, setSEND] = useState({
     id: "",
@@ -77,9 +77,6 @@ export const FoodSave = () => {
       food_carb: 0,
       food_protein: 0,
       food_fat: 0,
-      food_carb_percent: 0,
-      food_protein_percent: 0,
-      food_fat_percent: 0,
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -101,6 +98,12 @@ export const FoodSave = () => {
     food_protein: createRef(),
     food_fat: createRef(),
   })));
+
+  useEffect(() => {
+    console.log("===================================");
+    log("OBJECT", OBJECT);
+    console.log("===================================");
+  }, [OBJECT]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -195,29 +198,6 @@ export const FoodSave = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    const updatedFoodSection
-    = OBJECT.food_section.map(section => {
-      if (section.food_kcal > 0) {
-        return {
-          ...section,
-          food_carb_percent: (section.food_carb * 4 / section.food_kcal) * 100,
-          food_protein_percent: (section.food_protein * 4 / section.food_kcal) * 100,
-          food_fat_percent: (section.food_fat * 9 / section.food_kcal) * 100,
-        };
-      }
-      else {
-        return section;
-      }
-    });
-
-    setOBJECT((prev) => ({
-        ...prev,
-        food_section: updatedFoodSection
-    }));
-  }, [OBJECT.food_section]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     const totals = OBJECT?.food_section?.reduce((acc, cur) => {
       return {
         totalKcal: acc.totalKcal + Number(cur.food_kcal),
@@ -255,9 +235,6 @@ export const FoodSave = () => {
       food_fat: 0,
       food_carb: 0,
       food_protein: 0,
-      food_carb_percent: 0,
-      food_protein_percent: 0,
-      food_fat_percent: 0,
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
       idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
@@ -637,25 +614,19 @@ export const FoodSave = () => {
               ))}
             </TextField>
             <TextField
-              select={false}
+              select={true}
               label={translate("foodCount")}
               size={"small"}
               type={"text"}
               variant={"outlined"}
               className={"w-20vw ms-3vw"}
-              value={Math.min(OBJECT?.food_section[i]?.food_count, 9999)}
-              InputProps={{
-                readOnly: false
-              }}
+              value={Math.min(OBJECT?.food_section[i]?.food_count, 100)}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
-                if (newCount > 9999) {
+                if (newCount > 100) {
                   return;
                 }
-                if (isNaN(newCount) || newCount < 0) {
-                  return;
-                }
-                else if (newCount === 0) {
+                else if (isNaN(newCount) || newCount <= 0) {
                   return;
                 }
                 setOBJECT((prev) => ({
@@ -672,7 +643,13 @@ export const FoodSave = () => {
                   ))
                 }));
               }}
-            />
+            >
+              {Array.from({ length: 100 }, (_, index) => (
+                <MenuItem key={index + 1} value={index + 1}>
+                  {index + 1}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               select={false}
               label={translate("gram")}

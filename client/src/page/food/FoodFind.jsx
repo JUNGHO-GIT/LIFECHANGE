@@ -43,8 +43,8 @@ export const FoodFind = () => {
   const [LOADING, setLOADING] = useState(false);
   const [DATE, setDATE] = useState({
     dateType: "",
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd,
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
   const [SEND, setSEND] = useState({
     id: "",
@@ -61,6 +61,7 @@ export const FoodFind = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = [{
+    food_query: "",
     food_perNumber: 1,
     food_part_idx: 1,
     food_part_val: "breakfast",
@@ -100,7 +101,14 @@ export const FoodFind = () => {
     }
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const newChecked = OBJECT.map((item) => (
-      sectionArray.some((sectionItem) => sectionItem.food_name === item.food_name)
+      sectionArray.some((sectionItem) => (
+        sectionItem.food_name === item.food_name &&
+        sectionItem.food_gram === item.food_gram &&
+        sectionItem.food_kcal === item.food_kcal &&
+        sectionItem.food_carb === item.food_carb &&
+        sectionItem.food_protein === item.food_protein &&
+        sectionItem.food_fat === item.food_fat
+      ))
     ));
     setCheckedQueries({
       ...checkedQueries,
@@ -130,6 +138,7 @@ export const FoodFind = () => {
     OBJECT.forEach((item, index) => {
       if (pageChecked[index]) {
         if (!sectionArray.some((i) => (
+          i.food_name === item.food_name &&
           i.food_gram === item.food_gram &&
           i.food_kcal === item.food_kcal &&
           i.food_carb === item.food_carb &&
@@ -141,6 +150,7 @@ export const FoodFind = () => {
       }
       else {
         sectionArray = sectionArray.filter((i) => !(
+          i.food_name === item.food_name &&
           i.food_gram === item.food_gram &&
           i.food_kcal === item.food_kcal &&
           i.food_carb === item.food_carb &&
@@ -153,7 +163,7 @@ export const FoodFind = () => {
     // sessionStorage에 저장
     sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
 
-  }, [checkedQueries, PAGING.page, PAGING.query, OBJECT]);
+  }, [checkedQueries, PAGING.page, OBJECT]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
@@ -171,6 +181,9 @@ export const FoodFind = () => {
         ...prev,
         totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
       }));
+      // Accordion 초기값 설정
+      setIsExpanded(res.data.result.map((_, index) => (index)));
+      // setIsExpanded([]);
     })
     .catch((err) => {
       console.error(err);
@@ -181,6 +194,7 @@ export const FoodFind = () => {
   };
 
   // 4. handler ------------------------------------------------------------------------------------
+  // 체크박스 변경 시
   const handlerCheckboxChange = (index) => {
     const queryKey = `${PAGING.query}_${PAGING.page}`;
     const updatedChecked = [...(checkedQueries[queryKey] || [])];

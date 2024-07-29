@@ -49,8 +49,8 @@ export const ExerciseSave = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: location_dateType,
-    dateStart: location_dateStart,
-    dateEnd: location_dateEnd
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

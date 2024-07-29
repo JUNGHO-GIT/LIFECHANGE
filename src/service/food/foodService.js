@@ -163,6 +163,7 @@ export const find = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
+        food_query: query,
         food_perNumber: page * 10 + tableIndex * rows.length + rowIndex + 1,
         food_part_idx: 1,
         food_part_val: "breakfast",
