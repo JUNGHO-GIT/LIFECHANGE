@@ -2,7 +2,7 @@
 set -e
 
 # cd
-cd /var/www/html
+cd ~/Work/JPAGE/client
 status=$?
 if [ $status -eq 0 ]; then
   echo "cd : success"
@@ -11,6 +11,16 @@ else
   exit $status
 fi
 
+# build
+npm run build
+status=$?
+if [ $status -eq 0 ]; then
+  echo "build : success"
+else
+  echo "build : fail"
+  exit $status
+fi
+
 # rm
 rm -rf build.tar.gz
 status=$?
@@ -21,18 +31,8 @@ else
   exit $status
 fi
 
-# wget
-wget https://storage.googleapis.com/jungho-bucket/JPAGE/SERVER/build.tar.gz
-status=$?
-if [ $status -eq 0 ]; then
-  echo "wget : success"
-else
-  echo "wget : fail"
-  exit $status
-fi
-
 # tar
-tar -zxvf build.tar.gz
+tar -zcvf build.tar.gz build
 status=$?
 if [ $status -eq 0 ]; then
   echo "tar : success"
@@ -41,22 +41,22 @@ else
   exit $status
 fi
 
-# rm
-rm -rf build.tar.gz
+# gsutil cp
+gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz
 status=$?
 if [ $status -eq 0 ]; then
-  echo "rm : success"
+  echo "gsutil cp : success"
 else
-  echo "rm : fail"
+  echo "gsutil cp : fail"
   exit $status
 fi
 
-# httpd restart
-sudo systemctl restart httpd
+# enter cloud
+ssh -i ~/ssh/jungho123 jungho123@34.23.233.23 "sudo sh /client.sh"
 status=$?
 if [ $status -eq 0 ]; then
-  echo "httpd restart : success"
+  echo "gsutil : success"
 else
-  echo "httpd restart : fail"
+  echo "gsutil : fail"
   exit $status
 fi
