@@ -14,10 +14,8 @@ fi
 # env 파일 수정하기
 if [ -f ".env" ]; then
   cp .env .env.bak
-
   sed -i 's|^CLIENT_URL=.*|CLIENT_URL=https://www.junghomun.com|' .env
   sed -i 's|^GOOGLE_CALLBACK_URL=.*|GOOGLE_CALLBACK_URL=https://www.junghomun.com/api/google/callback|' .env
-
   echo ".env modification : success"
 else
   echo ".env modification : .env file not found"
@@ -36,16 +34,6 @@ else
   exit $status
 fi
 
-# run script on server
-ssh -i ~/.ssh/JKEY junghomun00@34.23.233.23 'sudo sh /server.sh'
-status=$?
-if [ $status -eq 0 ]; then
-  echo "Remote script execution : success"
-else
-  echo "Remote script execution : fail"
-  exit $status
-fi
-
 # env 파일 복구하기
 if [ -f ".env.bak" ]; then
   mv .env.bak .env
@@ -53,4 +41,14 @@ if [ -f ".env.bak" ]; then
 else
   echo ".env restore : backup file not found"
   exit 1
+fi
+
+# run script on server
+ssh -i ~/ssh/jungho123 jungho123@34.23.233.23 'sudo sh /server.sh'
+status=$?
+if [ $status -eq 0 ]; then
+  echo "Remote script execution : success"
+else
+  echo "Remote script execution : fail"
+  exit $status
 fi
