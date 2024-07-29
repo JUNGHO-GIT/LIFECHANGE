@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
-const os = require('os'); // OS 모듈을 불러옵니다.
+const os = require('os');
 
 // env 파일 수정하기
 const modifyEnv = () => {
@@ -14,7 +14,7 @@ const modifyEnv = () => {
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}${os.EOL}`; // OS에 맞는 줄바꿈 문자를 사용합니다.
+    return `${acc}${key}=${envConfig[key]}${os.EOL}`;
   }, '');
 
   writeFileSync('.env', newEnvFile);
@@ -44,7 +44,7 @@ const restoreEnv = () => {
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
-    return `${acc}${key}=${envConfig[key]}${os.EOL}`; // OS에 맞는 줄바꿈 문자를 사용합니다.
+    return `${acc}${key}=${envConfig[key]}${os.EOL}`;
   }, '');
 
   writeFileSync('.env', newEnvFile);
