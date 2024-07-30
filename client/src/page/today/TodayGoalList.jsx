@@ -211,11 +211,30 @@ export const TodayGoalList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-exercise"}>
-          <Div className={"d-center"}>
-            {translate("exercise")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Icons
+                name={"TbSearch"}
+                className={"w-18 h-18 black"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    dateType: DATE.dateType,
+                    dateStart: DATE.dateStart,
+                    dateEnd: DATE.dateEnd,
+                  });
+                  navigate(SEND.toExerciseGoal, {
+                    state: SEND
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={10} className={"d-left"}>
+              {translate("exercise")}
+              <Div className={"ms-1vw me-1vw"} />
+              {translate("empty")}
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -391,11 +410,30 @@ export const TodayGoalList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-food"}>
-          <Div className={"d-center"}>
-            {translate("food")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Icons
+                name={"TbSearch"}
+                className={"w-18 h-18 black"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    dateType: DATE.dateType,
+                    dateStart: DATE.dateStart,
+                    dateEnd: DATE.dateEnd,
+                  });
+                  navigate(SEND.toFoodGoal, {
+                    state: SEND
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={10} className={"d-left"}>
+              {translate("food")}
+              <Div className={"ms-1vw me-1vw"} />
+              {translate("empty")}
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -571,11 +609,30 @@ export const TodayGoalList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-money"}>
-          <Div className={"d-center"}>
-            {translate("money")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Icons
+                name={"TbSearch"}
+                className={"w-18 h-18 black"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    dateType: DATE.dateType,
+                    dateStart: DATE.dateStart,
+                    dateEnd: DATE.dateEnd,
+                  });
+                  navigate(SEND.toMoneyGoal, {
+                    state: SEND
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={10} className={"d-left"}>
+              {translate("money")}
+              <Div className={"ms-1vw me-1vw"} />
+              {translate("empty")}
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -707,11 +764,30 @@ export const TodayGoalList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-sleep"}>
-          <Div className={"d-center"}>
-            {translate("sleep")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Icons
+                name={"TbSearch"}
+                className={"w-18 h-18 black"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    dateType: DATE.dateType,
+                    dateStart: DATE.dateStart,
+                    dateEnd: DATE.dateEnd,
+                  });
+                  navigate(SEND.toSleepGoal, {
+                    state: SEND
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={10} className={"d-left"}>
+              {translate("sleep")}
+              <Div className={"ms-1vw me-1vw"} />
+              {translate("empty")}
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
