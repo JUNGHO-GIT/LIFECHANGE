@@ -48,6 +48,7 @@ export const UserDataDetail = () => {
     user_height: "",
     user_weight: "",
     user_image: "",
+    user_initProperty: "",
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -58,12 +59,14 @@ export const UserDataDetail = () => {
     user_gender: false,
     user_height: false,
     user_weight: false,
+    user_initProperty: false,
   });
   const REFS = useRef({
     user_age: createRef(),
     user_gender: createRef(),
     user_height: createRef(),
     user_weight: createRef(),
+    user_initProperty: createRef(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -101,6 +104,7 @@ export const UserDataDetail = () => {
       user_gender: false,
       user_height: false,
       user_weight: false,
+      user_initProperty: false,
     };
     const refsCurrent = REFS?.current;
 
@@ -134,6 +138,13 @@ export const UserDataDetail = () => {
       refsCurrent.user_weight.current &&
       refsCurrent.user_weight.current?.focus();
       initialErrors.user_weight = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
+      alert(translate("errorUserIniyProperty"));
+      refsCurrent.user_initProperty.current &&
+      refsCurrent.user_initProperty.current?.focus();
+      initialErrors.user_initProperty = true;
       foundError = true;
     }
 
@@ -223,7 +234,7 @@ export const UserDataDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-          <Br10 />
+          <Br20 />
           {/** 1 ~ 100 **/}
           <TextField
             select={true}
@@ -247,7 +258,7 @@ export const UserDataDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-          <Br10 />
+          <Br20 />
           {/** 100cm ~ 200cm **/}
           <TextField
             select={true}
@@ -271,7 +282,7 @@ export const UserDataDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-          <Br10 />
+          <Br20 />
           {/** 30kg ~ 200kg **/}
           <TextField
             select={true}
@@ -295,7 +306,30 @@ export const UserDataDetail = () => {
               </MenuItem>
             ))}
           </TextField>
-          <Br10 />
+          <Br20 />
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("initProperty")}
+            value={OBJECT.user_initProperty}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_initProperty}
+            error={ERRORS.user_initProperty}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_initProperty: e.target.value
+              }))
+            )}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
         </Div>
       );
       return (

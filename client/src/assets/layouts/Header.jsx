@@ -2,6 +2,7 @@
 
 import {React, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {Div, Img, Icons} from "../../import/ImportComponents.jsx";
+import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {logo2, logo3} from "../../import/ImportImages.jsx";
 
@@ -31,7 +32,19 @@ export const Header = () => {
   const defaultNode = () => (
     <Div className={"d-between w-100p"}>
       <Div className={"d-center"}>
-        <Img src={logo2} className={"h-max30"} />
+        <Img
+          src={logo2}
+          className={"h-max30"}
+          onClick={(e) => {
+            navigate("/today/diff/list", {
+              state: {
+                dateType: "day",
+                dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+                dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+              }
+            });
+          }}
+        />
         <Img src={logo3} className={"h-max30"} />
       </Div>
       <Div className={"d-center ms-auto"}>
