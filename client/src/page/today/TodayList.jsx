@@ -44,7 +44,7 @@ export const TodayList = () => {
   const [isExpandedSleep, setIsExpandedSleep] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: "day",
     dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
     dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
@@ -53,9 +53,13 @@ export const TodayList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
+    toExerciseGoal: "/exercise/goal/save",
     toExercise: "/exercise/save",
+    toFoodGoal: "/food/goal/save",
     toFood: "/food/save",
+    toMoneyGoal: "/money/goal/save",
     toMoney: "/money/save",
+    toSleepGoal: "/sleep/goal/save",
     toSleep: "/sleep/save",
   });
   const [PAGING, setPAGING] = useState({

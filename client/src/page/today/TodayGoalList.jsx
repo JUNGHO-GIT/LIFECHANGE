@@ -44,7 +44,7 @@ export const TodayGoalList = () => {
   const [isExpandedSleep, setIsExpandedSleep] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
   const [DATE, setDATE] = useState({
-    dateType: "",
+    dateType: "day",
     dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
     dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
@@ -53,9 +53,13 @@ export const TodayGoalList = () => {
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
+    toExerciseGoal: "/exercise/goal/save",
     toExercise: "/exercise/save",
+    toFoodGoal: "/food/goal/save",
     toFood: "/food/save",
+    toMoneyGoal: "/money/goal/save",
     toMoney: "/money/save",
+    toSleepGoal: "/sleep/goal/save",
     toSleep: "/sleep/save",
   });
   const [PAGING, setPAGING] = useState({
@@ -242,7 +246,7 @@ export const TodayGoalList = () => {
                           dateStart: item.exercise_goal_dateStart,
                           dateEnd: item.exercise_goal_dateEnd,
                         });
-                        navigate(SEND.toExercise, {
+                        navigate(SEND.toExerciseGoal, {
                           state: SEND
                         });
                       }}
@@ -422,7 +426,7 @@ export const TodayGoalList = () => {
                           dateStart: item.food_goal_dateStart,
                           dateEnd: item.food_goal_dateEnd,
                         });
-                        navigate(SEND.toFood, {
+                        navigate(SEND.toFoodGoal, {
                           state: SEND
                         });
                       }}
@@ -602,7 +606,7 @@ export const TodayGoalList = () => {
                           dateStart: item.money_goal_dateStart,
                           dateEnd: item.money_goal_dateEnd,
                         });
-                        navigate(SEND.toMoney, {
+                        navigate(SEND.toMoneyGoal, {
                           state: SEND
                         });
                       }}
@@ -738,7 +742,7 @@ export const TodayGoalList = () => {
                           dateStart: item.sleep_goal_dateStart,
                           dateEnd: item.sleep_goal_dateEnd,
                         });
-                        navigate(SEND.toSleep, {
+                        navigate(SEND.toSleepGoal, {
                           state: SEND
                         });
                       }}
