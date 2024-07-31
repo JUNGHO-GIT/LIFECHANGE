@@ -23,6 +23,7 @@ import "./assets/css/Jstyle.css";
 import {Header} from "./import/ImportLayouts.jsx";
 import {TopNav} from "./import/ImportLayouts.jsx";
 import {BottomNav} from "./import/ImportLayouts.jsx";
+import {Banner} from "./import/ImportLayouts.jsx";
 
 import {CalendarList} from "./page/calendar/CalendarList.jsx";
 import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
@@ -170,6 +171,10 @@ const App = () => {
     location.pathname.indexOf("/user") > -1 ||
     location.pathname.indexOf("/auth") > -1
   );
+  const noneBanner = (
+    location.pathname.indexOf("/user") > -1 ||
+    location.pathname.indexOf("/auth") > -1
+  );
 
   useRoot();
   useScrollTop();
@@ -190,6 +195,7 @@ const App = () => {
         <Route path="/auth/*" element={<Auth />} />
       </Routes>
       {!noneBottom && <BottomNav />}
+      {!noneBanner && <Banner />}
     </div>
   );
 };
