@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "fetch": "git fetch --all && git reset --hard origin/master",
-    "push": "git add . && git commit -m 'update' || echo 'Nothing to commit' && git push origin/master",
+    "push": "git add . && git commit -m 'update' || echo 'Nothing to commit' && git push origin master",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
