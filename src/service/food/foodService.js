@@ -30,7 +30,7 @@ export const exist = async (
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
- 
+
   const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
@@ -46,10 +46,21 @@ export const list = async (
   const finalResult = await repository.list.list(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-  
+
   finalResult.sort((a, b) => {
-    return dateTypeOrder.indexOf(a.food_dateType) - dateTypeOrder.indexOf(b.food_dateType) || 
-           (sort === 1 ? new Date(a.food_dateStart) - new Date(b.food_dateStart) : new Date(b.food_dateStart) - new Date(a.food_dateStart));
+    const dateTypeA = a.food_dateType;
+    const dateTypeB = b.food_dateType;
+    const dateStartA = new Date(a.food_dateStart);
+    const dateStartB = new Date(b.food_dateStart);
+    const sortOrder = sort;
+
+    const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+    const dateDiff = dateStartA.getTime() - dateStartB.getTime();
+
+    if (dateTypeDiff !== 0) {
+      return dateTypeDiff;
+    }
+    return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
   return {

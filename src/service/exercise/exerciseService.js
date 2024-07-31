@@ -44,10 +44,21 @@ export const list = async (
   const finalResult = await repository.list.list(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-  
+
   finalResult.sort((a, b) => {
-    return dateTypeOrder.indexOf(a.exercise_dateType) - dateTypeOrder.indexOf(b.exercise_dateType) || 
-           (sort === 1 ? new Date(a.exercise_dateStart) - new Date(b.exercise_dateStart) : new Date(b.exercise_dateStart) - new Date(a.exercise_dateStart));
+    const dateTypeA = a.exercise_dateType;
+    const dateTypeB = b.exercise_dateType;
+    const dateStartA = new Date(a.exercise_dateStart);
+    const dateStartB = new Date(b.exercise_dateStart);
+    const sortOrder = sort;
+
+    const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+    const dateDiff = dateStartA.getTime() - dateStartB.getTime();
+
+    if (dateTypeDiff !== 0) {
+      return dateTypeDiff;
+    }
+    return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
   return {

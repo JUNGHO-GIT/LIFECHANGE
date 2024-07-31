@@ -43,12 +43,23 @@ export const list = async (
   const finalResult = await repository.list.list(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
-  
+
   finalResult.sort((a, b) => {
-    return dateTypeOrder.indexOf(a.money_dateType) - dateTypeOrder.indexOf(b.money_dateType) || 
-           (sort === 1 ? new Date(a.money_dateStart) - new Date(b.money_dateStart) : new Date(b.money_dateStart) - new Date(a.money_dateStart));
+    const dateTypeA = a.money_dateType;
+    const dateTypeB = b.money_dateType;
+    const dateStartA = new Date(a.money_dateStart);
+    const dateStartB = new Date(b.money_dateStart);
+    const sortOrder = sort;
+
+    const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+    const dateDiff = dateStartA.getTime() - dateStartB.getTime();
+
+    if (dateTypeDiff !== 0) {
+      return dateTypeDiff;
+    }
+    return sortOrder === 1 ? dateDiff : -dateDiff;
   });
-  
+
   return {
     totalCnt: totalCnt,
     result: finalResult

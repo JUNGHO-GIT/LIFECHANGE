@@ -8,7 +8,7 @@ import { log } from "../../assets/js/utils.js";
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
- 
+
   const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
@@ -16,7 +16,7 @@ export const list = async (
 
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-  
+
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
@@ -24,10 +24,20 @@ export const list = async (
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  // Adjusted sorting based on the required dateType order
   listGoal.sort((a, b) => {
-    return dateTypeOrder.indexOf(a.sleep_goal_dateType) - dateTypeOrder.indexOf(b.sleep_goal_dateType) || 
-           (sort === 1 ? new Date(a.sleep_goal_dateStart) - new Date(b.sleep_goal_dateStart) : new Date(b.sleep_goal_dateStart) - new Date(a.sleep_goal_dateStart));
+    const dateTypeA = a.sleep_goal_dateType;
+    const dateTypeB = b.sleep_goal_dateType;
+    const dateStartA = new Date(a.sleep_goal_dateStart);
+    const dateStartB = new Date(b.sleep_goal_dateStart);
+    const sortOrder = sort;
+
+    const dateTypeDiff = dateTypeOrder.indexOf(dateTypeA) - dateTypeOrder.indexOf(dateTypeB);
+    const dateDiff = dateStartA.getTime() - dateStartB.getTime();
+
+    if (dateTypeDiff !== 0) {
+      return dateTypeDiff;
+    }
+    return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
   const finalResult = await Promise.all(listGoal.map(async (goal) => {
