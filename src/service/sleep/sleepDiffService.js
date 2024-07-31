@@ -1,8 +1,8 @@
 // sleepDiffService.js
 
-import {strToDecimal, decimalToStr} from "../../assets/js/utils.js";
+import { strToDecimal, decimalToStr } from "../../assets/js/utils.js";
 import * as repository from "../../repository/sleep/sleepDiffRepository.js";
-import {log} from "../../assets/js/utils.js";
+import { log } from "../../assets/js/utils.js";
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (
@@ -15,6 +15,8 @@ export const list = async (
 
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  
+  const dateTypeOrder = ["day", "week", "month", "year"];
 
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
@@ -23,11 +25,17 @@ export const list = async (
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
+  // Adjusted sorting based on the required dateType order
+  listGoal.sort((a, b) => {
+    return dateTypeOrder.indexOf(a.sleep_goal_dateType) - dateTypeOrder.indexOf(b.sleep_goal_dateType) || 
+           (sort === 1 ? new Date(a.sleep_goal_dateStart) - new Date(b.sleep_goal_dateStart) : new Date(b.sleep_goal_dateStart) - new Date(a.sleep_goal_dateStart));
+  });
+
   const finalResult = await Promise.all(listGoal.map(async (goal) => {
     const dateStart = goal?.sleep_goal_dateStart;
     const dateEnd = goal?.sleep_goal_dateEnd;
 
-    const listReal = await repository.list.list (
+    const listReal = await repository.list.list(
       user_id_param, dateType, dateStart, dateEnd
     );
 
@@ -48,9 +56,9 @@ export const list = async (
       sleep_sleepTime: decimalToStr(sleepTime)
     };
   }));
-  
+
   return {
-    totalCnt : totalCnt,
-    result : finalResult
-  }
+    totalCnt: totalCnt,
+    result: finalResult
+  };
 };
