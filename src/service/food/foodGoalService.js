@@ -29,6 +29,7 @@ export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
 
+  const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
@@ -43,6 +44,11 @@ export const list = async (
   const finalResult = await repository.list.list(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
+  
+  finalResult.sort((a, b) => {
+    return dateTypeOrder.indexOf(a.food_goal_dateType) - dateTypeOrder.indexOf(b.food_goal_dateType) || 
+           (sort === 1 ? new Date(a.food_goal_dateStart) - new Date(b.food_goal_dateStart) : new Date(b.food_goal_dateStart) - new Date(a.food_goal_dateStart));
+  });
 
   return {
     totalCnt: totalCnt,

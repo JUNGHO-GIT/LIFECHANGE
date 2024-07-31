@@ -6,20 +6,27 @@ import * as repository from "../../repository/food/foodDiffRepository.js";
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
-
+ 
+  const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-
+  
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
   const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
+  
+  // Adjusted sorting based on the required dateType order
+  listGoal.sort((a, b) => {
+    return dateTypeOrder.indexOf(a.food_goal_dateType) - dateTypeOrder.indexOf(b.food_goal_dateType) || 
+           (sort === 1 ? new Date(a.food_goal_dateStart) - new Date(b.food_goal_dateStart) : new Date(b.food_goal_dateStart) - new Date(a.food_goal_dateStart));
+  });
 
   const finalResult = await Promise.all(listGoal.map(async (goal) => {
     const dateStart = goal?.food_goal_dateStart;

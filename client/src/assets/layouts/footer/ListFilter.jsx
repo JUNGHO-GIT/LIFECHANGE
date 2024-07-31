@@ -82,6 +82,33 @@ export const ListFilter = ({
       {translate("today")}
     </Button>
   );
+  const thisWeekNode = () => (
+    <Button
+      size={"small"}
+      color={"primary"}
+      variant={"contained"}
+      className={"ms-3vw"}
+      style={{
+        lineHeight: "1.4",
+        padding: "3px 9px",
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        fontSize: "0.7rem"
+      }}
+      onClick={() => {
+        functions?.setDATE((prev) => ({
+          ...prev,
+          dateType: "",
+          dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+          dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+        }));
+      }}
+    >
+      {translate("today")}
+    </Button>
+  );
 
   // 7. filter -------------------------------------------------------------------------------------
   const filterNode = () => (

@@ -8,7 +8,8 @@ import { log } from "../../assets/js/utils.js";
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
-
+ 
+  const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
@@ -16,8 +17,6 @@ export const list = async (
   const sort = PAGING_param.sort === "asc" ? 1 : -1;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
   
-  const dateTypeOrder = ["day", "week", "month", "year"];
-
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );

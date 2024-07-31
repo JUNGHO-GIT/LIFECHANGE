@@ -6,7 +6,8 @@ import * as repository from "../../repository/money/moneyDiffRepository.js";
 export const list = async (
   user_id_param, PAGING_param, DATE_param
 ) => {
-
+  
+  const dateTypeOrder = ["day", "week", "month", "year"];
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
@@ -20,6 +21,12 @@ export const list = async (
   const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
+  
+  // Adjusted sorting based on the required dateType order
+  listGoal.sort((a, b) => {
+    return dateTypeOrder.indexOf(a.money_goal_dateType) - dateTypeOrder.indexOf(b.money_goal_dateType) || 
+           (sort === 1 ? new Date(a.money_goal_dateStart) - new Date(b.money_goal_dateStart) : new Date(b.money_goal_dateStart) - new Date(a.money_goal_dateStart));
+  });
 
   const finalResult = await Promise.all(listGoal.map(async (goal) => {
     const dateStart = goal?.money_goal_dateStart;
