@@ -202,8 +202,8 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pt-30 pb-80"}>
-        <Div className={"block-wrapper h-min76vh"}>
+      <Paper className={"content-wrapper radius border shadow-none pt-30"}>
+        <Div className={"block-wrapper h-min50vh"}>
           {tableSection()}
         </Div>
       </Paper>

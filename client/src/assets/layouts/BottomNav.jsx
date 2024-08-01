@@ -55,7 +55,7 @@ export const BottomNav = () => {
         icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("exercise");
-          navigate("exercise/chart/list", {
+          navigate("exercise/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -70,7 +70,7 @@ export const BottomNav = () => {
         icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("food");
-          navigate("food/chart/list", {
+          navigate("food/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -85,7 +85,7 @@ export const BottomNav = () => {
         icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("today");
-          navigate("today/chart/list", {
+          navigate("today/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -115,7 +115,7 @@ export const BottomNav = () => {
         icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("money");
-          navigate("money/chart/list", {
+          navigate("money/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -130,7 +130,7 @@ export const BottomNav = () => {
         icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
         onClick={() => {
           setValue("sleep");
-          navigate("sleep/chart/list", {
+          navigate("sleep/list", {
             state: {
               dateType: "",
               dateStart: moment().format("YYYY-MM-DD"),
@@ -144,7 +144,7 @@ export const BottomNav = () => {
 
   // 7. navigation ---------------------------------------------------------------------------------
   const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
+    <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
         {defaultNode()}
       </Card>

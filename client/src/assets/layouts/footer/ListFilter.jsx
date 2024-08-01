@@ -77,7 +77,8 @@ export const ListFilter = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               fontSize: "0.7rem",
-              backgroundColor: clickedType === "today" ? "#0D47A1" : "#1976d2",
+              backgroundColor: clickedType === "today" ? "#1976d2" : "#F9FAFB",
+              color: clickedType === "today" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
               functions?.setDATE((prev) => ({
@@ -103,7 +104,8 @@ export const ListFilter = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               fontSize: "0.7rem",
-              backgroundColor: clickedType === "thisWeek" ? "#0D47A1" : "#1976d2",
+              backgroundColor: clickedType === "thisWeek" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisWeek" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
               functions?.setDATE((prev) => ({
@@ -129,7 +131,8 @@ export const ListFilter = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               fontSize: "0.7rem",
-              backgroundColor: clickedType === "thisMonth" ? "#0D47A1" : "#1976d2",
+              backgroundColor: clickedType === "thisMonth" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisMonth" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
               functions?.setDATE((prev) => ({
@@ -155,7 +158,8 @@ export const ListFilter = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               fontSize: "0.7rem",
-              backgroundColor: clickedType === "thisYear" ? "#0D47A1" : "#1976d2",
+              backgroundColor: clickedType === "thisYear" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisYear" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
               functions?.setDATE((prev) => ({

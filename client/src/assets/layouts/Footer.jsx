@@ -72,35 +72,35 @@ export const Footer = ({
     }
     else if (!isCalendar && (isDiffList || isGoalList || isList)) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
+        <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {listFilterNode()}
         </Paper>
       )
     }
     else if (isDummy) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
+        <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
           {dummyNode()}
         </Paper>
       )
     }
     else if (isFind) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
+        <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {findFoodNode()}
         </Paper>
       )
     }
     else if (isGoalSave || isSave) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-16vh radius border shadow-none"}>
+        <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {btnNode()}
         </Paper>
       )
     }
     else if (isCategory || isDetail) {
       return (
-        <Paper className={"flex-wrapper p-sticky bottom-8vh radius border shadow-none"}>
+        <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
           {btnNode()}
         </Paper>
       )

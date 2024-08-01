@@ -10,9 +10,9 @@ export const Banner = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <Paper className={"flex-wrapper p-sticky bottom-0vh radius border shadow-none"}>
-      <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
+      <Card className={"block-wrapper d-row h-60 w-100p shadow-none"}>
         <Div className={"d-center"}>
-          - Test Banner -
+        
         </Div>
       </Card>
     </Paper>

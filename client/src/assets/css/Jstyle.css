@@ -10009,6 +10009,9 @@
 .bottom-199 {bottom: 199px !important;}
 .bottom-200 {bottom: 200px !important;}
 
+.bottom-8vh60 {bottom: calc(60px + 8vh) !important}
+.bottom-16vh60 {bottom: calc(60px + 16vh) !important}
+
 /** 7-1. font (px) ********************************************************************************/
 .fs-0 {font-size: 0px !important;}
 .fs-1 {font-size: 1px !important;}
