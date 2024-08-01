@@ -4,7 +4,7 @@ import {React, useState, useEffect, useRef, createRef} from "../../../import/Imp
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useTime} from "../../../import/ImportHooks.jsx";
 import {moment, axios} from "../../../import/ImportLibs.jsx";
-import {percent} from "../../../import/ImportUtils.jsx";
+import {sync} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
@@ -179,7 +179,7 @@ export const SleepGoalSave = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        percent();
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -212,7 +212,7 @@ export const SleepGoalSave = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        percent();
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,

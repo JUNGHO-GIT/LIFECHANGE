@@ -4,7 +4,7 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {createRef, useRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {percent, log} from "../../import/ImportUtils";
+import {sync, log} from "../../import/ImportUtils";
 import {Div, Br10, Img, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
@@ -125,7 +125,7 @@ export const UserLogin = () => {
         else {
           sessionStorage.setItem("isAdmin", "false");
         }
-        percent();
+        sync();
         navigate("/today/diff/list");
       }
       else {

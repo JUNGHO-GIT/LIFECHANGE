@@ -4,7 +4,7 @@ import {React, useState, useEffect, useRef, createRef} from "../../import/Import
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportUtils.jsx";
+import {sync, log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";

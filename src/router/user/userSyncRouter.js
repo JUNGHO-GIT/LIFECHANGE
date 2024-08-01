@@ -1,12 +1,12 @@
-// userPercentRouter.js
+// userSyncRouter.js
 
 import express from "express";
-import * as service from "../../service/user/userPercentService.js";
-import * as middleware from "../../middleware/user/userPercentMiddleware.js";
+import * as service from "../../service/user/userSyncService.js";
+import * as middleware from "../../middleware/user/userSyncMiddleware.js";
 export const router = express.Router();
 
-// 1-1. list ---------------------------------------------------------------------------------------
-router.get("/list", async (req, res) => {
+// 1. percent --------------------------------------------------------------------------------------
+router.get("/percent", async (req, res) => {
   try {
     let result = await service.list (
       req.query.user_id,
@@ -17,14 +17,14 @@ router.get("/list", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "성공",
+        msg: "퍼센트 조회 성공",
         result: result
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "실패"
+        msg: "퍼센트 조회 실패"
       });
     }
   }
@@ -46,14 +46,14 @@ router.get("/property", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "성공",
+        msg: "자산 조회 성공",
         result: result
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "실패"
+        msg: "자산 조회 실패"
       });
     }
   }

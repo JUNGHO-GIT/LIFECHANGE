@@ -290,6 +290,28 @@ export const TopNav = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
+              label={translate("initProperty")}
+              size={"small"}
+              variant={"outlined"}
+              className={"w-50vw"}
+              value={numeral(property?.initProperty).format("0,0")}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <Img src={money2} className={"w-16 h-16"} />
+                ),
+                endAdornment: (
+                  <Div className={"fs-0-6rem"}>
+                    {translate("currency")}
+                  </Div>
+                )
+              }}
+            />
+          </Div>
+          <Br20 />
+          <Div className={"d-center"}>
+            <TextField
+              select={false}
               label={translate("income")}
               size={"small"}
               variant={"outlined"}

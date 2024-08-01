@@ -1,7 +1,7 @@
 // ImportUtils.jsx
 
 import {handlerY} from "../assets/js/chartFormatter.js";
-import {percent} from "../assets/js/percent.js";
+import {sync} from "../assets/js/sync.js";
 import {log} from "../assets/js/utils.js";
 import {newDate, koreanDate} from "../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../assets/js/date.js";
@@ -12,7 +12,8 @@ import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 // -------------------------------------------------------------------------------------------------
 export {
   handlerY,
-  percent, log,
+  sync,
+  log,
   newDate, koreanDate,
   curWeekStart, curWeekEnd,
   curMonthStart, curMonthEnd,

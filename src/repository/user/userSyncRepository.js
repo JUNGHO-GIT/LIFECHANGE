@@ -1,4 +1,4 @@
-// userPercentRepository.js
+// userSyncRepository.js
 
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
@@ -8,6 +8,7 @@ import {Money} from "../../schema/money/Money.js";
 import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
+import {User} from "../../schema/user/User.js";
 
 // 1-1. percent ------------------------------------------------------------------------------------
 export const percent = {
@@ -224,7 +225,23 @@ export const percent = {
 
 // 2. property -------------------------------------------------------------------------------------
 export const property = {
-  listMoney: async (
+  initProperty: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.aggregate([
+      {$match: {
+        user_id: user_id_param
+      }},
+      {$project: {
+        _id: 0,
+        user_initProperty: "$user_initProperty",
+        user_regDt: "$user_regDt",
+      }}
+    ]);
+    return finalResult[0];
+  },
+
+  findMoney: async (
     user_id_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -235,17 +252,32 @@ export const property = {
         _id: null,
         money_total_income: { $sum: "$money_total_income" },
         money_total_expense: { $sum: "$money_total_expense" },
-        property_dateStart: { $min: "$money_dateStart" },
-        property_dateEnd: { $max: "$money_dateEnd" },
+        money_dateEnd: { $max: "$money_dateEnd" },
       }},
       {$project: {
         _id: 0,
         money_total_income: "$money_total_income",
         money_total_expense: "$money_total_expense",
-        property_dateStart: "$property_dateStart",
-        property_dateEnd: "$property_dateEnd",
+        money_dateEnd: "$money_dateEnd",
       }}
     ]);
     return finalResult[0];
-  }
+  },
+
+  updateProperty: async (
+    user_id_param, curProperty_param
+  ) => {
+    const finalResult = await User.findOneAndUpdate({
+      user_id: user_id_param,
+    }, {
+      $set: {
+        user_curProperty: curProperty_param,
+        user_updateDt: new Date(),
+      },
+    }, {
+      new: true,
+    });
+
+    return finalResult;
+  },
 };

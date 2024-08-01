@@ -4,7 +4,7 @@ import {React, useState, useEffect, useRef, createRef} from "../../import/Import
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
-import {percent, log} from "../../import/ImportUtils";
+import {sync, log} from "../../import/ImportUtils";
 import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
@@ -320,7 +320,7 @@ export const ExerciseSave = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        percent();
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -353,7 +353,7 @@ export const ExerciseSave = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        percent();
+        sync();
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,

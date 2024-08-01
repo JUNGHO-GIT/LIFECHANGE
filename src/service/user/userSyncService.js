@@ -1,13 +1,12 @@
-// userPercentService.js
+// userSyncService.js
 
-import * as repository from "../../repository/user/userPercentRepository.js";
+import * as repository from "../../repository/user/userSyncRepository.js";
 
 // 1-1. list ---------------------------------------------------------------------------------------
 export const list = async (
   user_id_param, DATE_param
 ) => {
 
-  const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
@@ -78,15 +77,30 @@ export const property = async (
   user_id_param
 ) => {
 
-  const findResult = await repository.property.listMoney(
+  // todo
+  const initProperty = await repository.property.initProperty(
     user_id_param
   );
+  const findMoney = await repository.property.findMoney(
+    user_id_param
+  );
+
+  const curProperty
+    = parseInt(initProperty?.user_initProperty)
+    + parseInt(findMoney?.money_total_income)
+    - parseInt(findMoney?.money_total_expense);
+
+  const updateProperty = await repository.property.updateProperty(
+    user_id_param, curProperty
+  );
+
   const finalResult = {
-    totalIncome: findResult?.money_total_income,
-    totalExpense: findResult?.money_total_expense,
-    totalProperty: findResult?.money_total_income - findResult?.money_total_expense,
-    dateStart: findResult?.property_dateStart,
-    dateEnd: findResult?.property_dateEnd,
+    initProperty: initProperty?.user_initProperty,
+    totalIncome: findMoney?.money_total_income,
+    totalExpense: findMoney?.money_total_expense,
+    totalProperty: curProperty,
+    dateStart: (initProperty?.user_regDt).toISOString().slice(0, 10),
+    dateEnd: (findMoney?.money_dateEnd).toISOString().slice(0, 10),
   };
 
   return finalResult;

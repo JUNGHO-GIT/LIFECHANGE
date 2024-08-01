@@ -1,9 +1,9 @@
-// percent.js
+// sync.js
 
-import {moment, axios} from "./../../import/ImportLibs.jsx";
+import {moment, axios} from "../../import/ImportLibs.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const percent = async () => {
+export const sync = async () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -19,13 +19,13 @@ export const percent = async () => {
   };
 
   try {
-    const resList = await axios.get(`${URL_OBJECT}/percent/list`, {
+    const resList = await axios.get(`${URL_OBJECT}/sync/percent`, {
       params: {
         user_id: sessionId,
         DATE: DATE,
       },
     });
-    const resProperty = await axios.get(`${URL_OBJECT}/percent/property`, {
+    const resProperty = await axios.get(`${URL_OBJECT}/sync/property`, {
       params: {
         user_id: sessionId,
       },
