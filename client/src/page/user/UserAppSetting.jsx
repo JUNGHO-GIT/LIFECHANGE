@@ -1,4 +1,4 @@
-// UserSetting.jsx
+// UserAppSetting.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
@@ -10,7 +10,7 @@ import {TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 import {flag1, flag2} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserSetting = () => {
+export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export const UserSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/data/detail")
+                      navigate("/user/detail")
                     }} />
                   </TableCell>
                 </TableRow>
@@ -48,7 +48,7 @@ export const UserSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/data/category")
+                      navigate("/user/category")
                     }} />
                   </TableCell>
                 </TableRow>
@@ -59,7 +59,7 @@ export const UserSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/data/list")
+                      navigate("/user/list")
                     }} />
                   </TableCell>
                 </TableRow>
@@ -109,7 +109,7 @@ export const UserSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/info")
+                      navigate("/user/app/info")
                     }} />
                   </TableCell>
                 </TableRow>

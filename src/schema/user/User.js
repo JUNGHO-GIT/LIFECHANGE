@@ -61,6 +61,11 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
+  user_currentProperty: {
+    type : String,
+    default: "",
+    required : false
+  },
 
   dataCategory: {
     calendar: {

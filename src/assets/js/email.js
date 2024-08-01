@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const sendEmail = async (email, code) => {
+export const emailSending = async (email, code) => {
   try {
     // 이메일 서버 설정
     const transporter = nodemailer.createTransport({

@@ -1,16 +1,16 @@
-// UserDataDetail.jsx
+// UserDetail.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios, numeral} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportUtils.jsx";
-import {Footer} from "../../../import/ImportLayouts.jsx";
-import {Div, Br30, Br20, Br10} from "../../../import/ImportComponents.jsx";
-import {Paper, TextField, Avatar, MenuItem} from "../../../import/ImportMuis.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
+import {axios, numeral} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
+import {Footer} from "../../import/ImportLayouts.jsx";
+import {Div, Br30, Br20, Br10} from "../../import/ImportComponents.jsx";
+import {Paper, TextField, Avatar, MenuItem} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDataDetail = () => {
+export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -34,7 +34,7 @@ export const UserDataDetail = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toUpdate: "/user/data/update",
+    toUpdate: "/user/update",
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

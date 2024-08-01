@@ -1,18 +1,18 @@
-// UserDataCategory.jsx
+// UserCategory.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {axios, moment} from "../../../import/ImportLibs.jsx";
-import {log} from "../../../import/ImportUtils.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20} from "../../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../../import/ImportMuis.jsx";
-import {TableContainer, Table, TableFooter} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
+import {axios, moment} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
+import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDataCategory = () => {
+export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -40,7 +40,7 @@ export const UserDataCategory = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCategory: "/user/data/category",
+    toDataCategory: "/user/category",
   });
   const [DATE, setDATE] = useState({
     dateType: "day",
@@ -113,7 +113,7 @@ export const UserDataCategory = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios.post(`${URL_OBJECT}/save`, {
+    await axios.post(`${URL_OBJECT}/category/save`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })

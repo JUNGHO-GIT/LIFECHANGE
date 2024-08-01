@@ -62,12 +62,12 @@ import {SleepGoalSave} from "./page/sleep/goal/SleepGoalSave.jsx";
 import {SleepList} from "./page/sleep/SleepList.jsx";
 import {SleepSave} from "./page/sleep/SleepSave.jsx";
 
-import {UserDataCategory} from "./page/user/data/UserDataCategory.jsx";
-import {UserDataDetail} from "./page/user/data/UserDataDetail.jsx";
-import {UserDataDummy} from "./page/user/data/UserDataDummy.jsx";
-import {UserSetting} from "./page/user/UserSetting.jsx";
+import {UserCategory} from "./page/user/UserCategory.jsx";
+import {UserDetail} from "./page/user/UserDetail.jsx";
+import {UserDummy} from "./page/user/UserDummy.jsx";
+import {UserAppSetting} from "./page/user/UserAppSetting.jsx";
 import {UserDeletes} from "./page/user/UserDeletes.jsx";
-import {UserInfo} from "./page/user/UserInfo.jsx";
+import {UserAppInfo} from "./page/user/UserAppInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
 
@@ -137,14 +137,14 @@ const Sleep = () => (
 // -------------------------------------------------------------------------------------------------
 const User = () => (
   <Routes>
-    <Route path="/data/category" element={<UserDataCategory />} />
-    <Route path="/data/detail" element={<UserDataDetail />} />
-    <Route path="/data/list" element={<UserDataDummy />} />
-    <Route path="/setting" element={<UserSetting />} />
-    <Route path="/info" element={<UserInfo />} />
-    <Route path="/deletes" element={<UserDeletes />} />
+    <Route path="/app/info" element={<UserAppInfo />} />
+    <Route path="/app/setting" element={<UserAppSetting />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
+    <Route path="/detail" element={<UserDetail />} />
+    <Route path="/deletes" element={<UserDeletes />} />
+    <Route path="/category" element={<UserCategory />} />
+    <Route path="/dummy" element={<UserDummy />} />
   </Routes>
 );
 

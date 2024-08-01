@@ -25,7 +25,6 @@ import { router as sleepDiffRouter } from "./src/router/sleep/sleepDiffRouter.js
 import { router as sleepRouter } from "./src/router/sleep/sleepRouter.js";
 import { router as sleepGoalRouter } from "./src/router/sleep/sleepGoalRouter.js";
 import { router as userPercentRouter } from "./src/router/user/userPercentRouter.js";
-import { router as userDataRouter } from "./src/router/user/userDataRouter.js";
 import { router as userRouter } from "./src/router/user/userRouter.js";
 import { router as googleRouter } from "./src/router/auth/googleRouter.js";
 
@@ -102,6 +101,5 @@ app.use("/api/sleep/diff", sleepDiffRouter);
 app.use("/api/sleep/goal", sleepGoalRouter);
 app.use("/api/sleep", sleepRouter);
 app.use("/api/user/percent", userPercentRouter);
-app.use("/api/user/data", userDataRouter);
 app.use("/api/user", userRouter);
 app.use("/api/google", googleRouter);

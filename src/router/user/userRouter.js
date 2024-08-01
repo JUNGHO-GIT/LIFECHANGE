@@ -4,29 +4,23 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
-// 0-0. send ---------------------------------------------------------------------------------------
-router.post("/send", async (req, res) => {
+// 0-1. app/info ------------------------------------------------------------------------------------
+router.get("/app/info", async (req, res) => {
   try {
-    let result = await service.send (
-      req.body.user_id
+    let result = await service.app/info (
+      req.query.user_id
     );
-    if (result.result === "success") {
+    if (result) {
       res.json({
         status: "success",
-        msg: "전송 성공",
+        msg: "앱정보 조회 성공",
         result: result
-      });
-    }
-    else if (result.result === "fail") {
-      res.json({
-        status: "fail",
-        msg: "전송 실패"
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "전송 실패"
+        msg: "앱정보 조회 실패"
       });
     }
   }
@@ -39,10 +33,45 @@ router.post("/send", async (req, res) => {
   }
 });
 
-// 0-0. verify -------------------------------------------------------------------------------------
-router.post("/verify", async (req, res) => {
+// 1-1. sendEmail ----------------------------------------------------------------------------------
+router.post("/email/send", async (req, res) => {
   try {
-    let result = await service.verify (
+    let result = await service.sendEmail (
+      req.body.user_id
+    );
+    if (result.result === "success") {
+      res.json({
+        status: "success",
+        msg: "이메일 전송 성공",
+        result: result
+      });
+    }
+    else if (result.result === "fail") {
+      res.json({
+        status: "fail",
+        msg: "이메일 전송 실패"
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "이메일 전송 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 1-2. verifyEmail --------------------------------------------------------------------------------
+router.post("/email/verify", async (req, res) => {
+  try {
+    let result = await service.verifyEmail (
       req.body.user_id,
       req.body.verify_code
     );
@@ -74,39 +103,10 @@ router.post("/verify", async (req, res) => {
   }
 });
 
-// 0-0. info ---------------------------------------------------------------------------------------
-router.get("/info", async (req, res) => {
-  try {
-    let result = await service.info (
-      req.query.user_id
-    );
-    if (result) {
-      res.json({
-        status: "success",
-        msg: "조회 성공",
-        result: result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "조회 실패"
-      });
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
-    });
-  }
-});
-
-// 0-0. signup -------------------------------------------------------------------------------------
+// 2-1. userSignup ---------------------------------------------------------------------------------
 router.post("/signup", async (req, res) => {
   try {
-    let result = await service.signup (
+    let result = await service.userSignup (
       req.body.user_id,
       req.body.OBJECT
     );
@@ -139,10 +139,10 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// 0-1. login --------------------------------------------------------------------------------------
+// 2-2. userLogin ----------------------------------------------------------------------------------
 router.post("/login", async (req, res) => {
   try {
-    let result = await service.login (
+    let result = await service.userLogin (
       req.body.user_id,
       req.body.user_pw
     );
@@ -170,11 +170,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 2. detail (상세는 eq) ---------------------------------------------------------------------------
+// 2-3. userDetail ---------------------------------------------------------------------------------
 router.get("/detail", async (req, res) => {
   try {
-    let result = await service.detail (
-      req.query._id,
+    let result = await service.userDetail (
       req.query.user_id
     );
     if (result) {
@@ -201,24 +200,24 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 3-2. save ---------------------------------------------------------------------------------------
-router.post("/save", async (req, res) => {
+// 2-4. userUpdate ---------------------------------------------------------------------------------
+router.post("/update", async (req, res) => {
   try {
-    let result = await service.save (
+    let result = await service.userUpdate (
       req.body.user_id,
       req.body.OBJECT
     );
     if (result) {
       res.json({
         status: "success",
-        msg: "저장 성공",
+        msg: "수정 성공",
         result: result
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패",
+        msg: "수정 실패",
         result: null
       });
     }
@@ -232,10 +231,10 @@ router.post("/save", async (req, res) => {
   }
 });
 
-// 4. deletes --------------------------------------------------------------------------------------
+// 2-3. userDeletes --------------------------------------------------------------------------------
 router.delete("/deletes", async (req, res) => {
   try {
-    let result = await service.deletes (
+    let result = await service.userDeletes (
       req.body.user_id
     );
     if (result) {
@@ -248,6 +247,160 @@ router.delete("/deletes", async (req, res) => {
       res.json({
         status: "fail",
         msg: "탈퇴 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 3-1. categoryList -------------------------------------------------------------------------------
+router.get("/categoryList", async (req, res) => {
+  try {
+    let result = await service.category (
+      req.query.user_id
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "카테고리 조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "카테고리 조회 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 3-2. categorySave -------------------------------------------------------------------------------
+router.post("/categorySave", async (req, res) => {
+  try {
+    let result = await service.categorySave (
+      req.body.user_id,
+      req.body.OBJECT
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "카테고리 저장 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "카테고리 저장 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 4-1. dummyList ----------------------------------------------------------------------------------
+router.get("/dummyList", async (req, res) => {
+  try {
+    let result = await service.dummyList (
+      req.query.user_id,
+      req.query.PAGING,
+      req.query.PART
+    );
+    if (result && result.result) {
+      res.json({
+        status: "success",
+        msg: "더미데이터 조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "더미데이터 조회 실패",
+        totalCnt: 0,
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 4-2. dummySave ----------------------------------------------------------------------------------
+router.post("/dummySave", async (req, res) => {
+  try {
+    let result = await service.dummySave (
+      req.body.user_id,
+      req.body.PART,
+      req.body.count
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "더미데이터 추가 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "더미데이터 추가 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 4-3. dummyDeletes -------------------------------------------------------------------------------
+router.delete("/dummyDeletes", async (req, res) => {
+  try {
+    let result = await service.dummyDeletes (
+      req.body.user_id,
+      req.body.PART,
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "더미데이터 삭제 성공"
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "더미데이터 삭제 실패"
       });
     }
   }

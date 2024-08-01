@@ -1,16 +1,16 @@
-// UserDataDummy.jsx
+// UserDummy.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
-import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Paper, TableContainer, Table, Card} from "../../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../../import/ImportMuis.jsx";
+import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
+import {Div} from "../../import/ImportComponents.jsx";
+import {Paper, TableContainer, Table, Card} from "../../import/ImportMuis.jsx";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserDataDummy = () => {
+export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
@@ -166,7 +166,7 @@ export const UserDataDummy = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/data/list`, {
+    axios.get(`${URL_OBJECT}/dummyList`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
@@ -216,7 +216,7 @@ export const UserDataDummy = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummySave = async () => {
     const previousPART = PART;
-    await axios.post(`${URL_OBJECT}/data/save`, {
+    await axios.post(`${URL_OBJECT}/dummySave`, {
       user_id: sessionId,
       PART: PART,
       count: COUNT?.inputCnt
@@ -248,7 +248,7 @@ export const UserDataDummy = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowDummyDeletes = async () => {
     const previousPART = PART;
-    await axios.delete(`${URL_OBJECT}/data/deletes`, {
+    await axios.delete(`${URL_OBJECT}/dummyDeletes`, {
       data: {
         user_id: sessionId,
         PART: PART,

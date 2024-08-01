@@ -61,16 +61,17 @@ export const useTranslate = () => {
     currency: {ko: "₩", en: "$"},
     calendarTitle: {ko: "제목", en: "Title"},
     color: {ko: "색상", en: "Color"},
+    chartBar: {ko: "목표", en: "Goal"},
+    chartPie: {ko: "비율", en: "Proportion"},
+    chartLine: {ko: "추이", en: "Trend"},
+    chartAvg: {ko: "평균", en: "Average"},
+    currentProperty: {ko: "현재 자산", en: "Current Property"},
 
     // d
     done: {ko: "완료", en: "Done"},
     delete: {ko: "삭제", en: "Delete"},
     deletes: {ko: "삭제", en: "Delete"},
     deletesAll: {ko: "전체삭제", en: "Delete All"},
-    chartBar: {ko: "목표", en: "Goal"},
-    chartPie: {ko: "비율", en: "Proportion"},
-    chartLine: {ko: "추이", en: "Trend"},
-    chartAvg: {ko: "평균", en: "Average"},
     dataCategory: {ko: "카테고리", en: "Category"},
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
@@ -169,6 +170,7 @@ export const useTranslate = () => {
     info: {ko: "정보", en: "Information"},
     isVerified: {ko: "인증되었습니다", en: "Verified"},
     isNotVerified: {ko: "인증 실패", en: "Not Verified"},
+    initProperty: {ko: "초기 자산", en: "Initial Property"},
 
     // j
     join: {ko: "가입", en: "Join"},

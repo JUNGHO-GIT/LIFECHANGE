@@ -185,11 +185,11 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSend = async () => {
+  const flowSendEmail = async () => {
     if (!validate(OBJECT, "send")) {
       return;
     }
-    await axios.post (`${URL_OBJECT}/send`, {
+    await axios.post (`${URL_OBJECT}/email/send`, {
       user_id: OBJECT.user_id
     })
     .then((res) => {
@@ -206,8 +206,8 @@ export const UserSignup = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowVerify = async () => {
-    await axios.post (`${URL_OBJECT}/verify`, {
+  const flowVerifyEmail = async () => {
+    await axios.post (`${URL_OBJECT}/email/verify`, {
       user_id: OBJECT.user_id,
       verify_code: clientCode
     })
@@ -323,7 +323,7 @@ export const UserSignup = () => {
               className={"w-20vw"}
               variant={"contained"}
               onClick={() => {
-                flowSend();
+                flowSendEmail();
                 setOBJECT((prev) => ({
                   ...prev,
                   user_id_verified: false
@@ -355,7 +355,7 @@ export const UserSignup = () => {
               variant={"contained"}
               disabled={OBJECT.user_id_verified}
               onClick={() => {
-                flowVerify();
+                flowVerifyEmail();
               }}
             >
               {translate("verify")}

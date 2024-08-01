@@ -1,4 +1,4 @@
-// UserInfo.jsx
+// UserAppInfo.jsx
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx"
@@ -9,7 +9,7 @@ import {TableBody, TableRow, TableCell, TableHead} from "../../import/ImportMuis
 import {logo1} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserInfo = () => {
+export const UserAppInfo = () => {
 
 
   // 1. common -------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ export const UserInfo = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/info`, {
+    axios.get(`${URL_OBJECT}/app/info`, {
       params: {
         user_id: sessionId,
       },

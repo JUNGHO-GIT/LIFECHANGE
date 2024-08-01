@@ -67,8 +67,8 @@ export const dataArray = [
     icon: "BiUser",
     title: "User",
     items: [
-      {to: "/user/data/category", label: "UserDataCategory"},
-      {to: "/user/data/list", label: "UserDataDummy"},
+      {to: "/user/category", label: "UserCategory"},
+      {to: "/user/list", label: "UserDummy"},
     ]
   }
 ];
