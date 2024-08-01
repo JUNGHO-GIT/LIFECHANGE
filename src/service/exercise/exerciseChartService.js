@@ -177,7 +177,7 @@ export const pieWeek = async (
   };
 };
 
-// 2-2. chart (pie - month) -------------------------------------------------------------------------
+// 2-2. chart (pie - month) ---------------------------------------------------------------------
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -217,7 +217,7 @@ export const pieMonth = async (
   };
 };
 
-// 3-1. chart (line - week) -------------------------------------------------------------------------
+// 3-1. chart (line - week) ---------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -336,7 +336,7 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. chart (avg - month) -------------------------------------------------------------------------
+// 4-1. chart (avg - month) ---------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param
 ) => {
@@ -417,7 +417,7 @@ export const avgMonth = async (
   };
 };
 
-// 4-2. chart (avg - year) -------------------------------------------------------------------------
+// 4-2. chart (avg - year) ---------------------------------------------------------------------
 export const avgYear = async (
   user_id_param
 ) => {

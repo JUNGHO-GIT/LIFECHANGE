@@ -8,7 +8,7 @@ import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. chart (bar - today) -------------------------------------------------------------------------
+// 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -51,7 +51,7 @@ export const barToday = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - today) -------------------------------------------------------------------------
+// 2-1. chart (pie - today) ------------------------------------------------------------------------
 export const pieToday = async (
   user_id_param
 ) => {
@@ -83,35 +83,34 @@ export const pieToday = async (
   if (dataMissing === false) {
     finalResult = [];
   }
-  else {
-    findResult.forEach((data, index) => {
-      sumBedTime += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-      sumWakeTime += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
-      sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
-      countRecords++;
-    });
-    totalSleep = sumBedTime + sumWakeTime + sumTime;
 
-    finalResult = [
-      {
-        name: "bedTime",
-        value: totalSleep > 0 ? Math.round(sumBedTime / totalSleep * 100) : 0
-      },
-      {
-        name: "wakeTime",
-        value: totalSleep > 0 ? Math.round(sumWakeTime / totalSleep * 100) : 0
-      },
-      {
-        name: "sleepTime",
-        value: totalSleep > 0 ? Math.round(sumTime / totalSleep * 100) : 0
-      },
-    ];
-  }
+  findResult.forEach((data, index) => {
+    sumBedTime += timeFormat(data.sleep_section[0]?.sleep_bedTime);
+    sumWakeTime += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
+    sumTime += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
+    countRecords++;
+  });
+  totalSleep = sumBedTime + sumWakeTime + sumTime;
+
+  finalResult = [
+    {
+      name: "bedTime",
+      value: totalSleep > 0 ? Math.round(sumBedTime / totalSleep * 100) : 0
+    },
+    {
+      name: "wakeTime",
+      value: totalSleep > 0 ? Math.round(sumWakeTime / totalSleep * 100) : 0
+    },
+    {
+      name: "sleepTime",
+      value: totalSleep > 0 ? Math.round(sumTime / totalSleep * 100) : 0
+    },
+  ];
 
   return finalResult;
 };
 
-// 2-2. chart (pie - week) -------------------------------------------------------------------------
+// 2-2. chart (pie - week) ---------------------------------------------------------------------
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -157,7 +156,7 @@ export const pieWeek = async (
   return finalResult;
 };
 
-// 2-3. chart (pie - month) -------------------------------------------------------------------------
+// 2-3. chart (pie - month) ------------------------------------------------------------------------
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -203,7 +202,7 @@ export const pieMonth = async (
   return finalResult;
 };
 
-// 3-1. chart (line - week) -------------------------------------------------------------------------
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -247,7 +246,7 @@ export const lineWeek = async (
   return finalResult;
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param
 ) => {
@@ -291,7 +290,7 @@ export const lineMonth = async (
   return finalResult;
 }
 
-// 4-1. chart (avg - month) -------------------------------------------------------------------------
+// 4-1. chart (avg - month) ------------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param
 ) => {
@@ -348,7 +347,7 @@ export const avgMonth = async (
   return finalResult;
 };
 
-// 4-2. chart (avg - year) -------------------------------------------------------------------------
+// 4-2. chart (avg - year) ---------------------------------------------------------------------
 export const avgYear = async (
   user_id_param
 ) => {

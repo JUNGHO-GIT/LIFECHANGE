@@ -8,7 +8,7 @@ import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. chart (bar - today) -------------------------------------------------------------------------
+// 1-1. chart (bar - today) ---------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -66,7 +66,7 @@ export const barToday = async (
   };
 };
 
-// 2-1. chart (pie - today) -------------------------------------------------------------------------
+// 2-1. chart (pie - today) ---------------------------------------------------------------------
 export const pieToday = async (
   user_id_param
 ) => {
@@ -148,7 +148,7 @@ export const pieWeek = async (
   };
 };
 
-// 2-3. chart (pie - month) -------------------------------------------------------------------------
+// 2-3. chart (pie - month) ---------------------------------------------------------------------
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -189,7 +189,7 @@ export const pieMonth = async (
   };
 };
 
-// 3-1. chart (line - week) -------------------------------------------------------------------------
+// 3-1. chart (line - week) ---------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -311,7 +311,7 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. chart (avg - month) -------------------------------------------------------------------------
+// 4-1. chart (avg - month) ---------------------------------------------------------------------
 export const avgMonth = async (
   user_id_param
 ) => {

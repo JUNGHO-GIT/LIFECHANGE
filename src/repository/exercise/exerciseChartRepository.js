@@ -3,7 +3,7 @@
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 
-// 1-1. chart (bar - today) -------------------------------------------------------------------------
+// 1-1. chart (bar - today) ---------------------------------------------------------------------
 export const barToday = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -117,7 +117,7 @@ export const barWeek = {
   }
 };
 
-// 1-3. chart (bar - month) -------------------------------------------------------------------------
+// 1-3. chart (bar - month) ---------------------------------------------------------------------
 export const barMonth = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -239,7 +239,7 @@ export const pieWeek = {
   }
 };
 
-// 2-2. chart (pie - month) -------------------------------------------------------------------------
+// 2-2. chart (pie - month) ---------------------------------------------------------------------
 export const pieMonth = {
   listPart: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -304,7 +304,7 @@ export const pieMonth = {
   }
 };
 
-// 3-1. chart (line - week) -------------------------------------------------------------------------
+// 3-1. chart (line - week) ---------------------------------------------------------------------
 export const lineWeek = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -410,7 +410,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. chart (avg - month) -------------------------------------------------------------------------
+// 4-1. chart (avg - month) ---------------------------------------------------------------------
 export const avgMonth = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -463,7 +463,7 @@ export const avgMonth = {
   }
 };
 
-// 4-2. chart (avg - year) -------------------------------------------------------------------------
+// 4-2. chart (avg - year) ---------------------------------------------------------------------
 export const avgYear = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param

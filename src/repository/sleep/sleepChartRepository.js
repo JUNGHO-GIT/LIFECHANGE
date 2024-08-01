@@ -3,7 +3,7 @@
 import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 
-// 1-1. chart (bar - today) -------------------------------------------------------------------------
+// 1-1. chart (bar - today) ---------------------------------------------------------------------
 export const barToday = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -58,7 +58,7 @@ export const barToday = {
   }
 };
 
-// 2-1. chart (pie - today) -------------------------------------------------------------------------
+// 2-1. chart (pie - today) ---------------------------------------------------------------------
 export const pieToday = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -86,7 +86,7 @@ export const pieToday = {
   }
 };
 
-// 2-2. chart (pie - week) -------------------------------------------------------------------------
+// 2-2. chart (pie - week) ---------------------------------------------------------------------
 export const pieWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -114,7 +114,7 @@ export const pieWeek = {
   }
 };
 
-// 2-3. chart (pie - month) -------------------------------------------------------------------------
+// 2-3. chart (pie - month) ---------------------------------------------------------------------
 export const pieMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -142,7 +142,7 @@ export const pieMonth = {
   }
 };
 
-// 3-1. chart (line - week) -------------------------------------------------------------------------
+// 3-1. chart (line - week) ---------------------------------------------------------------------
 export const lineWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -199,7 +199,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. chart (avg - month) -------------------------------------------------------------------------
+// 4-1. chart (avg - month) ---------------------------------------------------------------------
 export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -227,7 +227,7 @@ export const avgMonth = {
   }
 };
 
-// 4-2. chart (avg - year) -------------------------------------------------------------------------
+// 4-2. chart (avg - year) ---------------------------------------------------------------------
 export const avgYear = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
