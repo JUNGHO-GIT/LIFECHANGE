@@ -1,6 +1,5 @@
 // ImportUtils.jsx
 
-import {dataArray} from "../assets/js/dataArray.js";
 import {handlerY} from "../assets/js/chartFormatter.js";
 import {percent} from "../assets/js/percent.js";
 import {log} from "../assets/js/utils.js";
@@ -12,7 +11,6 @@ import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 
 // -------------------------------------------------------------------------------------------------
 export {
-  dataArray,
   handlerY,
   percent, log,
   newDate, koreanDate,

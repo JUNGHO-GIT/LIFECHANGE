@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/user/userService.js";
 export const router = express.Router();
 
-// 0-1. app/info ------------------------------------------------------------------------------------
+// 0-1. appInfo -----------------------------------------------------------------------------------
 router.get("/app/info", async (req, res) => {
   try {
-    let result = await service.app/info (
+    let result = await service.appInfo (
       req.query.user_id
     );
     if (result) {
@@ -260,9 +260,9 @@ router.delete("/deletes", async (req, res) => {
 });
 
 // 3-1. categoryList -------------------------------------------------------------------------------
-router.get("/categoryList", async (req, res) => {
+router.get("/category/list", async (req, res) => {
   try {
-    let result = await service.category (
+    let result = await service.categoryList (
       req.query.user_id
     );
     if (result) {
@@ -289,7 +289,7 @@ router.get("/categoryList", async (req, res) => {
 });
 
 // 3-2. categorySave -------------------------------------------------------------------------------
-router.post("/categorySave", async (req, res) => {
+router.post("/category/save", async (req, res) => {
   try {
     let result = await service.categorySave (
       req.body.user_id,

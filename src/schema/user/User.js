@@ -61,7 +61,7 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
-  user_currentProperty: {
+  user_curProperty: {
     type : String,
     default: "",
     required : false

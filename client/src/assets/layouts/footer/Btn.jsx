@@ -1,6 +1,6 @@
 // Btn.jsx
 
-import {React} from "../../../import/ImportReacts.jsx";
+import {React, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Button, Card} from "../../../import/ImportMuis.jsx";
 
@@ -11,6 +11,8 @@ export const Btn = ({
 
   // 1. common -------------------------------------------------------------------------------------
   const {translate} = useTranslate();
+  const location = useLocation();
+  const PATH = location?.pathname;
 
   // 2. goto find ----------------------------------------------------------------------------------
   const btnGotoFind = () => (
@@ -94,17 +96,14 @@ export const Btn = ({
 
   // 7. btn ----------------------------------------------------------------------------------------
   const btnNode = () => {
-    if (
-      (strings?.second === "data" && strings?.third === "category") ||
-      (strings?.second === "data" && strings?.third === "detail")
-    ) {
+    if (PATH.indexOf("/user/category") > -1 || PATH.indexOf("/user/detail") > -1) {
       return (
         <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
           {btnSave()}
         </Card>
       );
     }
-    else if (strings?.first === "food" && strings?.second === "save") {
+    else if (PATH.indexOf("/food/save") > -1) {
       return (
         <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
           {btnGotoFind()}

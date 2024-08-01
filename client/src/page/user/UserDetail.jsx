@@ -49,6 +49,7 @@ export const UserDetail = () => {
     user_weight: "",
     user_image: "",
     user_initProperty: "",
+    user_curProperty: "",
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -60,6 +61,7 @@ export const UserDetail = () => {
     user_height: false,
     user_weight: false,
     user_initProperty: false,
+    user_curProperty: false,
   });
   const REFS = useRef({
     user_age: createRef(),
@@ -67,12 +69,13 @@ export const UserDetail = () => {
     user_height: createRef(),
     user_weight: createRef(),
     user_initProperty: createRef(),
+    user_curProperty: createRef(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/data/detail`, {
+    await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId
       },
@@ -105,6 +108,7 @@ export const UserDetail = () => {
       user_height: false,
       user_weight: false,
       user_initProperty: false,
+      user_curProperty: false,
     };
     const refsCurrent = REFS?.current;
 
@@ -141,10 +145,17 @@ export const UserDetail = () => {
       foundError = true;
     }
     else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
-      alert(translate("errorUserIniyProperty"));
+      alert(translate("errorUserInitProperty"));
       refsCurrent.user_initProperty.current &&
       refsCurrent.user_initProperty.current?.focus();
       initialErrors.user_initProperty = true;
+      foundError = true;
+    }
+    else if (OBJECT.user_curProperty === "" || !OBJECT.user_curProperty) {
+      alert(translate("errorUserCurProperty"));
+      refsCurrent.user_curProperty.current &&
+      refsCurrent.user_curProperty.current?.focus();
+      initialErrors.user_curProperty = true;
       foundError = true;
     }
 
@@ -157,7 +168,7 @@ export const UserDetail = () => {
     if (!validate(OBJECT)) {
       return;
     }
-    await axios.post(`${URL_OBJECT}/data/update`, {
+    await axios.post(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
     })
@@ -211,7 +222,7 @@ export const UserDetail = () => {
             }}
           />
           <Br20 />
-          {/** section 2 **/}
+          {/** 성별 (N, M, F) **/}
           <TextField
             select={true}
             type={"text"}
@@ -235,7 +246,7 @@ export const UserDetail = () => {
             ))}
           </TextField>
           <Br20 />
-          {/** 1 ~ 100 **/}
+          {/** 나이 (1세 ~ 100세) **/}
           <TextField
             select={true}
             type={"text"}
@@ -259,7 +270,7 @@ export const UserDetail = () => {
             ))}
           </TextField>
           <Br20 />
-          {/** 100cm ~ 200cm **/}
+          {/** 신장 (100cm ~ 200cm) **/}
           <TextField
             select={true}
             type={"text"}
@@ -283,7 +294,7 @@ export const UserDetail = () => {
             ))}
           </TextField>
           <Br20 />
-          {/** 30kg ~ 200kg **/}
+          {/** 몸무게 (30kg ~ 200kg) **/}
           <TextField
             select={true}
             type={"text"}
@@ -307,6 +318,7 @@ export const UserDetail = () => {
             ))}
           </TextField>
           <Br20 />
+          {/** 초기 자산 **/}
           <TextField
             select={false}
             type={"text"}
@@ -320,6 +332,31 @@ export const UserDetail = () => {
               setOBJECT((prev) => ({
                 ...prev,
                 user_initProperty: e.target.value
+              }))
+            )}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
+          <Br20 />
+          {/** 현재 자산 **/}
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("curProperty")}
+            value={OBJECT.user_curProperty}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_curProperty}
+            error={ERRORS.user_curProperty}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_curProperty: e.target.value
               }))
             )}
             InputProps={{

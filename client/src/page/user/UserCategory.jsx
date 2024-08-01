@@ -87,7 +87,7 @@ export const UserCategory = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/data/category`, {
+    await axios.get(`${URL_OBJECT}/category/list`, {
       params: {
         user_id: sessionId
       }

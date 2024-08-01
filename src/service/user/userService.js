@@ -16,8 +16,8 @@ import {fileURLToPath} from "url";
 import {emailSending} from "../../assets/js/email.js";
 dotenv.config();
 
-// 0-1. app/info ------------------------------------------------------------------------------------
-export const app/info = async (
+// 0-1. appInfo ------------------------------------------------------------------------------------
+export const appInfo = async (
   user_id_param
 ) => {
 
@@ -330,10 +330,10 @@ export const dummySave = async (
         exercise_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesExerciseGoal(
+    await repository.dummy.deletesExerciseGoal(
       user_id_param, OBJECT
     );
-    await repository.save.saveExerciseGoal(
+    await repository.dummy.saveExerciseGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -384,10 +384,10 @@ export const dummySave = async (
         exercise_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesExercise(
+    await repository.dummy.deletesExercise(
       user_id_param, OBJECT
     );
-    await repository.save.saveExercise(
+    await repository.dummy.saveExercise(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -412,10 +412,10 @@ export const dummySave = async (
         food_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesFoodGoal(
+    await repository.dummy.deletesFoodGoal(
       user_id_param, OBJECT
     );
-    await repository.save.saveFoodGoal(
+    await repository.dummy.saveFoodGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -477,10 +477,10 @@ export const dummySave = async (
       };
     }
     );
-    await repository.save.deletesFood(
+    await repository.dummy.deletesFood(
       user_id_param, OBJECT
     );
-    await repository.save.saveFood(
+    await repository.dummy.saveFood(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -503,10 +503,10 @@ export const dummySave = async (
         money_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesMoneyGoal(
+    await repository.dummy.deletesMoneyGoal(
       user_id_param, OBJECT
     );
-    await repository.save.saveMoneyGoal(
+    await repository.dummy.saveMoneyGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -553,10 +553,10 @@ export const dummySave = async (
         money_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesMoney(
+    await repository.dummy.deletesMoney(
       user_id_param, OBJECT
     );
-    await repository.save.saveMoney(
+    await repository.dummy.saveMoney(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -580,10 +580,10 @@ export const dummySave = async (
         sleep_goal_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesSleepGoal(
+    await repository.dummy.deletesSleepGoal(
       user_id_param, OBJECT
     );
-    await repository.save.saveSleepGoal(
+    await repository.dummy.saveSleepGoal(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -613,10 +613,10 @@ export const dummySave = async (
         sleep_updateDt: Date.now(),
       };
     });
-    await repository.save.deletesSleep(
+    await repository.dummy.deletesSleep(
       user_id_param, OBJECT
     );
-    await repository.save.saveSleep(
+    await repository.dummy.saveSleep(
       user_id_param, OBJECT
     );
     finalResult = "success";
@@ -639,7 +639,7 @@ export const dummyDeletes = async (
 
   // 0. all
   if (secondStr === "all") {
-    await repository.deletes.all(
+    await repository.dummy.all(
       user_id_param
     );
     finalResult = "success";
@@ -647,7 +647,7 @@ export const dummyDeletes = async (
 
   // 1. exerciseGoal
   else if (secondStr === "exerciseGoal") {
-    await repository.deletes.exerciseGoal(
+    await repository.dummy.exerciseGoal(
       user_id_param
     );
     finalResult = "success";
@@ -655,7 +655,7 @@ export const dummyDeletes = async (
 
   // 2. exercise
   else if (secondStr === "exercise") {
-    await repository.deletes.exercise(
+    await repository.dummy.exercise(
       user_id_param
     );
     finalResult = "success";
@@ -663,7 +663,7 @@ export const dummyDeletes = async (
 
   // 3. foodGoal
   else if (secondStr === "foodGoal") {
-    await repository.deletes.foodGoal(
+    await repository.dummy.foodGoal(
       user_id_param
     );
     finalResult = "success";
@@ -671,7 +671,7 @@ export const dummyDeletes = async (
 
   // 4. food
   else if (secondStr === "food") {
-    await repository.deletes.food(
+    await repository.dummy.food(
       user_id_param
     );
     finalResult = "success";
@@ -679,7 +679,7 @@ export const dummyDeletes = async (
 
   // 5. moneyGoal
   else if (secondStr === "moneyGoal") {
-    await repository.deletes.moneyGoal(
+    await repository.dummy.moneyGoal(
       user_id_param
     );
     finalResult = "success";
@@ -687,7 +687,7 @@ export const dummyDeletes = async (
 
   // 6. money
   else if (secondStr === "money") {
-    await repository.deletes.money(
+    await repository.dummy.money(
       user_id_param
     );
     finalResult = "success";
@@ -695,7 +695,7 @@ export const dummyDeletes = async (
 
   // 7. sleepGoal
   else if (secondStr === "sleepGoal") {
-    await repository.deletes.sleepGoal(
+    await repository.dummy.sleepGoal(
       user_id_param
     );
     finalResult = "success";
@@ -703,7 +703,7 @@ export const dummyDeletes = async (
 
   // 8. sleep
   else if (secondStr === "sleep") {
-    await repository.deletes.sleep(
+    await repository.dummy.sleep(
       user_id_param
     );
     finalResult = "success";

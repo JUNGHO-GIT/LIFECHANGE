@@ -34,6 +34,8 @@ export const UserSignup = () => {
     user_gender: "",
     user_height: "",
     user_weight: "",
+    user_initProperty: "",
+    user_curProperty: "",
     user_image: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -396,7 +398,7 @@ export const UserSignup = () => {
             )}
           />
           <Hr40 />
-          {/** section 2 **/}
+          {/** 성별 (N, M, F) **/}
           <TextField
             select={true}
             type={"text"}
@@ -420,7 +422,7 @@ export const UserSignup = () => {
             ))}
           </TextField>
           <Br10 />
-          {/** 1 ~ 100 **/}
+          {/** 나이 (1세 ~ 100세) **/}
           <TextField
             select={true}
             type={"text"}
@@ -444,7 +446,7 @@ export const UserSignup = () => {
             ))}
           </TextField>
           <Br10 />
-          {/** 100cm ~ 200cm **/}
+          {/** 신장 (100cm ~ 200cm) **/}
           <TextField
             select={true}
             type={"text"}
@@ -468,7 +470,7 @@ export const UserSignup = () => {
             ))}
           </TextField>
           <Br10 />
-          {/** 30kg ~ 200kg **/}
+          {/** 체중 (30kg ~ 200kg) **/}
           <TextField
             select={true}
             type={"text"}
@@ -492,6 +494,29 @@ export const UserSignup = () => {
             ))}
           </TextField>
           <Br10 />
+          {/** 초기 자산 **/}
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("initProperty")}
+            value={OBJECT.user_initProperty}
+            className={"w-86vw"}
+            onChange={(e) => (
+              setOBJECT((prev) => ({
+                ...prev,
+                user_initProperty: e.target.value
+              }))
+            )}
+            InputProps={{
+              readOnly: false,
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("currency")}
+                </Div>
+              )
+            }}
+          />
         </Div>
       );
       return (

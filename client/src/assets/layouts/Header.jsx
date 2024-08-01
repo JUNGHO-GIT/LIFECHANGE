@@ -19,7 +19,7 @@ export const Header = () => {
   const btnUser = () => (
     firstStr !== "user" ? (
       <Icons name={"TbSettings"} className={"w-24 h-24 black m-0"} onClick={() => {
-        navigate("/app/setting");
+        navigate("/user/app/setting");
       }}/>
     ) : (
       <Icons name={"TbArrowRight"} className={"w-24 h-24 black m-0"} onClick={() => {

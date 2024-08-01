@@ -1,6 +1,6 @@
 // Footer.jsx
 
-import {React}from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 import {Dummy} from "./footer/Dummy.jsx";
 import {FindFilter} from "./footer/FindFilter.jsx";
@@ -13,6 +13,9 @@ export const Footer = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const location = useLocation();
+  const PATH = location?.pathname;
+
   const isCalendar = strings?.first === "calendar";
   const isFind = strings?.second === "find";
 
@@ -35,7 +38,7 @@ export const Footer = ({
     />
   );
 
-  // 3. btn ---------------------------------------------------------------------------------
+  // 3. btn ----------------------------------------------------------------------------------------
   const btnNode = () => (
     <Btn
       strings={strings}
@@ -67,44 +70,62 @@ export const Footer = ({
 
   // 7. footer -------------------------------------------------------------------------------------
   const footerNode = () => {
-    if (isCalendar && (isDiffList || isGoalList || isList)) {
+    if (
+      PATH.indexOf("/calendar") > -1 && (
+        PATH.indexOf("/diff/list") > -1 ||
+        PATH.indexOf("/goal/list") > -1 ||
+        PATH.indexOf("/list") > -1
+      )
+    ) {
       return null
     }
-    else if (!isCalendar && (isDiffList || isGoalList || isList)) {
+
+    else if (
+      PATH.indexOf("/calendar") === -1 && (
+        PATH.indexOf("/diff/list") > -1 ||
+        PATH.indexOf("/goal/list") > -1 ||
+        PATH.indexOf("/list") > -1
+      )
+    ) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {listFilterNode()}
         </Paper>
       )
     }
-    else if (isDummy) {
+
+    else if (PATH.indexOf("/user/dummy") > -1) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
           {dummyNode()}
         </Paper>
       )
     }
-    else if (isFind) {
+
+    else if (PATH.indexOf("/food/find") > -1) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {findFoodNode()}
         </Paper>
       )
     }
-    else if (isGoalSave || isSave) {
+
+    else if (PATH.indexOf("/goal/save") > -1 || PATH.indexOf("/save") > -1) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-8vh60 radius border shadow-none"}>
           {btnNode()}
         </Paper>
       )
     }
-    else if (isCategory || isDetail) {
+
+    else if (PATH.indexOf("/user/category") > -1 || PATH.indexOf("/user/detail") > -1) {
       return (
         <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
           {btnNode()}
         </Paper>
       )
     }
+
     else {
       return null
     }

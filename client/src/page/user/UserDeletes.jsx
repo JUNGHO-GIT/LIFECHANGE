@@ -44,7 +44,7 @@ export const UserDeletes = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/data/detail`, {
+    axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
       },

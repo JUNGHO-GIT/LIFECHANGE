@@ -59,7 +59,7 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/list")
+                      navigate("/user/dummy")
                     }} />
                   </TableCell>
                 </TableRow>

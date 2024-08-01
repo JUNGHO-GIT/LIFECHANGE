@@ -65,7 +65,7 @@ export const useTranslate = () => {
     chartPie: {ko: "비율", en: "Proportion"},
     chartLine: {ko: "추이", en: "Trend"},
     chartAvg: {ko: "평균", en: "Average"},
-    currentProperty: {ko: "현재 자산", en: "Current Property"},
+    curProperty: {ko: "현재 자산", en: "Current Property"},
 
     // d
     done: {ko: "완료", en: "Done"},
@@ -456,6 +456,8 @@ export const useTranslate = () => {
     errorUserGender: {ko: "성별을 선택해주세요", en: "Please select Gender"},
     errorUserHeight: {ko: "키를 입력해주세요", en: "Please enter Height"},
     errorUserWeight: {ko: "체중을 입력해주세요", en: "Please enter Weight"},
+    errorUserInitProperty: {ko: "초기자산을 입력해주세요", en: "Please enter Initial Property"},
+    errorUserCurProperty: {ko: "현재자산을 입력해주세요", en: "Please enter Current Property"},
   };
 
   const translate = useCallback((key, className) => {
