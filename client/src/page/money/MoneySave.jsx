@@ -130,6 +130,16 @@ export const MoneySave = () => {
           return {...prev, ...res.data.result};
         }
       });
+      // section 내부 part_idx 값에 따라 재정렬
+      setOBJECT((prev) => {
+        const mergedFoodSection = prev?.money_section
+          ? prev.money_section.sort((a, b) => a.money_part_idx - b.money_part_idx)
+          : [];
+        return {
+          ...prev,
+          money_section: mergedFoodSection,
+        };
+      });
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

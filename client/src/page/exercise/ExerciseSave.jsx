@@ -141,6 +141,16 @@ export const ExerciseSave = () => {
           return {...prev, ...res.data.result};
         }
       });
+      // section 내부 part_idx 값에 따라 재정렬
+      setOBJECT((prev) => {
+        const mergedFoodSection = prev?.exercise_section
+          ? prev.exercise_section.sort((a, b) => a.exercise_part_idx - b.exercise_part_idx)
+          : [];
+        return {
+          ...prev,
+          exercise_section: mergedFoodSection,
+        };
+      });
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,

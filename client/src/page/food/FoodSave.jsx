@@ -99,12 +99,6 @@ export const FoodSave = () => {
     food_fat: createRef(),
   })));
 
-  useEffect(() => {
-    console.log("===================================");
-    log("OBJECT", OBJECT);
-    console.log("===================================");
-  }, [OBJECT]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
@@ -176,6 +170,12 @@ export const FoodSave = () => {
         let mergedFoodSection = prev?.food_section
           ? [...prev.food_section, ...sectionArray]
           : sectionArray;
+
+        // food_part_idx 값에 따라 정렬
+        mergedFoodSection.sort((a, b) => (
+          a.food_part_idx - b.food_part_idx
+        ));
+
         return {
           ...prev,
           food_section: mergedFoodSection

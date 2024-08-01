@@ -123,6 +123,16 @@ export const SleepSave = () => {
           return {...prev, ...res.data.result};
         }
       });
+      // section 내부 part_idx 값에 따라 재정렬
+      setOBJECT((prev) => {
+        const mergedFoodSection = prev?.sleep_section
+          ? prev.sleep_section.sort((a, b) => a.sleep_part_idx - b.sleep_part_idx)
+          : [];
+        return {
+          ...prev,
+          sleep_section: mergedFoodSection,
+        };
+      });
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt || 0,
