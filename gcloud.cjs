@@ -20,6 +20,7 @@ const modifyEnv = () => {
   writeFileSync('.env', newEnvFile);
 };
 
+
 // git push
 const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
