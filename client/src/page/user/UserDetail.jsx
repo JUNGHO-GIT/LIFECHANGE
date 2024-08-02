@@ -17,7 +17,7 @@ export const UserDetail = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
   const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-  const totalProperty = property?.totalProperty || 0;
+  const curProperty = property?.curProperty || 0;
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();

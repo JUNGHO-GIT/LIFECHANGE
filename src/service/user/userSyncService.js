@@ -94,11 +94,18 @@ export const property = async (
     user_id_param, curProperty
   );
 
+  if (updateProperty?.user_curProperty) {
+    console.log(
+      "property update result: "
+      + JSON.stringify(updateProperty?.user_curProperty, null, 2)
+    );
+  }
+
   const finalResult = {
-    initProperty: initProperty?.user_initProperty,
+    initProperty: parseInt(initProperty?.user_initProperty),
     totalIncome: findMoney?.money_total_income,
     totalExpense: findMoney?.money_total_expense,
-    totalProperty: curProperty,
+    curProperty: curProperty,
     dateStart: (initProperty?.user_regDt).toISOString().slice(0, 10),
     dateEnd: findMoney?.money_dateEnd,
   };

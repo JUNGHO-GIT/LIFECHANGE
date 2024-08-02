@@ -16,20 +16,28 @@ export const TopNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {translate} = useTranslate();
-  const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
-  const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-  const totalIncome = property?.totalIncome || 0;
-  const totalExpense = property?.totalExpense || 0;
-  const totalProperty = property?.totalProperty || 0;
-  const dateStart = property?.dateStart;
-  const dateEnd = property?.dateEnd;
   const PATH = location?.pathname;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useState("analyze");
+  const [percent, setPercent] = useState({
+    total : {},
+    exercise : {},
+    food : {},
+    money : {},
+    sleep : {},
+  });
+  const [property, setProperty] = useState({
+    initProperty: 0,
+    totalIncome: 0,
+    totalExpense: 0,
+    curProperty: 0,
+    dateStart: "",
+    dateEnd: "",
+  });
+  const [selectedTab, setSelectedTab] = useState('analyze');
   const [smileScore, setSmileScore] = useState({
     total: 0,
     exercise: 0,
@@ -45,6 +53,30 @@ export const TopNav = () => {
     sleep: smile3,
   });
   const [mainSmileImage, setMainSmileImage] = useState(smile3);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 퍼센트, 자산 설정
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      const storedPercent = sessionStorage.getItem('percent');
+      const storedProperty = sessionStorage.getItem('property');
+
+      if (storedPercent) {
+        setPercent(JSON.parse(storedPercent));
+      }
+
+      if (storedProperty) {
+        setProperty(JSON.parse(storedProperty));
+      }
+    };
+
+    window.addEventListener('storageChange', handleStorageChange);
+    handleStorageChange();
+
+    return () => {
+      window.removeEventListener('storageChange', handleStorageChange);
+    };
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -255,6 +287,8 @@ export const TopNav = () => {
       {(popTrigger={}) => (
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
+          const event = new Event('storageChange');
+          window.dispatchEvent(event);
         }}>
           <Img src={mainSmileImage} className={"w-max25 h-max25"} />
         </Div>
@@ -273,13 +307,13 @@ export const TopNav = () => {
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
               <Div className={"fs-1-0rem fw-500 me-2vw"}>
-                {dateStart}
+                {property?.dateStart}
               </Div>
               <Div className={"fs-0-7rem fw-500"}>
                 ~
               </Div>
               <Div className={"fs-1-0rem fw-500 ms-2vw"}>
-                {dateEnd}
+                {property?.dateEnd}
               </Div>
             </Grid>
             <Hr40 />
@@ -287,7 +321,7 @@ export const TopNav = () => {
               <Div className={"d-center"}>
                 <Img src={money2} className={"w-16 h-16"} />
                 <Div className={"fs-1-4rem fw-600"}>
-                  {numeral(totalProperty).format("0,0")}
+                  {numeral(property.curProperty).format("0,0")}
                 </Div>
               </Div>
             </Grid>
@@ -299,7 +333,7 @@ export const TopNav = () => {
                 size={"small"}
                 variant={"outlined"}
                 className={"w-50vw"}
-                value={numeral(property?.initProperty).format("0,0")}
+                value={numeral(property.initProperty).format("0,0")}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -321,7 +355,7 @@ export const TopNav = () => {
                 size={"small"}
                 variant={"outlined"}
                 className={"w-50vw"}
-                value={numeral(totalIncome).format("0,0")}
+                value={numeral(property.totalIncome).format("0,0")}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -343,7 +377,7 @@ export const TopNav = () => {
                 size={"small"}
                 variant={"outlined"}
                 className={"w-50vw"}
-                value={numeral(totalExpense).format("0,0")}
+                value={numeral(property.totalExpense).format("0,0")}
                 InputProps={{
                   readOnly: true,
                   startAdornment: (
@@ -363,6 +397,8 @@ export const TopNav = () => {
       {(popTrigger={}) => (
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
+          const event = new Event('storageChange');
+          window.dispatchEvent(event);
         }}>
           <Img src={money4} className={"w-max25 h-max25"} />
         </Div>
