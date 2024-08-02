@@ -373,6 +373,17 @@ export const ExerciseGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
+            <Time
+              OBJECT={OBJECT}
+              setOBJECT={setOBJECT}
+              REFS={REFS}
+              ERRORS={ERRORS}
+              extra={"exercise_goal_cardio"}
+              i={i}
+            />
+          </Div>
+          <Br20 />
+          <Div className={"d-center"}>
             <TextField
               select={false}
               type={"text"}
@@ -402,17 +413,6 @@ export const ExerciseGoalSave = () => {
                   exercise_goal_weight: limitedValue
                 }));
               }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              extra={"exercise_goal_cardio"}
-              i={i}
             />
           </Div>
         </Card>
