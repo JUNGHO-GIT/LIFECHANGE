@@ -2,7 +2,7 @@
 
 import {React, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
-import {percent} from "../../import/ImportUtils.jsx";
+import {sync} from "../../import/ImportUtils.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
 

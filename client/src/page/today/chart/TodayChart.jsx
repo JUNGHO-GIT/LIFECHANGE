@@ -17,7 +17,6 @@ export const TodayChart = () => {
       {TodayChartFood()}
       {TodayChartMoney()}
       {TodayChartSleep()}
-      <Br40 />
     </>
   );
 };

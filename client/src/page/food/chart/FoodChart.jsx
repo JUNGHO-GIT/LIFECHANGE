@@ -17,7 +17,6 @@ export const FoodChart = () => {
       {FoodChartPie()}
       {FoodChartLine()}
       {FoodChartAvg()}
-      <Br40 />
     </>
   );
 };

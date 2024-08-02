@@ -17,7 +17,6 @@ export const ExerciseChart = () => {
       {ExerciseChartPie()}
       {ExerciseChartLine()}
       {ExerciseChartAvg()}
-      <Br40 />
     </>
   );
 };

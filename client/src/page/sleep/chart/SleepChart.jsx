@@ -17,7 +17,6 @@ export const SleepChart = () => {
       {SleepChartPie()}
       {SleepChartLine()}
       {SleepChartAvg()}
-      <Br40 />
     </>
   );
 };
