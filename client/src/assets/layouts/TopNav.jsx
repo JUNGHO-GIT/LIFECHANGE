@@ -3,11 +3,9 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {TextField, Tabs, Tab, tabsClasses, Paper, Grid} from "../../import/ImportMuis.jsx";
-import {Card, Menu, MenuItem} from "../../import/ImportMuis.jsx";
-import {PopUp, Div, Img, Br10, Br20} from "../../import/ImportComponents.jsx";
+import {TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card} from "../../import/ImportMuis.jsx";
+import {PopUp, Div, Img, Hr40, Br20} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 import {money2, money4} from "../../import/ImportImages.jsx";
 
@@ -29,236 +27,240 @@ export const TopNav = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const part = firstStr.charAt(0).toUpperCase() + firstStr.slice(1);
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [selectedTab, setSelectedTab] = useState("analyzeTabs");
-  const [selectedMenuItem, setSelectedMenuItem] = useState("chartList");
-  const [anchorAnalyze, setAnchorAnalyze] = useState(null);
-  const [anchorGoal, setAnchorGoal] = useState(null);
-  const [anchorReal, setAnchorReal] = useState(null);
+  const [selectedTab, setSelectedTab] = useState("analyze");
+  const [smileScore, setSmileScore] = useState({
+    total: 0,
+    exercise: 0,
+    food: 0,
+    money: 0,
+    sleep: 0,
+  });
+  const [smileImage, setSmileImage] = useState({
+    total: smile3,
+    exercise: smile3,
+    food: smile3,
+    money: smile3,
+    sleep: smile3,
+  });
+  const [mainSmileImage, setMainSmileImage] = useState(smile3);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 스마일 지수 계산
+  useEffect(() => {
+    if (!percent) {
+      return;
+    }
+
+    const newSmileScore = {
+      total: percent?.total?.average?.score || 0,
+      exercise: percent?.exercise?.average?.score || 0,
+      food: percent?.food?.average?.score || 0,
+      money: percent?.money?.average?.score || 0,
+      sleep: percent?.sleep?.average?.score || 0,
+    };
+
+    const getImage = (score) => {
+      if (score > 0 && score <= 1) {
+        return smile1;
+      }
+      else if (score > 1 && score <= 2) {
+        return smile2;
+      }
+      else if (score > 2 && score <= 3) {
+        return smile3;
+      }
+      else if (score > 3 && score <= 4) {
+        return smile4;
+      }
+      else if (score > 4 && score <= 5) {
+        return smile5;
+      }
+      else {
+        return smile3;
+      }
+    };
+
+    setSmileScore(newSmileScore);
+    setSmileImage({
+      total: getImage(newSmileScore.total),
+      exercise: getImage(newSmileScore.exercise),
+      food: getImage(newSmileScore.food),
+      money: getImage(newSmileScore.money),
+      sleep: getImage(newSmileScore.sleep),
+    });
+
+  }, [
+    percent?.total?.average?.score,
+    percent?.exercise?.average?.score,
+    percent?.food?.average?.score,
+    percent?.money?.average?.score,
+    percent?.sleep?.average?.score
+  ]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 메인 스마일 이미지
+  useEffect(() => {
+    if (firstStr === "calendar") {
+      setMainSmileImage(smileImage.total);
+    }
+    else if (firstStr === "today") {
+      setMainSmileImage(smileImage.total);
+    }
+    else if (firstStr === "exercise") {
+      setMainSmileImage(smileImage.exercise);
+    }
+    else if (firstStr === "food") {
+      setMainSmileImage(smileImage.food);
+    }
+    else if (firstStr === "money") {
+      setMainSmileImage(smileImage.money);
+    }
+    else if (firstStr === "sleep") {
+      setMainSmileImage(smileImage.sleep);
+    }
+    else {
+      setMainSmileImage(smileImage.total);
+    }
+  }, [firstStr]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
   useEffect(() => {
     // 1. calendar
     if (firstStr === "calendar") {
-      if (secondStr === "list") {
-        setSelectedTab("listTabs");
-      }
-      else if (secondStr === "save") {
-        setSelectedTab("saveTabs");
+      if (secondStr === "list" || secondStr === "save") {
+        setSelectedTab("schedule");
       }
     }
     // 2. today
     else if (firstStr === "today") {
-      if (secondStr === "chart" && thirdStr === "list") {
-        setSelectedTab("analyzeTabs");
-        setSelectedMenuItem("chartList");
+      if (secondStr === "chart") {
+        setSelectedTab("analyze");
       }
-      else if (secondStr === "diff" && thirdStr === "list") {
-        setSelectedTab("analyzeTabs");
-        setSelectedMenuItem("diffList");
+      else if (secondStr === "diff") {
+        setSelectedTab("diff");
       }
-      else if (secondStr === "goal" && thirdStr === "list") {
-        setSelectedTab("goalTabs");
-        setSelectedMenuItem("goalList");
+      else if (secondStr === "goal") {
+        setSelectedTab("goal");
       }
       else if (secondStr === "list") {
-        setSelectedTab("realTabs");
-        setSelectedMenuItem("realList");
+        setSelectedTab("real");
       }
     }
     // 3. exercise, food, money, sleep
     else if (
-      firstStr === "exercise" ||
-      firstStr === "food" ||
-      firstStr === "money" ||
-      firstStr === "sleep"
+      firstStr === "exercise" || firstStr === "food" ||
+      firstStr === "money" || firstStr === "sleep"
     ) {
-      if (secondStr === "chart" && thirdStr === "list") {
-        setSelectedTab("analyzeTabs");
-        setSelectedMenuItem("chartList");
+      if (secondStr === "chart") {
+        setSelectedTab("analyze");
       }
-      else if (secondStr === "diff" && thirdStr === "list") {
-        setSelectedTab("analyzeTabs");
-        setSelectedMenuItem("diffList");
+      else if (secondStr === "diff") {
+        setSelectedTab("diff");
       }
-      else if (secondStr === "goal" && thirdStr === "list") {
-        setSelectedTab("goalTabs");
-        setSelectedMenuItem("goalList");
+      else if (secondStr === "goal") {
+        setSelectedTab("goal");
       }
-      else if (secondStr === "goal" && thirdStr === "save") {
-        setSelectedTab("goalTabs");
-        setSelectedMenuItem("goalSave");
-      }
-      else if (secondStr === "list") {
-        setSelectedTab("realTabs");
-        setSelectedMenuItem("realList");
-      }
-      else if (secondStr === "save") {
-        setSelectedTab("realTabs");
-        setSelectedMenuItem("realSave");
+      else if (secondStr === "list" || secondStr === "save") {
+        setSelectedTab("real");
       }
     }
   }, [firstStr, secondStr, thirdStr]);
 
   // 4. smileNode ----------------------------------------------------------------------------------
-  const smileNode = () => {
-    const makeIcon = (part, className, text, popTrigger) => {
-      const classType = text === "N" ? "d-none" : "fs-0-7rem fw-600 ms-3vw";
-      if (
-        parseFloat(percent?.[`${part}`]?.average?.score) > 0 &&
-        parseFloat(percent?.[`${part}`]?.average?.score) <= 1
-      ) {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile1} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-      else if (
-        parseFloat(percent?.[`${part}`]?.average?.score) > 1 &&
-        parseFloat(percent?.[`${part}`]?.average?.score) <= 2
-      ) {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile2} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-      else if (
-        parseFloat(percent?.[`${part}`]?.average?.score) > 2 &&
-        parseFloat(percent?.[`${part}`]?.average?.score) <= 3
-      ) {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile3} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-      else if (
-        parseFloat(percent?.[`${part}`]?.average?.score) > 3 &&
-        parseFloat(percent?.[`${part}`]?.average?.score) <= 4
-      ) {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile4} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-      else if (
-        parseFloat(percent?.[`${part}`]?.average?.score) > 4 &&
-        parseFloat(percent?.[`${part}`]?.average?.score) <= 5
-      ) {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile5} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-      else {
-        return (
-          <Div className={"d-center pointer"} onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}>
-            <Img src={smile3} className={className} />
-            <Div className={classType}>
-              {percent?.[`${part}`]?.average?.score}
-            </Div>
-          </Div>
-        );
-      }
-    };
-    return (
-      <PopUp
-        type={"dropdown"}
-        position={"bottom"}
-        direction={"center"}
-        contents={({closePopup}) => (
-          <Div className={"d-column p-10"}>
-            <Div className={"d-center"}>
-              <Div className={"fs-0-8rem fw-600"}>{moment().format("YYYY-MM-DD (ddd)")}</Div>
-            </Div>
-            <Br20 />
-            <Div className={"d-center"}>
-              <Div className={"fs-0-8rem me-3vw"}>
+  const smileNode = () => (
+    <PopUp
+      type={"innerCenter"}
+      position={"center"}
+      direction={"center"}
+      contents={({closePopup}) => (
+        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
+          <Grid container>
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"fs-1-2rem fw-500"}>
+                {moment().format("YYYY-MM-DD (ddd)")}
+              </Div>
+            </Grid>
+            <Hr40 />
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"d-center"}>
+                <Img src={smileImage.total} className={"w-max25 h-max25"} />
+              </Div>
+              <Div className={"fs-1-1rem me-3vw"}>
                 {translate("total")}
               </Div>
-              {makeIcon("total", "w-max5vw h-max5vh")}
-            </Div>
-            <Br10 />
-            <Div className={"d-center"}>
-              <Div className={"fs-0-8rem me-3vw"}>
-                {translate("exercise")}
+              <Div className={"fs-0-8rem"}>
+                {smileScore.total}
               </Div>
-              {makeIcon("exercise", "w-max5vw h-max5vh")}
-            </Div>
-            <Br10 />
+            </Grid>
+          </Grid>
+          <Br20 />
+          <Grid item xs={12} className={"d-center"}>
             <Div className={"d-center"}>
-              <Div className={"fs-0-8rem me-3vw"}>
-                {translate("food")}
-              </Div>
-              {makeIcon("food", "w-max5vw h-max5vh")}
+              <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
             </Div>
-            <Br10 />
+            <Div className={"fs-1-1rem me-3vw"}>
+              {translate("exercise")}
+            </Div>
+            <Div className={"fs-0-8rem"}>
+              {smileScore.exercise}
+            </Div>
+          </Grid>
+          <Br20 />
+          <Grid item xs={12} className={"d-center"}>
             <Div className={"d-center"}>
-              <Div className={"fs-0-8rem me-3vw"}>
-                {translate("money")}
-              </Div>
-              {makeIcon("money", "w-max5vw h-max5vh")}
+              <Img src={smileImage.food} className={"w-max25 h-max25"} />
             </Div>
-            <Br10 />
+            <Div className={"fs-1-1rem me-3vw"}>
+              {translate("food")}
+            </Div>
+            <Div className={"fs-0-8rem"}>
+              {smileScore.food}
+            </Div>
+          </Grid>
+          <Br20 />
+          <Grid item xs={12} className={"d-center"}>
             <Div className={"d-center"}>
-              <Div className={"fs-0-8rem me-3vw"}>
-                {translate("sleep")}
-              </Div>
-              {makeIcon("sleep", "w-max5vw h-max5vh")}
+              <Img src={smileImage.money} className={"w-max25 h-max25"} />
             </Div>
-            <Br20 />
+            <Div className={"fs-1-1rem me-3vw"}>
+              {translate("money")}
+            </Div>
+            <Div className={"fs-0-8rem"}>
+              {smileScore.money}
+            </Div>
+          </Grid>
+          <Br20 />
+          <Grid item xs={12} className={"d-center"}>
             <Div className={"d-center"}>
-              <Div className={"fs-0-6rem fw-500"}>
-                {translate("score")}
-              </Div>
+              <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
             </Div>
-          </Div>
-        )}>
-        {(popTrigger={}) => (
-          firstStr === "" || firstStr === "calendar" ||
-          firstStr === "user" || firstStr === "today" ? (
-            makeIcon("total", "w-max25 h-max25  ms-3vw", "N", popTrigger)
-          ) : (
-            makeIcon(part.toLowerCase(), "w-max25 h-max25 ms-3vw", "N", popTrigger)
-          )
-        )}
-      </PopUp>
-    );
-  };
+            <Div className={"fs-1-1rem me-3vw"}>
+              {translate("sleep")}
+            </Div>
+            <Div className={"fs-0-8rem"}>
+              {smileScore.sleep}
+            </Div>
+          </Grid>
+          <Hr40 />
+          <Grid item xs={12} className={"d-center"}>
+            <Div className={"fs-0-8rem"}>
+              {translate("score")}
+            </Div>
+          </Grid>
+        </Card>
+      )}>
+      {(popTrigger={}) => (
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+        }}>
+          <Img src={mainSmileImage} className={"w-max25 h-max25"} />
+        </Div>
+      )}
+    </PopUp>
+  );
 
   // 5. property -----------------------------------------------------------------------------------
   const propertyNode = () => (
@@ -267,98 +269,102 @@ export const TopNav = () => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"w-max75vw h-max65vh border d-column p-20"}>
-          <Div className={"d-center"}>
-            <Div className={"fs-1-0rem fw-500"}>
-              {dateStart}
-            </Div>
-            <Div className={"fs-0-7rem fw-500 ms-10 me-10"}>
-              ~
-            </Div>
-            <Div className={"fs-1-0rem fw-500"}>
-              {dateEnd}
-            </Div>
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Img src={money2} className={"w-16 h-16"} />
-            <Div className={"fs-1-4rem fw-600"}>
-              {numeral(totalProperty).format("0,0")}
-            </Div>
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <TextField
-              select={false}
-              label={translate("initProperty")}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-50vw"}
-              value={numeral(property?.initProperty).format("0,0")}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <TextField
-              select={false}
-              label={translate("income")}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-50vw"}
-              value={numeral(totalIncome).format("0,0")}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <TextField
-              select={false}
-              label={translate("expense")}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-50vw"}
-              value={numeral(totalExpense).format("0,0")}
-              InputProps={{
-                readOnly: true,
-                startAdornment: (
-                  <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
-            />
-          </Div>
-        </Div>
+        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
+          <Grid container>
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-500 me-2vw"}>
+                {dateStart}
+              </Div>
+              <Div className={"fs-0-7rem fw-500"}>
+                ~
+              </Div>
+              <Div className={"fs-1-0rem fw-500 ms-2vw"}>
+                {dateEnd}
+              </Div>
+            </Grid>
+            <Hr40 />
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"d-center"}>
+                <Img src={money2} className={"w-16 h-16"} />
+                <Div className={"fs-1-4rem fw-600"}>
+                  {numeral(totalProperty).format("0,0")}
+                </Div>
+              </Div>
+            </Grid>
+            <Hr40 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("initProperty")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={numeral(property?.initProperty).format("0,0")}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("income")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={numeral(totalIncome).format("0,0")}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("expense")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={numeral(totalExpense).format("0,0")}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={money2} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Div className={"d-center pointer"} onClick={(e) => {
           popTrigger.openPopup(e.currentTarget)
         }}>
-          <Img src={money4} className={"w-max25 h-max25 ms-3vw"} />
+          <Img src={money4} className={"w-max25 h-max25"} />
         </Div>
       )}
     </PopUp>
@@ -367,317 +373,168 @@ export const TopNav = () => {
   // 6. tabs ---------------------------------------------------------------------------------------
   const tabsNode = () => (
     (firstStr === "today") ? (
-      <>
-        <Tabs
-          value={selectedTab}
-          variant={"scrollable"}
-          selectionFollowsFocus={true}
-          scrollButtons={false}
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              '&.Mui-disabled': { opacity: 0.3 },
-            },
-          }}>
-          <Tab
-            label={translate("analyzeTabs")}
-            value={"analyzeTabs"}
-            onClick={(e) => {
-              // @ts-ignore
-              setAnchorAnalyze(e.currentTarget);
-            }}
-          />
-          <Tab
-            label={translate("goalTabs")}
-            value={"goalTabs"}
-            onClick={(e) => {
-              setSelectedTab("goalTabs");
-              navigate(`${firstStr}/goal/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          />
-          <Tab
-            label={translate("realTabs")}
-            value={"realTabs"}
-            onClick={(e) => {
-              setSelectedTab("realTabs");
-              navigate(`${firstStr}/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          />
-        </Tabs>
-        <Menu
-          anchorEl={anchorAnalyze}
-          open={Boolean(anchorAnalyze)}
-          onClose={() => setAnchorAnalyze(null)}
-        >
-          <MenuItem
-            selected={selectedMenuItem === "chartList"}
-            onClick={() => {
-              setSelectedTab("analyzeTabs");
-              setSelectedMenuItem("chartList");
-              setAnchorAnalyze(null);
-              navigate(`${firstStr}/chart/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("chartList")}
-          </MenuItem>
-          <MenuItem
-            selected={selectedMenuItem === "diffList"}
-            onClick={() => {
-              setSelectedTab("analyzeTabs");
-              setSelectedMenuItem("diffList");
-              setAnchorAnalyze(null);
-              navigate(`${firstStr}/diff/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("diffList")}
-          </MenuItem>
-        </Menu>
-      </>
-    )
-    : (firstStr === "calendar") ? (
-      <>
-        <Tabs
-          value={selectedTab}
-          variant={"scrollable"}
-          selectionFollowsFocus={true}
-          scrollButtons={false}
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              '&.Mui-disabled': { opacity: 0.3 },
-            },
-          }}>
-          <Tab
-            label={translate("listTabs")}
-            value={"listTabs"}
-            onClick={(e) => {
-              setSelectedTab("listTabs");
-              navigate(`${firstStr}/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          />
-          <Tab
-            label={translate("saveTabs")}
-            value={"saveTabs"}
-            onClick={(e) => {
-              setSelectedTab("saveTabs");
-              navigate(`${firstStr}/save`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          />
-        </Tabs>
-      </>
-    )
-    : (
-      <>
-        <Tabs
-          value={selectedTab}
-          variant={"scrollable"}
-          selectionFollowsFocus={true}
-          scrollButtons={false}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
+      <Tabs
+        value={selectedTab}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .${tabsClasses.scrollButtons}`]: {
+            '&.Mui-disabled': { opacity: 0.3 },
+          },
+        }}>
+        <Tab
+          label={translate("analyze")}
+          value={"analyze"}
+          onClick={(e) => {
+            setSelectedTab("analyze");
+            navigate(`${firstStr}/chart/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
           }}
-        >
-          <Tab
-            label={translate("analyzeTabs")}
-            value={"analyzeTabs"}
-            onClick={(e) => {
-              // @ts-ignore
-              setAnchorAnalyze(e.currentTarget);
-            }}
-          />
-          <Tab
-            label={translate("goalTabs")}
-            value={"goalTabs"}
-            onClick={(e) => {
-              // @ts-ignore
-              setAnchorGoal(e.currentTarget);
-            }}
-          />
-          <Tab
-            label={translate("realTabs")}
-            value={"realTabs"}
-            onClick={(e) => {
-              // @ts-ignore
-              setAnchorReal(e.currentTarget);
-            }}
-          />
-        </Tabs>
-        <Menu
-          anchorEl={anchorAnalyze}
-          open={Boolean(anchorAnalyze)}
-          onClose={() => setAnchorAnalyze(null)}
-        >
-          <MenuItem
-            selected={selectedMenuItem === "chartList"}
-            onClick={() => {
-              setSelectedTab("analyzeTabs");
-              setSelectedMenuItem("chartList");
-              setAnchorAnalyze(null);
-              navigate(`${firstStr}/chart/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("chartList")}
-          </MenuItem>
-          <MenuItem
-            selected={selectedMenuItem === "diffList"}
-            onClick={() => {
-              setSelectedTab("analyzeTabs");
-              setSelectedMenuItem("diffList");
-              setAnchorAnalyze(null);
-              navigate(`${firstStr}/diff/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("diffList")}
-          </MenuItem>
-        </Menu>
-        <Menu
-          anchorEl={anchorGoal}
-          open={Boolean(anchorGoal)}
-          onClose={() => setAnchorGoal(null)}
-        >
-          <MenuItem
-            selected={selectedMenuItem === "goalList"}
-            onClick={() => {
-              setSelectedTab("goalTabs");
-              setSelectedMenuItem("goalList");
-              setAnchorGoal(null);
-              navigate(`${firstStr}/goal/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("list")}
-          </MenuItem>
-          <MenuItem
-            selected={selectedMenuItem === "goalSave"}
-            onClick={() => {
-              setSelectedTab("goalTabs");
-              setSelectedMenuItem("goalSave");
-              setAnchorGoal(null);
-              navigate(`${firstStr}/goal/save`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("save")}
-          </MenuItem>
-        </Menu>
-        <Menu
-          anchorEl={anchorReal}
-          open={Boolean(anchorReal)}
-          onClose={() => setAnchorReal(null)}
-        >
-          {firstStr === "food" && (
-            <MenuItem
-              selected={selectedMenuItem === "findList"}
-              onClick={() => {
-                setSelectedTab("realTabs");
-                setSelectedMenuItem("findList");
-                setAnchorReal(null);
-                navigate(`${firstStr}/find`, {
-                  state: {
-                    dateType: "day",
-                    dateStart: moment().format("YYYY-MM-DD"),
-                    dateEnd: moment().format("YYYY-MM-DD"),
-                  },
-                });
-              }}
-            >
-              {translate("findList")}
-            </MenuItem>
-          )}
-          <MenuItem
-            selected={selectedMenuItem === "realList"}
-            onClick={() => {
-              setSelectedTab("realTabs");
-              setSelectedMenuItem("realList");
-              setAnchorReal(null);
-              navigate(`${firstStr}/list`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("list")}
-          </MenuItem>
-          <MenuItem
-            selected={selectedMenuItem === "realSave"}
-            onClick={() => {
-              setSelectedTab("realTabs");
-              setSelectedMenuItem("realSave");
-              setAnchorReal(null);
-              navigate(`${firstStr}/save`, {
-                state: {
-                  dateType: "day",
-                  dateStart: moment().format("YYYY-MM-DD"),
-                  dateEnd: moment().format("YYYY-MM-DD"),
-                },
-              });
-            }}
-          >
-            {translate("save")}
-          </MenuItem>
-        </Menu>
-      </>
+        />
+        <Tab
+          label={translate("diff")}
+          value={"diff"}
+          onClick={(e) => {
+            setSelectedTab("diff");
+            navigate(`${firstStr}/diff/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("goal")}
+          value={"goal"}
+          onClick={(e) => {
+            setSelectedTab("goal");
+            navigate(`${firstStr}/goal/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("real")}
+          value={"real"}
+          onClick={(e) => {
+            setSelectedTab("real");
+            navigate(`${firstStr}/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+      </Tabs>
+    ) : (firstStr === "calendar") ? (
+      <Tabs
+        value={selectedTab}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .${tabsClasses.scrollButtons}`]: {
+            '&.Mui-disabled': { opacity: 0.3 },
+          },
+        }}>
+        <Tab
+          label={translate("schedule")}
+          value={"schedule"}
+          onClick={(e) => {
+            setSelectedTab("schedule");
+            navigate(`${firstStr}/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+      </Tabs>
+    ) : (
+      <Tabs
+        value={selectedTab}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .MuiTabs-scrollButtons`]: {
+            "&.Mui-disabled": { opacity: 0.3 },
+          },
+        }}
+      >
+        <Tab
+          label={translate("analyze")}
+          value={"analyze"}
+          onClick={(e) => {
+            setSelectedTab("analyze");
+            navigate(`${firstStr}/chart/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("diff")}
+          value={"diff"}
+          onClick={(e) => {
+            setSelectedTab("diff");
+            navigate(`${firstStr}/diff/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("goal")}
+          value={"goal"}
+          onClick={(e) => {
+            setSelectedTab("goal");
+            navigate(`${firstStr}/goal/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("real")}
+          value={"real"}
+          onClick={(e) => {
+            setSelectedTab("real");
+            navigate(`${firstStr}/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+      </Tabs>
     )
   );
 
@@ -686,14 +543,14 @@ export const TopNav = () => {
     <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
         <Grid container>
-          <Grid item xs={1} className={"d-center"}>
+          <Grid item xs={2} className={"d-center"}>
             {smileNode()}
           </Grid>
-          <Grid item xs={10} className={"d-center"}>
-            {tabsNode()}
-          </Grid>
-          <Grid item xs={1} className={"d-center"}>
+          <Grid item xs={2} className={"d-center"}>
             {propertyNode()}
+          </Grid>
+          <Grid item xs={8} className={"d-center"}>
+            {tabsNode()}
           </Grid>
         </Grid>
       </Card>

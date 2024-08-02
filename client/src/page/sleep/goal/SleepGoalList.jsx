@@ -107,10 +107,31 @@ export const SleepGoalList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+        <Card className={"border radius shadow-none p-10"} key={"empty-sleep"}>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Icons
+                name={"TbSearch"}
+                className={"w-18 h-18 black"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Object.assign(SEND, {
+                    dateType: "day",
+                    dateStart: DATE.dateStart,
+                    dateEnd: DATE.dateEnd,
+                  });
+                  navigate(SEND.toSave, {
+                    state: SEND
+                  });
+                }}
+              />
+            </Grid>
+            <Grid item xs={10} className={"d-left"}>
+              {translate("sleep")}
+              <Div className={"ms-1vw me-1vw"} />
+              {translate("empty")}
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (

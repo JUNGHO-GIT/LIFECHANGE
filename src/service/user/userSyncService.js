@@ -100,7 +100,7 @@ export const property = async (
     totalExpense: findMoney?.money_total_expense,
     totalProperty: curProperty,
     dateStart: (initProperty?.user_regDt).toISOString().slice(0, 10),
-    dateEnd: (findMoney?.money_dateEnd).toISOString().slice(0, 10),
+    dateEnd: findMoney?.money_dateEnd,
   };
 
   return finalResult;

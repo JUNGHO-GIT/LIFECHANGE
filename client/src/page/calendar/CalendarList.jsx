@@ -152,7 +152,18 @@ export const CalendarList = () => {
           locale={"ko"}
           view={"month"}
           value={new Date(DATE.dateStart)}
-          onClickDay={undefined}
+          onClickDay={(value) => {
+            Object.assign(SEND, {
+              id: "",
+              section_id: "",
+              dateType: "day",
+              dateStart: moment(value).format("YYYY-MM-DD"),
+              dateEnd: moment(value).format("YYYY-MM-DD"),
+            });
+            navigate(SEND.toSave, {
+              state: SEND
+            });
+          }}
           showNavigation={true}
           showNeighboringMonth={true}
           showDoubleView={false}
