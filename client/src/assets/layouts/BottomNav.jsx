@@ -27,6 +27,9 @@ export const BottomNav = () => {
     if (firstStr === "calendar") {
       setValue("calendar");
     }
+    else if (firstStr === "today") {
+      setValue("today");
+    }
     else if (firstStr === "exercise") {
       setValue("exercise");
     }

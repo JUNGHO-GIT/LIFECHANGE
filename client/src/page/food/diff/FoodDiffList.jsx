@@ -122,10 +122,19 @@ export const FoodDiffList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+        <Card className={"border radius shadow-none p-10"} key={"empty-food"}>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("food")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -390,6 +399,7 @@ export const FoodDiffList = () => {
                       {translate("g")}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -404,7 +414,7 @@ export const FoodDiffList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

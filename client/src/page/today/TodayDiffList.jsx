@@ -242,7 +242,7 @@ export const TodayDiffList = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. exercise
+    // 7-1. exercise
     const exerciseSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -252,11 +252,18 @@ export const TodayDiffList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-exercise"}>
-          <Div className={"d-center"}>
-            {translate("exercise")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("exercise")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -275,14 +282,14 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("exercise")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -515,6 +522,7 @@ export const TodayDiffList = () => {
                       {translate("kg")}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -527,7 +535,7 @@ export const TodayDiffList = () => {
         )
       );
     };
-    // 7-4. food
+    // 7-2. food
     const foodSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -537,11 +545,18 @@ export const TodayDiffList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-food"}>
-          <Div className={"d-center"}>
-            {translate("food")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("food")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -560,14 +575,14 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("food")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -800,6 +815,7 @@ export const TodayDiffList = () => {
                       {translate("g")}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -812,7 +828,7 @@ export const TodayDiffList = () => {
         )
       );
     };
-    // 7-5. money
+    // 7-3. money
     const moneySection = () => {
       const loadingFragment = () => (
         <Loading
@@ -822,11 +838,18 @@ export const TodayDiffList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-money"}>
-          <Div className={"d-center"}>
-            {translate("money")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("money")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -845,14 +868,14 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("money")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -880,6 +903,7 @@ export const TodayDiffList = () => {
                       )}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -995,7 +1019,7 @@ export const TodayDiffList = () => {
         )
       );
     };
-    // 7-6. sleep
+    // 7-4. sleep
     const sleepSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -1005,11 +1029,18 @@ export const TodayDiffList = () => {
       );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty-sleep"}>
-          <Div className={"d-center"}>
-            {translate("sleep")}
-            <Div className={"ms-1vw me-1vw"} />
-            {translate("empty")}
-          </Div>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("sleep")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -1028,14 +1059,14 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("sleep")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -1217,6 +1248,7 @@ export const TodayDiffList = () => {
                       {translate("hm")}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -1231,7 +1263,7 @@ export const TodayDiffList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {exerciseSection()}
           <Br30 />

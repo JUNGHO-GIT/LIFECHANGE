@@ -122,10 +122,19 @@ export const ExerciseDiffList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+        <Card className={"border radius shadow-none p-10"} key={"empty-exercise"}>
+          <Grid container>
+            <Grid item xs={2} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("exercise")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       const tableFragment = (i) => (
@@ -144,14 +153,14 @@ export const ExerciseDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("exercise")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -384,6 +393,7 @@ export const ExerciseDiffList = () => {
                       {translate("kg")}
                     </Div>
                   </Grid>
+                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -398,7 +408,7 @@ export const ExerciseDiffList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

@@ -234,7 +234,7 @@ export const TodayList = () => {
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
-    // 7-3. exercise
+    // 7-1. exercise
     const exerciseSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -262,10 +262,15 @@ export const TodayList = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              {translate("exercise")}
-              <Div className={"ms-1vw me-1vw"} />
-              {translate("empty")}
+            <Grid item xs={2} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("exercise")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
             </Grid>
           </Grid>
         </Card>
@@ -304,7 +309,14 @@ export const TodayList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("exercise")}
+                      </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -411,7 +423,7 @@ export const TodayList = () => {
         )
       );
     };
-    // 7-4. food
+    // 7-2. food
     const foodSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -439,10 +451,15 @@ export const TodayList = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              {translate("food")}
-              <Div className={"ms-1vw me-1vw"} />
-              {translate("empty")}
+            <Grid item xs={2} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("food")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
             </Grid>
           </Grid>
         </Card>
@@ -481,7 +498,14 @@ export const TodayList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("food")}
+                      </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -610,7 +634,7 @@ export const TodayList = () => {
         )
       );
     };
-    // 7-5. money
+    // 7-3. money
     const moneySection = () => {
       const loadingFragment = () => (
         <Loading
@@ -638,10 +662,15 @@ export const TodayList = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              {translate("money")}
-              <Div className={"ms-1vw me-1vw"} />
-              {translate("empty")}
+            <Grid item xs={2} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("money")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
             </Grid>
           </Grid>
         </Card>
@@ -680,7 +709,14 @@ export const TodayList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("money")}
+                      </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -765,7 +801,7 @@ export const TodayList = () => {
         )
       );
     };
-    // 7-6. sleep
+    // 7-4. sleep
     const sleepSection = () => {
       const loadingFragment = () => (
         <Loading
@@ -793,10 +829,15 @@ export const TodayList = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              {translate("exercise")}
-              <Div className={"ms-1vw me-1vw"} />
-              {translate("empty")}
+            <Grid item xs={2} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("sleep")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
             </Grid>
           </Grid>
         </Card>
@@ -835,7 +876,14 @@ export const TodayList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("sleep")}
+                      </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -944,7 +992,7 @@ export const TodayList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {exerciseSection()}
           <Br30 />

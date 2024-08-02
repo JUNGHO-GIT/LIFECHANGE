@@ -10566,13 +10566,6 @@
   color: #d1d2d5 !important;
 }
 
-.dark {
-  color: #697A8D !important;
-}
-.dark:hover, .dark:focus, .dark:active {
-  color: #4B5563 !important;
-}
-
 .red {
   color: #EF4444 !important;
 }

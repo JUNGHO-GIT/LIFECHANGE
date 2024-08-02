@@ -140,10 +140,15 @@ export const FoodList = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              {translate("food")}
-              <Div className={"ms-1vw me-1vw"} />
-              {translate("empty")}
+            <Grid item xs={2} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-600 dark"}>
+                {translate("food")}
+              </Div>
+            </Grid>
+            <Grid item xs={8} className={"d-left"}>
+              <Div className={"fs-1-0rem fw-500 black"}>
+                {translate("empty")}
+              </Div>
             </Grid>
           </Grid>
         </Card>
@@ -182,7 +187,14 @@ export const FoodList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                    <Div className={"d-center"}>
+                      <Div className={"fs-1-0rem fw-600 dark"}>
+                        {translate("food")}
+                      </Div>
+                    </Div>
+                  </Grid>
+                  <Grid item xs={8} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -319,7 +331,7 @@ export const FoodList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pb-80"}>
+      <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper h-min75vh"}>
           {tableSection()}
         </Div>

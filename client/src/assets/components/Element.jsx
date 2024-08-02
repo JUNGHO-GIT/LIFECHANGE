@@ -18,7 +18,7 @@ export const Img = (props) => {
     const fileName = srcProps.split("/").pop().split(".")[0];
     return (
       <img
-        loading={"lazy"}
+        loading={"eager"}
         alt={fileName}
         style={{
           margin: "0px 10px 0px 0px",
