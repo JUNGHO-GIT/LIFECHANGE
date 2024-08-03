@@ -12,6 +12,11 @@ export const Empty = ({
 
   // 1. common -------------------------------------------------------------------------------------
   const {translate} = useTranslate();
+  const navigateStr = (
+    type === "goal" ? `/${extra}/goal/save` :
+    type === "real" ? `/${extra}/save` :
+    null
+  );
 
   // 2. diffNode -----------------------------------------------------------------------------------
   const diffNode = () => (
@@ -52,7 +57,7 @@ export const Empty = ({
                     dateStart: DATE.dateStart,
                     dateEnd: DATE.dateEnd,
                   });
-                  navigate(SEND.toSave, {
+                  navigate(navigateStr, {
                     state: SEND
                   });
                 }}

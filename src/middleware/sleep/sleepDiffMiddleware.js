@@ -10,7 +10,9 @@ export const list = async (object) => {
     return [];
   }
 
-  // ex. 22:00 - 04:00 = 06:00   /  22:00 - 22:30 = 00:30  /  22:09 - 23:00 = 00:51
+  // ex. 22:00 - 04:00 = 06:00
+  // ex. 22:00 - 22:30 = 00:30
+  // ex. 22:09 - 23:00 = 00:51
   const compareTime = (goal, real, extra) => {
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
@@ -19,9 +21,9 @@ export const list = async (object) => {
       // 밤을 넘어가는 시간 처리
       let diff = differenceInMinutes(realDate, goalDate);
 
-      // 24시간을 분으로 환산 후, 차이가 음수인 경우 추가
+      // 차이가 음수인 경우, 절대값을 사용하여 계산
       if (diff < 0) {
-        diff += 1440;
+        diff = Math.abs(diff);
       }
 
       // HH:mm 형식으로 결과 반환

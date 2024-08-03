@@ -33,6 +33,7 @@ import exercise3_2 from "../assets/images/exercise3_2.webp";
 import exercise3_3 from "../assets/images/exercise3_3.webp";
 import exercise4 from "../assets/images/exercise4.webp";
 import exercise5 from "../assets/images/exercise5.webp";
+import exercise6 from "../assets/images/exercise6.webp";
 
 import food1 from "../assets/images/food1.webp";
 import food2 from "../assets/images/food2.webp";
@@ -63,7 +64,7 @@ export {
   flag1, flag2,
   common1, common2, common3_1, common3_2, common4, common5,
   calendar1, calendar2, calendar3, today1,
-  exercise1, exercise2, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5,
+  exercise1, exercise2, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5, exercise6,
   food1, food2, food3, food4, food5,
   money1, money2, money3, money4,
   sleep1, sleep2, sleep3, sleep4,
