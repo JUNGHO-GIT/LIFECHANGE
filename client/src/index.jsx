@@ -185,6 +185,7 @@ const App = () => {
       {!noneHeader && <Header />}
       {!noneTop && <TopNav />}
       <Routes>
+        <Route path="/" element={<Today />} />
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/today/*" element={<Today />} />
         <Route path="/exercise/*" element={<Exercise />} />

@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Br10} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
@@ -119,37 +119,13 @@ export const ExerciseList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty-exercise"}>
-          <Grid container>
-            <Grid item xs={2} className={"d-center"}>
-              <Icons
-                name={"TbSearch"}
-                className={"w-18 h-18 black"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Object.assign(SEND, {
-                    dateType: "day",
-                    dateStart: DATE.dateStart,
-                    dateEnd: DATE.dateEnd,
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}
-              />
-            </Grid>
-            <Grid item xs={2} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("exercise")}
-              </Div>
-            </Grid>
-            <Grid item xs={8} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </Card>
+        <Empty
+          DATE={DATE}
+          SEND={SEND}
+          navigate={navigate}
+          type={"real"}
+          extra={"exercise"}
+        />
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
@@ -167,7 +143,7 @@ export const ExerciseList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
@@ -185,60 +161,54 @@ export const ExerciseList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("exercise")}
-                      </Div>
+                  <Grid item xs={2} className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("exercise")}
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
-                    <Div className={"d-center"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      {item.exercise_dateStart === item.exercise_dateEnd ? (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.exercise_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.exercise_dateStart).format("ddd")}
-                          </Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.exercise_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                            ~
-                          </Div>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.exercise_dateEnd?.substring(5, 10)}
-                          </Div>
-                        </>
-                      )}
-                    </Div>
+                  <Grid item xs={8} className={"d-left"}>
+                    {item.exercise_dateStart === item.exercise_dateEnd ? (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.exercise_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_dateStart).format("ddd")}
+                        </Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.exercise_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
+                          ~
+                        </Div>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.exercise_dateEnd?.substring(5, 10)}
+                        </Div>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={2} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={7} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("vol")}
                     </Div>
@@ -247,44 +217,44 @@ export const ExerciseList = () => {
                 <Hr30 />
                 {/** row 2 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.exercise_total_cardio}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
                   </Grid>
                 </Grid>
                 <Hr30 />
-                {/** row 4 **/}
+                {/** row 3 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_body_weight).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("kg")}
+                      {translate("k")}
                     </Div>
                   </Grid>
                 </Grid>

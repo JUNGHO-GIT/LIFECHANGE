@@ -418,13 +418,13 @@ export const FoodChartAvg = () => {
       );
       return (
         <Grid container>
-          <Grid item xs={3} className={"d-column align-left"}>
+          <Grid item xs={3} className={"d-left"}>
             {selectSection1()}
           </Grid>
-          <Grid item xs={6} className={"d-column align-center"}>
+          <Grid item xs={6} className={"d-center"}>
             {titleSection()}
           </Grid>
-          <Grid item xs={3} className={"d-column align-right"}>
+          <Grid item xs={3} className={"d-right"}>
             {selectSection2()}
           </Grid>
         </Grid>

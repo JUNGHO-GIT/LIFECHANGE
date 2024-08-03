@@ -74,7 +74,7 @@ export const UserAppSetting = () => {
                       position={"bottom"}
                       direction={"center"}
                       contents={({closePopup}) => (
-                      <Div className={"d-column align-left"}>
+                      <Div className={"d-left"}>
                         <Div className={"d-center"} onClick={() => {
                           setLang("ko")
                           sessionStorage.setItem("lang", "ko")

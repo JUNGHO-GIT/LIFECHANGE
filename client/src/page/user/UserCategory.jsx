@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
 import {Card, Paper} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";

@@ -2,9 +2,9 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Hr30, Br10, Br20, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
 import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
@@ -122,20 +122,13 @@ export const FoodDiffList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty-food"}>
-          <Grid container>
-            <Grid item xs={2} className={"d-center"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("food")}
-              </Div>
-            </Grid>
-            <Grid item xs={8} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </Card>
+        <Empty
+          DATE={DATE}
+          SEND={SEND}
+          navigate={navigate}
+          type={"diff"}
+          extra={"food"}
+        />
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
@@ -153,56 +146,50 @@ export const FoodDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("food")}
-                      </Div>
+                  <Grid item xs={2} className={"d-center"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("food")}
                     </Div>
                   </Grid>
-                  <Grid item xs={10} className={"d-column align-left pt-10"}>
-                    <Div className={"d-center"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      {item.food_goal_dateStart === item.food_goal_dateEnd ? (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_goal_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_goal_dateStart).format("ddd")}
-                          </Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_goal_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_goal_dateStart).format("ddd")}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                            ~
-                          </Div>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_goal_dateEnd?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_goal_dateEnd).format("ddd")}
-                          </Div>
-                        </>
-                      )}
-                    </Div>
+                  <Grid item xs={10} className={"d-left"}>
+                    {item.food_goal_dateStart === item.food_goal_dateEnd ? (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_goal_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_goal_dateStart).format("ddd")}
+                        </Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_goal_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_goal_dateStart).format("ddd")}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
+                          ~
+                        </Div>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_goal_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_goal_dateEnd).format("ddd")}
+                        </Div>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
@@ -235,25 +222,25 @@ export const FoodDiffList = () => {
                   </Grid>
                   <Grid item xs={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("k")}
+                      {translate("kc")}
                     </Div>
                     <Br10 />
                     <Div className={"fs-0-6rem"}>
-                      {translate("k")}
+                      {translate("kc")}
                     </Div>
                     <Br10 />
                     <Div className={"fs-0-6rem"}>
-                      {translate("k")}
+                      {translate("kc")}
                     </Div>
                   </Grid>
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
@@ -301,10 +288,10 @@ export const FoodDiffList = () => {
                 <Hr30 />
                 {/** row 3 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
@@ -352,10 +339,10 @@ export const FoodDiffList = () => {
                 <Hr30 />
                 {/** row 4 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>

@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Br20, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
@@ -121,37 +121,13 @@ export const FoodList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty-food"}>
-          <Grid container>
-            <Grid item xs={2} className={"d-center"}>
-              <Icons
-                name={"TbSearch"}
-                className={"w-18 h-18 black"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Object.assign(SEND, {
-                    dateType: "day",
-                    dateStart: DATE.dateStart,
-                    dateEnd: DATE.dateEnd,
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}
-              />
-            </Grid>
-            <Grid item xs={2} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("food")}
-              </Div>
-            </Grid>
-            <Grid item xs={8} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </Card>
+        <Empty
+          DATE={DATE}
+          SEND={SEND}
+          navigate={navigate}
+          type={"real"}
+          extra={"food"}
+        />
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
@@ -169,7 +145,7 @@ export const FoodList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
@@ -187,88 +163,82 @@ export const FoodList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("food")}
-                      </Div>
+                  <Grid item xs={2} className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("food")}
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
-                    <Div className={"d-center"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      {item.food_dateStart === item.food_dateEnd ? (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_dateStart).format("ddd")}
-                          </Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_dateStart).format("ddd")}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                            ~
-                          </Div>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.food_dateEnd?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.food_dateEnd).format("ddd")}
-                          </Div>
-                        </>
-                      )}
-                    </Div>
+                  <Grid item xs={8} className={"d-left"}>
+                    {item.food_dateStart === item.food_dateEnd ? (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_dateStart).format("ddd")}
+                        </Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_dateStart).format("ddd")}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
+                          ~
+                        </Div>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.food_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_dateEnd).format("ddd")}
+                        </Div>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_total_kcal).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
-                      {translate("k")}
+                      {translate("kc")}
                     </Div>
                   </Grid>
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_total_carb).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -277,20 +247,20 @@ export const FoodList = () => {
                 <Hr30 />
                 {/** row 3 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_total_protein).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -299,20 +269,20 @@ export const FoodList = () => {
                 <Hr30 />
                 {/** row 4 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_total_fat).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>

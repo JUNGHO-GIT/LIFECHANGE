@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Br20, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
@@ -114,37 +114,13 @@ export const MoneyList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty-money"}>
-          <Grid container>
-            <Grid item xs={2} className={"d-center"}>
-              <Icons
-                name={"TbSearch"}
-                className={"w-18 h-18 black"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Object.assign(SEND, {
-                    dateType: "day",
-                    dateStart: DATE.dateStart,
-                    dateEnd: DATE.dateEnd,
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}
-              />
-            </Grid>
-            <Grid item xs={2} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("money")}
-              </Div>
-            </Grid>
-            <Grid item xs={8} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </Card>
+        <Empty
+          DATE={DATE}
+          SEND={SEND}
+          navigate={navigate}
+          type={"real"}
+          extra={"money"}
+        />
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
@@ -162,7 +138,7 @@ export const MoneyList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
@@ -180,60 +156,54 @@ export const MoneyList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("money")}
-                      </Div>
+                  <Grid item xs={2} className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("money")}
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
-                    <Div className={"d-center"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      {item.money_dateStart === item.money_dateEnd ? (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.money_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.money_dateStart).format("ddd")}
-                          </Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.money_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-3vw me-3vw"}>
-                            ~
-                          </Div>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.money_dateEnd?.substring(5, 10)}
-                          </Div>
-                        </>
-                      )}
-                    </Div>
+                  <Grid item xs={8} className={"d-left"}>
+                    {item.money_dateStart === item.money_dateEnd ? (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.money_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_dateStart).format("ddd")}
+                        </Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.money_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
+                          ~
+                        </Div>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.money_dateEnd?.substring(5, 10)}
+                        </Div>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("income")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_total_income).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>
@@ -242,20 +212,20 @@ export const MoneyList = () => {
                 <Hr30 />
                 {/** row 2 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("expense")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_total_expense).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>

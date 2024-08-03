@@ -10,7 +10,7 @@ import {sleep2, sleep3, sleep4, exercise4} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Time = ({
-  OBJECT, setOBJECT, REFS, ERRORS, extra, i
+  OBJECT, setOBJECT, REFS, ERRORS, DATE, extra, i
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
@@ -57,13 +57,19 @@ export const Time = ({
   else if (firstStr === "exercise" && secondStr === "goal") {
     if (extra.split("_")[2] === "cardio") {
       image = exercise4;
-      translateStr = `${translate("goalCardio")} (${translate("total")})`;
+      translateStr = (
+        DATE?.dateType === "day" ? (
+          `${translate("goalCardio")}`
+        ) : (
+          `${translate("goalCardio")} (${translate("total")})`
+        )
+      );
     }
   }
   else if (firstStr === "exercise" && secondStr !== "goal") {
     if (extra.split("_")[1] === "cardio") {
       image = exercise4;
-      translateStr = `${translate("cardio")} (${translate("total")})`;
+      translateStr = `${translate("cardio")}`;
     }
   }
 

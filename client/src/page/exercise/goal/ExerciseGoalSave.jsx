@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {useTime, useTranslate} from "../../../import/ImportHooks.jsx";
 import {sync} from "../../../import/ImportUtils.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../../import/ImportMuis.jsx";
@@ -277,7 +277,6 @@ export const ExerciseGoalSave = () => {
         />
       </Card>
     );
-    // 7-2. total
     // 7-3. table
     const tableSection = () => {
       const loadingFragment = () => (
@@ -311,7 +310,13 @@ export const ExerciseGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalCount")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalCount")}`
+                ) : (
+                  `${translate("goalCount")} (${translate("total")})`
+                )
+              }
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
               inputRef={REFS?.current?.exercise_goal_count}
@@ -344,7 +349,13 @@ export const ExerciseGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalVolume")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalVolume")}`
+                ) : (
+                  `${translate("goalVolume")} (${translate("total")})`
+                )
+              }
               className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
               inputRef={REFS?.current?.exercise_goal_volume}
@@ -378,6 +389,7 @@ export const ExerciseGoalSave = () => {
               setOBJECT={setOBJECT}
               REFS={REFS}
               ERRORS={ERRORS}
+              DATE={DATE}
               extra={"exercise_goal_cardio"}
               i={i}
             />
@@ -399,7 +411,7 @@ export const ExerciseGoalSave = () => {
                 ),
                 endAdornment: (
                   <Div className={"fs-0-6rem"}>
-                    {translate("kg")}
+                    {translate("k")}
                   </Div>
                 )
               }}

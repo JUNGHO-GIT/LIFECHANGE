@@ -4,7 +4,7 @@ import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Br20, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
@@ -109,37 +109,13 @@ export const SleepList = () => {
         />
       );
       const emptyFragment = () => (
-        <Card className={"border radius shadow-none p-10"} key={"empty-sleep"}>
-          <Grid container>
-            <Grid item xs={2} className={"d-center"}>
-              <Icons
-                name={"TbSearch"}
-                className={"w-18 h-18 black"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Object.assign(SEND, {
-                    dateType: "day",
-                    dateStart: DATE.dateStart,
-                    dateEnd: DATE.dateEnd,
-                  });
-                  navigate(SEND.toSave, {
-                    state: SEND
-                  });
-                }}
-              />
-            </Grid>
-            <Grid item xs={2} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("sleep")}
-              </Div>
-            </Grid>
-            <Grid item xs={8} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </Card>
+        <Empty
+          DATE={DATE}
+          SEND={SEND}
+          navigate={navigate}
+          type={"real"}
+          extra={"sleep"}
+        />
       );
       const tableFragment = (i) => (
         OBJECT?.map((item, index) => (
@@ -157,7 +133,7 @@ export const SleepList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
@@ -175,60 +151,54 @@ export const SleepList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"}>
-                    <Div className={"d-center"}>
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {translate("sleep")}
-                      </Div>
+                  <Grid item xs={2} className={"d-left"}>
+                    <Div className={"fs-1-0rem fw-600 dark"}>
+                      {translate("sleep")}
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
-                    <Div className={"d-center"} onClick={(e) => {
-                      e.stopPropagation();
-                    }}>
-                      {item.sleep_dateStart === item.sleep_dateEnd ? (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.sleep_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                            {moment(item.sleep_dateStart).format("ddd")}
-                          </Div>
-                        </>
-                      ) : (
-                        <>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.sleep_dateStart?.substring(5, 10)}
-                          </Div>
-                          <Div className={"fs-1-0rem ms-1vw me-1vw"}>
-                            ~
-                          </Div>
-                          <Div className={"fs-1-2rem fw-600"}>
-                            {item.sleep_dateEnd?.substring(5, 10)}
-                          </Div>
-                        </>
-                      )}
-                    </Div>
+                  <Grid item xs={8} className={"d-left"}>
+                    {item.sleep_dateStart === item.sleep_dateEnd ? (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.sleep_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.sleep_dateStart).format("ddd")}
+                        </Div>
+                      </>
+                    ) : (
+                      <>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.sleep_dateStart?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                          ~
+                        </Div>
+                        <Div className={"fs-1-2rem fw-600"}>
+                          {item.sleep_dateEnd?.substring(5, 10)}
+                        </Div>
+                      </>
+                    )}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_section[0]?.sleep_bedTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -237,20 +207,20 @@ export const SleepList = () => {
                 <Hr30 />
                 {/** row 2 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_section[0]?.sleep_wakeTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -259,20 +229,20 @@ export const SleepList = () => {
                 <Hr30 />
                 {/** row 3 **/}
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-center"}>
+                  <Grid item xs={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-left"}>
+                  <Grid item xs={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-column align-right"}>
+                  <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_section[0]?.sleep_sleepTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>

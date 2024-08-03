@@ -124,6 +124,7 @@ export const useTranslate = () => {
     foodCount: {ko: "회", en: "Count"},
     foodName: {ko: "식품명", en: "Food"},
     foodBrand: {ko: "브랜드", en: "Brand"},
+    findFood: {ko: "음식", en: "Food"},
 
     // g
     g: {ko: "g", en: "g"},
@@ -177,10 +178,11 @@ export const useTranslate = () => {
     joinDate: {ko: "가입일", en: "Join Date"},
 
     // k
-    k: {ko: "kcal", en: "kcal"},
+    kc: {ko: "kcal", en: "kcal"},
     kcal: {ko: "칼로리", en: "Kcal"},
     kcalNut: {ko: "칼로리-영양소", en: "Kcal-Nutrition"},
-    kg: {ko: "kg", en: "kg"},
+    k: {ko: "kg", en: "kg"},
+    kg: {ko: "무게", en: "Kg"},
 
     // l
     language: {ko: "언어", en: "Language"},

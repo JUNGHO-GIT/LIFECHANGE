@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {sync, log} from "../../import/ImportUtils.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Br20} from "../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
@@ -472,7 +472,7 @@ export const FoodSave = () => {
               ),
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
-                  {translate("k")}
+                  {translate("kc")}
                 </Div>
               )
             }}
@@ -733,7 +733,7 @@ export const FoodSave = () => {
                 ),
                 endAdornment: (
                   <Div className={"fs-0-6rem"}>
-                    {translate("k")}
+                    {translate("kc")}
                   </Div>
                 )
               }}

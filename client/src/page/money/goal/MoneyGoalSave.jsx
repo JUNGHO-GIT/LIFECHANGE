@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {sync} from "../../../import/ImportUtils.jsx";
-import {Loading, Footer} from "../../../import/ImportLayouts.jsx";
+import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
 import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
@@ -261,7 +261,6 @@ export const MoneyGoalSave = () => {
         />
       </Card>
     );
-    // 7-2. total
     // 7-3. table
     const tableSection = () => {
       const loadingFragment = () => (
