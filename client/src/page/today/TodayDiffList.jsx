@@ -258,7 +258,7 @@ export const TodayDiffList = () => {
                 {translate("exercise")}
               </Div>
             </Grid>
-            <Grid item xs={8} className={"d-left"}>
+            <Grid item xs={10} className={"d-left"}>
               <Div className={"fs-1-0rem fw-500 black"}>
                 {translate("empty")}
               </Div>
@@ -282,14 +282,14 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("exercise")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -522,7 +522,6 @@ export const TodayDiffList = () => {
                       {translate("kg")}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -551,7 +550,7 @@ export const TodayDiffList = () => {
                 {translate("food")}
               </Div>
             </Grid>
-            <Grid item xs={8} className={"d-left"}>
+            <Grid item xs={10} className={"d-left"}>
               <Div className={"fs-1-0rem fw-500 black"}>
                 {translate("empty")}
               </Div>
@@ -575,7 +574,7 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("food")}
@@ -815,7 +814,6 @@ export const TodayDiffList = () => {
                       {translate("g")}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -868,7 +866,7 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("money")}
@@ -903,7 +901,6 @@ export const TodayDiffList = () => {
                       )}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
@@ -1059,7 +1056,7 @@ export const TodayDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("sleep")}
@@ -1248,7 +1245,6 @@ export const TodayDiffList = () => {
                       {translate("hm")}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>

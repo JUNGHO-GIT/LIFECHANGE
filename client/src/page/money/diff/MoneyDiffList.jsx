@@ -145,14 +145,14 @@ export const MoneyDiffList = () => {
                 />
               }>
                 <Grid container>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("money")}
                       </Div>
                     </Div>
                   </Grid>
-                  <Grid item xs={8} className={"d-column align-left pt-10"}>
+                  <Grid item xs={10} className={"d-column align-left pt-10"}>
                     <Div className={"d-center"} onClick={(e) => {
                       e.stopPropagation();
                     }}>
@@ -283,7 +283,6 @@ export const MoneyDiffList = () => {
                       {translate("currency")}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>

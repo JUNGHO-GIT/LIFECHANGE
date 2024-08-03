@@ -399,7 +399,6 @@ export const FoodDiffList = () => {
                       {translate("g")}
                     </Div>
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-center pt-10"} />
                 </Grid>
               </AccordionDetails>
             </Accordion>

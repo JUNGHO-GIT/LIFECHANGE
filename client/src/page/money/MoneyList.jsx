@@ -180,7 +180,7 @@ export const MoneyList = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-column align-left pt-10"}>
+                  <Grid item xs={2} className={"d-column align-center pt-10"}>
                     <Div className={"d-center"}>
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {translate("money")}
