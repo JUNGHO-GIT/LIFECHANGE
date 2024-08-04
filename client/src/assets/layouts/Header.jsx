@@ -36,7 +36,7 @@ export const Header = () => {
           src={logo2}
           className={"h-max30"}
           onClick={(e) => {
-            navigate("/today/diff/list", {
+            navigate("/today/list", {
               state: {
                 dateType: "day",
                 dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),

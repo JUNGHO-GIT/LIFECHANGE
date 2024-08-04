@@ -49,7 +49,6 @@ export const UserSignup = () => {
     user_pw: false,
     user_pw_verified: false,
     user_age: false,
-    user_gender: false,
     user_height: false,
     user_weight: false,
   });
@@ -59,7 +58,6 @@ export const UserSignup = () => {
     user_pw: createRef(),
     user_pw_verified: createRef(),
     user_age: createRef(),
-    user_gender: createRef(),
     user_height: createRef(),
     user_weight: createRef(),
   });
@@ -77,7 +75,6 @@ export const UserSignup = () => {
       user_pw: false,
       user_pw_verified: false,
       user_age: false,
-      user_gender: false,
       user_height: false,
       user_weight: false,
     };
@@ -161,13 +158,6 @@ export const UserSignup = () => {
         initialErrors.user_age = true;
         foundError = true;
       }
-      else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
-        alert(translate("errorUserGender"));
-        refsCurrent.user_gender.current &&
-        refsCurrent.user_gender.current?.focus();
-        initialErrors.user_gender = true;
-        foundError = true;
-      }
       else if (OBJECT.user_height === "" || !OBJECT.user_height) {
         alert(translate("errorUserHeight"));
         refsCurrent.user_height.current &&
@@ -216,6 +206,7 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
+    setLOADING(true);
     await axios.post (`${URL_OBJECT}/email/verify`, {
       user_id: OBJECT.user_id,
       verify_code: clientCode
@@ -238,6 +229,9 @@ export const UserSignup = () => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -418,12 +412,10 @@ export const UserSignup = () => {
             label={translate("gender")}
             value={OBJECT.user_gender || "N"}
             className={"w-86vw text-left"}
-            inputRef={REFS.current.user_gender}
-            error={ERRORS.user_gender}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
-                user_gender: e.target.value
+                user_gender: e.target.value || "N"
               }))
             )}
           >
