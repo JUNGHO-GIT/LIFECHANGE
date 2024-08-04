@@ -30,7 +30,7 @@ const gitPush = () => {
 
 // run script on server
 const runRemoteScript = () => {
-  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /server.sh\'"';
+  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/server.sh\'"';
   execSync(command, { stdio: 'inherit' });
 };
 
