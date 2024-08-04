@@ -26,6 +26,7 @@ export const UserLogin = () => {
   const [trigger, setTrigger] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
+  const [autoLogin, setAutoLogin] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
@@ -40,6 +41,24 @@ export const UserLogin = () => {
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  // 자동로그인 설정한 경우
+  useEffect(() => {
+    if (autoLogin) {
+      if (userId && userPw) {
+        flowSave();
+      }
+      localStorage.setItem("autoLogin", "true");
+      localStorage.setItem("user_id", userId);
+      localStorage.setItem("user_pw", userPw);
+    } else {
+      localStorage.removeItem("autoLogin");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("user_pw");
+    }
+  }, [autoLogin, userId, userPw]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 트리거가 활성화된 경우
   useEffect(() => {
     if (trigger) {
       flowSave();
@@ -48,10 +67,20 @@ export const UserLogin = () => {
   }, [trigger]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
+  // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
   useEffect(() => {
     const localId = localStorage.getItem("localId");
     const isGoogle = localStorage.getItem("isGoogle");
-    if (localId && isGoogle === "false") {
+    const autoLoginEnabled = localStorage.getItem("autoLogin") === "true";
+    const storedUserId = localStorage.getItem("user_id");
+    const storedUserPw = localStorage.getItem("user_pw");
+
+    if (autoLoginEnabled && storedUserId && storedUserPw) {
+      setUserId(storedUserId);
+      setUserPw(storedUserPw);
+      setAutoLogin(true);
+      flowSave();
+    } else if (isGoogle === "false" && localId) {
       setUserId(localId);
       setIsChecked(true);
     }
@@ -68,18 +97,16 @@ export const UserLogin = () => {
 
     if (!refsCurrent) {
       console.warn('Ref is undefined, skipping validation');
-      return;
+      return false;
     }
-    else if (user_id === "" || !user_id) {
+
+    if (user_id === "" || !user_id) {
       alert(translate("errorUserId"));
-      refsCurrent.user_id.current &&
       refsCurrent.user_id.current?.focus();
       initialErrors.user_id = true;
       foundError = true;
-    }
-    else if (user_pw === "" || !user_pw) {
+    } else if (user_pw === "" || !user_pw) {
       alert(translate("errorUserPw"));
-      refsCurrent.user_pw.current &&
       refsCurrent.user_pw.current?.focus();
       initialErrors.user_pw = true;
       foundError = true;
@@ -90,23 +117,33 @@ export const UserLogin = () => {
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
-  const flowSave = async (isClick) => {
+  const flowSave = async () => {
     if (!validate(userId, userPw)) {
       return;
     }
-    await axios.post (`${URL_OBJECT}/login`, {
+    await axios.post(`${URL_OBJECT}/login`, {
       user_id: userId,
       user_pw: userPw,
     })
     .then((res) => {
       if (res.data.status === "success") {
+        // localStorage
         if (isChecked) {
-          localStorage.setItem("localId", userId);
+          localStorage.setItem("localId", res.data.result.user_id);
         }
-        else {
-          localStorage.setItem("localId", "");
+        localStorage.setItem("isGoogle", "false");
+
+        // sessionStorage
+        if (res.data.admin === "admin") {
+          sessionStorage.setItem("isAdmin", "true");
+        } else {
+          sessionStorage.setItem("isAdmin", "false");
         }
-        sessionStorage.setItem("sessionId", userId);
+        sessionStorage.setItem("sessionId", res.data.result.user_id);
+        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("isLogin", "true");
+
         // @ts-ignore
         if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
           // @ts-ignore
@@ -115,42 +152,31 @@ export const UserLogin = () => {
             isAdmin: res.data.admin === "admin"
           }));
         }
-        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem("lang", "ko");
-        sessionStorage.setItem("isLogin", "true");
-        if (res.data.admin === "admin") {
-          sessionStorage.setItem("isAdmin", "true");
-        }
-        else {
-          sessionStorage.setItem("isAdmin", "false");
-        }
         sync();
         navigate("/today/diff/list");
-      }
-      else {
+      } else {
         alert(res.data.msg);
         sessionStorage.setItem("sessionId", "");
       }
     })
     .catch((err) => {
       console.error(err);
-    })
+    });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowGoogle = async () => {
-    await axios.get (`${URL_GOOGLE}/login`)
+    await axios.get(`${URL_GOOGLE}/login`)
     .then((res) => {
       if (res.data.status === "success") {
         window.location.href = res.data.url;
-      }
-      else {
+      } else {
         alert(res.data.msg);
       }
     })
     .catch((err) => {
       console.error(err);
-    })
+    });
   };
 
   // 7. table --------------------------------------------------------------------------------------
@@ -212,6 +238,18 @@ export const UserLogin = () => {
           />
           <Br10 />
           <Div className={"d-center"}>
+            <Div className={"fs-0-8rem"}>
+              {translate("autoLogin")}
+            </Div>
+            <Checkbox
+              color={"primary"}
+              size={"small"}
+              checked={autoLogin}
+              onChange={(e) => {
+                setAutoLogin(e.target.checked);
+              }}
+            />
+            <Div className={"w-20"} />
             <Div className={"fs-0-8rem"}>
               {translate("saveId")}
             </Div>

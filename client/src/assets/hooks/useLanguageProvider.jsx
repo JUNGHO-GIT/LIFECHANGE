@@ -37,6 +37,7 @@ export const useTranslate = () => {
     all: {ko: "전체", en: "All"},
     age: {ko: "나이", en: "Age"},
     asc: {ko: "오름차순", en: "Asc"},
+    autoLogin: {ko: "자동로그인", en: "Auto Login"},
     alreadyId: {ko: "아이디가 있는 경우", en: "Already have an Account"},
     amount: {ko: "금액", en: "Amount"},
     avg: {ko: "평균값", en: "Avg"},
