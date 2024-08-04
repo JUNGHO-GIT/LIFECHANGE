@@ -11,7 +11,6 @@ import {logo1} from "../../import/ImportImages.jsx";
 // -------------------------------------------------------------------------------------------------
 export const UserAppInfo = () => {
 
-
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
