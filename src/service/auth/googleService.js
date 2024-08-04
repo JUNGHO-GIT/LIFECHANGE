@@ -2,6 +2,7 @@
 
 import * as repository from "../../repository/auth/googleRepository.js";
 import { OAuth2Client } from 'google-auth-library';
+import bcrypt from 'bcrypt';
 import session from "express-session";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -74,13 +75,26 @@ export const afterCallback = async () => {
   let adminResult = null;
 
   const googleId = session.googleId;
-  const findResult = await repository.findUser(googleId);
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(`${googleId}_google`, saltRounds);
 
+  const findResult = await repository.findUser(googleId);
   if (!findResult) {
-    finalResult = await repository.createUser(googleId);
+    finalResult = await repository.createUser(googleId, hashedPassword);
   }
   else {
-    finalResult = findResult;
+    if (findResult.user_pw) {
+      const isPasswordMatch = await bcrypt.compare(`${googleId}_google`, findResult.user_pw);
+      if (isPasswordMatch) {
+        finalResult = findResult;
+      }
+      else {
+        return {
+          status: "fail",
+          message: "Google login password mismatch"
+        };
+      }
+    }
   }
 
   if (googleId === process.env.ADMIN_ID) {
@@ -95,6 +109,6 @@ export const afterCallback = async () => {
     result: finalResult,
     admin: adminResult,
     googleId: googleId,
-    googlePw: "google",
+    googlePw: `${googleId}_google`
   };
 }

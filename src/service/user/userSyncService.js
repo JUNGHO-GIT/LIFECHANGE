@@ -85,10 +85,10 @@ export const property = async (
     user_id_param
   );
 
-  const curProperty
-    = parseInt(initProperty?.user_initProperty)
-    + parseInt(findMoney?.money_total_income)
-    - parseInt(findMoney?.money_total_expense);
+  const curProperty =
+    (parseInt(initProperty?.user_initProperty) || 0) +
+    (parseInt(findMoney?.money_total_income) || 0) -
+    (parseInt(findMoney?.money_total_expense) || 0);
 
   const updateProperty = await repository.property.updateProperty(
     user_id_param, curProperty
@@ -102,7 +102,7 @@ export const property = async (
   }
 
   const finalResult = {
-    initProperty: parseInt(initProperty?.user_initProperty),
+    initProperty: !initProperty?.user_initProperty ? 0 : parseInt(initProperty?.user_initProperty),
     totalIncome: findMoney?.money_total_income,
     totalExpense: findMoney?.money_total_expense,
     curProperty: curProperty,

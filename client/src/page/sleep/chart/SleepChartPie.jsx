@@ -342,12 +342,6 @@ export const SleepChartPie = () => {
     };
     // 7-2. chart
     const chartSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           {chartToday()}
@@ -364,13 +358,13 @@ export const SleepChartPie = () => {
         </Card>
       );
       if (SECTION === "today") {
-        return LOADING ? loadingFragment() : chartFragment1(0);
+        return LOADING ? <Loading /> : chartFragment1(0);
       }
       else if (SECTION === "week") {
-        return LOADING ? loadingFragment() : chartFragment2(0);
+        return LOADING ? <Loading /> : chartFragment2(0);
       }
       else if (SECTION === "month") {
-        return LOADING ? loadingFragment() : chartFragment3(0);
+        return LOADING ? <Loading /> : chartFragment3(0);
       }
     }
     // 7-10. return

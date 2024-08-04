@@ -3,6 +3,7 @@
 import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
+import {Loading} from "../../import/ImportLayouts.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, MenuItem} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
@@ -21,6 +22,7 @@ export const UserSignup = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [clientCode, setClientCode] = useState("");
+  const [LOADING, setLOADING] = useState(false);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -188,7 +190,9 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
+    setLOADING(true);
     if (!validate(OBJECT, "send")) {
+      setLOADING(false);
       return;
     }
     await axios.post (`${URL_OBJECT}/email/send`, {
@@ -204,6 +208,9 @@ export const UserSignup = () => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -236,7 +243,9 @@ export const UserSignup = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    setLOADING(true);
     if (!validate(OBJECT, "save")) {
+      setLOADING(false);
       return;
     }
     await axios.post (`${URL_OBJECT}/signup`, {
@@ -271,6 +280,9 @@ export const UserSignup = () => {
     .catch((err) => {
       console.error(err);
     })
+    .finally(() => {
+      setLOADING(false);
+    });
   };
 
   // 3. flow ---------------------------------------------------------------------------------------
@@ -573,6 +585,8 @@ export const UserSignup = () => {
     );
     // 7-10. return
     return (
+      <>
+      {LOADING && <Loading />}
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
           {titleSection()}
@@ -586,6 +600,7 @@ export const UserSignup = () => {
           {toLoginSection()}
         </Div>
       </Paper>
+      </>
     );
   };
 

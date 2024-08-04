@@ -323,12 +323,6 @@ export const CalendarSave = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}><Badge
@@ -468,7 +462,7 @@ export const CalendarSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.calendar_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.calendar_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

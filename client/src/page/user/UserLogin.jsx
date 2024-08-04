@@ -5,7 +5,7 @@ import {createRef, useRef} from "../../import/ImportReacts.jsx";
 import {useTranslate} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {sync, log} from "../../import/ImportUtils";
-import {Div, Br10, Img, Hr40} from "../../import/ImportComponents.jsx";
+import {Div, Br10, Br20, Img, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
@@ -18,8 +18,9 @@ export const UserLogin = () => {
   const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
   const URL_GOOGLE = URL + SUBFIX_GOOGLE;
+  const ADMIN_ID = process.env.REACT_APP_ADMIN_ID || "";
+  const ADMIN_PW = process.env.REACT_APP_ADMIN_PW || "";
   const navigate = useNavigate();
-  const location = useLocation();
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -79,13 +80,17 @@ export const UserLogin = () => {
 
     if (autoLogin === "true") {
       setCheckedAutoLogin(true);
-      setUserId(autoLoginId);
-      setUserPw(autoLoginPw);
+      if (autoLoginId && autoLoginPw) {
+        setUserId(autoLoginId);
+        setUserPw(autoLoginPw);
+      }
       setLoginTrigger(true);
     }
     if (saveId === "true") {
       setCheckedSaveId(true);
-      setUserId(savedId);
+      if (savedId) {
+        setUserId(savedId);
+      }
     }
   }, []);
 
@@ -149,14 +154,6 @@ export const UserLogin = () => {
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
 
-        // @ts-ignore
-        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-          // @ts-ignore
-          window.ReactNativeWebView.postMessage(JSON.stringify({
-            userId: userId,
-            isAdmin: res.data.admin === "admin"
-          }));
-        }
         sync();
         navigate("/today/diff/list");
       }
@@ -195,8 +192,8 @@ export const UserLogin = () => {
           setClickCount((prevCount) => {
             const newCount = prevCount + 1;
             if (newCount === 5) {
-              setUserId("junghomun00@gmail.com");
-              setUserPw("google");
+              setUserId(ADMIN_ID);
+              setUserPw(ADMIN_PW);
               setLoginTrigger(true);
               setClickCount(0);
             }
@@ -229,7 +226,7 @@ export const UserLogin = () => {
           <Br10 />
           <TextField
             select={false}
-            type={"text"}
+            type={"password"}
             size={"small"}
             label={translate("pw")}
             value={userPw}
@@ -243,7 +240,7 @@ export const UserLogin = () => {
               setUserPw(e.target.value);
             }}
           />
-          <Br10 />
+          <Br20 />
           <Div className={"d-center"}>
             <Div className={"fs-0-8rem"}>
               {translate("autoLogin")}

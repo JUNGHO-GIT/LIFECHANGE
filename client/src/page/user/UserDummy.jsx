@@ -282,12 +282,6 @@ export const UserDummy = () => {
   const tableNode = () => {
     // 7-1. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Card className={"border radius shadow-none p-10"} key={"empty"}>
           <Div className={"d-center"}>
@@ -652,42 +646,42 @@ export const UserDummy = () => {
         </Card>
       );
       if (PART === "exerciseGoal") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment1(0)
         );
       }
       else if (PART === "exercise") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment2(0)
         );
       }
       else if (PART === "foodGoal") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment3(0)
         );
       }
       else if (PART === "food") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment4(0)
         );
       }
       else if (PART === "moneyGoal") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment5(0)
         );
       }
       else if (PART === "money") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment6(0)
         );
       }
       else if (PART === "sleepGoal") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment7(0)
         );
       }
       else if (PART === "sleep") {
-        return LOADING ? loadingFragment() : (
+        return LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment8(0)
         );
       }

@@ -59,7 +59,7 @@ export const user = {
   checkId: async (
     user_id_param
   ) => {
-    const finalResult = await User.find({
+    const finalResult = await User.findOne({
       user_id: user_id_param
     })
     .lean();
@@ -73,8 +73,8 @@ export const user = {
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      user_google: false,
       user_pw: OBJECT_param.user_pw,
+      user_google: "N",
       user_age: OBJECT_param.user_age,
       user_gender: OBJECT_param.user_gender,
       user_height: OBJECT_param.user_height,

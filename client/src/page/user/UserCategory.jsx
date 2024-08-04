@@ -398,12 +398,6 @@ export const UserCategory = () => {
     );
     // 7-2. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-0"} key={i}>
           <TableContainer>
@@ -463,7 +457,7 @@ export const UserCategory = () => {
         </Card>
       );
       return (
-        LOADING ? loadingFragment() : tableFragment(0)
+        LOADING ? <Loading /> : tableFragment(0)
       );
     };
     // 7-10. return

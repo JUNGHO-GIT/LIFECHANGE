@@ -288,7 +288,7 @@ export const SleepSave = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      newSectionCnt: prev.newSectionCnt - 1,
+      newSectionCnt: prev.newSectionCnt - 1
     }));
   };
 
@@ -313,12 +313,6 @@ export const SleepSave = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}><Badge
@@ -378,7 +372,7 @@ export const SleepSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.sleep_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.sleep_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

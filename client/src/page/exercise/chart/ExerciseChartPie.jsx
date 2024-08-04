@@ -429,12 +429,6 @@ export const ExerciseChartPie = () => {
     };
     // 7-2. chart
     const chartSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           {chartPartWeek()}
@@ -456,16 +450,16 @@ export const ExerciseChartPie = () => {
         </Card>
       );
       if (SECTION === "week" && LINE === "부위") {
-        return LOADING ? loadingFragment() : chartFragment1(0);
+        return LOADING ? <Loading /> : chartFragment1(0);
       }
       else if (SECTION === "month" && LINE === "부위") {
-        return LOADING ? loadingFragment() : chartFragment2(0);
+        return LOADING ? <Loading /> : chartFragment2(0);
       }
       else if (SECTION === "week" && LINE === "운동") {
-        return LOADING ? loadingFragment() : chartFragment3(0);
+        return LOADING ? <Loading /> : chartFragment3(0);
       }
       else if (SECTION === "month" && LINE === "운동") {
-        return LOADING ? loadingFragment() : chartFragment4(0);
+        return LOADING ? <Loading /> : chartFragment4(0);
       }
     };
     // 7-10. return

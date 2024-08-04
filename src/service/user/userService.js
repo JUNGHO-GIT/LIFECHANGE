@@ -3,15 +3,14 @@
 import fs from "fs";
 import path from "path";
 import dotenv from 'dotenv';
-import * as repository from "../../repository/user/userRepository.js";
 import mongodb from 'mongodb';
 import moment from 'moment';
+import bcrypt from 'bcrypt';
+import * as repository from "../../repository/user/userRepository.js";
 import {randomNumber, randomTime, calcDate} from '../../assets/js/utils.js';
-import {calendarArray} from '../../assets/array/calendarArray.js';
 import {exerciseArray} from '../../assets/array/exerciseArray.js';
 import {foodArray} from '../../assets/array/foodArray.js';
 import {moneyArray} from '../../assets/array/moneyArray.js';
-import {sleepArray} from '../../assets/array/sleepArray.js';
 import {fileURLToPath} from "url";
 import {emailSending} from "../../assets/js/email.js";
 dotenv.config();
@@ -90,7 +89,10 @@ export const userSignup = async (
   );
 
   let finalResult = null;
-  if (findResult.length === 0) {
+  if (!findResult) {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(OBJECT_param.user_pw, saltRounds);
+    OBJECT_param.user_pw = hashedPassword;
     finalResult = await repository.user.signup(
       user_id_param, OBJECT_param
     );
@@ -107,15 +109,21 @@ export const userLogin = async (
   user_id_param, user_pw_param
 ) => {
 
-  const findResult = await repository.user.login(
-    user_id_param, user_pw_param
+  const findResult = await repository.user.checkId(
+    user_id_param
   );
 
   let finalResult = null;
   let adminResult = null;
 
-  if (findResult !== null) {
-    finalResult = findResult;
+  if (findResult !== null && findResult.user_pw) {
+    const isPasswordMatch = await bcrypt.compare(user_pw_param, findResult.user_pw);
+    if (isPasswordMatch) {
+      finalResult = findResult;
+    }
+    else {
+      finalResult = "fail";
+    }
   }
   else {
     finalResult = "fail";

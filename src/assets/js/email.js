@@ -23,16 +23,16 @@ export const emailSending = async (email, code) => {
     await transporter.sendMail({
 
       // 발신자
-      from: process.env.EMAIL_FROM,
+      from: `"LIFECHANGE" <${process.env.EMAIL_ID}>`,
 
       // 수신자
       to: email,
 
       // 제목
-      subject: "이메일 인증 코드",
+      subject: "LIFECHANGE 인증 코드",
 
       // 내용
-      text: `인증 코드: ${code}`
+      text: `인증 코드   :   ${code}`,
     });
 
     console.log("========================================");

@@ -542,12 +542,6 @@ export const FoodSave = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}>
@@ -866,7 +860,7 @@ export const FoodSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.food_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.food_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

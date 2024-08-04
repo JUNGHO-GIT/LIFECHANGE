@@ -263,12 +263,6 @@ export const MoneyGoalSave = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}><Badge
@@ -360,7 +354,7 @@ export const MoneyGoalSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : tableFragment(0)
+          LOADING ? <Loading /> : tableFragment(0)
         )
       );
     };

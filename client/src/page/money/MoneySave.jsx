@@ -399,12 +399,6 @@ export const MoneySave = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           <Div className={"d-between"}><Badge
@@ -558,7 +552,7 @@ export const MoneySave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? loadingFragment() : OBJECT?.money_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.money_section?.map((_, i) => (tableFragment(i)))
         )
       );
     };

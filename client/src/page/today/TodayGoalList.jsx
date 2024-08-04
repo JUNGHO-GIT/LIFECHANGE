@@ -203,12 +203,6 @@ export const TodayGoalList = () => {
   const tableNode = () => {
     // 7-1. exercise
     const exerciseSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -377,19 +371,13 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? loadingFragment() : (
+        LOADING ? <Loading /> : (
           COUNT_EXERCISE.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );
     };
     // 7-2. food
     const foodSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -558,19 +546,13 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? loadingFragment() : (
+        LOADING ? <Loading /> : (
           COUNT_FOOD.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );
     };
     // 7-3. money
     const moneySection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -695,19 +677,13 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? loadingFragment() : (
+        LOADING ? <Loading /> : (
           COUNT_MONEY.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );
     };
     // 7-4. sleep
     const sleepSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -854,7 +830,7 @@ export const TodayGoalList = () => {
         ))
       );
       return (
-        LOADING ? loadingFragment() : (
+        LOADING ? <Loading /> : (
           COUNT_SLEEP.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );

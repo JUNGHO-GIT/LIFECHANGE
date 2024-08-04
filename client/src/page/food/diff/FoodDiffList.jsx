@@ -115,12 +115,6 @@ export const FoodDiffList = () => {
   const tableNode = () => {
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -393,7 +387,7 @@ export const FoodDiffList = () => {
         ))
       );
       return (
-        LOADING ? loadingFragment() : (
+        LOADING ? <Loading /> : (
           COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
         )
       );

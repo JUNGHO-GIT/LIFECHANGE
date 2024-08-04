@@ -219,7 +219,7 @@ export const SleepChartAvg = () => {
               display:"flex",
               justifyContent:"center",
               alignItems:"center",
-              fontSize: "0.8rem",
+              fontSize: "0.8rem"
             }}
           />
         </ComposedChart>
@@ -303,12 +303,6 @@ export const SleepChartAvg = () => {
     };
     // 7-2. chart
     const chartSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
           {chartMonth()}
@@ -320,10 +314,10 @@ export const SleepChartAvg = () => {
         </Card>
       );
       if (SECTION === "month") {
-        return LOADING ? loadingFragment() : chartFragment1(0);
+        return LOADING ? <Loading /> : chartFragment1(0);
       }
       else if (SECTION === "year") {
-        return LOADING ? loadingFragment() : chartFragment2(0);
+        return LOADING ? <Loading /> : chartFragment2(0);
       }
     }
     // 7-10. return

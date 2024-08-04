@@ -140,12 +140,6 @@ export const CalendarList = () => {
     );
     // 7-3. table
     const tableSection = () => {
-      const loadingFragment = () => (
-        <Loading
-          LOADING={LOADING}
-          setLOADING={setLOADING}
-        />
-      );
       const tableFragment = (i) => (
         <Calendar
           key={`${i}`}
@@ -208,7 +202,7 @@ export const CalendarList = () => {
         />
       );
       return (
-        LOADING ? loadingFragment() : tableFragment(0)
+        LOADING ? <Loading /> : tableFragment(0)
       );
     };
     // 7-10. return
