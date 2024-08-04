@@ -29,15 +29,33 @@ export const Time = ({
   if (firstStr === "sleep" && secondStr === "goal") {
     if (extra.split("_")[2] === "bedTime") {
       image = sleep2;
-      translateStr = `${translate("goalBedTime")} (${translate("avg")})`;
+      translateStr = (
+        DATE?.dateType === "day" ? (
+          `${translate("goalBedTime")}`
+        ) : (
+          `${translate("goalBedTime")} (${translate("avg")})`
+        )
+      )
     }
     else if (extra.split("_")[2] === "wakeTime") {
       image = sleep3;
-      translateStr = `${translate("goalWakeTime")} (${translate("avg")})`;
+      translateStr = (
+        DATE?.dateType === "day" ? (
+          `${translate("goalWakeTime")}`
+        ) : (
+          `${translate("goalWakeTime")} (${translate("avg")})`
+        )
+      )
     }
     else if (extra.split("_")[2] === "sleepTime") {
       image = sleep4;
-      translateStr = `${translate("goalSleepTime")} (${translate("avg")})`;
+      translateStr = (
+        DATE?.dateType === "day" ? (
+          `${translate("goalSleepTime")}`
+        ) : (
+          `${translate("goalSleepTime")} (${translate("avg")})`
+        )
+      )
     }
   }
   else if (firstStr === "sleep" && secondStr !== "goal") {

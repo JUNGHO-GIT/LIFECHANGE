@@ -38,7 +38,7 @@ export const AuthGoogle = () => {
         }
 
         sync();
-        navigate("/today/diff/list");
+        navigate("/today/list");
       }
     })
     .catch((err) => {

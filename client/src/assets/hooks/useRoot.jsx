@@ -18,7 +18,7 @@ export const useRoot = () => {
         navigate("/user/login");
       }
       else if (location.pathname === '/' && sessionId) {
-        navigate("/today/diff/list");
+        navigate("/today/list");
       }
     }
   }, [location, navigate, sessionId]);

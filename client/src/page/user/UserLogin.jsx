@@ -155,7 +155,7 @@ export const UserLogin = () => {
         sessionStorage.setItem("lang", "ko");
 
         sync();
-        navigate("/today/diff/list");
+        navigate("/today/list");
       }
       else {
         alert(res.data.msg);
