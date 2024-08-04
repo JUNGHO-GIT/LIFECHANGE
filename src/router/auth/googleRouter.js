@@ -70,6 +70,7 @@ router.get("/afterCallback", async (req, res) => {
         result: result.result,
         admin: result.admin,
         googleId: result.googleId,
+        googlePw: result.googlePw,
       });
     }
     else {

@@ -23,10 +23,10 @@ export const UserLogin = () => {
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [trigger, setTrigger] = useState(false);
+  const [loginTrigger, setLoginTrigger] = useState(false);
   const [clickCount, setClickCount] = useState(0);
-  const [isChecked, setIsChecked] = useState(false);
-  const [autoLogin, setAutoLogin] = useState(false);
+  const [checkedSaveId, setCheckedSaveId] = useState(false);
+  const [checkedAutoLogin, setCheckedAutoLogin] = useState(false);
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
@@ -41,48 +41,51 @@ export const UserLogin = () => {
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  // 자동로그인 설정한 경우
-  useEffect(() => {
-    if (autoLogin) {
-      if (userId && userPw) {
-        flowSave();
-      }
-      localStorage.setItem("autoLogin", "true");
-      localStorage.setItem("user_id", userId);
-      localStorage.setItem("user_pw", userPw);
-    } else {
-      localStorage.removeItem("autoLogin");
-      localStorage.removeItem("user_id");
-      localStorage.removeItem("user_pw");
-    }
-  }, [autoLogin, userId, userPw]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우
   useEffect(() => {
-    if (trigger) {
+    if (loginTrigger) {
       flowSave();
-      setTrigger(false);
+      setLoginTrigger(false);
     }
-  }, [trigger]);
+  }, [loginTrigger]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 자동로그인 활성화된 경우
+  useEffect(() => {
+    if (checkedAutoLogin) {
+      localStorage.setItem("autoLogin", "true");
+      localStorage.setItem("autoLoginId", userId);
+      localStorage.setItem("autoLoginPw", userPw);
+    }
+  }, [checkedAutoLogin, userId, userPw]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 아이디 저장 활성화된 경우
+  useEffect(() => {
+    if (checkedSaveId) {
+      localStorage.setItem("saveId", "true");
+      localStorage.setItem("savedId", userId);
+    }
+  }, [checkedSaveId, userId]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
   useEffect(() => {
-    const localId = localStorage.getItem("localId");
-    const isGoogle = localStorage.getItem("isGoogle");
-    const autoLoginEnabled = localStorage.getItem("autoLogin") === "true";
-    const storedUserId = localStorage.getItem("user_id");
-    const storedUserPw = localStorage.getItem("user_pw");
+    const autoLogin = localStorage.getItem("autoLogin");
+    const autoLoginId = localStorage.getItem("autoLoginId");
+    const autoLoginPw = localStorage.getItem("autoLoginPw");
+    const saveId = localStorage.getItem("saveId");
+    const savedId = localStorage.getItem("savedId");
 
-    if (autoLoginEnabled && storedUserId && storedUserPw) {
-      setUserId(storedUserId);
-      setUserPw(storedUserPw);
-      setAutoLogin(true);
-      flowSave();
-    } else if (isGoogle === "false" && localId) {
-      setUserId(localId);
-      setIsChecked(true);
+    if (autoLogin === "true") {
+      setCheckedAutoLogin(true);
+      setUserId(autoLoginId);
+      setUserPw(autoLoginPw);
+      setLoginTrigger(true);
+    }
+    if (saveId === "true") {
+      setCheckedSaveId(true);
+      setUserId(savedId);
     }
   }, []);
 
@@ -105,7 +108,8 @@ export const UserLogin = () => {
       refsCurrent.user_id.current?.focus();
       initialErrors.user_id = true;
       foundError = true;
-    } else if (user_pw === "" || !user_pw) {
+    }
+    else if (user_pw === "" || !user_pw) {
       alert(translate("errorUserPw"));
       refsCurrent.user_pw.current?.focus();
       initialErrors.user_pw = true;
@@ -128,21 +132,22 @@ export const UserLogin = () => {
     .then((res) => {
       if (res.data.status === "success") {
         // localStorage
-        if (isChecked) {
-          localStorage.setItem("localId", res.data.result.user_id);
+        if (checkedSaveId) {
+          localStorage.setItem("savedId", res.data.result.user_id);
         }
         localStorage.setItem("isGoogle", "false");
 
         // sessionStorage
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
-        } else {
+        }
+        else {
           sessionStorage.setItem("isAdmin", "false");
         }
+
         sessionStorage.setItem("sessionId", res.data.result.user_id);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
-        sessionStorage.setItem("isLogin", "true");
 
         // @ts-ignore
         if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
@@ -154,7 +159,8 @@ export const UserLogin = () => {
         }
         sync();
         navigate("/today/diff/list");
-      } else {
+      }
+      else {
         alert(res.data.msg);
         sessionStorage.setItem("sessionId", "");
       }
@@ -170,7 +176,8 @@ export const UserLogin = () => {
     .then((res) => {
       if (res.data.status === "success") {
         window.location.href = res.data.url;
-      } else {
+      }
+      else {
         alert(res.data.msg);
       }
     })
@@ -190,7 +197,7 @@ export const UserLogin = () => {
             if (newCount === 5) {
               setUserId("junghomun00@gmail.com");
               setUserPw("google");
-              setTrigger(true);
+              setLoginTrigger(true);
               setClickCount(0);
             }
             return newCount;
@@ -244,9 +251,9 @@ export const UserLogin = () => {
             <Checkbox
               color={"primary"}
               size={"small"}
-              checked={autoLogin}
+              checked={checkedAutoLogin}
               onChange={(e) => {
-                setAutoLogin(e.target.checked);
+                setCheckedAutoLogin(e.target.checked);
               }}
             />
             <Div className={"w-20"} />
@@ -256,9 +263,9 @@ export const UserLogin = () => {
             <Checkbox
               color={"primary"}
               size={"small"}
-              checked={isChecked}
+              checked={checkedSaveId}
               onChange={(e) => {
-                setIsChecked(e.target.checked);
+                setCheckedSaveId(e.target.checked);
               }}
             />
           </Div>

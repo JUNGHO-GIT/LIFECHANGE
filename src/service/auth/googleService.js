@@ -94,6 +94,7 @@ export const afterCallback = async () => {
     status: "success",
     result: finalResult,
     admin: adminResult,
-    googleId: googleId
+    googleId: googleId,
+    googlePw: "google",
   };
 }

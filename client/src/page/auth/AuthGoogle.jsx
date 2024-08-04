@@ -20,18 +20,23 @@ export const AuthGoogle = () => {
     await axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res) => {
       if (res.data.status === "success") {
-        localStorage.setItem("localId", res.data.googleId);
+
+        localStorage.setItem("autoLogin", "true");
+        localStorage.setItem("autoLoginId", res.data.googleId);
+        localStorage.setItem("autoLoginPw", res.data.googlePw);
         localStorage.setItem("isGoogle", "true");
+
         sessionStorage.setItem("sessionId", res.data.googleId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("lang", "ko");
-        sessionStorage.setItem("isLogin", "true");
+
         if (res.data.admin === "admin") {
           sessionStorage.setItem("isAdmin", "true");
         }
         else {
           sessionStorage.setItem("isAdmin", "false");
         }
+
         sync();
         navigate("/today/diff/list");
       }

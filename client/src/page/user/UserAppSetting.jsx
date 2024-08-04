@@ -120,8 +120,10 @@ export const UserAppSetting = () => {
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
+                      localStorage.setItem("autoLogin", "false")
+                      localStorage.setItem("autoLoginId", "")
+                      localStorage.setItem("autoLoginPw", "")
                       sessionStorage.clear()
-                      sessionStorage.setItem("isLogin", "false")
                       navigate("/")
                     }} />
                   </TableCell>
