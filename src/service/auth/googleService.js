@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/auth/googleRepository.js";
 import { OAuth2Client } from 'google-auth-library';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import session from "express-session";
 import dotenv from 'dotenv';
 dotenv.config();

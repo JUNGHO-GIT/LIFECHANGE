@@ -5,7 +5,7 @@ import path from "path";
 import dotenv from 'dotenv';
 import mongodb from 'mongodb';
 import moment from 'moment';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import * as repository from "../../repository/user/userRepository.js";
 import {randomNumber, randomTime, calcDate} from '../../assets/js/utils.js';
 import {exerciseArray} from '../../assets/array/exerciseArray.js';
