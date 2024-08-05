@@ -58,6 +58,7 @@ export const SleepGoalList = () => {
     _id: "",
     sleep_goal_number: 0,
     sleep_goal_dummy: "N",
+    sleep_goal_dateType: "",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
@@ -124,23 +125,25 @@ export const SleepGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_goal_dateType,
+                      dateStart: item.sleep_goal_dateStart,
+                      dateEnd: item.sleep_goal_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.sleep_goal_dateType,
-                          dateStart: item.sleep_goal_dateStart,
-                          dateEnd: item.sleep_goal_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

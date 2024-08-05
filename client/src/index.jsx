@@ -159,9 +159,9 @@ const Auth = () => (
 const App = () => {
   const location = useLocation();
   const noneHeader = (
-    location.pathname === "/user/login" ||
-    location.pathname === "/user/signup" ||
-    location.pathname === "/auth/google"
+    location.pathname.includes("/user/login") ||
+    location.pathname.includes("/user/signup") ||
+    location.pathname.indexOf("/auth") > -1
   );
   const noneTop = (
     location.pathname.indexOf("/user") > -1 ||

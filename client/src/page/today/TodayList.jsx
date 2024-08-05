@@ -92,20 +92,21 @@ export const TodayList = () => {
     _id: "",
     exercise_number: 0,
     exercise_dummy: "N",
+    exercise_dateType: "day",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "",
+    exercise_total_volume: "0",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "",
+    exercise_body_weight: "0",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
       exercise_title_idx: 0,
       exercise_title_val: "all",
-      exercise_set: "",
-      exercise_rep: "",
-      exercise_kg: "",
-      exercise_volume: "",
+      exercise_set: "0",
+      exercise_rep: "0",
+      exercise_kg: "0",
+      exercise_volume: "0",
       exercise_cardio: "00:00",
     }],
   }];
@@ -113,40 +114,42 @@ export const TodayList = () => {
     _id: "",
     food_number: 0,
     food_dummy: "N",
+    food_dateType: "day",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
-    food_total_kcal: "",
-    food_total_fat: "",
-    food_total_carb: "",
-    food_total_protein: "",
+    food_total_kcal: "0",
+    food_total_fat: "0",
+    food_total_carb: "0",
+    food_total_protein: "0",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
       food_name: "",
       food_brand: "",
-      food_count: "",
+      food_count: "0",
       food_serv: "회",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
+      food_gram: "0",
+      food_kcal: "0",
+      food_fat: "0",
+      food_carb: "0",
+      food_protein: "0",
     }],
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
     money_dummy: "N",
+    money_dateType: "day",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_income: "",
-    money_total_expense: "",
+    money_total_income: "0",
+    money_total_expense: "0",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "all",
       money_title_idx: 0,
       money_title_val: "all",
-      money_amount: "",
+      money_amount: "0",
       money_content: "",
     }],
   }];
@@ -154,6 +157,7 @@ export const TodayList = () => {
     _id: "",
     sleep_number: 0,
     sleep_dummy: "N",
+    sleep_dateType: "day",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
@@ -260,23 +264,25 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.exercise_dateType || "day",
+                      dateStart: item.exercise_dateStart,
+                      dateEnd: item.exercise_dateEnd,
+                    });
+                    navigate(SEND.toExercise, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.exercise_dateType,
-                          dateStart: item.exercise_dateStart,
-                          dateEnd: item.exercise_dateEnd,
-                        });
-                        navigate(SEND.toExercise, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -422,7 +428,7 @@ export const TodayList = () => {
                         e.stopPropagation();
                         Object.assign(SEND, {
                           id: item._id,
-                          dateType: item.food_dateType,
+                          dateType: item.food_dateType || "day",
                           dateStart: item.food_dateStart,
                           dateEnd: item.food_dateEnd,
                         });
@@ -588,23 +594,25 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.money_dateType || "day",
+                      dateStart: item.money_dateStart,
+                      dateEnd: item.money_dateEnd,
+                    });
+                    navigate(SEND.toMoney, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.money_dateType,
-                          dateStart: item.money_dateStart,
-                          dateEnd: item.money_dateEnd,
-                        });
-                        navigate(SEND.toMoney, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -719,23 +727,25 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_dateType || "day",
+                      dateStart: item.sleep_dateStart,
+                      dateEnd: item.sleep_dateEnd,
+                    });
+                    navigate(SEND.toSleep, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.sleep_dateType,
-                          dateStart: item.sleep_dateStart,
-                          dateEnd: item.sleep_dateEnd,
-                        });
-                        navigate(SEND.toSleep, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

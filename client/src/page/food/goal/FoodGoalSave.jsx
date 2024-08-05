@@ -57,12 +57,13 @@ export const FoodGoalSave = () => {
     _id: "",
     food_goal_number: 0,
     food_goal_dummy: "N",
+    food_goal_dateType: "",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "",
-    food_goal_carb: "",
-    food_goal_protein: "",
-    food_goal_fat: "",
+    food_goal_kcal: "0",
+    food_goal_carb: "0",
+    food_goal_protein: "0",
+    food_goal_fat: "0",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -289,7 +290,8 @@ export const FoodGoalSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{
@@ -312,7 +314,13 @@ export const FoodGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalKcal")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalKcal")}`
+                ) : (
+                  `${translate("goalKcal")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
@@ -329,14 +337,22 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_goal_kcal: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_kcal: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_kcal: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -346,7 +362,13 @@ export const FoodGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalCarb")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalCarb")}`
+                ) : (
+                  `${translate("goalCarb")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
@@ -363,14 +385,22 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_goal_carb: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_carb: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_carb: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -380,7 +410,13 @@ export const FoodGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalProtein")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalProtein")}`
+                ) : (
+                  `${translate("goalProtein")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
@@ -397,14 +433,22 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_goal_protein: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_protein: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_protein: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -414,7 +458,13 @@ export const FoodGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalFat")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalFat")}`
+                ) : (
+                  `${translate("goalFat")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
@@ -431,14 +481,22 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_goal_fat: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_fat: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_goal_fat: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>

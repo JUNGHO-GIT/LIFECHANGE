@@ -1,6 +1,6 @@
 // Loading.jsx
 
-import {React, useState, useEffect, useLocation} from "../../import/ImportReacts.jsx";
+import {React, useLocation} from "../../import/ImportReacts.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
 
 // 14. loading -------------------------------------------------------------------------------------
@@ -9,7 +9,6 @@ export const Loading = () => {
   // 1. common -------------------------------------------------------------------------------------
   const location = useLocation();
   const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] ? PATH?.split("/")[1] : "";
 
   // 6. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
@@ -17,7 +16,13 @@ export const Loading = () => {
       <Div className={"loader-wrapper d-center"}>
         <Div className={"loader"} />
       </Div>
-    ) : (
+    )
+    : PATH.includes("/calendar/list") ? (
+      <Div className={`h-min60vh d-center`}>
+        <Div className={"loader"} />
+      </Div>
+    )
+    : (
       <Div className={`h-min50vh d-center`}>
         <Div className={"loader"} />
       </Div>

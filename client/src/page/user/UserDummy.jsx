@@ -54,6 +54,7 @@ export const UserDummy = () => {
     _id: "",
     exercise_number: 0,
     exercise_dummy: "N",
+    exercise_dateType: "day",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: "",
@@ -75,6 +76,7 @@ export const UserDummy = () => {
     _id: "",
     food_goal_number: 0,
     food_goal_dummy: "N",
+    food_goal_dateType: "day",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
     food_goal_kcal: "",
@@ -86,6 +88,7 @@ export const UserDummy = () => {
     _id: "",
     food_number: 0,
     food_dummy: "N",
+    food_dateType: "day",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: "",
@@ -110,6 +113,7 @@ export const UserDummy = () => {
     _id: "",
     money_goal_number: 0,
     money_goal_dummy: "N",
+    money_goal_dateType: "day",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: "",
@@ -119,6 +123,7 @@ export const UserDummy = () => {
     _id: "",
     money_number: 0,
     money_dummy: "N",
+    money_dateType: "day",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: "",
@@ -136,6 +141,7 @@ export const UserDummy = () => {
     _id: "",
     sleep_goal_number: 0,
     sleep_goal_dummy: "N",
+    sleep_goal_dateType: "day",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
@@ -146,6 +152,7 @@ export const UserDummy = () => {
     _id: "",
     sleep_number: 0,
     sleep_dummy: "N",
+    sleep_dateType: "day",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
@@ -296,7 +303,7 @@ export const UserDummy = () => {
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr"}>
                   <TableCell>{translate("date")}</TableCell>
-                  <TableCell>{translate("count")}</TableCell>
+                  <TableCell>{translate("exerciseCount")}</TableCell>
                   <TableCell>{translate("volume")}</TableCell>
                   <TableCell>{translate("cardio")}</TableCell>
                   <TableCell>{translate("weight")}</TableCell>

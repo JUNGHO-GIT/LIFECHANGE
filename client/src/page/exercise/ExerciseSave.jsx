@@ -58,20 +58,21 @@ export const ExerciseSave = () => {
     _id: "",
     exercise_number: 0,
     exercise_dummy: "N",
+    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "",
+    exercise_total_volume: "0",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "",
+    exercise_body_weight: "0",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
       exercise_title_idx: 0,
       exercise_title_val: "all",
-      exercise_set: "",
-      exercise_rep: "",
-      exercise_kg: "",
-      exercise_volume: "",
+      exercise_set: "0",
+      exercise_rep: "0",
+      exercise_kg: "0",
+      exercise_volume: "0",
       exercise_cardio: "00:00",
     }],
   };
@@ -210,10 +211,10 @@ export const ExerciseSave = () => {
       exercise_part_val: "all",
       exercise_title_idx: 0,
       exercise_title_val: "all",
-      exercise_set: "",
-      exercise_rep: "",
-      exercise_kg: "",
-      exercise_volume: "",
+      exercise_set: "0",
+      exercise_rep: "0",
+      exercise_kg: "0",
+      exercise_volume: "0",
       exercise_cardio: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
@@ -457,12 +458,22 @@ export const ExerciseSave = () => {
             variant={"outlined"}
             className={"w-86vw"}
             onChange={(e) => {
-              const value = e.target.value;
-              const limitedValue = Math.min(Number(value), 999).toString();
-              setOBJECT((prev) => ({
-                ...prev,
-                exercise_body_weight: limitedValue
-              }));
+              const value = e.target.value.replace(/^0+/, '');
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                const newValue = parseFloat(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_body_weight: "0"
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_body_weight: value
+                  }));
+                }
+              }
             }}
             InputProps={{
               startAdornment: (
@@ -482,7 +493,8 @@ export const ExerciseSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{
@@ -586,6 +598,7 @@ export const ExerciseSave = () => {
           <Div className={"d-center"}>
             <TextField
               select={false}
+              type={"text"}
               label={translate("set")}
               size={"small"}
               variant={"outlined"}
@@ -604,19 +617,32 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_set: limitedValue
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_set: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_set: value
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
             <TextField
@@ -625,7 +651,7 @@ export const ExerciseSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
-              value={OBJECT?.exercise_section[i]?.exercise_rep}
+              value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
               inputRef={REFS.current[i]?.exercise_rep}
               error={ERRORS[i]?.exercise_rep}
               InputProps={{
@@ -639,19 +665,32 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_rep: limitedValue
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_rep: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_rep: value
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -663,7 +702,7 @@ export const ExerciseSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-40vw me-3vw"}
-              value={OBJECT?.exercise_section[i]?.exercise_kg}
+              value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
               inputRef={REFS.current[i]?.exercise_kg}
               error={ERRORS[i]?.exercise_kg}
               InputProps={{
@@ -677,19 +716,32 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_kg: limitedValue
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_kg: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_kg: value
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
             <Time

@@ -58,24 +58,25 @@ export const FoodList = () => {
     _id: "",
     food_number: 0,
     food_dummy: "N",
+    food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
-    food_total_kcal: "",
-    food_total_fat: "",
-    food_total_carb: "",
-    food_total_protein: "",
+    food_total_kcal: "0",
+    food_total_carb: "0",
+    food_total_protein: "0",
+    food_total_fat: "0",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
       food_name: "",
       food_brand: "",
-      food_count: "",
+      food_count: "0",
       food_serv: "회",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
+      food_gram: "0",
+      food_kcal: "0",
+      food_carb: "0",
+      food_protein: "0",
+      food_fat: "0",
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -138,23 +139,25 @@ export const FoodList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.food_dateType,
+                      dateStart: item.food_dateStart,
+                      dateEnd: item.food_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.food_dateType,
-                          dateStart: item.food_dateStart,
-                          dateEnd: item.food_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

@@ -58,11 +58,12 @@ export const ExerciseGoalList = () => {
     _id: "",
     exercise_goal_number: 0,
     exercise_goal_dummy: "N",
+    exercise_goal_dateType: "",
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: "",
-    exercise_goal_volume: "",
-    exercise_goal_weight: "",
+    exercise_goal_count: "0",
+    exercise_goal_volume: "0",
+    exercise_goal_weight: "0",
     exercise_goal_cardio: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -125,23 +126,25 @@ export const ExerciseGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.exercise_goal_dateType,
+                      dateStart: item.exercise_goal_dateStart,
+                      dateEnd: item.exercise_goal_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.exercise_goal_dateType,
-                          dateStart: item.exercise_goal_dateStart,
-                          dateEnd: item.exercise_goal_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

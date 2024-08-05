@@ -181,10 +181,27 @@ export const TopNav = () => {
         setSelectedTab("real");
       }
     }
-    // 3. exercise, food, money, sleep
+    // 3. food
+    else if (firstStr === "food") {
+      if (secondStr === "chart") {
+        setSelectedTab("analyze");
+      }
+      else if (secondStr === "diff") {
+        setSelectedTab("diff");
+      }
+      else if (secondStr === "goal") {
+        setSelectedTab("goal");
+      }
+      else if (secondStr === "list" || secondStr === "save") {
+        setSelectedTab("real");
+      }
+      else if (secondStr === "find") {
+        setSelectedTab("find");
+      }
+    }
+    // 3. exercise, money, sleep
     else if (
-      firstStr === "exercise" || firstStr === "food" ||
-      firstStr === "money" || firstStr === "sleep"
+      firstStr === "exercise" || firstStr === "money" || firstStr === "sleep"
     ) {
       if (secondStr === "chart") {
         setSelectedTab("analyze");
@@ -502,7 +519,90 @@ export const TopNav = () => {
           }}
         />
       </Tabs>
-    ) : (
+    ) : (firstStr === "food") ? (
+      <Tabs
+        value={selectedTab}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .MuiTabs-scrollButtons`]: {
+            "&.Mui-disabled": { opacity: 0.3 },
+          },
+        }}
+      >
+        <Tab
+          label={translate("analyze")}
+          value={"analyze"}
+          onClick={(e) => {
+            setSelectedTab("analyze");
+            navigate(`${firstStr}/chart/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("diff")}
+          value={"diff"}
+          onClick={(e) => {
+            setSelectedTab("diff");
+            navigate(`${firstStr}/diff/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("goal")}
+          value={"goal"}
+          onClick={(e) => {
+            setSelectedTab("goal");
+            navigate(`${firstStr}/goal/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("real")}
+          value={"real"}
+          onClick={(e) => {
+            setSelectedTab("real");
+            navigate(`${firstStr}/list`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+        <Tab
+          label={translate("find")}
+          value={"find"}
+          onClick={(e) => {
+            setSelectedTab("find");
+            navigate(`${firstStr}/find`, {
+              state: {
+                dateType: "day",
+                dateStart: moment().format("YYYY-MM-DD"),
+                dateEnd: moment().format("YYYY-MM-DD"),
+              },
+            });
+          }}
+        />
+      </Tabs>
+    ): (
       <Tabs
         value={selectedTab}
         variant={"scrollable"}

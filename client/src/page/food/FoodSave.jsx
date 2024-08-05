@@ -59,24 +59,25 @@ export const FoodSave = () => {
     _id: "",
     food_number: 0,
     food_dummy: "N",
+    food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
-    food_total_kcal: "",
-    food_total_carb: "",
-    food_total_protein: "",
-    food_total_fat: "",
+    food_total_kcal: "0",
+    food_total_carb: "0",
+    food_total_protein: "0",
+    food_total_fat: "0",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
       food_name: "",
       food_brand: "",
-      food_count: "",
+      food_count: "0",
       food_serv: "회",
-      food_gram: "",
-      food_kcal: "",
-      food_carb: "",
-      food_protein: "",
-      food_fat: "",
+      food_gram: "0",
+      food_kcal: "0",
+      food_carb: "0",
+      food_protein: "0",
+      food_fat: "0",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -228,13 +229,13 @@ export const FoodSave = () => {
       food_part_val: "breakfast",
       food_name: " ",
       food_brand: " ",
-      food_count: "",
+      food_count: "0",
       food_serv: "회",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
+      food_gram: "0",
+      food_kcal: "0",
+      food_fat: "0",
+      food_carb: "0",
+      food_protein: "0",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
       idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
@@ -656,18 +657,34 @@ export const FoodSave = () => {
               size={"small"}
               variant={"outlined"}
               className={"w-20vw ms-3vw"}
-              value={OBJECT?.food_section[i]?.food_gram}
+              value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
               onChange={(e) => {
-                const newVal = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_gram: newVal,
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_gram: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_gram: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -738,19 +755,32 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_kcal: limitedValue,
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_kcal: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_kcal: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
             <TextField
@@ -773,19 +803,32 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_carb: limitedValue,
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_carb: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_carb: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -811,19 +854,32 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_protein: limitedValue,
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_protein: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_protein: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
             <TextField
@@ -846,19 +902,32 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_fat: limitedValue,
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_fat: "0"
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 99999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      food_section: prev.food_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          food_fat: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
           </Div>

@@ -63,6 +63,7 @@ export const CalendarSave = () => {
     _id: "",
     calendar_number: 0,
     calendar_dummy: "N",
+    calendar_dateType: "",
     calendar_dateStart: "0000-00-00",
     calendar_dateEnd: "0000-00-00",
     calendar_section: [{
@@ -325,7 +326,8 @@ export const CalendarSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{

@@ -45,22 +45,24 @@ export const Empty = ({
     <Card className={"border radius shadow-none"} key={`empty-${extra}`}>
       <Accordion className={"shadow-none"} expanded={false}>
         <AccordionSummary>
-          <Grid container className={"w-95p"}>
+          <Grid container className={"w-95p"}
+            onClick={(e) => {
+              e.stopPropagation();
+              Object.assign(SEND, {
+                dateType: DATE.dateType || "day",
+                dateStart: DATE.dateStart,
+                dateEnd: DATE.dateEnd,
+              });
+              navigate(navigateStr, {
+                state: SEND
+              });
+            }}
+          >
             <Grid item xs={2} className={"d-center"}>
               <Icons
                 name={"TbSearch"}
                 className={"w-18 h-18 black"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Object.assign(SEND, {
-                    dateType: DATE.dateType || "day",
-                    dateStart: DATE.dateStart,
-                    dateEnd: DATE.dateEnd,
-                  });
-                  navigate(navigateStr, {
-                    state: SEND
-                  });
-                }}
+                onClick={() => {}}
               />
             </Grid>
             <Grid item xs={2} className={"d-left"}>
@@ -87,12 +89,12 @@ export const Empty = ({
           <Grid container className={"w-95p"}>
             <Grid item xs={2} className={"d-center"}>
               <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate("findFood")}
+                {translate("search")}
               </Div>
             </Grid>
             <Grid item xs={10} className={"d-left"}>
               <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
+                {translate("notFound")}
               </Div>
             </Grid>
           </Grid>

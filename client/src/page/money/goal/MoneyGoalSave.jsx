@@ -56,10 +56,11 @@ export const MoneyGoalSave = () => {
     _id: "",
     money_goal_number: 0,
     money_goal_dummy: "N",
+    money_goal_dateType: "",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "",
-    money_goal_expense: ""
+    money_goal_income: "0",
+    money_goal_expense: "0"
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -241,7 +242,6 @@ export const MoneyGoalSave = () => {
     }));
   };
 
-
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. date + count
@@ -265,7 +265,8 @@ export const MoneyGoalSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{
@@ -288,7 +289,13 @@ export const MoneyGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalIncome")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalIncome")}`
+                ) : (
+                  `${translate("goalIncome")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
@@ -305,14 +312,22 @@ export const MoneyGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_goal_income: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_income: "0",
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_income: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -322,7 +337,13 @@ export const MoneyGoalSave = () => {
               select={false}
               type={"text"}
               size={"small"}
-              label={`${translate("goalExpense")} (${translate("total")})`}
+              label={
+                DATE.dateType === "day" ? (
+                  `${translate("goalExpense")}`
+                ) : (
+                  `${translate("goalExpense")} (${translate("total")})`
+                )
+              }
               variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
@@ -339,14 +360,22 @@ export const MoneyGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_goal_expense: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_expense: "0",
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_goal_expense: value,
+                    }));
+                  }
+                }
               }}
             />
           </Div>

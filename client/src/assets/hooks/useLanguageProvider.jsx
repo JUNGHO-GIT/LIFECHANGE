@@ -57,7 +57,7 @@ export const useTranslate = () => {
     cardio: {ko: "유산소", en: "Cardio"},
     category: {ko: "분류", en: "Category"},
     content: {ko: "내용", en: "Content"},
-    count: {ko: "항목수", en: "Count"},
+    count: {ko: "항목", en: "Count"},
     culture: {ko: "문화", en: "Culture"},
     currency: {ko: "₩", en: "$"},
     calendarTitle: {ko: "제목", en: "Title"},
@@ -166,6 +166,7 @@ export const useTranslate = () => {
     health: {ko: "건강", en: "Health"},
 
     // i
+    item: {ko: "항목", en: "Item"},
     id: {ko: "아이디", en: "ID"},
     income: {ko: "수입", en: "Income"},
     incomeExpense: {ko: "수입-지출", en: "Income-Expense"},
@@ -218,6 +219,7 @@ export const useTranslate = () => {
     notId: {ko: "아이디가 없는 경우", en: "Don't have an Account"},
     nutrition: {ko: "영양소", en: "Nutrition"},
     nut: {ko: "영양소", en: "Nutrition"},
+    notFound: {ko: "결과가 없습니다", en: "result is not available"},
 
     // o
     others: {ko: "기타", en: "Others"},
@@ -247,6 +249,7 @@ export const useTranslate = () => {
 
     // s
     s: {ko: "set", en: "set"},
+    search: {ko: "검색", en: "Search"},
     save: {ko: "저장", en: "Save"},
     saveTabs: {ko: "저장", en: "Save"},
     saveAll: {ko: "전체저장", en: "Save All"},

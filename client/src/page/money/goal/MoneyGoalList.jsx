@@ -58,10 +58,11 @@ export const MoneyGoalList = () => {
     _id: "",
     money_goal_number: 0,
     money_goal_dummy: "N",
+    money_goal_dateType: "",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "",
-    money_goal_expense: ""
+    money_goal_income: "0",
+    money_goal_expense: "0"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -123,23 +124,25 @@ export const MoneyGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.money_goal_dateType,
+                      dateStart: item.money_goal_dateStart,
+                      dateEnd: item.money_goal_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.money_goal_dateType,
-                          dateStart: item.money_goal_dateStart,
-                          dateEnd: item.money_goal_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

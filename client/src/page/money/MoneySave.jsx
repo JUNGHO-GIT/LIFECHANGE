@@ -58,16 +58,17 @@ export const MoneySave = () => {
     _id: "",
     money_number: 0,
     money_dummy: "N",
+    money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_income: "",
-    money_total_expense: "",
+    money_total_income: "0",
+    money_total_expense: "0",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "all",
       money_title_idx: 0,
       money_title_val: "all",
-      money_amount: "",
+      money_amount: "0",
       money_content: "",
     }],
   };
@@ -187,7 +188,7 @@ export const MoneySave = () => {
       money_part_val: "all",
       money_title_idx: 0,
       money_title_val: "all",
-      money_amount: "",
+      money_amount: "0",
       money_content: ""
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
@@ -406,7 +407,8 @@ export const MoneySave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{
@@ -528,19 +530,32 @@ export const MoneySave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_section: prev.money_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      money_amount: limitedValue
-                    } : item
-                  ))
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_amount: "0",
+                        } : item
+                      ))
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_amount: value,
+                        } : item
+                      ))
+                    }));
+                  }
+                }
               }}
             />
           </Div>

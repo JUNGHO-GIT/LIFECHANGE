@@ -92,37 +92,41 @@ export const TodayGoalList = () => {
     _id: "",
     exercise_goal_goal_number: 0,
     exercise_goal_goal_dummy: "N",
+    exercise_goal_dateType: "day",
     exercise_goal_goal_dateStart: "0000-00-00",
     exercise_goal_goal_dateEnd: "0000-00-00",
-    exercise_goal_goal_count: "",
-    exercise_goal_goal_volume: "",
-    exercise_goal_goal_weight: "",
+    exercise_goal_goal_count: "0",
+    exercise_goal_goal_volume: "0",
+    exercise_goal_goal_weight: "0",
     exercise_goal_goal_cardio: "00:00"
   }];
   const OBJECT_FOOD_DEF = [{
     _id: "",
     food_goal_goal_number: 0,
     food_goal_goal_dummy: "N",
+    food_goal_dateType: "day",
     food_goal_goal_dateStart: "0000-00-00",
     food_goal_goal_dateEnd: "0000-00-00",
-    food_goal_goal_kcal: "",
-    food_goal_goal_carb: "",
-    food_goal_goal_protein: "",
-    food_goal_goal_fat: ""
+    food_goal_goal_kcal: "0",
+    food_goal_goal_carb: "0",
+    food_goal_goal_protein: "0",
+    food_goal_goal_fat: "0",
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_goal_number: 0,
     money_goal_dummy: "N",
+    money_goal_dateType: "day",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: "",
-    money_goal_expense: ""
+    money_goal_income: "0",
+    money_goal_expense: "0",
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_goal_number: 0,
     sleep_goal_dummy: "N",
+    sleep_goal_dateType: "day",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
@@ -227,23 +231,25 @@ export const TodayGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.exercise_goal_dateType,
+                      dateStart: item.exercise_goal_dateStart,
+                      dateEnd: item.exercise_goal_dateEnd,
+                    });
+                    navigate(SEND.toExerciseGoal, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.exercise_goal_dateType,
-                          dateStart: item.exercise_goal_dateStart,
-                          dateEnd: item.exercise_goal_dateEnd,
-                        });
-                        navigate(SEND.toExerciseGoal, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -402,23 +408,25 @@ export const TodayGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.food_goal_dateType,
+                      dateStart: item.food_goal_dateStart,
+                      dateEnd: item.food_goal_dateEnd,
+                    });
+                    navigate(SEND.toFoodGoal, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.food_goal_dateType,
-                          dateStart: item.food_goal_dateStart,
-                          dateEnd: item.food_goal_dateEnd,
-                        });
-                        navigate(SEND.toFoodGoal, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -577,23 +585,25 @@ export const TodayGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.money_goal_dateType,
+                      dateStart: item.money_goal_dateStart,
+                      dateEnd: item.money_goal_dateEnd,
+                    });
+                    navigate(SEND.toMoneyGoal, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.money_goal_dateType,
-                          dateStart: item.money_goal_dateStart,
-                          dateEnd: item.money_goal_dateEnd,
-                        });
-                        navigate(SEND.toMoneyGoal, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -708,23 +718,25 @@ export const TodayGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.sleep_goal_dateType,
+                      dateStart: item.sleep_goal_dateStart,
+                      dateEnd: item.sleep_goal_dateEnd,
+                    });
+                    navigate(SEND.toSleepGoal, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.sleep_goal_dateType,
-                          dateStart: item.sleep_goal_dateStart,
-                          dateEnd: item.sleep_goal_dateEnd,
-                        });
-                        navigate(SEND.toSleepGoal, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

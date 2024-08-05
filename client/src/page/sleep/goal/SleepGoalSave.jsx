@@ -55,6 +55,7 @@ export const SleepGoalSave = () => {
     _id: "",
     sleep_goal_number: 0,
     sleep_goal_dummy: "N",
+    sleep_goal_dateType: "",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
@@ -268,7 +269,8 @@ export const SleepGoalSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{

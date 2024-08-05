@@ -59,20 +59,21 @@ export const ExerciseList = () => {
     _id: "",
     exercise_number: 0,
     exercise_dummy: "N",
+    exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: "",
+    exercise_total_volume: "0",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "",
+    exercise_body_weight: "0",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
       exercise_title_idx: 0,
       exercise_title_val: "all",
-      exercise_set: "",
-      exercise_rep: "",
-      exercise_kg: "",
-      exercise_volume: "",
+      exercise_set: "0",
+      exercise_rep: "0",
+      exercise_kg: "0",
+      exercise_volume: "0",
       exercise_cardio: "00:00",
     }],
   }];
@@ -136,23 +137,25 @@ export const ExerciseList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.exercise_dateType,
+                      dateStart: item.exercise_dateStart,
+                      dateEnd: item.exercise_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.exercise_dateType,
-                          dateStart: item.exercise_dateStart,
-                          dateEnd: item.exercise_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
@@ -243,7 +246,7 @@ export const ExerciseList = () => {
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_body_weight).format("0,0")}
+                      {item.exercise_body_weight}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-right lh-2-4"}>

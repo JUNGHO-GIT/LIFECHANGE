@@ -56,12 +56,13 @@ export const ExerciseGoalSave = () => {
     _id: "",
     exercise_goal_number: 0,
     exercise_goal_dummy: "N",
+    exercise_goal_dateType: "",
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: "",
+    exercise_goal_count: "0",
     exercise_goal_cardio: "00:00",
-    exercise_goal_volume: "",
-    exercise_goal_weight: "",
+    exercise_goal_volume: "0",
+    exercise_goal_weight: "0",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -247,10 +248,10 @@ export const ExerciseGoalSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      exercise_goal_count: "",
-      exercise_goal_volume: "",
+      exercise_goal_count: "0",
+      exercise_goal_volume: "0",
       exercise_goal_cardio: "00:00",
-      exercise_goal_weight: ""
+      exercise_goal_weight: "0",
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -281,7 +282,8 @@ export const ExerciseGoalSave = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          <Div className={"d-between"}><Badge
+          <Div className={"d-between"}>
+            <Badge
               badgeContent={i + 1}
               showZero={true}
               sx={{
@@ -326,14 +328,22 @@ export const ExerciseGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_goal_count: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_count: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_count: value
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -365,14 +375,22 @@ export const ExerciseGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_goal_volume: limitedValue
-                }));
+                const value = e.target.value.replace(/,/g, '');
+                if (/^\d*$/.test(value) || value === "") {
+                  const newValue = Number(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_volume: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 9999999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_volume: value
+                    }));
+                  }
+                }
               }}
             />
           </Div>
@@ -396,7 +414,7 @@ export const ExerciseGoalSave = () => {
               size={"small"}
               label={translate("goalWeight")}
               className={"w-86vw"}
-              value={numeral(OBJECT?.exercise_goal_weight).format("0,0")}
+              value={OBJECT?.exercise_goal_weight}
               inputRef={REFS?.current?.exercise_goal_weight}
               error={ERRORS?.exercise_goal_weight}
               InputProps={{
@@ -410,14 +428,22 @@ export const ExerciseGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex =  /,/gm;
-                const match = e.target.value.match(regex);
-                const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999).toString();
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_goal_weight: limitedValue
-                }));
+                const value = e.target.value.replace(/^0+/, '');
+                if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                  const newValue = parseFloat(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_weight: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_goal_weight: value
+                    }));
+                  }
+                }
               }}
             />
           </Div>

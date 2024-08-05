@@ -58,12 +58,13 @@ export const FoodGoalList = () => {
     _id: "",
     food_goal_number: 0,
     food_goal_dummy: "N",
+    food_goal_dateType: "",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: "",
-    food_goal_carb: "",
-    food_goal_protein: "",
-    food_goal_fat: ""
+    food_goal_kcal: "0",
+    food_goal_carb: "0",
+    food_goal_protein: "0",
+    food_goal_fat: "0",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -125,23 +126,25 @@ export const FoodGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.food_goal_dateType,
+                      dateStart: item.food_goal_dateStart,
+                      dateEnd: item.food_goal_dateEnd,
+                    });
+                    navigate(SEND.toSave, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.food_goal_dateType,
-                          dateStart: item.food_goal_dateStart,
-                          dateEnd: item.food_goal_dateEnd,
-                        });
-                        navigate(SEND.toSave, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>
