@@ -60,18 +60,18 @@ export const ExerciseSave = () => {
     exercise_dummy: "N",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
-    exercise_total_volume: 0,
+    exercise_total_volume: "",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: 0,
+    exercise_body_weight: "",
     exercise_section: [{
       exercise_part_idx: 0,
-      exercise_part_val: "전체",
+      exercise_part_val: "all",
       exercise_title_idx: 0,
-      exercise_title_val: "전체",
-      exercise_set: 0,
-      exercise_rep: 0,
-      exercise_kg: 0,
-      exercise_volume: 0,
+      exercise_title_val: "all",
+      exercise_set: "",
+      exercise_rep: "",
+      exercise_kg: "",
+      exercise_volume: "",
       exercise_cardio: "00:00",
     }],
   };
@@ -178,7 +178,7 @@ export const ExerciseSave = () => {
 
     const updatedSections = OBJECT?.exercise_section?.map((section) => {
       const {exercise_set, exercise_rep, exercise_kg} = section;
-      const sectionVolume = exercise_set * exercise_rep * exercise_kg;
+      const sectionVolume = Number(exercise_set) * Number(exercise_rep) * Number(exercise_kg);
 
       totalVolume += sectionVolume;
 
@@ -190,14 +190,14 @@ export const ExerciseSave = () => {
 
       return {
         ...section,
-        exercise_volume: sectionVolume
+        exercise_volume: sectionVolume.toString(),
       };
     });
 
     setOBJECT((prev) => ({
       ...prev,
       exercise_section: updatedSections,
-      exercise_total_volume: totalVolume,
+      exercise_total_volume: totalVolume.toString(),
       exercise_total_cardio: `${Math.floor(totalTime / 60).toString().padStart(2, '0')}:${(totalTime % 60).toString().padStart(2, '0')}`
     }));
 
@@ -207,13 +207,13 @@ export const ExerciseSave = () => {
   useEffect(() => {
     const defaultSection = {
       exercise_part_idx: 0,
-      exercise_part_val: "전체",
+      exercise_part_val: "all",
       exercise_title_idx: 0,
-      exercise_title_val: "전체",
-      exercise_set: 0,
-      exercise_rep: 0,
-      exercise_kg: 0,
-      exercise_volume: 0,
+      exercise_title_val: "all",
+      exercise_set: "",
+      exercise_rep: "",
+      exercise_kg: "",
+      exercise_volume: "",
       exercise_cardio: "00:00",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
@@ -453,21 +453,18 @@ export const ExerciseSave = () => {
             label={translate("weight")}
             type={"text"}
             size={"small"}
-            value={numeral(OBJECT?.exercise_body_weight).format("0,0")}
+            value={OBJECT?.exercise_body_weight}
             variant={"outlined"}
             className={"w-86vw"}
             onChange={(e) => {
-              const regex = /,/g;
-              const match = e.target.value.match(regex);
-              const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-              const limitedValue = Math.min(Number(rawValue), 999);
+              const value = e.target.value;
+              const limitedValue = Math.min(Number(value), 999).toString();
               setOBJECT((prev) => ({
                 ...prev,
                 exercise_body_weight: limitedValue
               }));
             }}
             InputProps={{
-              readOnly: false,
               startAdornment: (
                 <Img src={exercise5} className={"w-16 h-16"} />
               ),
@@ -607,10 +604,10 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999);
+                const limitedValue = Math.min(Number(rawValue), 999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_section: prev.exercise_section?.map((item, idx) => (
@@ -642,10 +639,10 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999);
+                const limitedValue = Math.min(Number(rawValue), 999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_section: prev.exercise_section?.map((item, idx) => (
@@ -680,10 +677,10 @@ export const ExerciseSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 999);
+                const limitedValue = Math.min(Number(rawValue), 999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_section: prev.exercise_section?.map((item, idx) => (

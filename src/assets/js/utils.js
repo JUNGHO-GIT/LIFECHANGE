@@ -16,38 +16,25 @@ export const calcDate = (startTime, endTime) => {
   return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
 }
 
-// 1-1. format -------------------------------------------------------------------------------------
-export const intFormat = (data) => {
-  if (!data) {
-    return 0;
-  }
-  else if (typeof data === "string") {
-    const toInt = parseInt(data, 10);
-    return Math.round(toInt);
-  }
-  else {
-    return Math.round(data);
-  }
-};
-
 // 1-2. format -------------------------------------------------------------------------------------
 export const timeFormat = (data) => {
   if (!data) {
-    return 0;
+    return "0";
   }
-  else if (typeof data === "string") {
+
+  if (typeof data === "string") {
     const time = data.split(":");
     if (time.length === 2) {
       const hours = parseInt(time[0], 10);
       const minutes = parseInt(time[1], 10) / 60;
-      return parseFloat((hours + minutes).toFixed(1));
+      return parseFloat((hours + minutes).toFixed(1)).toString();
     }
     else {
       return 0;
     }
   }
   else {
-    return parseFloat(data.toFixed(1));
+    return parseFloat(data.toFixed(1)).toString();
   }
 };
 

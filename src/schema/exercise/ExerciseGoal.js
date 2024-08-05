@@ -38,13 +38,13 @@ const schema = new mongoose.Schema({
   },
 
   exercise_goal_count: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   exercise_goal_volume: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   exercise_goal_cardio: {
@@ -53,8 +53,8 @@ const schema = new mongoose.Schema({
     required: false
   },
   exercise_goal_weight: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
 

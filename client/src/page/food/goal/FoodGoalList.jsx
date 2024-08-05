@@ -60,10 +60,10 @@ export const FoodGoalList = () => {
     food_goal_dummy: "N",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: 0,
-    food_goal_carb: 0,
-    food_goal_protein: 0,
-    food_goal_fat: 0
+    food_goal_kcal: "",
+    food_goal_carb: "",
+    food_goal_protein: "",
+    food_goal_fat: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 

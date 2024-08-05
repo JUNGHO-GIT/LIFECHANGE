@@ -34,10 +34,10 @@ export const MoneyChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_WEEK_DEF = [
-    {name:"", day: "", income: 0, expense: 0},
+    {name:"", date: "", income: "0", expense: "0"},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", income: 0, expense: 0},
+    {name:"", date: "", income: "0", expense: "0"},
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);

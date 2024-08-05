@@ -67,13 +67,13 @@ export const FoodFind = () => {
     food_part_val: "breakfast",
     food_name: "",
     food_brand: "",
-    food_count: 0,
+    food_count: "",
     food_serv: "",
-    food_gram: 0,
-    food_kcal: 0,
-    food_carb: 0,
-    food_protein: 0,
-    food_fat: 0,
+    food_gram: "",
+    food_kcal: "",
+    food_carb: "",
+    food_protein: "",
+    food_fat: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 

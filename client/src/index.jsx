@@ -172,7 +172,8 @@ const App = () => {
     location.pathname.indexOf("/auth") > -1
   );
   const noneBanner = (
-    location.pathname.indexOf("/user") > -1 ||
+    location.pathname.includes("/user/login") ||
+    location.pathname.includes("/user/signup") ||
     location.pathname.indexOf("/auth") > -1
   );
 

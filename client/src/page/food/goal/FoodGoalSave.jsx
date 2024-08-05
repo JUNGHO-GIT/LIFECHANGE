@@ -59,10 +59,10 @@ export const FoodGoalSave = () => {
     food_goal_dummy: "N",
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
-    food_goal_kcal: 0,
-    food_goal_carb: 0,
-    food_goal_protein: 0,
-    food_goal_fat: 0,
+    food_goal_kcal: "",
+    food_goal_carb: "",
+    food_goal_protein: "",
+    food_goal_fat: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -255,10 +255,10 @@ export const FoodGoalSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      food_goal_kcal: 0,
-      food_goal_carb: 0,
-      food_goal_protein: 0,
-      food_goal_fat: 0,
+      food_goal_kcal: "",
+      food_goal_carb: "",
+      food_goal_protein: "",
+      food_goal_fat: "",
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -329,10 +329,10 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_goal_kcal: limitedValue
@@ -363,10 +363,10 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_goal_carb: limitedValue
@@ -397,10 +397,10 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_goal_protein: limitedValue
@@ -431,10 +431,10 @@ export const FoodGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(99999, parseInt(rawValue, 10));
+                const limitedValue = Math.min(99999, parseInt(rawValue, 10)).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_goal_fat: limitedValue
@@ -453,7 +453,7 @@ export const FoodGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"block-wrapper h-min50vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

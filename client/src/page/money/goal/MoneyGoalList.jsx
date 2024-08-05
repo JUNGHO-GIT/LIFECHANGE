@@ -60,8 +60,8 @@ export const MoneyGoalList = () => {
     money_goal_dummy: "N",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: 0,
-    money_goal_expense: 0
+    money_goal_income: "",
+    money_goal_expense: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 

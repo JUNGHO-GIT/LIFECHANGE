@@ -2,13 +2,12 @@
 
 import * as repository from "../../repository/exercise/exerciseChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {intFormat} from "../../assets/js/utils.js";
 import {newDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. chart (bar - Today) ---------------------------------------------------------------------
+// 1-1. chart (bar - Today) ------------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -31,15 +30,15 @@ export const barToday = async (
     {
       name: "weight",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.exercise_goal_weight),
-      real: intFormat(findReal?.[0]?.exercise_body_weight)
+      goal: String(findGoal?.[0]?.exercise_goal_weight || "0"),
+      real: String(findReal?.[0]?.exercise_body_weight || "0")
     }
   ];
 
   return finalResult;
 };
 
-// 1-2. chart (bar - week) ----------------------------------------------------------------------
+// 1-2. chart (bar - week) -------------------------------------------------------------------------
 export const barWeek = async (
   user_id_param
 ) => {
@@ -80,15 +79,21 @@ export const barWeek = async (
     finalResult.push({
       name: data,
       date: date[index],
-      목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
-      real: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+      goal:
+        findIndexGoal !== -1
+        ? String(findGoal[findIndexGoal]?.exercise_goal_weight)
+        : "0",
+      real:
+        findIndexReal !== -1
+        ? String(findReal[findIndexReal]?.exercise_body_weight)
+        : "0"
     });
   });
 
   return finalResult;
 };
 
-// 1-3. chart (bar - month) ---------------------------------------------------------------------
+// 1-3. chart (bar - month) ------------------------------------------------------------------------
 export const barMonth = async (
   user_id_param
 ) => {
@@ -129,15 +134,22 @@ export const barMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      목표: findIndexGoal !== -1 ? intFormat(findGoal[findIndexGoal]?.exercise_goal_weight) : 0,
-      real: findIndexReal !== -1 ? intFormat(findReal[findIndexReal]?.exercise_body_weight) : 0
+      goal:
+        findIndexGoal !== -1
+        ? String(findGoal[findIndexGoal]?.exercise_goal_weight)
+        : "0",
+      real:
+        findIndexReal !== -1
+        ? String(findReal[findIndexReal]?.exercise_body_weight)
+        : "0"
     });
   });
 
   return finalResult;
 };
 
-// 2-1. chart (pie - week) --------------------------------------------------------------------------
+// 2-1. chart (pie - week) -------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -161,23 +173,23 @@ export const pieWeek = async (
 
   // part
   finalResultPart = findResultPart?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.count)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // title
   finalResultTitle = findResultTitle?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.count)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
 
   return {
     part: finalResultPart,
     title: finalResultTitle,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 2-2. chart (pie - month) ---------------------------------------------------------------------
+// 2-2. chart (pie - month) ------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -201,23 +213,22 @@ export const pieMonth = async (
 
   // part
   finalResultPart = findResultPart?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.count)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // title
   finalResultTitle = findResultTitle?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.count)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
 
   return {
     part: finalResultPart,
     title: finalResultTitle,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 3-1. chart (line - week) ---------------------------------------------------------------------
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -261,12 +272,18 @@ export const lineWeek = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      volume: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
+      volume:
+        findIndexVolume !== -1
+        ? String(findResultVolume[findIndexVolume]?.exercise_total_volume)
+        : "0"
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      cardio: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      cardio:
+        findIndexCardio !== -1
+        ? String(findResultCardio[findIndexCardio]?.exercise_total_cardio)
+        : "0"
     });
   });
 
@@ -276,7 +293,7 @@ export const lineWeek = async (
   };
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param
 ) => {
@@ -321,12 +338,18 @@ export const lineMonth = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      volume: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
+      volume:
+        findIndexVolume !== -1
+        ? String(findResultVolume[findIndexVolume]?.exercise_total_volume)
+        : "0"
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      cardio: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
+      cardio:
+        findIndexCardio !== -1
+        ? String(findResultCardio[findIndexCardio]?.exercise_total_cardio)
+        : "0"
     });
   });
 
@@ -336,8 +359,8 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. chart (avg - month) ---------------------------------------------------------------------
-export const avgMonth = async (
+// 4-1. chart (avg - week) -------------------------------------------------------------------------
+export const avgWeek = async (
   user_id_param
 ) => {
 
@@ -364,11 +387,11 @@ export const avgMonth = async (
   let finalResultCardio = [];
 
   // volume
-  findResultVolume = await repository.avgMonth.listVolume(
+  findResultVolume = await repository.avgWeek.listVolume(
     user_id_param, dateStart, dateEnd
   );
   // cardio
-  findResultCardio = await repository.avgMonth.listCardio(
+  findResultCardio = await repository.avgWeek.listCardio(
     user_id_param, dateStart, dateEnd
   );
 
@@ -379,7 +402,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumVolume[weekNum] += intFormat(item.exercise_total_volume);
+      sumVolume[weekNum] += Number(item.exercise_total_volume || "0");
       countRecords[weekNum]++;
     }
   });
@@ -391,7 +414,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumCardio[weekNum] += intFormat(item.exercise_total_cardio);
+      sumCardio[weekNum] += Number(item.exercise_total_cardio || "0");
       countRecords[weekNum]++;
     }
   });
@@ -402,12 +425,18 @@ export const avgMonth = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      volume: intFormat(sumVolume[index] / countRecords[index])
+      volume:
+        countRecords[index] > 0
+        ? String((sumVolume[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      cardio: intFormat(sumCardio[index] / countRecords[index])
+      cardio:
+        countRecords[index] > 0
+        ? String((sumCardio[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
   });
 
@@ -417,8 +446,8 @@ export const avgMonth = async (
   };
 };
 
-// 4-2. chart (avg - year) ---------------------------------------------------------------------
-export const avgYear = async (
+// 4-2. chart (avg - month) ---------------------------------------------------------------------
+export const avgMonth = async (
   user_id_param
 ) => {
 
@@ -432,7 +461,9 @@ export const avgYear = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 12 }, (_, i) => {
-    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
+    const startOfMonth = curYearStart.clone().add(i, 'months').startOf('month').format("MM-DD");
+    const endOfMonth = curYearStart.clone().add(i, 'months').endOf('month').format("MM-DD");
+    return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
   let sumVolume = Array(12).fill(0);
@@ -445,11 +476,11 @@ export const avgYear = async (
   let finalResultCardio = [];
 
   // volume
-  findResultVolume = await repository.avgYear.listVolume(
+  findResultVolume = await repository.avgMonth.listVolume(
     user_id_param, dateStart, dateEnd
   );
   // cardio
-  findResultCardio = await repository.avgYear.listCardio(
+  findResultCardio = await repository.avgMonth.listCardio(
     user_id_param, dateStart, dateEnd
   );
 
@@ -457,15 +488,19 @@ export const avgYear = async (
   findResultVolume.forEach((item) => {
     const exerciseDate = new Date(item.exercise_dateStart);
     const monthNum = exerciseDate.getMonth();
-    sumVolume[monthNum] += intFormat(item.exercise_total_volume);
-    countRecords[monthNum]++;
+    if (monthNum >= 0 && monthNum < 12) {
+      sumVolume[monthNum] += Number(item.exercise_total_volume || "0");
+      countRecords[monthNum]++;
+    }
   });
   // cardio
   findResultCardio.forEach((item) => {
     const exerciseDate = new Date(item.exercise_dateStart);
     const monthNum = exerciseDate.getMonth();
-    sumCardio[monthNum] += intFormat(item.exercise_total_cardio);
-    countRecords[monthNum]++;
+    if (monthNum >= 0 && monthNum < 12) {
+      sumCardio[monthNum] += Number(item.exercise_total_cardio || "0");
+      countRecords[monthNum]++;
+    }
   });
 
   // week = getDay() + 1
@@ -474,12 +509,18 @@ export const avgYear = async (
     finalResultVolume.push({
       name: data,
       date: date[index],
-      volume: intFormat(sumVolume[index] / countRecords[index])
+      volume:
+        countRecords[index] > 0
+        ? String((sumVolume[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
-      cardio: intFormat(sumCardio[index] / countRecords[index])
+      cardio:
+        countRecords[index] > 0
+        ? String((sumCardio[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
   });
 

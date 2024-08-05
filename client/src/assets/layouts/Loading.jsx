@@ -13,7 +13,7 @@ export const Loading = () => {
 
   // 6. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
-    firstStr === "user" ? (
+    PATH.includes("/user/signup") ? (
       <Div className={"loader-wrapper d-center"}>
         <Div className={"loader"} />
       </Div>

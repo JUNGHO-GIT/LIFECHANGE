@@ -32,7 +32,7 @@ export const SleepChartBar = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 

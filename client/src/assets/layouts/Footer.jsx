@@ -16,18 +16,6 @@ export const Footer = ({
   const location = useLocation();
   const PATH = location?.pathname;
 
-  const isCalendar = strings?.first === "calendar";
-  const isFind = strings?.second === "find";
-
-  const isDiffList = strings?.second === "diff" && strings?.third === "list";
-  const isGoalList = strings?.second === "goal" && strings?.third === "list";
-  const isGoalSave = strings?.second === "goal" && strings?.third === "save";
-  const isList = strings?.second === "list" && strings?.third === "";
-  const isSave = strings?.second === "save" && strings?.third === "";
-  const isDummy = strings?.second === "data" && strings?.third === "list";
-  const isCategory = strings?.second === "data" && strings?.third === "category";
-  const isDetail = strings?.second === "data" && strings?.third === "detail";
-
   // 2. listFilter ---------------------------------------------------------------------------------
   const listFilterNode = () => (
     <ListFilter

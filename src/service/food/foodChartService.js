@@ -2,13 +2,12 @@
 
 import * as repository from "../../repository/food/foodChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {intFormat} from "../../assets/js/utils.js";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
-// 1-1. chart (bar - today) ---------------------------------------------------------------------
+// 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (
   user_id_param
 ) => {
@@ -33,8 +32,8 @@ export const barToday = async (
     {
       name: "kcal",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.food_goal_kcal),
-      real: intFormat(findReal?.[0]?.food_total_kcal)
+      goal: String(findGoal?.[0]?.food_goal_kcal || "0"),
+      real: String(findReal?.[0]?.food_total_kcal || "0")
     }
   ];
 
@@ -43,20 +42,20 @@ export const barToday = async (
     {
       name: "carb",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.food_goal_carb),
-      real: intFormat(findReal?.[0]?.food_total_carb)
+      goal: String(findGoal?.[0]?.food_goal_carb || "0"),
+      real: String(findReal?.[0]?.food_total_carb || "0")
     },
     {
       name: "protein",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.food_goal_protein),
-      real: intFormat(findReal?.[0]?.food_total_protein)
+      goal: String(findGoal?.[0]?.food_goal_protein || "0"),
+      real: String(findReal?.[0]?.food_total_protein || "0")
     },
     {
       name: "fat",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.food_goal_fat),
-      real: intFormat(findReal?.[0]?.food_total_fat)
+      goal: String(findGoal?.[0]?.food_goal_fat || "0"),
+      real: String(findReal?.[0]?.food_total_fat || "0")
     }
   ];
 
@@ -66,7 +65,8 @@ export const barToday = async (
   };
 };
 
-// 2-1. chart (pie - today) ---------------------------------------------------------------------
+// 2-1. chart (pie - today) ------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieToday = async (
   user_id_param
 ) => {
@@ -90,24 +90,33 @@ export const pieToday = async (
 
   // kcal
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "carb", value: intFormat(item.food_total_carb)},
-    {name: "protein", value: intFormat(item.food_total_protein)},
-    {name: "fat", value: intFormat(item.food_total_fat)}
+    {
+      name: String("carb"),
+      value: Number(item.food_total_carb) || 0
+    },
+    {
+      name: String("protein"),
+      value: Number(item.food_total_protein) || 0
+    },
+    {
+      name: String("fat"),
+      value: Number(item.food_total_fat) || 0
+    },
   ]).flat();
 
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 2-2. chart (pie - week) --------------------------------------------------------------------------
+// 2-2. chart (pie - week) -------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -131,24 +140,33 @@ export const pieWeek = async (
 
   // kcal
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "carb", value: intFormat(item.food_total_carb)},
-    {name: "protein", value: intFormat(item.food_total_protein)},
-    {name: "fat", value: intFormat(item.food_total_fat)}
+    {
+      name: String("carb"),
+      value: Number(item.food_total_carb) || 0
+    },
+    {
+      name: String("protein"),
+      value: Number(item.food_total_protein) || 0
+    },
+    {
+      name: String("fat"),
+      value: Number(item.food_total_fat) || 0
+    },
   ]).flat();
 
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 2-3. chart (pie - month) ---------------------------------------------------------------------
+// 2-3. chart (pie - month) ------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -172,24 +190,32 @@ export const pieMonth = async (
 
   // kcal
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // nut
   finalResultNut = findResultNut.map((item) => [
-    {name: "carb", value: intFormat(item.food_total_carb)},
-    {name: "protein", value: intFormat(item.food_total_protein)},
-    {name: "fat", value: intFormat(item.food_total_fat)}
+    {
+      name: String("carb"),
+      value: Number(item.food_total_carb) || 0
+    },
+    {
+      name: String("protein"),
+      value: Number(item.food_total_protein) || 0
+    },
+    {
+      name: String("fat"),
+      value: Number(item.food_total_fat) || 0
+    },
   ]).flat();
 
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 3-1. chart (line - week) ---------------------------------------------------------------------
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
   user_id_param
 ) => {
@@ -233,14 +259,26 @@ export const lineWeek = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      kcal: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
+      kcal:
+        findIndexKcal !== -1
+        ? String(findResultKcal[findIndexKcal]?.food_total_kcal)
+        : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      carb: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
-      protein: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
-      fat: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
+      carb:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_carb)
+        : "0",
+      protein:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_protein)
+        : "0",
+      fat:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_fat)
+        : "0",
     });
   });
 
@@ -250,7 +288,7 @@ export const lineWeek = async (
   };
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (
   user_id_param
 ) => {
@@ -294,14 +332,26 @@ export const lineMonth = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      kcal: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
+      kcal:
+        findIndexKcal !== -1
+        ? String(findResultKcal[findIndexKcal]?.food_total_kcal)
+        : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      carb: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
-      protein: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
-      fat: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
+      carb:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_carb)
+        : "0",
+      protein:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_protein)
+        : "0",
+      fat:
+        findIndexNut !== -1
+        ? String(findResultNut[findIndexNut]?.food_total_fat)
+        : "0",
     });
   });
 
@@ -311,8 +361,8 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. chart (avg - month) ---------------------------------------------------------------------
-export const avgMonth = async (
+// 4-1. chart (avg - week) -------------------------------------------------------------------------
+export const avgWeek = async (
   user_id_param
 ) => {
 
@@ -341,11 +391,11 @@ export const avgMonth = async (
   let finalResultNut = [];
 
   // kcal
-  findResultKcal = await repository.avgMonth.listKcal(
+  findResultKcal = await repository.avgWeek.listKcal(
     user_id_param, dateStart, dateEnd
   );
   // nut
-  findResultNut = await repository.avgMonth.listNut(
+  findResultNut = await repository.avgWeek.listNut(
     user_id_param, dateStart, dateEnd
   );
 
@@ -356,7 +406,7 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumKcal[weekNum] += intFormat(item.food_total_kcal);
+      sumKcal[weekNum] += Number(item.food_total_kcal || "0");
       countRecords[weekNum]++;
     }
   });
@@ -368,9 +418,9 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumCarb[weekNum] += intFormat(item.food_total_carb);
-      sumProtein[weekNum] += intFormat(item.food_total_protein);
-      sumFat[weekNum] += intFormat(item.food_total_fat);
+      sumCarb[weekNum] += Number(item.food_total_carb || "0");
+      sumProtein[weekNum] += Number(item.food_total_protein || "0");
+      sumFat[weekNum] += Number(item.food_total_fat || "0");
       countRecords[weekNum]++;
     }
   });
@@ -381,14 +431,26 @@ export const avgMonth = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      kcal: intFormat(sumKcal[index] / countRecords[index])
+      kcal:
+        countRecords[index] > 0
+        ? String((sumKcal[index] / countRecords[index]).toFixed(2))
+        : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      carb: intFormat(sumCarb[index] / countRecords[index]),
-      protein: intFormat(sumProtein[index] / countRecords[index]),
-      fat: intFormat(sumFat[index] / countRecords[index])
+      carb:
+        countRecords[index] > 0
+        ? String((sumCarb[index] / countRecords[index]).toFixed(2))
+        : "0",
+      protein:
+        countRecords[index] > 0
+        ? String((sumProtein[index] / countRecords[index]).toFixed(2))
+        : "0",
+      fat:
+        countRecords[index] > 0
+        ? String((sumFat[index] / countRecords[index]).toFixed(2))
+        : "0"
     });
   });
 
@@ -398,8 +460,8 @@ export const avgMonth = async (
   };
 };
 
-// 4-2. chart (avg-year) ----------------------------------------------------------------------------
-export const avgYear = async (
+// 4-2. chart (avg - month) ------------------------------------------------------------------------
+export const avgMonth = async (
   user_id_param
 ) => {
 
@@ -413,7 +475,9 @@ export const avgYear = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 12 }, (_, i) => {
-    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
+    const startOfMonth = curYearStart.clone().add(i, 'months').startOf('month').format("MM-DD");
+    const endOfMonth = curYearStart.clone().add(i, 'months').endOf('month').format("MM-DD");
+    return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
   let sumKcal = Array(12).fill(0);
@@ -428,11 +492,11 @@ export const avgYear = async (
   let finalResultNut = [];
 
   // kcal
-  findResultKcal = await repository.avgYear.listKcal(
+  findResultKcal = await repository.avgMonth.listKcal(
     user_id_param, dateStart, dateEnd
   );
   // nut
-  findResultNut = await repository.avgYear.listNut(
+  findResultNut = await repository.avgMonth.listNut(
     user_id_param, dateStart, dateEnd
   );
 
@@ -440,17 +504,21 @@ export const avgYear = async (
   findResultKcal.forEach((item) => {
     const foodDate = new Date(item.food_dateStart);
     const monthNum = foodDate.getMonth();
-    sumKcal[monthNum] += intFormat(item.food_total_kcal);
-    countRecords[monthNum]++;
+    if (monthNum >= 0 && monthNum < 12) {
+      sumKcal[monthNum] += Number(item.food_total_kcal || "0");
+      countRecords[monthNum]++;
+    }
   });
   // nut
   findResultNut.forEach((item) => {
     const foodDate = new Date(item.food_dateStart);
     const monthNum = foodDate.getMonth();
-    sumCarb[monthNum] += intFormat(item.food_total_carb);
-    sumProtein[monthNum] += intFormat(item.food_total_protein);
-    sumFat[monthNum] += intFormat(item.food_total_fat);
-    countRecords[monthNum]++;
+    if (monthNum >= 0 && monthNum < 12) {
+      sumCarb[monthNum] += Number(item.food_total_carb || "0");
+      sumProtein[monthNum] += Number(item.food_total_protein || "0");
+      sumFat[monthNum] += Number(item.food_total_fat || "0");
+      countRecords[monthNum]++;
+    }
   });
 
   // week = getDay() + 1
@@ -459,14 +527,26 @@ export const avgYear = async (
     finalResultKcal.push({
       name: data,
       date: date[index],
-      kcal: intFormat(sumKcal[index] / countRecords[index])
+      kcal:
+        countRecords[index] > 0
+        ? String((sumKcal[index] / countRecords[index]).toFixed(2))
+        : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
-      carb: intFormat(sumCarb[index] / countRecords[index]),
-      protein: intFormat(sumProtein[index] / countRecords[index]),
-      fat: intFormat(sumFat[index] / countRecords[index])
+      carb:
+        countRecords[index] > 0
+        ? String((sumCarb[index] / countRecords[index]).toFixed(2))
+        : "0",
+      protein:
+        countRecords[index] > 0
+        ? String((sumProtein[index] / countRecords[index]).toFixed(2))
+        : "0",
+      fat:
+        countRecords[index] > 0
+        ? String((sumFat[index] / countRecords[index]).toFixed(2))
+        : "0"
     });
   });
 

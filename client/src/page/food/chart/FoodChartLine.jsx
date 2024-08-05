@@ -34,16 +34,16 @@ export const FoodChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_WEEK_DEF = [
-    {name:"", date:"", kcal: 0},
+    {name:"", date:"", kcal: ""},
   ];
   const OBJECT_NUT_WEEK_DEF = [
-    {name:"", date:"", carb: 0, protein: 0, fat: 0},
+    {name:"", date:"", carb: "", protein: "", fat: ""},
   ];
   const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", date:"", kcal: 0},
+    {name:"", date:"", kcal: ""},
   ];
   const OBJECT_NUT_MONTH_DEF = [
-    {name:"", date:"", carb: 0, protein: 0, fat: 0},
+    {name:"", date:"", carb: "", protein: "", fat: ""},
   ];
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);

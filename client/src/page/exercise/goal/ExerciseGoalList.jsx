@@ -60,9 +60,9 @@ export const ExerciseGoalList = () => {
     exercise_goal_dummy: "N",
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
-    exercise_goal_count: 0,
-    exercise_goal_volume: 0,
-    exercise_goal_weight: 0,
+    exercise_goal_count: "",
+    exercise_goal_volume: "",
+    exercise_goal_weight: "",
     exercise_goal_cardio: "00:00"
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);

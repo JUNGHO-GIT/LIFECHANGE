@@ -38,13 +38,13 @@ const schema = new mongoose.Schema({
   },
 
   money_goal_income: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   money_goal_expense: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
 

@@ -38,8 +38,8 @@ const schema = new mongoose.Schema({
   },
 
   exercise_total_volume: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   exercise_total_cardio: {
@@ -48,8 +48,8 @@ const schema = new mongoose.Schema({
     required: false,
   },
   exercise_body_weight: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
 
@@ -75,23 +75,23 @@ const schema = new mongoose.Schema({
       required: false,
     },
     exercise_kg: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
       required: false,
     },
     exercise_set: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
       required: false,
     },
     exercise_rep: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
       required: false,
     },
     exercise_volume: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "",
       required: false
     },
     exercise_cardio: {

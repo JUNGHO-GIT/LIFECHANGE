@@ -234,7 +234,6 @@ export const UserLogin = () => {
             inputRef={REFS.current.user_pw}
             error={ERRORS.user_pw}
             InputProps={{
-              readOnly: false,
             }}
             onChange={(e) => {
               setUserPw(e.target.value);

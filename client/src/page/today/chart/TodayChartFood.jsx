@@ -34,10 +34,10 @@ export const TodayChartFood = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const OBJECT_NUT_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState(OBJECT_KCAL_TODAY_DEF);
   const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEF);

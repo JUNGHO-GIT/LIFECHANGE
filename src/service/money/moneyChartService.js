@@ -2,7 +2,6 @@
 
 import * as repository from "../../repository/money/moneyChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {intFormat} from "../../assets/js/utils.js";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -31,14 +30,14 @@ export const barToday = async (
     {
       name: "income",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.money_goal_income),
-      real: intFormat(findReal?.[0]?.money_total_income)
+      goal: String(findGoal?.[0]?.money_goal_income || "0"),
+      real: String(findReal?.[0]?.money_total_income || "0"),
     },
     {
       name: "expense",
       date: dateStart,
-      goal: intFormat(findGoal?.[0]?.money_goal_expense),
-      real: intFormat(findReal?.[0]?.money_total_expense)
+      goal: String(findGoal?.[0]?.money_goal_expense || "0"),
+      real: String(findReal?.[0]?.money_total_expense || "0"),
     }
   ];
 
@@ -46,6 +45,7 @@ export const barToday = async (
 };
 
 // 2-1. chart (pie - today) ------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieToday = async (
   user_id_param
 ) => {
@@ -69,23 +69,23 @@ export const pieToday = async (
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // expense
   finalResultExpense = findResultExpense?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
     expense: finalResultExpense,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
-// 2-2. chart (pie - week) ---------------------------------------------------------------------
+// 2-2. chart (pie - week) -------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -109,23 +109,23 @@ export const pieWeek = async (
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // expense
   finalResultExpense = findResultExpense?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
     expense: finalResultExpense,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
 // 2-3. chart (pie - month) ------------------------------------------------------------------------
+// pie 차트는 무조건 int 리턴
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -149,19 +149,18 @@ export const pieMonth = async (
 
   // income
   finalResultInCome = findResultInCome?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
   // expense
   finalResultExpense = findResultExpense?.map((item) => ({
-    name: item._id || "",
-    value: intFormat(item.value) || 0
+    name: String(item._id) || "",
+    value: Number(item.value) || 0
   }));
 
   return {
     income: finalResultInCome,
     expense: finalResultExpense,
-    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -199,8 +198,14 @@ export const lineWeek = async (
     finalResult.push({
       name: data,
       date: date[index],
-      income: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_income) : 0,
-      expense: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_expense) : 0
+      income:
+        findIndex !== -1
+        ? String(findResult[findIndex]?.money_total_income || "0")
+        : "0",
+      expense:
+        findIndex !== -1
+        ? String(findResult[findIndex]?.money_total_expense || "0")
+        : "0",
     });
   });
 
@@ -241,16 +246,22 @@ export const lineMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      income: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_income) : 0,
-      expense: findIndex !== -1 ? intFormat(findResult[findIndex]?.money_total_expense) : 0
+      income:
+        findIndex !== -1
+        ? String(findResult[findIndex]?.money_total_income || "0")
+        : "0",
+      expense:
+        findIndex !== -1
+        ? String(findResult[findIndex]?.money_total_expense || "0")
+        : "0",
     });
   });
 
   return finalResult;
 };
 
-// 4-1. chart (avg - month) ------------------------------------------------------------------------
-export const avgMonth = async (
+// 4-1. chart (avg - week) ------------------------------------------------------------------------
+export const avgWeek = async (
   user_id_param
 ) => {
 
@@ -274,7 +285,7 @@ export const avgMonth = async (
   let findResult = [];
   let finalResult = [];
 
-  findResult = await repository.avgMonth.list(
+  findResult = await repository.avgWeek.list(
     user_id_param, dateStart, dateEnd
   );
 
@@ -284,8 +295,8 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumIn[weekNum] += intFormat(item.money_total_income);
-      sumExpense[weekNum] += intFormat(item.money_total_expense);
+      sumIn[weekNum] += Number(item.money_total_income || "0");
+      sumExpense[weekNum] += Number(item.money_total_expense || "0");
       countRecords[weekNum]++;
     }
   });
@@ -296,16 +307,22 @@ export const avgMonth = async (
     finalResult.push({
       name: data,
       date: date[index],
-      income: intFormat(sumIn[index] / countRecords[index]),
-      expense: intFormat(sumExpense[index] / countRecords[index])
+      income:
+        countRecords[index] > 0
+        ? String((sumIn[index] / countRecords[index]).toFixed(2))
+        : "0",
+      expense:
+        countRecords[index] > 0
+        ? String((sumExpense[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
   });
 
   return finalResult;
 };
 
-// 4-2. chart (avg - year) ---------------------------------------------------------------------
-export const avgYear = async (
+// 4-2. chart (avg - month) ------------------------------------------------------------------------
+export const avgMonth = async (
   user_id_param
 ) => {
 
@@ -319,26 +336,30 @@ export const avgYear = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 12 }, (_, i) => {
-    return `${curMonthStart.clone().add(i, 'months').format("MM-DD")} ~ ${curMonthEnd.clone().add(i, 'months').format("MM-DD")}`;
+    const startOfMonth = curYearStart.clone().add(i, 'months').startOf('month').format("MM-DD");
+    const endOfMonth = curYearStart.clone().add(i, 'months').endOf('month').format("MM-DD");
+    return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
-  let sumIn = Array(5).fill(0);
-  let sumExpense = Array(5).fill(0);
-  let countRecords = Array(5).fill(0);
+  let sumIn = Array(12).fill(0);
+  let sumExpense = Array(12).fill(0);
+  let countRecords = Array(12).fill(0);
 
   let findResult = [];
   let finalResult = [];
 
-  findResult = await repository.avgYear.list(
+  findResult = await repository.avgMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
   findResult.forEach((item) => {
     const moneyDate = new Date(item.money_dateStart);
     const monthNum = moneyDate.getMonth();
-    sumIn[monthNum] += intFormat(item.money_total_income);
-    sumExpense[monthNum] += intFormat(item.money_total_expense);
-    countRecords[monthNum]++;
+    if (monthNum >= 0 && monthNum < 12) {
+      sumIn[monthNum] += Number(item.money_total_income || "0");
+      sumExpense[monthNum] += Number(item.money_total_expense || "0");
+      countRecords[monthNum]++;
+    }
   });
 
   // week = getDay() + 1
@@ -347,8 +368,14 @@ export const avgYear = async (
     finalResult.push({
       name: data,
       date: date[index],
-      income: intFormat(sumIn[index] / countRecords[index]),
-      expense: intFormat(sumExpense[index] / countRecords[index])
+      income:
+        countRecords[index] > 0
+        ? String((sumIn[index] / countRecords[index]).toFixed(2))
+        : "0",
+      expense:
+        countRecords[index] > 0
+        ? String((sumExpense[index] / countRecords[index]).toFixed(2))
+        : "0",
     });
   });
 

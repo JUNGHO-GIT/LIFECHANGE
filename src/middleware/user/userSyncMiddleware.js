@@ -520,7 +520,7 @@ export const percent = async (object) => {
   const total = {
     score: 0,
     percent: 0,
-    count: 0,
+    count: "",
   };
 
   ["exercise", "food", "money", "sleep"]?.forEach(category => {

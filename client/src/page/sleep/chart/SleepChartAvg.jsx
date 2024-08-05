@@ -35,10 +35,10 @@ export const SleepChartAvg = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
+    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
   ];
   const OBJECT_YEAR_DEF = [
-    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
+    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
   ];
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
   const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
@@ -46,27 +46,27 @@ export const SleepChartAvg = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
+    const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
+      params: {
+        user_id: sessionId
+      },
+    });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
       params: {
         user_id: sessionId
       },
     });
-    const resYear = await axios.get(`${URL_OBJECT}/chart/avg/year`, {
-      params: {
-        user_id: sessionId
-      },
-    });
     setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_MONTH_DEF
     );
     setOBJECT_YEAR(
-      resYear.data.result.length > 0 ? resYear.data.result : OBJECT_YEAR_DEF
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_YEAR_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartMonth = () => {
+  const chartWeek = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -147,7 +147,7 @@ export const SleepChartAvg = () => {
   };
 
   // 5-2. chart ------------------------------------------------------------------------------------
-  const chartYear = () => {
+  const chartMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -248,8 +248,8 @@ export const SleepChartAvg = () => {
               setSECTION(e.target.value)
             )}
           >
+            <MenuItem value={"week"}>{translate("week")}</MenuItem>
             <MenuItem value={"month"}>{translate("month")}</MenuItem>
-            <MenuItem value={"year"}>{translate("year")}</MenuItem>
           </TextField>
         </Div>
       );
@@ -305,18 +305,18 @@ export const SleepChartAvg = () => {
     const chartSection = () => {
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartMonth()}
+          {chartWeek()}
         </Card>
       );
       const chartFragment2 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartYear()}
+          {chartMonth()}
         </Card>
       );
-      if (SECTION === "month") {
+      if (SECTION === "week") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "year") {
+      else if (SECTION === "month") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
     }

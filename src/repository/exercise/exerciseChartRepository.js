@@ -3,7 +3,7 @@
 import {Exercise} from "../../schema/exercise/Exercise.js";
 import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
 
-// 1-1. chart (bar - today) ---------------------------------------------------------------------
+// 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -60,7 +60,7 @@ export const barToday = {
   }
 };
 
-// 1-2. chart (bar - week) --------------------------------------------------------------------------
+// 1-2. chart (bar - week) -------------------------------------------------------------------------
 export const barWeek = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -117,7 +117,7 @@ export const barWeek = {
   }
 };
 
-// 1-3. chart (bar - month) ---------------------------------------------------------------------
+// 1-3. chart (bar - month) ------------------------------------------------------------------------
 export const barMonth = {
   listGoal: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -174,7 +174,7 @@ export const barMonth = {
   }
 };
 
-// 2-1. chart (pie - week) --------------------------------------------------------------------------
+// 2-1. chart (pie - week) -------------------------------------------------------------------------
 export const pieWeek = {
   listPart: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -199,7 +199,7 @@ export const pieWeek = {
       }},
       {$group: {
         _id: "$exercise_section.exercise_part_val",
-        count: {$sum: 1}
+        value: {$sum: 1}
       }},
       {$sort: {count: -1}},
       {$limit: 5}
@@ -230,7 +230,7 @@ export const pieWeek = {
       }},
       {$group: {
         _id: "$exercise_section.exercise_title_val",
-        count: {$sum: 1}
+        value: {$sum: 1}
       }},
       {$sort: {count: -1}},
       {$limit: 5}
@@ -239,7 +239,7 @@ export const pieWeek = {
   }
 };
 
-// 2-2. chart (pie - month) ---------------------------------------------------------------------
+// 2-2. chart (pie - month) ------------------------------------------------------------------------
 export const pieMonth = {
   listPart: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -264,7 +264,7 @@ export const pieMonth = {
       }},
       {$group: {
         _id: "$exercise_section.exercise_part_val",
-        count: {$sum: 1}
+        value: {$sum: 1}
       }},
       {$sort: {count: -1}},
       {$limit: 5}
@@ -295,7 +295,7 @@ export const pieMonth = {
       }},
       {$group: {
         _id: "$exercise_section.exercise_title_val",
-        count: {$sum: 1}
+        value: {$sum: 1}
       }},
       {$sort: {count: -1}},
       {$limit: 5}
@@ -304,7 +304,7 @@ export const pieMonth = {
   }
 };
 
-// 3-1. chart (line - week) ---------------------------------------------------------------------
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -357,7 +357,7 @@ export const lineWeek = {
   }
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -410,8 +410,8 @@ export const lineMonth = {
   }
 };
 
-// 4-1. chart (avg - month) ---------------------------------------------------------------------
-export const avgMonth = {
+// 4-1. chart (avg - week) -------------------------------------------------------------------------
+export const avgWeek = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
@@ -463,8 +463,8 @@ export const avgMonth = {
   }
 };
 
-// 4-2. chart (avg - year) ---------------------------------------------------------------------
-export const avgYear = {
+// 4-2. chart (avg - month) ------------------------------------------------------------------------
+export const avgMonth = {
   listVolume: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {

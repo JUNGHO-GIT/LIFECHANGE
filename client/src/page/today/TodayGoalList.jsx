@@ -94,9 +94,9 @@ export const TodayGoalList = () => {
     exercise_goal_goal_dummy: "N",
     exercise_goal_goal_dateStart: "0000-00-00",
     exercise_goal_goal_dateEnd: "0000-00-00",
-    exercise_goal_goal_count: 0,
-    exercise_goal_goal_volume: 0,
-    exercise_goal_goal_weight: 0,
+    exercise_goal_goal_count: "",
+    exercise_goal_goal_volume: "",
+    exercise_goal_goal_weight: "",
     exercise_goal_goal_cardio: "00:00"
   }];
   const OBJECT_FOOD_DEF = [{
@@ -105,10 +105,10 @@ export const TodayGoalList = () => {
     food_goal_goal_dummy: "N",
     food_goal_goal_dateStart: "0000-00-00",
     food_goal_goal_dateEnd: "0000-00-00",
-    food_goal_goal_kcal: 0,
-    food_goal_goal_carb: 0,
-    food_goal_goal_protein: 0,
-    food_goal_goal_fat: 0
+    food_goal_goal_kcal: "",
+    food_goal_goal_carb: "",
+    food_goal_goal_protein: "",
+    food_goal_goal_fat: ""
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
@@ -116,8 +116,8 @@ export const TodayGoalList = () => {
     money_goal_dummy: "N",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: 0,
-    money_goal_expense: 0
+    money_goal_income: "",
+    money_goal_expense: ""
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",

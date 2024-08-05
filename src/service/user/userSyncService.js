@@ -21,7 +21,7 @@ export const list = async (
     if (result?.exercise_total_volume <= 1 && result?.exercise_total_cardio === "00:00") {
       return {
         ...result,
-        exercise_total_count: 0
+        exercise_total_count: ""
       };
     }
     else {

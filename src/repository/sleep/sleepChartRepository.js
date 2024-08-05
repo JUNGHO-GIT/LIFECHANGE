@@ -199,8 +199,8 @@ export const lineMonth = {
   }
 };
 
-// 4-1. chart (avg - month) ---------------------------------------------------------------------
-export const avgMonth = {
+// 4-1. chart (avg - week) ---------------------------------------------------------------------
+export const avgWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
@@ -227,8 +227,8 @@ export const avgMonth = {
   }
 };
 
-// 4-2. chart (avg - year) ---------------------------------------------------------------------
-export const avgYear = {
+// 4-2. chart (avg - month) ---------------------------------------------------------------------
+export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {

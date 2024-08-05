@@ -38,23 +38,23 @@ const schema = new mongoose.Schema({
   },
 
   food_goal_kcal: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   food_goal_carb: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   food_goal_protein: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
   food_goal_fat: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
     required: false
   },
 

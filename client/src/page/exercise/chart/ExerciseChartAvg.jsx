@@ -25,7 +25,7 @@ export const ExerciseChartAvg = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("month");
+  const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("volume");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
@@ -33,57 +33,57 @@ export const ExerciseChartAvg = () => {
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_VOLUME_WEEK_DEF = [
+    {name:"", date:"", volume: ""},
+  ];
+  const OBJECT_CARDIO_WEEK_DEF = [
+    {name:"", date:"", cardio: ""},
+  ];
   const OBJECT_VOLUME_MONTH_DEF = [
-    {name:"", date:"", volume: 0},
+    {name:"", date:"", volume: ""},
   ];
   const OBJECT_CARDIO_MONTH_DEF = [
-    {name:"", date:"", 시간: 0},
+    {name:"", date:"", cardio: ""},
   ];
-  const OBJECT_VOLUME_YEAR_DEF = [
-    {name:"", date:"", volume: 0},
-  ];
-  const OBJECT_CARDIO_YEAR_DEF = [
-    {name:"", date:"", 시간: 0},
-  ];
+  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState(OBJECT_VOLUME_WEEK_DEF);
+  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState(OBJECT_CARDIO_WEEK_DEF);
   const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEF);
   const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEF);
-  const [OBJECT_VOLUME_YEAR, setOBJECT_VOLUME_YEAR] = useState(OBJECT_VOLUME_YEAR_DEF);
-  const [OBJECT_CARDIO_YEAR, setOBJECT_CARDIO_YEAR] = useState(OBJECT_CARDIO_YEAR_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
+    const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
+      params: {
+        user_id: sessionId
+      },
+    });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
       params: {
         user_id: sessionId
       },
     });
-    const resYear = await axios.get(`${URL_OBJECT}/chart/avg/year`, {
-      params: {
-        user_id: sessionId
-      },
-    });
+    setOBJECT_VOLUME_WEEK(
+      resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : OBJECT_VOLUME_WEEK_DEF
+    );
+    setOBJECT_CARDIO_WEEK(
+      resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : OBJECT_CARDIO_WEEK_DEF
+    );
     setOBJECT_VOLUME_MONTH(
       resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : OBJECT_VOLUME_MONTH_DEF
     );
     setOBJECT_CARDIO_MONTH(
       resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
     );
-    setOBJECT_VOLUME_YEAR(
-      resYear.data.result.volume.length > 0 ? resYear.data.result.volume : OBJECT_VOLUME_YEAR_DEF
-    );
-    setOBJECT_CARDIO_YEAR(
-      resYear.data.result.cardio.length > 0 ? resYear.data.result.cardio : OBJECT_CARDIO_YEAR_DEF
-    );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartVolumeMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
+  const chartVolumeWeek = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
+        <ComposedChart data={OBJECT_VOLUME_WEEK} barGap={8} barCategoryGap={"20%"}
         margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -150,11 +150,11 @@ export const ExerciseChartAvg = () => {
   };
 
   // 5-2. chart ------------------------------------------------------------------------------------
-  const chartCardioMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
+  const chartCardioWeek = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
+        <ComposedChart data={OBJECT_CARDIO_WEEK} barGap={8} barCategoryGap={"20%"}
         margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -220,11 +220,11 @@ export const ExerciseChartAvg = () => {
   };
 
   // 5-3. chart ------------------------------------------------------------------------------------
-  const chartVolumeYear = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_YEAR, array, "exercise");
+  const chartVolumeMonth = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_VOLUME_YEAR} barGap={8} barCategoryGap={"20%"}
+        <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
           margin={{top: 20, right: 20, bottom: 20, left: 20}}
         >
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
@@ -291,11 +291,11 @@ export const ExerciseChartAvg = () => {
   };
 
   // 5-4. chart ------------------------------------------------------------------------------------
-  const chartCardioYear = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_YEAR, array, "exercise");
+  const chartCardioMonth = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_CARDIO_YEAR} barGap={8} barCategoryGap={"20%"}
+        <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
           margin={{top: 20, right: 20, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -381,8 +381,8 @@ export const ExerciseChartAvg = () => {
               setSECTION(e.target.value)
             )}
           >
+            <MenuItem value={"week"}>{translate("week")}</MenuItem>
             <MenuItem value={"month"}>{translate("month")}</MenuItem>
-            <MenuItem value={"year"}>{translate("year")}</MenuItem>
           </TextField>
         </Div>
       );
@@ -430,34 +430,34 @@ export const ExerciseChartAvg = () => {
     const chartSection = () => {
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartVolumeMonth()}
+          {chartVolumeWeek()}
         </Card>
       );
       const chartFragment2 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartCardioMonth()}
+          {chartCardioWeek()}
         </Card>
       );
       const chartFragment3 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartVolumeYear()}
+          {chartVolumeMonth()}
         </Card>
       );
       const chartFragment4 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartCardioYear()}
+          {chartCardioMonth()}
         </Card>
       );
-      if (SECTION === "month" && LINE === "volume") {
+      if (SECTION === "week" && LINE === "volume") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "year" && LINE === "volume") {
+      else if (SECTION === "month" && LINE === "volume") {
         return LOADING ? <Loading /> : chartFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "cardio") {
+      else if (SECTION === "week" && LINE === "cardio") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
-      else if (SECTION === "year" && LINE === "cardio") {
+      else if (SECTION === "month" && LINE === "cardio") {
         return LOADING ? <Loading /> : chartFragment4(0);
       }
     };

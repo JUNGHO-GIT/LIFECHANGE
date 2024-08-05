@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
 import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportUtils";
+import {handlerY, log} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -25,7 +25,7 @@ export const FoodChartAvg = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("month");
+  const [SECTION, setSECTION] = useState("week");
   const [LINE, setLINE] = useState("kcal");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
@@ -33,52 +33,194 @@ export const FoodChartAvg = () => {
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_KCAL_WEEK_DEF = [
+    {name:"", date:"", kcal: ""},
+  ];
+  const OBJECT_NUT_WEEK_DEF = [
+    {name:"", date:"", carb: "", protein: "", fat: ""},
+  ];
   const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", date:"", kcal: 0},
+    {name:"", date:"", kcal: ""},
   ];
   const OBJECT_NUT_MONTH_DEF = [
-    {name:"", date:"", carb: 0, protein: 0, fat: 0},
+    {name:"", date:"", carb: "", protein: "", fat: ""},
   ];
-  const OBJECT_KCAL_YEAR_DEF = [
-    {name:"", date:"", kcal: 0},
-  ];
-  const OBJECT_NUT_YEAR_DEF = [
-    {name:"", date:"", carb: 0, protein: 0, fat: 0},
-  ];
+  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
+  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
-  const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState(OBJECT_KCAL_YEAR_DEF);
-  const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState(OBJECT_NUT_YEAR_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
+    const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
+      params: {
+        user_id: sessionId
+      },
+    });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
       params: {
         user_id: sessionId
       },
     });
-    const resYear = await axios.get(`${URL_OBJECT}/chart/avg/year`, {
-      params: {
-        user_id: sessionId
-      },
-    });
+    setOBJECT_KCAL_WEEK(
+      resWeek.data.result.kcal.length > 0 ? resWeek.data.result.kcal : OBJECT_KCAL_WEEK_DEF
+    );
+    setOBJECT_NUT_WEEK(
+      resWeek.data.result.nut.length > 0 ? resWeek.data.result.nut : OBJECT_NUT_WEEK_DEF
+    );
     setOBJECT_KCAL_MONTH(
       resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : OBJECT_KCAL_MONTH_DEF
     );
     setOBJECT_NUT_MONTH(
       resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
     );
-    setOBJECT_KCAL_YEAR(
-      resYear.data.result.kcal.length > 0 ? resYear.data.result.kcal : OBJECT_KCAL_YEAR_DEF
-    );
-    setOBJECT_NUT_YEAR(
-      resYear.data.result.nut.length > 0 ? resYear.data.result.nut : OBJECT_NUT_YEAR_DEF
-    );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
+  const chartKcalWeek = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_WEEK, array, "food");
+    return (
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_KCAL_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
+        barGap={8} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={false}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
+          />
+          <YAxis
+            width={30}
+            type={"number"}
+            domain={domain}
+            tickLine={false}
+            axisLine={false}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
+          />
+          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Tooltip
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} kcal`, customName];
+            }}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            formatter={(value) => {
+              return translate(value);
+            }}
+            wrapperStyle={{
+              width:"95%",
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              fontSize: "0.8rem",
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+    );
+  };
+
+  // 5-2. chart ------------------------------------------------------------------------------------
+  const chartNutWeek = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_WEEK, array, "food");
+    return (
+      <ResponsiveContainer width={"100%"} height={350}>
+        <ComposedChart data={OBJECT_NUT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
+        barGap={8} barCategoryGap={"20%"}>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <XAxis
+            type={"category"}
+            dataKey={"name"}
+            tickLine={false}
+            axisLine={false}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={(value) => (
+              translate(value)
+            )}
+          />
+          <YAxis
+            width={30}
+            type={"number"}
+            domain={domain}
+            tickLine={false}
+            axisLine={false}
+            ticks={ticks}
+            tick={{fill:"#666", fontSize:14}}
+            tickFormatter={formatterY}
+          />
+          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Tooltip
+            labelFormatter={(label, payload) => {
+              const date = payload.length > 0 ? payload[0]?.payload.date : '';
+              return `${date}`;
+            }}
+            formatter={(value, name, props) => {
+              const customName = translate(name);
+              return [`${Number(value).toLocaleString()} g`, customName];
+            }}
+            cursor={{
+              fill:"rgba(0, 0, 0, 0.1)"
+            }}
+            contentStyle={{
+              borderRadius:"10px",
+              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+              padding:"10px",
+              border:"none",
+              background:"#fff",
+              color:"#666"
+            }}
+          />
+          <Legend
+            iconType={"circle"}
+            verticalAlign={"bottom"}
+            align={"center"}
+            formatter={(value) => {
+              return translate(value);
+            }}
+            wrapperStyle={{
+              width:"95%",
+              display:"flex",
+              justifyContent:"center",
+              alignItems:"center",
+              fontSize: "0.8rem",
+            }}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+    );
+  };
+
+  // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
@@ -148,154 +290,12 @@ export const FoodChartAvg = () => {
     );
   };
 
-  // 5-2. chart ------------------------------------------------------------------------------------
+  // 5-4. chart ------------------------------------------------------------------------------------
   const chartNutMonth = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={8} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            width={30}
-            type={"number"}
-            domain={domain}
-            tickLine={false}
-            axisLine={false}
-            ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={formatterY}
-          />
-          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Tooltip
-            labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value, name, props) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()} g`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-3. chart ------------------------------------------------------------------------------------
-  const chartKcalYear = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_YEAR, array, "food");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={8} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            width={30}
-            type={"number"}
-            domain={domain}
-            tickLine={false}
-            axisLine={false}
-            ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={formatterY}
-          />
-          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Tooltip
-            labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value, name, props) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()} kcal`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-4. chart ------------------------------------------------------------------------------------
-  const chartNutYear = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_YEAR, array, "food");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -374,18 +374,18 @@ export const FoodChartAvg = () => {
       const selectSection1 = () => (
         <Div className={"d-center"}>
           <TextField
-          select={true}
-          type={"text"}
-          size={"small"}
-          variant={"outlined"}
-          value={SECTION}
-          onChange={(e) => (
-            setSECTION(e.target.value)
-          )}
-        >
-          <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          <MenuItem value={"year"}>{translate("year")}</MenuItem>
-        </TextField>
+            select={true}
+            type={"text"}
+            size={"small"}
+            variant={"outlined"}
+            value={SECTION}
+            onChange={(e) => (
+              setSECTION(e.target.value)
+            )}
+          >
+            <MenuItem value={"week"}>{translate("week")}</MenuItem>
+            <MenuItem value={"month"}>{translate("month")}</MenuItem>
+          </TextField>
         </Div>
       );
       const selectSection2 = () => (
@@ -434,34 +434,34 @@ export const FoodChartAvg = () => {
     const chartSection = () => {
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
+          {chartKcalWeek()}
+        </Card>
+      );
+      const chartFragment2 = (i) => (
+        <Card className={"border radius shadow-none p-20"} key={i}>
           {chartKcalMonth()}
         </Card>
       );
       const chartFragment3 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartKcalYear()}
-        </Card>
-      );
-      const chartFragment2 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartNutMonth()}
+          {chartNutWeek()}
         </Card>
       );
       const chartFragment4 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartNutYear()}
+          {chartNutMonth()}
         </Card>
       );
-      if (SECTION === "month" && LINE === "kcal") {
+      if (SECTION === "week" && LINE === "kcal") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "year" && LINE === "kcal") {
+      else if (SECTION === "week" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "nut") {
+      else if (SECTION === "month" && LINE === "kcal") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
-      else if (SECTION === "year" && LINE === "nut") {
+      else if (SECTION === "month" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment4(0);
       }
     }

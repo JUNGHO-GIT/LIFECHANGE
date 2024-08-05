@@ -24,7 +24,7 @@ export const ExerciseChartPie = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("부위");
+  const [LINE, setLINE] = useState("part");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -393,7 +393,7 @@ export const ExerciseChartPie = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["부위", "운동"]?.map((key, index) => (
+          ["part", "title"].map((key, index) => (
             <FormGroup key={index}>
               <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
                 if (LINE === key) {
@@ -449,16 +449,16 @@ export const ExerciseChartPie = () => {
           {chartTitleMonth()}
         </Card>
       );
-      if (SECTION === "week" && LINE === "부위") {
+      if (SECTION === "week" && LINE === "part") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "month" && LINE === "부위") {
+      else if (SECTION === "month" && LINE === "title") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "운동") {
+      else if (SECTION === "week" && LINE === "title") {
         return LOADING ? <Loading /> : chartFragment3(0);
       }
-      else if (SECTION === "month" && LINE === "운동") {
+      else if (SECTION === "month" && LINE === "part") {
         return LOADING ? <Loading /> : chartFragment4(0);
       }
     };

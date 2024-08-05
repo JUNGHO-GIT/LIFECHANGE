@@ -60,14 +60,14 @@ export const MoneySave = () => {
     money_dummy: "N",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
-    money_total_income: 0,
-    money_total_expense: 0,
+    money_total_income: "",
+    money_total_expense: "",
     money_section: [{
       money_part_idx: 0,
-      money_part_val: "전체",
+      money_part_val: "all",
       money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
+      money_title_val: "all",
+      money_amount: "",
       money_content: "",
     }],
   };
@@ -160,17 +160,22 @@ export const MoneySave = () => {
     const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
         // money_part_val 가 income인경우
-        totalIncome: acc.totalIncome + (cur.money_part_val === "income" ? cur.money_amount : 0),
+        totalIncome:
+          acc.totalIncome + (cur.money_part_val === "income" ? Number(cur.money_amount) : 0),
 
         // money_part_val 가 expense인경우
-        totalExpense: acc.totalExpense + (cur.money_part_val === "expense" ? cur.money_amount : 0)
+        totalExpense:
+          acc.totalExpense + (cur.money_part_val === "expense" ? Number(cur.money_amount) : 0),
       };
-    }, {totalIncome: 0, totalExpense: 0});
+    }, {
+      totalIncome: 0,
+      totalExpense: 0
+    });
 
     setOBJECT((prev) => ({
       ...prev,
-      money_total_income: Math.round(totals.totalIncome),
-      money_total_expense: Math.round(totals.totalExpense)
+      money_total_income: Math.round(totals.totalIncome).toString(),
+      money_total_expense: Math.round(totals.totalExpense).toString(),
     }));
 
   }, [OBJECT?.money_section]);
@@ -179,10 +184,10 @@ export const MoneySave = () => {
   useEffect(() => {
     const defaultSection = {
       money_part_idx: 0,
-      money_part_val: "전체",
+      money_part_val: "all",
       money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
+      money_title_val: "all",
+      money_amount: "",
       money_content: ""
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
@@ -523,10 +528,10 @@ export const MoneySave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex = /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   money_section: prev.money_section?.map((item, idx) => (

@@ -25,7 +25,6 @@ export const MoneyChartBar = () => {
   const sessionId = sessionStorage.getItem("sessionId");
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
-  const [LINE, setLINE] = useState(array);
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -33,7 +32,7 @@ export const MoneyChartBar = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 

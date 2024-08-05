@@ -34,16 +34,16 @@ export const ExerciseChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_VOLUME_WEEK_DEF = [
-    {name:"", date:"", volume: 0},
+    {name:"", date:"", volume: ""},
   ];
   const OBJECT_CARDIO_WEEK_DEF = [
-    {name:"", date:"", 시간: 0},
+    {name:"", date:"", cardio: ""},
   ];
   const OBJECT_VOLUME_MONTH_DEF = [
-    {name:"", date:"", volume: 0},
+    {name:"", date:"", cardio: ""},
   ];
   const OBJECT_CARDIO_MONTH_DEF = [
-    {name:"", date:"", 시간: 0},
+    {name:"", date:"", cardio: ""},
   ];
   const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState(OBJECT_VOLUME_WEEK_DEF);
   const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState(OBJECT_CARDIO_WEEK_DEF);

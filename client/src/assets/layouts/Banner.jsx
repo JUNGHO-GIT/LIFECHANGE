@@ -12,7 +12,6 @@ export const Banner = () => {
     <Paper className={"flex-wrapper p-sticky bottom-0vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-60 w-100p shadow-none"}>
         <Div className={"d-center"}>
-        
         </Div>
       </Card>
     </Paper>

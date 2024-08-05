@@ -58,8 +58,8 @@ export const MoneyGoalSave = () => {
     money_goal_dummy: "N",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
-    money_goal_income: 0,
-    money_goal_expense: 0
+    money_goal_income: "",
+    money_goal_expense: ""
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -232,8 +232,8 @@ export const MoneyGoalSave = () => {
   const handlerDelete = (index) => {
     setOBJECT((prev) => ({
       ...prev,
-      money_goal_income: 0,
-      money_goal_expense: 0
+      money_goal_income: "",
+      money_goal_expense: ""
     }));
     setCOUNT((prev) => ({
       ...prev,
@@ -305,10 +305,10 @@ export const MoneyGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   money_goal_income: limitedValue
@@ -339,10 +339,10 @@ export const MoneyGoalSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 9999999999);
+                const limitedValue = Math.min(Number(rawValue), 9999999999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   money_goal_expense: limitedValue
@@ -361,7 +361,7 @@ export const MoneyGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
+        <Div className={"block-wrapper h-min50vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>

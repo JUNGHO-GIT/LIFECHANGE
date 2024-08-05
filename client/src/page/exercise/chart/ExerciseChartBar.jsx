@@ -32,13 +32,13 @@ export const ExerciseChartBar = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const OBJECT_WEEK_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);

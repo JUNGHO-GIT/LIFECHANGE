@@ -61,22 +61,22 @@ export const FoodSave = () => {
     food_dummy: "N",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
-    food_total_kcal: 0,
-    food_total_carb: 0,
-    food_total_protein: 0,
-    food_total_fat: 0,
+    food_total_kcal: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_total_fat: "",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
       food_name: "",
       food_brand: "",
-      food_count: 0,
+      food_count: "",
       food_serv: "회",
-      food_gram: 0,
-      food_kcal: 0,
-      food_carb: 0,
-      food_protein: 0,
-      food_fat: 0,
+      food_gram: "",
+      food_kcal: "",
+      food_carb: "",
+      food_protein: "",
+      food_fat: "",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -214,10 +214,10 @@ export const FoodSave = () => {
 
     setOBJECT((prev) => ({
       ...prev,
-      food_total_kcal: Number(totals.totalKcal.toFixed(1)),
-      food_total_fat: Number(totals.totalFat.toFixed(1)),
-      food_total_carb: Number(totals.totalCarb.toFixed(1)),
-      food_total_protein: Number(totals.totalProtein.toFixed(1)),
+      food_total_kcal: Number(totals.totalKcal).toString(),
+      food_total_fat: Number(totals.totalFat.toFixed(1)).toString(),
+      food_total_carb: Number(totals.totalCarb.toFixed(1)).toString(),
+      food_total_protein: Number(totals.totalProtein.toFixed(1)).toString(),
     }));
   }, [OBJECT?.food_section]);
 
@@ -228,13 +228,13 @@ export const FoodSave = () => {
       food_part_val: "breakfast",
       food_name: " ",
       food_brand: " ",
-      food_count: 0,
+      food_count: "",
       food_serv: "회",
-      food_gram: 0,
-      food_kcal: 0,
-      food_fat: 0,
-      food_carb: 0,
-      food_protein: 0,
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
     };
     let updatedSection = Array(COUNT?.newSectionCnt).fill(null).map((_, idx) =>
       idx < OBJECT?.food_section.length ? OBJECT?.food_section[idx] : defaultSection
@@ -614,7 +614,7 @@ export const FoodSave = () => {
               type={"text"}
               variant={"outlined"}
               className={"w-20vw ms-3vw"}
-              value={Math.min(OBJECT?.food_section[i]?.food_count, 100)}
+              value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100)}
               onChange={(e) => {
                 const newCount = Number(e.target.value);
                 if (newCount > 100) {
@@ -623,16 +623,22 @@ export const FoodSave = () => {
                 else if (isNaN(newCount) || newCount <= 0) {
                   return;
                 }
+                const newVal = (value) => {
+                  return (
+                    Number(((newCount * value) /
+                    Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
+                  );
+                }
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_count: newCount,
-                      food_kcal: Number(((newCount * item.food_kcal) / item.food_count).toFixed(2)),
-                      food_fat: Number(((newCount * item.food_fat) / item.food_count).toFixed(2)),
-                      food_carb: Number(((newCount * item.food_carb) / item.food_count).toFixed(2)),
-                      food_protein: Number(((newCount * item.food_protein) / item.food_count).toFixed(2)),
+                      food_count: newCount.toString(),
+                      food_kcal: newVal(item.food_kcal),
+                      food_fat: newVal(item.food_fat),
+                      food_carb: newVal(item.food_carb),
+                      food_protein: newVal(item.food_protein),
                     } : item
                   ))
                 }));
@@ -652,13 +658,13 @@ export const FoodSave = () => {
               className={"w-20vw ms-3vw"}
               value={OBJECT?.food_section[i]?.food_gram}
               onChange={(e) => {
-                const newGram = Number(e.target.value);
+                const newVal = e.target.value;
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
                     idx === i ? {
                       ...item,
-                      food_gram: newGram,
+                      food_gram: newVal,
                     } : item
                   ))
                 }));
@@ -677,7 +683,7 @@ export const FoodSave = () => {
               inputRef={REFS?.current[i]?.food_name}
               error={ERRORS[i]?.food_name}
               onChange={(e) => {
-                const newVal = String(e.target.value);
+                const newVal = e.target.value;
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
@@ -697,7 +703,7 @@ export const FoodSave = () => {
               label={translate("brand")}
               value={OBJECT?.food_section[i]?.food_brand}
               onChange={(e) => {
-                const newVal = String(e.target.value);
+                const newVal = e.target.value;
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
@@ -732,10 +738,10 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999);
+                const limitedValue = Math.min(Number(rawValue), 99999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
@@ -767,10 +773,10 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999);
+                const limitedValue = Math.min(Number(rawValue), 99999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
@@ -805,10 +811,10 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999);
+                const limitedValue = Math.min(Number(rawValue), 99999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (
@@ -840,10 +846,10 @@ export const FoodSave = () => {
                 )
               }}
               onChange={(e) => {
-                const regex = /,/g;
+                const regex =  /,/gm;
                 const match = e.target.value.match(regex);
                 const rawValue = match ? e.target.value.replace(regex, "") : e.target.value;
-                const limitedValue = Math.min(Number(rawValue), 99999);
+                const limitedValue = Math.min(Number(rawValue), 99999).toString();
                 setOBJECT((prev) => ({
                   ...prev,
                   food_section: prev?.food_section?.map((item, idx) => (

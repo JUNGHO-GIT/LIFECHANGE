@@ -34,10 +34,10 @@ export const SleepChartLine = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_WEEK_DEF = [
-    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
+    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
+    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0},
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);

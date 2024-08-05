@@ -33,43 +33,43 @@ export const MoneyChartAvg = () => {
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_WEEK_DEF = [
+    {name:"", date: "", income: "0", expense: "0"},
+  ];
   const OBJECT_MONTH_DEF = [
-    {name:"", day: "", income: 0, expense: 0},
+    {name:"", date: "", income: "0", expense: "0"},
   ];
-  const OBJECT_YEAR_DEF = [
-    {name:"", day: "", income: 0, expense: 0},
-  ];
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
-  const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
+    const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
+      params: {
+        user_id: sessionId
+      },
+    });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
       params: {
         user_id: sessionId
       },
     });
-    const resYear = await axios.get(`${URL_OBJECT}/chart/avg/year`, {
-      params: {
-        user_id: sessionId
-      },
-    });
+    setOBJECT_WEEK (
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+    );
     setOBJECT_MONTH (
       resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
-    );
-    setOBJECT_YEAR (
-      resYear.data.result.length > 0 ? resYear.data.result : OBJECT_YEAR_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
 
   // 5-1. chart ------------------------------------------------------------------------------------
-  const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
+  const chartWeek = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
+        <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -140,11 +140,11 @@ export const MoneyChartAvg = () => {
   };
 
   // 5-3. chart ------------------------------------------------------------------------------------
-  const chartYear = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "money");
+  const chartMonth = () => {
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_YEAR} margin={{top: 30, right: 20, bottom: 20, left: 20}}
+        <ComposedChart data={OBJECT_MONTH} margin={{top: 30, right: 20, bottom: 20, left: 20}}
         barGap={8} barCategoryGap={"20%"}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
@@ -235,8 +235,8 @@ export const MoneyChartAvg = () => {
               setSECTION(e.target.value)
             )}
           >
+            <MenuItem value={"week"}>{translate("week")}</MenuItem>
             <MenuItem value={"month"}>{translate("month")}</MenuItem>
-            <MenuItem value={"year"}>{translate("year")}</MenuItem>
           </TextField>
         </Div>
       );
@@ -289,18 +289,18 @@ export const MoneyChartAvg = () => {
     const chartSection = () => {
       const chartFragment1 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartMonth()}
+          {chartWeek()}
         </Card>
       );
       const chartFragment2 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartYear()}
+          {chartMonth()}
         </Card>
       );
-      if (SECTION === "month") {
+      if (SECTION === "week") {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
-      else if (SECTION === "year") {
+      else if (SECTION === "month") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
     };

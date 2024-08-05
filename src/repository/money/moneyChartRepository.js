@@ -80,6 +80,11 @@ export const pieToday = {
       {$match: {
         "money_section.money_part_idx": 1
       }},
+      {$addFields: {
+        "money_section.money_amount": {
+          $toDouble: "$money_section.money_amount"
+        }
+      }},
       {$group: {
         _id: "$money_section.money_title_val",
         value: {
@@ -112,6 +117,11 @@ export const pieToday = {
       {$match: {
         "money_section.money_part_idx": 2
       }},
+      {$addFields: {
+        "money_section.money_amount": {
+          $toDouble: "$money_section.money_amount"
+        }
+      }},
       {$group: {
         _id: "$money_section.money_title_val",
         value: {
@@ -125,7 +135,7 @@ export const pieToday = {
   }
 };
 
-// 2-2. chart (pie - week) --------------------------------------------------------------------------
+// 2-2. chart (pie - week) -------------------------------------------------------------------------
 export const pieWeek = {
   listIncome: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -288,7 +298,7 @@ export const lineWeek = {
   },
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
@@ -317,8 +327,8 @@ export const lineMonth = {
   },
 };
 
-// 4-1. chart (avg - month) ---------------------------------------------------------------------
-export const avgMonth = {
+// 4-1. chart (avg - week) ---------------------------------------------------------------------
+export const avgWeek = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
@@ -346,8 +356,8 @@ export const avgMonth = {
   },
 };
 
-// 4-2. chart (avg - year) ---------------------------------------------------------------------
-export const avgYear = {
+// 4-2. chart (avg - month) ---------------------------------------------------------------------
+export const avgMonth = {
   list: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {

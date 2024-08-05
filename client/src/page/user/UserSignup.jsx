@@ -513,7 +513,6 @@ export const UserSignup = () => {
               }))
             )}
             InputProps={{
-              readOnly: false,
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}

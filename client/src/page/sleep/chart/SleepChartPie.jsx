@@ -30,7 +30,7 @@ export const SleepChartPie = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
-    {name:"Empty", value: 100},
+    {name:"Empty", value: 100}
   ];
   const OBJECT_WEEK_DEF = [
     {name:"Empty", value: 100}

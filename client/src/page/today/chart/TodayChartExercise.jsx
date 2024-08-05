@@ -32,17 +32,15 @@ export const TodayChartExercise = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const OBJECT_WEEK_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const OBJECT_MONTH_DEF = [
-    {name:"", date:"", goal:0, real:0},
+    {name: "", date: "", goal: "0", real: "0"},
   ];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -52,24 +50,8 @@ export const TodayChartExercise = () => {
         user_id: sessionId
       },
     });
-    const resWeek = await axios.get(`${URL_OBJECT}/chart/bar/week`, {
-      params: {
-        user_id: sessionId
-      },
-    });
-    const resMonth = await axios.get(`${URL_OBJECT}/chart/bar/month`, {
-      params: {
-        user_id: sessionId
-      },
-    });
     setOBJECT_TODAY(
       resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
-    );
-    setOBJECT_WEEK(
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
-    );
-    setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);
@@ -150,164 +132,6 @@ export const TodayChartExercise = () => {
     );
   };
 
-  // 5-2. chart ------------------------------------------------------------------------------------
-  const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            width={30}
-            type={"number"}
-            domain={domain}
-            tickLine={false}
-            axisLine={false}
-            ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={formatterY}
-          />
-          <Scatter
-            dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
-          />
-          <Scatter
-            dataKey={"real"}
-            fill={COLORS[2]}
-            line={{stroke: COLORS[2], strokeWidth: 0.6}}
-          />
-          <Tooltip
-            labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value, name, props) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()} kg`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
-    );
-  };
-
-  // 5-3. chart ------------------------------------------------------------------------------------
-  const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise");
-    return (
-      <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
-          <XAxis
-            type={"category"}
-            dataKey={"name"}
-            tickLine={false}
-            axisLine={false}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={(value) => (
-              translate(value)
-            )}
-          />
-          <YAxis
-            width={30}
-            type={"number"}
-            domain={domain}
-            tickLine={false}
-            axisLine={false}
-            ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
-            tickFormatter={formatterY}
-          />
-          <Scatter
-            dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
-          />
-          <Scatter
-            dataKey={"real"}
-            fill={COLORS[2]}
-            line={{stroke: COLORS[2], strokeWidth: 0.6}}
-          />
-          <Tooltip
-            labelFormatter={(label, payload) => {
-              const date = payload.length > 0 ? payload[0]?.payload.date : '';
-              return `${date}`;
-            }}
-            formatter={(value, name, props) => {
-              const customName = translate(name);
-              return [`${Number(value).toLocaleString()} kg`, customName];
-            }}
-            cursor={{
-              fill:"rgba(0, 0, 0, 0.1)"
-            }}
-            contentStyle={{
-              borderRadius:"10px",
-              boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
-              padding:"10px",
-              border:"none",
-              background:"#fff",
-              color:"#666"
-            }}
-          />
-          <Legend
-            iconType={"circle"}
-            verticalAlign={"bottom"}
-            align={"center"}
-            formatter={(value) => {
-              return translate(value);
-            }}
-            wrapperStyle={{
-              width:"95%",
-              display:"flex",
-              justifyContent:"center",
-              alignItems:"center",
-              fontSize: "0.8rem",
-            }}
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
-    );
-  };
-
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
     // 7-1. head
@@ -330,8 +154,6 @@ export const TodayChartExercise = () => {
             )}
           >
             <MenuItem value={"today"}>{translate("today")}</MenuItem>
-            <MenuItem value={"week"}>{translate("week")}</MenuItem>
-            <MenuItem value={"month"}>{translate("month")}</MenuItem>
           </TextField>
         </Div>
       );
@@ -359,24 +181,8 @@ export const TodayChartExercise = () => {
           {chartToday()}
         </Card>
       );
-      const chartFragment2 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartWeek()}
-        </Card>
-      );
-      const chartFragment3 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartMonth()}
-        </Card>
-      );
       if (SECTION === "today") {
         return LOADING ? <Loading /> : chartFragment1(0);
-      }
-      else if (SECTION === "week") {
-        return LOADING ? <Loading /> : chartFragment2(0);
-      }
-      else if (SECTION === "month") {
-        return LOADING ? <Loading /> : chartFragment3(0);
       }
     };
     // 7-10. return
