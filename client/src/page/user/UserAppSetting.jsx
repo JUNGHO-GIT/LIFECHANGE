@@ -31,112 +31,121 @@ export const UserAppSetting = () => {
             <Table>
               <TableBody className={"table-tbody"}>
                 {/** detail **/}
-                <TableRow>
+                <TableRow onClick={() => {
+                  navigate("/user/detail")
+                }}>
                   <TableCell className={"w-90vw p-15"}>
                     {translate("dataDetail")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/detail")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
                 {/** category **/}
-                <TableRow>
+                <TableRow onClick={() => {
+                  navigate("/user/category")
+                }}>
                   <TableCell className={"w-90vw p-15"}>
                     {translate("dataCategory")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/category")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
                 {/** list **/}
-                <TableRow className={`${isAdmin !== "true" ? "d-none" : ""}`}>
+                <TableRow
+                  className={`${isAdmin !== "true" ? "d-none" : ""}`}
+                  onClick={() => {
+                    navigate("/user/dummy")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15"}>
                     {translate("dataList")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/dummy")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
                 {/** language **/}
-                <TableRow>
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("language")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <PopUp
-                      type={"innerCenter"}
-                      position={"bottom"}
-                      direction={"center"}
-                      contents={({closePopup}) => (
-                      <Div className={"d-left"}>
-                        <Div className={"d-center"} onClick={() => {
-                          setLang("ko")
-                          sessionStorage.setItem("lang", "ko")
-                          navigate(0)
-                        }}>
-                          <Img src={flag1} className={"w-24 h-24"} />한국어
-                          <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "ko" ? "d-none" : ""}`} onClick={() => {}} />
-                        </Div>
-                        <Br20 />
-                        <Div className={"d-center"} onClick={() => {
-                          setLang("en")
-                          sessionStorage.setItem("lang", "en")
-                          navigate(0)
-                        }}>
-                          <Img src={flag2} className={"w-24 h-24"} />English
-                          <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "en" ? "d-none" : ""}`} onClick={() => {}} />
-                        </Div>
-                      </Div>
-                      )}>
-                      {(popTrigger={}) => (
-                        <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={(e) => {
-                          popTrigger.openPopup(e.currentTarget)
-                        }} />
-                      )}
-                    </PopUp>
-                  </TableCell>
-                </TableRow>
+                <PopUp
+                  type={"innerCenter"}
+                  position={"bottom"}
+                  direction={"center"}
+                  contents={({closePopup}) => (
+                  <Div className={"d-column"}>
+                    <Div className={"d-center"} onClick={() => {
+                      setLang("ko")
+                      sessionStorage.setItem("lang", "ko")
+                      navigate(0)
+                    }}>
+                      <Img src={flag1} className={"w-24 h-24"} />한국어
+                      <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "ko" ? "d-none" : ""}`} onClick={() => {}} />
+                    </Div>
+                    <Br20 />
+                    <Div className={"d-center"} onClick={() => {
+                      setLang("en")
+                      sessionStorage.setItem("lang", "en")
+                      navigate(0)
+                    }}>
+                      <Img src={flag2} className={"w-24 h-24"} />English
+                      <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "en" ? "d-none" : ""}`} onClick={() => {}} />
+                    </Div>
+                  </Div>
+                  )}>
+                  {(popTrigger={}) => (
+                    <TableRow onClick={(e) => {
+                      popTrigger.openPopup(e.currentTarget)
+                    }}>
+                      <TableCell className={"w-90vw p-15"}>
+                        {translate("language")}
+                      </TableCell>
+                      <TableCell className={"w-10vw p-15"}>
+                        <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </PopUp>
                 {/** info **/}
-                <TableRow>
+                <TableRow
+                  onClick={() => {
+                    navigate("/user/app/info")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15"}>
                     {translate("info")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/app/info")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
                 {/** logout **/}
-                <TableRow>
+                <TableRow
+                  onClick={() => {
+                    localStorage.setItem("autoLogin", "false")
+                    localStorage.setItem("autoLoginId", "")
+                    localStorage.setItem("autoLoginPw", "")
+                    sessionStorage.clear()
+                    navigate("/")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15"}>
                     {translate("logout")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      localStorage.setItem("autoLogin", "false")
-                      localStorage.setItem("autoLoginId", "")
-                      localStorage.setItem("autoLoginPw", "")
-                      sessionStorage.clear()
-                      navigate("/")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
                 {/** deletes **/}
-                <TableRow>
+                <TableRow
+                  onClick={() => {
+                    navigate("/user/deletes")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15 red"}>
                     {translate("userDeletes")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} onClick={() => {
-                      navigate("/user/deletes")
-                    }} />
+                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
                   </TableCell>
                 </TableRow>
               </TableBody>

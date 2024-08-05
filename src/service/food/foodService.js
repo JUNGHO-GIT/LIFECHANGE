@@ -186,13 +186,13 @@ export const find = async (
         food_part_val: "breakfast",
         food_name: titleElement === "" ? " " : titleElement,
         food_brand: brandElement === "" ? " " : brandElement,
-        food_count: nutritionElement.count,
-        food_serv: nutritionElement.serv,
-        food_gram: nutritionElement.gram,
-        food_kcal: nutritionElement.kcal,
-        food_fat: nutritionElement.fat,
-        food_carb: nutritionElement.carb,
-        food_protein: nutritionElement.protein,
+        food_count: nutritionElement.count || "0",
+        food_serv: nutritionElement.serv || "회",
+        food_gram: nutritionElement.gram || "0",
+        food_kcal: nutritionElement.kcal || "0",
+        food_fat: nutritionElement.fat || "0",
+        food_carb: nutritionElement.carb || "0",
+        food_protein: nutritionElement.protein || "0",
       });
     });
   });

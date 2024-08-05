@@ -155,7 +155,7 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-  }, [location]);
+  }, [location, selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화

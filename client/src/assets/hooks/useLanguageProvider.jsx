@@ -73,7 +73,7 @@ export const useTranslate = () => {
     delete: {ko: "삭제", en: "Delete"},
     deletes: {ko: "삭제", en: "Delete"},
     deletesAll: {ko: "전체삭제", en: "Delete All"},
-    dataCategory: {ko: "카테고리", en: "Category"},
+    dataCategory: {ko: "카테고리 편집", en: "Edit Category"},
     dataCategory1: {ko: "분류 1", en: "Category 1"},
     dataCategory2: {ko: "분류 2", en: "Category 2"},
     dataCategory3: {ko: "분류 3", en: "Category 3"},
