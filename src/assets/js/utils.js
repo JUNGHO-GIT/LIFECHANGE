@@ -17,7 +17,7 @@ export const calcDate = (startTime, endTime) => {
 }
 
 // 1-2. format -------------------------------------------------------------------------------------
-export const timeFormat = (data) => {
+export const timeToDecimal = (data) => {
   if (!data) {
     return "0";
   }
@@ -37,6 +37,20 @@ export const timeFormat = (data) => {
     return parseFloat(data.toFixed(1)).toString();
   }
 };
+export const decimalToTime = (data) => {
+  if (!data) {
+    return "00:00";
+  }
+
+  if (typeof data === "string") {
+    return data;
+  }
+  else {
+    const hours = Math.floor(data);
+    const minutes = Math.round((data - hours) * 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+}
 
 // 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (time) => {
@@ -44,7 +58,6 @@ export const strToDecimal = (time) => {
   const [hours, minutes] = time.split(":").map(Number);
   return hours + minutes / 60;
 };
-
 export const decimalToStr = (time) => {
   if (time === null || time === undefined) return "00:00";
   const hours = Math.floor(time);

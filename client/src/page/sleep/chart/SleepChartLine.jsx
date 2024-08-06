@@ -66,7 +66,7 @@ export const SleepChartLine = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "sleep", "sleepData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -89,20 +89,35 @@ export const SleepChartLine = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
-            <Line dataKey={"bedTime"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"bedTime"}
+              type={"monotone"}
+              stroke={COLORS[4]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           {PART.includes("wakeTime") && (
-            <Line dataKey={"wakeTime"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"wakeTime"}
+              type={"monotone"}
+              stroke={COLORS[1]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           {PART.includes("sleepTime") && (
-            <Line dataKey={"sleepTime"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"sleepTime"}
+              type={"monotone"}
+              stroke={COLORS[2]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -147,7 +162,7 @@ export const SleepChartLine = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep", "sleepData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -170,20 +185,35 @@ export const SleepChartLine = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
-            <Line dataKey={"bedTime"} type={"monotone"} stroke={COLORS[4]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"bedTime"}
+              type={"monotone"}
+              stroke={COLORS[4]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           {PART.includes("wakeTime") && (
-            <Line dataKey={"wakeTime"} type={"monotone"} stroke={COLORS[1]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"wakeTime"}
+              type={"monotone"}
+              stroke={COLORS[1]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           {PART.includes("sleepTime") && (
-            <Line dataKey={"sleepTime"} type={"monotone"} stroke={COLORS[2]} activeDot={{r:8}}
-            strokeWidth={2}/>
+            <Line
+              dataKey={"sleepTime"}
+              type={"monotone"}
+              stroke={COLORS[2]}
+              activeDot={{r:8}}
+              strokeWidth={2}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {

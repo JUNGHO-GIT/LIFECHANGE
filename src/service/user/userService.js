@@ -23,22 +23,27 @@ export const appInfo = async () => {
   const envData = fs.readFileSync(path.join(__dirname, '../../../.env'), 'utf8');
   const markdownData = fs.readFileSync(path.join(__dirname, '../../../changelog.md'), 'utf8');
 
-  const versionRegex = /(\s*)(\d+\.\d+\.\d+)(\s*)/;
-  const dateRegex = /(-\s*)(.*?)(\s*\()(.*)\)/;
+  const versionRegex = /(\s*)(\d+\.\d+\.\d+)(\s*)/g;
+  const dateRegex = /-\s*(\d{4}-\d{2}-\d{2})\s*\((\d{2}:\d{2}:\d{2})\)/g;
   const gitRegex = /GIT_REPO=(.*)/;
   const licenseRegex = /LICENSE=(.*)/;
 
-  const versionMatch = markdownData.match(versionRegex);
-  const dateMatch = markdownData.match(dateRegex);
-  const timeMatch = markdownData.match(dateRegex);
+  const versionMatches = [...markdownData.matchAll(versionRegex)];
+  const dateMatches = [...markdownData.matchAll(dateRegex)];
   const gitMatch = envData.match(gitRegex);
   const licenseMatch = envData.match(licenseRegex);
 
+  const lastVersion = versionMatches.length > 0 ? versionMatches[versionMatches.length - 1][2] : "";
+  const lastDateMatch = dateMatches.length > 0 ? dateMatches[dateMatches.length - 1] : null;
+  const lastDateTime = lastDateMatch ? `${lastDateMatch[1]}_${lastDateMatch[2]}` : "";
+  const lastGit = gitMatch ? gitMatch[1] : "";
+  const lastLicense = licenseMatch ? licenseMatch[1] : "";
+
   const finalResult = {
-    version: versionMatch ? versionMatch[2] : "",
-    date: (dateMatch && timeMatch) ? `${dateMatch[2]}_${timeMatch[4]}` : "",
-    git: gitMatch ? gitMatch[1] : "",
-    license: licenseMatch ? licenseMatch[1] : "",
+    version: lastVersion,
+    date: lastDateTime,
+    git: lastGit,
+    license: lastLicense,
   };
 
   return finalResult;

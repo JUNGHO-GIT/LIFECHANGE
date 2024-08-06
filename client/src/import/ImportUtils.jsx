@@ -1,6 +1,6 @@
 // ImportUtils.jsx
 
-import {handlerY} from "../assets/js/chartFormatter.js";
+import {handlerY} from "../assets/js/chartFmt.js";
 import {sync} from "../assets/js/sync.js";
 import {log} from "../assets/js/utils.js";
 import {newDate, koreanDate} from "../assets/js/date.js";

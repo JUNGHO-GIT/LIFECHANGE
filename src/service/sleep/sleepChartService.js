@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/sleep/sleepChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {timeFormat} from "../../assets/js/utils.js";
+import {timeToDecimal} from "../../assets/js/utils.js";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -31,20 +31,20 @@ export const barToday = async (
     {
       name: "bedTime",
       date: dateStart,
-      goal: String(timeFormat(findGoal?.[0]?.sleep_goal_bedTime) || "0"),
-      real: String(timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_bedTime) || "0")
+      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_bedTime) || "0"),
+      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_bedTime) || "0")
     },
     {
       name: "wakeTime",
       date: dateStart,
-      goal: String(timeFormat(findGoal?.[0]?.sleep_goal_wakeTime) || "0"),
-      real: String(timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime) || "0")
+      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_wakeTime) || "0"),
+      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime) || "0")
     },
     {
       name: "sleepTime",
       date: dateStart,
-      goal: String(timeFormat(findGoal?.[0]?.sleep_goal_sleepTime) || "0"),
-      real: String(timeFormat(findReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime) || "0")
+      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_sleepTime) || "0"),
+      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime) || "0")
     }
   ];
 
@@ -86,9 +86,9 @@ export const pieToday = async (
   }
 
   findResult.forEach((data, index) => {
-    sumBedTime += Number(timeFormat(data.sleep_section[0]?.sleep_bedTime));
-    sumWakeTime += Number(timeFormat(data.sleep_section[0]?.sleep_wakeTime));
-    sumSleepTime += Number(timeFormat(data.sleep_section[0]?.sleep_sleepTime));
+    sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
+    sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
+    sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
     countRecords++;
   });
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
@@ -133,9 +133,9 @@ export const pieWeek = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumBedTime += Number(timeFormat(data.sleep_section[0]?.sleep_bedTime));
-    sumWakeTime += Number(timeFormat(data.sleep_section[0]?.sleep_wakeTime));
-    sumSleepTime += Number(timeFormat(data.sleep_section[0]?.sleep_sleepTime));
+    sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
+    sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
+    sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
     countRecords++;
   });
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
@@ -180,9 +180,9 @@ export const pieMonth = async (
     user_id_param, dateStart, dateEnd
   );
   findResult.forEach((data, index) => {
-    sumBedTime += Number(timeFormat(data.sleep_section[0]?.sleep_bedTime));
-    sumWakeTime += Number(timeFormat(data.sleep_section[0]?.sleep_wakeTime));
-    sumSleepTime += Number(timeFormat(data.sleep_section[0]?.sleep_sleepTime));
+    sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
+    sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
+    sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
     countRecords++;
   });
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
@@ -242,15 +242,15 @@ export const lineWeek = async (
       date: date[index],
       bedTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
         : "0",
       wakeTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
         : "0",
       sleepTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
         : "0",
     });
   });
@@ -295,15 +295,15 @@ export const lineMonth = async (
       date: date[index],
       bedTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
         : "0",
       wakeTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_wakeTime))
         : "0",
       sleepTime:
         findIndex !== -1
-        ? String(timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
+        ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_sleepTime))
         : "0",
     });
   });
@@ -346,9 +346,9 @@ export const avgWeek = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumBedTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-      sumWakeTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
-      sumSleepTime[weekNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
+      sumBedTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_bedTime);
+      sumWakeTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_wakeTime);
+      sumSleepTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_sleepTime);
       countRecords[weekNum]++;
     }
   });
@@ -361,15 +361,15 @@ export const avgWeek = async (
       date: date[index],
       bedTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumBedTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumBedTime[index] / countRecords[index]))
         : "0",
       wakeTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumWakeTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumWakeTime[index] / countRecords[index]))
         : "0",
       sleepTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumSleepTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumSleepTime[index] / countRecords[index]))
         : "0",
     });
   });
@@ -412,9 +412,9 @@ export const avgMonth = async (
     const sleepDate = new Date(data.sleep_dateStart);
     const monthNum = sleepDate.getMonth();
     if (monthNum >= 0 && monthNum < 12) {
-      sumBedTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_bedTime);
-      sumWakeTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_wakeTime);
-      sumSleepTime[monthNum] += timeFormat(data.sleep_section[0]?.sleep_sleepTime);
+      sumBedTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_bedTime);
+      sumWakeTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_wakeTime);
+      sumSleepTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_sleepTime);
       countRecords[monthNum]++;
     }
   });
@@ -427,15 +427,15 @@ export const avgMonth = async (
       date: date[index],
       bedTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumBedTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumBedTime[index] / countRecords[index]))
         : "0",
       wakeTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumWakeTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumWakeTime[index] / countRecords[index]))
         : "0",
       sleepTime:
         countRecords[index] > 0
-        ? String(timeFormat(sumSleepTime[index] / countRecords[index]))
+        ? String(timeToDecimal(sumSleepTime[index] / countRecords[index]))
         : "0",
     });
   });

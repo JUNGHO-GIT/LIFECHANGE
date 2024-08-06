@@ -66,7 +66,7 @@ export const MoneyChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -89,7 +89,7 @@ export const MoneyChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {LINE.includes("income") && (
@@ -141,7 +141,7 @@ export const MoneyChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 30, right: 20, bottom: 20, left: 20}}
@@ -164,7 +164,7 @@ export const MoneyChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {LINE.includes("income") && (

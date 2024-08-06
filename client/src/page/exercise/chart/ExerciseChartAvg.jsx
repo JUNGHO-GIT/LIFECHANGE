@@ -80,7 +80,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartVolumeWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise", "volume");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_WEEK} barGap={8} barCategoryGap={"20%"}
@@ -103,7 +103,7 @@ export const ExerciseChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
@@ -151,7 +151,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartCardioWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise", "cardio");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_WEEK} barGap={8} barCategoryGap={"20%"}
@@ -174,7 +174,7 @@ export const ExerciseChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -221,7 +221,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartVolumeMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise", "volume");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
@@ -245,7 +245,7 @@ export const ExerciseChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -292,7 +292,7 @@ export const ExerciseChartAvg = () => {
 
   // 5-4. chart ------------------------------------------------------------------------------------
   const chartCardioMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise", "cardio");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
@@ -315,7 +315,7 @@ export const ExerciseChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />

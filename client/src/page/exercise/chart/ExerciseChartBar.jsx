@@ -76,7 +76,7 @@ export const ExerciseChartBar = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -99,10 +99,14 @@ export const ExerciseChartBar = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill:"#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={false}
           />
           <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
@@ -152,7 +156,7 @@ export const ExerciseChartBar = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -175,7 +179,7 @@ export const ExerciseChartBar = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Scatter
@@ -231,7 +235,7 @@ export const ExerciseChartBar = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -254,7 +258,7 @@ export const ExerciseChartBar = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Scatter

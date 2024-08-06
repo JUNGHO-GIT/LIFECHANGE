@@ -1,7 +1,7 @@
 // exerciseChartService.js
 
 import * as repository from "../../repository/exercise/exerciseChartRepository.js";
-import {log} from "../../assets/js/utils.js";
+import {timeToDecimal} from "../../assets/js/utils.js";
 import {newDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -282,7 +282,7 @@ export const lineWeek = async (
       date: date[index],
       cardio:
         findIndexCardio !== -1
-        ? String(findResultCardio[findIndexCardio]?.exercise_total_cardio)
+        ? String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio))
         : "0"
     });
   });
@@ -348,7 +348,7 @@ export const lineMonth = async (
       date: date[index],
       cardio:
         findIndexCardio !== -1
-        ? String(findResultCardio[findIndexCardio]?.exercise_total_cardio)
+        ? String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio))
         : "0"
     });
   });
@@ -414,7 +414,7 @@ export const avgWeek = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumCardio[weekNum] += Number(item.exercise_total_cardio || "0");
+      sumCardio[weekNum] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
       countRecords[weekNum]++;
     }
   });
@@ -435,7 +435,7 @@ export const avgWeek = async (
       date: date[index],
       cardio:
         countRecords[index] > 0
-        ? String((sumCardio[index] / countRecords[index]).toFixed(2))
+        ? String(timeToDecimal(sumCardio[index] / countRecords[index]))
         : "0",
     });
   });
@@ -498,7 +498,7 @@ export const avgMonth = async (
     const exerciseDate = new Date(item.exercise_dateStart);
     const monthNum = exerciseDate.getMonth();
     if (monthNum >= 0 && monthNum < 12) {
-      sumCardio[monthNum] += Number(item.exercise_total_cardio || "0");
+      sumCardio[monthNum] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
       countRecords[monthNum]++;
     }
   });
@@ -519,7 +519,7 @@ export const avgMonth = async (
       date: date[index],
       cardio:
         countRecords[index] > 0
-        ? String((sumCardio[index] / countRecords[index]).toFixed(2))
+        ? String(timeToDecimal(sumCardio[index] / countRecords[index]))
         : "0",
     });
   });

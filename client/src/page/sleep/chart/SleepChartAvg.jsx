@@ -67,7 +67,7 @@ export const SleepChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "sleep", "sleepData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -90,7 +90,7 @@ export const SleepChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
@@ -148,7 +148,7 @@ export const SleepChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "sleep");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_YEAR, array, "sleep", "sleepData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_YEAR} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -171,7 +171,7 @@ export const SleepChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (

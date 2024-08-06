@@ -66,7 +66,7 @@ export const MoneyChartLine = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -102,12 +102,20 @@ export const MoneyChartLine = () => {
             width={30}
           />
           {LINE.includes("income") && (
-            <Line dataKey={"income"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+            <Line
+              dataKey={"income"}
+              type={"monotone"}
+              stroke={COLORS[0]}
+              strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
           {LINE.includes("expense") && (
-            <Line dataKey={"expense"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+            <Line
+              dataKey={"expense"}
+              type={"monotone"}
+              stroke={COLORS[3]}
+              strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
@@ -154,7 +162,7 @@ export const MoneyChartLine = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart
@@ -190,12 +198,20 @@ export const MoneyChartLine = () => {
             width={30}
           />
           {LINE.includes("income") && (
-            <Line dataKey={"income"} type={"monotone"} stroke={COLORS[0]} strokeWidth={2}
+            <Line
+              dataKey={"income"}
+              type={"monotone"}
+              stroke={COLORS[0]}
+              strokeWidth={2}
               activeDot={{r:8}}
             />
           )}
           {LINE.includes("expense") && (
-            <Line dataKey={"expense"} type={"monotone"} stroke={COLORS[3]} strokeWidth={2}
+            <Line
+              dataKey={"expense"}
+              type={"monotone"}
+              stroke={COLORS[3]}
+              strokeWidth={2}
               activeDot={{r:8}}
             />
           )}

@@ -80,7 +80,7 @@ export const FoodChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_WEEK, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_WEEK, array, "food", "kcal");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -103,7 +103,7 @@ export const FoodChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -150,7 +150,7 @@ export const FoodChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartNutWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_WEEK, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_WEEK, array, "food", "nut");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -173,7 +173,7 @@ export const FoodChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -222,7 +222,7 @@ export const FoodChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartKcalMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_MONTH, array, "food", "kcal");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -245,7 +245,7 @@ export const FoodChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
@@ -292,7 +292,7 @@ export const FoodChartAvg = () => {
 
   // 5-4. chart ------------------------------------------------------------------------------------
   const chartNutMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_MONTH, array, "food", "nut");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -315,7 +315,7 @@ export const FoodChartAvg = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
           <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />

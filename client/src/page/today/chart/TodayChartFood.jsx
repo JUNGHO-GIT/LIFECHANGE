@@ -61,7 +61,7 @@ export const TodayChartFood = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartKcalToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_TODAY, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_TODAY, array, "food", "kcal");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}} barGap={80} barCategoryGap={"20%"}>
@@ -83,10 +83,14 @@ export const TodayChartFood = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={false}
           />
           <ReferenceLine y={OBJECT_KCAL_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
@@ -136,7 +140,7 @@ export const TodayChartFood = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartNutToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_TODAY, array, "food");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_TODAY, array, "food", "nut");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -159,10 +163,14 @@ export const TodayChartFood = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={false}
           />
           <ReferenceLine y={OBJECT_NUT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />

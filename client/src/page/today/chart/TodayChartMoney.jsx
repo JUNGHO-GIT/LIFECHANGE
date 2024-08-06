@@ -53,7 +53,7 @@ export const TodayChartMoney = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "money");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -76,10 +76,14 @@ export const TodayChartMoney = () => {
             tickLine={false}
             axisLine={false}
             ticks={ticks}
-            tick={{fill:"#666", fontSize:14}}
+            tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line dataKey={"goal"} stroke={COLORS[0]} strokeWidth={2} dot={false}
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={false}
           />
           <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
