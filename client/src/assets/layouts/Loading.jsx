@@ -23,7 +23,7 @@ export const Loading = () => {
       </Div>
     )
     : (
-      <Div className={`h-min50vh d-center`}>
+      <Div className={`h-min60vh d-center`}>
         <Div className={"loader"} />
       </Div>
     )

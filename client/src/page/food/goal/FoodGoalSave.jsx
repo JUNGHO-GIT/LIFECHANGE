@@ -511,7 +511,7 @@ export const FoodGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min50vh"}>
+        <Div className={"block-wrapper h-min60vh"}>
           {dateCountSection()}
           {tableSection()}
         </Div>
