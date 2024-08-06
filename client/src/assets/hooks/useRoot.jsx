@@ -12,14 +12,26 @@ export const useRoot = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    // 로그인, 회원가입
+
     if (location.pathname !== "/user/login" && location.pathname !== "/user/signup") {
-      if (location.pathname === '/' && !sessionId) {
-        navigate("/user/login");
+
+      // '/'경로로 진입했을때의 처리
+      if (location.pathname === '/') {
+        if (!sessionId) {
+          navigate("/user/login");
+        }
+        else {
+          navigate("/today/list");
+        }
       }
-      else if (location.pathname === '/' && sessionId) {
-        navigate("/today/list");
+
+      // 기타 다른 경로로 진입했을때의 처리
+      else {
+        if (!sessionId) {
+          navigate("/user/login");
+        }
       }
     }
   }, [location, navigate, sessionId]);
+
 };
