@@ -157,7 +157,11 @@ const Auth = () => (
 
 // -------------------------------------------------------------------------------------------------
 const App = () => {
+  useRoot();
+  useScrollTop();
+  useEnhancedTouch();
   const location = useLocation();
+
   const noneHeader = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
@@ -176,10 +180,6 @@ const App = () => {
     location.pathname.includes("/user/signup") ||
     location.pathname.indexOf("/auth") > -1
   );
-
-  useRoot();
-  useScrollTop();
-  useEnhancedTouch();
 
   return (
     <div className={"App"}>
