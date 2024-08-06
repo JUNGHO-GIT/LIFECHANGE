@@ -157,11 +157,12 @@ const Auth = () => (
 
 // -------------------------------------------------------------------------------------------------
 const App = () => {
+
   useRoot();
   useScrollTop();
   useEnhancedTouch();
-  const location = useLocation();
 
+  const location = useLocation();
   const noneHeader = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
