@@ -77,7 +77,7 @@ const modifyChangelog = () => {
 
   const newVersion = `\\[ ${versionArray.join('.')} \\]`;
   const newDateTime = `- ${currentDate} (${currentTime})`;
-  const newEntry = `\n## ${newVersion}\n\t${newDateTime}\n`;
+  const newEntry = `\n## ${newVersion}\n\t${newDateTime}\n\n`;
 
   const updatedChangelog = changelog + newEntry;
 

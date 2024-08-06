@@ -16,18 +16,30 @@ import {emailSending} from "../../assets/js/email.js";
 dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------
-export const appInfo = async (
-) => {
+export const appInfo = async () => {
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const envData = fs.readFileSync(path.join(__dirname, '../../../.env'), 'utf8');
   const markdownData = fs.readFileSync(path.join(__dirname, '../../../changelog.md'), 'utf8');
 
-  const versionStr = markdownData?.match(/## \[ (.*) \]/)[1] || "";
-  const dateStr = markdownData?.match(/- (.*) \(/)[1] || "";
-  const gitStr = envData?.match(/GIT_REPO=(.*)/)[1] || "";
-  const licenseStr = envData?.match(/LICENSE=(.*)/)[1] || "";
+  const versionRegex = /(\s*)(\d+\.\d+\.\d+)(\s*)/;
+  const dateRegex = /(-\s*)(.*?)(\s*\()(.*)\)/;
+  const gitRegex = /GIT_REPO=(.*)/;
+  const licenseRegex = /LICENSE=(.*)/;
+
+  const versionMatch = markdownData.match(versionRegex);
+  const dateMatch = markdownData.match(dateRegex);
+  const timeMatch = markdownData.match(dateRegex);
+  const gitMatch = envData.match(gitRegex);
+  const licenseMatch = envData.match(licenseRegex);
+
+  const finalResult = {
+    version: versionMatch ? versionMatch[2] : "",
+    date: (dateMatch && timeMatch) ? `${dateMatch[2]}_${timeMatch[4]}` : "",
+    git: gitMatch ? gitMatch[1] : "",
+    license: licenseMatch ? licenseMatch[1] : "",
+  };
 
   return finalResult;
 };
