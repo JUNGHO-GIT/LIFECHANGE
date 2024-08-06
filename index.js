@@ -81,6 +81,7 @@ app.use((req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
 });
+
 // -------------------------------------------------------------------------------------------------
 app.use("/api/calendar", calendarRouter);
 app.use("/api/exercise/chart", exerciseChartRouter);
