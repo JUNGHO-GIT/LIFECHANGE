@@ -8,7 +8,6 @@ export const router = express.Router();
 router.get("/app/info", async (req, res) => {
   try {
     let result = await service.appInfo (
-      req.query.user_id
     );
     if (result) {
       res.json({

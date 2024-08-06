@@ -31,30 +31,44 @@ export const UserAppSetting = () => {
             <Table>
               <TableBody className={"table-tbody"}>
                 {/** detail **/}
-                <TableRow onClick={() => {
-                  navigate("/user/detail")
-                }}>
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/detail")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15"}>
                     {translate("dataDetail")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
                 {/** category **/}
-                <TableRow onClick={() => {
-                  navigate("/user/category")
-                }}>
+                <TableRow
+                  className={"pointer"}
+                  onClick={() => {
+                    navigate("/user/category")
+                  }}
+                >
                   <TableCell className={"w-90vw p-15"}>
                     {translate("dataCategory")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
                 {/** list **/}
                 <TableRow
-                  className={`${isAdmin !== "true" ? "d-none" : ""}`}
+                  className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
                   onClick={() => {
                     navigate("/user/dummy")
                   }}
@@ -63,7 +77,11 @@ export const UserAppSetting = () => {
                     {translate("dataList")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
                 {/** language **/}
@@ -73,53 +91,86 @@ export const UserAppSetting = () => {
                   direction={"center"}
                   contents={({closePopup}) => (
                   <Div className={"d-column"}>
-                    <Div className={"d-center"} onClick={() => {
-                      setLang("ko")
-                      sessionStorage.setItem("lang", "ko")
-                      navigate(0)
-                    }}>
-                      <Img src={flag1} className={"w-24 h-24"} />한국어
-                      <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "ko" ? "d-none" : ""}`} onClick={() => {}} />
+                    <Div
+                      className={"d-center"}
+                      onClick={() => {
+                        setLang("ko")
+                        sessionStorage.setItem("lang", "ko")
+                        navigate(0)
+                      }}
+                    >
+                      <Img className={"w-24 h-24"} src={flag1} />
+                      <Div className={`${lang === "ko" ? "fw-700" : ""}`}>
+                        한국어
+                      </Div>
+                      <Icons
+                        name={"TbCheck"}
+                        className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
+                        onClick={() => {}}
+                      />
                     </Div>
                     <Br20 />
-                    <Div className={"d-center"} onClick={() => {
-                      setLang("en")
-                      sessionStorage.setItem("lang", "en")
-                      navigate(0)
-                    }}>
-                      <Img src={flag2} className={"w-24 h-24"} />English
-                      <Icons name={"TbCheck"} className={`w-16 h-16 black ${lang !== "en" ? "d-none" : ""}`} onClick={() => {}} />
+                    <Div
+                      className={"d-center"}
+                      onClick={() => {
+                        setLang("en")
+                        sessionStorage.setItem("lang", "en")
+                        navigate(0)
+                      }}
+                    >
+                      <Img src={flag2} className={"w-24 h-24"} />
+                      <Div className={`${lang === "en" ? "fw-700" : ""}`}>
+                        English
+                      </Div>
+                      <Icons
+                        name={"TbCheck"}
+                        className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
+                        onClick={() => {}}
+                      />
                     </Div>
                   </Div>
                   )}>
                   {(popTrigger={}) => (
-                    <TableRow onClick={(e) => {
-                      popTrigger.openPopup(e.currentTarget)
-                    }}>
+                    <TableRow
+                      className={"pointer"}
+                      onClick={(e) => {
+                        popTrigger.openPopup(e.currentTarget)
+                      }}
+                    >
                       <TableCell className={"w-90vw p-15"}>
                         {translate("language")}
                       </TableCell>
                       <TableCell className={"w-10vw p-15"}>
-                        <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                        <Icons
+                          name={"TbChevronRight"}
+                          className={"w-16 h-16 black"}
+                          onClick={() => {}}
+                        />
                       </TableCell>
                     </TableRow>
                   )}
                 </PopUp>
-                {/** info **/}
+                {/** app info **/}
                 <TableRow
+                  className={"pointer"}
                   onClick={() => {
                     navigate("/user/app/info")
                   }}
                 >
                   <TableCell className={"w-90vw p-15"}>
-                    {translate("info")}
+                    {translate("appInfo")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
                 {/** logout **/}
                 <TableRow
+                  className={"pointer"}
                   onClick={() => {
                     localStorage.setItem("autoLogin", "false")
                     localStorage.setItem("autoLoginId", "")
@@ -132,11 +183,16 @@ export const UserAppSetting = () => {
                     {translate("logout")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
                 {/** deletes **/}
                 <TableRow
+                  className={"pointer"}
                   onClick={() => {
                     navigate("/user/deletes")
                   }}
@@ -145,7 +201,11 @@ export const UserAppSetting = () => {
                     {translate("userDeletes")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
-                    <Icons name={"TbChevronRight"} className={"w-16 h-16 black"} />
+                    <Icons
+                      name={"TbChevronRight"}
+                      className={"w-16 h-16 black"}
+                      onClick={() => {}}
+                    />
                   </TableCell>
                 </TableRow>
               </TableBody>

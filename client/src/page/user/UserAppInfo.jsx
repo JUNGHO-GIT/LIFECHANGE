@@ -33,11 +33,7 @@ export const UserAppInfo = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    axios.get(`${URL_OBJECT}/app/info`, {
-      params: {
-        user_id: sessionId,
-      },
-    })
+    axios.get(`${URL_OBJECT}/app/info`)
     .then(res => {
       setOBJECT(res.data.result || OBJECT_DEF);
     })

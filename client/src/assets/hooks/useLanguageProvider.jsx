@@ -43,6 +43,7 @@ export const useTranslate = () => {
     avg: {ko: "평균값", en: "Avg"},
     analyze: {ko: "분석", en: "Analyze"},
     analyzeTabs: {ko: "분석", en: "Analyze"},
+    appInfo: {ko: "앱 정보", en: "App Info"},
 
     // b
     brand: {ko: "브랜드", en: "Brand"},

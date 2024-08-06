@@ -17,19 +17,17 @@ dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------
 export const appInfo = async (
-  user_id_param
 ) => {
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const json = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../package.json'), 'utf-8'));
+  const envData = fs.readFileSync(path.join(__dirname, '../../../.env'), 'utf8');
+  const markdownData = fs.readFileSync(path.join(__dirname, '../../../changelog.md'), 'utf8');
 
-  const finalResult = {
-    version: json.version || "",
-    date: json.date || "",
-    git: json.git || "",
-    license: json.license || "",
-  };
+  const versionStr = markdownData?.match(/## \[ (.*) \]/)[1] || "";
+  const dateStr = markdownData?.match(/- (.*) \(/)[1] || "";
+  const gitStr = envData?.match(/GIT_REPO=(.*)/)[1] || "";
+  const licenseStr = envData?.match(/LICENSE=(.*)/)[1] || "";
 
   return finalResult;
 };
