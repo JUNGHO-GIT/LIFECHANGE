@@ -2,7 +2,7 @@
 
 import * as repository from "../../repository/sleep/sleepChartRepository.js";
 import {log} from "../../assets/js/utils.js";
-import {timeToDecimal} from "../../assets/js/utils.js";
+import {timeToDecimal, decimalToTime} from "../../assets/js/utils.js";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -346,9 +346,9 @@ export const avgWeek = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumBedTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_bedTime);
-      sumWakeTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_wakeTime);
-      sumSleepTime[weekNum] += timeToDecimal(data.sleep_section[0]?.sleep_sleepTime);
+      sumBedTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
+      sumWakeTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
+      sumSleepTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
       countRecords[weekNum]++;
     }
   });
@@ -361,15 +361,15 @@ export const avgWeek = async (
       date: date[index],
       bedTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumBedTime[index] / countRecords[index]))
+        ? String((sumBedTime[index] / countRecords[index]).toFixed(1))
         : "0",
       wakeTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumWakeTime[index] / countRecords[index]))
+        ? String((sumWakeTime[index] / countRecords[index]).toFixed(1))
         : "0",
       sleepTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumSleepTime[index] / countRecords[index]))
+        ? String((sumSleepTime[index] / countRecords[index]).toFixed(1))
         : "0",
     });
   });
@@ -412,9 +412,9 @@ export const avgMonth = async (
     const sleepDate = new Date(data.sleep_dateStart);
     const monthNum = sleepDate.getMonth();
     if (monthNum >= 0 && monthNum < 12) {
-      sumBedTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_bedTime);
-      sumWakeTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_wakeTime);
-      sumSleepTime[monthNum] += timeToDecimal(data.sleep_section[0]?.sleep_sleepTime);
+      sumBedTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
+      sumWakeTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
+      sumSleepTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
       countRecords[monthNum]++;
     }
   });
@@ -427,15 +427,15 @@ export const avgMonth = async (
       date: date[index],
       bedTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumBedTime[index] / countRecords[index]))
+        ? String((sumBedTime[index] / countRecords[index]).toFixed(1))
         : "0",
       wakeTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumWakeTime[index] / countRecords[index]))
+        ? String((sumWakeTime[index] / countRecords[index]).toFixed(1))
         : "0",
       sleepTime:
         countRecords[index] > 0
-        ? String(timeToDecimal(sumSleepTime[index] / countRecords[index]))
+        ? String((sumSleepTime[index] / countRecords[index]).toFixed(1))
         : "0",
     });
   });

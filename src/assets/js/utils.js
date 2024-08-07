@@ -21,36 +21,24 @@ export const timeToDecimal = (data) => {
   if (!data) {
     return "0";
   }
-
-  if (typeof data === "string") {
-    const time = data.split(":");
-    if (time.length === 2) {
-      const hours = parseInt(time[0], 10);
-      const minutes = parseInt(time[1], 10) / 60;
-      return parseFloat((hours + minutes).toFixed(1)).toString();
-    }
-    else {
-      return 0;
-    }
+  const time = data.split(":");
+  if (time.length === 2) {
+    const hours = parseInt(time[0], 10);
+    const minutes = parseInt(time[1], 10) / 60;
+    return (hours + minutes).toFixed(1).toString();
   }
-  else {
-    return parseFloat(data.toFixed(1)).toString();
-  }
+  return "0";
 };
+
 export const decimalToTime = (data) => {
   if (!data) {
     return "00:00";
   }
-
-  if (typeof data === "string") {
-    return data;
-  }
-  else {
-    const hours = Math.floor(data);
-    const minutes = Math.round((data - hours) * 60);
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-  }
-}
+  const floatHours = parseFloat(data);
+  const hours = Math.floor(floatHours);
+  const minutes = Math.round((floatHours - hours) * 60);
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+};
 
 // 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (time) => {
