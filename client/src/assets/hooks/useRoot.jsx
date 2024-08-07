@@ -13,7 +13,11 @@ export const useRoot = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
 
-    if (location.pathname !== "/user/login" && location.pathname !== "/user/signup") {
+    if (
+      location.pathname.indexOf("/user/login") === -1 &&
+      location.pathname.indexOf("/user/signup") === -1 &&
+      location.pathname.indexOf("/auth") === -1
+    ) {
 
       // '/'경로로 진입했을때의 처리
       if (location.pathname === '/') {
