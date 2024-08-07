@@ -1,4 +1,4 @@
-// App.jsx
+// index.jsx
 
 import React from "react";
 import {useLocation} from "react-router-dom";
@@ -71,6 +71,7 @@ import {UserAppInfo} from "./page/user/UserAppInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
 
+import {AuthPrivacy} from "./page/auth/AuthPrivacy.jsx";
 import {AuthGoogle} from "./page/auth/AuthGoogle.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -151,6 +152,7 @@ const User = () => (
 // -------------------------------------------------------------------------------------------------
 const Auth = () => (
   <Routes>
+    <Route path="/privacy" element={<AuthPrivacy />} />
     <Route path="/google" element={<AuthGoogle />} />
   </Routes>
 );
@@ -187,7 +189,7 @@ const App = () => {
       {!noneHeader && <Header />}
       {!noneTop && <TopNav />}
       <Routes>
-        <Route path="/" element={<User />} />
+        <Route path="/*" element={<User />} />
         <Route path="/calendar/*" element={<Calendar />} />
         <Route path="/today/*" element={<Today />} />
         <Route path="/exercise/*" element={<Exercise />} />
