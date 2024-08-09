@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Img} from "../../import/ImportComponents.jsx";
 import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
 import {calendar1, today1} from "../../import/ImportImages.jsx";
@@ -20,127 +20,123 @@ export const BottomNav = () => {
   const firstStr = PATH?.split("/")[1] || "";
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [value, setValue] = useState("today");
+  const [selectedTab, setSelectedTab] = useState("today");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (firstStr === "calendar") {
-      setValue("calendar");
+      setSelectedTab("calendar");
     }
     else if (firstStr === "today") {
-      setValue("today");
+      setSelectedTab("today");
     }
     else if (firstStr === "exercise") {
-      setValue("exercise");
+      setSelectedTab("exercise");
     }
     else if (firstStr === "food") {
-      setValue("food");
+      setSelectedTab("food");
     }
     else if (firstStr === "money") {
-      setValue("money");
+      setSelectedTab("money");
     }
     else if (firstStr === "sleep") {
-      setValue("sleep");
+      setSelectedTab("sleep");
     }
   }, [firstStr]);
+
+  // 4. handler ------------------------------------------------------------------------------------
+  const handleClickBottomNav = (value) => {
+    setSelectedTab(value);
+
+    // ex. selectedTab(food), selectedTab(exercise) ...
+    let sessionStorageData = null;
+    const pattern = new RegExp(`^selectedTab\\(${value}\\)$`);
+
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i) || "";
+
+      // 값이 있는 경우
+      if (pattern.test(key)) {
+        sessionStorageData = sessionStorage.getItem(key);
+        // 큰따옴표 제거
+        if (sessionStorageData) {
+          sessionStorageData = sessionStorageData.replace(/"/g, "");
+        }
+        break;
+      }
+
+      // 값이 없는 경우
+      else {
+        sessionStorageData = "";
+      }
+    }
+
+    let url = "";
+    if (sessionStorageData) {
+      if (sessionStorageData === "real" || sessionStorageData === "schedule") {
+        url = `${value}/list`;
+      }
+      else if (sessionStorageData === "find") {
+        url = `${value}/find`;
+      }
+      else {
+        url = `${value}/${sessionStorageData}/list`;
+      }
+    }
+    else {
+      url = `${value}/list`;
+    }
+
+    navigate(url, {
+      state: {
+        dateType: "",
+        dateStart: moment().format("YYYY-MM-DD"),
+        dateEnd: moment().format("YYYY-MM-DD")
+      }
+    });
+  };
 
   // 6. default ------------------------------------------------------------------------------------
   const defaultNode = () => (
     <BottomNavigation
       showLabels={true}
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}>
+      value={selectedTab}
+    >
       <BottomNavigationAction
         label={translate("exercise")}
         value={"exercise"}
         icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("exercise");
-          navigate("exercise/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("exercise")}
       />
       <BottomNavigationAction
         label={translate("food")}
         value={"food"}
         icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("food");
-          navigate("food/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("food")}
       />
       <BottomNavigationAction
         label={translate("today")}
         value={"today"}
         icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("today");
-          navigate("today/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("today")}
       />
       <BottomNavigationAction
         label={translate("calendar")}
         value={"calendar"}
         icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("calendar");
-          navigate("calendar/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("calendar")}
       />
       <BottomNavigationAction
         label={translate("money")}
         value={"money"}
         icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("money");
-          navigate("money/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("money")}
       />
       <BottomNavigationAction
         label={translate("sleep")}
         value={"sleep"}
         icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
-        onClick={() => {
-          setValue("sleep");
-          navigate("sleep/list", {
-            state: {
-              dateType: "",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
-            }
-          });
-        }}
+        onClick={() => handleClickBottomNav("sleep")}
       />
     </BottomNavigation>
   );

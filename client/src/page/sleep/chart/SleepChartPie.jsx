@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -17,27 +17,30 @@ export const SleepChartPie = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("today");
-  const [radius, setRadius] = useState(120);
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_TODAY_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_WEEK_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_MONTH_DEF = [
-    {name:"Empty", value: 100}
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("today");
+  const [radius, setRadius] = useState(120);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_TODAY_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_WEEK_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_MONTH_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);

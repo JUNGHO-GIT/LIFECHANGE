@@ -2,7 +2,7 @@
 
 import {React, useLocation, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {PopUp, Img, Div} from "../../import/ImportComponents.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 import {DigitalClock, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";

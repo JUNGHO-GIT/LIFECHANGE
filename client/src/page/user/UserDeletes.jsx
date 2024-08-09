@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
 import {axios} from "../../import/ImportLibs.jsx";

@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {handlerY, log} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
@@ -21,30 +21,42 @@ export const FoodChartAvg = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["kcal", "carb", "protein", "fat"];
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("week");
-  const [LINE, setLINE] = useState("kcal");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_KCAL_WEEK_DEF = [
-    {name:"", date:"", kcal: ""},
-  ];
-  const OBJECT_NUT_WEEK_DEF = [
-    {name:"", date:"", carb: "", protein: "", fat: ""},
-  ];
-  const OBJECT_KCAL_MONTH_DEF = [
-    {name:"", date:"", kcal: ""},
-  ];
-  const OBJECT_NUT_MONTH_DEF = [
-    {name:"", date:"", carb: "", protein: "", fat: ""},
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("week");
+  const [LINE, setLINE] = useState("kcal");
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_KCAL_WEEK_DEF = [{
+    name:"",
+    date:"",
+    kcal: ""
+  }];
+  const OBJECT_NUT_WEEK_DEF = [{
+    name:"",
+    date:"",
+    carb: "",
+    protein: "",
+    fat: ""
+  }];
+  const OBJECT_KCAL_MONTH_DEF = [{
+    name:"",
+    date:"",
+    kcal: ""
+  }];
+  const OBJECT_NUT_MONTH_DEF = [{
+    name:"",
+    date:"",
+    carb: "",
+    protein: "",
+    fat: ""
+  }];
   const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEF);
   const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEF);
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);

@@ -1,7 +1,7 @@
 // Dummy.jsx
 
 import {React} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Div} from "../../../import/ImportComponents.jsx";
 import {Card, Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
 

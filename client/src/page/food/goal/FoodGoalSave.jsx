@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {sync} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";

@@ -1,7 +1,7 @@
 // Picker.jsx
 
 import {React, useLocation, useEffect} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
 import {PopUp, Div, Img, Br20} from "../../import/ImportComponents.jsx";
@@ -21,6 +21,7 @@ export const Picker = ({
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
+  const isToday = firstStr === "today";
   const isDiffList = secondStr === "diff" && thirdStr === "list";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
@@ -240,7 +241,9 @@ export const Picker = ({
             ),
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
           }}
         />
       )}
@@ -363,7 +366,9 @@ export const Picker = ({
             ),
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
           }}
         />
       )}
@@ -459,7 +464,9 @@ export const Picker = ({
             ),
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
           }}
         />
       )}
@@ -555,7 +562,9 @@ export const Picker = ({
             ),
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
           }}
         />
       )}
@@ -662,7 +671,9 @@ export const Picker = ({
             ),
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
           }}
         />
       )}

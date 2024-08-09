@@ -63,6 +63,7 @@ export const useTranslate = () => {
     currency: {ko: "₩", en: "$"},
     calendarTitle: {ko: "제목", en: "Title"},
     color: {ko: "색상", en: "Color"},
+    chart: {ko: "분석", en: "Analysis"},
     chartBar: {ko: "목표", en: "Goal"},
     chartPie: {ko: "비율", en: "Proportion"},
     chartLine: {ko: "추이", en: "Trend"},

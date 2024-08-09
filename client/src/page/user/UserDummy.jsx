@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
 import {Div} from "../../import/ImportComponents.jsx";
@@ -28,10 +28,12 @@ export const UserDummy = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [PART, setPART] = useState("exerciseGoal");
-  const [PAGING, setPAGING] = useState({
-    sort: "asc",
-    page: 1,
-  });
+  const [PAGING, setPAGING] = useStorage(
+    `PAGING(${PATH})`, {
+      sort: "asc",
+      page: 1,
+    }
+  );
   const [COUNT, setCOUNT] = useState({
     inputCnt: 0,
     totalCnt: 0,

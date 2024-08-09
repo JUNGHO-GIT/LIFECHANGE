@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
@@ -30,6 +30,16 @@ export const UserCategory = () => {
   const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
   const sessionId = sessionStorage.getItem("sessionId");
 
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  // 리스트에서만 사용
+  const [DATE, setDATE] = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "day",
+      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [dataType, setDataType] = useState("exercise");
@@ -41,11 +51,6 @@ export const UserCategory = () => {
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toDataCategory: "/user/category",
-  });
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
   });
   const [idx, setIdx] = useState({
     category1Idx: 0,

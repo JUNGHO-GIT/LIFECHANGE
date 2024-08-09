@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card} from "../../import/ImportMuis.jsx";
 import {PopUp, Div, Img, Hr40, Br20} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
@@ -37,7 +37,6 @@ export const TopNav = () => {
     dateStart: "",
     dateEnd: "",
   });
-  const [selectedTab, setSelectedTab] = useState('analyze');
   const [smileScore, setSmileScore] = useState({
     total: 0,
     exercise: 0,
@@ -53,6 +52,7 @@ export const TopNav = () => {
     sleep: smile3,
   });
   const [mainSmileImage, setMainSmileImage] = useState(smile3);
+  const [selectedTab, setSelectedTab] = useState("chart");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 퍼센트, 자산 설정
@@ -169,7 +169,7 @@ export const TopNav = () => {
     // 2. today
     else if (firstStr === "today") {
       if (secondStr === "chart") {
-        setSelectedTab("analyze");
+        setSelectedTab("chart");
       }
       else if (secondStr === "diff") {
         setSelectedTab("diff");
@@ -184,7 +184,7 @@ export const TopNav = () => {
     // 3. food
     else if (firstStr === "food") {
       if (secondStr === "chart") {
-        setSelectedTab("analyze");
+        setSelectedTab("chart");
       }
       else if (secondStr === "diff") {
         setSelectedTab("diff");
@@ -204,7 +204,7 @@ export const TopNav = () => {
       firstStr === "exercise" || firstStr === "money" || firstStr === "sleep"
     ) {
       if (secondStr === "chart") {
-        setSelectedTab("analyze");
+        setSelectedTab("chart");
       }
       else if (secondStr === "diff") {
         setSelectedTab("diff");
@@ -217,6 +217,33 @@ export const TopNav = () => {
       }
     }
   }, [firstStr, secondStr, thirdStr]);
+
+  // 4. handler ------------------------------------------------------------------------------------
+  const handleClickTobNav = (value) => {
+    setSelectedTab(value);
+
+    // ex. selectedTab(food), selectedTab(exercise) 형식으로 저장
+    sessionStorage.setItem(`selectedTab(${firstStr})`, JSON.stringify(value));
+
+    let url = "";
+    if (value === "real" || value === "schedule") {
+      url = `${firstStr}/list`;
+    }
+    else if (value === "find") {
+      url = `${firstStr}/find`;
+    }
+    else {
+      url = `${firstStr}/${value}/list`;
+    }
+
+    navigate(url, {
+      state: {
+        dateType: "",
+        dateStart: moment().format("YYYY-MM-DD"),
+        dateEnd: moment().format("YYYY-MM-DD")
+      }
+    });
+  };
 
   // 4. smileNode ----------------------------------------------------------------------------------
   const smileNode = () => (
@@ -425,75 +452,7 @@ export const TopNav = () => {
 
   // 6. tabs ---------------------------------------------------------------------------------------
   const tabsNode = () => (
-    (firstStr === "today") ? (
-      <Tabs
-        value={selectedTab}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .${tabsClasses.scrollButtons}`]: {
-            '&.Mui-disabled': { opacity: 0.3 },
-          },
-        }}>
-        <Tab
-          label={translate("analyze")}
-          value={"analyze"}
-          onClick={(e) => {
-            setSelectedTab("analyze");
-            navigate(`${firstStr}/chart/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("diff")}
-          value={"diff"}
-          onClick={(e) => {
-            setSelectedTab("diff");
-            navigate(`${firstStr}/diff/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("goal")}
-          value={"goal"}
-          onClick={(e) => {
-            setSelectedTab("goal");
-            navigate(`${firstStr}/goal/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("real")}
-          value={"real"}
-          onClick={(e) => {
-            setSelectedTab("real");
-            navigate(`${firstStr}/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-      </Tabs>
-    ) : (firstStr === "calendar") ? (
+   (firstStr === "calendar") ? (
       <Tabs
         value={selectedTab}
         variant={"scrollable"}
@@ -507,19 +466,10 @@ export const TopNav = () => {
         <Tab
           label={translate("schedule")}
           value={"schedule"}
-          onClick={(e) => {
-            setSelectedTab("schedule");
-            navigate(`${firstStr}/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          onClick={() => handleClickTobNav("schedule")}
         />
       </Tabs>
-    ) : (firstStr === "food") ? (
+    ) : (
       <Tabs
         value={selectedTab}
         variant={"scrollable"}
@@ -532,144 +482,32 @@ export const TopNav = () => {
         }}
       >
         <Tab
-          label={translate("analyze")}
-          value={"analyze"}
-          onClick={(e) => {
-            setSelectedTab("analyze");
-            navigate(`${firstStr}/chart/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          label={translate("chart")}
+          value={"chart"}
+          onClick={() => handleClickTobNav("chart")}
         />
         <Tab
           label={translate("diff")}
           value={"diff"}
-          onClick={(e) => {
-            setSelectedTab("diff");
-            navigate(`${firstStr}/diff/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          onClick={() => handleClickTobNav("diff")}
         />
         <Tab
           label={translate("goal")}
           value={"goal"}
-          onClick={(e) => {
-            setSelectedTab("goal");
-            navigate(`${firstStr}/goal/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          onClick={() => handleClickTobNav("goal")}
         />
         <Tab
           label={translate("real")}
           value={"real"}
-          onClick={(e) => {
-            setSelectedTab("real");
-            navigate(`${firstStr}/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
+          onClick={() => handleClickTobNav("real")}
         />
-        <Tab
-          label={translate("find")}
-          value={"find"}
-          onClick={(e) => {
-            setSelectedTab("find");
-            navigate(`${firstStr}/find`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-      </Tabs>
-    ): (
-      <Tabs
-        value={selectedTab}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .MuiTabs-scrollButtons`]: {
-            "&.Mui-disabled": { opacity: 0.3 },
-          },
-        }}
-      >
-        <Tab
-          label={translate("analyze")}
-          value={"analyze"}
-          onClick={(e) => {
-            setSelectedTab("analyze");
-            navigate(`${firstStr}/chart/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("diff")}
-          value={"diff"}
-          onClick={(e) => {
-            setSelectedTab("diff");
-            navigate(`${firstStr}/diff/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("goal")}
-          value={"goal"}
-          onClick={(e) => {
-            setSelectedTab("goal");
-            navigate(`${firstStr}/goal/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
-        <Tab
-          label={translate("real")}
-          value={"real"}
-          onClick={(e) => {
-            setSelectedTab("real");
-            navigate(`${firstStr}/list`, {
-              state: {
-                dateType: "day",
-                dateStart: moment().format("YYYY-MM-DD"),
-                dateEnd: moment().format("YYYY-MM-DD"),
-              },
-            });
-          }}
-        />
+        {firstStr === "food" && (
+          <Tab
+            label={translate("find")}
+            value={"find"}
+            onClick={() => handleClickTobNav("find")}
+          />
+        )}
       </Tabs>
     )
   );

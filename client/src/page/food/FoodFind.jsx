@@ -29,23 +29,27 @@ export const FoodFind = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
-  // 2-1. useStorage (리스트에서만 사용) -----------------------------------------------------------
-  const {val:PAGING, set:setPAGING} = useStorage(
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  // 리스트에서만 사용
+  const [DATE, setDATE] = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "",
+      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }
+  );
+  const [PAGING, setPAGING] = useStorage(
     `PAGING(${PATH})`, {
-    sort: "asc",
-    query: "",
-    page: 0,
-  });
+      sort: "asc",
+      query: "",
+      page: 0,
+    }
+  );
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [checkedQueries, setCheckedQueries] = useState({});
   const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
-  const [DATE, setDATE] = useState({
-    dateType: "",
-    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",

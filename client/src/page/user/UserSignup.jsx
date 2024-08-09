@@ -1,7 +1,7 @@
 // UserSignup.jsx
 
 import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Loading} from "../../import/ImportLayouts.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";

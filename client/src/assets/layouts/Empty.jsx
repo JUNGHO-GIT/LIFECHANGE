@@ -1,7 +1,7 @@
 // Empty.jsx
 
 import {React} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Div, Icons} from "../../import/ImportComponents.jsx";
 import {Card, Accordion, AccordionSummary, Grid} from "../../import/ImportMuis.jsx";
 

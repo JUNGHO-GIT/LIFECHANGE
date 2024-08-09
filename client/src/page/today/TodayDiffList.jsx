@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
 import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
@@ -37,17 +37,28 @@ export const TodayDiffList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  // 리스트에서만 사용
+  const [DATE, setDATE] = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "day",
+      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }
+  );
+  const [PAGING, setPAGING] = useStorage(
+    `PAGING(${PATH})`, {
+      sort: "asc",
+      page: 1,
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpandedExercise, setIsExpandedExercise] = useState([0]);
   const [isExpandedFood, setIsExpandedFood] = useState([0]);
   const [isExpandedMoney, setIsExpandedMoney] = useState([0]);
   const [isExpandedSleep, setIsExpandedSleep] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -57,10 +68,6 @@ export const TodayDiffList = () => {
     toFood: "/food/save",
     toMoney: "/money/save",
     toSleep: "/sleep/save",
-  });
-  const [PAGING, setPAGING] = useState({
-    sort: "asc",
-    page: 1,
   });
   const [COUNT_EXERCISE, setCOUNT_EXERCISE] = useState({
     totalCnt: 0,

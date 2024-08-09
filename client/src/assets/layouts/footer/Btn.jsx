@@ -1,7 +1,7 @@
 // Btn.jsx
 
 import {React, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Button, Card} from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
@@ -21,30 +21,38 @@ export const ExerciseChartLine = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["volume", "cardio"];
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("week");
-  const [LINE, setLINE] = useState("volume");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_VOLUME_WEEK_DEF = [
-    {name:"", date:"", volume: ""},
-  ];
-  const OBJECT_CARDIO_WEEK_DEF = [
-    {name:"", date:"", cardio: ""},
-  ];
-  const OBJECT_VOLUME_MONTH_DEF = [
-    {name:"", date:"", cardio: ""},
-  ];
-  const OBJECT_CARDIO_MONTH_DEF = [
-    {name:"", date:"", cardio: ""},
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("week");
+  const [LINE, setLINE] = useState("volume");
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_VOLUME_WEEK_DEF = [{
+    name:"",
+    date:"",
+    volume: ""
+  }];
+  const OBJECT_CARDIO_WEEK_DEF = [{
+    name:"",
+    date:"",
+    cardio: ""
+  }];
+  const OBJECT_VOLUME_MONTH_DEF = [{
+    name:"",
+    date:"",
+    cardio: ""
+  }];
+  const OBJECT_CARDIO_MONTH_DEF = [{
+    name:"",
+    date:"",
+    cardio: ""
+  }];
   const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState(OBJECT_VOLUME_WEEK_DEF);
   const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState(OBJECT_CARDIO_WEEK_DEF);
   const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEF);

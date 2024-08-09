@@ -1,7 +1,7 @@
 // Count.jsx
 
 import {React, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {PopUp, Img, Div, Icons} from "../../import/ImportComponents.jsx";
 import {TextField} from "../../import/ImportMuis.jsx";
 import {common2} from "../../import/ImportImages.jsx";

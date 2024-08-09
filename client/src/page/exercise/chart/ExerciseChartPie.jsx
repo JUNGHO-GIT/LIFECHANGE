@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -18,31 +18,35 @@ export const ExerciseChartPie = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("week");
-  const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("part");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_PART_WEEK_DEF = [
-    {name:"Empty", value: 100},
-  ];
-  const OBJECT_TITLE_WEEK_DEF = [
-    {name:"Empty", value: 100},
-  ];
-  const OBJECT_PART_MONTH_DEF = [
-    {name:"Empty", value: 100},
-  ];
-  const OBJECT_TITLE_MONTH_DEF = [
-    {name:"Empty", value: 100},
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("week");
+  const [radius, setRadius] = useState(120);
+  const [LINE, setLINE] = useState("part");
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_PART_WEEK_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_TITLE_WEEK_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_PART_MONTH_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_TITLE_MONTH_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
   const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState(OBJECT_PART_WEEK_DEF);
   const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState(OBJECT_TITLE_WEEK_DEF);
   const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEF);

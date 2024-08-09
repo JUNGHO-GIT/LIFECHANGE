@@ -1,7 +1,7 @@
 // FindFilter.jsx
 
 import {React, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Icons, Div} from "../../../import/ImportComponents.jsx";
 import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
 

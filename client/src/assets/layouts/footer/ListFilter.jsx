@@ -1,12 +1,11 @@
 // ListFilter.jsx
 
-import {React, useState} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {React} from "../../../import/ImportReacts.jsx";
+import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
 import {Picker, Div, Br10, PopUp} from "../../../import/ImportComponents.jsx";
 import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
-import { format } from "date-fns";
-import { tz } from "moment-timezone";
 
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = ({
@@ -14,9 +13,15 @@ export const ListFilter = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const location = useLocation();
   const {translate} = useTranslate();
-  const [clickedType, setClickedType] = useState("today");
+  const PATH = location?.pathname;
   const isToday = strings?.first === "today";
+
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  const [clickedType, setClickedType] = useStorage(
+    `clickedType(${PATH})`, "today"
+  );
 
   // 2. sort ---------------------------------------------------------------------------------------
   const sortNode = () => (

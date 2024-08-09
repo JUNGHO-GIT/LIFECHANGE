@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -18,37 +18,43 @@ export const MoneyChartPie = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("today");
-  const [radius, setRadius] = useState(120);
-  const [LINE, setLINE] = useState("income");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_IN_TODAY_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_OUT_TODAY_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_IN_WEEK_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_OUT_WEEK_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_IN_MONTH_DEF = [
-    {name:"Empty", value: 100}
-  ];
-  const OBJECT_OUT_MONTH_DEF = [
-    {name:"Empty", value: 100}
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("today");
+  const [radius, setRadius] = useState(120);
+  const [LINE, setLINE] = useState("income");
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_IN_TODAY_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_OUT_TODAY_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_IN_WEEK_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_OUT_WEEK_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_IN_MONTH_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
+  const OBJECT_OUT_MONTH_DEF = [{
+    name:"Empty",
+    value: 100
+  }];
   const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
   const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);
   const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEF);

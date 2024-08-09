@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Hr30, Br10, Br20, Icons} from "../../../import/ImportComponents.jsx";
@@ -28,24 +28,31 @@ export const MoneyDiffList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  // 리스트에서만 사용
+  const [DATE, setDATE] = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "",
+      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }
+  );
+  const [PAGING, setPAGING] = useStorage(
+    `PAGING(${PATH})`, {
+      sort: "asc",
+      page: 1,
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
-  const [DATE, setDATE] = useState({
-    dateType: "",
-    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
     toSave: "/money/goal/save",
-  });
-  const [PAGING, setPAGING] = useState({
-    sort: "asc",
-    page: 1,
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,

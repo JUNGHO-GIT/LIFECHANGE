@@ -2,7 +2,7 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {handlerY} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
@@ -22,24 +22,32 @@ export const SleepChartAvg = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["bedTime", "wakeTime", "sleepTime"];
-
-  // 2-2. useState ---------------------------------------------------------------------------------
   const sessionId = sessionStorage.getItem("sessionId");
-  const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("month");
-  const [PART, setPART] = useState(array);
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
   ];
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const OBJECT_MONTH_DEF = [
-    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
-  ];
-  const OBJECT_YEAR_DEF = [
-    {name:"", date: "", bedTime: 0, wakeTime: 0, sleepTime: 0}
-  ];
+  const [LOADING, setLOADING] = useState(true);
+  const [SECTION, setSECTION] = useState("month");
+  const [PART, setPART] = useState(array);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const OBJECT_MONTH_DEF = [{
+    name:"",
+    date: "",
+    bedTime: "0",
+    wakeTime: "0",
+    sleepTime: "0",
+  }];
+  const OBJECT_YEAR_DEF = [{
+    name:"",
+    date: "",
+    bedTime: "0",
+    wakeTime: "0",
+    sleepTime: "0",
+  }];
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
   const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
 

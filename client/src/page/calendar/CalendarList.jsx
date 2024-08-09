@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
+import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Icons, Div} from "../../import/ImportComponents.jsx";
 import {Paper} from "../../import/ImportMuis.jsx";
@@ -26,13 +26,18 @@ export const CalendarList = () => {
   const thirdStr = PATH?.split("/")[3] || "";
   const sessionId = sessionStorage.getItem("sessionId");
 
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  // 리스트에서만 사용
+  const [DATE, setDATE] = useStorage(
+    `DATE(${PATH})`, {
+      dateType: "",
+      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }
+  );
+
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
-  const [DATE, setDATE] = useState({
-    dateType: "",
-    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-  });
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
