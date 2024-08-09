@@ -20,7 +20,7 @@ export const ListFilter = ({
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
-    `clickedType(${PATH})`, "today"
+    `CLICKED(${PATH})`, "today"
   );
 
   // 2. sort ---------------------------------------------------------------------------------------

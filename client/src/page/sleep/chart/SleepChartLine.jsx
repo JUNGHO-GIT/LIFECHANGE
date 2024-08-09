@@ -21,7 +21,7 @@ export const SleepChartLine = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["bedTime", "wakeTime", "sleepTime"];
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -45,7 +45,7 @@ export const SleepChartLine = () => {
     date: "",
     bedTime: "0",
     wakeTime: "0",
-    sleepTime: "0",
+    sleepTime: "0"
   }];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
@@ -79,7 +79,10 @@ export const SleepChartLine = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}
@@ -175,7 +178,10 @@ export const SleepChartLine = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}

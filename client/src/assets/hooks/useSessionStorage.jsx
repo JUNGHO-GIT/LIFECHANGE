@@ -8,7 +8,7 @@ export const useSessionStorage = () => {
   // 1. common -------------------------------------------------------------------------------------
   const navigate = useNavigate();
   const location = useLocation();
-  const sessionId = sessionStorage.getItem('sessionId');
+  const sessionId = sessionStorage.getItem('ID_SESSION');
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

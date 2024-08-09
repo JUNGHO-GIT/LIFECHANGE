@@ -17,7 +17,7 @@ export const SleepChartPie = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",

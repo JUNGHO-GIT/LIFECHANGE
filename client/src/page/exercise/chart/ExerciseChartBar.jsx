@@ -20,7 +20,7 @@ export const ExerciseChartBar = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["goal", "real"];
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -90,7 +90,10 @@ export const ExerciseChartBar = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}
@@ -171,7 +174,10 @@ export const ExerciseChartBar = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}
@@ -250,7 +256,10 @@ export const ExerciseChartBar = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}
@@ -353,11 +362,17 @@ export const ExerciseChartBar = () => {
         <Img src={common3_2} className={"w-24 h-24"} />
       );
       return (
-        <Div className={"d-center"}>
-          <Div className={"ms-0"}>{selectSection1()}</Div>
-          <Div className={"ms-auto"}>{titleSection()}</Div>
-          <Div className={"ms-auto me-0"}>{selectSection2()}</Div>
-        </Div>
+        <Grid container>
+          <Grid item xs={3} className={"d-left"}>
+            {selectSection1()}
+          </Grid>
+          <Grid item xs={6} className={"d-center"}>
+            {titleSection()}
+          </Grid>
+          <Grid item xs={3} className={"d-right"}>
+            {selectSection2()}
+          </Grid>
+        </Grid>
       );
     };
     // 7-2. chart

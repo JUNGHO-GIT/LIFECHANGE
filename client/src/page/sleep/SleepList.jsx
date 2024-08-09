@@ -26,7 +26,7 @@ export const SleepList = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -104,7 +104,7 @@ export const SleepList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  })()}, [ID_SESSION, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {

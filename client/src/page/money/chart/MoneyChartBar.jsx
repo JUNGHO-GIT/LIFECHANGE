@@ -20,7 +20,7 @@ export const MoneyChartBar = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["goal", "real"];
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -35,7 +35,7 @@ export const MoneyChartBar = () => {
     name: "",
     date: "",
     goal: "0",
-    real: "0"
+    real: "0",
   }];
   const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 
@@ -60,7 +60,10 @@ export const MoneyChartBar = () => {
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
         barGap={20} barCategoryGap={"20%"}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}

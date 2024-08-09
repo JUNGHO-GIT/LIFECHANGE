@@ -28,7 +28,7 @@ export const ExerciseGoalSave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -104,7 +104,7 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -131,7 +131,7 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {

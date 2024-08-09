@@ -24,17 +24,17 @@ export const AuthGoogle = () => {
         localStorage.setItem("autoLogin", "true");
         localStorage.setItem("autoLoginId", res.data.googleId);
         localStorage.setItem("autoLoginPw", res.data.googlePw);
-        localStorage.setItem("isGoogle", "true");
+        localStorage.setItem("GOOGLE", "true");
 
-        sessionStorage.setItem("sessionId", res.data.googleId);
+        sessionStorage.setItem("ID_SESSION", res.data.googleId);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("LANG", "ko");
 
         if (res.data.admin === "admin") {
-          sessionStorage.setItem("isAdmin", "true");
+          sessionStorage.setItem("ADMIN", "true");
         }
         else {
-          sessionStorage.setItem("isAdmin", "false");
+          sessionStorage.setItem("ADMIN", "false");
         }
 
         sync();

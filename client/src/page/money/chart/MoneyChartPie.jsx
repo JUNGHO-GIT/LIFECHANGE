@@ -18,7 +18,7 @@ export const MoneyChartPie = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -33,27 +33,27 @@ export const MoneyChartPie = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_IN_TODAY_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const OBJECT_OUT_TODAY_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const OBJECT_IN_WEEK_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const OBJECT_OUT_WEEK_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const OBJECT_IN_MONTH_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const OBJECT_OUT_MONTH_DEF = [{
     name:"Empty",
-    value: 100
+    value: 100,
   }];
   const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
   const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);

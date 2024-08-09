@@ -28,7 +28,7 @@ export const UserCategory = () => {
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -50,7 +50,7 @@ export const UserCategory = () => {
     dateType: "",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    toDataCategory: "/user/category",
+    toDataCategory: "/user/category"
   });
   const [idx, setIdx] = useState({
     category1Idx: 0,

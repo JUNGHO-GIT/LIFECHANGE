@@ -48,9 +48,9 @@ export const BottomNav = () => {
   const handleClickBottomNav = (value) => {
     setSelectedTab(value);
 
-    // ex. selectedTab(food), selectedTab(exercise) ...
+    // ex. TABS(food), TABS(exercise) ...
     let sessionStorageData = null;
-    const pattern = new RegExp(`^selectedTab\\(${value}\\)$`);
+    const pattern = new RegExp(`^TABS\\(${value}\\)$`);
 
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i) || "";

@@ -18,8 +18,8 @@ export const UserAppSetting = () => {
   const {translate} = useTranslate();
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [lang, setLang] = useState(sessionStorage.getItem("lang"));
-  const [isAdmin, setIsAdmin] = useState(sessionStorage.getItem("isAdmin"));
+  const [lang, setLang] = useState(sessionStorage.getItem("LANG"));
+  const [ADMIN, setIsAdmin] = useState(sessionStorage.getItem("ADMIN"));
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -68,7 +68,7 @@ export const UserAppSetting = () => {
                 </TableRow>
                 {/** list **/}
                 <TableRow
-                  className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
+                  className={`${ADMIN !== "true" ? "d-none" : ""} pointer`}
                   onClick={() => {
                     navigate("/user/dummy")
                   }}
@@ -95,7 +95,7 @@ export const UserAppSetting = () => {
                       className={"d-center"}
                       onClick={() => {
                         setLang("ko")
-                        sessionStorage.setItem("lang", "ko")
+                        sessionStorage.setItem("LANG", "ko")
                         navigate(0)
                       }}
                     >

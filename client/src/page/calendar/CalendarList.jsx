@@ -24,15 +24,15 @@ export const CalendarList = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     }
   );
 
@@ -41,17 +41,12 @@ export const CalendarList = () => {
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
+    category: "",
     refresh: 0,
     dateType: "day",
     dateStart: "0000-00-00",
     dateEnd: "0000-00-00",
-    category: "",
     toSave: "/calendar/save"
-  });
-  const [COUNT, setCOUNT] = useState({
-    totalCnt: 0,
-    sectionCnt: 0,
-    newSectionCnt: 0
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -84,12 +79,6 @@ export const CalendarList = () => {
     })
     .then((res) => {
       setOBJECT(res.data.result && res.data.result.length > 0 ? res.data.result : OBJECT_DEF);
-      setCOUNT((prev) => ({
-        ...prev,
-        totalCnt: res.data.totalCnt || 0,
-        sectionCnt: res.data.sectionCnt || 0,
-        newSectionCnt: res.data.sectionCnt || 0
-      }));
     })
     .catch((err) => {
       console.error(err);

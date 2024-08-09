@@ -20,7 +20,7 @@ export const UserDeletes = () => {
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -62,7 +62,7 @@ export const UserDeletes = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios.delete(`${URL_OBJECT}/deletes`, {
+    await axios.delete(`${URL_OBJECT}/deletes`,{
       data: {
         user_id: sessionId,
       },

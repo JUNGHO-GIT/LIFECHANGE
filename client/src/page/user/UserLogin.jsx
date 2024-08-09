@@ -65,7 +65,7 @@ export const UserLogin = () => {
   useEffect(() => {
     if (checkedSaveId) {
       localStorage.setItem("saveId", "true");
-      localStorage.setItem("savedId", userId);
+      localStorage.setItem("ID_SAVED", userId);
     }
   }, [checkedSaveId, userId]);
 
@@ -76,7 +76,7 @@ export const UserLogin = () => {
     const autoLoginId = localStorage.getItem("autoLoginId");
     const autoLoginPw = localStorage.getItem("autoLoginPw");
     const saveId = localStorage.getItem("saveId");
-    const savedId = localStorage.getItem("savedId");
+    const ID_SAVED = localStorage.getItem("ID_SAVED");
 
     if (autoLogin === "true") {
       setCheckedAutoLogin(true);
@@ -88,8 +88,8 @@ export const UserLogin = () => {
     }
     if (saveId === "true") {
       setCheckedSaveId(true);
-      if (savedId) {
-        setUserId(savedId);
+      if (ID_SAVED) {
+        setUserId(ID_SAVED);
       }
     }
   }, []);
@@ -138,28 +138,28 @@ export const UserLogin = () => {
       if (res.data.status === "success") {
         // localStorage
         if (checkedSaveId) {
-          localStorage.setItem("savedId", res.data.result.user_id);
+          localStorage.setItem("ID_SAVED", res.data.result.user_id);
         }
-        localStorage.setItem("isGoogle", "false");
+        localStorage.setItem("GOOGLE", "false");
 
         // sessionStorage
         if (res.data.admin === "admin") {
-          sessionStorage.setItem("isAdmin", "true");
+          sessionStorage.setItem("ADMIN", "true");
         }
         else {
-          sessionStorage.setItem("isAdmin", "false");
+          sessionStorage.setItem("ADMIN", "false");
         }
 
-        sessionStorage.setItem("sessionId", res.data.result.user_id);
+        sessionStorage.setItem("ID_SESSION", res.data.result.user_id);
         sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem("lang", "ko");
+        sessionStorage.setItem("LANG", "ko");
 
         sync();
         navigate("/today/list");
       }
       else {
         alert(res.data.msg);
-        sessionStorage.setItem("sessionId", "");
+        sessionStorage.setItem("ID_SESSION", "");
       }
     })
     .catch((err) => {

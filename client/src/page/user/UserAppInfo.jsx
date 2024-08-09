@@ -15,7 +15,7 @@ export const UserAppInfo = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -26,7 +26,7 @@ export const UserAppInfo = () => {
     version: "",
     date: "",
     github: "",
-    license: ""
+    license: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 

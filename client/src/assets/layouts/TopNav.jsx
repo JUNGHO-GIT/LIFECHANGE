@@ -58,8 +58,8 @@ export const TopNav = () => {
   // 퍼센트, 자산 설정
   useEffect(() => {
     const handleStorageChange = (e) => {
-      const storedPercent = sessionStorage.getItem('percent');
-      const storedProperty = sessionStorage.getItem('property');
+      const storedPercent = sessionStorage.getItem("PERCENT");
+      const storedProperty = sessionStorage.getItem("PROPERTY");
 
       if (storedPercent) {
         setPercent(JSON.parse(storedPercent));
@@ -223,7 +223,7 @@ export const TopNav = () => {
     setSelectedTab(value);
 
     // ex. selectedTab(food), selectedTab(exercise) 형식으로 저장
-    sessionStorage.setItem(`selectedTab(${firstStr})`, JSON.stringify(value));
+    sessionStorage.setItem(`TABS(${firstStr})`, JSON.stringify(value));
 
     let url = "";
     if (value === "real" || value === "schedule") {

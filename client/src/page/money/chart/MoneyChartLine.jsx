@@ -21,7 +21,7 @@ export const MoneyChartLine = () => {
   const URL_OBJECT = URL + SUBFIX;
   const {translate} = useTranslate();
   const array = ["income", "expense"];
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
     "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
     "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
@@ -37,13 +37,13 @@ export const MoneyChartLine = () => {
     name:"",
     date: "",
     income: "0",
-    expense: "0"
+    expense: "0",
   }];
   const OBJECT_MONTH_DEF = [{
     name:"",
     date: "",
     income: "0",
-    expense: "0"
+    expense: "0",
   }];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
@@ -86,7 +86,10 @@ export const MoneyChartLine = () => {
             left: 20
           }}
         >
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}
@@ -182,7 +185,10 @@ export const MoneyChartLine = () => {
             left: 20
           }}
         >
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
+          <CartesianGrid
+            strokeDasharray={"3 3"}
+            stroke={"#f5f5f5"}
+          />
           <XAxis
             type={"category"}
             dataKey={"name"}

@@ -9,7 +9,7 @@ export const sync = async () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
 
   // 2-1. useStorage -------------------------------------------------------------------------------
   const DATE = {
@@ -31,8 +31,8 @@ export const sync = async () => {
       },
     });
 
-    sessionStorage.setItem("percent", JSON.stringify(resPercent.data.result));
-    sessionStorage.setItem("property", JSON.stringify(resProperty.data.result));
+    sessionStorage.setItem("PERCENT", JSON.stringify(resPercent.data.result));
+    sessionStorage.setItem("PROPERTY", JSON.stringify(resProperty.data.result));
   }
   catch (error) {
     console.error(`percent error: ${error}`);

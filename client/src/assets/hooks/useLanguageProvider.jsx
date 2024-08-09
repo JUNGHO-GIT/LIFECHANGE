@@ -10,10 +10,10 @@ const LanguageContext = createContext();
 
 // -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState(sessionStorage.getItem('lang') || 'ko');
+  const [lang, setLang] = useState(sessionStorage.getItem("LANG") || 'ko');
 
   useEffect(() => {
-    sessionStorage.setItem('lang', lang);
+    sessionStorage.setItem("LANG", lang);
     log("LanguageProvider", lang);
   }, [lang]);
 

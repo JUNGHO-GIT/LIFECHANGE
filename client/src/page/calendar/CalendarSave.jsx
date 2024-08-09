@@ -32,7 +32,7 @@ export const CalendarSave = () => {
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("sessionId");
+  const sessionId = sessionStorage.getItem("ID_SESSION");
   const colors = [
     "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
   ];
@@ -111,7 +111,7 @@ export const CalendarSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -146,7 +146,7 @@ export const CalendarSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, location_id, location_category, DATE.dateStart, DATE.dateEnd]);
+  })()}, [ID_SESSION, location_id, location_category, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
