@@ -66,7 +66,6 @@ function startServer(httpPort, httpsPort) {
 }
 startServer(httpPort, httpsPort);
 
-
 // 미들웨어 설정 -----------------------------------------------------------------------------------
 // app.use(morgan('dev'));
 app.use(cors({
