@@ -24,6 +24,7 @@ export const UserLogin = () => {
   const {translate} = useTranslate();
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [LOADING, setLOADING] = useState(false);
   const [loginTrigger, setLoginTrigger] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [checkedSaveId, setCheckedSaveId] = useState(false);
@@ -127,6 +128,7 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    setLOADING(true);
     if (!validate(userId, userPw)) {
       return;
     }
@@ -151,7 +153,7 @@ export const UserLogin = () => {
         }
 
         sessionStorage.setItem("ID_SESSION", res.data.result.user_id);
-        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("LANG", "ko");
 
         sync();
@@ -164,6 +166,9 @@ export const UserLogin = () => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 

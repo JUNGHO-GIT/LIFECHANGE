@@ -104,7 +104,7 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -131,7 +131,7 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {

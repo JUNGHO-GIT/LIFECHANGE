@@ -125,7 +125,7 @@ export const UserCategory = () => {
     .then((res) => {
       if (res.data.status === "success") {
         alert(res.data.msg);
-        sessionStorage.setItem("dataCategory", JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
       }
       else {
         alert(res.data.msg);

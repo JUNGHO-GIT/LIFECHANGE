@@ -18,7 +18,7 @@ export const CalendarSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCategory") || "{}";
+  const session = sessionStorage.getItem("CATEGORY") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -111,7 +111,7 @@ export const CalendarSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -146,7 +146,7 @@ export const CalendarSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, location_id, location_category, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, location_id, location_category, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

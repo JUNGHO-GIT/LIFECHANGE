@@ -103,7 +103,7 @@ export const FoodGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {

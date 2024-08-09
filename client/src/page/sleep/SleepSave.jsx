@@ -102,7 +102,7 @@ export const SleepSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -147,7 +147,7 @@ export const SleepSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

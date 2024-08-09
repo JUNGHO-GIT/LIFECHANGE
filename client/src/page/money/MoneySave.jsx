@@ -18,7 +18,7 @@ export const MoneySave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCategory") || "{}";
+  const session = sessionStorage.getItem("CATEGORY") || "{}";
   const moneyArray = JSON.parse(session)?.money || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -109,7 +109,7 @@ export const MoneySave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -154,7 +154,7 @@ export const MoneySave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

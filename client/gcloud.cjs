@@ -5,8 +5,10 @@ const { execSync } = require('child_process');
 // -------------------------------------------------------------------------------------------------
 // build project
 const buildProject = () => {
-  const command = 'npm run build';
-  execSync(command, { stdio: 'inherit' });
+  const commandRmEslint = "del /f node_modules\.cache\.eslintcache";
+  const commandBuild = 'npm run build';
+  execSync(commandRmEslint, { stdio: 'inherit' });
+  execSync(commandBuild, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ export const ExerciseSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("dataCategory") || "{}";
+  const session = sessionStorage.getItem("CATEGORY") || "{}";
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const navigate = useNavigate();
   const location = useLocation();
@@ -120,7 +120,7 @@ export const ExerciseSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -165,7 +165,7 @@ export const ExerciseSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [ID_SESSION, DATE.dateStart, DATE.dateEnd]);
+  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
