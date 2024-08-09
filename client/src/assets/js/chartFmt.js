@@ -1,8 +1,8 @@
-// chartFmt.js
+// chartFormatter.js
 
 // -------------------------------------------------------------------------------------------------
 export const handlerY = (
-  OBJECT=[{}], array=[""], type="", extra=""
+  OBJECT, array, type, extra
 ) => {
 
   let ticks = [];
@@ -10,65 +10,50 @@ export const handlerY = (
   let topValue = 0;
   let tickInterval = 0;
 
+  // 숫자 변환 및 NaN 처리
+  OBJECT = OBJECT.map(item => {
+    let newItem = {};
+    for (let key in item) {
+      newItem[key] = isNaN(Number(item[key])) ? 0 : Number(item[key]);
+    }
+    return newItem;
+  });
+
   if (type === "sleep") {
-    maxValue = Math.max(...OBJECT?.map((item) => (
-      Math.max(...array?.map((key) => item[key]))
+    maxValue = Math.max(...OBJECT.map((item) => (
+      Math.max(...array.map((key) => item[key] !== undefined ? item[key] : 0))
     )));
     topValue = 24;
     tickInterval = 1;
   }
   else if (type === "money") {
-    maxValue = Math.max(...OBJECT?.map((item) => (
-      Math.max(...array?.map((key) => item[key]))
+    maxValue = Math.max(...OBJECT.map((item) => (
+      Math.max(...array.map((key) => item[key] !== undefined ? item[key] : 0))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 100;
   }
   else if (type === "food") {
-    maxValue = Math.max(...OBJECT?.map((item) => (
-      Math.max(...array?.map((key) => item[key]))
+    maxValue = Math.max(...OBJECT.map((item) => (
+      Math.max(...array.map((key) => item[key] !== undefined ? item[key] : 0))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10;
   }
   else if (type === "exercise") {
-    maxValue = Math.max(...OBJECT?.map((item) => (
-      Math.max(...array?.map((key) => item[key]))
+    maxValue = Math.max(...OBJECT.map((item) => (
+      Math.max(...array.map((key) => item[key] !== undefined ? item[key] : 0))
     )));
     topValue = Math.ceil(maxValue / 100) * 100;
     tickInterval = 10;
   }
   else {
-    console.error("handlerY: invalid type");
-    throw new Error("handlerY: invalid type");
+    throw new Error("handlerY: type error");
   }
 
-  // const allZero = OBJECT_VOLUME_WEEK.every(item => item.volume === 0);
-  // const adjustedDomain = allZero ? [0, 1] : domain;
-  // const adjustedTicks = allZero ? [0, 1] : ticks;
-
-  /* let extraStr = "";
-  if (extra === "volume") {
-    extraStr = "volume";
+  for (let i = 0; i <= topValue; i += tickInterval) {
+    ticks.push(i);
   }
-  else if (extra === "cardio") {
-    extraStr = "cardio";
-  }
-  else {
-    console.error("handlerY: invalid extra");
-    throw new Error("handlerY: invalid extra");
-  } */
-
-  /* if (allZero) {
-    topValue = 1;
-    tickInterval = 1;
-    ticks = [0, 1];
-  }
-  else {
-    for (let i = 0; i <= topValue; i += tickInterval) {
-      ticks.push(i);
-    }
-  } */
 
   return {
     domain: [0, topValue],

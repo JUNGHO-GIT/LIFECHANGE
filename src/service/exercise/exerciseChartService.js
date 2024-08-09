@@ -1,6 +1,7 @@
 // exerciseChartService.js
 
 import * as repository from "../../repository/exercise/exerciseChartRepository.js";
+import moment from "moment-timezone";
 import {timeToDecimal} from "../../assets/js/utils.js";
 import {newDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
@@ -67,8 +68,6 @@ export const barWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndexGoal = findGoal?.findIndex((item) => (
       new Date(item.exercise_goal_dateStart).getDay() === index + 1
@@ -122,8 +121,6 @@ export const barMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndexGoal = findGoal?.findIndex((item) => (
       new Date(item.exercise_goal_dateStart).getDate() === index
@@ -260,8 +257,6 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndexVolume = findResultVolume?.findIndex((item) => (
       new Date(item.exercise_dateStart).getDay() === index + 1
@@ -325,14 +320,12 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
-    const findIndexVolume = findResultVolume.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index
+    const findIndexVolume = findResultVolume?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
-    const findIndexCardio = findResultCardio.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index
+    const findIndexCardio = findResultCardio?.findIndex((item) => (
+      new Date(item.exercise_dateStart).getDay() === index + 1
     ));
 
     finalResultVolume.push({
@@ -364,8 +357,11 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
+  );
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -374,12 +370,15 @@ export const avgWeek = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
+    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
   });
 
   let sumVolume = Array(5).fill(0);
   let sumCardio = Array(5).fill(0);
-  let countRecords = Array(5).fill(0);
+  let countRecordsVolume = Array(5).fill(0);
+  let countRecordsCardio = Array(5).fill(0);
 
   let findResultVolume = [];
   let findResultCardio = [];
@@ -397,45 +396,43 @@ export const avgWeek = async (
 
   // volume
   findResultVolume.forEach((item) => {
-    const exerciseDate = new Date(item.exercise_dateStart);
-    const diffTime = Math.abs(exerciseDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumVolume[weekNum] += Number(item.exercise_total_volume || "0");
-      countRecords[weekNum]++;
-    }
+    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumVolume[index] += Number(item.exercise_total_volume || "0");
+        countRecordsVolume[index]++;
+      }
+    });
   });
 
   // cardio
   findResultCardio.forEach((item) => {
-    const exerciseDate = new Date(item.exercise_dateStart);
-    const diffTime = Math.abs(exerciseDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumCardio[weekNum] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
-      countRecords[weekNum]++;
-    }
+    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+        countRecordsCardio[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
       date: date[index],
       volume:
-        countRecords[index] > 0
-        ? String((sumVolume[index] / countRecords[index]).toFixed(2))
+        countRecordsVolume[index] > 0
+        ? String((sumVolume[index] / countRecordsVolume[index]).toFixed(2))
         : "0",
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
       cardio:
-        countRecords[index] > 0
-        ? String(timeToDecimal(sumCardio[index] / countRecords[index]))
+        countRecordsCardio[index] > 0
+        ? String(timeToDecimal(sumCardio[index] / countRecordsCardio[index]))
         : "0",
     });
   });
@@ -468,7 +465,8 @@ export const avgMonth = async (
 
   let sumVolume = Array(12).fill(0);
   let sumCardio = Array(12).fill(0);
-  let countRecords = Array(12).fill(0);
+  let countRecordsVolume = Array(12).fill(0);
+  let countRecordsCardio = Array(12).fill(0);
 
   let findResultVolume = [];
   let findResultCardio = [];
@@ -486,40 +484,45 @@ export const avgMonth = async (
 
   // volume
   findResultVolume.forEach((item) => {
-    const exerciseDate = new Date(item.exercise_dateStart);
-    const monthNum = exerciseDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumVolume[monthNum] += Number(item.exercise_total_volume || "0");
-      countRecords[monthNum]++;
-    }
-  });
-  // cardio
-  findResultCardio.forEach((item) => {
-    const exerciseDate = new Date(item.exercise_dateStart);
-    const monthNum = exerciseDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumCardio[monthNum] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
-      countRecords[monthNum]++;
-    }
+    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumVolume[index] += Number(item.exercise_total_volume || "0");
+        countRecordsVolume[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
+  // cardio
+  findResultCardio.forEach((item) => {
+    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+        countRecordsCardio[index]++;
+      }
+    });
+  });
+
   name.forEach((data, index) => {
     finalResultVolume.push({
       name: data,
       date: date[index],
       volume:
-        countRecords[index] > 0
-        ? String((sumVolume[index] / countRecords[index]).toFixed(2))
+        countRecordsVolume[index] > 0
+        ? String((sumVolume[index] / countRecordsVolume[index]).toFixed(2))
         : "0",
     });
     finalResultCardio.push({
       name: data,
       date: date[index],
       cardio:
-        countRecords[index] > 0
-        ? String(timeToDecimal(sumCardio[index] / countRecords[index]))
+        countRecordsCardio[index] > 0
+        ? String(timeToDecimal(sumCardio[index] / countRecordsCardio[index]))
         : "0",
     });
   });

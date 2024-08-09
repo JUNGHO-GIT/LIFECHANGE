@@ -1,8 +1,8 @@
 // sleepChartService.js
 
 import * as repository from "../../repository/sleep/sleepChartRepository.js";
-import {log} from "../../assets/js/utils.js";
-import {timeToDecimal, decimalToTime} from "../../assets/js/utils.js";
+import moment from "moment-timezone";
+import {timeToDecimal} from "../../assets/js/utils.js";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -230,8 +230,6 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndex = findResult?.findIndex((item) => (
       new Date(item.sleep_dateStart).getDay() === index + 1
@@ -283,11 +281,9 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
-    const findIndex = findResult.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDate() === index
+    const findIndex = findResult?.findIndex((item) => (
+      new Date(item.sleep_dateStart).getDate() === index + 1
     ));
 
     finalResult.push({
@@ -316,8 +312,11 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
+  );
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -326,7 +325,9 @@ export const avgWeek = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
+    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
   });
 
   let sumBedTime = Array(5).fill(0);
@@ -340,21 +341,20 @@ export const avgWeek = async (
   findResult = await repository.avgWeek.list(
     user_id_param, dateStart, dateEnd
   );
-  findResult.forEach((data, index) => {
-    const sleepDate = new Date(data.sleep_dateStart);
-    const diffTime = Math.abs(sleepDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumBedTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-      sumWakeTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-      sumSleepTime[weekNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
-      countRecords[weekNum]++;
-    }
+
+  findResult.forEach((item) => {
+    const startDate = moment(item.sleep_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime));
+        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime));
+        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime));
+        countRecords[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,
@@ -408,19 +408,21 @@ export const avgMonth = async (
   findResult = await repository.avgMonth.list(
     user_id_param, dateStart, dateEnd
   );
-  findResult.forEach((data, index) => {
-    const sleepDate = new Date(data.sleep_dateStart);
-    const monthNum = sleepDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumBedTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-      sumWakeTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-      sumSleepTime[monthNum] += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
-      countRecords[monthNum]++;
-    }
+
+  findResult.forEach((item) => {
+    const startDate = moment(item.sleep_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime));
+        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime));
+        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime));
+        countRecords[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,

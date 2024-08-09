@@ -93,10 +93,20 @@ export const MoneyChartAvg = () => {
             tickFormatter={formatterY}
           />
           {LINE.includes("income") && (
-            <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar
+              dataKey={"income"}
+              fill={COLORS[0]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           )}
           {LINE.includes("expense") && (
-            <Bar dataKey={"expense"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar
+              dataKey={"expense"}
+              fill={COLORS[3]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -168,10 +178,20 @@ export const MoneyChartAvg = () => {
             tickFormatter={formatterY}
           />
           {LINE.includes("income") && (
-            <Bar dataKey={"income"} fill={COLORS[0]} radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar
+              dataKey={"income"}
+              fill={COLORS[0]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           )}
           {LINE.includes("expense") && (
-            <Bar dataKey={"expense"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+            <Bar
+              dataKey={"expense"}
+              fill={COLORS[3]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           )}
           <Tooltip
             labelFormatter={(label, payload) => {

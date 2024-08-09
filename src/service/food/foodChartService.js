@@ -1,7 +1,7 @@
 // foodChartService.js
 
 import * as repository from "../../repository/food/foodChartRepository.js";
-import {log} from "../../assets/js/utils.js";
+import moment from "moment-timezone";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -247,8 +247,6 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
       new Date(item.food_dateStart).getDay() === index + 1
@@ -320,14 +318,12 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index
+      new Date(item.food_dateStart).getDate() === index + 1
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index
+      new Date(item.food_dateStart).getDate() === index + 1
     ));
     finalResultKcal.push({
       name: data,
@@ -366,8 +362,11 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
+  );
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -376,14 +375,17 @@ export const avgWeek = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
+    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
   });
 
   let sumKcal = Array(5).fill(0);
   let sumCarb = Array(5).fill(0);
   let sumProtein = Array(5).fill(0);
   let sumFat = Array(5).fill(0);
-  let countRecords = Array(5).fill(0);
+  let countRecordsKcal = Array(5).fill(0);
+  let countRecordsNut = Array(5).fill(0);
 
   let findResultKcal = [];
   let findResultNut = [];
@@ -401,55 +403,53 @@ export const avgWeek = async (
 
   // kcal
   findResultKcal.forEach((item) => {
-    const foodDate = new Date(item.food_dateStart);
-    const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumKcal[weekNum] += Number(item.food_total_kcal || "0");
-      countRecords[weekNum]++;
-    }
+    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumKcal[index] += Number(item.food_total_kcal || "0");
+        countRecordsKcal[index]++;
+      }
+    });
   });
 
   // nut
   findResultNut.forEach((item) => {
-    const foodDate = new Date(item.food_dateStart);
-    const diffTime = Math.abs(foodDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumCarb[weekNum] += Number(item.food_total_carb || "0");
-      sumProtein[weekNum] += Number(item.food_total_protein || "0");
-      sumFat[weekNum] += Number(item.food_total_fat || "0");
-      countRecords[weekNum]++;
-    }
+    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumCarb[index] += Number(item.food_total_carb || "0");
+        sumProtein[index] += Number(item.food_total_protein || "0");
+        sumFat[index] += Number(item.food_total_fat || "0");
+        countRecordsNut[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,
       date: date[index],
       kcal:
-        countRecords[index] > 0
-        ? String((sumKcal[index] / countRecords[index]).toFixed(2))
+        countRecordsKcal[index] > 0
+        ? String((sumKcal[index] / countRecordsKcal[index]).toFixed(0))
         : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
       carb:
-        countRecords[index] > 0
-        ? String((sumCarb[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumCarb[index] / countRecordsNut[index]).toFixed(2))
         : "0",
       protein:
-        countRecords[index] > 0
-        ? String((sumProtein[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumProtein[index] / countRecordsNut[index]).toFixed(2))
         : "0",
       fat:
-        countRecords[index] > 0
-        ? String((sumFat[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumFat[index] / countRecordsNut[index]).toFixed(2))
         : "0"
     });
   });
@@ -484,7 +484,8 @@ export const avgMonth = async (
   let sumCarb = Array(12).fill(0);
   let sumProtein = Array(12).fill(0);
   let sumFat = Array(12).fill(0);
-  let countRecords = Array(12).fill(0);
+  let countRecordsKcal = Array(12).fill(0);
+  let countRecordsNut = Array(12).fill(0);
 
   let findResultKcal = [];
   let findResultNut = [];
@@ -502,50 +503,55 @@ export const avgMonth = async (
 
   // kcal
   findResultKcal.forEach((item) => {
-    const foodDate = new Date(item.food_dateStart);
-    const monthNum = foodDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumKcal[monthNum] += Number(item.food_total_kcal || "0");
-      countRecords[monthNum]++;
-    }
-  });
-  // nut
-  findResultNut.forEach((item) => {
-    const foodDate = new Date(item.food_dateStart);
-    const monthNum = foodDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumCarb[monthNum] += Number(item.food_total_carb || "0");
-      sumProtein[monthNum] += Number(item.food_total_protein || "0");
-      sumFat[monthNum] += Number(item.food_total_fat || "0");
-      countRecords[monthNum]++;
-    }
+    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumKcal[index] += Number(item.food_total_kcal || "0");
+        countRecordsKcal[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
+  // nut
+  findResultNut.forEach((item) => {
+    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumCarb[index] += Number(item.food_total_carb || "0");
+        sumProtein[index] += Number(item.food_total_protein || "0");
+        sumFat[index] += Number(item.food_total_fat || "0");
+        countRecordsNut[index]++;
+      }
+    });
+  });
+
   name.forEach((data, index) => {
     finalResultKcal.push({
       name: data,
       date: date[index],
       kcal:
-        countRecords[index] > 0
-        ? String((sumKcal[index] / countRecords[index]).toFixed(2))
+        countRecordsKcal[index] > 0
+        ? String((sumKcal[index] / countRecordsKcal[index]).toFixed(0))
         : "0"
     });
     finalResultNut.push({
       name: data,
       date: date[index],
       carb:
-        countRecords[index] > 0
-        ? String((sumCarb[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumCarb[index] / countRecordsNut[index]).toFixed(2))
         : "0",
       protein:
-        countRecords[index] > 0
-        ? String((sumProtein[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumProtein[index] / countRecordsNut[index]).toFixed(2))
         : "0",
       fat:
-        countRecords[index] > 0
-        ? String((sumFat[index] / countRecords[index]).toFixed(2))
+        countRecordsNut[index] > 0
+        ? String((sumFat[index] / countRecordsNut[index]).toFixed(2))
         : "0"
     });
   });

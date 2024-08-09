@@ -94,7 +94,8 @@ export const FoodChartBar = () => {
           />
           <ReferenceLine y={OBJECT_KCAL_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
-          <Bar dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar
+            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip
@@ -174,7 +175,8 @@ export const FoodChartBar = () => {
           />
           <ReferenceLine y={OBJECT_NUT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
           />
-          <Bar dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar
+            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             barSize={20}
           />
           <Tooltip

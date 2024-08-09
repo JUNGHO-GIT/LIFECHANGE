@@ -106,7 +106,11 @@ export const ExerciseChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+          <Bar
+            dataKey={"volume"}
+            fill={COLORS[1]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -177,7 +181,12 @@ export const ExerciseChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"cardio"}
+            fill={COLORS[3]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -248,7 +257,12 @@ export const ExerciseChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"volume"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"volume"}
+            fill={COLORS[1]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -318,7 +332,12 @@ export const ExerciseChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"cardio"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"cardio"}
+            fill={COLORS[3]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';

@@ -1,7 +1,7 @@
 // moneyChartService.js
 
 import * as repository from "../../repository/money/moneyChartRepository.js";
-import {log} from "../../assets/js/utils.js";
+import moment from "moment-timezone";
 import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
@@ -189,8 +189,6 @@ export const lineWeek = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndex = findResult.findIndex((item) => (
       new Date(item.money_dateStart).getDay() === index + 1
@@ -237,11 +235,9 @@ export const lineMonth = async (
     user_id_param, dateStart, dateEnd
   );
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     const findIndex = findResult.findIndex((item) => (
-      new Date(item.money_dateStart).getDate() === index
+      new Date(item.money_dateStart).getDate() === index + 1
     ));
     finalResult.push({
       name: data,
@@ -265,8 +261,11 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
+  );
 
   // ex. 00주차
   const name = Array.from({ length: 5 }, (_, i) => {
@@ -275,10 +274,12 @@ export const avgWeek = async (
 
   // ex. 00-00 ~ 00-00
   const date = Array.from({ length: 5 }, (_, i) => {
-    return `${curMonthStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curMonthStart.clone().add(i * 7 + 6, 'days').format("MM-DD")}`;
+    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
   });
 
-  let sumIn = Array(5).fill(0);
+  let sumIncome = Array(5).fill(0);
   let sumExpense = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
@@ -290,26 +291,24 @@ export const avgWeek = async (
   );
 
   findResult.forEach((item) => {
-    const moneyDate = new Date(item.money_dateStart);
-    const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(diffDays / 7);
-    if (weekNum >= 0 && weekNum < 5) {
-      sumIn[weekNum] += Number(item.money_total_income || "0");
-      sumExpense[weekNum] += Number(item.money_total_expense || "0");
-      countRecords[weekNum]++;
-    }
+    const startDate = moment(item.money_dateStart).tz("Asia/Seoul");
+    weekStartDate.forEach((startOfWeek, index) => {
+      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
+      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+        sumIncome[index] += Number(item.money_total_income || "0");
+        sumExpense[index] += Number(item.money_total_expense || "0");
+        countRecords[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,
       date: date[index],
       income:
         countRecords[index] > 0
-        ? String((sumIn[index] / countRecords[index]).toFixed(2))
+        ? String((sumIncome[index] / countRecords[index]).toFixed(2))
         : "0",
       expense:
         countRecords[index] > 0
@@ -341,7 +340,7 @@ export const avgMonth = async (
     return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
-  let sumIn = Array(12).fill(0);
+  let sumIncome = Array(12).fill(0);
   let sumExpense = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
@@ -353,24 +352,25 @@ export const avgMonth = async (
   );
 
   findResult.forEach((item) => {
-    const moneyDate = new Date(item.money_dateStart);
-    const monthNum = moneyDate.getMonth();
-    if (monthNum >= 0 && monthNum < 12) {
-      sumIn[monthNum] += Number(item.money_total_income || "0");
-      sumExpense[monthNum] += Number(item.money_total_expense || "0");
-      countRecords[monthNum]++;
-    }
+    const startDate = moment(item.money_dateStart).tz("Asia/Seoul");
+    name.forEach((data, index) => {
+      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
+      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
+      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
+        sumIncome[index] += Number(item.money_total_income || "0");
+        sumExpense[index] += Number(item.money_total_expense || "0");
+        countRecords[index]++;
+      }
+    });
   });
 
-  // week = getDay() + 1
-  // month = getDate()
   name.forEach((data, index) => {
     finalResult.push({
       name: data,
       date: date[index],
       income:
         countRecords[index] > 0
-        ? String((sumIn[index] / countRecords[index]).toFixed(2))
+        ? String((sumIncome[index] / countRecords[index]).toFixed(2))
         : "0",
       expense:
         countRecords[index] > 0

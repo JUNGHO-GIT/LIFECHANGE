@@ -94,15 +94,18 @@ export const SleepChartAvg = () => {
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
-            <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("wakeTime") && (
-            <Bar dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("sleepTime") && (
-            <Bar dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip
@@ -175,15 +178,18 @@ export const SleepChartAvg = () => {
             tickFormatter={formatterY}
           />
           {PART.includes("bedTime") && (
-            <Bar dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"bedTime"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("wakeTime") && (
-            <Bar dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"wakeTime"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           {PART.includes("sleepTime") && (
-            <Bar dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            <Bar
+            dataKey={"sleepTime"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
             />
           )}
           <Tooltip

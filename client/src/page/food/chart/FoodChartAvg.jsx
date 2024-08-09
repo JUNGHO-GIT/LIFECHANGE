@@ -106,7 +106,12 @@ export const FoodChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"kcal"}
+            fill={COLORS[3]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -176,9 +181,24 @@ export const FoodChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"carb"}
+            fill={COLORS[1]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
+          <Bar
+            dataKey={"protein"}
+            fill={COLORS[4]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
+          <Bar
+            dataKey={"fat"}
+            fill={COLORS[2]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+          />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -248,7 +268,11 @@ export const FoodChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"kcal"} fill={COLORS[3]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"kcal"} fill={COLORS[3]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';
@@ -318,9 +342,21 @@ export const FoodChartAvg = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Bar dataKey={"carb"} fill={COLORS[1]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"protein"} fill={COLORS[4]} radius={[10, 10, 0, 0]} minPointSize={1} />
-          <Bar dataKey={"fat"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1} />
+          <Bar
+            dataKey={"carb"} fill={COLORS[1]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
+          <Bar
+            dataKey={"protein"} fill={COLORS[4]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
+          <Bar
+            dataKey={"fat"} fill={COLORS[2]}
+              radius={[10, 10, 0, 0]}
+              minPointSize={1}
+            />
           <Tooltip
             labelFormatter={(label, payload) => {
               const date = payload.length > 0 ? payload[0]?.payload.date : '';

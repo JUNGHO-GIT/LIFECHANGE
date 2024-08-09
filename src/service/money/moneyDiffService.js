@@ -46,7 +46,7 @@ export const list = async (
       user_id_param, dateType, dateStart, dateEnd
     );
 
-    const moneyTotalIn = listReal.reduce((acc, curr) => (
+    const moneyTotalIncome = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_income ?? 0)
     ), 0);
     const moneyTotalExpense = listReal.reduce((acc, curr) => (
@@ -55,7 +55,7 @@ export const list = async (
 
     return {
       ...goal,
-      money_total_income: moneyTotalIn,
+      money_total_income: moneyTotalIncome,
       money_total_expense: moneyTotalExpense
     };
   }));
