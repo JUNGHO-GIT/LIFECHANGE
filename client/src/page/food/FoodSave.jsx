@@ -168,14 +168,13 @@ export const FoodSave = () => {
 
       // 기존 food_section 데이터와 병합하여 OBJECT 재설정
       setOBJECT((prev) => {
-        let mergedFoodSection = prev?.food_section
-          ? [...prev.food_section, ...sectionArray]
-          : sectionArray;
+        // 기존의 food_section만 정렬
+        let sortedFoodSection = prev?.food_section
+          ? [...prev.food_section].sort((a, b) => a.food_part_idx - b.food_part_idx)
+          : [];
 
-        // food_part_idx 값에 따라 정렬
-        mergedFoodSection.sort((a, b) => (
-          a.food_part_idx - b.food_part_idx
-        ));
+        // sectionArray를 마지막에 추가
+        let mergedFoodSection = [...sortedFoodSection, ...sectionArray];
 
         return {
           ...prev,
@@ -229,7 +228,7 @@ export const FoodSave = () => {
       food_part_val: "breakfast",
       food_name: " ",
       food_brand: " ",
-      food_count: "0",
+      food_count: "1",
       food_serv: "회",
       food_gram: "0",
       food_kcal: "0",

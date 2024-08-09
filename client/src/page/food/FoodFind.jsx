@@ -30,14 +30,7 @@ export const FoodFind = () => {
   const sessionId = sessionStorage.getItem("sessionId");
 
   // 2-2. useStorage -------------------------------------------------------------------------------
-  // 리스트에서만 사용
-  const [DATE, setDATE] = useStorage(
-    `DATE(${PATH})`, {
-      dateType: "",
-      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-    }
-  );
+  // 리스트에서만 사용 (find 사용금지)
   const [PAGING, setPAGING] = useStorage(
     `PAGING(${PATH})`, {
       sort: "asc",
@@ -50,6 +43,11 @@ export const FoodFind = () => {
   const [checkedQueries, setCheckedQueries] = useState({});
   const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
+  const [DATE, setDATE] = useState({
+    dateType: "day",
+    dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "day",
@@ -80,6 +78,12 @@ export const FoodFind = () => {
     food_fat: "0",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  useEffect(() => {
+    console.log("===================================");
+    log("location", location);
+    log("DATE", DATE);
+  }, [location, DATE]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출

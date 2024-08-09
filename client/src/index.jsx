@@ -7,6 +7,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
 import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
 import {useRoot} from "./assets/hooks/useRoot.jsx";
+import {useSessionStorage} from "./assets/hooks/useSessionStorage.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -161,6 +162,7 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
+  useSessionStorage();
   useScrollTop();
   useEnhancedTouch();
 

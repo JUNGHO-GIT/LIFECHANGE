@@ -13,6 +13,7 @@ export const useRoot = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
 
+    // 1. 리다리렉트 처리
     if (
       location.pathname.indexOf("/user/login") === -1 &&
       location.pathname.indexOf("/user/signup") === -1 &&

@@ -5,6 +5,7 @@ const moment = require('moment');
 const os = require('os');
 const fs = require('fs');
 
+// -------------------------------------------------------------------------------------------------
 // env 파일 수정하기
 const modifyEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
@@ -22,6 +23,7 @@ const modifyEnv = () => {
   writeFileSync('.env', newEnvFile);
 };
 
+// -------------------------------------------------------------------------------------------------
 // git push
 const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
@@ -29,12 +31,14 @@ const gitPush = () => {
   execSync('git push origin master', { stdio: 'inherit' });
 };
 
+// -------------------------------------------------------------------------------------------------
 // run script on server
 const runRemoteScript = () => {
   const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/server.sh\'"';
   execSync(command, { stdio: 'inherit' });
 };
 
+// -------------------------------------------------------------------------------------------------
 // env 파일 복구하기
 const restoreEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
@@ -52,6 +56,7 @@ const restoreEnv = () => {
   writeFileSync('.env', newEnvFile);
 };
 
+// -------------------------------------------------------------------------------------------------
 // modify changelog
 const modifyChangelog = () => {
 
@@ -84,7 +89,7 @@ const modifyChangelog = () => {
   fs.writeFileSync('changelog.md', updatedChangelog, 'utf8');
 };
 
-// execute all steps
+// -------------------------------------------------------------------------------------------------
 modifyEnv();
 gitPush();
 runRemoteScript();
