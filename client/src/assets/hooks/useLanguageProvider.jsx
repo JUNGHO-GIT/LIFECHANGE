@@ -269,10 +269,12 @@ export const useTranslate = () => {
     savings: {ko: "저축", en: "Savings"},
     snack: {ko: "간식", en: "Snack"},
     schedule: {ko: "일정", en: "Schedule"},
+    selectDate: {ko: "날짜선택", en: "Select"},
 
     // t
     trend: {ko: "추이", en: "Trend"},
     today: {ko: "오늘", en: "Today"},
+    thisToday: {ko: "오늘", en: "Today"},
     thisWeek: {ko: "이번주", en: "This Week"},
     thisMonth: {ko: "이번달", en: "This Month"},
     thisYear: {ko: "올해", en: "This Year"},
@@ -298,7 +300,7 @@ export const useTranslate = () => {
     verify: {ko: "인증", en: "Verify"},
     viewDay: {ko: "일별", en: "Day View"},
     viewMonth: {ko: "월별", en: "Month View"},
-    viewSelect: {ko: "선택별", en: "Select View"},
+    viewSelect: {ko: "날짜선택", en: "Select View"},
     viewWeek: {ko: "주별", en: "Week View"},
     viewYear: {ko: "년별", en: "Year View"},
     volume: {ko: "볼륨", en: "Volume"},

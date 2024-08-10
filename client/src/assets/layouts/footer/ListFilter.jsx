@@ -1,6 +1,6 @@
 // ListFilter.jsx
 
-import {React} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {moment} from "../../../import/ImportLibs.jsx";
@@ -16,12 +16,63 @@ export const ListFilter = ({
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const isToday = strings?.first === "today";
+  const isToday = strings?.first === "thisToday";
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
-    `CLICKED(${PATH})`, "today"
+    `CLICKED(${PATH})`, "thisToday"
   );
+  const [clickedDate, setClickedDate] = useState({
+    todayDate: {
+      dateType: "",
+      dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+    },
+    weekDate: {
+      dateType: "",
+      dateStart: moment.tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+      dateEnd: moment.tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
+    },
+    monthDate: {
+      dateStart: moment.tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment.tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
+    },
+    yearDate: {
+      dateStart: moment.tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment.tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
+    },
+    selectDate: {
+      dateType: "",
+      dateStart: "",
+      dateEnd: "",
+    }
+  });
+  
+ const shallowEqual = (obj1, obj2) => {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+};
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+  switch (clickedType) {
+    case "thisToday":
+      functions?.setDATE(clickedDate.todayDate);
+      break;
+    case "thisWeek":
+      functions?.setDATE(clickedDate.weekDate);
+      break;
+    case "thisMonth":
+      functions?.setDATE(clickedDate.monthDate);
+      break;
+    case "thisYear":
+      functions?.setDATE(clickedDate.yearDate);
+      break;
+    case "selectDate":
+      functions?.setDATE(clickedDate.selectDate);
+      break;
+    default:
+      break;
+  }
+}, [clickedType]);
 
   // 2. sort ---------------------------------------------------------------------------------------
   const sortNode = () => (
@@ -63,8 +114,8 @@ export const ListFilter = ({
     />
   );
 
-  // 4. typeNode -----------------------------------------------------------------------------------
-  const typeNode = () => (
+  // 4. clickNode -----------------------------------------------------------------------------------
+  const clickNode = () => (
     <PopUp
       type={"dropdown"}
       position={"top"}
@@ -82,20 +133,14 @@ export const ListFilter = ({
               overflow: "hidden",
               textOverflow: "ellipsis",
               fontSize: "0.7rem",
-              backgroundColor: clickedType === "today" ? "#1976d2" : "#F9FAFB",
-              color: clickedType === "today" ? "#ffffff" : "#1976d2",
+              backgroundColor: clickedType === "thisToday" ? "#1976d2" : "#F9FAFB",
+              color: clickedType === "thisToday" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
-              functions?.setDATE((prev) => ({
-                ...prev,
-                dateType: "",
-                dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-                dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-              }));
-              setClickedType("today");
+              setClickedType("thisToday");
             }}
           >
-            {translate("today")}
+            {translate("thisToday")}
           </Button>
           <Br10/>
           <Button
@@ -113,12 +158,6 @@ export const ListFilter = ({
               color: clickedType === "thisWeek" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
-              functions?.setDATE((prev) => ({
-                ...prev,
-                dateType: "",
-                dateStart: moment.tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-                dateEnd: moment.tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
-              }));
               setClickedType("thisWeek");
             }}
           >
@@ -140,12 +179,6 @@ export const ListFilter = ({
               color: clickedType === "thisMonth" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
-              functions?.setDATE((prev) => ({
-                ...prev,
-                dateType: "",
-                dateStart: moment.tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-                dateEnd: moment.tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
-              }));
               setClickedType("thisMonth");
             }}
           >
@@ -167,16 +200,31 @@ export const ListFilter = ({
               color: clickedType === "thisYear" ? "#ffffff" : "#1976d2",
             }}
             onClick={() => {
-              functions?.setDATE((prev) => ({
-                ...prev,
-                dateType: "",
-                dateStart: moment.tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-                dateEnd: moment.tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
-              }));
               setClickedType("thisYear");
             }}
           >
             {translate("thisYear")}
+          </Button>
+          <Br10/>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("selectDate");
+            }}
+          >
+            {translate("selectDate")}
           </Button>
         </Div>
       )}
@@ -211,7 +259,7 @@ export const ListFilter = ({
     <Card className={"block-wrapper d-row h-8vh shadow-none"}>
       {sortNode()}
       {pickerNode()}
-      {isToday ? null : typeNode()}
+      {isToday ? null : clickNode()}
     </Card>
   );
 

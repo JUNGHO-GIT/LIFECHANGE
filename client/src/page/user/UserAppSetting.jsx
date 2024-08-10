@@ -56,7 +56,7 @@ export const UserAppSetting = () => {
                   }}
                 >
                   <TableCell className={"w-90vw p-15"}>
-                    {translate("CATEGORY")}
+                    {translate("category")}
                   </TableCell>
                   <TableCell className={"w-10vw p-15"}>
                     <Icons
