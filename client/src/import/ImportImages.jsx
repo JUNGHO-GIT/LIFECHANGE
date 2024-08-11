@@ -28,7 +28,6 @@ import today1 from "../assets/images/today1.webp";
 
 import exercise1 from "../assets/images/exercise1.webp";
 import exercise2 from "../assets/images/exercise2.webp";
-im
 import exercise3_1 from "../assets/images/exercise3_1.webp";
 import exercise3_2 from "../assets/images/exercise3_2.webp";
 import exercise3_3 from "../assets/images/exercise3_3.webp";
