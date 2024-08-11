@@ -12,7 +12,7 @@ export const Loading = () => {
 
   // 6. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
-    PATH.includes("/user/signup") ? (
+    PATH.includes("/user/signup") || PATH.includes("/user/login") ? (
       <Div className={"loader-wrapper d-center"}>
         <Div className={"loader"} />
       </Div>

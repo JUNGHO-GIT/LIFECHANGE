@@ -2,7 +2,8 @@
 
 import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {createRef, useRef} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
+import {useTranslate} from "../../import/ImportHooks.jsx";
+import {Loading} from "../../import/ImportLayouts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {sync, log} from "../../import/ImportUtils";
 import {Div, Br10, Br20, Img, Hr40} from "../../import/ImportComponents.jsx";
@@ -327,6 +328,8 @@ export const UserLogin = () => {
     );
     // 7-10. return
     return (
+      <>
+      {LOADING && <Loading />}
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min94vh"}>
           {titleSection()}
@@ -340,6 +343,7 @@ export const UserLogin = () => {
           {signupSection()}
         </Div>
       </Paper>
+      </>
     );
   };
 
