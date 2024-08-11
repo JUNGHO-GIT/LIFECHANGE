@@ -2,8 +2,8 @@
 
 import {JSDOM} from "jsdom";
 import axios from "axios";
+import pretty from 'pretty';
 import * as repository from "../../repository/food/foodRepository.js";
-import {log} from "../../assets/js/utils.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -71,19 +71,16 @@ export const list = async (
 
 // 1-2. find ---------------------------------------------------------------------------------------
 export const find = async (
-  user_id_param, PAGING_param, DATE_param
+  PAGING_param
 ) => {
 
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
   const query = PAGING_param.query;
   const page = PAGING_param.page === 0 ? "" : PAGING_param.page;
 
-  let finalResult = [];
   let serv = "";
   let gram = "";
-  let servArray = [
-    "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분", "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
-  ];
+  let finalResult = [];
 
   const getFindResult = () => {
     return new Promise((resolve, reject) => {
@@ -103,7 +100,9 @@ export const find = async (
   };
 
   const findResult = await getFindResult();
-  const document = new JSDOM(findResult).window._document;
+  const document = new JSDOM(findResult).window.document;
+
+  console.log(pretty(document.documentElement.outerHTML));
 
   // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;
@@ -111,7 +110,8 @@ export const find = async (
   const totalCnt = countMatch ? parseInt(countMatch[1]) : 0;
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
-  const regexBrand = (param) => {
+  // 브랜드 이름 처리
+  const getBrand = (param) => {
     if (!param) {
       return "";
     }
@@ -129,18 +129,22 @@ export const find = async (
     return secondResult;
   };
 
-  const calcServ = (param) => {
+  // 영양정보 처리
+  const getServ = (param) => {
     const regex = /(\s*)(\d+\s*.*\n*)(\s*당\s*-\s*)(\s*칼\s*로\s*리\s*[:]\s*)(\d+\s*.*\n*)(kcal)(\s*[|]\s*)(\s*지\s*방\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*탄\s*수\s*화\s*물\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*단\s*백\s*질\s*[:]\s*)(\d+\s*.*\n*)(g)/;
     const matches = param.match(regex);
 
+    // 단위 찾기
     if (matches) {
-
       let found = false;
+      let servArray = [
+        "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분", "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
+      ];
       // 1. servArray에 포함된 단어가 있는 경우
       servArray.forEach((el) => {
         if (matches[2]?.includes(el)) {
           const idx = matches[2]?.indexOf(el);
-          const gramMatch = matches[2]?.slice(idx + el.length).trim().match(/(\d+)\s*g/);
+          const gramMatch = matches[2]?.slice(idx + el.length).trim().match(/(\d+)\s*(g|ml|l|kg)/);
           serv = matches[2]?.slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
           gram  = gramMatch ? gramMatch[1] : "0";
           found = true;
@@ -149,17 +153,20 @@ export const find = async (
 
       // 2. servArray에 포함된 단어가 없는 경우, gram 정보 직접 확인
       if (!found) {
-        const gramDirectMatch = param.trim().match(/(\d+)\s*g/);
+        const gramDirectMatch = matches[2]?.trim().match(/(\d+)\s*(g|ml|l|kg)/);
         if (gramDirectMatch) {
           serv = "1회";
           gram = gramDirectMatch[1];
         }
         else {
-          const gramMatch = matches[2]?.trim().match(/(\d+)\s*g/);
+          const gramMatch = matches[2]?.trim().match(/(\d+)\s*(g|ml|l|kg)/);
           serv = matches ? matches[2]?.replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
           gram = gramMatch ? gramMatch[1] : "0";
         }
       }
+
+      console.log(pretty("serv: " + serv));
+      console.log(pretty("gram: " + gram));
     }
     return {
       count: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
@@ -176,8 +183,8 @@ export const find = async (
     const rows = param.querySelectorAll("tr");
     Array.from(rows).forEach((prev, rowIndex) => {
       const titleElement = prev.querySelector("a.prominent")?.textContent?.trim();
-      const brandElement = regexBrand(prev.querySelector("a.brand")?.textContent?.trim());
-      const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
+      const brandElement = getBrand(prev.querySelector("a.brand")?.textContent?.trim());
+      const nutritionElement = getServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
         food_query: query,

@@ -74,9 +74,7 @@ router.get("/list", async (req, res) => {
 router.get("/find", async (req, res) => {
   try {
     let result = await service.find (
-      req.query.user_id,
       req.query.PAGING,
-      req.query.DATE
     );
     if (result && result.result) {
       res.json({

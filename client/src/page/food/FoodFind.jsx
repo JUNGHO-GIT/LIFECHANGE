@@ -172,9 +172,7 @@ export const FoodFind = () => {
     setLOADING(true);
     await axios.get(`${URL_OBJECT}/find`, {
       params: {
-        user_id: sessionId,
         PAGING: PAGING,
-        DATE: DATE,
       },
     })
     .then((res) => {
@@ -258,16 +256,22 @@ export const FoodFind = () => {
                     />
                   </Grid>
                   <Grid item xs={6} className={"d-left"}>
-                    {/** 15자 넘어가면 ... 처리 */}
-                    {isExpanded.includes(index) ? (
+                    {/** 1 ~ 5 글자 **/}
+                    {item.food_name.length > 1 && item.food_name.length < 6 && (
                       <Div className={"fs-1-0rem fw-600 dark"}>
                         {item.food_name}
                       </Div>
-                    ) : (
-                      <Div className={"fs-1-0rem fw-600 dark"}>
-                        {item.food_name.length > 15 ? (
-                          `${item.food_name.substring(0, 15)}...`
-                        ) : item.food_name}
+                    )}
+                    {/** 6 ~ 10 글자 **/}
+                    {item.food_name.length > 5 && item.food_name.length < 11 && (
+                      <Div className={"fs-0-9rem fw-600 dark"}>
+                        {item.food_name}
+                      </Div>
+                    )}
+                    {/** 10 글자 이상 **/}
+                    {item.food_name.length > 10 && (
+                      <Div className={"fs-0-8rem fw-600 dark"}>
+                        {item.food_name}
                       </Div>
                     )}
                   </Grid>
