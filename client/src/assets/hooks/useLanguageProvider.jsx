@@ -56,7 +56,7 @@ export const useTranslate = () => {
     carb: {ko: "탄수화물", en: "Carb"},
     calendar: {ko: "일정", en: "calendar"},
     cardio: {ko: "유산소", en: "Cardio"},
-    category: {ko: "분류", en: "Category"},
+    category: {ko: "분류 편집", en: "Edit Category"},
     content: {ko: "내용", en: "Content"},
     count: {ko: "항목", en: "Count"},
     culture: {ko: "문화", en: "Culture"},

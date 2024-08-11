@@ -9,7 +9,7 @@ export const useTime = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const strLow = PATH.match(/\/([^\/]+)\//)[1];
+  const strLow = PATH.match(/\/([^/]+)\//)[1];
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 2-3. useEffect --------------------------------------------------------------------------------

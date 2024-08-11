@@ -151,7 +151,7 @@ export const find = async (
         }
       });
 
-      // 2. servArray에 포함된 단어가 없는 경우, gram 정보 직접 확인
+      // 2. servArray에 포함된 단어가 없는 경우
       if (!found) {
         const gramDirectMatch = matches[2]?.trim().match(/(\d+)\s*(g|ml|l|kg)/);
         if (gramDirectMatch) {

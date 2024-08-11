@@ -157,22 +157,21 @@ export const MoneyChartBar = () => {
         </Div>
       );
       const selectSection1 = () => (
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            variant={"outlined"}
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"today"}>
-              {translate("today")}
-            </MenuItem>
-          </TextField>
-        </Div>
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          variant={"outlined"}
+          value={translate(SECTION)}
+          InputProps={{
+            readOnly: true,
+            style: {
+              width: 76,
+              fontSize: "0.9rem",
+              color: "#666",
+            },
+          }}
+        />
       );
       const selectSection2 = () => (
         <Img src={common3_2} className={"w-24 h-24"} />

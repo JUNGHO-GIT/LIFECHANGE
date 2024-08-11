@@ -17,11 +17,6 @@ export const Loading = () => {
         <Div className={"loader"} />
       </Div>
     )
-    : PATH.includes("/calendar/list") ? (
-      <Div className={`h-min60vh d-center`}>
-        <Div className={"loader"} />
-      </Div>
-    )
     : (
       <Div className={`h-min60vh d-center`}>
         <Div className={"loader"} />

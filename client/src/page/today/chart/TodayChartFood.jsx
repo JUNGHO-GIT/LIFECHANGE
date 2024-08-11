@@ -95,20 +95,23 @@ export const TodayChartFood = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line
-            dataKey={"goal"}
-            stroke={COLORS[0]}
-            strokeWidth={2}
-            dot={true}
-          />
-          <ReferenceLine y={OBJECT_KCAL_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
-          />
           <Bar
             dataKey={"real"}
             fill={COLORS[2]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
             barSize={20}
+          />
+          <ReferenceLine
+            y={OBJECT_KCAL_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
+          />
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={true}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -182,20 +185,23 @@ export const TodayChartFood = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
-          <Line
-            dataKey={"goal"}
-            stroke={COLORS[0]}
-            strokeWidth={2}
-            dot={true}
-          />
-          <ReferenceLine y={OBJECT_NUT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
-          />
           <Bar
             dataKey={"real"}
             fill={COLORS[2]}
             radius={[10, 10, 0, 0]}
             minPointSize={1}
             barSize={20}
+          />
+          <ReferenceLine
+            y={OBJECT_NUT_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
+          />
+          <Line
+            dataKey={"goal"}
+            stroke={COLORS[0]}
+            strokeWidth={2}
+            dot={true}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -248,20 +254,21 @@ export const TodayChartFood = () => {
         </Div>
       );
       const selectSection1 = () => (
-        <Div className={"d-center"}>
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            variant={"outlined"}
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"today"}>{translate("today")}</MenuItem>
-          </TextField>
-        </Div>
+        <TextField
+          select={false}
+          type={"text"}
+          size={"small"}
+          variant={"outlined"}
+          value={translate(SECTION)}
+          InputProps={{
+            readOnly: true,
+            style: {
+              width: 76,
+              fontSize: "0.9rem",
+              color: "#666",
+            },
+          }}
+        />
       );
       const selectSection2 = () => (
         <PopUp

@@ -19,8 +19,6 @@ export const CalendarList = () => {
   const location = useLocation();
   const PATH = location?.pathname;
   const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
   const firstStr = PATH?.split("/")[1] || "";
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
@@ -184,14 +182,21 @@ export const CalendarList = () => {
             const calendarForDates = OBJECT.filter((calendar) => (
               dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
             ));
-            const className = calendarForDates.length >= 3 ? "calendar-tile over-y-auto" : "calendar-tile";
+            const className
+              = calendarForDates.length >= 3
+              ? "calendar-tile over-y-auto"
+              : "calendar-tile";
             return className;
           }}
           tileContent={({ date, view }) => {
             const calendarForDates = OBJECT.filter((calendar) => (
               dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
             ));
-            return calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates);
+            const content
+              = calendarForDates.length > 0
+              ? activeLine(calendarForDates)
+              : unActiveLine(calendarForDates);
+            return content;
           }}
         />
       );
