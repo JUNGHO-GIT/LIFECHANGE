@@ -79,12 +79,6 @@ export const FoodFind = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  useEffect(() => {
-    console.log("===================================");
-    log("location", location);
-    log("DATE", DATE);
-  }, [location, DATE]);
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
@@ -241,7 +235,12 @@ export const FoodFind = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  // 체크박스 체크
+                  onClick={(e) => {
+                    handlerCheckboxChange(index);
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Checkbox
                       key={`check-${index}`}

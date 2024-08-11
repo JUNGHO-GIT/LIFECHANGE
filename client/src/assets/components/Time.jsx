@@ -112,7 +112,7 @@ export const Time = ({
       contents={({closePopup}) => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DigitalClock
-          timeStep={10}
+          timeStep={20}
           ampm={false}
           timezone={"Asia/Seoul"}
           value={moment(OBJECT?.[`${extra}`], "HH:mm")}
@@ -149,7 +149,9 @@ export const Time = ({
             )
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
+            extra !== "sleep_sleepTime" && (
+              popTrigger.openPopup(e.currentTarget)
+            )
           }}
         />
       )}
@@ -166,7 +168,7 @@ export const Time = ({
       contents={({closePopup}) => (
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
         <DigitalClock
-          timeStep={10}
+          timeStep={20}
           ampm={false}
           timezone={"Asia/Seoul"}
           value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
@@ -208,7 +210,9 @@ export const Time = ({
             )
           }}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
+            extra !== "sleep_sleepTime" && (
+              popTrigger.openPopup(e.currentTarget)
+            )
           }}
         />
       )}

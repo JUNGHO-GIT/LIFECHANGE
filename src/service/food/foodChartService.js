@@ -12,52 +12,53 @@ export const barToday = async (
   user_id_param
 ) => {
 
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
-
-  let findGoal = [];
-  let findReal = [];
+  // findResult, finalResult 변수 선언
+  let findResultGoal = [];
+  let findResultReal = [];
   let finalResultKcal = [];
   let finalResultNut = [];
 
-  findGoal = await repository.barToday.listGoal(
-    user_id_param, dateStart, dateEnd
-  );
-  findReal = await repository.barToday.list(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = koreanDate;
+  const dateEnd = koreanDate;
 
-  // kcal
-  finalResultKcal = [
-    {
-      name: "kcal",
-      date: dateStart,
-      goal: String(findGoal?.[0]?.food_goal_kcal || "0"),
-      real: String(findReal?.[0]?.food_total_kcal || "0")
-    }
-  ];
+  // promise 사용하여 병렬 처리
+  [findResultGoal, findResultReal] = await Promise.all([
+    repository.barToday.listGoal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.barToday.list(
+      user_id_param, dateStart, dateEnd
+    )
+  ]);
 
-  // nut
-  finalResultNut = [
+  // findResult 배열을 순회하며 결과 저장
+  finalResultKcal = findResultGoal?.map((item) => ({
+    name: String("kcal"),
+    date: String(dateStart),
+    goal: String(item.food_goal_kcal || "0"),
+    real: String(findResultReal[0]?.food_total_kcal || "0")
+  }));
+  finalResultNut = findResultGoal?.map((item) => [
     {
-      name: "carb",
-      date: dateStart,
-      goal: String(findGoal?.[0]?.food_goal_carb || "0"),
-      real: String(findReal?.[0]?.food_total_carb || "0")
+      name: String("carb"),
+      date: String(dateStart),
+      goal: String(item.food_goal_carb || "0"),
+      real: String(findResultReal[0]?.food_total_carb || "0")
     },
     {
-      name: "protein",
-      date: dateStart,
-      goal: String(findGoal?.[0]?.food_goal_protein || "0"),
-      real: String(findReal?.[0]?.food_total_protein || "0")
+      name: String("protein"),
+      date: String(dateStart),
+      goal: String(item.food_goal_protein || "0"),
+      real: String(findResultReal[0]?.food_total_protein || "0")
     },
     {
-      name: "fat",
-      date: dateStart,
-      goal: String(findGoal?.[0]?.food_goal_fat || "0"),
-      real: String(findReal?.[0]?.food_total_fat || "0")
-    }
-  ];
+      name: String("fat"),
+      date: String(dateStart),
+      goal: String(item.food_goal_fat || "0"),
+      real: String(findResultReal[0]?.food_total_fat || "0")
+    },
+  ]).flat();
 
   return  {
     kcal: finalResultKcal,
@@ -71,29 +72,31 @@ export const pieToday = async (
   user_id_param
 ) => {
 
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
-
+  // findResult, finalResult 변수 선언
   let findResultKcal = [];
   let findResultNut = [];
   let finalResultKcal = [];
   let finalResultNut = [];
 
-  // kcal
-  findResultKcal = await repository.pieToday.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.pieToday.listNut(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = koreanDate;
+  const dateEnd = koreanDate;
 
-  // kcal
+  // promise 사용하여 병렬 처리
+  [findResultKcal, findResultNut] = await Promise.all([
+    repository.pieToday.listKcal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.pieToday.listNut(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
+
+  // findResult 배열을 순회하며 결과 저장
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
-  // nut
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -121,29 +124,31 @@ export const pieWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
-
+  // findResult, finalResult 변수 선언
   let findResultKcal = [];
   let findResultNut = [];
   let finalResultKcal = [];
   let finalResultNut = [];
 
-  // kcal
-  findResultKcal = await repository.pieWeek.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.pieWeek.listNut(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // kcal
+  // promise 사용하여 병렬 처리
+  [findResultKcal, findResultNut] = await Promise.all([
+    repository.pieWeek.listKcal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.pieWeek.listNut(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
+
+  // findResult 배열을 순회하며 결과 저장
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
-  // nut
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -171,29 +176,31 @@ export const pieMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
-
+  // findResult, finalResult 변수 선언
   let findResultKcal = [];
   let findResultNut = [];
   let finalResultKcal = [];
   let finalResultNut = [];
 
-  // kcal
-  findResultKcal = await repository.pieMonth.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.pieMonth.listNut(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  // kcal
+  // promise 사용하여 병렬 처리
+  [findResultKcal, findResultNut] = await Promise.all([
+    repository.pieMonth.listKcal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.pieMonth.listNut(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
+
+  // findResult 배열을 순회하며 결과 저장
   finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
-  // nut
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -220,10 +227,13 @@ export const lineWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultKcal = [];
+  let findResultNut = [];
+  let finalResultKcal = [];
+  let finalResultNut = [];
 
-  // ex mon, tue
+  // ex. mon, tue
   const name = [
     "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
@@ -233,38 +243,42 @@ export const lineWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultKcal = [];
-  let findResultNut = [];
-  let finalResultKcal = [];
-  let finalResultNut = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // kcal
-  findResultKcal = await repository.lineWeek.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.lineWeek.listNut(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultKcal, findResultNut] = await Promise.all([
+    repository.lineWeek.listKcal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.lineWeek.listNut(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
 
+  // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index + 1
+      item.food_dateStart === targetDate
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDay() === index + 1
+      item.food_dateStart === targetDate
     ));
+
     finalResultKcal.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       kcal:
         findIndexKcal !== -1
         ? String(findResultKcal[findIndexKcal]?.food_total_kcal)
         : "0"
     });
     finalResultNut.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       carb:
         findIndexNut !== -1
         ? String(findResultNut[findIndexNut]?.food_total_carb)
@@ -291,51 +305,56 @@ export const lineMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultKcal = [];
+  let findResultNut = [];
+  let finalResultKcal = [];
+  let finalResultNut = [];
 
   // ex. 00일
-  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}`;
-  });
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => `${i + 1}`);
 
   // ex. 00-00
   const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultKcal = [];
-  let findResultNut = [];
-  let finalResultKcal = [];
-  let finalResultNut = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  // kcal
-  findResultKcal = await repository.lineMonth.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.lineMonth.listNut(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultKcal, findResultNut] = await Promise.all([
+    repository.lineMonth.listKcal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.lineMonth.listNut(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
 
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curMonthStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndexKcal = findResultKcal.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index + 1
+      item.food_dateStart === targetDate
     ));
     const findIndexNut = findResultNut.findIndex((item) => (
-      new Date(item.food_dateStart).getDate() === index + 1
+      item.food_dateStart === targetDate
     ));
+
     finalResultKcal.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       kcal:
         findIndexKcal !== -1
         ? String(findResultKcal[findIndexKcal]?.food_total_kcal)
         : "0"
     });
     finalResultNut.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       carb:
         findIndexNut !== -1
         ? String(findResultNut[findIndexNut]?.food_total_carb)
@@ -362,24 +381,13 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
-  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
-    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
-  );
+  // findResult, finalResult 변수 선언
+  let findResultKcal = [];
+  let findResultNut = [];
+  let finalResultKcal = [];
+  let finalResultNut = [];
 
-  // ex. 00주차
-  const name = Array.from({ length: 5 }, (_, i) => {
-    return `week${i + 1}`;
-  });
-
-  // ex. 00-00 ~ 00-00
-  const date = Array.from({ length: 5 }, (_, i) => {
-    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    return `${startOfWeek} ~ ${endOfWeek}`;
-  });
-
+  // sum, count 변수 선언
   let sumKcal = Array(5).fill(0);
   let sumCarb = Array(5).fill(0);
   let sumProtein = Array(5).fill(0);
@@ -387,58 +395,71 @@ export const avgWeek = async (
   let countRecordsKcal = Array(5).fill(0);
   let countRecordsNut = Array(5).fill(0);
 
-  let findResultKcal = [];
-  let findResultNut = [];
-  let finalResultKcal = [];
-  let finalResultNut = [];
-
-  // kcal
-  findResultKcal = await repository.avgWeek.listKcal(
-    user_id_param, dateStart, dateEnd
-  );
-  // nut
-  findResultNut = await repository.avgWeek.listNut(
-    user_id_param, dateStart, dateEnd
+  // weekStartDate 정의
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
   );
 
-  // kcal
-  findResultKcal.forEach((item) => {
-    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
-    weekStartDate.forEach((startOfWeek, index) => {
-      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
-        sumKcal[index] += Number(item.food_total_kcal || "0");
-        countRecordsKcal[index]++;
-      }
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => `week${i + 1}`);
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    const startOfWeek = weekStartDate[i].format("MM-DD");
+    const endOfWeek = weekStartDate[i].clone().endOf('isoWeek').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
+  });
+
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    weekStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
+
+      [findResultKcal, findResultNut] = await Promise.all([
+        repository.avgWeek.listKcal(
+          user_id_param, dateStart, dateEnd
+        ),
+        repository.avgWeek.listNut(
+          user_id_param, dateStart, dateEnd
+        ),
+      ]);
+
+      return {
+        findResultKcal,
+        findResultNut,
+        index: i
+      };
+    })
+  );
+
+  // sum, count 설정
+  parallelResult.forEach(({findResultKcal, findResultNut, index}) => {
+    findResultKcal.forEach((item) => {
+      sumKcal[index] += Number(item.food_total_kcal || "0");
+      countRecordsKcal[index]++;
+    });
+    findResultNut.forEach((item) => {
+      sumCarb[index] += Number(item.food_total_carb || "0");
+      sumProtein[index] += Number(item.food_total_protein || "0");
+      sumFat[index] += Number(item.food_total_fat || "0");
+      countRecordsNut[index]++;
     });
   });
 
-  // nut
-  findResultNut.forEach((item) => {
-    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
-    weekStartDate.forEach((startOfWeek, index) => {
-      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
-        sumCarb[index] += Number(item.food_total_carb || "0");
-        sumProtein[index] += Number(item.food_total_protein || "0");
-        sumFat[index] += Number(item.food_total_fat || "0");
-        countRecordsNut[index]++;
-      }
-    });
-  });
-
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResultKcal.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       kcal:
         countRecordsKcal[index] > 0
         ? String((sumKcal[index] / countRecordsKcal[index]).toFixed(0))
         : "0"
     });
     finalResultNut.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       carb:
         countRecordsNut[index] > 0
         ? String((sumCarb[index] / countRecordsNut[index]).toFixed(2))
@@ -465,10 +486,26 @@ export const avgMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curYearStart.format("YYYY-MM-DD");
-  const dateEnd = curYearEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultKcal = [];
+  let findResultNut = [];
+  let finalResultKcal = [];
+  let finalResultNut = [];
 
-  // ex. 00월
+  // sum, count 변수 선언
+  let sumKcal = Array(12).fill(0);
+  let sumCarb = Array(12).fill(0);
+  let sumProtein = Array(12).fill(0);
+  let sumFat = Array(12).fill(0);
+  let countRecordsKcal = Array(12).fill(0);
+  let countRecordsNut = Array(12).fill(0);
+
+  // monthStartDate 정의
+  const monthStartDate = Array.from({ length: 12 }, (_, i) =>
+    moment(curYearStart).tz("Asia/Seoul").startOf("year").add(i, 'months')
+  );
+
+  // ex. 00 월
   const name = Array.from({ length: 12 }, (_, i) => {
     return `month${i + 1}`;
   });
@@ -480,67 +517,56 @@ export const avgMonth = async (
     return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
-  let sumKcal = Array(12).fill(0);
-  let sumCarb = Array(12).fill(0);
-  let sumProtein = Array(12).fill(0);
-  let sumFat = Array(12).fill(0);
-  let countRecordsKcal = Array(12).fill(0);
-  let countRecordsNut = Array(12).fill(0);
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    monthStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
-  let findResultKcal = [];
-  let findResultNut = [];
-  let finalResultKcal = [];
-  let finalResultNut = [];
+      [findResultKcal, findResultNut] = await Promise.all([
+        repository.avgMonth.listKcal(
+          user_id_param, dateStart, dateEnd
+        ),
+        repository.avgMonth.listNut(
+          user_id_param, dateStart, dateEnd
+        ),
+      ]);
 
-  // kcal
-  findResultKcal = await repository.avgMonth.listKcal(
-    user_id_param, dateStart, dateEnd
+      return {
+        findResultKcal,
+        findResultNut,
+        index: i
+      };
+    })
   );
-  // nut
-  findResultNut = await repository.avgMonth.listNut(
-    user_id_param, dateStart, dateEnd
-  );
 
-  // kcal
-  findResultKcal.forEach((item) => {
-    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
-    name.forEach((data, index) => {
-      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
-      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
-      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
-        sumKcal[index] += Number(item.food_total_kcal || "0");
-        countRecordsKcal[index]++;
-      }
+  // sum, count 설정
+  parallelResult.forEach(({findResultKcal, findResultNut, index}) => {
+    findResultKcal.forEach((item) => {
+      sumKcal[index] += Number(item.food_total_kcal || "0");
+      countRecordsKcal[index]++;
+    });
+    findResultNut.forEach((item) => {
+      sumCarb[index] += Number(item.food_total_carb || "0");
+      sumProtein[index] += Number(item.food_total_protein || "0");
+      sumFat[index] += Number(item.food_total_fat || "0");
+      countRecordsNut[index]++;
     });
   });
 
-  // nut
-  findResultNut.forEach((item) => {
-    const startDate = moment(item.food_dateStart).tz("Asia/Seoul");
-    name.forEach((data, index) => {
-      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
-      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
-      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
-        sumCarb[index] += Number(item.food_total_carb || "0");
-        sumProtein[index] += Number(item.food_total_protein || "0");
-        sumFat[index] += Number(item.food_total_fat || "0");
-        countRecordsNut[index]++;
-      }
-    });
-  });
-
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResultKcal.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       kcal:
         countRecordsKcal[index] > 0
         ? String((sumKcal[index] / countRecordsKcal[index]).toFixed(0))
         : "0"
     });
     finalResultNut.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       carb:
         countRecordsNut[index] > 0
         ? String((sumCarb[index] / countRecordsNut[index]).toFixed(2))

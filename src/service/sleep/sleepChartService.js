@@ -13,40 +13,46 @@ export const barToday = async (
   user_id_param
 ) => {
 
+  // findResult, finalResult 변수 선언
+  let findResultGoal = [];
+  let findResultReal = [];
+  let finalResult = [];
+
+  // dateStart, dateEnd 정의
   const dateStart = koreanDate;
   const dateEnd = koreanDate;
 
-  let findGoal = [];
-  let findReal = [];
-  let finalResult = [];
+  // promise 사용하여 병렬 처리
+  [findResultGoal, findResultReal] = await Promise.all([
+    repository.barToday.listGoal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.barToday.list(
+      user_id_param, dateStart, dateEnd
+    )
+  ]);
 
-  findGoal = await repository.barToday.listGoal(
-    user_id_param, dateStart, dateEnd
-  );
-  findReal = await repository.barToday.list(
-    user_id_param, dateStart, dateEnd
-  );
-
-  finalResult = [
+  // findResult 배열을 순회하며 결과 저장
+  finalResult = findResultGoal?.map((item) => [
     {
-      name: "bedTime",
-      date: dateStart,
-      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_bedTime) || "0"),
-      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_bedTime) || "0")
+      name: String("bedTime"),
+      date: String(dateStart),
+      goal: String(timeToDecimal(item?.sleep_goal_bedTime) || "0"),
+      real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_bedTime) || "0")
     },
     {
-      name: "wakeTime",
-      date: dateStart,
-      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_wakeTime) || "0"),
-      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime) || "0")
+      name: String("wakeTime"),
+      date: String(dateStart),
+      goal: String(timeToDecimal(item?.sleep_goal_wakeTime) || "0"),
+      real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_wakeTime) || "0")
     },
     {
-      name: "sleepTime",
-      date: dateStart,
-      goal: String(timeToDecimal(findGoal?.[0]?.sleep_goal_sleepTime) || "0"),
-      real: String(timeToDecimal(findReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime) || "0")
+      name: String("sleepTime"),
+      date: String(dateStart),
+      goal: String(timeToDecimal(item?.sleep_goal_sleepTime) || "0"),
+      real: String(timeToDecimal(findResultReal?.[0]?.sleep_section?.[0]?.sleep_sleepTime) || "0")
     }
-  ];
+  ]).flat();
 
   return finalResult;
 };
@@ -57,42 +63,38 @@ export const pieToday = async (
   user_id_param
 ) => {
 
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
+  // sum, count 변수 선언
   let sumBedTime = 0;
   let sumWakeTime = 0;
   let sumSleepTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
 
-  let findResult = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = koreanDate;
+  const dateEnd = koreanDate;
 
+  // promise 사용하여 병렬 처리
   findResult = await repository.pieToday.list(
     user_id_param, dateStart, dateEnd
   );
 
-  // 누락된 데이터가 있는지 확인
-  let dataMissing = findResult.some((data) => (
-    !data.sleep_section[0]?.sleep_bedTime ||
-    !data.sleep_section[0]?.sleep_wakeTime ||
-    !data.sleep_section[0]?.sleep_sleepTime
-  ));
-
-  // 데이터가 누락되었는지 확인
-  if (dataMissing === false) {
-    finalResult = [];
-  }
-
-  findResult.forEach((data, index) => {
-    sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
-    sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
-    sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
+  // sum, count 설정
+  findResult.forEach((item) => {
+    sumBedTime += Number(timeToDecimal(item?.sleep_section?.[0]?.sleep_bedTime));
+    sumWakeTime += Number(timeToDecimal(item?.sleep_section?.[0]?.sleep_wakeTime));
+    sumSleepTime += Number(timeToDecimal(item?.sleep_section?.[0]?.sleep_sleepTime));
     countRecords++;
   });
+
+  // totalSleep 계산
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
 
+  // finalResult 배열에 결과 저장
   finalResult = [
     {
       name: String("bedTime"),
@@ -117,29 +119,38 @@ export const pieWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
+  // sum, count 변수 선언
   let sumBedTime = 0;
   let sumWakeTime = 0;
   let sumSleepTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
 
-  let findResult = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
+  // promise 사용하여 병렬 처리
   findResult = await repository.pieWeek.list(
     user_id_param, dateStart, dateEnd
   );
+
+  // sum, count 설정
   findResult.forEach((data, index) => {
     sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
     sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
     sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
     countRecords++;
   });
+
+  // totalSleep 계산
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
 
+  // finalResult 배열에 결과 저장
   finalResult = [
     {
       name: String("bedTime"),
@@ -164,29 +175,38 @@ export const pieMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
+  // sum, count 변수 선언
   let sumBedTime = 0;
   let sumWakeTime = 0;
   let sumSleepTime = 0;
   let countRecords = 0;
   let totalSleep = 0;
 
-  let findResult = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
+  // promise 사용하여 병렬 처리
   findResult = await repository.pieMonth.list(
     user_id_param, dateStart, dateEnd
   );
+
+  // sum, count 설정
   findResult.forEach((data, index) => {
     sumBedTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_bedTime));
     sumWakeTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_wakeTime));
     sumSleepTime += Number(timeToDecimal(data.sleep_section[0]?.sleep_sleepTime));
     countRecords++;
   });
+
+  // totalSleep 계산
   totalSleep = sumBedTime + sumWakeTime + sumSleepTime;
 
+  // finalResult 배열에 결과 저장
   finalResult = [
     {
       name: String("bedTime"),
@@ -210,10 +230,11 @@ export const lineWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
-  // ex mon, tue
+  // ex. mon, tue
   const name = [
     "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
@@ -223,21 +244,26 @@ export const lineWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResult = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
+  // promise 사용하여 병렬 처리
   findResult = await repository.lineWeek.list(
     user_id_param, dateStart, dateEnd
   );
 
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndex = findResult?.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDay() === index + 1
+      item.sleep_dateStart === targetDate
     ));
 
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       bedTime:
         findIndex !== -1
         ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
@@ -261,34 +287,38 @@ export const lineMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
   // ex. 00일
-  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}`;
-  });
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => `${i + 1}`);
 
   // ex. 00-00
   const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResult = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
+  // promise 사용하여 병렬 처리
   findResult = await repository.lineMonth.list(
     user_id_param, dateStart, dateEnd
   );
 
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curMonthStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndex = findResult?.findIndex((item) => (
-      new Date(item.sleep_dateStart).getDate() === index + 1
+      item.sleep_dateStart === targetDate
     ));
 
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       bedTime:
         findIndex !== -1
         ? String(timeToDecimal(findResult[findIndex]?.sleep_section[0]?.sleep_bedTime))
@@ -305,60 +335,71 @@ export const lineMonth = async (
   });
 
   return finalResult;
-}
+};
+
 
 // 4-1. chart (avg - week) ------------------------------------------------------------------------
 export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
-  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
-    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
-  );
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
-  // ex. 00주차
-  const name = Array.from({ length: 5 }, (_, i) => {
-    return `week${i + 1}`;
-  });
-
-  // ex. 00-00 ~ 00-00
-  const date = Array.from({ length: 5 }, (_, i) => {
-    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    return `${startOfWeek} ~ ${endOfWeek}`;
-  });
-
+  // sum, count 변수 선언
   let sumBedTime = Array(5).fill(0);
   let sumWakeTime = Array(5).fill(0);
   let sumSleepTime = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  let findResult = [];
-  let finalResult = [];
-
-  findResult = await repository.avgWeek.list(
-    user_id_param, dateStart, dateEnd
+  // weekStartDate 정의
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
   );
 
-  findResult.forEach((item) => {
-    const startDate = moment(item.sleep_dateStart).tz("Asia/Seoul");
-    weekStartDate.forEach((startOfWeek, index) => {
-      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
-        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime));
-        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime));
-        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime));
-        countRecords[index]++;
-      }
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => `week${i + 1}`);
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    const startOfWeek = weekStartDate[i].format("MM-DD");
+    const endOfWeek = weekStartDate[i].clone().endOf('isoWeek').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
+  });
+
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    weekStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
+
+      findResult = await repository.avgWeek.list(
+        user_id_param, dateStart, dateEnd
+      );
+
+      return {
+        findResult,
+        index: i
+      };
+    })
+  );
+
+  // sum, count 설정
+  parallelResult.forEach(({ findResult, index }) => {
+    findResult.forEach((item) => {
+      sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime) || "0");
+      sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime) || "0");
+      sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime) || "0");
+      countRecords[index]++;
     });
   });
 
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       bedTime:
         countRecords[index] > 0
         ? String((sumBedTime[index] / countRecords[index]).toFixed(1))
@@ -382,10 +423,22 @@ export const avgMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curYearStart.format("YYYY-MM-DD");
-  const dateEnd = curYearEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResult = [];
+  let finalResult = [];
 
-  // ex. 00월
+  // sum, count 변수 선언
+  let sumBedTime = Array(12).fill(0);
+  let sumWakeTime = Array(12).fill(0);
+  let sumSleepTime = Array(12).fill(0);
+  let countRecords = Array(12).fill(0);
+
+  // monthStartDate 정의
+  const monthStartDate = Array.from({ length: 12 }, (_, i) =>
+    moment(curYearStart).tz("Asia/Seoul").startOf("year").add(i, 'months')
+  );
+
+  // ex. 00 월
   const name = Array.from({ length: 12 }, (_, i) => {
     return `month${i + 1}`;
   });
@@ -397,36 +450,38 @@ export const avgMonth = async (
     return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
-  let sumBedTime = Array(12).fill(0);
-  let sumWakeTime = Array(12).fill(0);
-  let sumSleepTime = Array(12).fill(0);
-  let countRecords = Array(12).fill(0);
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    monthStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
-  let findResult = [];
-  let finalResult = [];
+      findResult = await repository.avgMonth.list(
+        user_id_param, dateStart, dateEnd
+      );
 
-  findResult = await repository.avgMonth.list(
-    user_id_param, dateStart, dateEnd
+      return {
+        findResult,
+        index: i
+      };
+    })
   );
 
-  findResult.forEach((item) => {
-    const startDate = moment(item.sleep_dateStart).tz("Asia/Seoul");
-    name.forEach((data, index) => {
-      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
-      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
-      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
-        sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime));
-        sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime));
-        sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime));
-        countRecords[index]++;
-      }
+  // sum, count 설정
+  parallelResult.forEach(({ findResult, index }) => {
+    findResult.forEach((item) => {
+      sumBedTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_bedTime) || "0");
+      sumWakeTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_wakeTime) || "0");
+      sumSleepTime[index] += Number(timeToDecimal(item.sleep_section[0]?.sleep_sleepTime) || "0");
+      countRecords[index]++;
     });
   });
 
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       bedTime:
         countRecords[index] > 0
         ? String((sumBedTime[index] / countRecords[index]).toFixed(1))

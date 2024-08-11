@@ -13,28 +13,32 @@ export const barToday = async (
   user_id_param
 ) => {
 
+  // dateStart, dateEnd 정의
   const dateStart = newDate.format("YYYY-MM-DD");
   const dateEnd = newDate.format("YYYY-MM-DD");
 
-  let findGoal = [];
-  let findReal = [];
+  // findResult, finalResult 변수 선언
+  let findResultGoal = [];
+  let findResultReal = [];
   let finalResult = [];
 
-  findGoal = await repository.barToday.listGoal(
-    user_id_param, dateStart, dateEnd
-  );
-  findReal = await repository.barToday.list(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultGoal, findResultReal] = await Promise.all([
+    repository.barToday.listGoal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.barToday.list(
+      user_id_param, dateStart, dateEnd
+    )
+  ]);
 
-  finalResult = [
-    {
-      name: "weight",
-      date: dateStart,
-      goal: String(findGoal?.[0]?.exercise_goal_weight || "0"),
-      real: String(findReal?.[0]?.exercise_body_weight || "0")
-    }
-  ];
+  // findResultGoal, findResultReal 배열을 순회하며 결과 저장
+  finalResult = findResultGoal?.map((item) => ({
+    name: String("weight"),
+    date: String(dateStart),
+    goal: String(item.exercise_goal_weight|| "0"),
+    real: "0"
+  }));
 
   return finalResult;
 };
@@ -44,10 +48,12 @@ export const barWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultGoal = [];
+  let findResultReal = [];
+  let finalResult = [];
 
-  // ex mon, tue
+  // ex. mon, tue
   const name = [
     "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
@@ -57,34 +63,41 @@ export const barWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findGoal = [];
-  let findReal = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  findGoal = await repository.barWeek.listGoal(
-    user_id_param, dateStart, dateEnd
-  );
-  findReal = await repository.barWeek.list(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultGoal, findResultReal] = await Promise.all([
+    repository.barWeek.listGoal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.barWeek.list(
+      user_id_param, dateStart, dateEnd
+    )
+  ]);
 
+  // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
-    const findIndexGoal = findGoal?.findIndex((item) => (
-      new Date(item.exercise_goal_dateStart).getDay() === index + 1
+    const targetDate = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
+    const findIndexGoal = findResultGoal?.findIndex((item) => (
+      item.exercise_goal_dateStart === targetDate
     ));
-    const findIndexReal = findReal?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+    const findIndexReal = findResultReal?.findIndex((item) => (
+      item.exercise_dateStart === targetDate
     ));
+
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       goal:
         findIndexGoal !== -1
-        ? String(findGoal[findIndexGoal]?.exercise_goal_weight)
+        ? String(findResultGoal[findIndexGoal]?.exercise_goal_weight)
         : "0",
       real:
         findIndexReal !== -1
-        ? String(findReal[findIndexReal]?.exercise_body_weight)
+        ? String(findResultReal[findIndexReal]?.exercise_body_weight)
         : "0"
     });
   });
@@ -97,47 +110,54 @@ export const barMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultGoal = [];
+  let findResultReal = [];
+  let finalResult = [];
 
   // ex. 00일
-  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}`;
-  });
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => `${i + 1}`);
 
   // ex. 00-00
   const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findGoal = [];
-  let findReal = [];
-  let finalResult = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  findGoal = await repository.barMonth.listGoal(
-    user_id_param, dateStart, dateEnd
-  );
-  findReal = await repository.barMonth.list(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultGoal, findResultReal] = await Promise.all([
+    repository.barMonth.listGoal(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.barMonth.list(
+      user_id_param, dateStart, dateEnd
+    )
+  ]);
 
+  // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
-    const findIndexGoal = findGoal?.findIndex((item) => (
-      new Date(item.exercise_goal_dateStart).getDate() === index
+    const targetDate = curMonthStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
+    const findIndexGoal = findResultGoal?.findIndex((item) => (
+      item.exercise_goal_dateStart === targetDate
     ));
-    const findIndexReal = findReal?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDate() === index
+    const findIndexReal = findResultReal?.findIndex((item) => (
+      item.exercise_dateStart === targetDate
     ));
+
     finalResult.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       goal:
         findIndexGoal !== -1
-        ? String(findGoal[findIndexGoal]?.exercise_goal_weight)
+        ? String(findResultGoal[findIndexGoal]?.exercise_goal_weight)
         : "0",
       real:
         findIndexReal !== -1
-        ? String(findReal[findIndexReal]?.exercise_body_weight)
+        ? String(findResultReal[findIndexReal]?.exercise_body_weight)
         : "0"
     });
   });
@@ -151,31 +171,33 @@ export const pieWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
-
+  // findResult, finalResult 변수 선언
   let findResultPart = [];
   let findResultTitle = [];
   let finalResultPart = [];
   let finalResultTitle = [];
 
-  // part
-  findResultPart = await repository.pieWeek.listPart(
-    user_id_param, dateStart, dateEnd
-  );
-  // title
-  findResultTitle = await repository.pieWeek.listTitle(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // part
+  // promise 사용하여 병렬 처리
+  [findResultPart, findResultTitle] = await Promise.all([
+    repository.pieWeek.listPart(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.pieWeek.listTitle(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
+
+  // findResult 배열을 순회하며 결과 저장
   finalResultPart = findResultPart?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
-  // title
   finalResultTitle = findResultTitle?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
 
@@ -191,31 +213,33 @@ export const pieMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
-
+  // findResult, finalResult 변수 선언
   let findResultPart = [];
   let findResultTitle = [];
   let finalResultPart = [];
   let finalResultTitle = [];
 
-  // part
-  findResultPart = await repository.pieMonth.listPart(
-    user_id_param, dateStart, dateEnd
-  );
-  // title
-  findResultTitle = await repository.pieMonth.listTitle(
-    user_id_param, dateStart, dateEnd
-  );
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  // part
+  // promise 사용하여 병렬 처리
+  [findResultPart, findResultTitle] = await Promise.all([
+    repository.pieMonth.listPart(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.pieMonth.listTitle(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
+
+  // findResult 배열을 순회하며 결과 저장
   finalResultPart = findResultPart?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
-  // title
   finalResultTitle = findResultTitle?.map((item) => ({
-    name: String(item._id) || "",
+    name: String(item._id),
     value: Number(item.value) || 0
   }));
 
@@ -230,10 +254,13 @@ export const lineWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultVolume = [];
+  let findResultCardio = [];
+  let finalResultVolume = [];
+  let finalResultCardio = [];
 
-  // ex mon, tue
+  // ex. mon, tue
   const name = [
     "mon", "tue", "wed", "thu", "fri", "sat", "sun"
   ];
@@ -243,38 +270,42 @@ export const lineWeek = async (
     return curWeekStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultVolume = [];
-  let findResultCardio = [];
-  let finalResultVolume = [];
-  let finalResultCardio = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curWeekStart.format("YYYY-MM-DD");
+  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
-  // volume
-  findResultVolume = await repository.lineWeek.listVolume(
-    user_id_param, dateStart, dateEnd
-  );
-  // cardio
-  findResultCardio = await repository.lineWeek.listCardio(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultVolume, findResultCardio] = await Promise.all([
+    repository.lineWeek.listVolume(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.lineWeek.listCardio(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
 
+  // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curWeekStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndexVolume = findResultVolume?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      item.exercise_dateStart === targetDate
     ));
     const findIndexCardio = findResultCardio?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      item.exercise_dateStart === targetDate
     ));
+
     finalResultVolume.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       volume:
         findIndexVolume !== -1
         ? String(findResultVolume[findIndexVolume]?.exercise_total_volume)
         : "0"
     });
     finalResultCardio.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       cardio:
         findIndexCardio !== -1
         ? String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio))
@@ -293,52 +324,56 @@ export const lineMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultVolume = [];
+  let findResultCardio = [];
+  let finalResultVolume = [];
+  let finalResultCardio = [];
 
   // ex. 00일
-  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => {
-    return `${i + 1}`;
-  });
+  const name = Array.from({ length: curMonthEnd.date() }, (_, i) => `${i + 1}`);
 
   // ex. 00-00
   const date = Array.from({ length: curMonthEnd.date() }, (_, i) => {
     return curMonthStart.clone().add(i, 'days').format("MM-DD");
   });
 
-  let findResultVolume = [];
-  let findResultCardio = [];
-  let finalResultVolume = [];
-  let finalResultCardio = [];
+  // dateStart, dateEnd 정의
+  const dateStart = curMonthStart.format("YYYY-MM-DD");
+  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
-  // volume
-  findResultVolume = await repository.lineMonth.listVolume(
-    user_id_param, dateStart, dateEnd
-  );
-  // cardio
-  findResultCardio = await repository.lineMonth.listCardio(
-    user_id_param, dateStart, dateEnd
-  );
+  // promise 사용하여 병렬 처리
+  [findResultVolume, findResultCardio] = await Promise.all([
+    repository.lineMonth.listVolume(
+      user_id_param, dateStart, dateEnd
+    ),
+    repository.lineMonth.listCardio(
+      user_id_param, dateStart, dateEnd
+    ),
+  ]);
 
+  // name 배열 순회하며 결과 저장
   name.forEach((data, index) => {
+    const targetDate = curMonthStart.clone().add(index, 'days').format("YYYY-MM-DD");
+
     const findIndexVolume = findResultVolume?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      item.exercise_dateStart === targetDate
     ));
     const findIndexCardio = findResultCardio?.findIndex((item) => (
-      new Date(item.exercise_dateStart).getDay() === index + 1
+      item.exercise_dateStart === targetDate
     ));
 
     finalResultVolume.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       volume:
         findIndexVolume !== -1
         ? String(findResultVolume[findIndexVolume]?.exercise_total_volume)
         : "0"
     });
     finalResultCardio.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       cardio:
         findIndexCardio !== -1
         ? String(timeToDecimal(findResultCardio[findIndexCardio]?.exercise_total_cardio))
@@ -357,79 +392,81 @@ export const avgWeek = async (
   user_id_param
 ) => {
 
-  const dateStart = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
-  const dateEnd = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
-  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
-    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
-  );
-
-  // ex. 00주차
-  const name = Array.from({ length: 5 }, (_, i) => {
-    return `week${i + 1}`;
-  });
-
-  // ex. 00-00 ~ 00-00
-  const date = Array.from({ length: 5 }, (_, i) => {
-    const startOfWeek = moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    const endOfWeek = moment(curMonthStart).tz("Asia/Seoul").endOf("isoWeek").add(i, 'weeks').format("MM-DD");
-    return `${startOfWeek} ~ ${endOfWeek}`;
-  });
-
-  let sumVolume = Array(5).fill(0);
-  let sumCardio = Array(5).fill(0);
-  let countRecordsVolume = Array(5).fill(0);
-  let countRecordsCardio = Array(5).fill(0);
-
+  // findResult, finalResult 변수 선언
   let findResultVolume = [];
   let findResultCardio = [];
   let finalResultVolume = [];
   let finalResultCardio = [];
 
-  // volume
-  findResultVolume = await repository.avgWeek.listVolume(
-    user_id_param, dateStart, dateEnd
-  );
-  // cardio
-  findResultCardio = await repository.avgWeek.listCardio(
-    user_id_param, dateStart, dateEnd
+  // sum, count 변수 선언
+  let sumVolume = Array(5).fill(0);
+  let sumCardio = Array(5).fill(0);
+  let countRecordsVolume = Array(5).fill(0);
+  let countRecordsCardio = Array(5).fill(0);
+
+  // weekStartDate 정의
+  const weekStartDate = Array.from({ length: 5 }, (_, i) =>
+    moment(curMonthStart).tz("Asia/Seoul").startOf("isoWeek").add(i, 'weeks')
   );
 
-  // volume
-  findResultVolume.forEach((item) => {
-    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
-    weekStartDate.forEach((startOfWeek, index) => {
-      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
-        sumVolume[index] += Number(item.exercise_total_volume || "0");
-        countRecordsVolume[index]++;
-      }
+  // ex. 00주차
+  const name = Array.from({ length: 5 }, (_, i) => `week${i + 1}`);
+
+  // ex. 00-00 ~ 00-00
+  const date = Array.from({ length: 5 }, (_, i) => {
+    const startOfWeek = weekStartDate[i].format("MM-DD");
+    const endOfWeek = weekStartDate[i].clone().endOf('isoWeek').format("MM-DD");
+    return `${startOfWeek} ~ ${endOfWeek}`;
+  });
+
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    weekStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
+
+      [findResultVolume, findResultCardio] = await Promise.all([
+        repository.avgWeek.listVolume(
+          user_id_param, dateStart, dateEnd
+        ),
+        repository.avgWeek.listCardio(
+          user_id_param, dateStart, dateEnd
+        ),
+      ]);
+
+      return {
+        findResultVolume,
+        findResultCardio,
+        index: i
+      };
+    })
+  );
+
+  // sum, count 설정
+  parallelResult.forEach(({findResultVolume, findResultCardio, index}) => {
+    findResultVolume.forEach((item) => {
+      sumVolume[index] += Number(item.exercise_total_volume || "0");
+      countRecordsVolume[index]++;
+    });
+    findResultCardio.forEach((item) => {
+      sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+      countRecordsCardio[index]++;
     });
   });
 
-  // cardio
-  findResultCardio.forEach((item) => {
-    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
-    weekStartDate.forEach((startOfWeek, index) => {
-      const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-      if (startDate.isBetween(startOfWeek, endOfWeek, null, '[]')) {
-        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
-        countRecordsCardio[index]++;
-      }
-    });
-  });
-
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResultVolume.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       volume:
         countRecordsVolume[index] > 0
         ? String((sumVolume[index] / countRecordsVolume[index]).toFixed(2))
         : "0",
     });
     finalResultCardio.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       cardio:
         countRecordsCardio[index] > 0
         ? String(timeToDecimal(sumCardio[index] / countRecordsCardio[index]))
@@ -448,10 +485,24 @@ export const avgMonth = async (
   user_id_param
 ) => {
 
-  const dateStart = curYearStart.format("YYYY-MM-DD");
-  const dateEnd = curYearEnd.format("YYYY-MM-DD");
+  // findResult, finalResult 변수 선언
+  let findResultVolume = [];
+  let findResultCardio = [];
+  let finalResultVolume = [];
+  let finalResultCardio = [];
 
-  // ex. 00월
+  // sum, count 변수 선언
+  let sumVolume = Array(12).fill(0);
+  let sumCardio = Array(12).fill(0);
+  let countRecordsVolume = Array(12).fill(0);
+  let countRecordsCardio = Array(12).fill(0);
+
+  // monthStartDate 정의
+  const monthStartDate = Array.from({ length: 12 }, (_, i) =>
+    moment(curYearStart).tz("Asia/Seoul").startOf("year").add(i, 'months')
+  );
+
+  // ex. 00 월
   const name = Array.from({ length: 12 }, (_, i) => {
     return `month${i + 1}`;
   });
@@ -463,63 +514,54 @@ export const avgMonth = async (
     return `${startOfMonth} ~ ${endOfMonth}`;
   });
 
-  let sumVolume = Array(12).fill(0);
-  let sumCardio = Array(12).fill(0);
-  let countRecordsVolume = Array(12).fill(0);
-  let countRecordsCardio = Array(12).fill(0);
+  // promise 사용하여 병렬 처리
+  const parallelResult = await Promise.all(
+    monthStartDate.map(async (startDate, i) => {
+      const dateStart = startDate.format("YYYY-MM-DD");
+      const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
-  let findResultVolume = [];
-  let findResultCardio = [];
-  let finalResultVolume = [];
-  let finalResultCardio = [];
+      [findResultVolume, findResultCardio] = await Promise.all([
+        repository.avgMonth.listVolume(
+          user_id_param, dateStart, dateEnd
+        ),
+        repository.avgMonth.listCardio(
+          user_id_param, dateStart, dateEnd
+        ),
+      ]);
 
-  // volume
-  findResultVolume = await repository.avgMonth.listVolume(
-    user_id_param, dateStart, dateEnd
+      return {
+        findResultVolume,
+        findResultCardio,
+        index: i
+      };
+    })
   );
-  // cardio
-  findResultCardio = await repository.avgMonth.listCardio(
-    user_id_param, dateStart, dateEnd
-  );
 
-  // volume
-  findResultVolume.forEach((item) => {
-    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
-    name.forEach((data, index) => {
-      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
-      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
-      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
-        sumVolume[index] += Number(item.exercise_total_volume || "0");
-        countRecordsVolume[index]++;
-      }
+  // sum, count 설정
+  parallelResult.forEach(({findResultVolume, findResultCardio, index}) => {
+    findResultVolume.forEach((item) => {
+      sumVolume[index] += Number(item.exercise_total_volume || "0");
+      countRecordsVolume[index]++;
+    });
+    findResultCardio.forEach((item) => {
+      sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
+      countRecordsCardio[index]++;
     });
   });
 
-  // cardio
-  findResultCardio.forEach((item) => {
-    const startDate = moment(item.exercise_dateStart).tz("Asia/Seoul");
-    name.forEach((data, index) => {
-      const startOfMonth = curYearStart.clone().add(index, 'months').startOf('month');
-      const endOfMonth = curYearStart.clone().add(index, 'months').endOf('month');
-      if (startDate.isBetween(startOfMonth, endOfMonth, null, '[]')) {
-        sumCardio[index] += Number(timeToDecimal(item.exercise_total_cardio) || "0");
-        countRecordsCardio[index]++;
-      }
-    });
-  });
-
+  // name 배열을 순회하며 결과 저장
   name.forEach((data, index) => {
     finalResultVolume.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       volume:
         countRecordsVolume[index] > 0
         ? String((sumVolume[index] / countRecordsVolume[index]).toFixed(2))
         : "0",
     });
     finalResultCardio.push({
-      name: data,
-      date: date[index],
+      name: String(data),
+      date: String(date[index]),
       cardio:
         countRecordsCardio[index] > 0
         ? String(timeToDecimal(sumCardio[index] / countRecordsCardio[index]))

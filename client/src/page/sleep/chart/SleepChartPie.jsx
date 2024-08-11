@@ -64,13 +64,28 @@ export const SleepChartPie = () => {
       },
     });
     setOBJECT_TODAY(
-      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
+      (resToday.data.result.length > 0)
+      && (resToday.data.result[0].value !== 0)
+      && (resToday.data.result[1].value !== 0)
+      && (resToday.data.result[2].value !== 0)
+      ? resToday.data.result
+      : OBJECT_TODAY_DEF
     );
     setOBJECT_WEEK(
-      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+      (resWeek.data.result.length > 0)
+      && (resWeek.data.result[0].value !== 0)
+      && (resWeek.data.result[1].value !== 0)
+      && (resWeek.data.result[2].value !== 0)
+      ? resWeek.data.result
+      : OBJECT_WEEK_DEF
     );
     setOBJECT_MONTH(
-      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+      (resMonth.data.result.length > 0)
+      && (resMonth.data.result[0].value !== 0)
+      && (resMonth.data.result[1].value !== 0)
+      && (resMonth.data.result[2].value !== 0)
+      ? resMonth.data.result
+      : OBJECT_MONTH_DEF
     );
     setLOADING(false);
   })()}, [sessionId]);

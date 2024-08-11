@@ -59,8 +59,12 @@ export const TodayChartMoney = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "money", "moneyData");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_TODAY}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={20}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -89,12 +93,18 @@ export const TodayChartMoney = () => {
             dataKey={"goal"}
             stroke={COLORS[0]}
             strokeWidth={2}
-            dot={false}
+            dot={true}
           />
-          <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
+          <ReferenceLine
+            y={OBJECT_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
           />
           <Bar
-            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
+            dataKey={"real"}
+            fill={COLORS[2]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
             barSize={20}
           />
           <Tooltip

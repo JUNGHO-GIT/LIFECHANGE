@@ -88,8 +88,12 @@ export const ExerciseChartBar = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_TODAY}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={20}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -114,17 +118,23 @@ export const ExerciseChartBar = () => {
             tick={{fill:"#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
+          <Bar
+            dataKey={"real"}
+            fill={COLORS[2]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+            barSize={20}
+          />
+          <ReferenceLine
+            y={OBJECT_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
+          />
           <Line
             dataKey={"goal"}
             stroke={COLORS[0]}
             strokeWidth={2}
-            dot={false}
-          />
-          <ReferenceLine y={OBJECT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
-          />
-          <Bar
-            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}
+            dot={true}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -172,8 +182,12 @@ export const ExerciseChartBar = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_WEEK} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_WEEK}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={20}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -199,14 +213,14 @@ export const ExerciseChartBar = () => {
             tickFormatter={formatterY}
           />
           <Scatter
-            dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
-          />
-          <Scatter
             dataKey={"real"}
             fill={COLORS[2]}
             line={{stroke: COLORS[2], strokeWidth: 0.6}}
+          />
+          <Scatter
+            dataKey={"goal"}
+            fill={COLORS[0]}
+            line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -254,8 +268,12 @@ export const ExerciseChartBar = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_MONTH} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_MONTH}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={20}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -281,14 +299,14 @@ export const ExerciseChartBar = () => {
             tickFormatter={formatterY}
           />
           <Scatter
-            dataKey={"goal"}
-            fill={COLORS[0]}
-            line={{stroke: COLORS[0], strokeWidth: 0.6}}
-          />
-          <Scatter
             dataKey={"real"}
             fill={COLORS[2]}
             line={{stroke: COLORS[2], strokeWidth: 0.6}}
+          />
+          <Scatter
+            dataKey={"goal"}
+            fill={COLORS[0]}
+            line={{stroke: COLORS[0], strokeWidth: 0.6}}
           />
           <Tooltip
             labelFormatter={(label, payload) => {

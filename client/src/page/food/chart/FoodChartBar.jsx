@@ -70,7 +70,12 @@ export const FoodChartBar = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_KCAL_TODAY, array, "food", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_KCAL_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}} barGap={80} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_KCAL_TODAY}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={80}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -95,17 +100,23 @@ export const FoodChartBar = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
+          <Bar
+            dataKey={"real"}
+            fill={COLORS[2]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+            barSize={20}
+          />
+          <ReferenceLine
+            y={OBJECT_KCAL_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
+          />
           <Line
             dataKey={"goal"}
             stroke={COLORS[0]}
             strokeWidth={2}
-            dot={false}
-          />
-          <ReferenceLine y={OBJECT_KCAL_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
-          />
-          <Bar
-            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}
+            dot={true}
           />
           <Tooltip
             labelFormatter={(label, payload) => {
@@ -153,8 +164,12 @@ export const FoodChartBar = () => {
     const {domain, ticks, formatterY} = handlerY(OBJECT_NUT_TODAY, array, "food", "");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_NUT_TODAY} margin={{top: 20, right: 20, bottom: 20, left: 20}}
-        barGap={20} barCategoryGap={"20%"}>
+        <ComposedChart
+          data={OBJECT_NUT_TODAY}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={80}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -179,17 +194,23 @@ export const FoodChartBar = () => {
             tick={{fill: "#666", fontSize: 14}}
             tickFormatter={formatterY}
           />
+          <Bar
+            dataKey={"real"}
+            fill={COLORS[2]}
+            radius={[10, 10, 0, 0]}
+            minPointSize={1}
+            barSize={20}
+          />
+          <ReferenceLine
+            y={OBJECT_NUT_TODAY[0]?.goal}
+            stroke={COLORS[0]}
+            strokeDasharray={"3 3"}
+          />
           <Line
             dataKey={"goal"}
             stroke={COLORS[0]}
             strokeWidth={2}
-            dot={false}
-          />
-          <ReferenceLine y={OBJECT_NUT_TODAY[0]?.goal} stroke={COLORS[0]} strokeDasharray={"3 3"}
-          />
-          <Bar
-            dataKey={"real"} fill={COLORS[2]} radius={[10, 10, 0, 0]} minPointSize={1}
-            barSize={20}
+            dot={true}
           />
           <Tooltip
             labelFormatter={(label, payload) => {

@@ -34,10 +34,12 @@ export const ListFilter = ({
       dateEnd: moment.tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
     },
     monthDate: {
+      dateType: "",
       dateStart: moment.tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment.tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     },
     yearDate: {
+      dateType: "",
       dateStart: moment.tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
       dateEnd: moment.tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
     },
@@ -47,32 +49,56 @@ export const ListFilter = ({
       dateEnd: "",
     }
   });
-  
- const shallowEqual = (obj1, obj2) => {
-  return JSON.stringify(obj1) === JSON.stringify(obj2);
-};
+
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-  switch (clickedType) {
-    case "thisToday":
-      functions?.setDATE(clickedDate.todayDate);
-      break;
-    case "thisWeek":
-      functions?.setDATE(clickedDate.weekDate);
-      break;
-    case "thisMonth":
-      functions?.setDATE(clickedDate.monthDate);
-      break;
-    case "thisYear":
-      functions?.setDATE(clickedDate.yearDate);
-      break;
-    case "selectDate":
-      functions?.setDATE(clickedDate.selectDate);
-      break;
-    default:
-      break;
-  }
-}, [clickedType]);
+    if (clickedType === "thisToday") {
+      functions?.setDATE(clickedDate?.todayDate);
+    }
+    else if (clickedType === "thisWeek") {
+      functions?.setDATE(clickedDate?.weekDate);
+    }
+    else if (clickedType === "thisMonth") {
+      functions?.setDATE(clickedDate?.monthDate);
+    }
+    else if (clickedType === "thisYear") {
+      functions?.setDATE(clickedDate?.yearDate);
+    }
+    else if (clickedType === "selectDate") {
+      functions?.setDATE(clickedDate?.selectDate);
+    }
+  }, [clickedType]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (
+      (objects?.DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
+      (objects?.DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
+    ) {
+      setClickedType("thisToday");
+    }
+    else if (
+      (objects?.DATE?.dateStart === clickedDate?.weekDate?.dateStart) &&
+      (objects?.DATE?.dateEnd === clickedDate?.weekDate?.dateEnd)
+    ) {
+      setClickedType("thisWeek");
+    }
+    else if (
+      (objects?.DATE?.dateStart === clickedDate?.monthDate?.dateStart) &&
+      (objects?.DATE?.dateEnd === clickedDate?.monthDate?.dateEnd)
+    ) {
+      setClickedType("thisMonth");
+    }
+    else if (
+      (objects?.DATE?.dateStart === clickedDate?.yearDate?.dateStart) &&
+      (objects?.DATE?.dateEnd === clickedDate?.yearDate?.dateEnd)
+    ) {
+      setClickedType("thisYear");
+    }
+    else {
+      setClickedType("selectDate");
+    }
+  }, [objects?.DATE]);
 
   // 2. sort ---------------------------------------------------------------------------------------
   const sortNode = () => (
@@ -114,7 +140,7 @@ export const ListFilter = ({
     />
   );
 
-  // 4. clickNode -----------------------------------------------------------------------------------
+  // 4. clickNode ----------------------------------------------------------------------------------
   const clickNode = () => (
     <PopUp
       type={"dropdown"}
