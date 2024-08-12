@@ -4,12 +4,12 @@ import React from "react";
 import {useLocation} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
 import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
 import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
 import {useRoot} from "./assets/hooks/useRoot.jsx";
 import {useSessionStorage} from "./assets/hooks/useSessionStorage.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
-import CssBaseline from "@mui/material/CssBaseline";
 
 import "./index.css";
 import "moment/locale/ko";
