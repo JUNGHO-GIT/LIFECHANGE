@@ -85,26 +85,22 @@ export const property = async (
     user_id_param
   );
 
-  const curProperty =
+  const curProperty = String (
     (parseInt(initProperty?.user_initProperty) || 0) +
     (parseInt(findMoney?.money_total_income) || 0) -
-    (parseInt(findMoney?.money_total_expense) || 0);
+    (parseInt(findMoney?.money_total_expense) || 0)
+  );
 
-  const updateProperty = await repository.property.updateProperty(
+  await repository.property.updateProperty(
     user_id_param, curProperty
   );
 
-  if (updateProperty?.user_curProperty) {
-    console.log(
-      "property update result: "
-      + JSON.stringify(updateProperty?.user_curProperty, null, 2)
-    );
-  }
-
   const finalResult = {
-    initProperty: !initProperty?.user_initProperty ? 0 : parseInt(initProperty?.user_initProperty),
     totalIncome: findMoney?.money_total_income,
     totalExpense: findMoney?.money_total_expense,
+    initProperty: String (
+      !initProperty?.user_initProperty ? 0 : parseInt(initProperty?.user_initProperty)
+    ),
     curProperty: curProperty,
     dateStart: (initProperty?.user_regDt).toISOString().slice(0, 10),
     dateEnd: findMoney?.money_dateEnd,

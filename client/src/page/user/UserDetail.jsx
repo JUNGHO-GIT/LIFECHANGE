@@ -4,8 +4,7 @@ import {React, useState, useEffect, useRef, createRef} from "../../import/Import
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
-import {Footer} from "../../import/ImportLayouts.jsx";
+import {Footer, Loading} from "../../import/ImportLayouts.jsx";
 import {Div, Br30, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Avatar, MenuItem} from "../../import/ImportMuis.jsx";
 
@@ -165,6 +164,7 @@ export const UserDetail = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    setLOADING(true);
     if (!validate(OBJECT)) {
       return;
     }
@@ -183,6 +183,9 @@ export const UserDetail = () => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -324,16 +327,28 @@ export const UserDetail = () => {
             type={"text"}
             size={"small"}
             label={translate("initProperty")}
-            value={OBJECT.user_initProperty}
+            value={numeral(OBJECT.user_initProperty).format("0,0")}
             className={"w-86vw text-left"}
             inputRef={REFS.current.user_initProperty}
             error={ERRORS.user_initProperty}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_initProperty: e.target.value
-              }))
-            )}
+            onChange={(e) => {
+              const value = e.target.value.replace(/,/g, '');
+              if (/^\d*$/.test(value) || value === "") {
+                const newValue = Number(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initProperty: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initProperty: value,
+                  }));
+                }
+              }
+            }}
             InputProps={{
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
@@ -349,17 +364,12 @@ export const UserDetail = () => {
             type={"text"}
             size={"small"}
             label={translate("curProperty")}
-            value={OBJECT.user_curProperty}
+            value={numeral(OBJECT.user_curProperty).format("0,0")}
             className={"w-86vw text-left"}
             inputRef={REFS.current.user_curProperty}
             error={ERRORS.user_curProperty}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_curProperty: e.target.value
-              }))
-            )}
             InputProps={{
+              readOnly: true,
               endAdornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}
@@ -370,7 +380,7 @@ export const UserDetail = () => {
         </Div>
       );
       return (
-        tableFragment(0)
+        LOADING ? <Loading /> : tableFragment(0)
       );
     };
     // 7-10. return
