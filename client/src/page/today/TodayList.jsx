@@ -426,23 +426,25 @@ export const TodayList = () => {
                   )}}
                 />
               }>
-                <Grid container>
+                <Grid container
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Object.assign(SEND, {
+                      id: item._id,
+                      dateType: item.food_dateType || "day",
+                      dateStart: item.food_dateStart,
+                      dateEnd: item.food_dateEnd,
+                    });
+                    navigate(SEND.toFood, {
+                      state: SEND
+                    });
+                  }}
+                >
                   <Grid item xs={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        Object.assign(SEND, {
-                          id: item._id,
-                          dateType: item.food_dateType || "day",
-                          dateStart: item.food_dateStart,
-                          dateEnd: item.food_dateEnd,
-                        });
-                        navigate(SEND.toFood, {
-                          state: SEND
-                        });
-                      }}
+                      onClick={() => {}}
                     />
                   </Grid>
                   <Grid item xs={2} className={"d-left"}>

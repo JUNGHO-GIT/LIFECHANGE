@@ -17,7 +17,11 @@ export const ListFilter = ({
   const {translate} = useTranslate();
   const PATH = location?.pathname;
   const isToday = strings?.first === "today";
-  const sessionDate = sessionStorage?.getItem(`DATE(${PATH})`);
+
+  let sessionDate = sessionStorage?.getItem(`DATE(${PATH})`) || "{}";
+  let parseDate = JSON?.parse(sessionDate);
+  let dateStart = parseDate?.dateStart;
+  let dateEnd = parseDate?.dateEnd;
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
@@ -46,16 +50,20 @@ export const ListFilter = ({
     },
     selectDate: {
       dateType: "",
-      dateStart:
-        sessionDate
-        ? JSON?.parse(sessionDate)?.dateStart
-        : moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd:
-        sessionDate
-        ? JSON?.parse(sessionDate)?.dateEnd
-        : moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: dateStart,
+      dateEnd: dateEnd,
     }
   });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (dateStart === "") {
+      dateStart = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+    }
+    if (dateEnd === "") {
+      dateEnd = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+    }
+  }, [dateStart, dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
