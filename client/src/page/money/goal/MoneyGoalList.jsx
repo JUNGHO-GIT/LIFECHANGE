@@ -33,8 +33,8 @@ export const MoneyGoalList = () => {
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
   );
   const [PAGING, setPAGING] = useStorage(

@@ -111,8 +111,8 @@ export const Picker = ({
             setDATE((prev) => ({
               ...prev,
               dateType: "select",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
+              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
             }));
           }
         }}

@@ -16,7 +16,8 @@ export const ListFilter = ({
   const location = useLocation();
   const {translate} = useTranslate();
   const PATH = location?.pathname;
-  const isToday = strings?.first === "thisToday";
+  const isToday = strings?.first === "today";
+  const sessionDate = sessionStorage?.getItem(`DATE(${PATH})`);
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
@@ -25,28 +26,34 @@ export const ListFilter = ({
   const [clickedDate, setClickedDate] = useState({
     todayDate: {
       dateType: "",
-      dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     },
     weekDate: {
       dateType: "",
-      dateStart: moment.tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-      dateEnd: moment.tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
+      dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
     },
     monthDate: {
       dateType: "",
-      dateStart: moment.tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment.tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     },
     yearDate: {
       dateType: "",
-      dateStart: moment.tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-      dateEnd: moment.tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
+      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
     },
     selectDate: {
       dateType: "",
-      dateStart: "",
-      dateEnd: "",
+      dateStart:
+        sessionDate
+        ? JSON?.parse(sessionDate)?.dateStart
+        : moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd:
+        sessionDate
+        ? JSON?.parse(sessionDate)?.dateEnd
+        : moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
   });
 

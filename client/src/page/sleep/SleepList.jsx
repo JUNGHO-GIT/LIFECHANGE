@@ -3,6 +3,7 @@
 import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
+import {log} from "../../import/ImportUtils.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
@@ -33,8 +34,8 @@ export const SleepList = () => {
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
   );
   const [PAGING, setPAGING] = useStorage(
@@ -75,6 +76,14 @@ export const SleepList = () => {
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    console.log("===================================");
+    log("location", location);
+    console.log("===================================");
+    log("DATE", DATE);
+  }, [location, DATE]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {

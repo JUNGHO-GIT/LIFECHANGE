@@ -69,6 +69,7 @@ export const useTranslate = () => {
     chartLine: {ko: "추이", en: "Trend"},
     chartAvg: {ko: "평균", en: "Average"},
     curProperty: {ko: "현재 자산", en: "Current Property"},
+    close: {ko: "닫기", en: "Close"},
 
     // d
     done: {ko: "완료", en: "Done"},

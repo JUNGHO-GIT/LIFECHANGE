@@ -42,8 +42,8 @@ export const TodayDiffList = () => {
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "day",
-      dateStart: location_dateStart || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
   );
   const [PAGING, setPAGING] = useStorage(

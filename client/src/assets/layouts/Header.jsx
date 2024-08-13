@@ -39,8 +39,8 @@ export const Header = () => {
             navigate("/today/list", {
               state: {
                 dateType: "day",
-                dateStart: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
-                dateEnd: moment.tz("Asia/Seoul").format("YYYY-MM-DD"),
+                dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+                dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
               }
             });
           }}
