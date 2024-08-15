@@ -13,11 +13,11 @@ export const list = async (object) => {
   };
 
   const compareTime = (goal, real) => {
-    const hoursGoal = parseInt(goal?.split(":")[0], 10);
-    const minutesGoal = parseInt(goal?.split(":")[1], 10);
+    const hoursGoal = parseFloat(goal?.split(":")[0], 10);
+    const minutesGoal = parseFloat(goal?.split(":")[1], 10);
 
-    const hoursReal = parseInt(real?.split(":")[0], 10);
-    const minutesReal = parseInt(real?.split(":")[1], 10);
+    const hoursReal = parseFloat(real?.split(":")[0], 10);
+    const minutesReal = parseFloat(real?.split(":")[1], 10);
 
     const hours = Math.abs(hoursGoal - hoursReal);
     const minutes = Math.abs(minutesGoal - minutesReal);
@@ -76,11 +76,11 @@ export const list = async (object) => {
       }
     }
     else if (extra === "cardio") {
-      const hoursGoal = parseInt(goal?.split(":")[0], 10);
-      const minutesGoal = parseInt(goal?.split(":")[1], 10);
+      const hoursGoal = parseFloat(goal?.split(":")[0], 10);
+      const minutesGoal = parseFloat(goal?.split(":")[1], 10);
 
-      const hoursReal = parseInt(real?.split(":")[0], 10);
-      const minutesReal = parseInt(real?.split(":")[1], 10);
+      const hoursReal = parseFloat(real?.split(":")[0], 10);
+      const minutesReal = parseFloat(real?.split(":")[1], 10);
 
       const hours = Math.abs(hoursGoal - hoursReal);
       const minutes = Math.abs(minutesGoal - minutesReal);

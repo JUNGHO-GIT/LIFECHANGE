@@ -62,10 +62,10 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "cardio") {
-      const hoursGoal = parseInt(goalParam?.split(":")[0], 10);
-      const minutesGoal = parseInt(goalParam?.split(":")[1], 10);
-      const hoursReal = parseInt(realParam?.split(":")[0], 10);
-      const minutesReal = parseInt(realParam?.split(":")[1], 10);
+      const hoursGoal = parseFloat(goalParam?.split(":")[0], 10);
+      const minutesGoal = parseFloat(goalParam?.split(":")[1], 10);
+      const hoursReal = parseFloat(realParam?.split(":")[0], 10);
+      const minutesReal = parseFloat(realParam?.split(":")[1], 10);
       const hours = Math.abs(hoursGoal - hoursReal);
       const minutes = Math.abs(minutesGoal - minutesReal);
       const diffVal = (hours * 60) + minutes;
@@ -302,10 +302,10 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "sleepTime") {
-      const hoursGoal = parseInt(goal?.split(":")[0], 10);
-      const minutesGoal = parseInt(goal?.split(":")[1], 10);
-      const hoursReal = parseInt(real?.split(":")[0], 10);
-      const minutesReal = parseInt(real?.split(":")[1], 10);
+      const hoursGoal = parseFloat(goal?.split(":")[0], 10);
+      const minutesGoal = parseFloat(goal?.split(":")[1], 10);
+      const hoursReal = parseFloat(real?.split(":")[0], 10);
+      const minutesReal = parseFloat(real?.split(":")[1], 10);
       const hours = Math.abs(hoursGoal - hoursReal);
       const minutes = Math.abs(minutesGoal - minutesReal);
 

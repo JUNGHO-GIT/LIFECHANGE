@@ -97,9 +97,9 @@ export const property = async (
   );
 
   const curProperty = String (
-    (parseInt(initProperty?.user_initProperty) || 0) +
-    (parseInt(findMoney?.money_total_income) || 0) -
-    (parseInt(findMoney?.money_total_expense) || 0)
+    (parseFloat(initProperty?.user_initProperty) || 0) +
+    (parseFloat(findMoney?.money_total_income) || 0) -
+    (parseFloat(findMoney?.money_total_expense) || 0)
   );
 
   await repository.property.updateCurProperty(
@@ -108,13 +108,13 @@ export const property = async (
 
   const finalResult = {
     totalIncome: String (
-      findMoney?.money_total_income ? parseInt(findMoney?.money_total_income) : 0
+      findMoney?.money_total_income ? parseFloat(findMoney?.money_total_income) : 0
     ),
     totalExpense: String (
-      findMoney?.money_total_expense ? parseInt(findMoney?.money_total_expense) : 0
+      findMoney?.money_total_expense ? parseFloat(findMoney?.money_total_expense) : 0
     ),
     initProperty: String (
-      initProperty?.user_initProperty ? parseInt(initProperty?.user_initProperty) : 0
+      initProperty?.user_initProperty ? parseFloat(initProperty?.user_initProperty) : 0
     ),
     curProperty: curProperty,
     dateStart: regDt,
@@ -155,16 +155,16 @@ export const scale = async (
 
   const finalResult = {
     initScale: String (
-      initScale?.user_initScale ? parseInt(initScale?.user_initScale) : 0
+      initScale?.user_initScale ? parseFloat(initScale?.user_initScale) : 0
     ),
     minScale: String (
-      findScaleMinMax?.scale_min ? parseInt(findScaleMinMax?.scale_min) : 0
+      findScaleMinMax?.scale_min ? parseFloat(findScaleMinMax?.scale_min) : 0
     ),
     maxScale: String (
-      findScaleMinMax?.scale_max ? parseInt(findScaleMinMax?.scale_max) : 0
+      findScaleMinMax?.scale_max ? parseFloat(findScaleMinMax?.scale_max) : 0
     ),
     curScale: String (
-      findScaleCur?.exercise_body_weight ? parseInt(findScaleCur?.exercise_body_weight) : 0
+      findScaleCur?.exercise_body_weight ? parseFloat(findScaleCur?.exercise_body_weight) : 0
     ),
     dateStart: regDt,
     dateEnd: todayDt,

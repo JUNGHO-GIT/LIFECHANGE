@@ -107,7 +107,7 @@ export const find = async (
   // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;
   const countMatch = count ? count.match(/(\d+)중\s+(\d+)에서\s+(\d+)/) : null;
-  const totalCnt = countMatch ? parseInt(countMatch[1]) : 0;
+  const totalCnt = countMatch ? parseFloat(countMatch[1]) : 0;
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
   // 브랜드 이름 처리
