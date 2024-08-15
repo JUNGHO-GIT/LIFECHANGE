@@ -102,8 +102,6 @@ export const find = async (
   const findResult = await getFindResult();
   const document = new JSDOM(findResult).window.document;
 
-  console.log(pretty(document.documentElement.outerHTML));
-
   // ex. 116중 11에서 20 .. -> 116
   const count = document.querySelector(".searchResultSummary")?.textContent;
   const countMatch = count ? count.match(/(\d+)중\s+(\d+)에서\s+(\d+)/) : null;
@@ -164,9 +162,6 @@ export const find = async (
           gram = gramMatch ? gramMatch[1] : "0";
         }
       }
-
-      console.log(pretty("serv: " + serv));
-      console.log(pretty("gram: " + gram));
     }
     return {
       count: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],

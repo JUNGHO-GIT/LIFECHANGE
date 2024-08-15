@@ -109,17 +109,11 @@ export const TopNav = () => {
       sleep: getImage(newSmileScore.sleep),
     });
 
-  }, [
-    percent?.total?.average?.score,
-    percent?.exercise?.average?.score,
-    percent?.food?.average?.score,
-    percent?.money?.average?.score,
-    percent?.sleep?.average?.score
-  ]);
+  }, [percent]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 메인 스마일 이미지
-  useEffect(() => {
+  useEffect(() => {(async () => {
     if (firstStr === "calendar") {
       setMainSmileImage(smileImage.total);
     }
@@ -141,7 +135,8 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-  }, [location, selectedTab]);
+    console.log("firstStr", firstStr);
+  })()}, [location, selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 퍼센트, 자산, 체중 설정
