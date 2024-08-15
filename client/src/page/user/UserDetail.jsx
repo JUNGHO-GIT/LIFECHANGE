@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios, numeral} from "../../import/ImportLibs.jsx";
 import {Footer, Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Br30, Br20, Br10} from "../../import/ImportComponents.jsx";
+import {Div, Br30, Br20, Hr40} from "../../import/ImportComponents.jsx";
 import {Paper, TextField, Avatar, MenuItem} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -45,10 +45,11 @@ export const UserDetail = () => {
     user_gender: "",
     user_age: "",
     user_height: "",
-    user_weight: "",
-    user_image: "",
+    user_initScale: "",
+    user_curScale: "",
     user_initProperty: "",
     user_curProperty: "",
+    user_image: "",
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -58,17 +59,15 @@ export const UserDetail = () => {
     user_age: false,
     user_gender: false,
     user_height: false,
-    user_weight: false,
+    user_initScale: false,
     user_initProperty: false,
-    user_curProperty: false,
   });
   const REFS = useRef({
     user_age: createRef(),
     user_gender: createRef(),
     user_height: createRef(),
-    user_weight: createRef(),
+    user_initScale: createRef(),
     user_initProperty: createRef(),
-    user_curProperty: createRef(),
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -105,9 +104,8 @@ export const UserDetail = () => {
       user_age: false,
       user_gender: false,
       user_height: false,
-      user_weight: false,
+      user_initScale: false,
       user_initProperty: false,
-      user_curProperty: false,
     };
     const refsCurrent = REFS?.current;
 
@@ -136,11 +134,11 @@ export const UserDetail = () => {
       initialErrors.user_height = true;
       foundError = true;
     }
-    else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
-      alert(translate("errorUserWeight"));
-      refsCurrent.user_weight.current &&
-      refsCurrent.user_weight.current?.focus();
-      initialErrors.user_weight = true;
+    else if (OBJECT.user_initScale === "" || !OBJECT.user_initScale) {
+      alert(translate("errorUserInitScale"));
+      refsCurrent.user_initScale.current &&
+      refsCurrent.user_initScale.current?.focus();
+      initialErrors.user_initScale = true;
       foundError = true;
     }
     else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
@@ -148,13 +146,6 @@ export const UserDetail = () => {
       refsCurrent.user_initProperty.current &&
       refsCurrent.user_initProperty.current?.focus();
       initialErrors.user_initProperty = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_curProperty === "" || !OBJECT.user_curProperty) {
-      alert(translate("errorUserCurProperty"));
-      refsCurrent.user_curProperty.current &&
-      refsCurrent.user_curProperty.current?.focus();
-      initialErrors.user_curProperty = true;
       foundError = true;
     }
 
@@ -200,7 +191,7 @@ export const UserDetail = () => {
             src={OBJECT?.user_image}
             className={"m-auto w-150 h-150"}
           />
-          <Br30 />
+          <Hr40 />
           <TextField
             select={false}
             type={"text"}
@@ -224,7 +215,7 @@ export const UserDetail = () => {
               readOnly: true,
             }}
           />
-          <Br20 />
+          <Br30 />
           {/** 성별 (N, M, F) **/}
           <TextField
             select={true}
@@ -273,9 +264,9 @@ export const UserDetail = () => {
             ))}
           </TextField>
           <Br20 />
-          {/** 신장 (100cm ~ 200cm) **/}
+          {/** 신장 **/}
           <TextField
-            select={true}
+            select={false}
             type={"text"}
             size={"small"}
             label={translate("height")}
@@ -283,44 +274,88 @@ export const UserDetail = () => {
             className={"w-86vw text-left"}
             inputRef={REFS.current.user_height}
             error={ERRORS.user_height}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_height: e.target.value
-              }))
-            )}
-          >
-            {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
-              <MenuItem key={i} value={item}>
-                {`${item} cm`}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Br20 />
-          {/** 몸무게 (30kg ~ 200kg) **/}
+            onChange={(e) => {
+              const value = e.target.value.replace(/^0+/, '');
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                const newValue = parseFloat(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_height: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_height: value,
+                  }));
+                }
+              }
+            }}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("cm")}
+                </Div>
+              )
+            }}
+          />
+          <Br30 />
+          {/** 최초 몸무게 **/}
           <TextField
-            select={true}
+            select={false}
             type={"text"}
             size={"small"}
-            label={translate("weight")}
-            value={OBJECT.user_weight}
+            label={translate("initScale")}
+            value={OBJECT.user_initScale}
             className={"w-86vw text-left"}
-            inputRef={REFS.current.user_weight}
-            error={ERRORS.user_weight}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_weight: e.target.value
-              }))
-            )}
-          >
-            {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
-              <MenuItem key={i} value={item}>
-                {`${item} kg`}
-              </MenuItem>
-            ))}
-          </TextField>
+            inputRef={REFS.current.user_initScale}
+            error={ERRORS.user_initScale}
+            onChange={(e) => {
+              const value = e.target.value.replace(/^0+/, '');
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                const newValue = parseFloat(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initScale: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initScale: value,
+                  }));
+                }
+              }
+            }}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("k")}
+                </Div>
+              )
+            }}
+          />
           <Br20 />
+          {/** 현재 몸무게 **/}
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            label={translate("curScale")}
+            value={OBJECT.user_curScale}
+            className={"w-86vw text-left"}
+            InputProps={{
+              readOnly: true,
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("k")}
+                </Div>
+              )
+            }}
+          />
+          <Br30 />
           {/** 초기 자산 **/}
           <TextField
             select={false}
@@ -364,10 +399,8 @@ export const UserDetail = () => {
             type={"text"}
             size={"small"}
             label={translate("curProperty")}
-            value={numeral(OBJECT.user_curProperty).format("0,0")}
+            value={numeral(curProperty).format("0,0")}
             className={"w-86vw text-left"}
-            inputRef={REFS.current.user_curProperty}
-            error={ERRORS.user_curProperty}
             InputProps={{
               readOnly: true,
               endAdornment: (

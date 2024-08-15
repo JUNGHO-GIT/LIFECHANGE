@@ -35,7 +35,8 @@ export const UserSignup = () => {
     user_age: "",
     user_gender: "",
     user_height: "",
-    user_weight: "",
+    user_initScale: "",
+    user_curScale: "",
     user_initProperty: "",
     user_curProperty: "",
     user_image: "",
@@ -50,7 +51,8 @@ export const UserSignup = () => {
     user_pw_verified: false,
     user_age: false,
     user_height: false,
-    user_weight: false,
+    user_initScale: false,
+    user_initProperty: false,
   });
   const REFS = useRef({
     user_id: createRef(),
@@ -59,7 +61,8 @@ export const UserSignup = () => {
     user_pw_verified: createRef(),
     user_age: createRef(),
     user_height: createRef(),
-    user_weight: createRef(),
+    user_initScale: createRef(),
+    user_initProperty: createRef(),
   });
 
   // 2-4. validate ---------------------------------------------------------------------------------
@@ -76,7 +79,8 @@ export const UserSignup = () => {
       user_pw_verified: false,
       user_age: false,
       user_height: false,
-      user_weight: false,
+      user_initScale: false,
+      user_initProperty: false,
     };
     const refsCurrent = REFS?.current;
 
@@ -165,11 +169,18 @@ export const UserSignup = () => {
         initialErrors.user_height = true;
         foundError = true;
       }
-      else if (OBJECT.user_weight === "" || !OBJECT.user_weight) {
-        alert(translate("errorUserWeight"));
-        refsCurrent.user_weight.current &&
-        refsCurrent.user_weight.current?.focus();
-        initialErrors.user_weight = true;
+      else if (OBJECT.user_initScale === "" || !OBJECT.user_initScale) {
+        alert(translate("errorUserInitScale"));
+        refsCurrent.user_initScale.current &&
+        refsCurrent.user_initScale.current?.focus();
+        initialErrors.user_initScale = true;
+        foundError = true;
+      }
+      else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
+        alert(translate("errorUserInitProperty"));
+        refsCurrent.user_initProperty.current &&
+        refsCurrent.user_initProperty.current?.focus();
+        initialErrors.user_initProperty = true;
         foundError = true;
       }
     }
@@ -450,9 +461,9 @@ export const UserSignup = () => {
             ))}
           </TextField>
           <Br10 />
-          {/** 신장 (100cm ~ 200cm) **/}
+          {/** 신장 **/}
           <TextField
-            select={true}
+            select={false}
             type={"text"}
             size={"small"}
             label={translate("height")}
@@ -460,58 +471,98 @@ export const UserSignup = () => {
             className={"w-86vw text-left"}
             inputRef={REFS.current.user_height}
             error={ERRORS.user_height}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_height: e.target.value
-              }))
-            )}
-          >
-            {Array.from({length: 101}, (v, i) => i + 100).map((item, i) => (
-              <MenuItem key={i} value={item}>
-                {`${item} cm`}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={(e) => {
+              const value = e.target.value.replace(/^0+/, '');
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                const newValue = parseFloat(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_height: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_height: value,
+                  }));
+                }
+              }
+            }}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("cm")}
+                </Div>
+              )
+            }}
+          />
           <Br10 />
-          {/** 체중 (30kg ~ 200kg) **/}
+          {/** 초기 체중 **/}
           <TextField
-            select={true}
+            select={false}
             type={"text"}
             size={"small"}
-            label={translate("weight")}
-            value={OBJECT.user_weight}
+            label={translate("scale")}
+            value={OBJECT.user_initScale}
             className={"w-86vw text-left"}
-            inputRef={REFS.current.user_weight}
-            error={ERRORS.user_weight}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_weight: e.target.value
-              }))
-            )}
-          >
-            {Array.from({length: 171}, (v, i) => i + 30).map((item, i) => (
-              <MenuItem key={i} value={item}>
-                {`${item} kg`}
-              </MenuItem>
-            ))}
-          </TextField>
+            inputRef={REFS.current.user_initScale}
+            error={ERRORS.user_initScale}
+            onChange={(e) => {
+              const value = e.target.value.replace(/^0+/, '');
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                const newValue = parseFloat(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initScale: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initScale: value,
+                  }));
+                }
+              }
+            }}
+            InputProps={{
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("k")}
+                </Div>
+              )
+            }}
+          />
           <Br10 />
           {/** 초기 자산 **/}
           <TextField
             select={false}
             type={"text"}
             size={"small"}
-            label={translate("initProperty")}
+            label={translate("property")}
             value={OBJECT.user_initProperty}
-            className={"w-86vw"}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_initProperty: e.target.value
-              }))
-            )}
+            className={"w-86vw text-left"}
+            inputRef={REFS.current.user_initProperty}
+            error={ERRORS.user_initProperty}
+            onChange={(e) => {
+              const value = e.target.value.replace(/,/g, '');
+              if (/^\d*$/.test(value) || value === "") {
+                const newValue = Number(value);
+                if (value === "") {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initProperty: "0",
+                  }));
+                }
+                else if (!isNaN(newValue) && newValue <= 9999999999) {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_initProperty: value,
+                  }));
+                }
+              }
+            }}
             InputProps={{
               endAdornment: (
                 <Div className={"fs-0-6rem"}>

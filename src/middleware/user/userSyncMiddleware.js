@@ -8,10 +8,12 @@ export const percent = async (object) => {
   }
 
   // 1. exercise
-  const diffExercise = (goal, real, extra) => {
+  const diffExercise = (goalParam, realParam, extra) => {
 
     let score = 0;
     let percent = 0;
+    let goal = parseFloat(goalParam);
+    let real = parseFloat(realParam);
 
     if (extra === "count" || extra === "volume") {
       percent = ((real - goal) / goal) * 100;
@@ -60,10 +62,10 @@ export const percent = async (object) => {
       }
     }
     else if (extra === "cardio") {
-      const hoursGoal = parseInt(goal?.split(":")[0], 10);
-      const minutesGoal = parseInt(goal?.split(":")[1], 10);
-      const hoursReal = parseInt(real?.split(":")[0], 10);
-      const minutesReal = parseInt(real?.split(":")[1], 10);
+      const hoursGoal = parseInt(goalParam?.split(":")[0], 10);
+      const minutesGoal = parseInt(goalParam?.split(":")[1], 10);
+      const hoursReal = parseInt(realParam?.split(":")[0], 10);
+      const minutesReal = parseInt(realParam?.split(":")[1], 10);
       const hours = Math.abs(hoursGoal - hoursReal);
       const minutes = Math.abs(minutesGoal - minutesReal);
       const diffVal = (hours * 60) + minutes;
@@ -90,16 +92,24 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
+      score:
+        String(Math.abs(score).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(score).toFixed(2)),
+      percent:
+        String(Math.abs(percent).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(percent).toFixed(2)),
     };
   };
 
   // 2. food
-  const diffFood = (goal, real, extra) => {
+  const diffFood = (goalParam, realParam, extra) => {
 
     let score = 0;
     let percent = 0;
+    let goal = parseFloat(goalParam);
+    let real = parseFloat(realParam);
 
     if (extra === "kcal" || extra === "carb" || extra === "protein" || extra === "fat") {
       percent = ((real - goal) / goal) * 100;
@@ -126,16 +136,24 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
+      score:
+        String(Math.abs(score).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(score).toFixed(2)),
+      percent:
+        String(Math.abs(percent).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(percent).toFixed(2)),
     };
   };
 
   // 3. money
-  const diffMoney = (goal, real, extra) => {
+  const diffMoney = (goalParam, realParam, extra) => {
 
     let percent = 0;
     let score = 0;
+    let goal = parseFloat(goalParam);
+    let real = parseFloat(realParam);
 
     if (extra === "income") {
       percent = (Math.abs(goal - real) / goal) * 100;
@@ -231,16 +249,24 @@ export const percent = async (object) => {
       }
     }
     return {
-      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
+      score:
+        String(Math.abs(score).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(score).toFixed(2)),
+      percent:
+        String(Math.abs(percent).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(percent).toFixed(2)),
     };
   };
 
   // 4. sleep
-  const diffSleep = (goal, real, extra) => {
+  const diffSleep = (goalParam, realParam, extra) => {
 
     let score = 0;
     let percent = 0;
+    let goal = goalParam;
+    let real = realParam;
 
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
@@ -310,8 +336,14 @@ export const percent = async (object) => {
     }
 
     return {
-      score: Math.abs(score).toFixed(2) === "NaN" ? "0.00" : Math.abs(score).toFixed(2),
-      percent: Math.abs(percent).toFixed(2) === "NaN" ? "0.00" : Math.abs(percent).toFixed(2),
+      score:
+        String(Math.abs(score).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(score).toFixed(2)),
+      percent:
+        String(Math.abs(percent).toFixed(2)) === "NaN"
+          ? "0.00"
+          : String(Math.abs(percent).toFixed(2)),
     };
   };
 
@@ -520,7 +552,7 @@ export const percent = async (object) => {
   const total = {
     score: 0,
     percent: 0,
-    count: "",
+    count: 0,
   };
 
   ["exercise", "food", "money", "sleep"]?.forEach(category => {

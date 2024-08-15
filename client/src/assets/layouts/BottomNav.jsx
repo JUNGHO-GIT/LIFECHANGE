@@ -90,8 +90,8 @@ export const BottomNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: moment().format("YYYY-MM-DD"),
-        dateEnd: moment().format("YYYY-MM-DD")
+        dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+        dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
       }
     });
   };

@@ -31,6 +31,11 @@ const schema = new mongoose.Schema({
     unique : true
   },
 
+  user_image: {
+    type : String,
+    default: "",
+    required : false
+  },
   user_age: {
     type : String,
     default: "",
@@ -46,12 +51,12 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
-  user_weight: {
+  user_initScale: {
     type : String,
     default: "",
     required : false
   },
-  user_image: {
+  user_curScale: {
     type : String,
     default: "",
     required : false

@@ -10,7 +10,7 @@ import {Sleep} from "../../schema/sleep/Sleep.js";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
 import {User} from "../../schema/user/User.js";
 
-// 1-1. percent ------------------------------------------------------------------------------------
+// 1. percent --------------------------------------------------------------------------------------
 export const percent = {
 
   // 1-1. exercise (goal)
@@ -286,7 +286,7 @@ export const property = {
     return finalResult[0];
   },
 
-  updateProperty: async (
+  updateCurProperty: async (
     user_id_param, curProperty_param
   ) => {
     const finalResult = await User.findOneAndUpdate({
@@ -302,4 +302,106 @@ export const property = {
 
     return finalResult;
   },
+};
+
+// 3. scale ----------------------------------------------------------------------------------------
+export const scale = {
+
+  findRegDt: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.aggregate([
+      {$match: {
+        user_id: user_id_param
+      }},
+      {$project: {
+        _id: 0,
+        user_regDt: "$user_regDt",
+      }}
+    ]);
+    return finalResult[0];
+  },
+
+  initScale: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.aggregate([
+      {$match: {
+        user_id: user_id_param
+      }},
+      {$project: {
+        _id: 0,
+        user_initScale: "$user_initScale",
+        user_regDt: "$user_regDt",
+      }}
+    ]);
+    return finalResult[0];
+  },
+
+  findScaleMinMax: async (
+    user_id_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Exercise.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        }
+      }},
+      {$addFields: {
+        exercise_body_weight: { $toDouble: "$exercise_body_weight" }
+      }},
+      {$group: {
+        _id: null,
+        scale_min: { $min: "$exercise_body_weight" },
+        scale_max: { $max: "$exercise_body_weight" },
+      }},
+      {$project: {
+        _id: 0,
+        scale_min: 1,
+        scale_max: 1,
+      }}
+    ]);
+    return finalResult[0];
+  },
+
+  findScaleCur: async (
+    user_id_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Exercise.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        }
+      }},
+      {$sort: {
+        exercise_dateEnd: -1,
+      }},
+      {$project: {
+        _id: 0,
+        exercise_body_weight: "$exercise_body_weight",
+      }},
+    ]);
+    return finalResult[0];
+  },
+
+  updateCurScale: async (
+    user_id_param, curScale_param
+  ) => {
+    const finalResult = await User.findOneAndUpdate({
+      user_id: user_id_param,
+    }, {
+      $set: {
+        user_curScale: curScale_param,
+        user_updateDt: new Date(),
+      },
+    }, {
+      new: true,
+    });
+
+    return finalResult;
+  }
 };

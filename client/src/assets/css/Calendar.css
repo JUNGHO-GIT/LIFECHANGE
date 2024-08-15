@@ -185,3 +185,8 @@ abbr[title] {
   cursor: pointer;
   font-size: 0.8rem;
 }
+.calendar-today abbr {
+  color: #006ab3;
+  font-weight: 700;
+  font-size: 0.9rem;
+}

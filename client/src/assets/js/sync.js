@@ -11,28 +11,49 @@ export const sync = async () => {
   const URL_OBJECT = URL + SUBFIX;
   const sessionId = sessionStorage.getItem("ID_SESSION");
 
-  // 2-1. useStorage -------------------------------------------------------------------------------
+  // 2-1. useState ---------------------------------------------------------------------------------
+  const OBJECT = {
+    percent: [],
+    property: [],
+    scale: [],
+  };
   const DATE = {
     dateType: "day",
-    dateStart: moment().format("YYYY-MM-DD"),
-    dateEnd: moment().format("YYYY-MM-DD"),
+    dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
   };
 
   try {
-    const resPercent = await axios.get(`${URL_OBJECT}/sync/percent`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resProperty = await axios.get(`${URL_OBJECT}/sync/property`, {
-      params: {
-        user_id: sessionId,
-      },
+    const [resPercent, resProperty, resScale] = await Promise.all([
+      axios.get(`${URL_OBJECT}/sync/percent`, {
+        params: {
+          user_id: sessionId,
+          DATE: DATE,
+        },
+      }),
+      axios.get(`${URL_OBJECT}/sync/property`, {
+        params: {
+          user_id: sessionId,
+          DATE: DATE,
+        },
+      }),
+      axios.get(`${URL_OBJECT}/sync/scale`, {
+        params: {
+          user_id: sessionId,
+          DATE: DATE,
+        },
+      }),
+    ]);
+
+    Object.assign(OBJECT, {
+      percent: resPercent.data.result,
+      property: resProperty.data.result,
+      scale: resScale.data.result,
     });
 
     sessionStorage.setItem("PERCENT", JSON.stringify(resPercent.data.result));
     sessionStorage.setItem("PROPERTY", JSON.stringify(resProperty.data.result));
+    sessionStorage.setItem("SCALE", JSON.stringify(resScale.data.result));
   }
   catch (error) {
     console.error(`percent error: ${error}`);

@@ -89,7 +89,7 @@ export const CalendarList = () => {
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
     const formatDate = (date) => (
-      moment(date).format("YYYY-MM-DD")
+      moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
     );
     const dateInRange = (date, dateStart, dateEnd) => {
       const currDate = formatDate(date);
@@ -124,7 +124,10 @@ export const CalendarList = () => {
     const unActiveLine = (calendarForDates) => (
       calendarForDates?.map((calendar) =>
         calendar.calendar_section.map((section) => (
-          <Div key={calendar._id} className={"calendar-unfilled"}>
+          <Div
+            key={calendar._id}
+            className={"calendar-unfilled"}
+          >
             <span className={"calendar-category"}>{section.calendar_title}</span>
           </Div>
         ))
@@ -143,8 +146,8 @@ export const CalendarList = () => {
               id: "",
               section_id: "",
               dateType: "day",
-              dateStart: moment(value).format("YYYY-MM-DD"),
-              dateEnd: moment(value).format("YYYY-MM-DD"),
+              dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
             });
             navigate(SEND.toSave, {
               state: SEND
@@ -157,14 +160,14 @@ export const CalendarList = () => {
           next2Label={null}
           prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
           nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
-          formatDay={(locale, date) => moment(date).format("D")}
-          formatWeekday={(locale, date) => moment(date).format("d")}
-          formatMonth={(locale, date) => moment(date).format("MM")}
-          formatYear={(locale, date) => moment(date).format("YYYY")}
-          formatLongDate={(locale, date) => moment(date).format("YYYY-MM-DD")}
-          formatMonthYear={(locale, date) => moment(date).format("YYYY-MM")}
+          formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
+          formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
+          formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
+          formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
+          formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
+          formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
           formatShortWeekday={(locale, date) => {
-            const day = moment(date).format("d");
+            const day = moment(date).tz("Asia/Seoul").format("d");
             const week = [
               translate("sun"), translate("mon"), translate("tue"), translate("wed"),
               translate("thu"), translate("fri"), translate("sat")
@@ -182,10 +185,15 @@ export const CalendarList = () => {
             const calendarForDates = OBJECT.filter((calendar) => (
               dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
             ));
-            const className
+            const isToday = moment(date).isSame(new Date(), 'day');
+            let className
               = calendarForDates.length >= 3
               ? "calendar-tile over-y-auto"
               : "calendar-tile";
+
+            if (isToday) {
+              className += " calendar-today";
+            }
             return className;
           }}
           tileContent={({ date, view }) => {

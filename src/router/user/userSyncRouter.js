@@ -8,7 +8,7 @@ export const router = express.Router();
 // 1. percent --------------------------------------------------------------------------------------
 router.get("/percent", async (req, res) => {
   try {
-    let result = await service.list (
+    let result = await service.percent(
       req.query.user_id,
       req.query.DATE
     );
@@ -41,7 +41,8 @@ router.get("/percent", async (req, res) => {
 router.get("/property", async (req, res) => {
   try {
     let result = await service.property (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE
     );
     if (result) {
       res.json({
@@ -54,6 +55,36 @@ router.get("/property", async (req, res) => {
       res.json({
         status: "fail",
         msg: "자산 조회 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 3. scale ----------------------------------------------------------------------------------------
+router.get("/scale", async (req, res) => {
+  try {
+    let result = await service.scale (
+      req.query.user_id,
+      req.query.DATE
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "스케일 조회 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "스케일 조회 실패"
       });
     }
   }

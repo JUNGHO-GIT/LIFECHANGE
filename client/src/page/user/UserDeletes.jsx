@@ -35,7 +35,10 @@ export const UserDeletes = () => {
     user_gender: "",
     user_age: "",
     user_height: "",
-    user_weight: "",
+    user_initScale: "",
+    user_curScale: "",
+    user_initProperty: "",
+    user_curProperty: "",
     user_image: "",
     user_regDt: "",
   };

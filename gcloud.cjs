@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const os = require('os');
 const fs = require('fs');
 
@@ -27,8 +27,8 @@ const modifyEnv = () => {
 // modify changelog
 const modifyChangelog = () => {
 
-  const currentDate = moment().format('YYYY-MM-DD');
-  const currentTime = moment().format('HH:mm:ss');
+  const currentDate = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
+  const currentTime = moment().tz("Asia/Seoul").format('HH:mm:ss');
 
   const changelog = fs.readFileSync('changelog.md', 'utf8');
   const versionPattern = /\d+\.\d+\.\d+/g;

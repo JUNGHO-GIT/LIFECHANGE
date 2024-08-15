@@ -8,6 +8,7 @@ import {TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card} from "../../import
 import {PopUp, Div, Img, Hr40, Br20} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 import {money2, money4} from "../../import/ImportImages.jsx";
+import {exercise5, exercise6} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
@@ -29,20 +30,12 @@ export const TopNav = () => {
     money : {},
     sleep : {},
   });
-  const [property, setProperty] = useState({
-    initProperty: 0,
-    totalIncome: 0,
-    totalExpense: 0,
-    curProperty: 0,
-    dateStart: "",
-    dateEnd: "",
-  });
   const [smileScore, setSmileScore] = useState({
-    total: 0,
-    exercise: 0,
-    food: 0,
-    money: 0,
-    sleep: 0,
+    total: "0",
+    exercise: "0",
+    food: "0",
+    money: "0",
+    sleep: "0",
   });
   const [smileImage, setSmileImage] = useState({
     total: smile3,
@@ -51,32 +44,24 @@ export const TopNav = () => {
     money: smile3,
     sleep: smile3,
   });
+  const [property, setProperty] = useState({
+    dateStart: "",
+    dateEnd: "",
+    initProperty: "0",
+    curProperty: "0",
+    totalIncome: "0",
+    totalExpense: "0",
+  });
+  const [scale, setScale] = useState({
+    dateStart: "",
+    dateEnd: "",
+    initScale: "0",
+    curScale: "0",
+    minScale: "0",
+    maxScale: "0",
+  });
   const [mainSmileImage, setMainSmileImage] = useState(smile3);
   const [selectedTab, setSelectedTab] = useState("chart");
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  // 퍼센트, 자산 설정
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      const storedPercent = sessionStorage.getItem("PERCENT");
-      const storedProperty = sessionStorage.getItem("PROPERTY");
-
-      if (storedPercent) {
-        setPercent(JSON.parse(storedPercent));
-      }
-
-      if (storedProperty) {
-        setProperty(JSON.parse(storedProperty));
-      }
-    };
-
-    window.addEventListener('storageChange', handleStorageChange);
-    handleStorageChange();
-
-    return () => {
-      window.removeEventListener('storageChange', handleStorageChange);
-    };
-  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -86,27 +71,28 @@ export const TopNav = () => {
     }
 
     const newSmileScore = {
-      total: percent?.total?.average?.score || 0,
-      exercise: percent?.exercise?.average?.score || 0,
-      food: percent?.food?.average?.score || 0,
-      money: percent?.money?.average?.score || 0,
-      sleep: percent?.sleep?.average?.score || 0,
+      total: percent?.total?.average?.score || "0",
+      exercise: percent?.exercise?.average?.score || "0",
+      food: percent?.food?.average?.score || "0",
+      money: percent?.money?.average?.score || "0",
+      sleep: percent?.sleep?.average?.score || "0",
     };
 
     const getImage = (score) => {
-      if (score > 0 && score <= 1) {
+      const parsScore = parseFloat(score);
+      if (parsScore > 0 && parsScore <= 1) {
         return smile1;
       }
-      else if (score > 1 && score <= 2) {
+      else if (parsScore > 1 && parsScore <= 2) {
         return smile2;
       }
-      else if (score > 2 && score <= 3) {
+      else if (parsScore > 2 && parsScore <= 3) {
         return smile3;
       }
-      else if (score > 3 && score <= 4) {
+      else if (parsScore > 3 && parsScore <= 4) {
         return smile4;
       }
-      else if (score > 4 && score <= 5) {
+      else if (parsScore > 4 && parsScore <= 5) {
         return smile5;
       }
       else {
@@ -156,6 +142,33 @@ export const TopNav = () => {
       setMainSmileImage(smileImage.total);
     }
   }, [location, selectedTab]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  // 퍼센트, 자산, 체중 설정
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      const storedPercent = sessionStorage.getItem("PERCENT");
+      const storedProperty = sessionStorage.getItem("PROPERTY");
+      const storedScale = sessionStorage.getItem("SCALE");
+
+      if (storedPercent) {
+        setPercent(JSON.parse(storedPercent));
+      }
+      if (storedProperty) {
+        setProperty(JSON.parse(storedProperty));
+      }
+      if (storedScale) {
+        setScale(JSON.parse(storedScale));
+      }
+    };
+
+    window.addEventListener('storageChange', handleStorageChange);
+    handleStorageChange();
+
+    return () => {
+      window.removeEventListener('storageChange', handleStorageChange);
+    };
+  }, []);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
@@ -239,8 +252,8 @@ export const TopNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: moment().format("YYYY-MM-DD"),
-        dateEnd: moment().format("YYYY-MM-DD")
+        dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+        dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
       }
     });
   };
@@ -256,7 +269,7 @@ export const TopNav = () => {
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-500"}>
-                {moment().format("YYYY-MM-DD (ddd)")}
+                {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
               </Div>
             </Grid>
             <Hr40 />
@@ -347,7 +360,7 @@ export const TopNav = () => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
+        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`property`}>
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
               <Div className={"fs-1-0rem fw-500 me-2vw"}>
@@ -395,7 +408,7 @@ export const TopNav = () => {
             <Grid item xs={12} className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("income")}
+                label={translate("sumIncome")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-50vw"}
@@ -417,7 +430,7 @@ export const TopNav = () => {
             <Grid item xs={12} className={"d-center"}>
               <TextField
                 select={false}
-                label={translate("expense")}
+                label={translate("sumExpense")}
                 size={"small"}
                 variant={"outlined"}
                 className={"w-50vw"}
@@ -445,6 +458,116 @@ export const TopNav = () => {
           window.dispatchEvent(event);
         }}>
           <Img src={money4} className={"w-max25 h-max25"} />
+        </Div>
+      )}
+    </PopUp>
+  );
+
+  // 6. scaleNode ----------------------------------------------------------------------------------
+  const scaleNode = () => (
+    <PopUp
+      type={"innerCenter"}
+      position={"center"}
+      direction={"center"}
+      contents={({closePopup}) => (
+        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`scale`}>
+          <Grid container>
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"fs-1-0rem fw-500 me-2vw"}>
+                {scale?.dateStart}
+              </Div>
+              <Div className={"fs-0-7rem fw-500"}>
+                ~
+              </Div>
+              <Div className={"fs-1-0rem fw-500 ms-2vw"}>
+                {scale?.dateEnd}
+              </Div>
+            </Grid>
+            <Hr40 />
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"d-center"}>
+                <Img src={exercise5} className={"w-16 h-16"} />
+                <Div className={"fs-1-4rem fw-600"}>
+                  {scale.curScale}
+                </Div>
+              </Div>
+            </Grid>
+            <Hr40 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("initScale")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={scale.initScale}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("k")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("minScale")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={scale.minScale}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("k")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid item xs={12} className={"d-center"}>
+              <TextField
+                select={false}
+                label={translate("maxScale")}
+                size={"small"}
+                variant={"outlined"}
+                className={"w-50vw"}
+                value={scale.maxScale}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  ),
+                  endAdornment: (
+                    <Div className={"fs-0-6rem"}>
+                      {translate("k")}
+                    </Div>
+                  )
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Card>
+      )}>
+      {(popTrigger={}) => (
+        <Div className={"d-center pointer"} onClick={(e) => {
+          popTrigger.openPopup(e.currentTarget)
+          const event = new Event('storageChange');
+          window.dispatchEvent(event);
+        }}>
+          <Img src={exercise6} className={"w-max25 h-max25"} />
         </Div>
       )}
     </PopUp>
@@ -517,11 +640,14 @@ export const TopNav = () => {
     <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
       <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
         <Grid container>
-          <Grid item xs={2} className={"d-center"}>
+          <Grid item xs={1} className={"d-center ms-2vw"}>
             {smileNode()}
           </Grid>
-          <Grid item xs={2} className={"d-center"}>
+          <Grid item xs={1} className={"d-center ms-2vw"}>
             {propertyNode()}
+          </Grid>
+          <Grid item xs={1} className={"d-center ms-2vw"}>
+            {scaleNode()}
           </Grid>
           <Grid item xs={8} className={"d-center"}>
             {tabsNode()}

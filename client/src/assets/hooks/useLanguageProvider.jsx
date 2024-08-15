@@ -70,6 +70,7 @@ export const useTranslate = () => {
     chartAvg: {ko: "평균", en: "Average"},
     curProperty: {ko: "현재 자산", en: "Current Property"},
     close: {ko: "닫기", en: "Close"},
+    curScale: {ko: "현재 체중", en: "Current Weight"},
 
     // d
     done: {ko: "완료", en: "Done"},
@@ -177,6 +178,7 @@ export const useTranslate = () => {
     isVerified: {ko: "인증되었습니다", en: "Verified"},
     isNotVerified: {ko: "인증 실패", en: "Not Verified"},
     initProperty: {ko: "초기 자산", en: "Initial Property"},
+    initScale: {ko: "초기 체중", en: "Initial Weight"},
 
     // j
     join: {ko: "가입", en: "Join"},
@@ -200,6 +202,8 @@ export const useTranslate = () => {
     labor: {ko: "근로", en: "Labor"},
 
     // m
+    minScale: {ko: "최저 체중", en: "Min Weight"},
+    maxScale: {ko: "최고 체중", en: "Max Weight"},
     memo: {ko: "메모", en: "Memo"},
     male: {ko: "남성", en: "Male"},
     money: {ko: "자산", en: "money"},
@@ -271,6 +275,9 @@ export const useTranslate = () => {
     snack: {ko: "간식", en: "Snack"},
     schedule: {ko: "일정", en: "Schedule"},
     selectDate: {ko: "날짜선택", en: "Select"},
+    scale: {ko: "체중", en: "Weight"},
+    sumIncome: {ko: "총 수입", en: "Total Income"},
+    sumExpense: {ko: "총 지출", en: "Total Expense"},
 
     // t
     trend: {ko: "추이", en: "Trend"},
