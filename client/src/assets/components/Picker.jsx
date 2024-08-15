@@ -79,32 +79,32 @@ export const Picker = ({
             setDATE((prev) => ({
               ...prev,
               dateType: "day",
-              dateStart: moment().format("YYYY-MM-DD"),
-              dateEnd: moment().format("YYYY-MM-DD")
+              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
             }));
           }
           else if (e.target.value === "week") {
             setDATE((prev) => ({
               ...prev,
               dateType: "week",
-              dateStart: moment().startOf("isoWeek").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("isoWeek").format("YYYY-MM-DD")
+              dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
             }));
           }
           else if (e.target.value === "month") {
             setDATE((prev) => ({
               ...prev,
               dateType: "month",
-              dateStart: moment().startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("month").format("YYYY-MM-DD")
+              dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
             }));
           }
           else if (e.target.value === "year") {
             setDATE((prev) => ({
               ...prev,
               dateType: "year",
-              dateStart: moment().startOf("year").format("YYYY-MM-DD"),
-              dateEnd: moment().endOf("year").format("YYYY-MM-DD")
+              dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
             }));
           }
           else if (e.target.value === "select") {
@@ -150,8 +150,8 @@ export const Picker = ({
             slots={{
               day: (props) => {
                 const {outsideCurrentMonth, day, ...other} = props;
-                const isBadged = EXIST.includes(moment(day).format("YYYY-MM-DD"));
-                const isSelected = DATE.dateStart === moment(day).format("YYYY-MM-DD");
+                const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
+                const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
                 return (
                   <Badge
                     key={props.day.toString()}
@@ -171,8 +171,8 @@ export const Picker = ({
                       onDaySelect={(day) => {
                         setDATE((prev) => ({
                           ...prev,
-                          dateStart: moment(day).format("YYYY-MM-DD"),
-                          dateEnd: moment(day).format("YYYY-MM-DD")
+                          dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                          dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                         }));
                         Object.keys(sessionStorage).forEach((key) => {
                           if (key.includes("foodSection")) {
@@ -273,11 +273,11 @@ export const Picker = ({
                 // 일주일에 해당하는 날짜를 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
-                  const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
+                  const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
+                  const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
                   const isSelected =
-                  DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
-                  DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
+                  DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
+                  DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                   let borderRadius = "";
                   if (isSelected) {
                     if (isFirst) {
@@ -303,8 +303,8 @@ export const Picker = ({
                       onDaySelect={(day) => {
                         setDATE((prev) => ({
                           ...prev,
-                          dateStart: moment(day).startOf("isoWeek").format("YYYY-MM-DD"),
-                          dateEnd: moment(day).endOf("isoWeek").format("YYYY-MM-DD")
+                          dateStart: moment(day).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+                          dateEnd: moment(day).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
                         }));
                       }}
                     />
@@ -398,7 +398,7 @@ export const Picker = ({
                 // 월의 첫번째 날을 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = moment(day).date() === 1;
+                  const isSelected = moment(day).tz("Asia/Seoul").date() === 1;
                   return (
                     <PickersDay
                       {...other}
@@ -496,7 +496,7 @@ export const Picker = ({
                 // 매년 1월 1일 선택
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = moment(day).month() === 0 && moment(day).date() === 1;
+                  const isSelected = moment(day).tz("Asia/Seoul").month() === 0 && moment(day).tz("Asia/Seoul").date() === 1;
                   return (
                      <PickersDay
                       {...other}
@@ -593,10 +593,10 @@ export const Picker = ({
               slots={{
                 day: (props) => {
                   const {outsideCurrentMonth, day, ...other} = props;
-                  const isFirst = moment(day).format("YYYY-MM-DD") === DATE.dateStart;
-                  const isLast = moment(day).format("YYYY-MM-DD") === DATE.dateEnd;
-                  const isSelected = DATE.dateStart <= moment(day).format("YYYY-MM-DD") &&
-                  DATE.dateEnd >= moment(day).format("YYYY-MM-DD")
+                  const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
+                  const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
+                  const isSelected = DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
+                  DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                   let borderRadius = "";
                   let backgroundColor = "";
                   if (isSelected) {
@@ -631,11 +631,11 @@ export const Picker = ({
                         if (
                           !DATE.dateStart ||
                           DATE.dateEnd ||
-                          moment(day).isBefore(DATE.dateStart)
+                          moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
                         ) {
                           setDATE((prev) => ({
                             ...prev,
-                            dateStart: moment(day).format("YYYY-MM-DD"),
+                            dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
                             dateEnd: ""
                           }));
                         }
@@ -643,7 +643,7 @@ export const Picker = ({
                           setDATE((prev) => ({
                             ...prev,
                             dateStart: prev.dateStart,
-                            dateEnd: moment(day).format("YYYY-MM-DD")
+                            dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                           }));
                         }
                       }}
