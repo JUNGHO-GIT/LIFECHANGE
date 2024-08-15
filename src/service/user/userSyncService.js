@@ -77,12 +77,20 @@ export const property = async (
   user_id_param
 ) => {
 
-  // todo
+  // 가입날짜 ~ 현재날짜
+  const findRegDt = await repository.property.findRegDt(
+    user_id_param
+  );
+
+  // 2024-08-04T15:30:20.805Z -> 2024-08-04
+  const regDt = (findRegDt?.user_regDt).toISOString().slice(0, 10);
+  const todayDt = new Date().toISOString().slice(0, 10);
+
   const initProperty = await repository.property.initProperty(
     user_id_param
   );
   const findMoney = await repository.property.findMoney(
-    user_id_param
+    user_id_param, regDt, todayDt
   );
 
   const curProperty = String (
@@ -102,8 +110,8 @@ export const property = async (
       !initProperty?.user_initProperty ? 0 : parseInt(initProperty?.user_initProperty)
     ),
     curProperty: curProperty,
-    dateStart: (initProperty?.user_regDt).toISOString().slice(0, 10),
-    dateEnd: findMoney?.money_dateEnd,
+    dateStart: regDt,
+    dateEnd: todayDt,
   };
 
   return finalResult;

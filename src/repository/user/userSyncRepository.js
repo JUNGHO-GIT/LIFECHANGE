@@ -225,6 +225,22 @@ export const percent = {
 
 // 2. property -------------------------------------------------------------------------------------
 export const property = {
+
+  findRegDt: async (
+    user_id_param
+  ) => {
+    const finalResult = await User.aggregate([
+      {$match: {
+        user_id: user_id_param
+      }},
+      {$project: {
+        _id: 0,
+        user_regDt: "$user_regDt",
+      }}
+    ]);
+    return finalResult[0];
+  },
+
   initProperty: async (
     user_id_param
   ) => {
@@ -242,23 +258,29 @@ export const property = {
   },
 
   findMoney: async (
-    user_id_param
+    user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param
+        user_id: user_id_param,
+        money_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        }
+      }},
+      {$addFields: {
+        money_total_income: { $toDouble: "$money_total_income" },
+        money_total_expense: { $toDouble: "$money_total_expense" }
       }},
       {$group: {
         _id: null,
         money_total_income: { $sum: "$money_total_income" },
         money_total_expense: { $sum: "$money_total_expense" },
-        money_dateEnd: { $max: "$money_dateEnd" },
       }},
       {$project: {
         _id: 0,
-        money_total_income: "$money_total_income",
-        money_total_expense: "$money_total_expense",
-        money_dateEnd: "$money_dateEnd",
+        money_total_income: 1,
+        money_total_expense: 1,
       }}
     ]);
     return finalResult[0];

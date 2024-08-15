@@ -48,7 +48,7 @@ export const list = async (
     );
 
     const exerciseTotalCount = listReal.reduce((acc, curr) => (
-      acc + (curr?.exercise_total_volume !== 1 ? 1 : 0)
+      acc + (curr?.exercise_total_volume === "0" ? 0 : 1)
     ), 0);
     const exerciseTotalVolume = listReal.reduce((acc, curr) => (
       acc + (curr?.exercise_total_volume ?? 0)

@@ -78,14 +78,6 @@ export const SleepList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    console.log("===================================");
-    log("location", location);
-    console.log("===================================");
-    log("DATE", DATE);
-  }, [location, DATE]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
     await axios.get(`${URL_OBJECT}/list`, {

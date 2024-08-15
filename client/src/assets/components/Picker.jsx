@@ -1,10 +1,10 @@
 // Picker.jsx
 
-import {React, useLocation, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useLocation, useEffect, useState} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
-import {PopUp, Div, Img, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {Badge, TextField, MenuItem, PickersDay, Button} from "../../import/ImportMuis.jsx";
 import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1} from "../../import/ImportImages.jsx";
@@ -29,104 +29,125 @@ export const Picker = ({
   const isSave = secondStr === "save" && thirdStr === "";
   const isFind  = secondStr === "find";
 
-  // 2. type ---------------------------------------------------------------------------------------
-  const typeStr =
-    (isDiffList || isGoalList || isList) ? (
-      "h-min0 h-4vh fs-0-7rem pointer"
-    )
-    : (isGoalSave || isSave || isFind) ? (
-      "h-min40 fs-0-8rem pointer"
-    )
-    : "";
+  let sessionDate = sessionStorage?.getItem(`DATE(${PATH})`) || "{}";
+  let parseDate = JSON?.parse(sessionDate);
+  let dateStart = parseDate?.dateStart;
+  let dateEnd = parseDate?.dateEnd;
 
-  // 3. width --------------------------------------------------------------------------------------
-  const widthStr =
-    (isDiffList || isGoalList || isList) ? (
-      "w-46vw"
-    )
-    : (isGoalSave || isSave || isFind) ? (
-      "w-86vw"
-    )
-    : "";
-
-  // 4. inner --------------------------------------------------------------------------------------
-  const innerStr =
-    (isDiffList || isGoalList || isList) ? (
-      "h-min0 h-4vh fs-0-7rem pointer"
-    )
-    : (isGoalSave || isSave || isFind) ? (
-      "h-min40 fs-0-8rem pointer"
-    )
-    : "";
-
-  // 1. type ---------------------------------------------------------------------------------------
-  const typeNode = () => (
-    (firstStr === "calendar" && secondStr !== "goal") ||
-    (firstStr !== "calendar" && secondStr === "goal") ? (
-      <TextField
-        select={true}
-        label={translate("dateType")}
-        size={"small"}
-        value={DATE.dateType || ""}
-        variant={"outlined"}
-        className={"w-26vw me-3vw"}
-        InputProps={{
-          readOnly: false,
-          className: typeStr
-        }}
-        onChange={(e) => {
-          if (e.target.value === "day") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "day",
-              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "week") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "week",
-              dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "month") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "month",
-              dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "year") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "year",
-              dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
-            }));
-          }
-          else if (e.target.value === "select") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "select",
-              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-            }));
-          }
-        }}
-      >
-        {["day", "week", "month", "year", "select"]?.map((item) => (
-          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-            {translate(item)}
-          </MenuItem>
-        ))}
-      </TextField>
-    ) : (
-      null
-    )
+  // 2-2. useStorage -------------------------------------------------------------------------------
+  const [clickedType, setClickedType] = useStorage(
+    `CLICKED(${PATH})`, "thisToday"
   );
+  const clickedDate = {
+    todayDate: {
+      dateType: "",
+      dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    },
+    weekDate: {
+      dateType: "",
+      dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
+    },
+    monthDate: {
+      dateType: "",
+      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
+    },
+    yearDate: {
+      dateType: "",
+      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
+    },
+    selectDate: {
+      dateType: "",
+      dateStart: dateStart,
+      dateEnd: dateEnd,
+    }
+  };
+  const [typeStr, setTypeStr] = useState("");
+  const [widthStr, setWidthStr] = useState("");
+  const [innerStr, setInnerStr] = useState("");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (isDiffList || isGoalList || isList) {
+      setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
+      setWidthStr("w-46vw");
+      setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
+    }
+    else if (isGoalSave || isSave || isFind) {
+      setTypeStr("h-min40 fs-0-8rem pointer");
+      setWidthStr("w-86vw");
+      setInnerStr("h-min40 fs-0-8rem pointer");
+    }
+  }, [PATH]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (!isSave && !isGoalSave) {
+      if (dateStart === "") {
+        dateStart = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      }
+      if (dateEnd === "") {
+        dateEnd = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      }
+    }
+  }, [dateStart, dateEnd]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (!isSave && !isGoalSave) {
+      if (clickedType === "thisToday") {
+        setDATE(clickedDate?.todayDate);
+      }
+      else if (clickedType === "thisWeek") {
+        setDATE(clickedDate?.weekDate);
+      }
+      else if (clickedType === "thisMonth") {
+        setDATE(clickedDate?.monthDate);
+      }
+      else if (clickedType === "thisYear") {
+        setDATE(clickedDate?.yearDate);
+      }
+      else {
+        setDATE(clickedDate?.selectDate);
+      }
+    }
+  }, [clickedType]);
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (!isSave && !isGoalSave) {
+      if (
+        (DATE?.dateStart === clickedDate?.todayDate?.dateStart) &&
+        (DATE?.dateEnd === clickedDate?.todayDate?.dateEnd)
+      ) {
+        setClickedType("thisToday");
+      }
+      else if (
+        (DATE?.dateStart === clickedDate?.weekDate?.dateStart) &&
+        (DATE?.dateEnd === clickedDate?.weekDate?.dateEnd)
+      ) {
+        setClickedType("thisWeek");
+      }
+      else if (
+        (DATE?.dateStart === clickedDate?.monthDate?.dateStart) &&
+        (DATE?.dateEnd === clickedDate?.monthDate?.dateEnd)
+      ) {
+        setClickedType("thisMonth");
+      }
+      else if (
+        (DATE?.dateStart === clickedDate?.yearDate?.dateStart) &&
+        (DATE?.dateEnd === clickedDate?.yearDate?.dateEnd)
+      ) {
+        setClickedType("thisYear");
+      }
+      else {
+        setClickedType("selectDate");
+      }
+    }
+  }, [DATE]);
 
   // 1. day ----------------------------------------------------------------------------------------
   const daySection = () => (
@@ -204,19 +225,20 @@ export const Picker = ({
               ),
               nextIconButton: (props) => (
                 <Button
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
+                  {...props}
+                  className={"fs-1-4rem"}
+                  onClick={() => {
                     setDATE((prev = {}) => {
-                    const newDateStart = moment(prev.dateStart).add(1, "month");
-                    const newDateEnd = newDateStart.clone().endOf('month');
-                    return {
-                      ...prev,
-                      dateStart: newDateStart.format("YYYY-MM-DD"),
-                      dateEnd: newDateEnd.format("YYYY-MM-DD")
-                    };
-                  });
-                }}>
+                      const newDateStart = moment(prev.dateStart).add(1, "month");
+                      const newDateEnd = newDateStart.clone().endOf('month');
+                      return {
+                        ...prev,
+                        dateStart: newDateStart.format("YYYY-MM-DD"),
+                        dateEnd: newDateEnd.format("YYYY-MM-DD")
+                      };
+                    });
+                  }}
+                >
                   {props.children}
                 </Button>
               )
@@ -633,15 +655,16 @@ export const Picker = ({
                           DATE.dateEnd ||
                           moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
                         ) {
-                          setDATE((prev) => ({
-                            ...prev,
+                          setDATE({
+                            dateType: "",
                             dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
                             dateEnd: ""
-                          }));
+                          });
                         }
                         else {
                           setDATE((prev) => ({
                             ...prev,
+                            dateType: "",
                             dateStart: prev.dateStart,
                             dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                           }));
@@ -680,17 +703,227 @@ export const Picker = ({
     </PopUp>
   );
 
+  // 6. clickNode ----------------------------------------------------------------------------------
+  const clickNode = () => (
+    <PopUp
+      type={"dropdown"}
+      position={"top"}
+      direction={"center"}
+      contents={({closePopup}) => (
+        <Div className={"d-column p-10"}>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "thisToday" ? "#1976d2" : "#F9FAFB",
+              color: clickedType === "thisToday" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("thisToday");
+            }}
+          >
+            {translate("thisToday")}
+          </Button>
+          <Br10/>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "thisWeek" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisWeek" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("thisWeek");
+            }}
+          >
+            {translate("thisWeek")}
+          </Button>
+          <Br10/>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "thisMonth" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisMonth" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("thisMonth");
+            }}
+          >
+            {translate("thisMonth")}
+          </Button>
+          <Br10/>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "thisYear" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "thisYear" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("thisYear");
+            }}
+          >
+            {translate("thisYear")}
+          </Button>
+          <Br10/>
+          <Button
+            size={"small"}
+            variant={"contained"}
+            style={{
+              lineHeight: "1.4",
+              padding: "3px 9px",
+              textTransform: "none",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: "0.7rem",
+              backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
+              color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
+            }}
+            onClick={() => {
+              setClickedType("selectDate");
+            }}
+          >
+            {translate("selectDate")}
+          </Button>
+        </Div>
+      )}
+    >
+      {(popTrigger={}) => (
+        <Button
+          size={"small"}
+          color={"primary"}
+          variant={"contained"}
+          className={"ms-3vw"}
+          style={{
+            lineHeight: "1.4",
+            padding: "3px 9px",
+            textTransform: "none",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            fontSize: "0.7rem"
+          }}
+          onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+          }}
+        >
+          {translate(clickedType)}
+        </Button>
+      )}
+    </PopUp>
+  );
+
+  // 7. type ---------------------------------------------------------------------------------------
+  const saveTypeSection = () => (
+    (firstStr === "calendar" && secondStr !== "goal") ||
+    (firstStr !== "calendar" && secondStr === "goal") ? (
+      <TextField
+        select={true}
+        label={translate("dateType")}
+        size={"small"}
+        value={DATE.dateType || ""}
+        variant={"outlined"}
+        className={"w-26vw me-3vw"}
+        InputProps={{
+          readOnly: false,
+          className: typeStr
+        }}
+        onChange={(e) => {
+          if (e.target.value === "day") {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: "day",
+              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "week") {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: "week",
+              dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "month") {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: "month",
+              dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "year") {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: "year",
+              dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
+            }));
+          }
+          else if (e.target.value === "select") {
+            setDATE((prev) => ({
+              ...prev,
+              dateType: "select",
+              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+            }));
+          }
+        }}
+      >
+        {["day", "week", "month", "year", "select"]?.map((item) => (
+          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+            {translate(item)}
+          </MenuItem>
+        ))}
+      </TextField>
+    ) : (
+      null
+    )
+  );
+
   // 6. list ---------------------------------------------------------------------------------------
   const listNode = () => (
     <Div className={"d-center"}>
       {selectSection()}
+      {isToday ? null : clickNode()}
     </Div>
   );
 
   // 6. save ---------------------------------------------------------------------------------------
   const saveNode = () => (
     <Div className={"d-center"}>
-      {typeNode()}
+      {saveTypeSection()}
       {DATE.dateType === "day" && daySection()}
       {DATE.dateType === "week" && weekSection()}
       {DATE.dateType === "month" && monthSection()}
