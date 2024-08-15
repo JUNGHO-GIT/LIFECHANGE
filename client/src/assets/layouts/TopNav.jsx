@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {moment, numeral} from "../../import/ImportLibs.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card} from "../../import/ImportMuis.jsx";
-import {PopUp, Div, Img, Hr40, Br20} from "../../import/ImportComponents.jsx";
+import {PopUp, Div, Img, Hr40, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
 import {money2, money4} from "../../import/ImportImages.jsx";
 import {exercise5, exercise6} from "../../import/ImportImages.jsx";
@@ -265,7 +265,7 @@ export const TopNav = () => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
+        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-500"}>
@@ -360,17 +360,17 @@ export const TopNav = () => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`property`}>
+        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`property`}>
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-0rem fw-500 me-2vw"}>
-                {property?.dateStart}
+              <Div className={"fs-1-3rem fw-600"}>
+                {translate("property")}
               </Div>
-              <Div className={"fs-0-7rem fw-500"}>
-                ~
-              </Div>
-              <Div className={"fs-1-0rem fw-500 ms-2vw"}>
-                {property?.dateEnd}
+            </Grid>
+            <Br10 />
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"fs-0-9rem fw-500 dark"}>
+                {`(${property?.dateStart} ~ ${property?.dateEnd})`}
               </Div>
             </Grid>
             <Hr40 />
@@ -470,17 +470,17 @@ export const TopNav = () => {
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"w-max65vw h-max65vh border radius shadow-none p-20"} key={`scale`}>
+        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`scale`}>
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-0rem fw-500 me-2vw"}>
-                {scale?.dateStart}
+              <Div className={"fs-1-3rem fw-600"}>
+                {translate("weight")}
               </Div>
-              <Div className={"fs-0-7rem fw-500"}>
-                ~
-              </Div>
-              <Div className={"fs-1-0rem fw-500 ms-2vw"}>
-                {scale?.dateEnd}
+            </Grid>
+            <Br10 />
+            <Grid item xs={12} className={"d-center"}>
+              <Div className={"fs-0-9rem fw-500 dark"}>
+                {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
               </Div>
             </Grid>
             <Hr40 />

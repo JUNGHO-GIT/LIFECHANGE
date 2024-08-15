@@ -7,7 +7,7 @@ import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, Text} from "recharts";
 import {common3_1} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -29,6 +29,9 @@ export const FoodChartPie = () => {
   const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
   const [LINE, setLINE] = useState("kcal");
+  const [pieDateToday, setPieDateToday] = useState("");
+  const [pieDateWeek, setPieDateWeek] = useState("");
+  const [pieDateMonth, setPieDateMonth] = useState("");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_TODAY_DEF = [{
@@ -98,6 +101,9 @@ export const FoodChartPie = () => {
     setOBJECT_NUT_MONTH(
       resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
     );
+    setPieDateToday(resToday.data.result.date);
+    setPieDateWeek(resWeek.data.result.date);
+    setPieDateMonth(resMonth.data.result.date);
     setLOADING(false);
   })()}, [sessionId]);
 

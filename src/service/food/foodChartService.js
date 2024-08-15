@@ -93,10 +93,12 @@ export const pieToday = async (
   ]);
 
   // findResult 배열을 순회하며 결과 저장
-  finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id),
-    value: Number(item.value) || 0
-  }));
+  finalResultKcal = findResultKcal?.map((item) => (
+    {
+      name: String(item._id),
+      value: Number(item.value) || 0
+    }
+  ));
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -115,6 +117,7 @@ export const pieToday = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -145,10 +148,12 @@ export const pieWeek = async (
   ]);
 
   // findResult 배열을 순회하며 결과 저장
-  finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id),
-    value: Number(item.value) || 0
-  }));
+  finalResultKcal = findResultKcal?.map((item) => (
+    {
+      name: String(item._id),
+      value: Number(item.value) || 0
+    }
+  ));
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -167,6 +172,7 @@ export const pieWeek = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
@@ -197,10 +203,12 @@ export const pieMonth = async (
   ]);
 
   // findResult 배열을 순회하며 결과 저장
-  finalResultKcal = findResultKcal?.map((item) => ({
-    name: String(item._id),
-    value: Number(item.value) || 0
-  }));
+  finalResultKcal = findResultKcal?.map((item) => (
+    {
+      name: String(item._id),
+      value: Number(item.value) || 0
+    }
+  ));
   finalResultNut = findResultNut.map((item) => [
     {
       name: String("carb"),
@@ -219,6 +227,7 @@ export const pieMonth = async (
   return {
     kcal: finalResultKcal,
     nut: finalResultNut,
+    date: `${dateStart} ~ ${dateEnd}`
   };
 };
 
