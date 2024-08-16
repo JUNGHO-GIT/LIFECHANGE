@@ -42,7 +42,7 @@ export const TodayList = () => {
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "day",
-      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart:location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
       dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     }
   );
@@ -312,11 +312,17 @@ export const TodayList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}
@@ -380,7 +386,7 @@ export const TodayList = () => {
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_body_weight).format("0,0")}
+                      {item.exercise_body_weight}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-right lh-2-4"}>
@@ -467,11 +473,17 @@ export const TodayList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.food_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.food_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}
@@ -644,11 +656,17 @@ export const TodayList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}
@@ -777,11 +795,17 @@ export const TodayList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.sleep_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.sleep_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}

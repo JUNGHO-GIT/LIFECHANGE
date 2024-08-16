@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Hr30, Br10, Br20, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {money2} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -69,7 +69,16 @@ export const MoneyGoalList = () => {
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: "0",
-    money_goal_expense: "0"
+    money_goal_expense: "0",
+    money_dateType: "",
+    money_dateStart: "0000-00-00",
+    money_dateEnd: "0000-00-00",
+    money_total_income: "0",
+    money_total_expense: "0",
+    money_diff_income: "0",
+    money_diff_expense: "0",
+    money_diff_income_color: "",
+    money_diff_expense_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -152,12 +161,7 @@ export const MoneyGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("money")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -172,11 +176,17 @@ export const MoneyGoalList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_goal_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_goal_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_goal_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}
@@ -194,12 +204,41 @@ export const MoneyGoalList = () => {
                       {translate("income")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_income).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.money_total_income).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.money_diff_income_color}`}>
+                      {numeral(item.money_diff_income).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>
@@ -216,12 +255,41 @@ export const MoneyGoalList = () => {
                       {translate("expense")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.money_goal_expense).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.money_total_expense).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.money_diff_expense_color}`}>
+                      {numeral(item.money_diff_expense).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("currency")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("currency")}
                     </Div>

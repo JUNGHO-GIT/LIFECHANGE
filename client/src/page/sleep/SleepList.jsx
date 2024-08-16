@@ -156,12 +156,7 @@ export const SleepList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("sleep")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.sleep_dateStart === item.sleep_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -176,11 +171,17 @@ export const SleepList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
-                        <Div className={"fs-1-0rem ms-1vw me-1vw"}>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.sleep_dateStart).format("ddd")}
+                        </Div>
+                        <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.sleep_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}

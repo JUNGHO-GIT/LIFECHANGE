@@ -167,12 +167,7 @@ export const FoodList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("food")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.food_dateStart === item.food_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>

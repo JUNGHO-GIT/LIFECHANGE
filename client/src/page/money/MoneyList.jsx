@@ -160,12 +160,7 @@ export const MoneyList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("money")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.money_dateStart === item.money_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -180,11 +175,17 @@ export const MoneyList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.money_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}

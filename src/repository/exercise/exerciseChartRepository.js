@@ -32,7 +32,7 @@ export const barToday = {
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -89,7 +89,7 @@ export const barWeek = {
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -146,7 +146,7 @@ export const barMonth = {
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Exercise.aggregate([

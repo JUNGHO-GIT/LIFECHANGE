@@ -40,12 +40,11 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-
-  const finalResult = await repository.list.list(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  finalResult.sort((a, b) => {
+  listGoal.sort((a, b) => {
     const dateTypeA = a.food_goal_dateType;
     const dateTypeB = b.food_goal_dateType;
     const dateStartA = new Date(a.food_goal_dateStart);
@@ -61,10 +60,40 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.food_goal_dateStart;
+    const dateEnd = goal?.food_goal_dateEnd;
+
+    const listReal = await repository.list.listReal(
+      user_id_param, dateType, dateStart, dateEnd
+    );
+
+    const foodTotalKcal = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.food_total_kcal) ?? 0)
+    ), 0);
+    const foodTotalCarb = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.food_total_carb) ?? 0)
+    ), 0);
+    const foodTotalProtein = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.food_total_protein) ?? 0)
+    ), 0);
+    const foodTotalFat = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.food_total_fat) ?? 0)
+    ), 0);
+
+    return {
+      ...goal,
+      food_total_kcal: String(foodTotalKcal),
+      food_total_carb: String(foodTotalCarb),
+      food_total_protein: String(foodTotalProtein),
+      food_total_fat: String(foodTotalFat),
+    };
+  }));
+
   return {
-    totalCnt: totalCnt,
-    result: finalResult
-  };
+    totalCnt : totalCnt,
+    result : finalResult
+  }
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------

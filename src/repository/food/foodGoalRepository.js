@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import {FoodGoal} from "../../schema/food/FoodGoal.js";
+import {Food} from "../../schema/food/Food.js";
 import {newDate} from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -38,6 +39,7 @@ export const exist = {
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = {
+
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
@@ -50,14 +52,14 @@ export const list = {
       food_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         food_goal_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -71,7 +73,7 @@ export const list = {
         food_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           food_goal_dateType: dateType_param
         }),
       }},
@@ -89,7 +91,41 @@ export const list = {
       {$skip: Number(page_param - 1)},
     ]);
     return finalResult;
-  }
+  },
+
+  listReal: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        food_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        food_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        ...((!dateType_param || dateType_param === "") ? {} : {
+          food_dateType: dateType_param
+        }),
+      }},
+      {$project: {
+        _id: 1,
+        food_dateType: "$food_dateType",
+        food_dateStart: "$food_dateStart",
+        food_dateEnd: "$food_dateEnd",
+        food_total_kcal: "$food_total_kcal",
+        food_total_carb: "$food_total_carb",
+        food_total_protein: "$food_total_protein",
+        food_total_fat: "$food_total_fat",
+      }},
+      {$sort: {food_dateStart: 1 }},
+    ]);
+    return finalResult;
+  },
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
@@ -107,7 +143,7 @@ export const detail = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         food_goal_dateType: dateType_param
       }),
     })
@@ -130,7 +166,7 @@ export const save = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         food_goal_dateType: dateType_param
       }),
     })
@@ -198,7 +234,7 @@ export const deletes = {
       food_goal_dateEnd: {
         $eq: dateEnd_param
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         food_goal_dateType: dateType_param
       }),
     })

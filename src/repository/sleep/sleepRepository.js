@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           sleep_dateType: dateType_param
         }),
       }},
@@ -56,14 +56,14 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         sleep_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -79,7 +79,7 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           sleep_dateType: dateType_param
         }),
       }},
@@ -119,7 +119,7 @@ export const detail = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -143,7 +143,7 @@ export const save = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -206,7 +206,7 @@ export const deletes = {
       sleep_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         sleep_dateType: dateType_param
       }),
     })
@@ -227,7 +227,7 @@ export const deletes = {
         sleep_dateEnd: {
           $eq: dateEnd_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           sleep_dateType: dateType_param
         }),
       },

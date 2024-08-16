@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
+import {Money} from "../../schema/money/Money.js";
 import {newDate} from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           money_goal_dateType: dateType_param
         }),
       }},
@@ -41,6 +42,7 @@ export const exist = {
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = {
+
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
@@ -53,14 +55,14 @@ export const list = {
       money_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_goal_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -74,7 +76,7 @@ export const list = {
         money_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           money_goal_dateType: dateType_param
         }),
       }},
@@ -87,10 +89,42 @@ export const list = {
         money_goal_expense: 1,
       }},
       {$sort: {money_goal_dateStart: sort_param}},
-      {$skip: (page_param - 1)},
+      {$skip: Number(page_param - 1)},
     ]);
     return finalResult;
-  }
+  },
+
+  listReal: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        money_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        money_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...((!dateType_param || dateType_param === "") ? {} : {
+          money_dateType: dateType_param
+        }),
+      }},
+      {$project: {
+        _id: 1,
+        money_dateType: "$money_dateType",
+        money_dateStart: "$money_dateStart",
+        money_dateEnd: "$money_dateEnd",
+        money_total_income: "$money_total_income",
+        money_total_expense: "$money_total_expense",
+      }},
+      {$sort: {money_dateStart: 1 }},
+    ]);
+    return finalResult;
+  },
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
@@ -108,7 +142,7 @@ export const detail = {
       money_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_goal_dateType: dateType_param
       }),
     })
@@ -132,7 +166,7 @@ export const save = {
       money_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_goal_dateType: dateType_param
       }),
     })
@@ -197,7 +231,7 @@ export const deletes = {
       money_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_goal_dateType: dateType_param
       }),
     })

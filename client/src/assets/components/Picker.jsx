@@ -22,7 +22,6 @@ export const Picker = ({
   const secondStr = PATH?.split("/")[2] || "";
   const thirdStr = PATH?.split("/")[3] || "";
   const isToday = firstStr === "today";
-  const isDiffList = secondStr === "diff" && thirdStr === "list";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
   const isList = secondStr === "list" && thirdStr === "";
@@ -40,27 +39,27 @@ export const Picker = ({
   );
   const clickedDate = {
     todayDate: {
-      dateType: "",
+      dateType: isToday ? "day" : "",
       dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     },
     weekDate: {
-      dateType: "",
+      dateType: isToday ? "day" : "",
       dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
     },
     monthDate: {
-      dateType: "",
+      dateType: isToday ? "day" : "",
       dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
     },
     yearDate: {
-      dateType: "",
+      dateType: isToday ? "day" : "",
       dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
       dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
     },
     selectDate: {
-      dateType: "",
+      dateType: isToday ? "day" : "",
       dateStart: dateStart,
       dateEnd: dateEnd,
     }
@@ -71,7 +70,7 @@ export const Picker = ({
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    if (isDiffList || isGoalList || isList) {
+    if (isGoalList || isList) {
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setWidthStr("w-46vw");
       setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
@@ -378,7 +377,8 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          variant={"outlined"}
+          value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
           InputProps={{
             readOnly: true,
@@ -476,7 +476,8 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          variant={"outlined"}
+          value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
           InputProps={{
             readOnly: true,
@@ -574,7 +575,8 @@ export const Picker = ({
           type={"text"}
           size={"small"}
           label={translate("duration")}
-          variant={"outlined"}value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
+          variant={"outlined"}
+          value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
           InputProps={{
             readOnly: true,
@@ -935,7 +937,7 @@ export const Picker = ({
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {(isDiffList || isGoalList || isList) && listNode()}
+      {(isGoalList || isList) && listNode()}
       {(isGoalSave || isSave || isFind) && saveNode()}
     </>
   );

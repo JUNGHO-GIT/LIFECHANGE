@@ -18,29 +18,7 @@ export const Empty = ({
     null
   );
 
-  // 2. diffNode -----------------------------------------------------------------------------------
-  const diffNode = () => (
-    <Card className={"border radius shadow-none"} key={`empty-${extra}`}>
-      <Accordion className={"shadow-none"} expanded={false}>
-        <AccordionSummary>
-          <Grid container className={"w-95p"}>
-            <Grid item xs={2} className={"d-center"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
-                {translate(`${extra}`)}
-              </Div>
-            </Grid>
-            <Grid item xs={10} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-500 black"}>
-                {translate("empty")}
-              </Div>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-      </Accordion>
-    </Card>
-  );
-
-  // 3. goalAndRealNode ----------------------------------------------------------------------------
+  // 2. goalAndRealNode ---------------------------------------------------------------------------
   const goalAndRealNode = () => (
     <Card className={"border radius shadow-none"} key={`empty-${extra}`}>
       <Accordion className={"shadow-none"} expanded={false}>
@@ -106,9 +84,7 @@ export const Empty = ({
   // 15. return ------------------------------------------------------------------------------------
   return (
     <>
-      {type === "diff" && diffNode()}
-      {(type === "goal" || type === "real") && goalAndRealNode()}
-      {type === "find" && findNode()}
+      {type === "find" ? findNode() : goalAndRealNode()}
     </>
   );
 };

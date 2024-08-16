@@ -175,7 +175,7 @@ export const user = {
 
 // 3. category -------------------------------------------------------------------------------------
 export const category = {
-  list: async (
+  listReal: async (
     user_id_param
   ) => {
     const finalResult = await User.aggregate([

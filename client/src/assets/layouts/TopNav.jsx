@@ -135,7 +135,6 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-    console.log("firstStr", firstStr);
   })()}, [location, selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -179,13 +178,10 @@ export const TopNav = () => {
       if (secondStr === "chart") {
         setSelectedTab("chart");
       }
-      else if (secondStr === "diff") {
-        setSelectedTab("diff");
-      }
       else if (secondStr === "goal") {
         setSelectedTab("goal");
       }
-      else if (secondStr === "list") {
+      else if (secondStr === "list" || secondStr === "save") {
         setSelectedTab("real");
       }
     }
@@ -193,9 +189,6 @@ export const TopNav = () => {
     else if (firstStr === "food") {
       if (secondStr === "chart") {
         setSelectedTab("chart");
-      }
-      else if (secondStr === "diff") {
-        setSelectedTab("diff");
       }
       else if (secondStr === "goal") {
         setSelectedTab("goal");
@@ -213,9 +206,6 @@ export const TopNav = () => {
     ) {
       if (secondStr === "chart") {
         setSelectedTab("chart");
-      }
-      else if (secondStr === "diff") {
-        setSelectedTab("diff");
       }
       else if (secondStr === "goal") {
         setSelectedTab("goal");
@@ -603,11 +593,6 @@ export const TopNav = () => {
           label={translate("chart")}
           value={"chart"}
           onClick={() => handleClickTobNav("chart")}
-        />
-        <Tab
-          label={translate("diff")}
-          value={"diff"}
-          onClick={() => handleClickTobNav("diff")}
         />
         <Tab
           label={translate("goal")}

@@ -45,7 +45,7 @@ const modifyChangelog = () => {
   }
 
   // 세 번째 숫자에 +1
-  versionArray[2] = (parseFloat(versionArray[2], 10) + 1).toString();
+  versionArray[2] = (parseFloat(versionArray[2]) + 1).toString();
 
   const newVersion = `\\[ ${versionArray.join('.')} \\]`;
   const newDateTime = `- ${currentDate} (${currentTime})`;

@@ -23,7 +23,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           money_dateType: dateType_param
         }),
       }},
@@ -55,14 +55,14 @@ export const list = {
         $gte: dateStart_param,
         $lte: dateEnd_param
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -78,7 +78,7 @@ export const list = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           money_dateType: dateType_param
         }),
       }},
@@ -111,7 +111,7 @@ export const detail = {
       money_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_dateType: dateType_param
       })
     })
@@ -135,7 +135,7 @@ export const save = {
       money_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_dateType: dateType_param
       })
     })
@@ -202,7 +202,7 @@ export const deletes = {
       money_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         money_dateType: dateType_param
       })
     })
@@ -223,7 +223,7 @@ export const deletes = {
         money_dateEnd: {
           $eq: dateEnd_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           money_dateType: dateType_param
         }),
       },

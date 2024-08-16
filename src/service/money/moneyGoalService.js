@@ -40,12 +40,16 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-
-  const finalResult = await repository.list.list(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  finalResult.sort((a, b) => {
+  console.log("dateType : ", dateType);
+  console.log("dateStart : ", dateStart);
+  console.log("dateEnd : ", dateEnd);
+  console.log("listGoal : ", listGoal);
+
+  listGoal.sort((a, b) => {
     const dateTypeA = a.money_goal_dateType;
     const dateTypeB = b.money_goal_dateType;
     const dateStartA = new Date(a.money_goal_dateStart);
@@ -61,10 +65,32 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.money_goal_dateStart;
+    const dateEnd = goal?.money_goal_dateEnd;
+
+    const listReal = await repository.list.listReal(
+      user_id_param, dateType, dateStart, dateEnd
+    );
+
+    const moneyTotalIncome = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.money_total_income) ?? 0)
+    ), 0);
+    const moneyTotalExpense = listReal.reduce((acc, curr) => (
+      acc + (parseFloat(curr?.money_total_expense) ?? 0)
+    ), 0);
+
+    return {
+      ...goal,
+      money_total_income: String(moneyTotalIncome),
+      money_total_expense: String(moneyTotalExpense)
+    };
+  }));
+
   return {
-    totalCnt: totalCnt,
-    result: finalResult
-  };
+    totalCnt : totalCnt,
+    result : finalResult
+  }
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------

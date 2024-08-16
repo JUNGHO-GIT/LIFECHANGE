@@ -10650,6 +10650,22 @@
   color: #000 !important;
 }
 
+.firstScore {
+  color: #3B82F6 !important;
+}
+.secondScore {
+  color: #10B981 !important;
+}
+.thirdScore {
+  color: #FACC15 !important;
+}
+.fourthScore {
+  color: #ff7903 !important;
+}
+.fifthScore {
+  color: #EF4444 !important;
+}
+
 /** 99. color *************************************************************************************/
 .bg-primary {
   background-color: #3B82F6 !important;

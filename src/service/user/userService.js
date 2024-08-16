@@ -198,7 +198,7 @@ export const categoryList = async (
   user_id_param
 ) => {
 
-  const findResult = await repository.category.list(
+  const findResult = await repository.category.listReal(
     user_id_param
   );
 

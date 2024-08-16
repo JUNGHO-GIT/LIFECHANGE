@@ -13,11 +13,11 @@ export const save = async (object) => {
   let totalTime = 0.0;
 
   object?.exercise_section?.map((item) => {
-    totalVolume += item?.exercise_set * item?.exercise_rep * item?.exercise_kg;
+    totalVolume += parseFloat(item?.exercise_set) * parseFloat(item?.exercise_rep) * parseFloat(item?.exercise_kg);
     totalTime += strToDecimal(item?.exercise_cardio);
   });
 
-  object.exercise_total_volume = totalVolume;
+  object.exercise_total_volume = String(totalVolume);
   object.exercise_total_cardio = decimalToStr(totalTime);
 
   return object;
@@ -33,11 +33,11 @@ export const deletes = async (object) => {
   let totalTime = 0.0;
 
   object?.exercise_section?.map((item) => {
-    totalVolume += item?.exercise_set * item?.exercise_rep * item?.exercise_kg;
+    totalVolume += parseFloat(item?.exercise_set) * parseFloat(item?.exercise_rep) * parseFloat(item?.exercise_kg);
     totalTime += strToDecimal(item?.exercise_cardio);
   });
 
-  object.exercise_total_volume = totalVolume;
+  object.exercise_total_volume = String(totalVolume);
   object.exercise_total_cardio = decimalToStr(totalTime);
 
   return object;

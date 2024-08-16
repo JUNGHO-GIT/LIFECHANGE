@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../../service/sleep/sleepGoalService.js";
+import * as middleware from "../../middleware/sleep/sleepGoalMiddleware.js";
 export const router = express.Router();
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -38,11 +39,12 @@ router.get("/exist", async (req, res) => {
 // 1-1. list ---------------------------------------------------------------------------------------
 router.get("/list", async (req, res) => {
   try {
-    let result = await service.list (
+    let result = await service.list(
       req.query.user_id,
       req.query.PAGING,
       req.query.DATE
     );
+    result = await middleware.list(result);
     if (result && result.result) {
       res.json({
         status: "success",

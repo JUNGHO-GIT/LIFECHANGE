@@ -27,7 +27,7 @@ export const barToday = async (
     repository.barToday.listGoal(
       user_id_param, dateStart, dateEnd
     ),
-    repository.barToday.list(
+    repository.barToday.listReal(
       user_id_param, dateStart, dateEnd
     )
   ]);
@@ -79,7 +79,7 @@ export const pieToday = async (
   const dateEnd = koreanDate;
 
   // promise 사용하여 병렬 처리
-  findResult = await repository.pieToday.list(
+  findResult = await repository.pieToday.listReal(
     user_id_param, dateStart, dateEnd
   );
 
@@ -135,7 +135,7 @@ export const pieWeek = async (
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
-  findResult = await repository.pieWeek.list(
+  findResult = await repository.pieWeek.listReal(
     user_id_param, dateStart, dateEnd
   );
 
@@ -191,7 +191,7 @@ export const pieMonth = async (
   const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
-  findResult = await repository.pieMonth.list(
+  findResult = await repository.pieMonth.listReal(
     user_id_param, dateStart, dateEnd
   );
 
@@ -249,7 +249,7 @@ export const lineWeek = async (
   const dateEnd = curWeekEnd.format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
-  findResult = await repository.lineWeek.list(
+  findResult = await repository.lineWeek.listReal(
     user_id_param, dateStart, dateEnd
   );
 
@@ -304,7 +304,7 @@ export const lineMonth = async (
   const dateEnd = curMonthEnd.format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
-  findResult = await repository.lineMonth.list(
+  findResult = await repository.lineMonth.listReal(
     user_id_param, dateStart, dateEnd
   );
 
@@ -374,7 +374,7 @@ export const avgWeek = async (
       const dateStart = startDate.format("YYYY-MM-DD");
       const dateEnd = startDate.clone().endOf('isoWeek').format("YYYY-MM-DD");
 
-      findResult = await repository.avgWeek.list(
+      findResult = await repository.avgWeek.listReal(
         user_id_param, dateStart, dateEnd
       );
 
@@ -456,7 +456,7 @@ export const avgMonth = async (
       const dateStart = startDate.format("YYYY-MM-DD");
       const dateEnd = startDate.clone().endOf('month').format("YYYY-MM-DD");
 
-      findResult = await repository.avgMonth.list(
+      findResult = await repository.avgMonth.listReal(
         user_id_param, dateStart, dateEnd
       );
 

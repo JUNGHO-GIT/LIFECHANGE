@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
+import {Exercise} from "../../schema/exercise/Exercise.js";
 import {newDate} from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ export const exist = {
           $gte: dateStart_param,
           $lte: dateEnd_param
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           exercise_goal_dateType: dateType_param
         }),
       }},
@@ -41,6 +42,7 @@ export const exist = {
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = {
+
   cnt: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
@@ -53,14 +55,14 @@ export const list = {
       exercise_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -74,7 +76,7 @@ export const list = {
         exercise_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           exercise_goal_dateType: dateType_param
         }),
       }},
@@ -92,7 +94,40 @@ export const list = {
       {$skip: Number(page_param - 1)},
     ]);
     return finalResult;
-  }
+  },
+
+  listReal: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Exercise.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        exercise_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        exercise_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param,
+        },
+        ...((!dateType_param || dateType_param === "") ? {} : {
+          exercise_dateType: dateType_param
+        }),
+      }},
+      {$project: {
+        _id: 1,
+        exercise_dateType: "$exercise_dateType",
+        exercise_dateStart: "$exercise_dateStart",
+        exercise_dateEnd: "$exercise_dateEnd",
+        exercise_total_volume: "$exercise_total_volume",
+        exercise_total_cardio: "$exercise_total_cardio",
+        exercise_body_weight: "$exercise_body_weight"
+      }},
+      {$sort: {exercise_dateStart: 1 }},
+    ]);
+    return finalResult;
+  },
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
@@ -110,7 +145,7 @@ export const detail = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
     });
@@ -133,7 +168,7 @@ export const save = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
     });
@@ -202,7 +237,7 @@ export const deletes = {
       exercise_goal_dateEnd: {
         $eq: dateEnd_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         exercise_goal_dateType: dateType_param
       }),
     })

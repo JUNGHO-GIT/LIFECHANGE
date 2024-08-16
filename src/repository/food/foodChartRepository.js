@@ -33,7 +33,7 @@ export const barToday = {
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Food.aggregate([

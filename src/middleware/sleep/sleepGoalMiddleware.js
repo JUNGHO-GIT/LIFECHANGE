@@ -2,7 +2,6 @@
 
 import {differenceInMinutes} from "date-fns";
 
-
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {
 
@@ -10,10 +9,10 @@ export const list = async (object) => {
     return [];
   }
 
-  // ex. 22:00 - 04:00 = 06:00
-  // ex. 22:00 - 22:30 = 00:30
-  // ex. 22:09 - 23:00 = 00:51
-  const compareTime = (goal, real, extra) => {
+  // 1. compareTime --------------------------------------------------------------------------------
+  const compareTime = (goalParam, realParam, extra) => {
+    const goal = goalParam;
+    const real = realParam;
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
       const realDate = new Date(`1970-01-01T${real}:00Z`);
@@ -29,7 +28,13 @@ export const list = async (object) => {
       // HH:mm 형식으로 결과 반환
       const hours = Math.floor(diff / 60);
       const minutes = diff % 60;
-      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+      if (goalDate > realDate) {
+        return `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      }
+      else {
+        return `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      }
     }
     else if (extra === "sleepTime") {
       const goalDate = new Date(`1970-01-01T${goal}:00Z`);
@@ -44,11 +49,20 @@ export const list = async (object) => {
 
       const hours = Math.floor(diff / 60);
       const minutes = diff % 60;
-      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+      if (goalDate > realDate) {
+        return `-${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      }
+      else {
+        return `+${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      }
     }
   };
 
-  const makeColor = (goal, real, extra) => {
+  // 3. makeColor ----------------------------------------------------------------------------------
+  const makeColor = (goalParam, realParam, extra) => {
+    const goal = goalParam;
+    const real = realParam;
     if (extra === "bedTime" || extra === "wakeTime") {
       const goalDate = new Date(`1970-01-01T${goal}Z`);
       const realDate = new Date(`1970-01-01T${real}Z`);
@@ -61,31 +75,31 @@ export const list = async (object) => {
       }
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 600000) {
-        return "primary";
+        return "firstScore";
       }
       // 2. 10분 ~ 20분
       else if (600000 < diffVal && diffVal <= 1200000) {
-        return "success";
+        return "secondScore";
       }
       // 3. 20분 ~ 40분
       else if (1200000 < diffVal && diffVal <= 2400000) {
-        return "secondary";
+        return "thirdScore";
       }
       // 4. 40분 ~ 60분
       else if (2400000 < diffVal && diffVal <= 3600000) {
-        return "warning";
+        return "fourthScore";
       }
       // 5. 60분 ~
       else {
-        return "danger";
+        return "fifthScore";
       }
     }
     else if (extra === "sleepTime") {
-      const hoursGoal = parseFloat(goal?.split(":")[0], 10);
-      const minutesGoal = parseFloat(goal?.split(":")[1], 10);
+      const hoursGoal = parseFloat(goal?.split(":")[0]);
+      const minutesGoal = parseFloat(goal?.split(":")[1]);
 
-      const hoursReal = parseFloat(real?.split(":")[0], 10);
-      const minutesReal = parseFloat(real?.split(":")[1], 10);
+      const hoursReal = parseFloat(real?.split(":")[0]);
+      const minutesReal = parseFloat(real?.split(":")[1]);
 
       const hours = Math.abs(hoursGoal - hoursReal);
       const minutes = Math.abs(minutesGoal - minutesReal);
@@ -94,27 +108,28 @@ export const list = async (object) => {
 
       // 1. ~ 10분
       if (0 <= diffVal && diffVal <= 10) {
-        return "primary";
+        return "firstScore";
       }
       // 2. 10분 ~ 20분
       else if (10 < diffVal && diffVal <= 20) {
-        return "success";
+        return "secondScore";
       }
       // 3. 20분 ~ 40분
       else if (20 < diffVal && diffVal <= 40) {
-        return "secondary";
+        return "thirdScore";
       }
       // 4. 40분 ~ 60분
       else if (40 < diffVal && diffVal <= 60) {
-        return "warning";
+        return "fourthScore";
       }
       // 5. 60분 ~
       else {
-        return "danger";
+        return "fifthScore";
       }
     }
   };
 
+  // 4. result -------------------------------------------------------------------------------------
   object?.result?.map((item) => {
     Object.assign((item), {
       sleep_diff_bedTime: compareTime(

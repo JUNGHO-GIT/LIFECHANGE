@@ -23,8 +23,8 @@ export const timeToDecimal = (data) => {
   }
   const time = data.split(":");
   if (time.length === 2) {
-    const hours = parseFloat(time[0], 10);
-    const minutes = parseFloat(time[1], 10) / 60;
+    const hours = parseFloat(time[0]);
+    const minutes = parseFloat(time[1]) / 60;
     return (hours + minutes).toFixed(1).toString();
   }
   return "0";

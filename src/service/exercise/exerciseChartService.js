@@ -27,7 +27,7 @@ export const barToday = async (
     repository.barToday.listGoal(
       user_id_param, dateStart, dateEnd
     ),
-    repository.barToday.list(
+    repository.barToday.listReal(
       user_id_param, dateStart, dateEnd
     )
   ]);
@@ -72,7 +72,7 @@ export const barWeek = async (
     repository.barWeek.listGoal(
       user_id_param, dateStart, dateEnd
     ),
-    repository.barWeek.list(
+    repository.barWeek.listReal(
       user_id_param, dateStart, dateEnd
     )
   ]);
@@ -132,7 +132,7 @@ export const barMonth = async (
     repository.barMonth.listGoal(
       user_id_param, dateStart, dateEnd
     ),
-    repository.barMonth.list(
+    repository.barMonth.listReal(
       user_id_param, dateStart, dateEnd
     )
   ]);

@@ -1,0 +1,82 @@
+first obj : {
+  "totalCnt": 2,
+  "result": [
+    {
+      "_id": "66be3358b389b66f7ba64b63",
+      "food_goal_dateType": "day",
+      "food_goal_dateStart": "2024-08-16",
+      "food_goal_dateEnd": "2024-08-16",
+      "food_goal_kcal": "2000",
+      "food_goal_carb": "200",
+      "food_goal_protein": "220",
+      "food_goal_fat": "40",
+      "food_total_kcal": "01448",
+      "food_total_carb": "0271",
+      "food_total_protein": "022.2",
+      "food_total_fat": "030.2"
+    },
+    {
+      "_id": "66bec2a51ccba2c6e0302038",
+      "food_goal_dateType": "month",
+      "food_goal_dateStart": "2024-08-01",
+      "food_goal_dateEnd": "2024-08-31",
+      "food_goal_kcal": "62000",
+      "food_goal_carb": "6200",
+      "food_goal_protein": "6200",
+      "food_goal_fat": "1240",
+      "food_total_kcal": 3641,
+      "food_total_carb": 292,
+      "food_total_protein": 208.3,
+      "food_total_fat": 114.2
+    }
+  ]
+}
+last obj : {
+  "totalCnt": 2,
+  "result": [
+    {
+      "_id": "66be3358b389b66f7ba64b63",
+      "food_goal_dateType": "day",
+      "food_goal_dateStart": "2024-08-16",
+      "food_goal_dateEnd": "2024-08-16",
+      "food_goal_kcal": "2000",
+      "food_goal_carb": "200",
+      "food_goal_protein": "220",
+      "food_goal_fat": "40",
+      "food_total_kcal": "01448",
+      "food_total_carb": "0271",
+      "food_total_protein": "022.2",
+      "food_total_fat": "030.2",
+      "food_diff_kcal": 552,
+      "food_diff_carb": 71,
+      "food_diff_protein": 197.8,
+      "food_diff_fat": 9.8,
+      "food_diff_kcal_color": "danger",
+      "food_diff_carb_color": "warning",
+      "food_diff_protein_color": "danger",
+      "food_diff_fat_color": "danger"
+    },
+    {
+      "_id": "66bec2a51ccba2c6e0302038",
+      "food_goal_dateType": "month",
+      "food_goal_dateStart": "2024-08-01",
+      "food_goal_dateEnd": "2024-08-31",
+      "food_goal_kcal": "62000",
+      "food_goal_carb": "6200",
+      "food_goal_protein": "6200",
+      "food_goal_fat": "1240",
+      "food_total_kcal": 3641,
+      "food_total_carb": 292,
+      "food_total_protein": 208.3,
+      "food_total_fat": 114.2,
+      "food_diff_kcal": 58359,
+      "food_diff_carb": 5908,
+      "food_diff_protein": 5991.7,
+      "food_diff_fat": 1125.8,
+      "food_diff_kcal_color": "danger",
+      "food_diff_carb_color": "danger",
+      "food_diff_protein_color": "danger",
+      "food_diff_fat_color": "danger"
+    }
+  ]
+}

@@ -27,7 +27,7 @@ export const barToday = async (
     repository.barToday.listGoal(
       user_id_param, dateStart, dateEnd
     ),
-    repository.barToday.list(
+    repository.barToday.listReal(
       user_id_param, dateStart, dateEnd
     )
   ]);

@@ -165,12 +165,7 @@ export const ExerciseList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("exercise")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -185,11 +180,17 @@ export const ExerciseList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}

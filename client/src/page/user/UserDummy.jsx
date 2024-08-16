@@ -337,7 +337,7 @@ export const UserDummy = () => {
                       {item.exercise_goal_cardio}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.exercise_goal_weight).format("0,0")}
+                      {item.exercise_goal_weight}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -381,7 +381,7 @@ export const UserDummy = () => {
                       {item.exercise_total_cardio}
                     </TableCell>
                     <TableCell>
-                      {numeral(item.exercise_body_weight).format("0,0")}
+                      {item.exercise_body_weight}
                     </TableCell>
                   </TableRow>
                 ))}

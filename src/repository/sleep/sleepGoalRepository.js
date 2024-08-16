@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
+import {Sleep} from "../../schema/sleep/Sleep.js";
 import {newDate} from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -54,14 +55,14 @@ export const list = {
       sleep_goal_dateEnd: {
         $gte: dateStart_param,
       },
-      ...(dateType_param === "" ? {} : {
+      ...((!dateType_param || dateType_param === "") ? {} : {
         sleep_goal_dateType: dateType_param
       }),
     });
     return finalResult;
   },
 
-  list: async (
+  listGoal: async (
     user_id_param,
     dateType_param, dateStart_param, dateEnd_param,
     sort_param, page_param,
@@ -75,7 +76,7 @@ export const list = {
         sleep_goal_dateEnd: {
           $gte: dateStart_param,
         },
-        ...(dateType_param === "" ? {} : {
+        ...((!dateType_param || dateType_param === "") ? {} : {
           sleep_goal_dateType: dateType_param
         }),
       }},
@@ -91,8 +92,43 @@ export const list = {
       {$sort: {sleep_goal_dateStart: sort_param}},
       {$skip: Number(page_param - 1)},
     ]);
+
     return finalResult;
-  }
+  },
+
+  listReal: async (
+    user_id_param,
+    dateType_param, dateStart_param, dateEnd_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_dateStart: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        sleep_dateEnd: {
+          $gte: dateStart_param,
+          $lte: dateEnd_param
+        },
+        ...((!dateType_param || dateType_param === "") ? {} : {
+          sleep_dateType: dateType_param
+        }),
+      }},
+      {$unwind: "$sleep_section"},
+      {$project: {
+        _id: 1,
+        sleep_dateType: 1,
+        sleep_dateStart: 1,
+        sleep_dateEnd: 1,
+        sleep_bedTime: "$sleep_section.sleep_bedTime",
+        sleep_wakeTime: "$sleep_section.sleep_wakeTime",
+        sleep_sleepTime: "$sleep_section.sleep_sleepTime",
+      }},
+      {$sort: {sleep_dateStart: 1 }},
+    ]);
+    return finalResult;
+  },
 };
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------

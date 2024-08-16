@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Hr30, Br10, Br20, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -72,6 +72,21 @@ export const FoodGoalList = () => {
     food_goal_carb: "0",
     food_goal_protein: "0",
     food_goal_fat: "0",
+    food_dateType: "",
+    food_dateStart: "0000-00-00",
+    food_dateEnd: "0000-00-00",
+    food_total_kcal: "0",
+    food_total_carb: "0",
+    food_total_protein: "0",
+    food_total_fat: "0",
+    food_diff_kcal: "0",
+    food_diff_carb: "0",
+    food_diff_protein: "0",
+    food_diff_fat: "0",
+    food_diff_kcal_color: "",
+    food_diff_carb_color: "",
+    food_diff_protein_color: "",
+    food_diff_fat_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -154,12 +169,7 @@ export const FoodGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("food")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -202,12 +212,41 @@ export const FoodGoalList = () => {
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_kcal).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_kcal).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_kcal_color}`}>
+                      {numeral(item.food_diff_kcal).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("kc")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("kc")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("kc")}
                     </Div>
@@ -224,12 +263,41 @@ export const FoodGoalList = () => {
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_carb).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_carb).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_carb_color}`}>
+                      {numeral(item.food_diff_carb).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -246,12 +314,41 @@ export const FoodGoalList = () => {
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.food_goal_protein}
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={3} className={"d-column align-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_goal_protein).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_protein).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_protein_color}`}>
+                      {numeral(item.food_diff_protein).format("+0,0")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -268,12 +365,41 @@ export const FoodGoalList = () => {
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_fat).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.food_total_fat).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.food_diff_fat_color}`}>
+                      {numeral(item.food_diff_fat).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("g")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>

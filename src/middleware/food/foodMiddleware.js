@@ -11,16 +11,16 @@ export const save = async (object) => {
   let totalFat = 0;
 
   object?.food_section?.map((item) => {
-    totalKcal += item?.food_kcal;
-    totalCarb += item?.food_carb;
-    totalProtein += item?.food_protein;
-    totalFat += item?.food_fat;
+    totalKcal += parseFloat(item?.food_kcal);
+    totalCarb += parseFloat(item?.food_carb);
+    totalProtein += parseFloat(item?.food_protein);
+    totalFat += parseFloat(item?.food_fat);
   });
 
-  object.food_total_kcal = totalKcal;
-  object.food_total_carb = totalCarb;
-  object.food_total_protein = totalProtein;
-  object.food_total_fat = totalFat;
+  object.food_total_kcal = String(totalKcal);
+  object.food_total_carb = String(totalCarb);
+  object.food_total_protein = String(totalProtein);
+  object.food_total_fat = String(totalFat);
 
   return object;
 };
@@ -36,16 +36,16 @@ export const deletes = async (object) => {
   let totalFat = 0;
 
   object?.food_section?.map((item) => {
-    totalKcal += item?.food_kcal;
-    totalCarb += item?.food_carb;
-    totalProtein += item?.food_protein;
-    totalFat += item?.food_fat;
+    totalKcal += parseFloat(item?.food_kcal);
+    totalCarb += parseFloat(item?.food_carb);
+    totalProtein += parseFloat(item?.food_protein);
+    totalFat += parseFloat(item?.food_fat);
   });
 
-  object.food_total_kcal = totalKcal;
-  object.food_total_carb = totalCarb;
-  object.food_total_protein = totalProtein;
-  object.food_total_fat = totalFat;
+  object.food_total_kcal = String(totalKcal);
+  object.food_total_carb = String(totalCarb);
+  object.food_total_protein = String(totalProtein);
+  object.food_total_fat = String(totalFat);
 
   return object;
 };

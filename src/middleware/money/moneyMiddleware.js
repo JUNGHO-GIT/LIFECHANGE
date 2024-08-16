@@ -10,15 +10,15 @@ export const save = async (object) => {
 
   object?.money_section?.map((item) => {
     if (item?.money_part_val === "income") {
-      totalIncome += item?.money_amount;
+      totalIncome += parseFloat(item?.money_amount);
     }
     else if (item?.money_part_val === "expense") {
-      totalExpense += item?.money_amount;
+      totalExpense += parseFloat(item?.money_amount);
     }
   });
 
-  object.money_total_income = totalIncome;
-  object.money_total_expense = totalExpense;
+  object.money_total_income = String(totalIncome);
+  object.money_total_expense = String(totalExpense);
 
   return object;
 };
@@ -33,15 +33,15 @@ export const deletes = async (object) => {
 
   object?.money_section?.map((item) => {
     if (item?.money_part_val === "income") {
-      totalIncome += item?.money_amount;
+      totalIncome += parseFloat(item?.money_amount);
     }
     else if (item?.money_part_val === "expense") {
-      totalExpense += item?.money_amount;
+      totalExpense += parseFloat(item?.money_amount);
     }
   });
 
-  object.money_total_income = totalIncome;
-  object.money_total_expense = totalExpense;
+  object.money_total_income = String(totalIncome);
+  object.money_total_expense = String(totalExpense);
 
   return object;
 };

@@ -41,7 +41,7 @@ export const list = async (
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  const finalResult = await repository.list.list(
+  const finalResult = await repository.list.listReal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 

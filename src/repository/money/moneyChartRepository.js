@@ -31,7 +31,7 @@ export const barToday = {
     return finalResult;
   },
 
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -271,7 +271,7 @@ export const pieMonth = {
 
 // 3-1. chart (line - week) ---------------------------------------------------------------------
 export const lineWeek = {
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -300,7 +300,7 @@ export const lineWeek = {
 
 // 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = {
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -329,7 +329,7 @@ export const lineMonth = {
 
 // 4-1. chart (avg - week) ---------------------------------------------------------------------
 export const avgWeek = {
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -358,7 +358,7 @@ export const avgWeek = {
 
 // 4-2. chart (avg - month) ---------------------------------------------------------------------
 export const avgMonth = {
-  list: async (
+  listReal: async (
     user_id_param, dateStart_param, dateEnd_param
   ) => {
     const finalResult = await Money.aggregate([

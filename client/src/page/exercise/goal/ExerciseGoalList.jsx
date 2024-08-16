@@ -5,9 +5,9 @@ import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
 import {axios, numeral, moment} from "../../../import/ImportLibs.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Br20, Img, Icons} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
+import {Div, Img, Hr30, Br10, Br20, Icons} from "../../../import/ImportComponents.jsx";
 import {Accordion, AccordionSummary, AccordionDetails} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, Grid} from "../../../import/ImportMuis.jsx";
 import {exercise2, exercise3_1, exercise4, exercise5} from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -71,7 +71,22 @@ export const ExerciseGoalList = () => {
     exercise_goal_count: "0",
     exercise_goal_volume: "0",
     exercise_goal_weight: "0",
-    exercise_goal_cardio: "00:00"
+    exercise_goal_cardio: "00:00",
+    exercise_dateType: "",
+    exercise_dateStart: "0000-00-00",
+    exercise_dateEnd: "0000-00-00",
+    exercise_total_count: "0",
+    exercise_total_volume: "0",
+    exercise_body_weight: "0",
+    exercise_total_cardio: "00:00",
+    exercise_diff_count: "0",
+    exercise_diff_cardio: "00:00",
+    exercise_diff_volume: "0",
+    exercise_diff_weight: "0",
+    exercise_diff_count_color: "",
+    exercise_diff_cardio_color: "",
+    exercise_diff_volume_color: "",
+    exercise_diff_weight_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -154,12 +169,7 @@ export const ExerciseGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("exercise")}
-                    </Div>
-                  </Grid>
-                <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -174,11 +184,17 @@ export const ExerciseGoalList = () => {
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_goal_dateStart).format("ddd")}
+                        </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
                         </Div>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_goal_dateEnd?.substring(5, 10)}
+                        </Div>
+                        <Div className={"fs-1-0rem fw-500 dark ms-10"}>
+                          {moment(item.exercise_goal_dateEnd).format("ddd")}
                         </Div>
                       </>
                     )}
@@ -196,12 +212,41 @@ export const ExerciseGoalList = () => {
                       {translate("exerciseCount")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_goal_count).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.exercise_total_count).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_count_color}`}>
+                      {numeral(item.exercise_diff_count).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("c")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("c")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("c")}
                     </Div>
@@ -218,12 +263,41 @@ export const ExerciseGoalList = () => {
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.exercise_goal_volume).format("0,0")}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {numeral(item.exercise_total_volume).format("0,0")}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_volume_color}`}>
+                      {numeral(item.exercise_diff_volume).format("+0,0")}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("vol")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("vol")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("vol")}
                     </Div>
@@ -240,12 +314,41 @@ export const ExerciseGoalList = () => {
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.exercise_goal_cardio}
                     </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.exercise_total_cardio}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_cardio_color}`}>
+                      {item.exercise_diff_cardio}
+                    </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("hm")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("hm")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -262,12 +365,41 @@ export const ExerciseGoalList = () => {
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {numeral(item.exercise_goal_weight).format("0,0")}
+                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("goal")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("real")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
+                      {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid item xs={3} className={"d-column align-right"}>
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.exercise_goal_weight}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-1-0rem fw-600"}>
+                      {item.exercise_body_weight}
+                    </Div>
+                    <Br10 />
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
+                      {item.exercise_diff_weight}
+                    </Div>
+                  </Grid>
+                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                    <Div className={"fs-0-6rem"}>
+                      {translate("k")}
+                    </Div>
+                    <Br10 />
+                    <Div className={"fs-0-6rem"}>
+                      {translate("k")}
+                    </Div>
+                    <Br10 />
                     <Div className={"fs-0-6rem"}>
                       {translate("k")}
                     </Div>

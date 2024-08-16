@@ -60,7 +60,6 @@ export const Footer = ({
   const footerNode = () => {
     if (
       PATH.indexOf("/calendar") > -1 && (
-        PATH.indexOf("/diff/list") > -1 ||
         PATH.indexOf("/goal/list") > -1 ||
         PATH.indexOf("/list") > -1
       )
@@ -70,7 +69,6 @@ export const Footer = ({
 
     else if (
       PATH.indexOf("/calendar") === -1 && (
-        PATH.indexOf("/diff/list") > -1 ||
         PATH.indexOf("/goal/list") > -1 ||
         PATH.indexOf("/list") > -1
       )

@@ -1,7 +1,7 @@
 // sleepGoalService.js
 
+import { strToDecimal, decimalToStr } from "../../assets/js/utils.js";
 import * as repository from "../../repository/sleep/sleepGoalRepository.js";
-import {log} from "../../assets/js/utils.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -40,12 +40,11 @@ export const list = async (
   const totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
-
-  const finalResult = await repository.list.list(
+  const listGoal = await repository.list.listGoal(
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  finalResult.sort((a, b) => {
+  listGoal.sort((a, b) => {
     const dateTypeA = a.sleep_goal_dateType;
     const dateTypeB = b.sleep_goal_dateType;
     const dateStartA = new Date(a.sleep_goal_dateStart);
@@ -61,11 +60,39 @@ export const list = async (
     return sortOrder === 1 ? dateDiff : -dateDiff;
   });
 
+  const finalResult = await Promise.all(listGoal.map(async (goal) => {
+    const dateStart = goal?.sleep_goal_dateStart;
+    const dateEnd = goal?.sleep_goal_dateEnd;
+
+    const listReal = await repository.list.listReal(
+      user_id_param, dateType, dateStart, dateEnd
+    );
+
+    // 각 평균값 구하기
+    const bedTime = listReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_bedTime)
+    ), 0) / listReal.length;
+    const wakeTime = listReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_wakeTime)
+    ), 0) / listReal.length;
+    const sleepTime = listReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_sleepTime)
+    ), 0) / listReal.length;
+
+    return {
+      ...goal,
+      sleep_bedTime: decimalToStr(bedTime),
+      sleep_wakeTime: decimalToStr(wakeTime),
+      sleep_sleepTime: decimalToStr(sleepTime)
+    };
+  }));
+
   return {
     totalCnt: totalCnt,
     result: finalResult
   };
 };
+
 
 // 2. detail (상세는 eq) ---------------------------------------------------------------------------
 export const detail = async (

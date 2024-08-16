@@ -110,7 +110,7 @@ export const FindFilter = ({
       onRowsPerPageChange={(event) => {
         functions.setPAGING((prev) => ({
           ...prev,
-          limit: parseFloat(event.target.value, 10)
+          limit: parseFloat(event.target.value)
         }));
       }}
     />
