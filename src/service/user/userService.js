@@ -57,6 +57,17 @@ export const sendEmail = async (
   // 임의의 코드 생성
   const code = Math.floor(100000 + Math.random() * 900000).toString();
 
+  // 중복 체크
+  const findId = await repository.email.findId(
+    user_id_param
+  );
+
+  if (findId) {
+    return {
+      result: "duplicate"
+    };
+  }
+
   const sendResult = await emailSending(
     user_id_param, code
   );

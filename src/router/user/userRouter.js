@@ -38,7 +38,13 @@ router.post("/email/send", async (req, res) => {
     let result = await service.sendEmail (
       req.body.user_id
     );
-    if (result.result === "success") {
+    if (result.result === "duplicate") {
+      res.json({
+        status: "duplicate",
+        msg: "이미 가입된 이메일 입니다."
+      });
+    }
+    else if (result.result === "success") {
       res.json({
         status: "success",
         msg: "이메일 전송 성공",

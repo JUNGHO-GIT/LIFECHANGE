@@ -200,11 +200,23 @@ export const UserSignup = () => {
       user_id: OBJECT.user_id
     })
     .then((res) => {
-      if (res.data.status === "success") {
+      if (res.data.status === "duplicate") {
         alert(res.data.msg);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: false
+        }));
+      }
+      else if (res.data.status === "success") {
+        alert(res.data.msg);
+        setOBJECT((prev) => ({
+          ...prev,
+          user_id_verified: true
+        }));
       }
       else {
         alert(res.data.msg);
+        return;
       }
     })
     .catch((err) => {
@@ -227,14 +239,14 @@ export const UserSignup = () => {
         alert(res.data.msg);
         setOBJECT((prev) => ({
           ...prev,
-          user_id_verified: true
+          user_id_verified: false
         }));
       }
       else {
         alert(res.data.msg);
         setOBJECT((prev) => ({
           ...prev,
-          user_id_verified: false
+          user_id_verified: true
         }));
       }
     })
@@ -372,7 +384,7 @@ export const UserSignup = () => {
               color={"primary"}
               className={"w-20vw"}
               variant={"contained"}
-              disabled={OBJECT.user_id_verified}
+              disabled={!OBJECT.user_id_verified}
               onClick={() => {
                 flowVerifyEmail();
               }}

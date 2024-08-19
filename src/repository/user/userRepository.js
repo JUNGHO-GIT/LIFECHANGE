@@ -16,6 +16,18 @@ import {Verify} from "../../schema/Verify.js";
 // 1. email ----------------------------------------------------------------------------------------
 export const email = {
 
+  findId: async (
+    user_id_param
+  ) => {
+
+    const finalResult = await User.findOne({
+      user_id: user_id_param
+    })
+    .lean();
+
+    return finalResult;
+  },
+
   sendEmail: async (
     user_id_param, code_param
   ) => {
