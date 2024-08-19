@@ -2,14 +2,13 @@
 
 import * as repository from "../../repository/food/foodChartRepository.js";
 import moment from "moment-timezone";
-import {koreanDate} from "../../assets/js/date.js";
 import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
 import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
 import {curYearStart, curYearEnd} from "../../assets/js/date.js";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -19,8 +18,8 @@ export const barToday = async (
   let finalResultNut = [];
 
   // dateStart, dateEnd 정의
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   // promise 사용하여 병렬 처리
   [findResultGoal, findResultReal] = await Promise.all([
@@ -69,7 +68,7 @@ export const barToday = async (
 // 2-1. chart (pie - today) ------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieToday = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -79,8 +78,8 @@ export const pieToday = async (
   let finalResultNut = [];
 
   // dateStart, dateEnd 정의
-  const dateStart = koreanDate;
-  const dateEnd = koreanDate;
+  const dateStart = DATE_param.dateStart;
+  const dateEnd = DATE_param.dateEnd;
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -124,7 +123,7 @@ export const pieToday = async (
 // 2-2. chart (pie - week) -------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieWeek = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -134,8 +133,10 @@ export const pieWeek = async (
   let finalResultNut = [];
 
   // dateStart, dateEnd 정의
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  const dateStart
+    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd
+    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -179,7 +180,7 @@ export const pieWeek = async (
 // 2-3. chart (pie - month) ------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieMonth = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -189,8 +190,10 @@ export const pieMonth = async (
   let finalResultNut = [];
 
   // dateStart, dateEnd 정의
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart
+    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD");
+  const dateEnd
+    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -233,7 +236,7 @@ export const pieMonth = async (
 
 // 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -253,8 +256,10 @@ export const lineWeek = async (
   });
 
   // dateStart, dateEnd 정의
-  const dateStart = curWeekStart.format("YYYY-MM-DD");
-  const dateEnd = curWeekEnd.format("YYYY-MM-DD");
+  const dateStart
+    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD");
+  const dateEnd
+    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -311,7 +316,7 @@ export const lineWeek = async (
 
 // 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -329,8 +334,10 @@ export const lineMonth = async (
   });
 
   // dateStart, dateEnd 정의
-  const dateStart = curMonthStart.format("YYYY-MM-DD");
-  const dateEnd = curMonthEnd.format("YYYY-MM-DD");
+  const dateStart
+    = moment(DATE_param.dateStart).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD");
+  const dateEnd
+    = moment(DATE_param.dateEnd).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD");
 
   // promise 사용하여 병렬 처리
   [findResultKcal, findResultNut] = await Promise.all([
@@ -387,7 +394,7 @@ export const lineMonth = async (
 
 // 4-1. chart (avg - week) -------------------------------------------------------------------------
 export const avgWeek = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -492,7 +499,7 @@ export const avgWeek = async (
 
 // 4-2. chart (avg - month) ------------------------------------------------------------------------
 export const avgMonth = async (
-  user_id_param
+  user_id_param, DATE_param
 ) => {
 
   // findResult, finalResult 변수 선언

@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import morgan from "morgan";
 
 import { router as calendarRouter } from "./src/router/calendar/calendarRouter.js";
 import { router as exerciseChartRouter } from "./src/router/exercise/exerciseChartRouter.js";
@@ -63,7 +62,6 @@ function startServer(httpPort, httpsPort) {
 startServer(httpPort, httpsPort);
 
 // 미들웨어 설정 -----------------------------------------------------------------------------------
-// app.use(morgan('dev'));
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT"],

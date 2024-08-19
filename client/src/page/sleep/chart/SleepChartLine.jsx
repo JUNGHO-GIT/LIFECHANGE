@@ -2,8 +2,8 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportUtils";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {handlerY, koreanDate} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, TextField, MenuItem, Grid} from "../../../import/ImportMuis.jsx";
@@ -31,6 +31,11 @@ export const SleepChartLine = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("week");
   const [PART, setPART] = useState(array);
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_WEEK_DEF = [{
@@ -55,12 +60,14 @@ export const SleepChartLine = () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/chart/line/week`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/line/month`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_WEEK(

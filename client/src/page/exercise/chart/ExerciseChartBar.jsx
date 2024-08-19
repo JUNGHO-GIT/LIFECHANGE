@@ -2,8 +2,8 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {handlerY, log} from "../../../import/ImportUtils.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {handlerY, koreanDate} from "../../../import/ImportUtils.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -29,6 +29,11 @@ export const ExerciseChartBar = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [{
@@ -58,17 +63,20 @@ export const ExerciseChartBar = () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/chart/bar/today`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/chart/bar/week`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/bar/month`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_TODAY(

@@ -2,8 +2,8 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportUtils";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {handlerY, koreanDate} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -29,8 +29,14 @@ export const TodayChartFood = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
+  const [radius, setRadius] = useState(120);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("kcal");
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_KCAL_TODAY_DEF = [{
@@ -53,7 +59,8 @@ export const TodayChartFood = () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/chart/bar/today`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_KCAL_TODAY(

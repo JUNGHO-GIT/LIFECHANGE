@@ -2,8 +2,9 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
+import {koreanDate} from "../../../import/ImportUtils.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
 import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
@@ -26,9 +27,14 @@ export const MoneyChartPie = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useState("today");
   const [radius, setRadius] = useState(120);
+  const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("income");
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_IN_TODAY_DEF = [{
@@ -67,17 +73,20 @@ export const MoneyChartPie = () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/chart/pie/today`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resWeek = await axios.get(`${URL_OBJECT}/chart/pie/week`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/pie/month`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_IN_TODAY(

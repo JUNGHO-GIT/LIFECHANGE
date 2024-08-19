@@ -2,11 +2,11 @@
 
 import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportUtils.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {handlerY, koreanDate} from "../../../import/ImportUtils.jsx";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
+import {Paper, Card, TextField, Grid} from "../../../import/ImportMuis.jsx";
 import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {common3_2} from "../../../import/ImportImages.jsx";
@@ -29,6 +29,11 @@ export const MoneyChartBar = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_TODAY_DEF = [{
@@ -44,7 +49,8 @@ export const MoneyChartBar = () => {
     setLOADING(true);
     const resToday = await axios.get(`${URL_OBJECT}/chart/bar/today`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_TODAY(

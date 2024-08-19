@@ -1,9 +1,9 @@
 // ExerciseChartAvg.tsx
 
-import {React, useState, useEffect, useLocation} from "../../../import/ImportReacts.jsx";
+import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
 import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {handlerY} from "../../../import/ImportUtils";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
+import {handlerY, koreanDate} from "../../../import/ImportUtils";
 import {Loading} from "../../../import/ImportLayouts.jsx";
 import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
 import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
@@ -19,9 +19,7 @@ export const ExerciseChartAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const location = useLocation();
   const {translate} = useTranslate();
-  const PATH = location?.pathname;
   const array = ["volume", "cardio"];
   const sessionId = sessionStorage.getItem("ID_SESSION");
   const COLORS = [
@@ -31,12 +29,13 @@ export const ExerciseChartAvg = () => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
-  const [SECTION, setSECTION] = useStorage(
-    `CHART_SECTION(${PATH})`, "week"
-  );
-  const [LINE, setLINE] = useStorage(
-    `CHART_LINE(${PATH})`, "volume"
-  );
+  const [SECTION, setSECTION] = useState("week");
+  const [LINE, setLINE] = useState("volume");
+  const [DATE, setDATE] = useState({
+    dateType: "",
+    dateStart: koreanDate,
+    dateEnd: koreanDate,
+  });
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_VOLUME_WEEK_DEF = [{
@@ -69,12 +68,14 @@ export const ExerciseChartAvg = () => {
     setLOADING(true);
     const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
       params: {
-        user_id: sessionId
+        user_id: sessionId,
+        DATE: DATE,
       },
     });
     setOBJECT_VOLUME_WEEK(

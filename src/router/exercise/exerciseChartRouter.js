@@ -8,7 +8,8 @@ export const router = express.Router();
 router.get("/bar/today", async (req, res) => {
   try {
     let result = await service.barToday (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -38,7 +39,8 @@ router.get("/bar/today", async (req, res) => {
 router.get("/bar/week", async (req, res) => {
   try {
     let result = await service.barWeek (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -68,7 +70,8 @@ router.get("/bar/week", async (req, res) => {
 router.get("/bar/month", async (req, res) => {
   try {
     let result = await service.barMonth (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -98,7 +101,8 @@ router.get("/bar/month", async (req, res) => {
 router.get("/pie/week", async (req, res) => {
   try {
     let result = await service.pieWeek (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -128,7 +132,8 @@ router.get("/pie/week", async (req, res) => {
 router.get("/pie/month", async (req, res) => {
   try {
     let result = await service.pieMonth (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -158,7 +163,8 @@ router.get("/pie/month", async (req, res) => {
 router.get("/line/week", async (req, res) => {
   try {
     let result = await service.lineWeek (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -188,7 +194,8 @@ router.get("/line/week", async (req, res) => {
 router.get("/line/month", async (req, res) => {
   try {
     let result = await service.lineMonth (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -218,7 +225,8 @@ router.get("/line/month", async (req, res) => {
 router.get("/avg/week", async (req, res) => {
   try {
     let result = await service.avgWeek (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
@@ -248,7 +256,8 @@ router.get("/avg/week", async (req, res) => {
 router.get("/avg/month", async (req, res) => {
   try {
     let result = await service.avgMonth (
-      req.query.user_id
+      req.query.user_id,
+      req.query.DATE,
     );
     if (result) {
       res.json({
