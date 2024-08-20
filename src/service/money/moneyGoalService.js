@@ -44,11 +44,6 @@ export const list = async (
     user_id_param, dateType, dateStart, dateEnd, sort, page
   );
 
-  console.log("dateType : ", dateType);
-  console.log("dateStart : ", dateStart);
-  console.log("dateEnd : ", dateEnd);
-  console.log("listGoal : ", listGoal);
-
   listGoal.sort((a, b) => {
     const dateTypeA = a.money_goal_dateType;
     const dateTypeB = b.money_goal_dateType;

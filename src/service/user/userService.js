@@ -180,10 +180,6 @@ export const userLogin = async (
     user_id_param
   );
 
-  console.log("user_id_param: ", user_id_param);
-  console.log("user_pw_param: ", user_pw_param);
-  console.log("findResult: ", findResult);
-
   if (findResult !== null && findResult.user_pw) {
     const isPasswordMatch = await bcrypt.compare(user_pw_param, findResult.user_pw);
     if (isPasswordMatch) {
