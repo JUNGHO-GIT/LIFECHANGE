@@ -1,13 +1,13 @@
 // UserCategory.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
+import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
 import {log} from "../../import/ImportUtils.jsx";
 import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
+import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -55,13 +55,14 @@ export const UserCategory = () => {
   const [idx, setIdx] = useState({
     category1Idx: 0,
     category2Idx: 1,
-    category3Idx: 1
+    category3Idx: 1,
   });
   const [selectedIdx, setSelectedIdx] = useState({
     category1Idx: 0,
     category2Idx: 1,
-    category3Idx: 1
+    category3Idx: 1,
   });
+  const [isEditable, setIsEditable] = useState("");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -88,6 +89,25 @@ export const UserCategory = () => {
     }
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
+
+  // 2-2. useState ---------------------------------------------------------------------------------
+  const REFS = useRef({
+    category1: createRef(),
+    category2: createRef(),
+    category3: createRef(),
+  });
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    if (isEditable.startsWith(`${dataType}_part_`)) {
+      // @ts-ignore
+      REFS.current.category2?.focus();
+    }
+    else if (isEditable.startsWith(`${dataType}_title_`)) {
+      // @ts-ignore
+      REFS.current.category3?.focus();
+    }
+  }, [isEditable]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
@@ -183,50 +203,10 @@ export const UserCategory = () => {
   // 4-2. handler ----------------------------------------------------------------------------------
   const handlerRename = (type, index) => {
     if (type === "part") {
-      const newCategory2 = prompt("새로운 이름을 입력하세요.", OBJECT?.dataCategory[dataType]?.[index]?.[`${dataType}_part`]);
-      if (newCategory2 !== null) {
-        setOBJECT((prev) => {
-          return {
-            ...prev,
-            dataCategory: {
-              ...prev.dataCategory,
-              [dataType]: [
-                ...prev.dataCategory[dataType]?.slice(0, index),
-                {
-                  ...prev.dataCategory[dataType]?.[index],
-                  [`${dataType}_part`]: newCategory2
-                },
-                ...prev.dataCategory[dataType]?.slice(index + 1)
-              ]
-            }
-          };
-        });
-      }
+      setIsEditable(`${dataType}_${type}_${index}`);
     }
     else if (type === "title") {
-      const newCategory3 = prompt("새로운 이름을 입력하세요.", OBJECT?.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.[index]);
-      if (newCategory3 !== null) {
-        setOBJECT((prev) => {
-          return {
-            ...prev,
-            dataCategory: {
-              ...prev.dataCategory,
-              [dataType]: [
-                ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
-                {
-                  ...prev.dataCategory[dataType]?.[idx.category2Idx],
-                  [`${dataType}_title`]: [
-                    ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
-                    newCategory3,
-                    ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
-                  ]
-                },
-                ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
-              ]
-            }
-          };
-        });
-      }
+      setIsEditable(`${dataType}_${type}_${index}`);
     }
   };
 
@@ -315,7 +295,45 @@ export const UserCategory = () => {
                       }));
                     }}>
                       <Div className={"fs-0-9rem ms-auto"}>
-                        {translate(item[`${dataType}_part`])}
+                        <TextField
+                          variant={"standard"}
+                          size={"small"}
+                          value={translate(item[`${dataType}_part`])}
+                          sx={{
+                            ".MuiInput-root::after": {
+                              borderBottom:
+                                isEditable === `${dataType}_part_${index}`
+                                ? "2px solid #1976d2"
+                                : "2px solid #000000"
+                            }
+                          }}
+                          InputProps={{
+                            readOnly: isEditable !== `${dataType}_part_${index}`
+                          }}
+                          inputRef={(el) => {
+                            if (isEditable === `${dataType}_part_${index}`) {
+                              REFS.current.category2 = el;
+                            }
+                          }}
+                          onChange={(e) => {
+                            setOBJECT((prev) => {
+                              return {
+                                ...prev,
+                                dataCategory: {
+                                  ...prev.dataCategory,
+                                  [dataType]: [
+                                    ...prev.dataCategory[dataType]?.slice(0, index),
+                                    {
+                                      ...prev.dataCategory[dataType]?.[index],
+                                      [`${dataType}_part`]: e.target.value
+                                    },
+                                    ...prev.dataCategory[dataType]?.slice(index + 1)
+                                  ]
+                                }
+                              };
+                            });
+                          }}
+                        />
                       </Div>
                       <Div className={"fs-0-9rem ms-auto"}>
                         <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
@@ -370,7 +388,49 @@ export const UserCategory = () => {
                         }));
                       }}>
                         <Div className={"fs-0-9rem ms-auto"}>
-                          {translate(item)}
+                          <TextField
+                            variant={"standard"}
+                            size={"small"}
+                            value={translate(item)}
+                            sx={{
+                              ".MuiInput-root::after": {
+                                borderBottom:
+                                  isEditable === `${dataType}_title_${index}`
+                                  ? "2px solid #1976d2"
+                                  : "2px solid #000000"
+                              }
+                            }}
+                            InputProps={{
+                              readOnly: isEditable !== `${dataType}_title_${index}`
+                            }}
+                            inputRef={(el) => {
+                              if (isEditable === `${dataType}_title_${index}`) {
+                                REFS.current.category3 = el;
+                              }
+                            }}
+                            onChange={(e) => {
+                              setOBJECT((prev) => {
+                                return {
+                                  ...prev,
+                                  dataCategory: {
+                                    ...prev.dataCategory,
+                                    [dataType]: [
+                                      ...prev.dataCategory[dataType]?.slice(0, idx.category2Idx),
+                                      {
+                                        ...prev.dataCategory[dataType]?.[idx.category2Idx],
+                                        [`${dataType}_title`]: [
+                                          ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(0, index),
+                                          e.target.value,
+                                          ...prev.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.slice(index + 1)
+                                        ]
+                                      },
+                                      ...prev.dataCategory[dataType]?.slice(idx.category2Idx + 1)
+                                    ]
+                                  }
+                                };
+                              });
+                            }}
+                          />
                         </Div>
                         <Div className={"fs-0-9rem ms-auto d-row"}>
                           <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {

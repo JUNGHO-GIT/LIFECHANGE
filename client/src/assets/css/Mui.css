@@ -44,6 +44,9 @@
 .MuiGrid-root {
   margin: 0px 0px 0px 0px !important;
 }
+.MuiInput-root::before {
+  content: none !important;
+}
 
 /** top *******************************************************************************************/
 .MuiTab-root.Mui-selected {
