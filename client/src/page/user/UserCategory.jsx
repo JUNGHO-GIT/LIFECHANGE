@@ -292,7 +292,7 @@ export const UserCategory = () => {
         <TableContainer className={"border-right over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
-              <TableRow className={"table-thead-tr p-sticky top-0"}>
+              <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
                 <TableCell>
                   {translate("dataCategory2")}
                 </TableCell>
@@ -347,7 +347,7 @@ export const UserCategory = () => {
           <TableContainer className={"border-left over-x-hidden"}>
             <Table>
               <TableHead className={"table-thead"}>
-                <TableRow className={"table-thead-tr p-sticky top-0"}>
+                <TableRow className={"table-thead-tr p-sticky top-0 z-900"}>
                   <TableCell>
                     {translate("dataCategory3")}
                   </TableCell>
@@ -409,7 +409,7 @@ export const UserCategory = () => {
             <Table>
               <TableHead className={"table-thead"}>
                 <TableRow className={"table-thead-tr"}>
-                  <TableCell>
+                  <TableCell className={"fs-1-0rem"}>
                     {translate("dataCategory1")}
                   </TableCell>
                 </TableRow>

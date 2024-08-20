@@ -2,12 +2,12 @@
 
 import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
 import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
+import {useTranslate} from "../../../import/ImportHooks.jsx";
 import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
 import {sync} from "../../../import/ImportUtils.jsx";
 import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
 import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {PopUp, Img, Picker, Time, Count, Delete} from "../../../import/ImportComponents.jsx";
+import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
 import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
 import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
 
@@ -154,28 +154,28 @@ export const FoodGoalSave = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === 0) {
+    else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
       alert(translate("errorFoodGoalKcal"));
       refsCurrent.food_goal_kcal.current &&
       refsCurrent.food_goal_kcal.current?.focus();
       initialErrors.food_goal_kcal = true;
       foundError = true;
     }
-    else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === 0) {
+    else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === "0") {
       alert(translate("errorFoodGoalCarb"));
       refsCurrent.food_goal_carb.current &&
       refsCurrent.food_goal_carb.current?.focus();
       initialErrors.food_goal_carb = true;
       foundError = true;
     }
-    else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === 0) {
+    else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === "0") {
       alert(translate("errorFoodGoalProtein"));
       refsCurrent.food_goal_protein.current &&
       refsCurrent.food_goal_protein.current?.focus();
       initialErrors.food_goal_protein = true;
       foundError = true;
     }
-    else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === 0) {
+    else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === "0") {
       alert(translate("errorFoodGoalFat"));
       refsCurrent.food_goal_fat.current &&
       refsCurrent.food_goal_fat.current?.focus();

@@ -249,7 +249,7 @@ export const ExerciseSave = () => {
       exercise_kg: false,
     }));
 
-    if (COUNT.newSectionCnt === 0) {
+    if (COUNT.newSectionCnt === 0 && OBJECT?.exercise_body_weight === "0") {
       alert(translate("errorCount"));
       foundError = true;
       return;
@@ -278,7 +278,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.exercise_set || section.exercise_set === 0) {
+      else if (!section.exercise_set || section.exercise_set === "0") {
         alert(translate("errorExerciseSet"));
         refsCurrentIdx.exercise_set.current &&
         refsCurrentIdx.exercise_set?.current?.focus();
@@ -286,7 +286,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.exercise_rep || section.exercise_rep === 0) {
+      else if (!section.exercise_rep || section.exercise_rep === "0") {
         alert(translate("errorExerciseRep"));
         refsCurrentIdx.exercise_rep.current &&
         refsCurrentIdx.exercise_rep?.current?.focus();
@@ -294,7 +294,7 @@ export const ExerciseSave = () => {
         foundError = true;
         break;
       }
-      else if (!section.exercise_kg || section.exercise_kg === 0) {
+      else if (!section.exercise_kg || section.exercise_kg === "0") {
         alert(translate("errorExerciseKg"));
         refsCurrentIdx.exercise_kg.current &&
         refsCurrentIdx.exercise_kg?.current?.focus();

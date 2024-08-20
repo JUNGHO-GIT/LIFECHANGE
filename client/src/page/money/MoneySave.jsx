@@ -248,7 +248,7 @@ export const MoneySave = () => {
         foundError = true;
         break;
       }
-      else if (!section.money_amount || section.money_amount === 0) {
+      else if (!section.money_amount || section.money_amount === "0") {
         alert(translate("errorMoneyAmount"));
         refsCurrentIdx.money_amount.current &&
         refsCurrentIdx.money_amount?.current?.focus();

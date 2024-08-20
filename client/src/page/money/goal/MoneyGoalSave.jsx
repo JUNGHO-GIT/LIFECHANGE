@@ -145,14 +145,14 @@ export const MoneyGoalSave = () => {
       console.warn('Ref is undefined, skipping validation');
       return;
     }
-    else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === 0) {
+    else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
       alert(translate("errorMoneyGoalIncome"));
       refsCurrent.money_goal_income.current &&
       refsCurrent.money_goal_income.current?.focus();
       initialErrors.money_goal_income = true;
       foundError = true;
     }
-    else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === 0) {
+    else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === "0") {
       alert(translate("errorMoneyGoalExpense"));
       refsCurrent.money_goal_expense.current &&
       refsCurrent.money_goal_expense.current?.focus();
