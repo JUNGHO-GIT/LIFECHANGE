@@ -13,7 +13,18 @@ export const PopUp = ({...props}) => {
   });
 
   let popupStyle = {};
-  if (props.type === "alert") {
+  if (props.type === "innerCenter") {
+    popupStyle = {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      border: '0.2px solid rgba(0, 0, 0, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+      padding: "20px 20px 20px 20px",
+    };
+  }
+  else if (props.type === "alert") {
     popupStyle = {
       display: "flex",
       flexDirection: "column",
@@ -35,15 +46,19 @@ export const PopUp = ({...props}) => {
       padding: "6px 0px 6px 12px",
     };
   }
-  else if (props.type === "innerCenter") {
+  else if (props.type === "modal") {
     popupStyle = {
       display: "flex",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
       border: '0.2px solid rgba(0, 0, 0, 0.2)',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-      padding: "20px 20px 20px 20px",
+      padding: "6px 6px 6px 6px",
     };
   }
   else {
@@ -160,7 +175,9 @@ export const PopUp = ({...props}) => {
   // 15. return ------------------------------------------------------------------------------------
   return (
     <>
-      {props.type === "innerCenter" ? innerCenterPopUp() : chainedPopUp()}
+      {props.type === "innerCenter" && innerCenterPopUp()}
+      {props.type === "modal" && innerCenterPopUp()}
+      {props.type !== "innerCenter" && chainedPopUp()}
     </>
   );
 };

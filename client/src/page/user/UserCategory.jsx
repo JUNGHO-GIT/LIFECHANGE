@@ -184,7 +184,7 @@ export const UserCategory = () => {
   const handlerRename = (type, index) => {
     if (type === "part") {
       const newCategory2 = prompt("새로운 이름을 입력하세요.", OBJECT?.dataCategory[dataType]?.[index]?.[`${dataType}_part`]);
-      if (newCategory2) {
+      if (newCategory2 !== null) {
         setOBJECT((prev) => {
           return {
             ...prev,
@@ -205,7 +205,7 @@ export const UserCategory = () => {
     }
     else if (type === "title") {
       const newCategory3 = prompt("새로운 이름을 입력하세요.", OBJECT?.dataCategory[dataType]?.[idx.category2Idx]?.[`${dataType}_title`]?.[index]);
-      if (newCategory3) {
+      if (newCategory3 !== null) {
         setOBJECT((prev) => {
           return {
             ...prev,
