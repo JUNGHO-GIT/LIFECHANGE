@@ -301,14 +301,14 @@ export const UserCategory = () => {
                           value={translate(item[`${dataType}_part`])}
                           sx={{
                             ".MuiInput-root::after": {
-                              borderBottom:
-                                isEditable === `${dataType}_part_${index}`
-                                ? "2px solid #1976d2"
-                                : "2px solid #000000"
+                              borderBottom: isEditable === `${dataType}_part_${index}`
+                              ? "2px solid #1976d2"
+                              : "2px solid #000000"
                             }
                           }}
                           InputProps={{
-                            readOnly: isEditable !== `${dataType}_part_${index}`
+                            readOnly: isEditable !== `${dataType}_part_${index}`,
+                            className: "fs-0-9rem",
                           }}
                           inputRef={(el) => {
                             if (isEditable === `${dataType}_part_${index}`) {
@@ -335,7 +335,7 @@ export const UserCategory = () => {
                           }}
                         />
                       </Div>
-                      <Div className={"fs-0-9rem ms-auto"}>
+                      <Div className={"fs-0-9rem ms-auto d-row"}>
                         <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
                           handlerRename("part", index);
                         }} />
@@ -394,14 +394,14 @@ export const UserCategory = () => {
                             value={translate(item)}
                             sx={{
                               ".MuiInput-root::after": {
-                                borderBottom:
-                                  isEditable === `${dataType}_title_${index}`
-                                  ? "2px solid #1976d2"
-                                  : "2px solid #000000"
+                                borderBottom: isEditable === `${dataType}_title_${index}`
+                                ? "2px solid #1976d2"
+                                : "2px solid #000000"
                               }
                             }}
                             InputProps={{
-                              readOnly: isEditable !== `${dataType}_title_${index}`
+                              readOnly: isEditable !== `${dataType}_title_${index}`,
+                              className: "fs-0-9rem",
                             }}
                             inputRef={(el) => {
                               if (isEditable === `${dataType}_title_${index}`) {
