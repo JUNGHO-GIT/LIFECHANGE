@@ -182,8 +182,8 @@ export const FoodGoalSave = () => {
       initialErrors.food_goal_fat = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 

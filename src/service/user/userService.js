@@ -51,7 +51,7 @@ export const appInfo = async () => {
 
 // 1-1. sendEmail ----------------------------------------------------------------------------------
 export const sendEmail = async (
-  user_id_param
+  user_id_param, type_param
 ) => {
 
   // 임의의 코드 생성
@@ -62,10 +62,19 @@ export const sendEmail = async (
     user_id_param
   );
 
-  if (findId) {
-    return {
-      result: "duplicate"
-    };
+  if (type_param === "signup") {
+    if (findId) {
+      return {
+        result: "duplicate",
+      };
+    }
+  }
+  else if (type_param === "resetPw") {
+    if (!findId) {
+      return {
+        result: "notExist",
+      };
+    }
   }
 
   const sendResult = await emailSending(
@@ -88,11 +97,13 @@ export const verifyEmail = async (
   user_id_param, code_param
 ) => {
 
-  const findResult = await repository.email.verifyEmail(
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.email.verifyEmail(
     user_id_param
   );
 
-  let finalResult = null;
   if (findResult !== null) {
     if (findResult.verify_code === code_param) {
       finalResult = "success";
@@ -110,12 +121,17 @@ export const userSignup = async (
   user_id_param, OBJECT_param
 ) => {
 
-  const findResult = await repository.user.checkId(
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.checkId(
     user_id_param
   );
 
-  let finalResult = null;
-  if (!findResult) {
+  if (findResult) {
+    return "alreadyExist";
+  }
+  else {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(OBJECT_param.user_pw, saltRounds);
     OBJECT_param.user_pw = hashedPassword;
@@ -123,24 +139,50 @@ export const userSignup = async (
       user_id_param, OBJECT_param
     );
   }
-  else {
-    finalResult = "duplicated";
+
+  return finalResult;
+};
+
+// 2-2. userResetPw --------------------------------------------------------------------------------
+export const userResetPw = async (
+  user_id_param, OBJECT_param
+) => {
+
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.checkId(
+    user_id_param
+  );
+
+  if (findResult) {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(OBJECT_param.user_pw, saltRounds);
+    OBJECT_param.user_pw = hashedPassword;
+    finalResult = await repository.user.resetPw(
+      user_id_param, OBJECT_param
+    );
   }
 
   return finalResult;
 };
 
-// 2-2. userLogin ----------------------------------------------------------------------------------
+// 2-3. userLogin ----------------------------------------------------------------------------------
 export const userLogin = async (
   user_id_param, user_pw_param
 ) => {
 
-  const findResult = await repository.user.checkId(
+  let findResult = null;
+  let finalResult = null;
+  let adminResult = null;
+
+  findResult = await repository.user.checkId(
     user_id_param
   );
 
-  let finalResult = null;
-  let adminResult = null;
+  console.log("user_id_param: ", user_id_param);
+  console.log("user_pw_param: ", user_pw_param);
+  console.log("findResult: ", findResult);
 
   if (findResult !== null && findResult.user_pw) {
     const isPasswordMatch = await bcrypt.compare(user_pw_param, findResult.user_pw);
@@ -168,40 +210,65 @@ export const userLogin = async (
   };
 };
 
-// 2-3. userDetail ---------------------------------------------------------------------------------
+// 2-4. userDetail ---------------------------------------------------------------------------------
 export const userDetail = async (
   user_id_param
 ) => {
 
-  const finalResult = await repository.user.detail(
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.detail(
     user_id_param
   );
+
+  if (findResult) {
+    finalResult = findResult;
+  }
 
   return finalResult
 };
 
-// 2-4. userUpdate ---------------------------------------------------------------------------------
+// 2-5. userUpdate ---------------------------------------------------------------------------------
 export const userUpdate = async (
   user_id_param, OBJECT_param
 ) => {
 
-  let finalResult = await repository.user.update(
-    user_id_param, OBJECT_param
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.detail(
+    user_id_param
   );
+
+  if (findResult) {
+    finalResult = await repository.user.update(
+      user_id_param, OBJECT_param
+    );
+  }
 
   return finalResult;
 };
 
-// 2-3. userDeletes --------------------------------------------------------------------------------
+// 2-6. userDeletes --------------------------------------------------------------------------------
 export const userDeletes = async (
   user_id_param
 ) => {
 
-  const finalResult = await repository.user.deletes(
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.detail(
     user_id_param
   );
 
-  return finalResult
+  if (findResult) {
+    finalResult = await repository.user.deletes(
+      user_id_param
+    );
+  }
+
+  return finalResult;
 };
 
 // 3-1. categoryList -------------------------------------------------------------------------------
@@ -209,11 +276,20 @@ export const categoryList = async (
   user_id_param
 ) => {
 
-  const findResult = await repository.category.listReal(
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.user.detail(
     user_id_param
   );
 
-  return findResult;
+  if (findResult) {
+    finalResult = await repository.category.listReal(
+      user_id_param
+    );
+  }
+
+  return finalResult;
 };
 
 // 3-2. categorySave -------------------------------------------------------------------------------
@@ -221,11 +297,13 @@ export const categorySave = async (
   user_id_param, OBJECT_param, DATE_param
 ) => {
 
-  const findResult = await repository.category.detail(
-    user_id_param, ""
+  let findResult = null;
+  let finalResult = null;
+
+  findResult = await repository.category.detail(
+    user_id_param, DATE_param
   );
 
-  let finalResult = null;
   if (!findResult) {
     finalResult = await repository.category.create(
       user_id_param, OBJECT_param
@@ -237,7 +315,7 @@ export const categorySave = async (
     );
   }
 
-  return finalResult
+  return finalResult;
 };
 
 // 4-1. dummyList ----------------------------------------------------------------------------------
@@ -245,10 +323,9 @@ export const dummyList = async (
   user_id_param, PAGING_param, PART_param
 ) => {
 
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-
   let finalResult = [];
   let totalCnt = 0;
+  let page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   // 1. exerciseGoal
   if (PART_param === "exerciseGoal") {
@@ -341,8 +418,8 @@ export const dummySave = async (
   user_id_param, PART_param, count_param
 ) => {
 
-  let insertCount = Number(count_param);
   let finalResult = String("");
+  let insertCount = Number(count_param);
   let secondStr = String(PART_param);
 
   // 1. exerciseGoal

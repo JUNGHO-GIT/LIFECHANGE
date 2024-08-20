@@ -42,15 +42,26 @@ export const decimalToTime = (data) => {
 
 // 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (time) => {
-  if (!time) return 0;
+  if (!time) {
+    return 0;
+  }
   const [hours, minutes] = time.split(":").map(Number);
-  return hours + minutes / 60;
+  const adjustedHours = hours + Math.floor(minutes / 60);
+  const adjustedMinutes = minutes % 60;
+
+  return adjustedHours + adjustedMinutes / 60;
 };
+
 export const decimalToStr = (time) => {
-  if (time === null || time === undefined) return "00:00";
+  if (time === null || time === undefined) {
+    return "00:00";
+  }
   const hours = Math.floor(time);
   const minutes = Math.round((time - hours) * 60);
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+  const adjustedHours = hours + Math.floor(minutes / 60);
+  const adjustedMinutes = minutes % 60;
+
+  return `${String(adjustedHours).padStart(2, "0")}:${String(adjustedMinutes).padStart(2, "0")}`;
 };
 
 // 2-1. log ----------------------------------------------------------------------------------------

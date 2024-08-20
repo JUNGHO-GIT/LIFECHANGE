@@ -162,8 +162,8 @@ export const SleepGoalSave = () => {
       initialErrors.sleep_goal_wakeTime = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 

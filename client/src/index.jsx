@@ -66,6 +66,7 @@ import {UserDeletes} from "./page/user/UserDeletes.jsx";
 import {UserAppInfo} from "./page/user/UserAppInfo.jsx";
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
+import {UserResetPw} from "./page/user/UserResetPw.jsx";
 
 import {AuthPrivacy} from "./page/auth/AuthPrivacy.jsx";
 import {AuthGoogle} from "./page/auth/AuthGoogle.jsx";
@@ -133,6 +134,7 @@ const User = () => (
     <Route path="/app/setting" element={<UserAppSetting />} />
     <Route path="/signup" element={<UserSignup />} />
     <Route path="/login" element={<UserLogin />} />
+    <Route path="/resetPw" element={<UserResetPw />} />
     <Route path="/detail" element={<UserDetail />} />
     <Route path="/deletes" element={<UserDeletes />} />
     <Route path="/category" element={<UserCategory />} />
@@ -160,6 +162,7 @@ const App = () => {
   const noneHeader = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
+    location.pathname.includes("/user/resetPw") ||
     location.pathname.indexOf("/auth") > -1
   );
   const noneTop = (
@@ -173,6 +176,7 @@ const App = () => {
   const noneBanner = (
     location.pathname.includes("/user/login") ||
     location.pathname.includes("/user/signup") ||
+    location.pathname.includes("/user/resetPw") ||
     location.pathname.indexOf("/auth") > -1
   );
 

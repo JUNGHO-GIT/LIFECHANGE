@@ -101,6 +101,23 @@ export const user = {
     return finalResult;
   },
 
+  resetPw: async (
+    user_id_param, OBJECT_param
+  ) => {
+
+    const finalResult = await User.findOneAndUpdate({
+      user_id: user_id_param,
+    }, {
+      $set: {
+        user_pw: OBJECT_param.user_pw,
+      },
+    }, {
+      new: true,
+    });
+
+    return finalResult;
+  },
+
   login: async (
     user_id_param, user_pw_param
   ) => {

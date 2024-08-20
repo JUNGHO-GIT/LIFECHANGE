@@ -130,6 +130,8 @@ export const useTranslate = () => {
     foodName: {ko: "식품명", en: "Food"},
     foodBrand: {ko: "브랜드", en: "Brand"},
     findFood: {ko: "음식", en: "Food"},
+    forgotPw: {ko: "비밀번호를 잊은 경우", en: "Forgot Password"},
+    resetPw: {ko: "비밀번호 변경", en: "Reset Password"},
 
     // g
     g: {ko: "g", en: "g"},
@@ -227,6 +229,8 @@ export const useTranslate = () => {
     nutrition: {ko: "영양소", en: "Nutrition"},
     nut: {ko: "영양소", en: "Nutrition"},
     notFound: {ko: "결과가 없습니다", en: "result is not available"},
+    newPw: {ko: "새 비밀번호", en: "New PW"},
+    newPwVerified: {ko: "새 비밀번호 확인", en: "New PW Confirm"},
 
     // o
     others: {ko: "기타", en: "Others"},
@@ -470,6 +474,7 @@ export const useTranslate = () => {
     errorUserIdVerified: {ko: "이메일 인증을 완료해주세요", en: "Please complete email verification"},
     errorUserIdAt: {ko: "아이디는 이메일 형식으로 입력해주세요", en: "Please enter ID in email format"},
     errorUserPw: {ko: "비밀번호를 입력해주세요", en: "Please enter PW"},
+    errorUserPwMatch: {ko: "비밀번호가 일치하지 않습니다", en: "Passwords do not match"},
     errorUserAge: {ko: "나이를 입력해주세요", en: "Please enter Age"},
     errorUserGender: {ko: "성별을 선택해주세요", en: "Please select Gender"},
     errorUserHeight: {ko: "키를 입력해주세요", en: "Please enter Height"},

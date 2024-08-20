@@ -159,8 +159,8 @@ export const MoneyGoalSave = () => {
       initialErrors.money_goal_expense = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 

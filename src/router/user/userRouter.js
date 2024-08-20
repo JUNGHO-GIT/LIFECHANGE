@@ -36,12 +36,19 @@ router.get("/app/info", async (req, res) => {
 router.post("/email/send", async (req, res) => {
   try {
     let result = await service.sendEmail (
-      req.body.user_id
+      req.body.user_id,
+      req.body.type,
     );
     if (result.result === "duplicate") {
       res.json({
         status: "duplicate",
         msg: "이미 가입된 이메일 입니다."
+      });
+    }
+    else if (result.result === "notExist") {
+      res.json({
+        status: "notExist",
+        msg: "가입되지 않은 이메일 입니다."
       });
     }
     else if (result.result === "success") {
@@ -144,7 +151,36 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// 2-2. userLogin ----------------------------------------------------------------------------------
+// 2-2. userResetPw --------------------------------------------------------------------------------
+router.post("/resetPw", async (req, res) => {
+  try {
+    let result = await service.userResetPw (
+      req.body.user_id,
+      req.body.OBJECT
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "비밀번호 재설정 성공"
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "비밀번호 재설정 실패"
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 2-3. userLogin ----------------------------------------------------------------------------------
 router.post("/login", async (req, res) => {
   try {
     let result = await service.userLogin (
@@ -175,7 +211,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 2-3. userDetail ---------------------------------------------------------------------------------
+// 2-4. userDetail ---------------------------------------------------------------------------------
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.userDetail (
@@ -205,7 +241,7 @@ router.get("/detail", async (req, res) => {
   }
 });
 
-// 2-4. userUpdate ---------------------------------------------------------------------------------
+// 2-5. userUpdate ---------------------------------------------------------------------------------
 router.post("/update", async (req, res) => {
   try {
     let result = await service.userUpdate (
@@ -236,7 +272,7 @@ router.post("/update", async (req, res) => {
   }
 });
 
-// 2-3. userDeletes --------------------------------------------------------------------------------
+// 2-6. userDeletes --------------------------------------------------------------------------------
 router.delete("/deletes", async (req, res) => {
   try {
     let result = await service.userDeletes (

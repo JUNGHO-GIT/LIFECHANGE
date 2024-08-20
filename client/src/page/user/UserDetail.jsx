@@ -148,8 +148,8 @@ export const UserDetail = () => {
       initialErrors.user_initProperty = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 

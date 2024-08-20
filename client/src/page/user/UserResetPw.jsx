@@ -1,22 +1,19 @@
-// UserSignup.jsx
+// UserResetPw.jsx
 
 import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {Loading} from "../../import/ImportLayouts.jsx";
 import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, MenuItem} from "../../import/ImportMuis.jsx";
-import {user1} from "../../import/ImportImages.jsx";
+import {Paper, TextField, Button} from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const UserSignup = () => {
+export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
-  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
   const URL_OBJECT = URL + SUBFIX;
-  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
   const navigate = useNavigate();
   const {translate} = useTranslate();
 
@@ -33,14 +30,6 @@ export const UserSignup = () => {
     user_id_verified: false,
     user_pw: "",
     user_pw_verified: "",
-    user_age: "",
-    user_gender: "",
-    user_height: "",
-    user_initScale: "",
-    user_curScale: "",
-    user_initProperty: "",
-    user_curProperty: "",
-    user_image: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -51,10 +40,6 @@ export const UserSignup = () => {
     user_id_verified: false,
     user_pw: false,
     user_pw_verified: false,
-    user_age: false,
-    user_height: false,
-    user_initScale: false,
-    user_initProperty: false,
   });
   const REFS = useRef({
     user_id: createRef(),
@@ -62,10 +47,6 @@ export const UserSignup = () => {
     user_id_verified: createRef(),
     user_pw: createRef(),
     user_pw_verified: createRef(),
-    user_age: createRef(),
-    user_height: createRef(),
-    user_initScale: createRef(),
-    user_initProperty: createRef(),
   });
 
   // 2-4. validate ---------------------------------------------------------------------------------
@@ -81,10 +62,6 @@ export const UserSignup = () => {
       user_id_verified: false,
       user_pw: false,
       user_pw_verified: false,
-      user_age: false,
-      user_height: false,
-      user_initScale: false,
-      user_initProperty: false,
     };
     const refsCurrent = REFS?.current;
 
@@ -166,34 +143,6 @@ export const UserSignup = () => {
         initialErrors.user_pw_verified = true;
         foundError = true;
       }
-      else if (OBJECT.user_age === "" || !OBJECT.user_age) {
-        alert(translate("errorUserAge"));
-        refsCurrent.user_age.current &&
-        refsCurrent.user_age.current?.focus();
-        initialErrors.user_age = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_height === "" || !OBJECT.user_height) {
-        alert(translate("errorUserHeight"));
-        refsCurrent.user_height.current &&
-        refsCurrent.user_height.current?.focus();
-        initialErrors.user_height = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_initScale === "" || !OBJECT.user_initScale) {
-        alert(translate("errorUserInitScale"));
-        refsCurrent.user_initScale.current &&
-        refsCurrent.user_initScale.current?.focus();
-        initialErrors.user_initScale = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
-        alert(translate("errorUserInitProperty"));
-        refsCurrent.user_initProperty.current &&
-        refsCurrent.user_initProperty.current?.focus();
-        initialErrors.user_initProperty = true;
-        foundError = true;
-      }
     }
 
     setERRORS(initialErrors);
@@ -210,10 +159,10 @@ export const UserSignup = () => {
     }
     await axios.post (`${URL_OBJECT}/email/send`, {
       user_id: OBJECT.user_id,
-      type: "signup"
+      type: "resetPw"
     })
     .then((res) => {
-      if (res.data.status === "duplicate") {
+      if (res.data.status === "notExist") {
         alert(res.data.msg);
         setOBJECT((prev) => ({
           ...prev,
@@ -281,20 +230,12 @@ export const UserSignup = () => {
       setLOADING(false);
       return;
     }
-    await axios.post (`${URL_OBJECT}/signup`, {
+    await axios.post (`${URL_OBJECT}/resetPw`, {
       user_id: OBJECT.user_id,
       OBJECT: OBJECT
     })
     .then((res) => {
-      if (res.data.status === "alreadyExist") {
-        alert(res.data.msg);
-        setOBJECT((prev) => ({
-          ...prev,
-          user_id: "",
-          user_pw: "",
-        }));
-      }
-      else if (res.data.status === "success") {
+      if (res.data.status === "success") {
         alert(res.data.msg);
         navigate("/user/login");
       }
@@ -323,28 +264,12 @@ export const UserSignup = () => {
     });
   };
 
-  // 3. flow ---------------------------------------------------------------------------------------
-  const flowGoogle = async () => {
-    await axios.get (`${URL_GOOGLE}/login`)
-    .then((res) => {
-      if (res.data.status === "success") {
-        window.location.href = res.data.url;
-      }
-      else {
-        alert(res.data.msg);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-  };
-
   // 7. table --------------------------------------------------------------------------------------
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("signup")}
+        {translate("resetPw")}
       </Div>
     );
     // 7-2. table
@@ -414,7 +339,7 @@ export const UserSignup = () => {
             select={false}
             type={"password"}
             size={"small"}
-            label={translate("pw")}
+            label={translate("newPw")}
             value={OBJECT.user_pw}
             className={"w-86vw"}
             inputRef={REFS.current.user_pw}
@@ -432,7 +357,7 @@ export const UserSignup = () => {
             select={false}
             type={"password"}
             size={"small"}
-            label={translate("pwVerified")}
+            label={translate("newPwVerified")}
             value={OBJECT.user_pw_verified}
             className={"w-86vw"}
             inputRef={REFS.current.user_pw_verified}
@@ -444,181 +369,6 @@ export const UserSignup = () => {
                 user_pw_verified: e.target.value
               }))
             )}
-          />
-          <Hr40 />
-          {/** 성별 (N, M, F) **/}
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("gender")}
-            value={OBJECT.user_gender || "N"}
-            className={"w-86vw text-left"}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_gender: e.target.value || "N"
-              }))
-            )}
-          >
-            {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
-              <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Br10 />
-          {/** 나이 (1세 ~ 100세) **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("age")}
-            value={OBJECT.user_age}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_age}
-            error={ERRORS.user_age}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_age: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 200) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_age: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("age")}
-                </Div>
-              )
-            }}
-          />
-          <Br10 />
-          {/** 신장 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("height")}
-            value={OBJECT.user_height}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_height}
-            error={ERRORS.user_height}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_height: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_height: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("cm")}
-                </Div>
-              )
-            }}
-          />
-          <Br10 />
-          {/** 초기 체중 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("scale")}
-            value={OBJECT.user_initScale}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_initScale}
-            error={ERRORS.user_initScale}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initScale: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initScale: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-          />
-          <Br10 />
-          {/** 초기 자산 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("property")}
-            value={OBJECT.user_initProperty}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_initProperty}
-            error={ERRORS.user_initProperty}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/,/g, '');
-              if (/^\d*$/.test(value) || value === "") {
-                const newValue = Number(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 9999999999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
           />
         </Div>
       );
@@ -638,29 +388,8 @@ export const UserSignup = () => {
             flowSave();
           }}
         >
-          {translate("signup")}
+          {translate("resetPw")}
         </Button>
-      </Div>
-    );
-    // 7-4. google
-    const googleSection = () => (
-      <Div className={"d-center w-86vw"}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          value={translate("googleLogin")}
-          className={"w-100p bg-white"}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={user1} className={"w-15 h-15"} />
-            ),
-          }}
-          onClick={() => {
-            flowGoogle();
-          }}
-        />
       </Div>
     );
     // 7-5. toLogin
@@ -674,14 +403,14 @@ export const UserSignup = () => {
         </Div>
       </Div>
     );
-    // 7-6. toResetPw
-    const toResetPwSection = () => (
+    // 7-5. toSignup
+    const toSignupSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
-        {translate("forgotPw")}
+        {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
-          navigate("/user/resetPw");
+          navigate("/user/signup");
         }}>
-          {translate("resetPw")}
+          {translate("signup")}
         </Div>
       </Div>
     );
@@ -696,12 +425,10 @@ export const UserSignup = () => {
           {tableSection()}
           <Hr40 />
           {buttonSection()}
-          <Br10 />
-          {googleSection()}
           <Hr40 />
           {toLoginSection()}
           <Br10 />
-          {toResetPwSection()}
+          {toSignupSection()}
         </Div>
       </Paper>
       </>

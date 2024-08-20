@@ -17,6 +17,7 @@ export const useRoot = () => {
     if (
       location.pathname.indexOf("/user/login") === -1 &&
       location.pathname.indexOf("/user/signup") === -1 &&
+      location.pathname.indexOf("/user/resetPw") === -1 &&
       location.pathname.indexOf("/auth") === -1
     ) {
 

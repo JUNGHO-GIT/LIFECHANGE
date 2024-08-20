@@ -7,7 +7,7 @@ import {Loading} from "../../import/ImportLayouts.jsx";
 import {axios} from "../../import/ImportLibs.jsx";
 import {sync, log} from "../../import/ImportUtils";
 import {Div, Br10, Br20, Img, Hr40} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, Checkbox} from "../../import/ImportMuis.jsx";
+import {Paper, TextField, Button, Checkbox, Grid} from "../../import/ImportMuis.jsx";
 import {user1} from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -122,8 +122,8 @@ export const UserLogin = () => {
       initialErrors.user_pw = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 
@@ -315,14 +315,25 @@ export const UserLogin = () => {
         />
       </Div>
     );
-    // 7-5. signup
-    const signupSection = () => (
+    // 7-5. toSignup
+    const toSignupSection = () => (
       <Div className={"d-center w-86vw fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");
         }}>
           {translate("signup")}
+        </Div>
+      </Div>
+    );
+    // 7-6. toResetPw
+    const toResetPwSection = () => (
+      <Div className={"d-center w-86vw fs-0-8rem"}>
+        {translate("forgotPw")}
+        <Div className={"d-center blue pointer ms-10"} onClick={() => {
+          navigate("/user/resetPw");
+        }}>
+          {translate("resetPw")}
         </Div>
       </Div>
     );
@@ -340,7 +351,9 @@ export const UserLogin = () => {
           <Br10 />
           {googleSection()}
           <Hr40 />
-          {signupSection()}
+          {toSignupSection()}
+          <Br10 />
+          {toResetPwSection()}
         </Div>
       </Paper>
       </>

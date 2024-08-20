@@ -174,8 +174,8 @@ export const ExerciseGoalSave = () => {
       initialErrors.exercise_goal_weight = true;
       foundError = true;
     }
-
     setERRORS(initialErrors);
+
     return !foundError;
   };
 
