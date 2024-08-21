@@ -1,6 +1,6 @@
 // exerciseMiddleware.js
 
-import {strToDecimal, decimalToStr} from "../../assets/js/utils.js";
+import { strToDecimal, decimalToStr } from "../../assets/js/utils.js";
 
 // 1. list -----------------------------------------------------------------------------------------
 export const list = async (object) => {

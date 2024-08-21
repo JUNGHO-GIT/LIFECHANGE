@@ -1,6 +1,6 @@
 // useDeveloperMode.jsx
 
-import {React, useEffect} from "../../import/ImportReacts.jsx";
+import { useEffect } from "../../import/ImportReacts.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useEnhancedTouch = () => {

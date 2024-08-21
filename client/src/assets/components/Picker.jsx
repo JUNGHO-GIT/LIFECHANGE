@@ -1,12 +1,12 @@
 // Picker.jsx
 
-import {React, useLocation, useEffect, useState} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
-import {PopUp, Div, Img, Br20, Br10} from "../../import/ImportComponents.jsx";
-import {Badge, TextField, MenuItem, PickersDay, Button} from "../../import/ImportMuis.jsx";
-import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {common1} from "../../import/ImportImages.jsx";
+import { React, useEffect, useState } from "../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
+import { moment } from "../../import/ImportLibs.jsx";
+import { PopUp, Div, Img, Br20, Br10 } from "../../import/ImportComponents.jsx";
+import { Badge, TextField, MenuItem, PickersDay, Button } from "../../import/ImportMuis.jsx";
+import { DateCalendar, AdapterMoment, LocalizationProvider } from "../../import/ImportMuis.jsx";
+import { common1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Picker = ({
@@ -14,12 +14,11 @@ export const Picker = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
+  const {
+    translate, PATH, firstStr, secondStr, thirdStr, koreanDate, curWeekStart, curWeekEnd,
+    curMonthStart, curMonthEnd, curYearStart, curYearEnd,
+  } = useCommon();
+
   const isToday = firstStr === "today";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
   const isGoalSave = secondStr === "goal" && thirdStr === "save";
@@ -39,23 +38,23 @@ export const Picker = ({
   const clickedDate = {
     todayDate: {
       dateType: isToday ? "day" : "",
-      dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: koreanDate,
+      dateEnd: koreanDate,
     },
     weekDate: {
       dateType: isToday ? "day" : "",
-      dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD"),
+      dateStart: curWeekStart,
+      dateEnd: curWeekEnd,
     },
     monthDate: {
       dateType: isToday ? "day" : "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
+      dateStart: curMonthStart,
+      dateEnd: curMonthEnd,
     },
     yearDate: {
       dateType: isToday ? "day" : "",
-      dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD"),
+      dateStart: curYearStart,
+      dateEnd: curYearEnd,
     },
     selectDate: {
       dateType: isToday ? "day" : "",
@@ -85,10 +84,10 @@ export const Picker = ({
   useEffect(() => {
     if (!isSave && !isGoalSave) {
       if (dateStart === "") {
-        dateStart = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+        dateStart = koreanDate;
       }
       if (dateEnd === "") {
-        dateEnd = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+        dateEnd = koreanDate;
       }
     }
   }, [dateStart, dateEnd]);
@@ -863,40 +862,40 @@ export const Picker = ({
             setDATE((prev) => ({
               ...prev,
               dateType: "day",
-              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+              dateStart: koreanDate,
+              dateEnd: koreanDate
             }));
           }
           else if (e.target.value === "week") {
             setDATE((prev) => ({
               ...prev,
               dateType: "week",
-              dateStart: moment().tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
+              dateStart: curWeekStart,
+              dateEnd: curWeekEnd
             }));
           }
           else if (e.target.value === "month") {
             setDATE((prev) => ({
               ...prev,
               dateType: "month",
-              dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+              dateStart: curMonthStart,
+              dateEnd: curMonthEnd
             }));
           }
           else if (e.target.value === "year") {
             setDATE((prev) => ({
               ...prev,
               dateType: "year",
-              dateStart: moment().tz("Asia/Seoul").startOf("year").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").endOf("year").format("YYYY-MM-DD")
+              dateStart: curYearStart,
+              dateEnd: curYearEnd
             }));
           }
           else if (e.target.value === "select") {
             setDATE((prev) => ({
               ...prev,
               dateType: "select",
-              dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-              dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+              dateStart: koreanDate,
+              dateEnd: koreanDate,
             }));
           }
         }}

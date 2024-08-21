@@ -1,9 +1,9 @@
 // foodGoalRepository.js
 
 import mongoose from "mongoose";
-import {FoodGoal} from "../../schema/food/FoodGoal.js";
-import {Food} from "../../schema/food/Food.js";
-import {newDate} from "../../assets/js/date.js";
+import { FoodGoal } from "../../schema/food/FoodGoal.js";
+import { Food } from "../../schema/food/Food.js";
+import { newDate } from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = {

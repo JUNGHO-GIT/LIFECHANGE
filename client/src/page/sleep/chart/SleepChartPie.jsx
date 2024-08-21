@@ -1,28 +1,21 @@
 // SleepChartPie.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {Loading} from "../../../import/ImportLayouts.jsx";
-import {koreanDate} from "../../../import/ImportUtils.jsx";
-import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
-import {common3_2} from "../../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { axios } from "../../../import/ImportLibs.jsx";
+import { Loading } from "../../../import/ImportLayouts.jsx";
+import { Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, MenuItem, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
+import { common3_2 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepChartPie = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const {translate} = useTranslate();
-  const sessionId = sessionStorage.getItem("ID_SESSION");
-  const COLORS = [
-    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
-    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
+  const {
+    URL_OBJECT, sessionId, COLORS, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
@@ -54,24 +47,21 @@ export const SleepChartPie = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const resToday = await axios.get(`${URL_OBJECT}/chart/pie/today`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resWeek = await axios.get(`${URL_OBJECT}/chart/pie/week`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resMonth = await axios.get(`${URL_OBJECT}/chart/pie/month`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
+    const params = {
+      user_id: sessionId,
+      DATE: DATE,
+    };
+    const [resToday, resWeek, resMonth] = await Promise.all([
+      axios.get(`${URL_OBJECT}/chart/pie/today`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/chart/pie/week`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/chart/pie/month`, {
+        params: params,
+      }),
+    ]);
     setOBJECT_TODAY(
       (resToday.data.result.length > 0)
       && (resToday.data.result[0].value !== 0)

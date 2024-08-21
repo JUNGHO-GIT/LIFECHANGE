@@ -1,31 +1,29 @@
 // AuthGoogle.jsx
 
-import {React, useEffect, useNavigate} from "../../import/ImportReacts.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
-import {sync} from "../../import/ImportUtils.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
+import { React, useEffect, useNavigate } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { axios } from "../../import/ImportLibs.jsx";
+import { sync } from "../../import/ImportUtils.jsx";
+import { Div } from "../../import/ImportComponents.jsx";
+import { Paper } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
-  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
-  const navigate = useNavigate();
+  const {
+    URL_GOOGLE, navigate
+  } = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     await axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res) => {
       if (res.data.status === "success") {
-
         localStorage.setItem("autoLogin", "true");
         localStorage.setItem("autoLoginId", res.data.googleId);
         localStorage.setItem("autoLoginPw", res.data.googlePw);
         localStorage.setItem("GOOGLE", "true");
-
         sessionStorage.setItem("ID_SESSION", res.data.googleId);
         sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
         sessionStorage.setItem("LANG", "ko");
@@ -36,7 +34,6 @@ export const AuthGoogle = () => {
         else {
           sessionStorage.setItem("ADMIN", "false");
         }
-
         sync();
         navigate("/today/list");
       }
@@ -51,8 +48,7 @@ export const AuthGoogle = () => {
     // 7-2. table
     const tableSection = () => {
       const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}>
-        </Div>
+        <Div className={"d-column"} key={i}></Div>
       );
       return (
         tableFragment(0)

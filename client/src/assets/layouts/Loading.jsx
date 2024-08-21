@@ -1,20 +1,32 @@
 // Loading.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
+import { React } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Div } from "../../import/ImportComponents.jsx";
 
 // 14. loading -------------------------------------------------------------------------------------
 export const Loading = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const PATH = location?.pathname;
+  const {
+    PATH,
+  } = useCommon();
+
+  const needWrapper = () => {
+    if (
+      PATH.includes("/user/signup") ||
+      PATH.includes("/user/login") ||
+      PATH.includes("/user/deletes") ||
+      PATH.includes("/user/resetPw")
+    ) {
+      return true;
+    };
+    return false;
+  };
 
   // 6. loading ------------------------------------------------------------------------------------
   const loadingNode = () => (
-    PATH.includes("/user/signup") ||
-    PATH.includes("/user/login") ||
-    PATH.includes("/user/resetPw") ? (
+    needWrapper() ? (
       <Div className={"loader-wrapper d-center"}>
         <Div className={"loader"} />
       </Div>

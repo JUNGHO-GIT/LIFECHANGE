@@ -1,30 +1,20 @@
 // UserDetail.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {axios, numeral} from "../../import/ImportLibs.jsx";
-import {Footer, Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Br30, Br20, Hr40} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Avatar, MenuItem} from "../../import/ImportMuis.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { axios, numeral } from "../../import/ImportLibs.jsx";
+import { Footer, Loading } from "../../import/ImportLayouts.jsx";
+import { Div, Br30, Br20, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Avatar, MenuItem } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const property = JSON.parse(sessionStorage.getItem("property") || "{}");
-  const curProperty = property?.curProperty || 0;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, firstStr, secondStr, thirdStr, curProperty,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);

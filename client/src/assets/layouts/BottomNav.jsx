@@ -1,23 +1,18 @@
 // BottomNav.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {Img} from "../../import/ImportComponents.jsx";
-import {BottomNavigation, BottomNavigationAction, Paper, Card} from "../../import/ImportMuis.jsx";
-import {calendar1, today1} from "../../import/ImportImages.jsx";
-import {exercise1, food1, money1, sleep1} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Img } from "../../import/ImportComponents.jsx";
+import { BottomNavigation, BottomNavigationAction, Paper, Card } from "../../import/ImportMuis.jsx";
+import { calendar1, today1, exercise1, food1, money1, sleep1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
+  const {
+    navigate, translate, firstStr, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [selectedTab, setSelectedTab] = useState("today");
@@ -90,8 +85,8 @@ export const BottomNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-        dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+        dateStart: koreanDate,
+        dateEnd: koreanDate
       }
     });
   };

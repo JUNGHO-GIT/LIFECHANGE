@@ -1,33 +1,23 @@
 // FoodFind.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
-import {useStorage, useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
-import {Paper, Card, Checkbox, Grid} from "../../import/ImportMuis.jsx";
-import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
-import {food2, food3, food4, food5} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
+import { axios, numeral } from "../../import/ImportLibs.jsx";
+import { Loading, Footer, Empty } from "../../import/ImportLayouts.jsx";
+import { Div, Hr30, Br10, Img, Icons } from "../../import/ImportComponents.jsx";
+import { Paper, Card, Checkbox, Grid } from "../../import/ImportMuis.jsx";
+import { Accordion, AccordionSummary, AccordionDetails } from "../../import/ImportMuis.jsx";
+import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodFind = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateStart, location_dateEnd,
+    PATH, firstStr, secondStr, thirdStr,
+    URL_OBJECT, sessionId, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
@@ -46,8 +36,8 @@ export const FoodFind = () => {
   const [LOADING, setLOADING] = useState(false);
   const [DATE, setDATE] = useState({
     dateType: "day",
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
   const [SEND, setSEND] = useState({
     id: "",

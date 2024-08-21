@@ -1,41 +1,24 @@
 // CalendarSave.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {sync, log} from "../../import/ImportUtils.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Img, Picker, Memo, Count, Delete} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
-import {calendar2} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { moment, axios } from "../../import/ImportLibs.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Img, Picker, Memo, Count, Delete } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Badge, MenuItem, TextField } from "../../import/ImportMuis.jsx";
+import { calendar2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_CALENDAR || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("CATEGORY") || "{}";
-  const calendarArray = JSON.parse(session)?.calendar || [];
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_id = location?.state?.id;
-  const location_dateType = location?.state?.dateType;
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const location_category = location?.state?.category;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
-  const colors = [
-    "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
-  ];
+  const {
+    navigate, location_id, location_category,
+    location_dateType, location_dateStart, location_dateEnd,
+    firstStr, secondStr, thirdStr, calendarArray, colors,
+    URL_OBJECT, sessionId, translate, koreanDate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -54,8 +37,8 @@ export const CalendarSave = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: location_dateType,
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

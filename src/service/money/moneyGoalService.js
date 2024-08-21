@@ -1,7 +1,7 @@
 // moneyGoalService.js
 
 import * as repository from "../../repository/money/moneyGoalRepository.js";
-import {log} from "../../assets/js/utils.js";
+import { log } from "../../assets/js/utils.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (

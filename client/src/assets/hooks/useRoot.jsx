@@ -1,14 +1,13 @@
 // useRoot.jsx
 
-import {useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import { useEffect, useNavigate, useLocation } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useRoot = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const sessionId = sessionStorage.getItem('ID_SESSION');
+  const {navigate, location, sessionId} = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

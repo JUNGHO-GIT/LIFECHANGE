@@ -1,6 +1,6 @@
 // NavBar.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
+import { React } from "../../import/ImportReacts.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Div = (props) => {

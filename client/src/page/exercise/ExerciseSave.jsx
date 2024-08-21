@@ -1,36 +1,23 @@
 // ExerciseSave.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useTime, useTranslate} from "../../import/ImportHooks.jsx";
-import {sync, log} from "../../import/ImportUtils";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Img, Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
-import {exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon, useTime } from "../../import/ImportHooks.jsx";
+import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
+import { sync } from "../../import/ImportUtils.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Div, Br20, Img, Picker, Time, Count, Delete } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Badge, MenuItem, TextField } from "../../import/ImportMuis.jsx";
+import { exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("CATEGORY") || "{}";
-  const exerciseArray = JSON.parse(session)?.exercise || [];
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType;
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+    PATH, firstStr, secondStr, thirdStr, exerciseArray, koreanDate,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -49,8 +36,8 @@ export const ExerciseSave = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: location_dateType,
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

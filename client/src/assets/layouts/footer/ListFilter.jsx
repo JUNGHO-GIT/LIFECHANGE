@@ -1,11 +1,9 @@
 // ListFilter.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {moment} from "../../../import/ImportLibs.jsx";
-import {Picker, Div, Br10, PopUp} from "../../../import/ImportComponents.jsx";
-import {TextField, MenuItem, Card, Button} from "../../../import/ImportMuis.jsx";
+import { React } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { Picker, Div } from "../../../import/ImportComponents.jsx";
+import { TextField, MenuItem, Card } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = ({
@@ -13,9 +11,7 @@ export const ListFilter = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
+  const {translate} = useCommon();
 
   // 2. sort ---------------------------------------------------------------------------------------
   const sortNode = () => (

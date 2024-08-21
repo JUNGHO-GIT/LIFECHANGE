@@ -1,10 +1,10 @@
 // Count.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {PopUp, Img, Div, Icons} from "../../import/ImportComponents.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {common2} from "../../import/ImportImages.jsx";
+import { React } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { PopUp, Img, Div, Icons } from "../../import/ImportComponents.jsx";
+import { TextField } from "../../import/ImportMuis.jsx";
+import { common2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Count = ({
@@ -12,10 +12,7 @@ export const Count = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const secondStr = PATH?.split("/")[2] || "";
+  const {translate, secondStr} = useCommon();
   const isFind = secondStr === "find";
 
   // 2. countNode ----------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 // useLanguageProvider.jsx
 
-import {React, useState, useEffect, useCallback} from "../../import/ImportReacts.jsx";
-import {createContext, useContext} from "../../import/ImportReacts.jsx";
+import { React, useState, useEffect, useCallback } from "../../import/ImportReacts.jsx";
+import { createContext, useContext } from "../../import/ImportReacts.jsx";
 
 // -------------------------------------------------------------------------------------------------
 // @ts-ignore

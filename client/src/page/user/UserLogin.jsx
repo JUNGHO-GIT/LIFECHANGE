@@ -1,28 +1,21 @@
 // UserLogin.jsx
 
-import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {createRef, useRef} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
-import {Loading} from "../../import/ImportLayouts.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
-import {sync, log} from "../../import/ImportUtils";
-import {Div, Br10, Br20, Img, Hr40} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, Checkbox, Grid} from "../../import/ImportMuis.jsx";
-import {user1} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect, createRef, useRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { axios } from "../../import/ImportLibs.jsx";
+import { sync } from "../../import/ImportUtils";
+import { Div, Br10, Br20, Img, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, Checkbox } from "../../import/ImportMuis.jsx";
+import { user1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
-  const ADMIN_ID = process.env.REACT_APP_ADMIN_ID || "";
-  const ADMIN_PW = process.env.REACT_APP_ADMIN_PW || "";
-  const navigate = useNavigate();
-  const {translate} = useTranslate();
+  const {
+    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);

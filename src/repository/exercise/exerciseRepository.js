@@ -1,8 +1,8 @@
 // exerciseRepository.js
 
 import mongoose from "mongoose";
-import {Exercise} from "../../schema/exercise/Exercise.js";
-import {newDate} from "../../assets/js/date.js";
+import { Exercise } from "../../schema/exercise/Exercise.js";
+import { newDate } from "../../assets/js/date.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = {

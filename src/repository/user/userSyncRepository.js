@@ -1,14 +1,14 @@
 // userSyncRepository.js
 
-import {Exercise} from "../../schema/exercise/Exercise.js";
-import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
-import {Food} from "../../schema/food/Food.js";
-import {FoodGoal} from "../../schema/food/FoodGoal.js";
-import {Money} from "../../schema/money/Money.js";
-import {MoneyGoal} from "../../schema/money/MoneyGoal.js";
-import {Sleep} from "../../schema/sleep/Sleep.js";
-import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
-import {User} from "../../schema/user/User.js";
+import { Exercise } from "../../schema/exercise/Exercise.js";
+import { ExerciseGoal } from "../../schema/exercise/ExerciseGoal.js";
+import { Food } from "../../schema/food/Food.js";
+import { FoodGoal } from "../../schema/food/FoodGoal.js";
+import { Money } from "../../schema/money/Money.js";
+import { MoneyGoal } from "../../schema/money/MoneyGoal.js";
+import { Sleep } from "../../schema/sleep/Sleep.js";
+import { SleepGoal } from "../../schema/sleep/SleepGoal.js";
+import { User } from "../../schema/user/User.js";
 
 // 1. percent --------------------------------------------------------------------------------------
 export const percent = {

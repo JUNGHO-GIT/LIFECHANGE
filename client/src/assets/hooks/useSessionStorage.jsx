@@ -1,14 +1,15 @@
 // useSessionStorage.jsx
 
-import {useEffect, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
+import { useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useSessionStorage = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const sessionId = sessionStorage.getItem('ID_SESSION');
+  const {
+    sessionId, navigate, location,
+  } = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

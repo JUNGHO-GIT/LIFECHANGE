@@ -1,33 +1,23 @@
 // SleepSave.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useTime} from "../../import/ImportHooks.jsx";
-import {moment, axios} from "../../import/ImportLibs.jsx";
-import {sync, log} from "../../import/ImportUtils";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../import/ImportComponents.jsx";
-import {Picker, Time, Count, Delete} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge} from "../../import/ImportMuis.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon, useValidate, useTime } from "../../import/ImportHooks.jsx";
+import { moment, axios } from "../../import/ImportLibs.jsx";
+import { sync } from "../../import/ImportUtils.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Picker, Time, Count, Delete } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Badge } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType;
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+    PATH, firstStr, secondStr, thirdStr, koreanDate,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -46,9 +36,10 @@ export const SleepSave = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: location_dateType,
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
+  const {REFS, ERRORS, validate } = useValidate("sleep", COUNT);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -67,14 +58,14 @@ export const SleepSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
+  /* [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: false,
     sleep_wakeTime: false,
   })));
-  const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
+  REFS = useRef(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: createRef(),
     sleep_wakeTime: createRef(),
-  })));
+  }))); */
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -178,7 +169,7 @@ export const SleepSave = () => {
   }, [OBJECT?.sleep_section.length]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT) => {
+  /* const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.sleep_section?.map(() => ({
       sleep_bedTime: false,
@@ -217,7 +208,7 @@ export const SleepSave = () => {
     }
     setERRORS(initialErrors);
     return !foundError;
-  };
+  }; */
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {

@@ -1,8 +1,8 @@
 // Btn.jsx
 
-import {React, useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {Button, Card} from "../../../import/ImportMuis.jsx";
+import { React } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { Button, Card } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Btn = ({
@@ -10,9 +10,7 @@ export const Btn = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {translate} = useTranslate();
-  const location = useLocation();
-  const PATH = location?.pathname;
+  const {translate, PATH} = useCommon();
 
   // 2. goto find ----------------------------------------------------------------------------------
   const btnGotoFind = () => (

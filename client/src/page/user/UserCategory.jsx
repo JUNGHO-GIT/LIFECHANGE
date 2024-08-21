@@ -1,41 +1,31 @@
 // UserCategory.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {Loading, Footer} from "../../import/ImportLayouts.jsx";
-import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField, Button} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
+import { axios } from "../../import/ImportLibs.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { PopUp, Div, Icons } from "../../import/ImportComponents.jsx";
+import { Card, Paper, TextField } from "../../import/ImportMuis.jsx";
+import { TableContainer, Table, TableFooter } from "../../import/ImportMuis.jsx";
+import { TableHead, TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const dataCategoryArray = ["exercise", "food", "calendar", "money", "sleep"];
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateStart, location_dateEnd,
+    PATH, firstStr, secondStr, thirdStr, dataCategoryArray,
+    URL_OBJECT, sessionId, translate, koreanDate
+  } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "day",
-      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: location_dateStart || koreanDate,
+      dateEnd: location_dateEnd || koreanDate,
     }
   );
 

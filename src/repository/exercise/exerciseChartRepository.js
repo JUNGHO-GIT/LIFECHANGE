@@ -1,7 +1,7 @@
 // exerciseChartRepository.js
 
-import {Exercise} from "../../schema/exercise/Exercise.js";
-import {ExerciseGoal} from "../../schema/exercise/ExerciseGoal.js";
+import { Exercise } from "../../schema/exercise/Exercise.js";
+import { ExerciseGoal } from "../../schema/exercise/ExerciseGoal.js";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = {

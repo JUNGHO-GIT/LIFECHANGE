@@ -1,8 +1,8 @@
 // Banner.jsx
 
-import {React}from "../../import/ImportReacts.jsx";
-import {Div} from "../../import/ImportComponents.jsx";
-import {Paper, Card} from "../../import/ImportMuis.jsx";
+import { React}from "../../import/ImportReacts.jsx";
+import { Div } from "../../import/ImportComponents.jsx";
+import { Paper, Card } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Banner = () => {

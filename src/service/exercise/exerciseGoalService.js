@@ -1,6 +1,6 @@
 // exerciseGoalService.js
 
-import {strToDecimal, decimalToStr} from "../../assets/js/utils.js";
+import { strToDecimal, decimalToStr } from "../../assets/js/utils.js";
 import * as repository from "../../repository/exercise/exerciseGoalRepository.js";
 
 // 0. exist ----------------------------------------------------------------------------------------

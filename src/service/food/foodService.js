@@ -1,6 +1,6 @@
 // foodService.js
 
-import {JSDOM} from "jsdom";
+import { JSDOM } from "jsdom";
 import axios from "axios";
 import * as repository from "../../repository/food/foodRepository.js";
 

@@ -1,24 +1,20 @@
 // UserSignup.jsx
 
-import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
-import {Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, MenuItem} from "../../import/ImportMuis.jsx";
-import {user1} from "../../import/ImportImages.jsx";
+import { React, useState, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { axios } from "../../import/ImportLibs.jsx";
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { Div, Br10, Img, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, MenuItem } from "../../import/ImportMuis.jsx";
+import { user1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserSignup = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const SUBFIX_GOOGLE = process.env.REACT_APP_GOOGLE || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const URL_GOOGLE = URL + SUBFIX_GOOGLE;
-  const navigate = useNavigate();
-  const {translate} = useTranslate();
+  const {
+    navigate, URL_OBJECT, URL_GOOGLE, translate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [clientCode, setClientCode] = useState("");

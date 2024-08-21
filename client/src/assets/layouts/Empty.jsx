@@ -1,9 +1,9 @@
 // Empty.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {Div, Icons} from "../../import/ImportComponents.jsx";
-import {Card, Accordion, AccordionSummary, Grid} from "../../import/ImportMuis.jsx";
+import { React } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Div, Icons } from "../../import/ImportComponents.jsx";
+import { Card, Accordion, AccordionSummary, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Empty = ({
@@ -11,7 +11,11 @@ export const Empty = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {translate} = useTranslate();
+  const {
+    translate
+  } = useCommon();
+
+  // 3. navigateStr --------------------------------------------------------------------------------
   const navigateStr = (
     type === "goal" ? `/${extra}/goal/save` :
     type === "real" ? `/${extra}/save` :

@@ -1,35 +1,24 @@
 // FoodGoalSave.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {moment, axios, numeral} from "../../../import/ImportLibs.jsx";
-import {sync} from "../../../import/ImportUtils.jsx";
-import {Loading, Footer, Empty} from "../../../import/ImportLayouts.jsx";
-import {Div, Br20, Br40} from "../../../import/ImportComponents.jsx";
-import {Img, Picker, Count, Delete} from "../../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, TextField} from "../../../import/ImportMuis.jsx";
-import {food2, food3, food4, food5} from "../../../import/ImportImages.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { moment, axios, numeral } from "../../../import/ImportLibs.jsx";
+import { sync } from "../../../import/ImportUtils.jsx";
+import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
+import { Div, Br20 } from "../../../import/ImportComponents.jsx";
+import { Img, Picker, Count, Delete } from "../../../import/ImportComponents.jsx";
+import { Card, Paper, Badge, TextField } from "../../../import/ImportMuis.jsx";
+import { food2, food3, food4, food5 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("CATEGORY") || "{}";
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateType = location?.state?.dateType;
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+    firstStr, secondStr, thirdStr, koreanDate,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -48,8 +37,8 @@ export const FoodGoalSave = () => {
   });
   const [DATE, setDATE] = useState({
     dateType: location_dateType,
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

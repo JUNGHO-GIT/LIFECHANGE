@@ -1,25 +1,24 @@
 // UserAppInfo.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {axios} from "../../import/ImportLibs.jsx"
-import {PopUp, Div, Icons, Br20, Img, Br40} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableBody, TableRow, TableCell, TableHead} from "../../import/ImportMuis.jsx";
-import {logo1} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { axios } from "../../import/ImportLibs.jsx"
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { Div, Img, Br40 } from "../../import/ImportComponents.jsx";
+import { Card, Paper } from "../../import/ImportMuis.jsx";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
+import { logo1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppInfo = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    URL_OBJECT, sessionId,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -98,7 +97,7 @@ export const UserAppInfo = () => {
         </Card>
       );
       return (
-        tableFragment(0)
+        LOADING ? <Loading /> : tableFragment(0)
       );
     };
     // 7-10. return

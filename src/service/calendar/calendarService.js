@@ -1,7 +1,7 @@
 // calendarService.js
 
 import * as repository from "../../repository/calendar/calendarRepository.js";
-import {log} from "../../assets/js/utils.js";
+import { log } from "../../assets/js/utils.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (

@@ -1,13 +1,13 @@
 // UserAppSetting.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {PopUp, Div, Icons, Br20, Img} from "../../import/ImportComponents.jsx";
-import {Card, Paper} from "../../import/ImportMuis.jsx";
-import {TableContainer, Table} from "../../import/ImportMuis.jsx";
-import {TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
-import {flag1, flag2} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useNavigate, useLocation } from "../../import/ImportReacts.jsx";
+import { useTranslate, useStorage } from "../../import/ImportHooks.jsx";
+import { PopUp, Div, Icons, Br20, Img } from "../../import/ImportComponents.jsx";
+import { Card, Paper } from "../../import/ImportMuis.jsx";
+import { TableContainer, Table } from "../../import/ImportMuis.jsx";
+import { TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
+import { flag1, flag2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppSetting = () => {

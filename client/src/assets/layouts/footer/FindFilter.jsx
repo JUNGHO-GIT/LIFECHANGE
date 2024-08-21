@@ -1,9 +1,9 @@
 // FindFilter.jsx
 
-import {React, useLocation} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {Icons, Div} from "../../../import/ImportComponents.jsx";
-import {Button, TextField, Card, TablePagination} from "../../../import/ImportMuis.jsx";
+import { React, useLocation } from "../../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../../import/ImportHooks.jsx";
+import { Icons } from "../../../import/ImportComponents.jsx";
+import { Button, TextField, Card, TablePagination } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FindFilter = ({
@@ -11,12 +11,7 @@ export const FindFilter = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
+  const {translate, firstStr, secondStr, thirdStr,} = useCommon();
 
   // 2. query --------------------------------------------------------------------------------------
   const queryNode = () => (

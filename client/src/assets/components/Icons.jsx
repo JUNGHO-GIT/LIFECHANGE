@@ -1,7 +1,7 @@
 // Icons.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
-import {IconButton} from "@mui/material";
+import { React } from "../../import/ImportReacts.jsx";
+import { IconButton } from "@mui/material";
 
 // -------------------------------------------------------------------------------------------------
 export const Icons = ({name, onClick, ...props}) => {

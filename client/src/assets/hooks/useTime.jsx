@@ -1,7 +1,7 @@
 // useTime.jsx
 
-import {React, useEffect} from "../../import/ImportReacts.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
+import { useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useTime = (
@@ -10,7 +10,7 @@ export const useTime = (
 
   // 1. common -------------------------------------------------------------------------------------
   const strLow = PATH.match(/\/([^/]+)\//)[1];
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+  const {koreanDate} = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

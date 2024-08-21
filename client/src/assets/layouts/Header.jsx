@@ -1,19 +1,18 @@
 // Header.jsx
 
-import {React, useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {Div, Img, Icons} from "../../import/ImportComponents.jsx";
-import {axios, numeral, moment} from "../../import/ImportLibs.jsx";
-import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
-import {logo2, logo3} from "../../import/ImportImages.jsx";
+import { React } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Div, Img, Icons } from "../../import/ImportComponents.jsx";
+import { Paper, Card } from "../../import/ImportMuis.jsx";
+import { logo2, logo3 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Header = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const PATH = location.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
+  const {
+    navigate, firstStr, koreanDate,
+  } = useCommon();
 
   // 6-2. button -----------------------------------------------------------------------------------
   const btnUser = () => (
@@ -39,8 +38,8 @@ export const Header = () => {
             navigate("/today/list", {
               state: {
                 dateType: "day",
-                dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-                dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+                dateStart: koreanDate,
+                dateEnd: koreanDate,
               }
             });
           }}

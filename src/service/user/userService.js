@@ -7,12 +7,12 @@ import mongodb from 'mongodb';
 import moment from 'moment';
 import bcrypt from 'bcryptjs';
 import * as repository from "../../repository/user/userRepository.js";
-import {randomNumber, randomTime, calcDate} from '../../assets/js/utils.js';
-import {exerciseArray} from '../../assets/array/exerciseArray.js';
-import {foodArray} from '../../assets/array/foodArray.js';
-import {moneyArray} from '../../assets/array/moneyArray.js';
-import {fileURLToPath} from "url";
-import {emailSending} from "../../assets/js/email.js";
+import { randomNumber, randomTime, calcDate} from '../../assets/js/utils.js';
+import { exerciseArray} from '../../assets/array/exerciseArray.js';
+import { foodArray} from '../../assets/array/foodArray.js';
+import { moneyArray} from '../../assets/array/moneyArray.js';
+import { fileURLToPath } from "url";
+import { emailSending } from "../../assets/js/email.js";
 dotenv.config();
 
 // 0-1. appInfo ------------------------------------------------------------------------------------

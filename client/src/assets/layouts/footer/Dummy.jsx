@@ -1,9 +1,9 @@
 // Dummy.jsx
 
-import {React} from "../../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../../import/ImportHooks.jsx";
-import {Div} from "../../../import/ImportComponents.jsx";
-import {Card, Button, TextField, MenuItem} from "../../../import/ImportMuis.jsx";
+import { React } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { Div } from "../../../import/ImportComponents.jsx";
+import { Card, Button, TextField, MenuItem } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Dummy = ({
@@ -11,7 +11,7 @@ export const Dummy = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {translate} = useTranslate();
+  const {translate} = useCommon();
 
   // 2. type ---------------------------------------------------------------------------------------
   const partNode = () => (

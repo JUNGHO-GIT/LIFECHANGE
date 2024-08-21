@@ -1,8 +1,8 @@
 // PopUp.jsx
 
-import {React} from "../../import/ImportReacts.jsx";
-import {Popover, bindPopover} from "../../import/ImportMuis.jsx";
-import {usePopupState} from 'material-ui-popup-state/hooks';
+import { React } from "../../import/ImportReacts.jsx";
+import { Popover, bindPopover } from "../../import/ImportMuis.jsx";
+import { usePopupState} from 'material-ui-popup-state/hooks';
 
 // -------------------------------------------------------------------------------------------------
 export const PopUp = ({...props}) => {

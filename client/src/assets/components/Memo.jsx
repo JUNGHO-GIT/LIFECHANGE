@@ -1,10 +1,10 @@
 // Memo.jsx
 
-import {React, useState, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate} from "../../import/ImportHooks.jsx";
-import {PopUp, Img, Div, Br20} from "../../import/ImportComponents.jsx";
-import {TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
-import {calendar3} from "../../import/ImportImages.jsx";
+import { React, useState, useLocation } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { PopUp, Img, Div, Br20 } from "../../import/ImportComponents.jsx";
+import { TextField, Button, TextArea } from "../../import/ImportMuis.jsx";
+import { calendar3 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Memo = ({
@@ -12,10 +12,7 @@ export const Memo = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
+  const {firstStr, translate} = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [prevContent, setPrevContent] = useState("");

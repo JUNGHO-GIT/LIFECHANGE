@@ -1,6 +1,6 @@
 // sync.js
 
-import {moment, axios} from "../../import/ImportLibs.jsx";
+import { moment, axios } from "../../import/ImportLibs.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const sync = async () => {
@@ -22,26 +22,21 @@ export const sync = async () => {
     dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
     dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
   };
+  const params = {
+    user_id: sessionId,
+    DATE: DATE,
+  };
 
   try {
     const [resPercent, resProperty, resScale] = await Promise.all([
       axios.get(`${URL_OBJECT}/sync/percent`, {
-        params: {
-          user_id: sessionId,
-          DATE: DATE,
-        },
+        params: params,
       }),
       axios.get(`${URL_OBJECT}/sync/property`, {
-        params: {
-          user_id: sessionId,
-          DATE: DATE,
-        },
+        params: params,
       }),
       axios.get(`${URL_OBJECT}/sync/scale`, {
-        params: {
-          user_id: sessionId,
-          DATE: DATE,
-        },
+        params: params,
       }),
     ]);
 

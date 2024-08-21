@@ -1,15 +1,15 @@
 // index.jsx
 
 import React from "react";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
-import {useScrollTop} from "./assets/hooks/useScrollTop.jsx";
-import {useEnhancedTouch} from "./assets/hooks/useEnhancedTouch.jsx";
-import {useRoot} from "./assets/hooks/useRoot.jsx";
-import {useSessionStorage} from "./assets/hooks/useSessionStorage.jsx";
-import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
+import { useScrollTop } from "./assets/hooks/useScrollTop.jsx";
+import { useEnhancedTouch } from "./assets/hooks/useEnhancedTouch.jsx";
+import { useRoot } from "./assets/hooks/useRoot.jsx";
+import { useSessionStorage } from "./assets/hooks/useSessionStorage.jsx";
+import { LanguageProvider } from "./assets/hooks/useLanguageProvider.jsx";
 
 import "./index.css";
 import "react-calendar/dist/Calendar.css";
@@ -20,55 +20,55 @@ import "./assets/css/Components.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 
-import {Header} from "./import/ImportLayouts.jsx";
-import {TopNav} from "./import/ImportLayouts.jsx";
-import {BottomNav} from "./import/ImportLayouts.jsx";
-import {Banner} from "./import/ImportLayouts.jsx";
+import { Header } from "./import/ImportLayouts.jsx";
+import { TopNav } from "./import/ImportLayouts.jsx";
+import { BottomNav } from "./import/ImportLayouts.jsx";
+import { Banner } from "./import/ImportLayouts.jsx";
 
-import {CalendarList} from "./page/calendar/CalendarList.jsx";
-import {CalendarSave} from "./page/calendar/CalendarSave.jsx";
+import { CalendarList } from "./page/calendar/CalendarList.jsx";
+import { CalendarSave } from "./page/calendar/CalendarSave.jsx";
 
-import {TodayChart} from "./page/today/chart/TodayChart.jsx";
-import {TodayGoalList} from "./page/today/TodayGoalList.jsx";
-import {TodayList} from "./page/today/TodayList.jsx";
+import { TodayChart } from "./page/today/chart/TodayChart.jsx";
+import { TodayGoalList } from "./page/today/TodayGoalList.jsx";
+import { TodayList } from "./page/today/TodayList.jsx";
 
-import {ExerciseChart} from "./page/exercise/chart/ExerciseChart.jsx";
-import {ExerciseGoalList} from "./page/exercise/goal/ExerciseGoalList.jsx";
-import {ExerciseGoalSave} from "./page/exercise/goal/ExerciseGoalSave.jsx";
-import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
-import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
+import { ExerciseChart } from "./page/exercise/chart/ExerciseChart.jsx";
+import { ExerciseGoalList } from "./page/exercise/goal/ExerciseGoalList.jsx";
+import { ExerciseGoalSave } from "./page/exercise/goal/ExerciseGoalSave.jsx";
+import { ExerciseList } from "./page/exercise/ExerciseList.jsx";
+import { ExerciseSave } from "./page/exercise/ExerciseSave.jsx";
 
-import {FoodChart} from "./page/food/chart/FoodChart.jsx";
-import {FoodGoalList} from "./page/food/goal/FoodGoalList.jsx";
-import {FoodGoalSave} from "./page/food/goal/FoodGoalSave.jsx";
-import {FoodFind} from "./page/food/FoodFind.jsx";
-import {FoodList} from "./page/food/FoodList.jsx";
-import {FoodSave} from "./page/food/FoodSave.jsx";
+import { FoodChart } from "./page/food/chart/FoodChart.jsx";
+import { FoodGoalList } from "./page/food/goal/FoodGoalList.jsx";
+import { FoodGoalSave } from "./page/food/goal/FoodGoalSave.jsx";
+import { FoodFind } from "./page/food/FoodFind.jsx";
+import { FoodList } from "./page/food/FoodList.jsx";
+import { FoodSave } from "./page/food/FoodSave.jsx";
 
-import {MoneyChart} from "./page/money/chart/MoneyChart.jsx";
-import {MoneyGoalList} from "./page/money/goal/MoneyGoalList.jsx";
-import {MoneyGoalSave} from "./page/money/goal/MoneyGoalSave.jsx";
-import {MoneyList} from "./page/money/MoneyList.jsx";
-import {MoneySave} from "./page/money/MoneySave.jsx";
+import { MoneyChart } from "./page/money/chart/MoneyChart.jsx";
+import { MoneyGoalList } from "./page/money/goal/MoneyGoalList.jsx";
+import { MoneyGoalSave } from "./page/money/goal/MoneyGoalSave.jsx";
+import { MoneyList } from "./page/money/MoneyList.jsx";
+import { MoneySave } from "./page/money/MoneySave.jsx";
 
-import {SleepChart} from "./page/sleep/chart/SleepChart.jsx";
-import {SleepGoalList} from "./page/sleep/goal/SleepGoalList.jsx";
-import {SleepGoalSave} from "./page/sleep/goal/SleepGoalSave.jsx";
-import {SleepList} from "./page/sleep/SleepList.jsx";
-import {SleepSave} from "./page/sleep/SleepSave.jsx";
+import { SleepChart } from "./page/sleep/chart/SleepChart.jsx";
+import { SleepGoalList } from "./page/sleep/goal/SleepGoalList.jsx";
+import { SleepGoalSave } from "./page/sleep/goal/SleepGoalSave.jsx";
+import { SleepList } from "./page/sleep/SleepList.jsx";
+import { SleepSave } from "./page/sleep/SleepSave.jsx";
 
-import {UserCategory} from "./page/user/UserCategory.jsx";
-import {UserDetail} from "./page/user/UserDetail.jsx";
-import {UserDummy} from "./page/user/UserDummy.jsx";
-import {UserAppSetting} from "./page/user/UserAppSetting.jsx";
-import {UserDeletes} from "./page/user/UserDeletes.jsx";
-import {UserAppInfo} from "./page/user/UserAppInfo.jsx";
-import {UserSignup} from "./page/user/UserSignup.jsx";
-import {UserLogin} from "./page/user/UserLogin.jsx";
-import {UserResetPw} from "./page/user/UserResetPw.jsx";
+import { UserCategory } from "./page/user/UserCategory.jsx";
+import { UserDetail } from "./page/user/UserDetail.jsx";
+import { UserDummy } from "./page/user/UserDummy.jsx";
+import { UserAppSetting } from "./page/user/UserAppSetting.jsx";
+import { UserDeletes } from "./page/user/UserDeletes.jsx";
+import { UserAppInfo } from "./page/user/UserAppInfo.jsx";
+import { UserSignup } from "./page/user/UserSignup.jsx";
+import { UserLogin } from "./page/user/UserLogin.jsx";
+import { UserResetPw } from "./page/user/UserResetPw.jsx";
 
-import {AuthPrivacy} from "./page/auth/AuthPrivacy.jsx";
-import {AuthGoogle} from "./page/auth/AuthGoogle.jsx";
+import { AuthPrivacy } from "./page/auth/AuthPrivacy.jsx";
+import { AuthGoogle } from "./page/auth/AuthGoogle.jsx";
 
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (

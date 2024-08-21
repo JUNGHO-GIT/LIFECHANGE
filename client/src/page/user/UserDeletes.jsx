@@ -1,30 +1,22 @@
 // UserDeletes.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
-import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button, TextArea} from "../../import/ImportMuis.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { moment, axios } from "../../import/ImportLibs.jsx";
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { Div, Br20, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, TextArea } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDeletes = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, translate, sessionId, URL_OBJECT,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
-  const [EXIST, setEXIST] = useState([""]);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -65,6 +57,7 @@ export const UserDeletes = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
+    setLOADING(true);
     await axios.delete(`${URL_OBJECT}/deletes`,{
       data: {
         user_id: sessionId,
@@ -82,6 +75,9 @@ export const UserDeletes = () => {
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      setLOADING(false);
     });
   };
 
@@ -151,6 +147,8 @@ export const UserDeletes = () => {
 
     // 7-10. return
     return (
+      <>
+      {LOADING && <Loading />}
       <Paper className={"content-wrapper radius border shadow-none"}>
         <Div className={"block-wrapper d-column h-min84vh"}>
           {titleSection()}
@@ -160,6 +158,7 @@ export const UserDeletes = () => {
           {buttonSection()}
         </Div>
       </Paper>
+      </>
     );
   };
 

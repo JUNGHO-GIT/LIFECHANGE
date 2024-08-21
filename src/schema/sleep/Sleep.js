@@ -1,7 +1,7 @@
 // Sleep.js
 
 import mongoose from "mongoose";
-import {incrementSeq} from "../Counter.js";
+import { incrementSeq } from "../Counter.js";
 
 // 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({

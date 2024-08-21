@@ -1,31 +1,24 @@
 // ExerciseChartAvg.tsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY, koreanDate} from "../../../import/ImportUtils";
-import {Loading} from "../../../import/ImportLayouts.jsx";
-import {PopUp, Div, Img, Br20} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
-import {FormGroup, FormControlLabel, Switch} from "../../../import/ImportMuis.jsx";
-import {ComposedChart, Bar} from "recharts";
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {common3_1} from "../../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { axios } from "../../../import/ImportLibs.jsx";
+import { handlerY } from "../../../import/ImportUtils.jsx";
+import { Loading } from "../../../import/ImportLayouts.jsx";
+import { PopUp, Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, MenuItem, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { FormGroup, FormControlLabel, Switch } from "../../../import/ImportMuis.jsx";
+import { ComposedChart, Bar } from "recharts";
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { common3_1 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseChartAvg = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const {translate} = useTranslate();
-  const array = ["volume", "cardio"];
-  const sessionId = sessionStorage.getItem("ID_SESSION");
-  const COLORS = [
-    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
-    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
+  const {
+    URL_OBJECT, sessionId, exerciseChartArray, COLORS, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
@@ -66,18 +59,18 @@ export const ExerciseChartAvg = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const resWeek = await axios.get(`${URL_OBJECT}/chart/avg/week`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resMonth = await axios.get(`${URL_OBJECT}/chart/avg/month`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
+    const params = {
+      user_id: sessionId,
+      DATE: DATE,
+    };
+    const [resWeek, resMonth] = await Promise.all([
+      axios.get(`${URL_OBJECT}/chart/avg/week`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/chart/avg/month`, {
+        params: params,
+      }),
+    ]);
     setOBJECT_VOLUME_WEEK(
       resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : OBJECT_VOLUME_WEEK_DEF
     );
@@ -95,11 +88,15 @@ export const ExerciseChartAvg = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartVolumeWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise", "volume");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_WEEK, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_VOLUME_WEEK} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <ComposedChart
+          data={OBJECT_VOLUME_WEEK}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={8}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -173,11 +170,15 @@ export const ExerciseChartAvg = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartCardioWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise", "cardio");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_WEEK, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_CARDIO_WEEK} barGap={8} barCategoryGap={"20%"}
-        margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <ComposedChart
+          data={OBJECT_CARDIO_WEEK}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={8}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}
@@ -251,11 +252,14 @@ export const ExerciseChartAvg = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartVolumeMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise", "volume");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_VOLUME_MONTH, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_VOLUME_MONTH} barGap={8} barCategoryGap={"20%"}
+        <ComposedChart
+          data={OBJECT_VOLUME_MONTH}
           margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={8}
+          barCategoryGap={"20%"}
         >
           <CartesianGrid
             strokeDasharray={"3 3"}
@@ -330,11 +334,15 @@ export const ExerciseChartAvg = () => {
 
   // 5-4. chart ------------------------------------------------------------------------------------
   const chartCardioMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise", "cardio");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_CARDIO_MONTH, exerciseChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <ComposedChart data={OBJECT_CARDIO_MONTH} barGap={8} barCategoryGap={"20%"}
-          margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <ComposedChart
+          data={OBJECT_CARDIO_MONTH}
+          margin={{top: 20, right: 20, bottom: 20, left: 20}}
+          barGap={8}
+          barCategoryGap={"20%"}
+        >
           <CartesianGrid
             strokeDasharray={"3 3"}
             stroke={"#f5f5f5"}

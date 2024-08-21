@@ -1,7 +1,7 @@
 // foodChartRepository.js
 
-import {Food} from "../../schema/food/Food.js";
-import {FoodGoal} from "../../schema/food/FoodGoal.js";
+import { Food } from "../../schema/food/Food.js";
+import { FoodGoal } from "../../schema/food/FoodGoal.js";
 
 // 1-1. chart (bar - today) ---------------------------------------------------------------------
 export const barToday = {

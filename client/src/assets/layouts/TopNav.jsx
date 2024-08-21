@@ -1,26 +1,21 @@
 // TopNav.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card} from "../../import/ImportMuis.jsx";
-import {PopUp, Div, Img, Hr40, Br20, Br10} from "../../import/ImportComponents.jsx";
-import {smile1, smile2, smile3, smile4, smile5} from "../../import/ImportImages.jsx";
-import {money2, money4} from "../../import/ImportImages.jsx";
-import {exercise5, exercise6} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { moment, numeral } from "../../import/ImportLibs.jsx";
+import { TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card } from "../../import/ImportMuis.jsx";
+import { PopUp, Div, Img, Hr40, Br20, Br10 } from "../../import/ImportComponents.jsx";
+import { smile1, smile2, smile3, smile4, smile5 } from "../../import/ImportImages.jsx";
+import { money2, money4 } from "../../import/ImportImages.jsx";
+import { exercise5, exercise6 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
+  const {
+    navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState({
@@ -237,8 +232,8 @@ export const TopNav = () => {
     navigate(url, {
       state: {
         dateType: "",
-        dateStart: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-        dateEnd: moment().tz("Asia/Seoul").format("YYYY-MM-DD")
+        dateStart: koreanDate,
+        dateEnd: koreanDate
       }
     });
   };

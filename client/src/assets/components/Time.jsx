@@ -1,12 +1,12 @@
 // Time.jsx
 
-import {React, useLocation, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {moment} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {PopUp, Img, Div} from "../../import/ImportComponents.jsx";
-import {TextField} from "../../import/ImportMuis.jsx";
-import {DigitalClock, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
-import {sleep2, sleep3, sleep4, exercise4} from "../../import/ImportImages.jsx";
+import { React, useEffect, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { moment } from "../../import/ImportLibs.jsx";
+import { PopUp, Img, Div } from "../../import/ImportComponents.jsx";
+import { TextField } from "../../import/ImportMuis.jsx";
+import { DigitalClock, AdapterMoment, LocalizationProvider } from "../../import/ImportMuis.jsx";
+import { sleep2, sleep3, sleep4, exercise4 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Time = ({
@@ -14,11 +14,7 @@ export const Time = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
+  const {firstStr, secondStr, translate} = useCommon();
 
   // displayed image
   let image = null;

@@ -1,30 +1,23 @@
 // MoneyChartBar.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY, koreanDate} from "../../../import/ImportUtils.jsx";
-import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Div, Img, Br20} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, TextField, Grid} from "../../../import/ImportMuis.jsx";
-import {Bar, Line, ComposedChart, ReferenceLine} from "recharts";
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {common3_2} from "../../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { axios } from "../../../import/ImportLibs.jsx";
+import { handlerY } from "../../../import/ImportUtils.jsx";
+import { Loading } from "../../../import/ImportLayouts.jsx";
+import { Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { common3_2 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_MONEY || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const {translate} = useTranslate();
-  const array = ["goal", "real"];
-  const sessionId = sessionStorage.getItem("ID_SESSION");
-  const COLORS = [
-    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
-    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
+  const {
+    URL_OBJECT, sessionId, barChartArray, COLORS, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
@@ -47,12 +40,15 @@ export const MoneyChartBar = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const resToday = await axios.get(`${URL_OBJECT}/chart/bar/today`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
+    const params = {
+      user_id: sessionId,
+      DATE: DATE,
+    };
+    const [resToday] = await Promise.all([
+      axios.get(`${URL_OBJECT}/chart/bar/today`, {
+        params: params,
+      }),
+    ]);
     setOBJECT_TODAY(
       resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
@@ -61,7 +57,7 @@ export const MoneyChartBar = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "money", "");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, barChartArray, "money");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

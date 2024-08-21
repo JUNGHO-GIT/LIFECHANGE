@@ -2,9 +2,9 @@
 
 import * as repository from "../../repository/food/foodChartRepository.js";
 import moment from "moment-timezone";
-import {curWeekStart, curWeekEnd} from "../../assets/js/date.js";
-import {curMonthStart, curMonthEnd} from "../../assets/js/date.js";
-import {curYearStart, curYearEnd} from "../../assets/js/date.js";
+import { curWeekStart, curWeekEnd } from "../../assets/js/date.js";
+import { curMonthStart, curMonthEnd } from "../../assets/js/date.js";
+import { curYearStart, curYearEnd } from "../../assets/js/date.js";
 
 // 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const barToday = async (

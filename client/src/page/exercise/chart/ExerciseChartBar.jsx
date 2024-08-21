@@ -1,30 +1,23 @@
 // ExerciseChartBar.jsx
 
-import {React, useState, useEffect} from "../../../import/ImportReacts.jsx";
-import {axios} from "../../../import/ImportLibs.jsx";
-import {useTranslate} from "../../../import/ImportHooks.jsx";
-import {handlerY, koreanDate} from "../../../import/ImportUtils.jsx";
-import {Loading} from "../../../import/ImportLayouts.jsx";
-import {Div, Br20, Img} from "../../../import/ImportComponents.jsx";
-import {Paper, Card, MenuItem, TextField, Grid} from "../../../import/ImportMuis.jsx";
-import {Bar, Scatter, ComposedChart, ReferenceLine, Line} from "recharts";
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {common3_2} from "../../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
+import { useCommon } from "../../../import/ImportHooks.jsx";
+import { axios } from "../../../import/ImportLibs.jsx";
+import { handlerY } from "../../../import/ImportUtils.jsx";
+import { Loading } from "../../../import/ImportLayouts.jsx";
+import { Div, Br20, Img } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, MenuItem, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Bar, Scatter, ComposedChart, ReferenceLine, Line } from "recharts";
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { common3_2 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseChartBar = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const {translate} = useTranslate();
-  const array = ["goal", "real"];
-  const sessionId = sessionStorage.getItem("ID_SESSION");
-  const COLORS = [
-    "#0088FE", "#00C49F", "#FFBB28", "#FF5733", "#6F42C1",
-    "#0EA5E9", "#22C55E", "#D97706", "#EF4444", "#9333EA",
-  ];
+  const {
+    URL_OBJECT, sessionId, barChartArray, COLORS, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(true);
@@ -61,24 +54,21 @@ export const ExerciseChartBar = () => {
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {(async () => {
     setLOADING(true);
-    const resToday = await axios.get(`${URL_OBJECT}/chart/bar/today`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resWeek = await axios.get(`${URL_OBJECT}/chart/bar/week`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
-    const resMonth = await axios.get(`${URL_OBJECT}/chart/bar/month`, {
-      params: {
-        user_id: sessionId,
-        DATE: DATE,
-      },
-    });
+    const params = {
+      user_id: sessionId,
+      DATE: DATE,
+    };
+    const [resToday, resWeek, resMonth] = await Promise.all([
+      axios.get(`${URL_OBJECT}/chart/bar/today`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/chart/bar/week`, {
+        params: params,
+      }),
+      axios.get(`${URL_OBJECT}/chart/bar/month`, {
+        params: params,
+      }),
+    ]);
     setOBJECT_TODAY(
       resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
     );
@@ -93,7 +83,7 @@ export const ExerciseChartBar = () => {
 
   // 5-1. chart ------------------------------------------------------------------------------------
   const chartToday = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, array, "exercise", "");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_TODAY, barChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -187,7 +177,7 @@ export const ExerciseChartBar = () => {
 
   // 5-2. chart ------------------------------------------------------------------------------------
   const chartWeek = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, array, "exercise", "");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_WEEK, barChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart
@@ -273,7 +263,7 @@ export const ExerciseChartBar = () => {
 
   // 5-3. chart ------------------------------------------------------------------------------------
   const chartMonth = () => {
-    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, array, "exercise", "");
+    const {domain, ticks, formatterY} = handlerY(OBJECT_MONTH, barChartArray, "exercise");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <ComposedChart

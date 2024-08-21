@@ -1,36 +1,29 @@
 // CalendarList.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, Calendar} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Icons, Div} from "../../import/ImportComponents.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
+import { moment, axios, Calendar } from "../../import/ImportLibs.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Icons, Div } from "../../import/ImportComponents.jsx";
+import { Paper } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_CALENDAR || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const PATH = location?.pathname;
-  const {translate} = useTranslate();
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, PATH, firstStr, secondStr, thirdStr,
+    curMonthStart, curMonthEnd,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: moment().tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
-      dateEnd: moment().tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD"),
+      dateStart: curMonthStart,
+      dateEnd: curMonthEnd,
     }
   );
 

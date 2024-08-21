@@ -2,7 +2,7 @@
 
 // -------------------------------------------------------------------------------------------------
 export const handlerY = (
-  OBJECT, array, type, extra
+  OBJECT, array, type
 ) => {
 
   let ticks = [];

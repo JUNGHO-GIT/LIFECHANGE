@@ -1,7 +1,7 @@
 // foodGoalService.js
 
 import * as repository from "../../repository/food/foodGoalRepository.js";
-import {log} from "../../assets/js/utils.js";
+import { log } from "../../assets/js/utils.js";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (

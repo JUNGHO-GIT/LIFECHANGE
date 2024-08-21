@@ -1,41 +1,31 @@
 // SleepList.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {axios, moment} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Hr30, Br10, Img, Icons} from "../../import/ImportComponents.jsx";
-import {Paper, Card, Grid} from "../../import/ImportMuis.jsx";
-import {Accordion, AccordionSummary, AccordionDetails} from "../../import/ImportMuis.jsx";
-import {sleep2, sleep3, sleep4} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
+import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
+import { axios, moment } from "../../import/ImportLibs.jsx";
+import { Loading, Footer, Empty } from "../../import/ImportLayouts.jsx";
+import { Div, Hr30, Br10, Img, Icons } from "../../import/ImportComponents.jsx";
+import { Paper, Card, Grid } from "../../import/ImportMuis.jsx";
+import { Accordion, AccordionSummary, AccordionDetails } from "../../import/ImportMuis.jsx";
+import { sleep2, sleep3, sleep4 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateStart, location_dateEnd,
+    PATH, firstStr, secondStr, thirdStr,
+    URL_OBJECT, sessionId, translate, koreanDate,
+  } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
     `DATE(${PATH})`, {
       dateType: "",
-      dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-      dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
+      dateStart: location_dateStart || koreanDate,
+      dateEnd: location_dateEnd || koreanDate,
     }
   );
   const [PAGING, setPAGING] = useStorage(

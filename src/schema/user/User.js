@@ -1,12 +1,12 @@
 // User.js
 
 import mongoose from "mongoose";
-import {incrementSeq} from "../Counter.js";
-import {calendarArray} from "../../assets/array/calendarArray.js";
-import {exerciseArray} from "../../assets/array/exerciseArray.js";
-import {moneyArray} from "../../assets/array/moneyArray.js";
-import {foodArray} from "../../assets/array/foodArray.js";
-import {sleepArray} from "../../assets/array/sleepArray.js";
+import { incrementSeq } from "../Counter.js";
+import { calendarArray } from "../../assets/array/calendarArray.js";
+import { exerciseArray } from "../../assets/array/exerciseArray.js";
+import { moneyArray } from "../../assets/array/moneyArray.js";
+import { foodArray } from "../../assets/array/foodArray.js";
+import { sleepArray } from "../../assets/array/sleepArray.js";
 
 // 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({

@@ -1,6 +1,6 @@
 // sleepDiffMiddleware.js
 
-import {differenceInMinutes} from "date-fns";
+import { differenceInMinutes } from "date-fns";
 
 // 1. list (리스트는 gte lte) ----------------------------------------------------------------------
 export const list = async (object) => {

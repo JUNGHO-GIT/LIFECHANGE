@@ -1,7 +1,7 @@
 // sleepChartRepository.js
 
-import {Sleep} from "../../schema/sleep/Sleep.js";
-import {SleepGoal} from "../../schema/sleep/SleepGoal.js";
+import { Sleep } from "../../schema/sleep/Sleep.js";
+import { SleepGoal } from "../../schema/sleep/SleepGoal.js";
 
 // 1-1. chart (bar - today) ---------------------------------------------------------------------
 export const barToday = {

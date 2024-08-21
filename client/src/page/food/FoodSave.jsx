@@ -1,44 +1,28 @@
 // FoodSave.jsx
 
-import {React, useState, useEffect, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
-import {moment, axios, numeral} from "../../import/ImportLibs.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {sync, log} from "../../import/ImportUtils.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
-import {Div, Br20} from "../../import/ImportComponents.jsx";
-import {Img, Picker, Count, Delete} from "../../import/ImportComponents.jsx";
-import {Card, Paper, Badge, MenuItem, TextField} from "../../import/ImportMuis.jsx";
-import {food2, food3, food4, food5} from "../../import/ImportImages.jsx";
+import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
+import { sync } from "../../import/ImportUtils.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Img, Picker, Count, Delete } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Badge, MenuItem, TextField } from "../../import/ImportMuis.jsx";
+import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const session = sessionStorage.getItem("CATEGORY") || "{}";
-  const foodArray = JSON.parse(session)?.food || [];
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
-  const location_dateStart = location?.state?.dateStart;
-  const location_dateEnd = location?.state?.dateEnd;
-  const PATH = location?.pathname;
-  const firstStr = PATH?.split("/")[1] || "";
-  const secondStr = PATH?.split("/")[2] || "";
-  const thirdStr = PATH?.split("/")[3] || "";
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const {
+    navigate, location_dateType, location_dateStart, location_dateEnd,
+    firstStr, secondStr, thirdStr, foodArray, koreanDate,
+    URL_OBJECT, sessionId, translate
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
   const [EXIST, setEXIST] = useState([""]);
-  const [DATE, setDATE] = useState({
-    dateType: "day",
-    dateStart: location_dateStart || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateEnd: location_dateEnd || moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-  });
   const [SEND, setSEND] = useState({
     id: "",
     dateType: "",
@@ -52,6 +36,11 @@ export const FoodSave = () => {
     totalCnt: 0,
     sectionCnt: 0,
     newSectionCnt: 0
+  });
+  const [DATE, setDATE] = useState({
+    dateType: location_dateType || "",
+    dateStart: location_dateStart || koreanDate,
+    dateEnd: location_dateEnd || koreanDate,
   });
 
   // 2-2. useState ---------------------------------------------------------------------------------

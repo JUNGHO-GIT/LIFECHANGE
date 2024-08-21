@@ -1,11 +1,12 @@
 // Footer.jsx
 
-import {React, useLocation} from "../../import/ImportReacts.jsx";
-import {Paper} from "../../import/ImportMuis.jsx";
-import {Dummy} from "./footer/Dummy.jsx";
-import {FindFilter} from "./footer/FindFilter.jsx";
-import {Btn} from "./footer/Btn.jsx";
-import {ListFilter} from "./footer/ListFilter.jsx";
+import { React } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Paper } from "../../import/ImportMuis.jsx";
+import { Dummy } from "./footer/Dummy.jsx";
+import { FindFilter } from "./footer/FindFilter.jsx";
+import { Btn } from "./footer/Btn.jsx";
+import { ListFilter } from "./footer/ListFilter.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Footer = ({
@@ -13,8 +14,9 @@ export const Footer = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const location = useLocation();
-  const PATH = location?.pathname;
+  const {
+    PATH,
+  } = useCommon();
 
   // 2. listFilter ---------------------------------------------------------------------------------
   const listFilterNode = () => (

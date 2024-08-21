@@ -1,21 +1,19 @@
 // UserResetPw.jsx
 
-import {React, useState, useNavigate, useRef, createRef} from "../../import/ImportReacts.jsx";
-import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
-import {axios} from "../../import/ImportLibs.jsx";
-import {Loading} from "../../import/ImportLayouts.jsx";
-import {Div, Br10, Br20, Img, Hr40, Hr20} from "../../import/ImportComponents.jsx";
-import {Paper, TextField, Button} from "../../import/ImportMuis.jsx";
+import { React, useState, useRef, createRef } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { axios } from "../../import/ImportLibs.jsx";
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { Div, Br10, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_USER || "";
-  const URL_OBJECT = URL + SUBFIX;
-  const navigate = useNavigate();
-  const {translate} = useTranslate();
+  const {
+    navigate, URL_OBJECT, translate,
+  } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [clientCode, setClientCode] = useState("");
