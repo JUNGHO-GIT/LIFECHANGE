@@ -7,7 +7,6 @@ import {PopUp, Div, Img, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {Badge, TextField, MenuItem, PickersDay, Button} from "../../import/ImportMuis.jsx";
 import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1} from "../../import/ImportImages.jsx";
-import "moment/locale/ko";
 
 // -------------------------------------------------------------------------------------------------
 export const Picker = ({

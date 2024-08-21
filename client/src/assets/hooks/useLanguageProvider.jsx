@@ -11,6 +11,11 @@ const LanguageContext = createContext();
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState(sessionStorage.getItem("LANG") || 'ko');
 
+  if (lang === "ko") {
+    // @ts-ignore
+    require("moment/locale/ko");
+  }
+
   useEffect(() => {
     sessionStorage.setItem("LANG", lang);
     console.log("LanguageProvider", lang);
