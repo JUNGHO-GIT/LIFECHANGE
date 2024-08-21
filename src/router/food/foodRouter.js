@@ -76,6 +76,7 @@ router.get("/find", async (req, res) => {
   try {
     let result = await service.find (
       req.query.PAGING,
+      req.query.lang,
     );
     if (result && result.result) {
       res.json({

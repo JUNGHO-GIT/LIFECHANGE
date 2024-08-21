@@ -70,11 +70,6 @@ export const Picker = ({
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
-    console.log("DATE", JSON.stringify(DATE, null, 2));
-  }, [DATE]);
-
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
     if (isGoalList || isList) {
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setWidthStr("w-46vw");

@@ -70,10 +70,10 @@ export const list = async (
 
 // 1-2. find ---------------------------------------------------------------------------------------
 export const find = async (
-  PAGING_param
+  PAGING_param, lang_param
 ) => {
 
-  const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
+  let URL_SEARCH = encodeURI(`https://www.fatsecret.kr/칼로리-영양소/search`)
   const query = PAGING_param.query;
   const page = PAGING_param.page === 0 ? "" : PAGING_param.page;
 

@@ -40,6 +40,7 @@ export const FoodFind = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const [lang, setLang] = useState(sessionStorage.getItem("LANG"));
   const [checkedQueries, setCheckedQueries] = useState({});
   const [isExpanded, setIsExpanded] = useState([0]);
   const [LOADING, setLOADING] = useState(false);
@@ -177,6 +178,7 @@ export const FoodFind = () => {
     await axios.get(`${URL_OBJECT}/find`, {
       params: {
         PAGING: PAGING,
+        lang: lang,
       },
     })
     .then((res) => {
