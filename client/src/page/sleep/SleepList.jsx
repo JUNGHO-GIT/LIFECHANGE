@@ -71,8 +71,11 @@ export const SleepList = () => {
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
       sleep_bedTime: "00:00",
+      sleep_bedTime_color: "",
       sleep_wakeTime: "00:00",
+      sleep_wakeTime_color: "",
       sleep_sleepTime: "00:00",
+      sleep_sleepTime_color: "",
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -163,7 +166,7 @@ export const SleepList = () => {
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -172,7 +175,7 @@ export const SleepList = () => {
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -181,7 +184,7 @@ export const SleepList = () => {
                           {item.sleep_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateEnd).format("ddd")}
+                          {translate(moment(item.sleep_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -200,7 +203,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
                       {item.sleep_section[0]?.sleep_bedTime}
                     </Div>
                   </Grid>
@@ -222,7 +225,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                       {item.sleep_section[0]?.sleep_wakeTime}
                     </Div>
                   </Grid>
@@ -244,7 +247,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                       {item.sleep_section[0]?.sleep_sleepTime}
                     </Div>
                   </Grid>

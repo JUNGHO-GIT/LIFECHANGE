@@ -19,8 +19,18 @@ export const list = async (object) => {
     }
   };
 
-  // 3. makeColor ----------------------------------------------------------------------------------
-  const makeColor = (goalParam, realParam, extra) => {
+  // 3. makeNonValueColor -------------------------------------------------------------------------
+  const makeNonValueColor = (param) => {
+    if (param === "0" || param === "00:00") {
+      return "grey";
+    }
+    else {
+      return "";
+    }
+  };
+
+  // 4. makeDiffColor ------------------------------------------------------------------------------
+  const makeDiffColor = (goalParam, realParam, extra) => {
     const goal = parseFloat(goalParam);
     const real = parseFloat(realParam);
     const percent = ((real - goal) / goal) * 100;
@@ -49,6 +59,30 @@ export const list = async (object) => {
   // 4. result -------------------------------------------------------------------------------------
   object?.result?.map((item) => {
     Object.assign((item), {
+      food_total_kcal_color: makeNonValueColor(
+        item?.food_total_kcal
+      ),
+      food_total_carb_color: makeNonValueColor(
+        item?.food_total_carb
+      ),
+      food_total_protein_color: makeNonValueColor(
+        item?.food_total_protein
+      ),
+      food_total_fat_color: makeNonValueColor(
+        item?.food_total_fat
+      ),
+      food_goal_kcal_color: makeNonValueColor(
+        item?.food_goal_kcal
+      ),
+      food_goal_carb_color: makeNonValueColor(
+        item?.food_goal_carb
+      ),
+      food_goal_protein_color: makeNonValueColor(
+        item?.food_goal_protein
+      ),
+      food_goal_fat_color: makeNonValueColor(
+        item?.food_goal_fat
+      ),
       food_diff_kcal: compareValue(
         item?.food_goal_kcal, item?.food_total_kcal
       ),
@@ -61,16 +95,16 @@ export const list = async (object) => {
       food_diff_fat: compareValue(
         item?.food_goal_fat, item?.food_total_fat
       ),
-      food_diff_kcal_color: makeColor(
+      food_diff_kcal_color: makeDiffColor(
         item?.food_goal_kcal, item?.food_total_kcal, "kcal"
       ),
-      food_diff_carb_color: makeColor(
+      food_diff_carb_color: makeDiffColor(
         item?.food_goal_carb, item?.food_total_carb, "carb"
       ),
-      food_diff_protein_color: makeColor(
+      food_diff_protein_color: makeDiffColor(
         item?.food_goal_protein, item?.food_total_protein, "protein"
       ),
-      food_diff_fat_color: makeColor(
+      food_diff_fat_color: makeDiffColor(
         item?.food_goal_fat, item?.food_total_fat, "fat"
       ),
     });

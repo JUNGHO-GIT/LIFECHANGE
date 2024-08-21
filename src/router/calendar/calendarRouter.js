@@ -15,15 +15,15 @@ router.get("/exist", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -46,7 +46,7 @@ router.get("/list", async (req, res) => {
     if (result && result.result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
+        msg: "searchSuccessful",
         totalCnt: result.totalCnt,
         result: result.result
       });
@@ -54,9 +54,9 @@ router.get("/list", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
+        msg: "searchFailed",
         totalCnt: 0,
-        result: null
+        result: null,
       });
     }
   }
@@ -80,7 +80,7 @@ router.get("/detail", async (req, res) => {
     if (result && result.result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
+        msg: "searchSuccessful",
         sectionCnt: result.sectionCnt,
         result: result.result
       });
@@ -88,9 +88,9 @@ router.get("/detail", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
+        msg: "searchFailed",
         sectionCnt: 0,
-        result: null
+        result: null,
       });
     }
   }
@@ -115,15 +115,15 @@ router.post("/save", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "저장 성공",
-        result: result
+        msg: "saveSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패",
-        result: null
+        msg: "saveFailed",
+        result: null,
       });
     }
   }
@@ -148,15 +148,15 @@ router.post("/deletes", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "삭제 성공",
-        result: result
+        msg: "deleteSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "삭제 실패",
-        result: null
+        msg: "deleteFailed",
+        result: null,
       });
     }
   }

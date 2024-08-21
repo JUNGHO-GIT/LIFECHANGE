@@ -17,14 +17,15 @@ router.get("/percent", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "퍼센트 조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "퍼센트 조회 실패"
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -47,14 +48,15 @@ router.get("/property", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "자산 조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "자산 조회 실패"
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -77,14 +79,15 @@ router.get("/scale", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "스케일 조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "스케일 조회 실패"
+        msg: "searchFailed",
+        result: null,
       });
     }
   }

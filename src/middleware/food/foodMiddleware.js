@@ -1,5 +1,41 @@
 // foodMiddleware.js
 
+// 1. list -----------------------------------------------------------------------------------------
+export const list = async (object) => {
+
+  if (!object) {
+    return [];
+  }
+
+  const makeNonValueColor = (param) => {
+    if (param === "0" || param === "00:00") {
+      return "grey";
+    }
+    else {
+      return "";
+    }
+  };
+
+  object?.result?.map((item) => {
+    Object.assign((item), {
+      food_total_kcal_color: makeNonValueColor(
+        item?.food_total_kcal
+      ),
+      food_total_carb_color: makeNonValueColor(
+        item?.food_total_carb
+      ),
+      food_total_protein_color: makeNonValueColor(
+        item?.food_total_protein
+      ),
+      food_total_fat_color: makeNonValueColor(
+        item?.food_total_fat
+      ),
+    });
+  });
+
+  return object;
+};
+
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (object) => {
   if (object === "deleted") {

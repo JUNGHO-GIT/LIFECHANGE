@@ -19,7 +19,7 @@ export const UserAppSetting = () => {
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [lang, setLang] = useState(sessionStorage.getItem("LANG"));
-  const [ADMIN, setIsAdmin] = useState(sessionStorage.getItem("ADMIN"));
+  const [admin, setIsAdmin] = useState(sessionStorage.getItem("ADMIN"));
 
   // 6. table --------------------------------------------------------------------------------------
   const tableNode = () => {
@@ -68,7 +68,7 @@ export const UserAppSetting = () => {
                 </TableRow>
                 {/** list **/}
                 <TableRow
-                  className={`${ADMIN !== "true" ? "d-none" : ""} pointer`}
+                  className={`${admin !== "true" ? "d-none" : ""} pointer`}
                   onClick={() => {
                     navigate("/user/dummy")
                   }}
@@ -114,7 +114,7 @@ export const UserAppSetting = () => {
                       className={"d-center"}
                       onClick={() => {
                         setLang("en")
-                        sessionStorage.setItem("lang", "en")
+                        sessionStorage.setItem("LANG", "en")
                         navigate(0)
                       }}
                     >

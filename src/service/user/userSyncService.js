@@ -150,7 +150,7 @@ export const scale = async (
   );
 
   await repository.scale.updateCurScale(
-    user_id_param, findScaleCur?.exercise_body_weight
+    user_id_param, findScaleCur?.exercise_total_weight
   );
 
   const finalResult = {
@@ -164,7 +164,7 @@ export const scale = async (
       findScaleMinMax?.scale_max ? parseFloat(findScaleMinMax?.scale_max) : 0
     ),
     curScale: String (
-      findScaleCur?.exercise_body_weight ? parseFloat(findScaleCur?.exercise_body_weight) : 0
+      findScaleCur?.exercise_total_weight ? parseFloat(findScaleCur?.exercise_total_weight) : 0
     ),
     dateStart: regDt,
     dateEnd: todayDt,

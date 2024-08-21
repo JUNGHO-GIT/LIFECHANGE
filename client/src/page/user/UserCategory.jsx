@@ -4,10 +4,9 @@ import {React, useState, useEffect, useRef, createRef} from "../../import/Import
 import {useNavigate, useLocation} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {axios, moment} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
-import {Loading, Footer, Empty} from "../../import/ImportLayouts.jsx";
+import {Loading, Footer} from "../../import/ImportLayouts.jsx";
 import {PopUp, Div, Icons, Br20} from "../../import/ImportComponents.jsx";
-import {Card, Paper, TextField} from "../../import/ImportMuis.jsx";
+import {Card, Paper, TextField, Button} from "../../import/ImportMuis.jsx";
 import {TableContainer, Table, TableFooter} from "../../import/ImportMuis.jsx";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis.jsx";
 
@@ -124,7 +123,10 @@ export const UserCategory = () => {
           return res.data.result;
         }
         else {
-          return {...prev, ...res.data.result};
+          return {
+            ...prev,
+            ...res.data.result
+          };
         }
       });
     })
@@ -144,11 +146,11 @@ export const UserCategory = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -220,7 +222,7 @@ export const UserCategory = () => {
         ];
         // 하나만 남았을 때 삭제 시도 시 경고
         if (newCategory1.length <= 1) {
-          alert("마지막 항목은 삭제할 수 없습니다.");
+          alert("cantBeDeletedLastItem");
           return prev;
         }
 
@@ -242,7 +244,7 @@ export const UserCategory = () => {
         ];
         // 하나만 남았을 때 삭제 시도 시 경고
         if (currentTitles.length <= 2) {
-          alert("마지막 항목은 삭제할 수 없습니다.");
+          alert("cantBeDeletedLastItem");
           return prev;
         }
 

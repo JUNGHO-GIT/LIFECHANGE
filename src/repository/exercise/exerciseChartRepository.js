@@ -50,8 +50,8 @@ export const barToday = {
       {$project: {
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_body_weight: {
-          $ifNull: ["$exercise_body_weight", 0]
+        exercise_total_weight: {
+          $ifNull: ["$exercise_total_weight", 0]
         }
       }},
       {$sort: {exercise_dateStart: -1}}
@@ -107,8 +107,8 @@ export const barWeek = {
       {$project: {
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_body_weight: {
-          $ifNull: ["$exercise_body_weight", 0]
+        exercise_total_weight: {
+          $ifNull: ["$exercise_total_weight", 0]
         }
       }},
       {$sort: {exercise_dateStart: -1}}
@@ -164,8 +164,8 @@ export const barMonth = {
       {$project: {
         exercise_dateStart: 1,
         exercise_dateEnd: 1,
-        exercise_body_weight: {
-          $ifNull: ["$exercise_body_weight", 0]
+        exercise_total_weight: {
+          $ifNull: ["$exercise_total_weight", 0]
         }
       }},
       {$sort: {exercise_dateStart: -1}}

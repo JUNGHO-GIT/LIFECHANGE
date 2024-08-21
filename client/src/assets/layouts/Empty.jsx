@@ -43,12 +43,12 @@ export const Empty = ({
                 onClick={() => {}}
               />
             </Grid>
-            <Grid item xs={2} className={"d-left"}>
-              <Div className={"fs-1-0rem fw-600 dark"}>
+            <Grid item xs={3} className={"d-left"}>
+              <Div className={"fs-0-9rem fw-600 dark"}>
                 {translate(`${extra}`)}
               </Div>
             </Grid>
-            <Grid item xs={8} className={"d-left"}>
+            <Grid item xs={7} className={"d-left"}>
               <Div className={"fs-1-0rem fw-500 black"}>
                 {translate("empty")}
               </Div>

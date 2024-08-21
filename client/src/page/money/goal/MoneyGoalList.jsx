@@ -69,15 +69,19 @@ export const MoneyGoalList = () => {
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: "0",
+    money_goal_income_color: "",
     money_goal_expense: "0",
+    money_goal_expense_color: "",
     money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: "0",
+    money_total_income_color: "",
     money_total_expense: "0",
+    money_total_expense_color: "",
     money_diff_income: "0",
-    money_diff_expense: "0",
     money_diff_income_color: "",
+    money_diff_expense: "0",
     money_diff_expense_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -168,7 +172,7 @@ export const MoneyGoalList = () => {
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateStart).format("ddd")}
+                          {translate(moment(item.money_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -177,7 +181,7 @@ export const MoneyGoalList = () => {
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateStart).format("ddd")}
+                          {translate(moment(item.money_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -186,7 +190,7 @@ export const MoneyGoalList = () => {
                           {item.money_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.money_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

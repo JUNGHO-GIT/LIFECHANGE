@@ -485,7 +485,7 @@ export const dummySave = async (
         exercise_dateEnd: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_total_volume: totalVolume,
         exercise_total_cardio: moment.utc(totalCardio * 60000).format("HH:mm"),
-        exercise_body_weight: randomNumber(100),
+        exercise_total_weight: randomNumber(100),
         exercise_section: sections,
         exercise_regDt: Date.now(),
         exercise_updateDt: Date.now(),

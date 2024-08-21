@@ -12,7 +12,6 @@ import {useSessionStorage} from "./assets/hooks/useSessionStorage.jsx";
 import {LanguageProvider} from "./assets/hooks/useLanguageProvider.jsx";
 
 import "./index.css";
-import "moment/locale/ko";
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";
 import "./assets/css/Chart.css";

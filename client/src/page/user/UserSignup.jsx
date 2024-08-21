@@ -214,21 +214,21 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "duplicate") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
       }
       else if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: true
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
@@ -252,14 +252,14 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: true
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: false
@@ -287,7 +287,7 @@ export const UserSignup = () => {
     })
     .then((res) => {
       if (res.data.status === "alreadyExist") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -295,11 +295,11 @@ export const UserSignup = () => {
         }));
       }
       else if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         navigate("/user/login");
       }
       else if (res.data.status === "fail") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -307,7 +307,7 @@ export const UserSignup = () => {
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -331,7 +331,7 @@ export const UserSignup = () => {
         window.location.href = res.data.url;
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

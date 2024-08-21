@@ -81,8 +81,8 @@ export const list = async (
 
     // 기간중 가장 최신의 몸무게를 가져옴
     const exerciseCurBodyWeight = listReal.reduce((latest, curr) => {
-      if (curr?.exercise_body_weight) {
-        return curr.exercise_body_weight;
+      if (curr?.exercise_total_weight) {
+        return curr.exercise_total_weight;
       }
       return latest;
     }, null);
@@ -92,7 +92,7 @@ export const list = async (
       exercise_total_count: String(exerciseTotalCount),
       exercise_total_volume: String(exerciseTotalVolume),
       exercise_total_cardio: decimalToStr(exerciseTotalCardio),
-      exercise_body_weight: String(exerciseCurBodyWeight),
+      exercise_total_weight: String(exerciseCurBodyWeight),
     };
   }));
 

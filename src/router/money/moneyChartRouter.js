@@ -14,15 +14,15 @@ router.get("/bar/today", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -45,15 +45,15 @@ router.get("/pie/today", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -76,15 +76,15 @@ router.get("/pie/week", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -107,15 +107,15 @@ router.get("/pie/month", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -138,15 +138,15 @@ router.get("/line/week", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -169,15 +169,15 @@ router.get("/line/month", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -200,15 +200,15 @@ router.get("/avg/week", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -231,15 +231,15 @@ router.get("/avg/month", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }

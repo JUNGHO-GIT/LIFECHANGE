@@ -88,7 +88,7 @@ export const list = {
         exercise_dateEnd: 1,
         exercise_total_volume: 1,
         exercise_total_cardio: 1,
-        exercise_body_weight: 1,
+        exercise_total_weight: 1,
       }},
       {$sort: {exercise_dateStart: sort_param}},
       {$skip: (Number(page_param) - 1)}
@@ -157,7 +157,7 @@ export const save = {
       exercise_dateEnd: dateEnd_param,
       exercise_total_volume: OBJECT_param.exercise_total_volume,
       exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-      exercise_body_weight: OBJECT_param.exercise_body_weight,
+      exercise_total_weight: OBJECT_param.exercise_total_weight,
       exercise_section: OBJECT_param.exercise_section,
       exercise_regDt: newDate,
       exercise_updateDt: "",
@@ -179,7 +179,7 @@ export const save = {
         exercise_dateEnd: dateEnd_param,
         exercise_total_volume: OBJECT_param.exercise_total_volume,
         exercise_total_cardio: OBJECT_param.exercise_total_cardio,
-        exercise_body_weight: OBJECT_param.exercise_body_weight,
+        exercise_total_weight: OBJECT_param.exercise_total_weight,
         exercise_section: OBJECT_param.exercise_section,
         exercise_updateDt: newDate,
       }}

@@ -2,7 +2,6 @@
 
 import {JSDOM} from "jsdom";
 import axios from "axios";
-import pretty from 'pretty';
 import * as repository from "../../repository/food/foodRepository.js";
 
 // 0. exist ----------------------------------------------------------------------------------------

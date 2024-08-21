@@ -161,7 +161,7 @@ export const UserLogin = () => {
         navigate("/today/list");
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sessionStorage.setItem("ID_SESSION", "");
       }
     })
@@ -181,7 +181,7 @@ export const UserLogin = () => {
         window.location.href = res.data.url;
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

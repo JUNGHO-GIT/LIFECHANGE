@@ -59,8 +59,18 @@ export const list = async (object) => {
     }
   };
 
-  // 3. makeColor ----------------------------------------------------------------------------------
-  const makeColor = (goalParam, realParam, extra) => {
+  // 3. makeNonValueColor -------------------------------------------------------------------------
+  const makeNonValueColor = (param) => {
+    if (param === "0" || param === "00:00") {
+      return "grey";
+    }
+    else {
+      return "";
+    }
+  };
+
+  // 4. makeDiffColor ------------------------------------------------------------------------------
+  const makeDiffColor = (goalParam, realParam, extra) => {
     const goal = goalParam;
     const real = realParam;
     if (extra === "bedTime" || extra === "wakeTime") {
@@ -132,6 +142,24 @@ export const list = async (object) => {
   // 4. result -------------------------------------------------------------------------------------
   object?.result?.map((item) => {
     Object.assign((item), {
+      sleep_bedTime_color: makeNonValueColor(
+        item?.sleep_bedTime
+      ),
+      sleep_wakeTime_color: makeNonValueColor(
+        item?.sleep_wakeTime
+      ),
+      sleep_sleepTime_color: makeNonValueColor(
+        item?.sleep_sleepTime
+      ),
+      sleep_goal_bedTime_color: makeNonValueColor(
+        item?.sleep_goal_bedTime
+      ),
+      sleep_goal_wakeTime_color: makeNonValueColor(
+        item?.sleep_goal_wakeTime
+      ),
+      sleep_goal_sleepTime_color: makeNonValueColor(
+        item?.sleep_goal_sleepTime
+      ),
       sleep_diff_bedTime: compareTime(
         item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
       ),
@@ -141,13 +169,13 @@ export const list = async (object) => {
       sleep_diff_sleepTime: compareTime(
         item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
-      sleep_diff_bedTime_color: makeColor(
+      sleep_diff_bedTime_color: makeDiffColor(
         item?.sleep_goal_bedTime, item?.sleep_bedTime, "bedTime"
       ),
-      sleep_diff_wakeTime_color: makeColor(
+      sleep_diff_wakeTime_color: makeDiffColor(
         item?.sleep_goal_wakeTime, item?.sleep_wakeTime, "wakeTime"
       ),
-      sleep_diff_sleepTime_color: makeColor(
+      sleep_diff_sleepTime_color: makeDiffColor(
         item?.sleep_goal_sleepTime, item?.sleep_sleepTime, "sleepTime"
       ),
     });

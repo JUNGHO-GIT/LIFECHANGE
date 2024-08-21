@@ -69,19 +69,25 @@ export const SleepGoalList = () => {
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
+    sleep_goal_bedTime_color: "",
     sleep_goal_wakeTime: "00:00",
+    sleep_goal_wakeTime_color: "",
     sleep_goal_sleepTime: "00:00",
+    sleep_goal_sleepTime_color: "",
     sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_bedTime: "00:00",
+    sleep_bedTime_color: "",
     sleep_wakeTime: "00:00",
+    sleep_wakeTime_color: "",
     sleep_sleepTime: "00:00",
+    sleep_sleepTime_color: "",
     sleep_diff_bedTime: "00:00",
-    sleep_diff_wakeTime: "00:00",
-    sleep_diff_sleepTime: "00:00",
     sleep_diff_bedTime_color: "",
+    sleep_diff_wakeTime: "00:00",
     sleep_diff_wakeTime_color: "",
+    sleep_diff_sleepTime: "00:00",
     sleep_diff_sleepTime_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -172,7 +178,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_goal_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -181,7 +187,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_goal_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -190,7 +196,7 @@ export const SleepGoalList = () => {
                           {item.sleep_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateEnd).format("ddd")}
+                          {translate(moment(item.sleep_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

@@ -163,21 +163,21 @@ export const UserResetPw = () => {
     })
     .then((res) => {
       if (res.data.status === "notExist") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
         }));
       }
       else if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: true
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_sended: false
@@ -201,14 +201,14 @@ export const UserResetPw = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: true
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: false
@@ -236,11 +236,11 @@ export const UserResetPw = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         navigate("/user/login");
       }
       else if (res.data.status === "fail") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",
@@ -248,7 +248,7 @@ export const UserResetPw = () => {
         }));
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setOBJECT((prev) => ({
           ...prev,
           user_id: "",

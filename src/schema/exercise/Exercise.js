@@ -47,7 +47,7 @@ const schema = new mongoose.Schema({
     default: "00:00",
     required: false,
   },
-  exercise_body_weight: {
+  exercise_total_weight: {
     type: String,
     default: "",
     required: false

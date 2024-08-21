@@ -85,7 +85,10 @@ export const UserDetail = () => {
           return res.data.result;
         }
         else {
-          return {...prev, ...res.data.result};
+          return {
+            ...prev,
+            ...res.data.result
+          };
         }
       });
     })
@@ -165,11 +168,11 @@ export const UserDetail = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         navigate(0);
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

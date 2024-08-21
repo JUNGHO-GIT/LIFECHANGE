@@ -3,11 +3,11 @@
 import {React, useLocation, useEffect, useState} from "../../import/ImportReacts.jsx";
 import {useTranslate, useStorage} from "../../import/ImportHooks.jsx";
 import {moment} from "../../import/ImportLibs.jsx";
-import {log} from "../../import/ImportUtils.jsx";
 import {PopUp, Div, Img, Br20, Br10} from "../../import/ImportComponents.jsx";
 import {Badge, TextField, MenuItem, PickersDay, Button} from "../../import/ImportMuis.jsx";
 import {DateCalendar, AdapterMoment, LocalizationProvider} from "../../import/ImportMuis.jsx";
 import {common1} from "../../import/ImportImages.jsx";
+import "moment/locale/ko";
 
 // -------------------------------------------------------------------------------------------------
 export const Picker = ({
@@ -67,6 +67,11 @@ export const Picker = ({
   const [typeStr, setTypeStr] = useState("");
   const [widthStr, setWidthStr] = useState("");
   const [innerStr, setInnerStr] = useState("");
+
+  // 2-3. useEffect --------------------------------------------------------------------------------
+  useEffect(() => {
+    console.log("DATE", JSON.stringify(DATE, null, 2));
+  }, [DATE]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -657,16 +662,15 @@ export const Picker = ({
                           DATE.dateEnd ||
                           moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
                         ) {
-                          setDATE({
-                            dateType: "",
+                          setDATE((prev) => ({
+                            ...prev,
                             dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
                             dateEnd: ""
-                          });
+                          }));
                         }
                         else {
                           setDATE((prev) => ({
                             ...prev,
-                            dateType: "",
                             dateStart: prev.dateStart,
                             dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                           }));
@@ -705,8 +709,8 @@ export const Picker = ({
     </PopUp>
   );
 
-  // 6. clickNode ----------------------------------------------------------------------------------
-  const clickNode = () => (
+  // 6. listClickNode ------------------------------------------------------------------------------
+  const listClickNode = () => (
     <PopUp
       type={"dropdown"}
       position={"top"}
@@ -918,7 +922,7 @@ export const Picker = ({
   const listNode = () => (
     <Div className={"d-center"}>
       {selectSection()}
-      {isToday ? null : clickNode()}
+      {isToday ? null : listClickNode()}
     </Div>
   );
 

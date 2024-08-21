@@ -63,7 +63,7 @@ export const ExerciseSave = () => {
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: "0",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "0",
+    exercise_total_weight: "0",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
@@ -139,7 +139,10 @@ export const ExerciseSave = () => {
           return res.data.result;
         }
         else {
-          return {...prev, ...res.data.result};
+          return {
+            ...prev,
+            ...res.data.result
+          };
         }
       });
       // section 내부 part_idx 값에 따라 재정렬
@@ -249,7 +252,7 @@ export const ExerciseSave = () => {
       exercise_kg: false,
     }));
 
-    if (COUNT.newSectionCnt === 0 && OBJECT?.exercise_body_weight === "0") {
+    if (COUNT.newSectionCnt === 0 && OBJECT?.exercise_total_weight === "0") {
       alert(translate("errorCount"));
       foundError = true;
       return;
@@ -320,7 +323,7 @@ export const ExerciseSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -332,7 +335,7 @@ export const ExerciseSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -353,7 +356,7 @@ export const ExerciseSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -365,7 +368,7 @@ export const ExerciseSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -454,7 +457,7 @@ export const ExerciseSave = () => {
             label={translate("weight")}
             type={"text"}
             size={"small"}
-            value={OBJECT?.exercise_body_weight}
+            value={OBJECT?.exercise_total_weight}
             variant={"outlined"}
             className={"w-86vw"}
             onChange={(e) => {
@@ -464,13 +467,13 @@ export const ExerciseSave = () => {
                 if (value === "") {
                   setOBJECT((prev) => ({
                     ...prev,
-                    exercise_body_weight: "0"
+                    exercise_total_weight: "0"
                   }));
                 }
                 else if (!isNaN(newValue) && newValue <= 999) {
                   setOBJECT((prev) => ({
                     ...prev,
-                    exercise_body_weight: value
+                    exercise_total_weight: value
                   }));
                 }
               }

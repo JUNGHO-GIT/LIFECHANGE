@@ -29,8 +29,18 @@ export const list = async (object) => {
     }
   }
 
-  // 3. makeColor ----------------------------------------------------------------------------------
-  const makeColor = (goalParam, realParam, extra) => {
+  // 3. makeNonValueColor -------------------------------------------------------------------------
+  const makeNonValueColor = (param) => {
+    if (param === "0" || param === "00:00") {
+      return "grey";
+    }
+    else {
+      return "";
+    }
+  };
+
+  // 4. makeDiffColor ------------------------------------------------------------------------------
+  const makeDiffColor = (goalParam, realParam, extra) => {
     const goal = parseFloat(goalParam);
     const real = parseFloat(realParam);
     if (goal === undefined || real === undefined) {
@@ -134,16 +144,28 @@ export const list = async (object) => {
   // 4. result -------------------------------------------------------------------------------------
   object?.result?.map((item) => {
     Object.assign((item), {
+      money_total_income_color: makeNonValueColor(
+        item?.money_total_income
+      ),
+      money_total_expense_color: makeNonValueColor(
+        item?.money_total_expense
+      ),
+      money_goal_income_color: makeNonValueColor(
+        item?.money_goal_income
+      ),
+      money_goal_expense_color: makeNonValueColor(
+        item?.money_goal_expense
+      ),
       money_diff_income: compareValue(
         item?.money_goal_income, item?.money_total_income, "income"
       ),
       money_diff_expense: compareValue(
         item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
-      money_diff_income_color: makeColor(
+      money_diff_income_color: makeDiffColor(
         item?.money_goal_income, item?.money_total_income, "income"
       ),
-      money_diff_expense_color: makeColor(
+      money_diff_expense_color: makeDiffColor(
         item?.money_goal_expense, item?.money_total_expense, "expense"
       ),
     });

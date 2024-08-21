@@ -199,7 +199,7 @@ export const FoodGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -211,7 +211,7 @@ export const FoodGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -232,7 +232,7 @@ export const FoodGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -244,7 +244,7 @@ export const FoodGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

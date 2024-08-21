@@ -2,6 +2,39 @@
 
 import {strToDecimal, decimalToStr} from "../../assets/js/utils.js";
 
+// 1. list -----------------------------------------------------------------------------------------
+export const list = async (object) => {
+
+  if (!object) {
+    return [];
+  }
+
+  const makeNonValueColor = (param) => {
+    if (param === "0" || param === "00:00") {
+      return "grey";
+    }
+    else {
+      return "";
+    }
+  };
+
+  object?.result?.map((item) => {
+    Object.assign((item), {
+      exercise_total_volume_color: makeNonValueColor(
+        item?.exercise_total_volume
+      ),
+      exercise_total_cardio_color: makeNonValueColor(
+        item?.exercise_total_cardio
+      ),
+      exercise_total_weight_color: makeNonValueColor(
+        item?.exercise_total_weight
+      ),
+    });
+  });
+
+  return object;
+};
+
 // 3. save -----------------------------------------------------------------------------------------
 export const save = async (object) => {
 
@@ -22,6 +55,7 @@ export const save = async (object) => {
 
   return object;
 };
+
 // 4. deletes --------------------------------------------------------------------------------------
 export const deletes = async (object) => {
 

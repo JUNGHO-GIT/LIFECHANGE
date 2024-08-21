@@ -69,23 +69,31 @@ export const ExerciseGoalList = () => {
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
     exercise_goal_count: "0",
+    exercise_goal_count_color: "",
     exercise_goal_volume: "0",
+    exercise_goal_volume_color: "",
     exercise_goal_weight: "0",
+    exercise_goal_weight_color: "",
     exercise_goal_cardio: "00:00",
+    exercise_goal_cardio_color: "",
     exercise_dateType: "",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_count: "0",
+    exercise_total_count_color: "",
     exercise_total_volume: "0",
-    exercise_body_weight: "0",
+    exercise_total_volume_color: "",
+    exercise_total_weight: "0",
+    exercise_total_weight_color: "",
     exercise_total_cardio: "00:00",
+    exercise_total_cardio_color: "",
     exercise_diff_count: "0",
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: "0",
-    exercise_diff_weight: "0",
     exercise_diff_count_color: "",
+    exercise_diff_cardio: "00:00",
     exercise_diff_cardio_color: "",
+    exercise_diff_volume: "0",
     exercise_diff_volume_color: "",
+    exercise_diff_weight: "0",
     exercise_diff_weight_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -176,7 +184,7 @@ export const ExerciseGoalList = () => {
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -185,7 +193,7 @@ export const ExerciseGoalList = () => {
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -194,7 +202,7 @@ export const ExerciseGoalList = () => {
                           {item.exercise_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -226,11 +234,11 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_count_color}`}>
                       {numeral(item.exercise_goal_count).format("0,0")}
                     </Div>
                     <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_count_color}`}>
                       {numeral(item.exercise_total_count).format("0,0")}
                     </Div>
                     <Br10 />
@@ -277,11 +285,11 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_volume_color}`}>
                       {numeral(item.exercise_goal_volume).format("0,0")}
                     </Div>
                     <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
                     <Br10 />
@@ -328,11 +336,11 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_cardio_color}`}>
                       {item.exercise_goal_cardio}
                     </Div>
                     <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                       {item.exercise_total_cardio}
                     </Div>
                     <Br10 />
@@ -379,12 +387,12 @@ export const ExerciseGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_goal_weight_color}`}>
                       {item.exercise_goal_weight}
                     </Div>
                     <Br10 />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.exercise_body_weight}
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
+                      {item.exercise_total_weight}
                     </Div>
                     <Br10 />
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>

@@ -98,7 +98,7 @@ export const barWeek = async (
         : "0",
       real:
         findIndexReal !== -1
-        ? String(findResultReal[findIndexReal]?.exercise_body_weight)
+        ? String(findResultReal[findIndexReal]?.exercise_total_weight)
         : "0"
     });
   });
@@ -160,7 +160,7 @@ export const barMonth = async (
         : "0",
       real:
         findIndexReal !== -1
-        ? String(findResultReal[findIndexReal]?.exercise_body_weight)
+        ? String(findResultReal[findIndexReal]?.exercise_total_weight)
         : "0"
     });
   });

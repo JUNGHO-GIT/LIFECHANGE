@@ -69,7 +69,9 @@ export const MoneyList = () => {
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: "0",
+    money_total_income_color: "",
     money_total_expense: "0",
+    money_total_expense_color: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "all",
@@ -167,7 +169,7 @@ export const MoneyList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateStart).format("ddd")}
+                          {translate(moment(item.money_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -176,7 +178,7 @@ export const MoneyList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateStart).format("ddd")}
+                          {translate(moment(item.money_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -185,7 +187,7 @@ export const MoneyList = () => {
                           {item.money_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateEnd).format("ddd")}
+                          {translate(moment(item.money_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -204,7 +206,7 @@ export const MoneyList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
                       {numeral(item.money_total_income).format("0,0")}
                     </Div>
                   </Grid>
@@ -226,7 +228,7 @@ export const MoneyList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
                       {numeral(item.money_total_expense).format("0,0")}
                     </Div>
                   </Grid>

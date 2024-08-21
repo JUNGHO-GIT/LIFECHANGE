@@ -60,7 +60,7 @@ export const percent = {
         _id: 0,
         exercise_total_volume: "$exercise_total_volume",
         exercise_total_cardio: "$exercise_total_cardio",
-        exercise_body_weight: "$exercise_body_weight",
+        exercise_total_weight: "$exercise_total_weight",
       }}
     ]);
     return finalResult[0];
@@ -350,12 +350,12 @@ export const scale = {
         }
       }},
       {$addFields: {
-        exercise_body_weight: { $toDouble: "$exercise_body_weight" }
+        exercise_total_weight: { $toDouble: "$exercise_total_weight" }
       }},
       {$group: {
         _id: null,
-        scale_min: { $min: "$exercise_body_weight" },
-        scale_max: { $max: "$exercise_body_weight" },
+        scale_min: { $min: "$exercise_total_weight" },
+        scale_max: { $max: "$exercise_total_weight" },
       }},
       {$project: {
         _id: 0,
@@ -382,7 +382,7 @@ export const scale = {
       }},
       {$project: {
         _id: 0,
-        exercise_body_weight: "$exercise_body_weight",
+        exercise_total_weight: "$exercise_total_weight",
       }},
     ]);
     return finalResult[0];

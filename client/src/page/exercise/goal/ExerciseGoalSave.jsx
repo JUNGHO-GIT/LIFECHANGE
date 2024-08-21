@@ -191,7 +191,7 @@ export const ExerciseGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -203,7 +203,7 @@ export const ExerciseGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -224,7 +224,7 @@ export const ExerciseGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -236,7 +236,7 @@ export const ExerciseGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

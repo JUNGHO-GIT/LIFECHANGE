@@ -176,7 +176,7 @@ export const MoneyGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -188,7 +188,7 @@ export const MoneyGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -209,7 +209,7 @@ export const MoneyGoalSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -221,7 +221,7 @@ export const MoneyGoalSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

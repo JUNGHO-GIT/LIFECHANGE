@@ -67,7 +67,7 @@ export const Memo = ({
                 closePopup();
               }}
             >
-              {translate("save")}
+              {translate("confirm")}
             </Button>
             <Button
               size={"small"}

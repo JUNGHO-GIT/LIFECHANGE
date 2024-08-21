@@ -103,8 +103,11 @@ export const TodayList = () => {
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: "0",
+    exercise_total_volume_color: "",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "0",
+    exercise_total_cardio_color: "",
+    exercise_total_weight: "0",
+    exercise_total_weight_color: "",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
@@ -125,9 +128,13 @@ export const TodayList = () => {
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: "0",
+    food_total_kcal_color: "",
     food_total_fat: "0",
+    food_total_fat_color: "",
     food_total_carb: "0",
+    food_total_carb_color: "",
     food_total_protein: "0",
+    food_total_protein_color: "",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
@@ -150,7 +157,9 @@ export const TodayList = () => {
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: "0",
+    money_total_income_color: "",
     money_total_expense: "0",
+    money_total_expense_color: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "all",
@@ -169,8 +178,11 @@ export const TodayList = () => {
     sleep_dateEnd: "0000-00-00",
     sleep_section: [{
       sleep_bedTime: "00:00",
+      sleep_bedTime_color: "",
       sleep_wakeTime: "00:00",
+      sleep_wakeTime_color: "",
       sleep_sleepTime: "00:00",
+      sleep_sleepTime_color: "",
     }],
   }];
   const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
@@ -292,19 +304,14 @@ export const TodayList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("exercise")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -313,7 +320,7 @@ export const TodayList = () => {
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -322,7 +329,7 @@ export const TodayList = () => {
                           {item.exercise_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateEnd).format("ddd")}
+                          {translate(moment(item.exercise_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -341,7 +348,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
                   </Grid>
@@ -363,7 +370,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                       {item.exercise_total_cardio}
                     </Div>
                   </Grid>
@@ -385,8 +392,8 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.exercise_body_weight}
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
+                      {item.exercise_total_weight}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-right lh-2-4"}>
@@ -453,19 +460,14 @@ export const TodayList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("food")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.food_dateStart === item.food_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateStart).format("ddd")}
+                          {translate(moment(item.food_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -474,7 +476,7 @@ export const TodayList = () => {
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateStart).format("ddd")}
+                          {translate(moment(item.food_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -483,7 +485,7 @@ export const TodayList = () => {
                           {item.food_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateEnd).format("ddd")}
+                          {translate(moment(item.food_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -502,7 +504,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
                       {numeral(item.food_total_kcal).format("0,0")}
                     </Div>
                   </Grid>
@@ -524,7 +526,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
                       {numeral(item.food_total_carb).format("0,0")}
                     </Div>
                   </Grid>
@@ -546,7 +548,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
                       {numeral(item.food_total_protein).format("0,0")}
                     </Div>
                   </Grid>
@@ -568,7 +570,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
                       {numeral(item.food_total_fat).format("0,0")}
                     </Div>
                   </Grid>
@@ -636,19 +638,14 @@ export const TodayList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("money")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.money_dateStart === item.money_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateStart).format("ddd")}
+                          {translate(moment(item.money_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -657,7 +654,7 @@ export const TodayList = () => {
                           {item.money_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateStart).format("ddd")}
+                          {translate(moment(item.money_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -666,7 +663,7 @@ export const TodayList = () => {
                           {item.money_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_dateEnd).format("ddd")}
+                          {translate(moment(item.money_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -685,7 +682,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.money_total_income_color}`}>
                       {numeral(item.money_total_income).format("0,0")}
                     </Div>
                   </Grid>
@@ -707,7 +704,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.money_total_expense_color}`}>
                       {numeral(item.money_total_expense).format("0,0")}
                     </Div>
                   </Grid>
@@ -775,19 +772,14 @@ export const TodayList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("sleep")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.sleep_dateStart === item.sleep_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -796,7 +788,7 @@ export const TodayList = () => {
                           {item.sleep_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -805,7 +797,7 @@ export const TodayList = () => {
                           {item.sleep_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_dateEnd).format("ddd")}
+                          {translate(moment(item.sleep_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -824,7 +816,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_bedTime_color}`}>
                       {item.sleep_section[0]?.sleep_bedTime}
                     </Div>
                   </Grid>
@@ -846,7 +838,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_wakeTime_color}`}>
                       {item.sleep_section[0]?.sleep_wakeTime}
                     </Div>
                   </Grid>
@@ -868,7 +860,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.sleep_section[0]?.sleep_sleepTime_color}`}>
                       {item.sleep_section[0]?.sleep_sleepTime}
                     </Div>
                   </Grid>

@@ -69,13 +69,17 @@ export const FoodFind = () => {
     food_part_val: "breakfast",
     food_name: "",
     food_brand: "",
-    food_count:"0",
+    food_count: "0",
     food_serv: "",
     food_gram: "0",
     food_kcal: "0",
+    food_kcal_color: "",
     food_carb: "0",
+    food_carb_color: "",
     food_protein: "0",
+    food_protein_color: "",
     food_fat: "0",
+    food_fat_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
@@ -292,7 +296,7 @@ export const FoodFind = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
                       {numeral(item.food_kcal).format("0,0")}
                     </Div>
                   </Grid>
@@ -314,7 +318,7 @@ export const FoodFind = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
                       {numeral(item.food_carb).format("0,0")}
                     </Div>
                   </Grid>
@@ -336,7 +340,7 @@ export const FoodFind = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
                       {numeral(item.food_protein).format("0,0")}
                     </Div>
                   </Grid>
@@ -358,7 +362,7 @@ export const FoodFind = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
                       {numeral(item.food_fat).format("0,0")}
                     </Div>
                   </Grid>

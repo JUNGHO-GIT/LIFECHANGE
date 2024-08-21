@@ -121,7 +121,10 @@ export const SleepSave = () => {
           return res.data.result;
         }
         else {
-          return {...prev, ...res.data.result};
+          return {
+            ...prev,
+            ...res.data.result
+          };
         }
       });
       // section 내부 part_idx 값에 따라 재정렬
@@ -228,7 +231,7 @@ export const SleepSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -240,7 +243,7 @@ export const SleepSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -261,7 +264,7 @@ export const SleepSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         sync();
         Object.assign(SEND, {
           dateType: "",
@@ -273,7 +276,7 @@ export const SleepSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

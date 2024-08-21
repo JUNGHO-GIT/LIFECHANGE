@@ -388,7 +388,7 @@ export const percent = async (object) => {
       ),
       diff_weight:diffExercise(
         object?.exerciseGoal?.exercise_goal_weight,
-        object?.exercise?.exercise_body_weight,
+        object?.exercise?.exercise_total_weight,
         "weight"
       ),
     };

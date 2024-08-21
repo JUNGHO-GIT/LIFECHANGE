@@ -12,14 +12,15 @@ router.get("/app/info", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "앱정보 조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "앱정보 조회 실패"
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -39,35 +40,39 @@ router.post("/email/send", async (req, res) => {
       req.body.user_id,
       req.body.type,
     );
-    if (result.result === "duplicate") {
+    if (result.result === "success") {
+      res.json({
+        status: "success",
+        msg: "emailSendSuccessful",
+        result: result,
+      });
+    }
+    else if (result.result === "duplicate") {
       res.json({
         status: "duplicate",
-        msg: "이미 가입된 이메일 입니다."
+        msg: "duplicateEmail",
+        result: null,
       });
     }
     else if (result.result === "notExist") {
       res.json({
         status: "notExist",
-        msg: "가입되지 않은 이메일 입니다."
-      });
-    }
-    else if (result.result === "success") {
-      res.json({
-        status: "success",
-        msg: "이메일 전송 성공",
-        result: result
+        msg: "emailNotExist",
+        result: null,
       });
     }
     else if (result.result === "fail") {
       res.json({
         status: "fail",
-        msg: "이메일 전송 실패"
+        msg: "emailSendFailed",
+        result: null,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "이메일 전송 실패"
+        msg: "emailSendFailed",
+        result: null,
       });
     }
   }
@@ -90,19 +95,22 @@ router.post("/email/verify", async (req, res) => {
     if (result === "success") {
       res.json({
         status: "success",
-        msg: "인증 성공"
+        msg: "authenticationSuccessful",
+        result: result,
       });
     }
     else if (result === "fail") {
       res.json({
         status: "fail",
-        msg: "인증 실패"
+        msg: "authenticationFailed",
+        result: null,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "인증 실패"
+        msg: "authenticationFailed",
+        result: null,
       });
     }
   }
@@ -125,20 +133,22 @@ router.post("/signup", async (req, res) => {
     if (result && result !== "duplicated") {
       res.json({
         status: "success",
-        msg: "회원가입 성공",
-        result: result
+        msg: "signupSuccessful",
+        result: result,
       });
     }
     else if (result === "duplicated") {
       res.json({
         status: "duplicated",
-        msg: "아이디 중복"
+        msg: "duplicatedId",
+        result: null,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "회원가입 실패"
+        msg: "signupFailed",
+        result: null,
       });
     }
   }
@@ -161,13 +171,15 @@ router.post("/resetPw", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "비밀번호 재설정 성공"
+        msg: "pwResetSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "비밀번호 재설정 실패"
+        msg: "pwResetFailed",
+        result: null,
       });
     }
   }
@@ -190,15 +202,23 @@ router.post("/login", async (req, res) => {
     if (result.result && result.result !== "fail") {
       res.json({
         status: "success",
-        msg: "로그인 성공",
+        msg: "loginSuccessful",
         admin: result.admin,
-        result: result.result
+        result: result.result,
       });
     }
     else if (result.result === "fail") {
       res.json({
         status: "fail",
-        msg: "아이디 또는 비밀번호가 일치하지 않습니다."
+        msg: "theIdOrPwIsIncorrect",
+        result: null,
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "loginFailed",
+        result: null,
       });
     }
   }
@@ -220,15 +240,15 @@ router.get("/detail", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패",
-        result: null
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -251,15 +271,15 @@ router.post("/update", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "수정 성공",
-        result: result
+        msg: "UpdateSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "수정 실패",
-        result: null
+        msg: "UpdateFailed",
+        result: null,
       });
     }
   }
@@ -281,13 +301,15 @@ router.delete("/deletes", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "탈퇴 성공"
+        msg: "deleteSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "탈퇴 실패"
+        msg: "deleteFailed",
+        result: null,
       });
     }
   }
@@ -309,14 +331,15 @@ router.get("/category/list", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "카테고리 조회 성공",
-        result: result
+        msg: "searchSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "카테고리 조회 실패"
+        msg: "searchFailed",
+        result: null,
       });
     }
   }
@@ -339,14 +362,15 @@ router.post("/category/save", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "카테고리 저장 성공",
-        result: result
+        msg: "saveSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "카테고리 저장 실패"
+        msg: "saveFailed",
+        result: null,
       });
     }
   }
@@ -370,7 +394,7 @@ router.get("/dummyList", async (req, res) => {
     if (result && result.result) {
       res.json({
         status: "success",
-        msg: "더미데이터 조회 성공",
+        msg: "searchSuccessful",
         totalCnt: result.totalCnt,
         result: result.result
       });
@@ -378,9 +402,9 @@ router.get("/dummyList", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "더미데이터 조회 실패",
+        msg: "searchFailed",
         totalCnt: 0,
-        result: null
+        result: null,
       });
     }
   }
@@ -404,15 +428,15 @@ router.post("/dummySave", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "더미데이터 추가 성공",
-        result: result
+        msg: "saveSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "더미데이터 추가 실패",
-        result: null
+        msg: "saveFailed",
+        result: null,
       });
     }
   }
@@ -435,13 +459,15 @@ router.delete("/dummyDeletes", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "더미데이터 삭제 성공"
+        msg: "deleteSuccessful",
+        result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "더미데이터 삭제 실패"
+        msg: "deleteFailed",
+        result: null,
       });
     }
   }

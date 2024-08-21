@@ -103,23 +103,31 @@ export const TodayGoalList = () => {
     exercise_goal_dateStart: "0000-00-00",
     exercise_goal_dateEnd: "0000-00-00",
     exercise_goal_count: "0",
+    exercise_goal_count_color: "",
     exercise_goal_volume: "0",
+    exercise_goal_volume_color: "",
     exercise_goal_weight: "0",
+    exercise_goal_weight_color: "",
     exercise_goal_cardio: "00:00",
+    exercise_goal_cardio_color: "",
     exercise_dateType: "day",
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_count: "0",
+    exercise_total_count_color: "",
     exercise_total_volume: "0",
-    exercise_body_weight: "0",
+    exercise_total_volume_color: "",
+    exercise_total_weight: "0",
+    exercise_total_weight_color: "",
     exercise_total_cardio: "00:00",
+    exercise_total_cardio_color: "",
     exercise_diff_count: "0",
-    exercise_diff_cardio: "00:00",
-    exercise_diff_volume: "0",
-    exercise_diff_weight: "0",
     exercise_diff_count_color: "",
+    exercise_diff_cardio: "00:00",
     exercise_diff_cardio_color: "",
+    exercise_diff_volume: "0",
     exercise_diff_volume_color: "",
+    exercise_diff_weight: "0",
     exercise_diff_weight_color: "",
   }];
   const OBJECT_FOOD_DEF = [{
@@ -130,65 +138,82 @@ export const TodayGoalList = () => {
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
     food_goal_kcal: "0",
+    food_goal_kcal_color: "",
     food_goal_carb: "0",
+    food_goal_carb_color: "",
     food_goal_protein: "0",
+    food_goal_protein_color: "",
     food_goal_fat: "0",
+    food_goal_fat_color: "",
     food_dateType: "day",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: "0",
+    food_total_kcal_color: "",
     food_total_carb: "0",
+    food_total_carb_color: "",
     food_total_protein: "0",
+    food_total_protein_color: "",
     food_total_fat: "0",
     food_diff_kcal: "0",
-    food_diff_carb: "0",
-    food_diff_protein: "0",
-    food_diff_fat: "0",
     food_diff_kcal_color: "",
+    food_diff_carb: "0",
     food_diff_carb_color: "",
+    food_diff_protein: "0",
     food_diff_protein_color: "",
+    food_diff_fat: "0",
     food_diff_fat_color: "",
   }];
   const OBJECT_MONEY_DEF = [{
     _id: "",
     money_goal_number: 0,
     money_goal_dummy: "N",
-    money_goal_dateType: "day",
+    money_goal_dateType: "",
     money_goal_dateStart: "0000-00-00",
     money_goal_dateEnd: "0000-00-00",
     money_goal_income: "0",
+    money_goal_income_color: "",
     money_goal_expense: "0",
-    money_dateType: "day",
+    money_goal_expense_color: "",
+    money_dateType: "",
     money_dateStart: "0000-00-00",
     money_dateEnd: "0000-00-00",
     money_total_income: "0",
+    money_total_income_color: "",
     money_total_expense: "0",
+    money_total_expense_color: "",
     money_diff_income: "0",
-    money_diff_expense: "0",
     money_diff_income_color: "",
+    money_diff_expense: "0",
     money_diff_expense_color: "",
   }];
   const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_goal_number: 0,
     sleep_goal_dummy: "N",
-    sleep_goal_dateType: "day",
+    sleep_goal_dateType: "",
     sleep_goal_dateStart: "0000-00-00",
     sleep_goal_dateEnd: "0000-00-00",
     sleep_goal_bedTime: "00:00",
+    sleep_goal_bedTime_color: "",
     sleep_goal_wakeTime: "00:00",
+    sleep_goal_wakeTime_color: "",
     sleep_goal_sleepTime: "00:00",
-    sleep_dateType: "day",
+    sleep_goal_sleepTime_color: "",
+    sleep_dateType: "",
     sleep_dateStart: "0000-00-00",
     sleep_dateEnd: "0000-00-00",
     sleep_bedTime: "00:00",
+    sleep_bedTime_color: "",
     sleep_wakeTime: "00:00",
+    sleep_wakeTime_color: "",
     sleep_sleepTime: "00:00",
+    sleep_sleepTime_color: "",
     sleep_diff_bedTime: "00:00",
-    sleep_diff_wakeTime: "00:00",
-    sleep_diff_sleepTime: "00:00",
     sleep_diff_bedTime_color: "",
+    sleep_diff_wakeTime: "00:00",
     sleep_diff_wakeTime_color: "",
+    sleep_diff_sleepTime: "00:00",
     sleep_diff_sleepTime_color: ""
   }];
   const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
@@ -308,19 +333,14 @@ export const TodayGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("exercise")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.exercise_goal_dateStart === item.exercise_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -329,7 +349,7 @@ export const TodayGoalList = () => {
                           {item.exercise_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -338,7 +358,7 @@ export const TodayGoalList = () => {
                           {item.exercise_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.exercise_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -528,7 +548,7 @@ export const TodayGoalList = () => {
                     </Div>
                     <Br10 />
                     <Div className={"fs-1-0rem fw-600"}>
-                      {item.exercise_body_weight}
+                      {item.exercise_total_weight}
                     </Div>
                     <Br10 />
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_diff_weight_color}`}>
@@ -607,19 +627,14 @@ export const TodayGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("food")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.food_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateStart).format("ddd")}
+                          {translate(moment(item.food_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -628,7 +643,7 @@ export const TodayGoalList = () => {
                           {item.food_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateStart).format("ddd")}
+                          {translate(moment(item.food_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -637,7 +652,7 @@ export const TodayGoalList = () => {
                           {item.food_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.food_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -906,19 +921,14 @@ export const TodayGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("money")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.money_goal_dateStart === item.money_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateStart).format("ddd")}
+                          {translate(moment(item.money_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -927,7 +937,7 @@ export const TodayGoalList = () => {
                           {item.money_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateStart).format("ddd")}
+                          {translate(moment(item.money_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -936,7 +946,7 @@ export const TodayGoalList = () => {
                           {item.money_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.money_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.money_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -1103,19 +1113,14 @@ export const TodayGoalList = () => {
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
-                    <Div className={"fs-1-0rem fw-600 dark"}>
-                      {translate("sleep")}
-                    </Div>
-                  </Grid>
-                  <Grid item xs={8} className={"d-left"}>
+                  <Grid item xs={10} className={"d-left"}>
                     {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_goal_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -1124,7 +1129,7 @@ export const TodayGoalList = () => {
                           {item.sleep_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.sleep_goal_dateStart).format("ddd")}
+                          {translate(moment(item.sleep_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -1133,7 +1138,7 @@ export const TodayGoalList = () => {
                           {item.sleep_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateEnd).format("ddd")}
+                          {translate(moment(item.food_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

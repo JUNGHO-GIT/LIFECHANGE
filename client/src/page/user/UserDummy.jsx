@@ -61,7 +61,7 @@ export const UserDummy = () => {
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: "",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "",
+    exercise_total_weight: "",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
@@ -232,7 +232,7 @@ export const UserDummy = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,
@@ -246,7 +246,7 @@ export const UserDummy = () => {
         setPART(previousPART);
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -265,7 +265,7 @@ export const UserDummy = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         setCOUNT((prev) => ({
           ...prev,
           inputCnt: 0,
@@ -279,7 +279,7 @@ export const UserDummy = () => {
         setPART(previousPART);
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -381,7 +381,7 @@ export const UserDummy = () => {
                       {item.exercise_total_cardio}
                     </TableCell>
                     <TableCell>
-                      {item.exercise_body_weight}
+                      {item.exercise_total_weight}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -14,14 +14,15 @@ router.get("/login", async (req, res) => {
       // Google 로그인 페이지로 리디렉트 url 리턴
       res.json({
         status: "success",
-        msg: "인증 URL 생성 성공",
-        url: result.url
+        msg: "authenticationUrlGeneratedSuccessfully",
+        url: result.url,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "인증 URL 생성 실패"
+        msg: "authenticationUrlGenerationFailed",
+        result: null,
       });
     }
   }
@@ -46,7 +47,7 @@ router.get("/callback", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "콜백 실패"
+        msg: "callbackFailed"
       });
     }
   }
@@ -66,7 +67,7 @@ router.get("/afterCallback", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "구글로그인 정보 세션 저장 성공",
+        msg: "googleLoginSuccessful",
         result: result.result,
         admin: result.admin,
         googleId: result.googleId,
@@ -76,7 +77,8 @@ router.get("/afterCallback", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "구글로그인 정보 세션 저장 실패"
+        msg: "googleLoginFailed",
+        result: null,
       });
     }
   }

@@ -122,7 +122,7 @@ export const list = {
         exercise_dateEnd: "$exercise_dateEnd",
         exercise_total_volume: "$exercise_total_volume",
         exercise_total_cardio: "$exercise_total_cardio",
-        exercise_body_weight: "$exercise_body_weight"
+        exercise_total_weight: "$exercise_total_weight"
       }},
       {$sort: {exercise_dateStart: 1 }},
     ]);

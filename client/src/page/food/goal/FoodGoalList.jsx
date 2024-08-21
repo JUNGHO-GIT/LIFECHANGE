@@ -69,23 +69,31 @@ export const FoodGoalList = () => {
     food_goal_dateStart: "0000-00-00",
     food_goal_dateEnd: "0000-00-00",
     food_goal_kcal: "0",
+    food_goal_kcal_color: "",
     food_goal_carb: "0",
+    food_goal_carb_color: "",
     food_goal_protein: "0",
+    food_goal_protein_color: "",
     food_goal_fat: "0",
+    food_goal_fat_color: "",
     food_dateType: "",
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: "0",
+    food_total_kcal_color: "",
     food_total_carb: "0",
+    food_total_carb_color: "",
     food_total_protein: "0",
+    food_total_protein_color: "",
     food_total_fat: "0",
+    food_total_fat_color: "",
     food_diff_kcal: "0",
-    food_diff_carb: "0",
-    food_diff_protein: "0",
-    food_diff_fat: "0",
     food_diff_kcal_color: "",
+    food_diff_carb: "0",
     food_diff_carb_color: "",
+    food_diff_protein: "0",
     food_diff_protein_color: "",
+    food_diff_fat: "0",
     food_diff_fat_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
@@ -176,7 +184,7 @@ export const FoodGoalList = () => {
                           {item.food_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateStart).format("ddd")}
+                          {translate(moment(item.food_goal_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -185,7 +193,7 @@ export const FoodGoalList = () => {
                           {item.food_goal_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateStart).format("ddd")}
+                          {translate(moment(item.food_goal_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -194,7 +202,7 @@ export const FoodGoalList = () => {
                           {item.food_goal_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_goal_dateEnd).format("ddd")}
+                          {translate(moment(item.food_goal_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}

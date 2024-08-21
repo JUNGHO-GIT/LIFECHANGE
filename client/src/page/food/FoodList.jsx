@@ -69,9 +69,13 @@ export const FoodList = () => {
     food_dateStart: "0000-00-00",
     food_dateEnd: "0000-00-00",
     food_total_kcal: "0",
+    food_total_kcal_color: "",
     food_total_carb: "0",
+    food_total_carb_color: "",
     food_total_protein: "0",
+    food_total_protein_color: "",
     food_total_fat: "0",
+    food_total_fat_color: "",
     food_section: [{
       food_part_idx: 1,
       food_part_val: "breakfast",
@@ -174,7 +178,7 @@ export const FoodList = () => {
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateStart).format("ddd")}
+                          {translate(moment(item.food_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -183,7 +187,7 @@ export const FoodList = () => {
                           {item.food_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateStart).format("ddd")}
+                          {translate(moment(item.food_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -192,7 +196,7 @@ export const FoodList = () => {
                           {item.food_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.food_dateEnd).format("ddd")}
+                          {translate(moment(item.food_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -211,7 +215,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_kcal_color}`}>
                       {numeral(item.food_total_kcal).format("0,0")}
                     </Div>
                   </Grid>
@@ -233,7 +237,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_carb_color}`}>
                       {numeral(item.food_total_carb).format("0,0")}
                     </Div>
                   </Grid>
@@ -255,7 +259,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_protein_color}`}>
                       {numeral(item.food_total_protein).format("0,0")}
                     </Div>
                   </Grid>
@@ -277,7 +281,7 @@ export const FoodList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.food_total_fat_color}`}>
                       {numeral(item.food_total_fat).format("0,0")}
                     </Div>
                   </Grid>

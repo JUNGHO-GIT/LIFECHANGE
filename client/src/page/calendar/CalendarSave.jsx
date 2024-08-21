@@ -130,7 +130,10 @@ export const CalendarSave = () => {
           return res.data.result;
         }
         else {
-          return {...prev, ...res.data.result};
+          return {
+            ...prev,
+            ...res.data.result
+          };
         }
       });
       setCOUNT((prev) => ({
@@ -240,7 +243,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -251,7 +254,7 @@ export const CalendarSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {
@@ -272,7 +275,7 @@ export const CalendarSave = () => {
     })
     .then((res) => {
       if (res.data.status === "success") {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
         Object.assign(SEND, {
           dateType: "",
           dateStart: DATE.dateStart,
@@ -283,7 +286,7 @@ export const CalendarSave = () => {
         });
       }
       else {
-        alert(res.data.msg);
+        alert(translate(res.data.msg));
       }
     })
     .catch((err) => {

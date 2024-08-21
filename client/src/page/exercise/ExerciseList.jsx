@@ -70,8 +70,11 @@ export const ExerciseList = () => {
     exercise_dateStart: "0000-00-00",
     exercise_dateEnd: "0000-00-00",
     exercise_total_volume: "0",
+    exercise_total_volume_color: "",
     exercise_total_cardio: "00:00",
-    exercise_body_weight: "0",
+    exercise_total_cardio_color: "",
+    exercise_total_weight: "0",
+    exercise_total_weight_color: "",
     exercise_section: [{
       exercise_part_idx: 0,
       exercise_part_val: "all",
@@ -172,7 +175,7 @@ export const ExerciseList = () => {
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_dateStart).format("ddd"))}
                         </Div>
                       </>
                     ) : (
@@ -181,7 +184,7 @@ export const ExerciseList = () => {
                           {item.exercise_dateStart?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateStart).format("ddd")}
+                          {translate(moment(item.exercise_dateStart).format("ddd"))}
                         </Div>
                         <Div className={"fs-1-0rem ms-3vw me-3vw"}>
                           ~
@@ -190,7 +193,7 @@ export const ExerciseList = () => {
                           {item.exercise_dateEnd?.substring(5, 10)}
                         </Div>
                         <Div className={"fs-1-0rem fw-500 dark ms-10"}>
-                          {moment(item.exercise_dateEnd).format("ddd")}
+                          {translate(moment(item.exercise_dateEnd).format("ddd"))}
                         </Div>
                       </>
                     )}
@@ -209,7 +212,7 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={7} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
                   </Grid>
@@ -231,7 +234,7 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                       {item.exercise_total_cardio}
                     </Div>
                   </Grid>
@@ -253,8 +256,8 @@ export const ExerciseList = () => {
                     </Div>
                   </Grid>
                   <Grid item xs={6} className={"d-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.exercise_body_weight}
+                    <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
+                      {item.exercise_total_weight}
                     </Div>
                   </Grid>
                   <Grid item xs={1} className={"d-right lh-2-4"}>
