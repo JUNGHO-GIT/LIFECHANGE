@@ -1,16 +1,10 @@
 // index.jsx
 
-import React from "react";
-import { useLocation } from "react-router-dom";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useScrollTop } from "./assets/hooks/useScrollTop.jsx";
-import { useEnhancedTouch } from "./assets/hooks/useEnhancedTouch.jsx";
-import { useRoot } from "./assets/hooks/useRoot.jsx";
-import { useSessionStorage } from "./assets/hooks/useSessionStorage.jsx";
-import { LanguageProvider } from "./assets/hooks/useLanguageProvider.jsx";
+import { React, useLocation } from "./import/ImportReacts.jsx";
+import { ReactDOM, BrowserRouter, Routes, Route } from "./import/ImportReacts.jsx";
+import { CssBaseline, createTheme, ThemeProvider } from "./import/ImportMuis.jsx";
+import { useScrollTop, useEnhancedTouch } from "./import/ImportHooks.jsx";
+import { useRoot, useSessionStorage, LanguageProvider } from "./import/ImportHooks.jsx";
 
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";

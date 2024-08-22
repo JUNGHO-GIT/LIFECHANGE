@@ -33,7 +33,7 @@ export const Header = () => {
       <Div className={"d-center"}>
         <Img
           src={logo2}
-          className={"h-max30"}
+          className={"pointer h-max30"}
           onClick={(e) => {
             navigate("/today/list", {
               state: {
