@@ -12,8 +12,8 @@ const modifyEnv = () => {
   const envConfig = dotenv.parse(envFile);
 
   // envConfig 수정
-  envConfig.CLIENT_URL = "https://www.junghomun.com";
-  envConfig.GOOGLE_CALLBACK_URL = "https://www.junghomun.com/api/google/callback";
+  envConfig.CLIENT_URL = "https://www.junghomun.com/LIFECHANGE";
+  envConfig.GOOGLE_CALLBACK_URL = "https://www.junghomun.com/LIFECHANGE/api/google/callback";
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {
