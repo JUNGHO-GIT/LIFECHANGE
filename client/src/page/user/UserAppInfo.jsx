@@ -57,34 +57,34 @@ export const UserAppInfo = () => {
         <Card className={"border radius shadow-none p-0"} key={i}>
           <Grid container>
             <Grid item xs={12} className={"d-center border-top p-20"}>
-              <Grid item xs={3} className={"fw-700 border-right"}>
+              <Grid item xs={3} className={"d-left fs-0-9rem fw-500"}>
                 version
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} className={"d-right fs-0-8rem fw-500"}>
                 {OBJECT.version}
               </Grid>
             </Grid>
             <Grid item xs={12} className={"d-center border-top p-20"}>
-              <Grid item xs={3} className={"fw-700 border-right"}>
+              <Grid item xs={3} className={"d-left fs-0-9rem fw-500"}>
                 date
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} className={"d-right fs-0-8rem fw-500"}>
                 {OBJECT.date}
               </Grid>
             </Grid>
             <Grid item xs={12} className={"d-center border-top p-20"}>
-              <Grid item xs={3} className={"fw-700 border-right"}>
+              <Grid item xs={3} className={"d-left fs-0-9rem fw-500"}>
                 github
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} className={"d-right fs-0-6rem fw-500"}>
                 {OBJECT.git}
               </Grid>
             </Grid>
             <Grid item xs={12} className={"d-center border-top p-20"}>
-              <Grid item xs={3} className={"fw-700 border-right"}>
+              <Grid item xs={3} className={"d-left fs-0-9rem fw-500"}>
                 license
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} className={"d-right fs-0-8rem fw-500"}>
                 {OBJECT.license}
               </Grid>
             </Grid>
