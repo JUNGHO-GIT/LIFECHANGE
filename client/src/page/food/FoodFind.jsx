@@ -242,8 +242,8 @@ export const FoodFind = () => {
                       size={"small"}
                       checked={
                         !! (
-                          checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-                          checkedQueries[`${PAGING.query}_${PAGING.page}`][index]
+                          checkedQueries[`${OBJECT[index].food_query}_${PAGING.page}`] &&
+                          checkedQueries[`${OBJECT[index].food_query}_${PAGING.page}`][index]
                         )
                       }
                       onChange={() => {
