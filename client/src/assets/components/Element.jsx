@@ -50,7 +50,7 @@ const createHr = (param) => {
 
   const style = {
     "width": "100%",
-    "background": "rgb(158 158 158 / 12%)",
+    "background": "rgb(207 207 207)",
     "height": "0.1px",
     "margin": `${param/2}px 0px`,
   };
