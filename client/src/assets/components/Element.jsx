@@ -1,4 +1,4 @@
-// NavBar.jsx
+// Element.jsx
 
 import { React } from "../../import/ImportReacts.jsx";
 
