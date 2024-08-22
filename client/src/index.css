@@ -1,7 +1,4 @@
-/** 0. Non Media **********************************************************************************/
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
+@charset "UTF-8";
 
 /** 0. Media **************************************************************************************/
 html, body {
@@ -10,9 +7,12 @@ html, body {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   background-color: #e8e8e8 !important;
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Noto Sans KR", sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
 }
 
 /** 1. Small (0 ~ 479px) **************************************************************************/

@@ -5,13 +5,13 @@ import { useLocation } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useScrollTop } from "./assets/hooks/useScrollTop.jsx";
 import { useEnhancedTouch } from "./assets/hooks/useEnhancedTouch.jsx";
 import { useRoot } from "./assets/hooks/useRoot.jsx";
 import { useSessionStorage } from "./assets/hooks/useSessionStorage.jsx";
 import { LanguageProvider } from "./assets/hooks/useLanguageProvider.jsx";
 
-import "./index.css";
 import "react-calendar/dist/Calendar.css";
 import "./assets/css/Calendar.css";
 import "./assets/css/Chart.css";
@@ -19,6 +19,7 @@ import "./assets/css/Mui.css";
 import "./assets/css/Components.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
+import "./index.css";
 
 import { Header } from "./import/ImportLayouts.jsx";
 import { TopNav } from "./import/ImportLayouts.jsx";
@@ -201,17 +202,23 @@ const App = () => {
 };
 
 // -------------------------------------------------------------------------------------------------
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Noto Sans KR", sans-serif',
+  },
+});
 const rootElement = document.getElementById("root");
 if (rootElement === null) {
   throw new Error("root element is null");
 }
-
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
     <LanguageProvider>
-      <CssBaseline />
-      <App />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
     </LanguageProvider>
   </BrowserRouter>
 );

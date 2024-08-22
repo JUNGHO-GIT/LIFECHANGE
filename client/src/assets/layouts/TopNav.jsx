@@ -248,7 +248,7 @@ export const TopNav = () => {
         <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
           <Grid container>
             <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-500"}>
+              <Div className={"fs-1-2rem fw-600"}>
                 {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
               </Div>
             </Grid>

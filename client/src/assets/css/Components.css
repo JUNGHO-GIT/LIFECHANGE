@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /** table *****************************************************************************************/
 .table-thead-tr th, .table-thead-tr td {
   font-weight: bold !important;
