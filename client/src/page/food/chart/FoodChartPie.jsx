@@ -607,22 +607,22 @@ export const FoodChartPie = () => {
       );
       const chartFragment2 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartNutToday()}
+          {chartKcalWeek()}
         </Card>
       );
       const chartFragment3 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartKcalWeek()}
+          {chartKcalMonth()}
         </Card>
       );
       const chartFragment4 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartNutWeek()}
+          {chartNutToday()}
         </Card>
       );
       const chartFragment5 = (i) => (
         <Card className={"border radius shadow-none p-20"} key={i}>
-          {chartKcalMonth()}
+          {chartNutWeek()}
         </Card>
       );
       const chartFragment6 = (i) => (
@@ -634,16 +634,16 @@ export const FoodChartPie = () => {
         return LOADING ? <Loading /> : chartFragment1(0);
       }
       else if (SECTION === "week" && LINE === "kcal") {
-        return LOADING ? <Loading /> : chartFragment3(0);
-      }
-      else if (SECTION === "month" && LINE === "kcal") {
-        return LOADING ? <Loading /> : chartFragment5(0);
-      }
-      else if (SECTION === "today" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment2(0);
       }
-      else if (SECTION === "week" && LINE === "nut") {
+      else if (SECTION === "month" && LINE === "kcal") {
+        return LOADING ? <Loading /> : chartFragment3(0);
+      }
+      else if (SECTION === "today" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment4(0);
+      }
+      else if (SECTION === "week" && LINE === "nut") {
+        return LOADING ? <Loading /> : chartFragment5(0);
       }
       else if (SECTION === "month" && LINE === "nut") {
         return LOADING ? <Loading /> : chartFragment6(0);

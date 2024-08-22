@@ -16,7 +16,7 @@ export const TodayChartSleep = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_OBJECT, sessionId, barChartArray, COLORS, translate, koreanDate,
+    URL_SLEEP, sessionId, barChartArray, COLORS, translate, koreanDate,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ export const TodayChartSleep = () => {
       DATE: DATE,
     };
     const [resToday] = await Promise.all([
-      axios.get(`${URL_OBJECT}/chart/bar/today`, {
+      axios.get(`${URL_SLEEP}/chart/bar/today`, {
         params: params,
       }),
     ]);

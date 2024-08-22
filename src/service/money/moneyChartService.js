@@ -349,11 +349,11 @@ export const avgWeek = async (
       date: String(date[index]),
       income:
         countRecords[index] > 0
-        ? String((sumIncome[index] / countRecords[index]).toFixed(2))
+        ? String((sumIncome[index] / countRecords[index]).toFixed(0))
         : "0",
       expense:
         countRecords[index] > 0
-        ? String((sumExpense[index] / countRecords[index]).toFixed(2))
+        ? String((sumExpense[index] / countRecords[index]).toFixed(0))
         : "0",
     });
   });
@@ -425,11 +425,11 @@ export const avgMonth = async (
       date: String(date[index]),
       income:
         countRecords[index] > 0
-        ? String((sumIncome[index] / countRecords[index]).toFixed(2))
+        ? String((sumIncome[index] / countRecords[index]).toFixed(0))
         : "0",
       expense:
         countRecords[index] > 0
-        ? String((sumExpense[index] / countRecords[index]).toFixed(2))
+        ? String((sumExpense[index] / countRecords[index]).toFixed(0))
         : "0",
     });
   });

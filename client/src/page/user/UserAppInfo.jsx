@@ -4,9 +4,8 @@ import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx"
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Div, Img, Br40 } from "../../import/ImportComponents.jsx";
-import { Card, Paper } from "../../import/ImportMuis.jsx";
-import { TableContainer, Table, TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
+import { Div, Img, Br50 } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Grid } from "../../import/ImportMuis.jsx";
 import { logo1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -56,44 +55,40 @@ export const UserAppInfo = () => {
     const tableSection = () => {
       const tableFragment = (i) => (
         <Card className={"border radius shadow-none p-0"} key={i}>
-          <TableContainer>
-            <Table>
-              <TableBody className={"table-tbody"}>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    version
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.version}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    date
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.date}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    github
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.git}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className={"w-40vw fs-1-0rem p-15"}>
-                    license
-                  </TableCell>
-                  <TableCell className={"w-55vw fs-0-8rem p-15"}>
-                    {OBJECT.license}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Grid container>
+            <Grid item xs={12} className={"d-center border-top p-20"}>
+              <Grid item xs={3} className={"fw-700 border-right"}>
+                version
+              </Grid>
+              <Grid item xs={9}>
+                {OBJECT.version}
+              </Grid>
+            </Grid>
+            <Grid item xs={12} className={"d-center border-top p-20"}>
+              <Grid item xs={3} className={"fw-700 border-right"}>
+                date
+              </Grid>
+              <Grid item xs={9}>
+                {OBJECT.date}
+              </Grid>
+            </Grid>
+            <Grid item xs={12} className={"d-center border-top p-20"}>
+              <Grid item xs={3} className={"fw-700 border-right"}>
+                github
+              </Grid>
+              <Grid item xs={9}>
+                {OBJECT.git}
+              </Grid>
+            </Grid>
+            <Grid item xs={12} className={"d-center border-top p-20"}>
+              <Grid item xs={3} className={"fw-700 border-right"}>
+                license
+              </Grid>
+              <Grid item xs={9}>
+                {OBJECT.license}
+              </Grid>
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -103,9 +98,9 @@ export const UserAppInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min85vh"}>
+        <Div className={"block-wrapper d-column h-min80vh"}>
           {imageSection()}
-          <Br40 />
+          <Br50 />
           {tableSection()}
         </Div>
       </Paper>

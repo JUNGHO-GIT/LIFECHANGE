@@ -1,7 +1,7 @@
 // SleepSave.jsx
 
 import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
-import { useCommon, useValidate, useTime } from "../../import/ImportHooks.jsx";
+import { useCommon, useTime } from "../../import/ImportHooks.jsx";
 import { moment, axios } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
@@ -39,7 +39,6 @@ export const SleepSave = () => {
     dateStart: location_dateStart || koreanDate,
     dateEnd: location_dateEnd || koreanDate,
   });
-  const {REFS, ERRORS, validate } = useValidate("sleep", COUNT);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF = {
@@ -58,14 +57,14 @@ export const SleepSave = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  /* [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
+  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: false,
     sleep_wakeTime: false,
   })));
-  REFS = useRef(OBJECT?.sleep_section?.map(() => ({
+  const REFS = useRef(OBJECT?.sleep_section?.map(() => ({
     sleep_bedTime: createRef(),
     sleep_wakeTime: createRef(),
-  }))); */
+  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -169,7 +168,7 @@ export const SleepSave = () => {
   }, [OBJECT?.sleep_section.length]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
-  /* const validate = (OBJECT) => {
+  const validate = (OBJECT) => {
     let foundError = false;
     const initialErrors = OBJECT?.sleep_section?.map(() => ({
       sleep_bedTime: false,
@@ -208,7 +207,7 @@ export const SleepSave = () => {
     }
     setERRORS(initialErrors);
     return !foundError;
-  }; */
+  };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {

@@ -112,9 +112,9 @@ export const pieToday = {
       }},
       {$group: {
         _id: null,
-        total_carb: {$sum: "$food_total_carb"},
-        total_protein: {$sum: "$food_total_protein"},
-        total_fat: {$sum: "$food_total_fat"}
+        total_carb: {$sum: {$toDouble: "$food_total_carb"}},
+        total_protein: {$sum: {$toDouble: "$food_total_protein"}},
+        total_fat: {$sum: {$toDouble: "$food_total_fat"}},
       }},
       {$project: {
         _id: 0,
@@ -178,9 +178,9 @@ export const pieWeek = {
       }},
       {$group: {
         _id: null,
-        total_carb: {$sum: "$food_total_carb"},
-        total_protein: {$sum: "$food_total_protein"},
-        total_fat: {$sum: "$food_total_fat"}
+        total_carb: {$sum: {$toDouble: "$food_total_carb"}},
+        total_protein: {$sum: {$toDouble: "$food_total_protein"}},
+        total_fat: {$sum: {$toDouble: "$food_total_fat"}},
       }},
       {$project: {
         _id: 0,
@@ -244,9 +244,9 @@ export const pieMonth = {
       }},
       {$group: {
         _id: null,
-        total_carb: {$sum: "$food_total_carb"},
-        total_protein: {$sum: "$food_total_protein"},
-        total_fat: {$sum: "$food_total_fat"}
+        total_carb: {$sum: {$toDouble: "$food_total_carb"}},
+        total_protein: {$sum: {$toDouble: "$food_total_protein"}},
+        total_fat: {$sum: {$toDouble: "$food_total_fat"}},
       }},
       {$project: {
         _id: 0,
@@ -315,7 +315,7 @@ export const lineWeek = {
   }
 };
 
-// 3-2. chart (line - month) ------------------------------------------------------------------------
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = {
   listKcal: async (
     user_id_param, dateStart_param, dateEnd_param

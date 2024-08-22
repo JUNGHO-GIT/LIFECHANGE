@@ -5,7 +5,6 @@ import { useStorage } from "../assets/hooks/useStorage.jsx";
 import { useLanguage } from "../assets/hooks/useLanguageProvider.jsx";
 import { useTranslate } from "../assets/hooks/useLanguageProvider.jsx";
 import { useCommon } from "../assets/hooks/useCommon.jsx";
-import { useValidate } from "../assets/hooks/useValidate.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -14,5 +13,4 @@ export {
   useLanguage,
   useTranslate,
   useCommon,
-  useValidate,
 };
