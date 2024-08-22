@@ -11,7 +11,7 @@ const modifyEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
   const envConfig = dotenv.parse(envFile);
 
-  // envConfig 수정
+  // envConfig 수정s
   envConfig.CLIENT_URL = "https://www.junghomun.com";
   envConfig.GOOGLE_CALLBACK_URL = "https://www.junghomun.com/api/google/callback";
 
