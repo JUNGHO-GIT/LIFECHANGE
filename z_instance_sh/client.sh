@@ -2,7 +2,7 @@
 set -e
 
 # cd
-cd /var/www/JPAGE/client
+cd /var/www/JPAGE
 status=$?
 if [ $status -eq 0 ]; then
   echo "cd : success"
@@ -12,12 +12,22 @@ else
 fi
 
 # rm
-rm -rf build.tar.gz
+rm -rf client
 status=$?
 if [ $status -eq 0 ]; then
-  echo "rm build : success"
+  echo "rm client : success"
 else
-  echo "rm build : fail"
+  echo "rm client : fail"
+  exit $status
+fi
+
+# mkdir
+mkdir -p client
+status=$?
+if [ $status -eq 0 ]; then
+  echo "mkdir : success"
+else
+  echo "mkdir : fail"
   exit $status
 fi
 
@@ -42,7 +52,7 @@ else
 fi
 
 # mv
-mv build/* /var/www/JPAGE/client
+mv build/* client
 status=$?
 if [ $status -eq 0 ]; then
   echo "mv : success"
@@ -55,9 +65,9 @@ fi
 rm -rf build.tar.gz
 status=$?
 if [ $status -eq 0 ]; then
-  echo "rm : success"
+  echo "rm build : success"
 else
-  echo "rm : fail"
+  echo "rm build : fail"
   exit $status
 fi
 
