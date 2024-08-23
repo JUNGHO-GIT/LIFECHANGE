@@ -105,39 +105,6 @@
 ----------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------
-@@@=== PM2 ===@@@
-1. pm2 설치
-	= npm install pm2@latest -g
-
-2. 실행
-	= pm2 start index.js
-
-3. 부팅시 자동실행
-	= pm2 startup
-	= pm2 save
-
-3. 상태 확인
-	= pm2 status
-
-4. 로그 확인
-	= pm2 logs
-
-5. 재시작
-	= pm2 restart
-
-6. 종료
-	= pm2 stop index.js
-	= pm2 delete index.js
-
-7. 모니터링
-  = pm2 monit
-
-8. 방화벽 설정파일
-  = sudo firewall-cmd --add-port=4000/tcp --permanent
-  = sudo firewall-cmd --reload
-----------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------------
 @@@@=== Nginx ===@@@@
 1. 설치
 	= sudo yum install epel-release -y
@@ -187,10 +154,43 @@
 	= cd /var/www/html
 
 10. 설정파일 위치
-	= nano /etc/httpd/conf/httpd.conf
+	= micro /etc/httpd/conf/httpd.conf
 
 11. 방화벽 설정
   = sudo firewall-cmd --add-port=80/tcp --permanent
+  = sudo firewall-cmd --reload
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== PM2 ===@@@
+1. pm2 설치
+	= npm install pm2@latest -g
+
+2. 실행
+	= pm2 start index.js
+
+3. 부팅시 자동실행
+	= pm2 startup
+	= pm2 save
+
+3. 상태 확인
+	= pm2 status
+
+4. 로그 확인
+	= pm2 logs
+
+5. 재시작
+	= pm2 restart
+
+6. 종료
+	= pm2 stop index.js
+	= pm2 delete index.js
+
+7. 모니터링
+  = pm2 monit
+
+8. 방화벽 설정파일
+  = sudo firewall-cmd --add-port=4000/tcp --permanent
   = sudo firewall-cmd --reload
 ----------------------------------------------------------------------------------------------------
 
@@ -275,7 +275,7 @@
 	= 34.23.233.23:27017
 
 3. 설정파일
-	= sudo nano /etc/mongod.conf
+	= sudo micro /etc/mongod.conf
 
 4. 시작
 	= sudo systemctl start mongod
@@ -290,10 +290,10 @@
 
 7. 로그 확인
 	= sudo tail -50 /var/log/mongodb/mongod.log | grep error
-	= sudo nano /var/log/mongodb/mongod.log
+	= sudo micro /var/log/mongodb/mongod.log
 
 8. 서비스 수정
-	= sudo nano /usr/lib/systemd/system/mongod.service
+	= sudo micro /usr/lib/systemd/system/mongod.service
 
 9. 서비스 시작
 	= sudo systemctl daemon-reload
