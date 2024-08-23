@@ -205,6 +205,7 @@ const rootElement = document.getElementById("root");
 if (rootElement === null) {
   throw new Error("root element is null");
 }
+
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
