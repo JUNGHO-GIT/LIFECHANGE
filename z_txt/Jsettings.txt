@@ -132,7 +132,7 @@
 7. 모니터링
   = pm2 monit
 
-8. 방화벽 설정
+8. 방화벽 설정파일
   = sudo firewall-cmd --add-port=4000/tcp --permanent
   = sudo firewall-cmd --reload
 ----------------------------------------------------------------------------------------------------
@@ -343,8 +343,8 @@
   })
 
 20. 유저 생성
-  = use LIFECHANGE
-  = db.createUser ({
+	= use LIFECHANGE
+	= db.createUser ({
     user: "eric4757",
     pwd: "M7m7m7m7m7m7!",
     roles: [{ role: "readWrite", db: "LIFECHANGE" }]
