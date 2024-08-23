@@ -51,6 +51,26 @@ else
   exit $status
 fi
 
+# mv
+mv build/* ./
+status=$?
+if [ $status -eq 0 ]; then
+  echo "mv : success"
+else
+  echo "mv : fail"
+  exit $status
+fi
+
+# rm
+rm -rf build
+status=$?
+if [ $status -eq 0 ]; then
+  echo "rm build : success"
+else
+  echo "rm build : fail"
+  exit $status
+fi
+
 # httpd restart
 sudo systemctl restart nginx
 status=$?

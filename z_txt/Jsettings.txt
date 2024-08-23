@@ -1,0 +1,375 @@
+----------------------------------------------------------------------------------------------------
+@@@=== CURL ===@@@
+1. curl 테스트
+	= curl -d "user_id=123&user_pw=123" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://34.23.233.23:4000/api/user/login
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== YUM ===@@@
+1. YUM 캐시삭제
+	= sudo yum clean all
+	= sudo yum makecache
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== INSTANCE ===@@@
+0. 로컬에서 접속
+	= ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23
+
+1. gcloud 명령어
+	= gcloud config set project ancient-ceiling-377105
+	= gcloud compute ssh --project=ancient-ceiling-377105 --zone=us-east1-b instance-1
+	= ssh -i C:\Users\jungh\.ssh\JKEY junghomun00@34.23.233.23
+
+2. 내부 아이피
+	= 10.142.0.2
+
+3. 외부 아이피
+	= 34.23.233.23
+
+4. 포트찾기
+	= sudo ss -lptn 'sport = :80'
+	= netstat -tnlp|grep 80
+	= sudo lsof -i :443
+
+5. 포트 죽이기
+	= sudo kill -9 PID번호
+
+6. 방화벽 상태 확인
+	= firewall-cmd --list-all
+
+7. 방화벽 규칙 추가
+	= firewall-cmd --add-port=80/tcp --permanent
+
+8. 방화벽 리로드
+  = firewall-cmd --reload
+
+10. 시스템 파일 청소
+	= bleachbit --clean system.cache
+	= bleachbit --clean system.cache system.localizations
+	= package-cleanup --oldkernels --count=2
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== SELinux ===@@@
+1. 상태 확인
+	= getenforce
+
+2. Enforcing
+	= SELinux 보안 정책을 강제 적용합니다. 정책을 위반하는 작업은 차단되고 로그에 기록됩니다.
+
+3. Permissive
+	= SELinux 보안 정책을 강제 적용하지 않지만, 정책을 위반하는 작업은 로그에 기록됩니다.
+
+4. Disabled
+	= SELinux가 비활성화되어 있습니다.
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== SSH ===@@@
+1. 키 생성
+	= !!!!!!!!!!!!!!!! username 에는 인스턴스에 등록된 아이디만 (junghomun00) !!!!!!!!!!!!!!!!!!!!!!
+	= ssh-keygen -t rsa -f C:\Users\jungh\.ssh\JKEY -C junghomun00
+
+2. gcloud 키 추가
+	= gcloud compute project-info add-metadata --metadata-from-file ssh-keys=C:\Users\jungh\.ssh\JKEY.pub
+
+3. ssh 로 접속
+	= ssh -i C:\Users\jungh\.ssh\JKEY junghomun00@34.23.233.23
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== SSL ===@@@
+1. Certbot 설치
+	= sudo yum install epel-release
+	= sudo yum install certbot python2-certbot-apache
+
+2. Certbot을 사용하여 SSL 인증서 발급
+	= sudo certbot --apache -d junghomun.com
+	= sudo certbot certonly --webroot -w /var/www/html -d www.junghomun.com
+
+3. 인증서 파일
+	= /etc/letsencrypt/live/www.junghomun.com/cert.pem
+
+4. 개인 키 파일
+	= /etc/letsencrypt/live/www.junghomun.com/privkey.pem
+
+5. 체인 파일
+	= /etc/letsencrypt/live/www.junghomun.com/chain.pem
+
+6. 전체 체인
+	= /etc/letsencrypt/live/www.junghomun.com/fullchain.pem
+
+7. ssl 확인
+	= openssl s_client -connect 34.23.233.23:443 -servername www.junghomun.com </dev/null 2>/dev/null | openssl x509 -noout -text
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== PM2 ===@@@
+1. pm2 설치
+	= npm install pm2@latest -g
+
+2. 실행
+	= pm2 start index.js
+
+3. 부팅시 자동실행
+	= pm2 startup
+	= pm2 save
+
+3. 상태 확인
+	= pm2 status
+
+4. 로그 확인
+	= pm2 logs
+
+5. 재시작
+	= pm2 restart
+
+6. 종료
+	= pm2 stop index.js
+	= pm2 delete index.js
+
+7. 모니터링
+  = pm2 monit
+
+8. 방화벽 설정
+  = sudo firewall-cmd --add-port=4000/tcp --permanent
+  = sudo firewall-cmd --reload
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@@=== Nginx ===@@@@
+1. 설치
+	= sudo yum install epel-release -y
+	= sudo yum install nginx -y
+
+2. 부팅시 자동시작
+	= sudo systemctl start nginx
+	= sudo systemctl enable nginx
+
+3. 재시작
+	= sudo systemctl restart nginx
+
+3. 설정파일
+	= micro /etc/nginx/nginx.conf
+
+4. 로그파일
+  = tail -f /var/log/nginx/access.log
+  = tail -f /var/log/nginx/error.log
+
+5. 방화벽 설정
+  = sudo firewall-cmd --add-port=80/tcp --permanent
+  = sudo firewall-cmd --reload
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== Apache ===@@@
+1. 서버 시작
+	= sudo systemctl start httpd
+
+2. 서버 재시작
+	= sudo systemctl restart httpd
+
+4. 서버 상태
+	= sudo systemctl status httpd.service -l
+
+5. 아파치 https 가능하게 하도록 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	= sudo setsebool -P httpd_can_network_connect 1
+
+6. 아파치 포트 변경
+  = sudo semanage port -a -t http_port_t -p tcp 4000
+
+7. 로그 확인
+	= sudo tail -f /etc/httpd/logs/access_log
+	= sudo tail -f /etc/httpd/logs/access_log
+
+8. 웹루트 위치
+	= cd /var/www/html
+
+10. 설정파일 위치
+	= nano /etc/httpd/conf/httpd.conf
+
+11. 방화벽 설정
+  = sudo firewall-cmd --add-port=80/tcp --permanent
+  = sudo firewall-cmd --reload
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== TOMCAT ===@@@
+1. 톰캣 매니저 설정 (주석처리)
+	= cd tomcat9/webapps/manager/META-INF/context.xml
+
+2. 톰캣 실행
+	= cd /usr/share/tomcat9/bin
+
+3. 톰캣 상태
+  = sudo systemctl status tomcat9
+
+4. 톰캣 로그
+  = tail -f /usr/share/tomcat9/logs/catalina.out
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@=== Mysql8(기존 인스턴스 지우고 instance1에 sql 설치) ===@@@
+1. 설치
+	= sudo rpm -ivh http://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+	= sudo yum install mysql-community-server
+
+2. 서비스 시작
+	= sudo systemctl start mysqld
+
+3. 자동부팅 활성화
+	= sudo systemctl enable mysqld
+
+4. 임시비번 확인
+	= sudo grep 'temporary password' /var/log/mysqld.log
+
+5. 연결이름
+	= ancient-ceiling-377105:us-central1:junghosql
+
+6. 서비스계정
+	= p948805623318-y2jxze@gcp-sa-cloud-sql.iam.gserviceaccount.com
+
+7. 아이디 (씨발 대문자 주의 개씨발년!!!!!!!!!!!!!)
+	= root / M7m7m7m7m7!
+
+8. 로그인
+	= gcloud config set project ancient-ceiling-377105
+	= gcloud sql connect junghosql --user=root
+	= gcloud compute ssh --zone "us-east1-b" "instance-1" --project "ancient-ceiling-377105"
+
+9. 인코딩 맞추기
+	= 디비이름/?characterEncoding=utf8
+
+10. DB 삭제
+  - DROP DATABASE [database_name];
+
+11. DB 생성
+  - CREATE DATABASE [database_name];
+
+12. DB 덤프
+	= mysql -u root -p [database_name] < [dump_file.sql]
+
+13. DB 백업
+  - mysqldump -u root -p [database_name] > [dump_file.sql]
+
+14. 방화벽 설정
+  = gcloud sql instances patch junghosql --authorized-networks=
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+@@@@=== MongoDB (m7 6번이다 씨발아 !!!!!!!!!) ===@@@@
+1. 쉘파일 생성 (/etc/yum.conf.d/mongodb-org.6.0.repo)
+  [mongodb-org-6.0]
+  name=MongoDB Repository
+  baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/6.0/x86_64/
+  gpgcheck=1
+  enabled=1
+  gpgkey=https://pgp.mongodb.com/server-6.0.asc
+
+2. 몽고쉘 설치
+	= sudo yum install -y mongodb-org
+	= sudo yum install -y mongodb-org-shell
+
+3. 포트번호
+	= 34.23.233.23:27017
+
+3. 설정파일
+	= sudo nano /etc/mongod.conf
+
+4. 시작
+	= sudo systemctl start mongod
+
+5. 재시작
+	= sudo systemctl restart mongod
+
+6. 상태
+	= sudo systemctl status mongod
+ 	= sudo ps aux | grep mongod
+	= sudo service mongod status
+
+7. 로그 확인
+	= sudo tail -50 /var/log/mongodb/mongod.log | grep error
+	= sudo nano /var/log/mongodb/mongod.log
+
+8. 서비스 수정
+	= sudo nano /usr/lib/systemd/system/mongod.service
+
+9. 서비스 시작
+	= sudo systemctl daemon-reload
+	= sudo systemctl enable mongod
+	= sudo systemctl start mongod
+
+10. 서비스 강제종료
+	= sudo systemctl stop mongod
+	= sudo kill -9 [PID]
+
+10. 서비스 비활성화
+  = sudo systemctl disable mongodb
+
+11. sock 파일 삭제
+	= sudo rm /tmp/mongodb-27017.sock
+
+12. 14에러 해결
+	= sudo chown mongod:mongod /tmp/mongodb-27017.sock
+	= sudo systemctl start mongod
+
+13. 사용자 추가
+	= sudo useradd -r -m -s /bin/false mongod
+
+14. 권한설정
+  = sudo chown mongod:mongod /var/lib/mongo
+  = sudo chown mongod:mongod /var/log/mongodb
+  = sudo chown mongod:mongod /tmp/mongodb-27017.sock
+
+15. 백업
+  = mongodump --host $MONGO_HOST --username $MONGO_USER --password $MONGO_PASSWORD --authenticationDatabase $MONGO_AUTH_DB --out $BACKUP_PATH
+
+16. 덮어씌우기
+	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE.*' --nsTo 'LIFECHANGE_TEST.*' /backup/mongo_backup_2024-08-04-09-21
+
+17. 몽고쉘 접속 (mongod 아님 주의 !!!!!!!!!!!!!)
+	= mongosh
+
+18. 디비 생성
+  = use LIFECHANGE
+
+19. 유저 생성
+	= use admin
+	= db.createUser({
+    user: "eric4757",
+    pwd: "M7m7m7m7m7m7!",
+    roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
+  })
+
+20. 유저 생성
+  = use LIFECHANGE
+  = db.createUser ({
+    user: "eric4757",
+    pwd: "M7m7m7m7m7m7!",
+    roles: [{ role: "readWrite", db: "LIFECHANGE" }]
+  })
+
+21. 패키지 삭제
+	= sudo yum remove mongodb-org*
+	= sudo yum autoremove
+
+22. 로그파일 삭제
+	= sudo rm -rf /var/lib/mongo
+	= sudo rm -rf /var/log/mongodb
+
+23. 구성파일 삭제
+	= sudo rm /etc/mongod.conf
+	= sudo rm /etc/yum.repos.d/mongod-org.6.0.repo
+	= sudo rm /etc/yum.repos.d/mongodb-org-6.0.repo
+
+24. 사용자그룹 삭제
+	= sudo userdel -r mongodb
+
+40. 방화벽 설정
+	= sudo firewall-cmd --zone=public --add-port=27017/tcp --permanent
+	= sudo ufw enable
+	= sudo ufw allow from YourTrustedIP to any port 27017
+	= sudo ufw deny 27017
+	= sudo firewall-cmd --reload
+----------------------------------------------------------------------------------------------------
