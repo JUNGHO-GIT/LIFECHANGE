@@ -41,16 +41,6 @@ else
   exit $status
 fi
 
-# rm
-rm -rf build.tar.gz
-status=$?
-if [ $status -eq 0 ]; then
-  echo "rm : success"
-else
-  echo "rm : fail"
-  exit $status
-fi
-
 # mv
 mv build/* /var/www/JPAGE/client
 status=$?
@@ -58,6 +48,16 @@ if [ $status -eq 0 ]; then
   echo "mv : success"
 else
   echo "mv : fail"
+  exit $status
+fi
+
+# rm
+rm -rf build.tar.gz
+status=$?
+if [ $status -eq 0 ]; then
+  echo "rm : success"
+else
+  echo "rm : fail"
   exit $status
 fi
 
