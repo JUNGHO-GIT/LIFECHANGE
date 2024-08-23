@@ -242,16 +242,16 @@
 	= 디비이름/?characterEncoding=utf8
 
 10. DB 삭제
-  - DROP DATABASE [database_name];
+	= DROP DATABASE [database_name];
 
 11. DB 생성
-  - CREATE DATABASE [database_name];
+	= CREATE DATABASE [database_name];
 
 12. DB 덤프
 	= mysql -u root -p [database_name] < [dump_file.sql]
 
 13. DB 백업
-  - mysqldump -u root -p [database_name] > [dump_file.sql]
+	= mysqldump -u root -p [database_name] > [dump_file.sql]
 
 14. 방화벽 설정
   = gcloud sql instances patch junghosql --authorized-networks=

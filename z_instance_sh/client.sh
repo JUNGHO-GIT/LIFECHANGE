@@ -52,7 +52,7 @@ else
 fi
 
 # mv
-mv build/* ./
+mv build/* /var/www/JPAGE/client
 status=$?
 if [ $status -eq 0 ]; then
   echo "mv : success"
