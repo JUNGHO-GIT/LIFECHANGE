@@ -78,8 +78,8 @@ const restoreEnv = () => {
   const envConfig = dotenv.parse(envFile);
 
   // envConfig 수정
-  envConfig.CLIENT_URL = "http://localhost:3000";
-  envConfig.GOOGLE_CALLBACK_URL = "http://localhost:4000/api/google/callback";
+  envConfig.CLIENT_URL = "http://localhost:3000/JPAGE";
+  envConfig.GOOGLE_CALLBACK_URL = "http://localhost:4000/JPAGE/api/google/callback";
 
   // env 파일 쓰기
   const newEnvFile = Object.keys(envConfig).reduce((acc, key) => {

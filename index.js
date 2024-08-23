@@ -26,6 +26,7 @@ import { router as googleRouter } from "./src/router/auth/googleRouter.js";
 // -------------------------------------------------------------------------------------------------
 dotenv.config();
 const app = express();
+const preFix = process.env.HTTP_PREFIX || "";
 
 // MongoDB 설정 ------------------------------------------------------------------------------------
 const id = process.env.DB_USER;
@@ -77,19 +78,23 @@ app.use((req, res, next) => {
 });
 
 // -------------------------------------------------------------------------------------------------
-app.use("/api/calendar", calendarRouter);
-app.use("/api/exercise/chart", exerciseChartRouter);
-app.use("/api/exercise/goal", exerciseGoalRouter);
-app.use("/api/exercise", exerciseRouter);
-app.use("/api/food/chart", foodChartRouter);
-app.use("/api/food/goal", foodGoalRouter);
-app.use("/api/food", foodRouter);
-app.use("/api/money/chart", moneyChartRouter);
-app.use("/api/money/goal", moneyGoalRouter);
-app.use("/api/money", moneyRouter);
-app.use("/api/sleep/chart", sleepChartRouter);
-app.use("/api/sleep/goal", sleepGoalRouter);
-app.use("/api/sleep", sleepRouter);
-app.use("/api/user/sync", userSyncRouter);
-app.use("/api/user", userRouter);
-app.use("/api/google", googleRouter);
+app.use(`${preFix}/calendar`, calendarRouter);
+app.use(`${preFix}/exercise/chart`, exerciseChartRouter);
+app.use(`${preFix}/exercise/goal`, exerciseGoalRouter);
+app.use(`${preFix}/exercise`, exerciseRouter);
+app.use(`${preFix}/food/chart`, foodChartRouter);
+app.use(`${preFix}/food/goal`, foodGoalRouter);
+app.use(`${preFix}/food`, foodRouter);
+app.use(`${preFix}/money/chart`, moneyChartRouter);
+app.use(`${preFix}/money/goal`, moneyGoalRouter);
+app.use(`${preFix}/money`, moneyRouter);
+app.use(`${preFix}/sleep/chart`, sleepChartRouter);
+app.use(`${preFix}/sleep/goal`, sleepGoalRouter);
+app.use(`${preFix}/sleep`, sleepRouter);
+app.use(`${preFix}/user/sync`, userSyncRouter);
+app.use(`${preFix}/user`, userRouter);
+app.use(`${preFix}/auth/google`, googleRouter);
+app.use(`${preFix}/google`, googleRouter);
+app.use(`${preFix}/user/sync`, userSyncRouter);
+app.use(`${preFix}/user`, userRouter);
+app.use(`${preFix}/google`, googleRouter);
