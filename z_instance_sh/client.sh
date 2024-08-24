@@ -2,7 +2,7 @@
 set -e
 
 # cd
-cd /var/www/JPAGE
+cd /var/www/junghomun.com/JPAGE
 status=$?
 if [ $status -eq 0 ]; then
   echo "cd : success"

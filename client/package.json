@@ -1,6 +1,7 @@
 {
   "name": "JPAGE-client",
   "version": "1.0.0",
+  "homepage": "/JPAGE",
   "main": "index.jsx",
   "type": "module",
   "license": "MIT",
