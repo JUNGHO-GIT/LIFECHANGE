@@ -37,7 +37,7 @@ const uploadToGCS = () => {
 // -------------------------------------------------------------------------------------------------
 // run script on server
 const runRemoteScript = () => {
-  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/client.sh\'"';
+  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/JPAGE/client.sh\'"';
   execSync(command, { stdio: 'inherit' });
 };
 
