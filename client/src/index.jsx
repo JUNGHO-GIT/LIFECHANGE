@@ -208,7 +208,7 @@ if (rootElement === null) {
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename={"/JPAGE"}>
     <LanguageProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
