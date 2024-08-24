@@ -1,6 +1,10 @@
 @charset "UTF-8";
 
 /** 0. Media **************************************************************************************/
+* {
+  transition: font-size 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease;
+}
+
 html, body {
   width: 100%;
   height: 100%;
@@ -12,7 +16,6 @@ html, body {
   -moz-osx-font-smoothing: grayscale !important;
   -webkit-text-size-adjust: 100% !important;
   -ms-text-size-adjust: 100% !important;
-  text-size-adjust: 100% !important;
 }
 
 /** 1. Small (0 ~ 479px) **************************************************************************/
@@ -22,7 +25,7 @@ html, body {
 
   /** display **/
   html, body {
-    font-size: 16.0px;
+    font-size: 14px;
   }
 }
 
@@ -33,7 +36,7 @@ html, body {
 
   /** display **/
   html, body {
-    font-size: 16.4px;
+    font-size: 14.5px;
   }
 }
 
@@ -44,7 +47,7 @@ html, body {
 
   /** display **/
   html, body {
-    font-size: 16.8px;
+    font-size: 15.0px;
   }
 }
 
@@ -55,7 +58,7 @@ html, body {
 
   /** display **/
   html, body {
-    font-size: 17.2px;
+    font-size: 15.5px;
   }
 }
 
@@ -66,6 +69,6 @@ html, body {
 
   /** display **/
   html, body {
-    font-size: 17.6px;
+    font-size: 16.0px;
   }
 }

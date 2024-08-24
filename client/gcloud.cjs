@@ -28,9 +28,7 @@ const compressBuild = () => {
 // -------------------------------------------------------------------------------------------------
 // upload to gcloud
 const uploadToGCS = () => {
-  const commandRm = 'gsutil rm gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
   const commandCp = 'gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
-  execSync(commandRm, { stdio: 'inherit' });
   execSync(commandCp, { stdio: 'inherit' });
 };
 
