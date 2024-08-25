@@ -67,17 +67,24 @@ const gitPush = () => {
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const cmdCd = 'sudo cd /var/www/junghomun.com/server/JPAGE';
-  const cmdGitFetch = 'sudo git fetch --all';
-  const cmdGitReset = 'sudo git reset --hard origin/master';
-  const cmdNpm = 'sudo npm install';
-  const cmdRestart = 'sudo pm2 restart all';
-  const cmdSave = 'sudo pm2 save';
+
+  const remoteCommands = `
+    cd /var/www/junghomun.com/server/JPAGE &&
+    sudo git fetch --all &&
+    sudo git reset --hard origin/master &&
+    sudo npm install &&
+    sudo pm2 restart all &&
+    sudo pm2 save
+  `;
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${remoteCommands}'"`;
 
-  execSync(sshCommand, { stdio: 'inherit' });
+  try {
+    execSync(sshCommand, { stdio: 'inherit' });
+  } catch (error) {
+    console.error('Error executing remote script:', error);
+  }
 };
 
 // env 파일 복원 -----------------------------------------------------------------------------------
