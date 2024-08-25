@@ -2,12 +2,6 @@
 
 const { execSync } = require('child_process');
 
-// 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
-const deleteBuildTar = () => {
-  const command = 'del build.tar.gz';
-  execSync(command, { stdio: 'inherit' });
-};
-
 // 프로젝트 빌드 -----------------------------------------------------------------------------------
 const buildProject = () => {
   const commandBuild = 'npm run build';
@@ -26,6 +20,12 @@ const uploadToGCS = () => {
   execSync(command, { stdio: 'inherit' });
 };
 
+// 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
+const deleteBuildTar = () => {
+  const command = 'del build.tar.gz';
+  execSync(command, { stdio: 'inherit' });
+};
+
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
@@ -36,14 +36,13 @@ const runRemoteScript = () => {
   const cmdRestart = 'sudo systemctl restart nginx';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRestart}'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRestart}\'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------
 buildProject();
-deleteBuildTar();
 compressBuild();
 uploadToGCS();
 deleteBuildTar();
