@@ -7,8 +7,7 @@ const moment = require('moment-timezone');
 const os = require('os');
 const fs = require('fs');
 
-// -------------------------------------------------------------------------------------------------
-// env 파일 수정하기
+// env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
   const envConfig = dotenv.parse(envFile);
@@ -25,8 +24,7 @@ const modifyEnv = () => {
   writeFileSync('.env', newEnvFile);
 };
 
-// -------------------------------------------------------------------------------------------------
-// modify changelog
+// changelog 수정 ----------------------------------------------------------------------------------
 const modifyChangelog = () => {
 
   const currentDate = moment().tz("Asia/Seoul").format('YYYY-MM-DD');
@@ -58,35 +56,30 @@ const modifyChangelog = () => {
   fs.writeFileSync('changelog.md', updatedChangelog, 'utf8');
 };
 
-// -------------------------------------------------------------------------------------------------
-// git push
+// git push ----------------------------------------------------------------------------------------
 const gitPush = () => {
   execSync('git add .', { stdio: 'inherit' });
   execSync('git commit -m "update"', { stdio: 'inherit' });
   execSync('git push origin master', { stdio: 'inherit' });
 };
 
-// -------------------------------------------------------------------------------------------------
-// run script on server
+// 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
+  const cmdCd = 'sudo cd /var/www/junghomun.com/server/JPAGE';
   const cmdGit = 'sudo git fetch --all && sudo git reset --hard origin/master';
   const cmdNpm = 'sudo npm install';
   const cmdRestart = 'sudo pm2 restart all';
   const cmdSave = 'sudo pm2 save';
 
-  // 템플릿 리터럴을 올바르게 적용하기 위해 백틱(`)을 사용해야 합니다
-  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'"`;
-
-  console.log(sshCommand);
+  const sshCommand =
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
 
-// -------------------------------------------------------------------------------------------------
-// env 파일 복구하기
+// env 파일 복원 -----------------------------------------------------------------------------------
 const restoreEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
   const envConfig = dotenv.parse(envFile);

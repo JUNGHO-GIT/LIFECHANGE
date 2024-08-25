@@ -2,41 +2,44 @@
 
 const { execSync } = require('child_process');
 
-// -------------------------------------------------------------------------------------------------
-// build project
-const buildProject = () => {
-  const commandRmEslint = "del /f node_modules\.cache\.eslintcache";
-  const commandBuild = 'npm run build';
-  execSync(commandRmEslint, { stdio: 'inherit' });
-  execSync(commandBuild, { stdio: 'inherit' });
-};
-
-// -------------------------------------------------------------------------------------------------
-// delete build.tar.gz
+// 기존 build.tar.gz 삭제 --------------------------------------------------------------------------
 const deleteBuildTar = () => {
   const command = 'del build.tar.gz';
   execSync(command, { stdio: 'inherit' });
 };
 
-// -------------------------------------------------------------------------------------------------
-// compress build folder
+// 프로젝트 빌드 -----------------------------------------------------------------------------------
+const buildProject = () => {
+  const commandBuild = 'npm run build';
+  execSync(commandBuild, { stdio: 'inherit' });
+};
+
+// build 폴더 압축 ---------------------------------------------------------------------------------
 const compressBuild = () => {
   const command = 'tar -zcvf build.tar.gz build';
   execSync(command, { stdio: 'inherit' });
 };
 
-// -------------------------------------------------------------------------------------------------
-// upload to gcloud
+// gcloud에 업로드 ---------------------------------------------------------------------------------
 const uploadToGCS = () => {
-  const commandCp = 'gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
-  execSync(commandCp, { stdio: 'inherit' });
+  const command = 'gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
+  execSync(command, { stdio: 'inherit' });
 };
 
-// -------------------------------------------------------------------------------------------------
-// run script on server
+// 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/JPAGE/client.sh\'"';
-  execSync(command, { stdio: 'inherit' });
+  const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
+  const serverAddr = 'junghomun00@34.23.233.23';
+  const cmdCd = 'sudo cd /var/www/junghomun.com/client/JPAGE';
+  const cmdGs = 'sudo gsutil cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
+  const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
+  const cmdRestart = 'sudo systemctl restart nginx';
+
+
+  const sshCommand =
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRestart}'"`;
+
+  execSync(sshCommand, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------
