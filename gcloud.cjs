@@ -70,12 +70,13 @@ const runRemoteScript = () => {
   const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
   const cmdGitFetch = 'sudo git fetch --all';
   const cmdGitReset = 'sudo git reset --hard origin/master';
+  const cmdRmClient = 'sudo rm -rf client';
   const cmdNpm = 'sudo npm install';
-  const cmdRestart = 'sudo pm2 restart all';
+  const cmdStart = 'sudo pm2 start index.js --name JPAGE';
   const cmdSave = 'sudo pm2 save';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdStart} && ${cmdSave}\'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };

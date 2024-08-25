@@ -30,7 +30,7 @@ const uploadToGCS = () => {
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const cmdCd = 'sudo cd /var/www/junghomun.com/client/JPAGE';
+  const cmdCd = 'cd /var/www/junghomun.com/client/JPAGE';
   const cmdGs = 'sudo gsutil cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
   const cmdRestart = 'sudo systemctl restart nginx';
