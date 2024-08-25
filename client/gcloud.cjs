@@ -33,10 +33,11 @@ const runRemoteScript = () => {
   const cmdCd = 'cd /var/www/junghomun.com/client/JPAGE';
   const cmdGs = 'sudo gsutil cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
+  const cmdRm = 'sudo rm build.tar.gz';
   const cmdRestart = 'sudo systemctl restart nginx';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRestart}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
