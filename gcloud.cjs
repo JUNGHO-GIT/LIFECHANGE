@@ -78,8 +78,8 @@ const runRemoteScript = () => {
   const cmdRestart = 'pm2 restart all';
   const cmdSave = 'pm2 save';
 
-  const sshCommand
-    = 'powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"';
+  // 템플릿 리터럴을 올바르게 적용하기 위해 백틱(`)을 사용해야 합니다
+  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'"`;
 
   console.log(sshCommand);
 
