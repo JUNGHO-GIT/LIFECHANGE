@@ -75,8 +75,7 @@ const runRemoteScript = () => {
   const cmdSave = 'sudo pm2 save';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} &&
-    ${cmdGitReset} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
