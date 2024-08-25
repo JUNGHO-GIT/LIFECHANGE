@@ -76,7 +76,7 @@ export const UserAppInfo = () => {
               <Grid item xs={3} className={"d-left fs-0-9rem fw-500"}>
                 github
               </Grid>
-              <Grid item xs={9} className={"d-right fs-0-6rem fw-500"}>
+              <Grid item xs={9} className={"d-right fs-0-8rem fw-500"}>
                 {OBJECT.git}
               </Grid>
             </Grid>
