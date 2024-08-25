@@ -75,10 +75,11 @@ const runRemoteScript = () => {
   const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
   const cmdGit = 'git fetch --all && git reset --hard origin/master';
   const cmdNpm = 'npm install';
-  const cmdRestart = 'pm2 restart all && pm2 save';
+  const cmdRestart = 'pm2 restart all';
+  const cmdSave = 'pm2 save';
 
   const sshCommand
-    = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart}'"`;
+    = `'powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"'`;
 
   console.log(sshCommand);
 

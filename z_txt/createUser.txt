@@ -7,3 +7,5 @@ db.createUser({
     { role: "dbAdmin", db: "LIFECHANGE" }
   ]
 })
+
+powershell -Command "ssh -i C:\Users\jungh\.ssh\JKEY junghomun00@34.23.233.23 'sudo su && cd /var/www/junghomun.com/server/JPAGE && git fetch --all && git reset --hard origin/master && npm install && pm2 restart all && pm2 save'"
