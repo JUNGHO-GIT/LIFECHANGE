@@ -1,3 +1,5 @@
+// gcloud.js (server)
+
 const dotenv = require('dotenv');
 const { execSync } = require('child_process');
 const { readFileSync, writeFileSync } = require('fs');
@@ -69,9 +71,14 @@ const gitPush = () => {
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const remoteCommand = 'sudo sh /sh/JREACT/client.sh';
+  const cmdSudo = 'sudo su';
+  const cmdCd = '/var/www/junghomun.com/server/JPAGE';
+  const cmdGit = 'git fetch --all && git reset --hard origin/master';
+  const cmdNpm = 'npm install';
+  const cmdRestart = 'pm2 restart all && pm2 save';
 
-  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${remoteCommand}'"`;
+  const sshCommand
+    = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && cd ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart}'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };

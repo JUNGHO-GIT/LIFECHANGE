@@ -12,7 +12,8 @@ else
 fi
 
 # wget
-wget https://storage.googleapis.com/jungho-bucket/JPAGE/SERVER/build.tar.gz
+# wget https://storage.googleapis.com/jungho-bucket/JPAGE/SERVER/build.tar.gz
+gsutil cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .
 status=$?
 if [ $status -eq 0 ]; then
   echo "wget : success"
