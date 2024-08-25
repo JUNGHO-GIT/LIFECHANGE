@@ -79,7 +79,7 @@ const runRemoteScript = () => {
   const cmdSave = 'pm2 save';
 
   const sshCommand
-    = `'powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"'`;
+    = 'powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"';
 
   console.log(sshCommand);
 
