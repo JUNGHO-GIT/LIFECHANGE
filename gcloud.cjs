@@ -68,7 +68,7 @@ const gitPush = () => {
 // run script on server
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
-  const serverAddr = 'junghomun0034.23.233.23';
+  const serverAddr = 'junghomun00@34.23.233.23';
   const remoteCommand = 'sudo sh /sh/JREACT/client.sh';
 
   const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${remoteCommand}'"`;
