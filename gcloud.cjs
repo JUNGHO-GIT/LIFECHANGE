@@ -72,13 +72,15 @@ const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
   const cmdSudo = 'sudo su';
-  const cmdCd = '/var/www/junghomun.com/server/JPAGE';
+  const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
   const cmdGit = 'git fetch --all && git reset --hard origin/master';
   const cmdNpm = 'npm install';
   const cmdRestart = 'pm2 restart all && pm2 save';
 
   const sshCommand
-    = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && cd ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart}'"`;
+    = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart}'"`;
+
+  console.log(sshCommand);
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
