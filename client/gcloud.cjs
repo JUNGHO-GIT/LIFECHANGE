@@ -35,7 +35,6 @@ const runRemoteScript = () => {
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
   const cmdRestart = 'sudo systemctl restart nginx';
 
-
   const sshCommand =
     `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRestart}'"`;
 
