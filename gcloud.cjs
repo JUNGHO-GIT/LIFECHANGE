@@ -71,15 +71,14 @@ const gitPush = () => {
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const cmdSudo = 'sudo su';
   const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
-  const cmdGit = 'git fetch --all && git reset --hard origin/master';
-  const cmdNpm = 'npm install';
-  const cmdRestart = 'pm2 restart all';
-  const cmdSave = 'pm2 save';
+  const cmdGit = 'sudo git fetch --all && sudo git reset --hard origin/master';
+  const cmdNpm = 'sudo npm install';
+  const cmdRestart = 'sudo pm2 restart all';
+  const cmdSave = 'sudo pm2 save';
 
   // 템플릿 리터럴을 올바르게 적용하기 위해 백틱(`)을 사용해야 합니다
-  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdSudo} && ${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'"`;
+  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${cmdCd} && ${cmdGit} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}'"`;
 
   console.log(sshCommand);
 
