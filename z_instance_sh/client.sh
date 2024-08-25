@@ -2,32 +2,12 @@
 set -e
 
 # cd
-cd /var/www/junghomun.com/JPAGE
+cd /var/www/junghomun.com/client/JPAGE
 status=$?
 if [ $status -eq 0 ]; then
   echo "cd : success"
 else
   echo "cd : fail"
-  exit $status
-fi
-
-# rm
-rm -rf client
-status=$?
-if [ $status -eq 0 ]; then
-  echo "rm client : success"
-else
-  echo "rm client : fail"
-  exit $status
-fi
-
-# mkdir
-mkdir -p client
-status=$?
-if [ $status -eq 0 ]; then
-  echo "mkdir : success"
-else
-  echo "mkdir : fail"
   exit $status
 fi
 
@@ -52,7 +32,7 @@ else
 fi
 
 # mv
-mv build/* client
+mv build/* .
 status=$?
 if [ $status -eq 0 ]; then
   echo "mv : success"
@@ -62,17 +42,7 @@ else
 fi
 
 # rm
-rm -rf build.tar.gz
-status=$?
-if [ $status -eq 0 ]; then
-  echo "rm build : success"
-else
-  echo "rm build : fail"
-  exit $status
-fi
-
-# rm
-rm -rf build
+rm -rf build.tar.gz build
 status=$?
 if [ $status -eq 0 ]; then
   echo "rm build : success"

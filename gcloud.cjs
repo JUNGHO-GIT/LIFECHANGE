@@ -11,7 +11,7 @@ const modifyEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
   const envConfig = dotenv.parse(envFile);
 
-  // envConfig 수정s
+  // envConfig 수정
   envConfig.CLIENT_URL = "https://www.junghomun.com/JPAGE";
   envConfig.GOOGLE_CALLBACK_URL = "https://www.junghomun.com/JPAGE/api/google/callback";
 
@@ -67,8 +67,13 @@ const gitPush = () => {
 // -------------------------------------------------------------------------------------------------
 // run script on server
 const runRemoteScript = () => {
-  const command = 'powershell -Command "ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23 \'sudo sh /sh/JPAGE/server.sh\'"';
-  execSync(command, { stdio: 'inherit' });
+  const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
+  const serverAddr = 'junghomun0034.23.233.23';
+  const remoteCommand = 'sudo sh /sh/JREACT/client.sh';
+
+  const sshCommand = `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} '${remoteCommand}'"`;
+
+  execSync(sshCommand, { stdio: 'inherit' });
 };
 
 // -------------------------------------------------------------------------------------------------
