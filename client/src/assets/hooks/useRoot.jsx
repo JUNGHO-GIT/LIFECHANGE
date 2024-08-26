@@ -1,6 +1,6 @@
 // useRoot.jsx
 
-import { useEffect, useNavigate, useLocation } from "../../import/ImportReacts.jsx";
+import { useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -38,5 +38,4 @@ export const useRoot = () => {
       }
     }
   }, [location, navigate, sessionId]);
-
 };

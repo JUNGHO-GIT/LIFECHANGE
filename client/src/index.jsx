@@ -204,6 +204,7 @@ const theme = createTheme({
     fontFamily: '"Noto Sans KR", sans-serif',
   },
 });
+
 const rootElement = document.getElementById("root");
 if (rootElement === null) {
   throw new Error("root element is null");
