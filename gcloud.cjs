@@ -72,13 +72,11 @@ const runRemoteScript = () => {
   const cmdGitReset = 'sudo git reset --hard origin/master';
   const cmdRmClient = 'sudo rm -rf client';
   const cmdNpm = 'sudo npm install';
-  const cmdCheck = 'sudo pm2 describe JPAGE';
-  const cmdStart = 'sudo pm2 start index.js --name JPAGE';
-  const cmdRestart = 'sudo pm2 restart JPAGE';
+  const cmdRestart = 'sudo pm2 restart all';
   const cmdSave = 'sudo pm2 save';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && (${cmdCheck} && ${cmdRestart} || ${cmdStart}) && ${cmdSave}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"`;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };
