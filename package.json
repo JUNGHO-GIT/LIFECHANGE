@@ -27,6 +27,7 @@
     "request-promise": "^4.2.6"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express-session": "^1.18.0",
     "@types/mocha": "^10.0.6",
     "@types/morgan": "^1.9.9",

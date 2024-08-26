@@ -67,7 +67,7 @@ const gitPush = () => {
 const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
-  const cmdCd = 'cd /var/www/junghomun.com/server/JPAGE';
+  const cmdCd = 'cd /var/www/junghomun.com/JPAGE/server';
   const cmdGitFetch = 'sudo git fetch --all';
   const cmdGitReset = 'sudo git reset --hard origin/master';
   const cmdRmClient = 'sudo rm -rf client';
