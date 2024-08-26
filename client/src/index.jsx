@@ -12,6 +12,7 @@ import "./assets/css/Chart.css";
 import "./assets/css/Mui.css";
 import "./assets/css/Components.css";
 import "./assets/css/Core.css";
+import "./assets/css/Error.css";
 import "./assets/css/Jstyle.css";
 import "./index.css";
 
@@ -64,6 +65,7 @@ import { UserResetPw } from "./page/user/UserResetPw.jsx";
 
 import { AuthPrivacy } from "./page/auth/AuthPrivacy.jsx";
 import { AuthGoogle } from "./page/auth/AuthGoogle.jsx";
+import { AuthError } from "./page/auth/AuthError.jsx";
 
 // -------------------------------------------------------------------------------------------------
 const Calendar = () => (
@@ -141,6 +143,7 @@ const Auth = () => (
   <Routes>
     <Route path="/privacy" element={<AuthPrivacy />} />
     <Route path="/google" element={<AuthGoogle />} />
+    <Route path="/error" element={<AuthError />} />
   </Routes>
 );
 

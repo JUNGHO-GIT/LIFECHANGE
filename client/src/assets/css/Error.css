@@ -1,0 +1,147 @@
+:root {
+  --hue: 223;
+  --bg: hsl(var(--hue), 10%, 90%);
+  --fg: hsl(var(--hue), 10%, 10%);
+  --primary: hsl(var(--hue), 90%, 45%);
+  --primary-down: hsl(var(--hue), 90%, 65%);
+  --trans-dur: 0.3s;
+  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (2560 - 320));
+}
+
+/* 전역 설정 */
+.error_body {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  background-color: #ffffff;
+  color: var(--fg);
+  transition: background-color var(--trans-dur), color var(--trans-dur);
+}
+
+/* 버튼 */
+.error_btn-link {
+  background: var(--primary);
+  border-radius: 1.5em;
+  display: inline-block;
+  outline: transparent;
+  padding: 0.75em 1.5em;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.15s linear;
+}
+.error_btn-link, .error_btn-link:visited {
+  color: hsl(0, 0%, 100%);
+}
+.error_btn-link:focus-visible, .error_btn-link:hover {
+  background: var(--primary-down);
+}
+.error_btn-link:hover {
+  text-decoration: none;
+}
+
+/* paper 애니메이션 */
+.error_paper__main {
+  display: block;
+  margin: auto;
+  overflow: visible;
+  width: 100%;
+  max-width: 224px;
+  height: auto;
+}
+.error_paper__fill {
+  fill: hsl(0, 0%, 100%);
+}
+.error_paper__outline, .error_paper__lines {
+  transition: stroke var(--trans-dur);
+}
+.error_paper__outline {
+  stroke: hsl(var(--hue), 10%, 10%);
+}
+.error_paper__lines {
+  stroke: hsl(var(--hue), 10%, 70%);
+}
+.error_paper__shadow {
+  fill: hsl(var(--hue), 10%, 70%);
+  transition: fill var(--trans-dur);
+}
+.error_paper__top, .error_paper__bottom, .error_paper__tear, .error_paper__tear-fill {
+  animation: paperTop 1.25s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.error_paper__top, .error_paper__bottom {
+  transform-origin: 0 148px;
+  transition: transform var(--trans-dur) cubic-bezier(0.77, 0, 0.18, 1);
+}
+.error_paper__top {
+  transform: translate(0, 8px);
+}
+.error_paper__bottom {
+  animation-name: paperBottom;
+  transform: translate(0, 42px);
+}
+.error_paper__tear, .error_paper__tear-fill {
+  animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+}
+.error_paper__tear {
+  animation-name: paperTear;
+  stroke-dashoffset: 0;
+}
+.error_paper__tear-fill {
+  animation-name: paperTearFill;
+}
+.error_paper__outline:hover .error_paper__top, .error_paper__outline:hover .error_paper__bottom {
+  transform: translate(0, 25px);
+}
+
+/* 키프레임 애니메이션 */
+@keyframes paperTop {
+  from, 40% {
+    animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+    transform: translate(0, 25px) rotate(0);
+    transform-origin: 61px 148px;
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.33, 1, 0.67, 1.5);
+    transform: translate(0, 25px) rotate(-5deg);
+    transform-origin: 61px 148px;
+  }
+  to {
+    transform: translate(0, 8px) rotate(0);
+    transform-origin: 0 148px;
+  }
+}
+@keyframes paperBottom {
+  from, 40% {
+    animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+    transform: translate(0, 25px) rotate(0);
+    transform-origin: 61px 148px;
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.33, 1, 0.67, 1.5);
+    transform: translate(0, 25px) rotate(5deg);
+    transform-origin: 61px 148px;
+  }
+  to {
+    transform: translate(0, 42px) rotate(0);
+    transform-origin: 0 148px;
+  }
+}
+@keyframes paperTear {
+  from, 40% {
+    stroke-dashoffset: -198;
+  }
+  70%, to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes paperTearFill {
+  from, 40% {
+    width: 187px;
+  }
+  70%, to {
+    width: 0;
+  }
+}

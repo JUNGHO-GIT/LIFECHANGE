@@ -1,3 +1,5 @@
+// AuthPrivacy.jsx
+
 import {React} from "../../import/ImportReacts.jsx";
 
 export const AuthPrivacy = () => {
