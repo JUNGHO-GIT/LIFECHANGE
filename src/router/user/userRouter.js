@@ -226,6 +226,8 @@ router.post("/login", async (req, res) => {
     console.error(err);
     res.status(500).json({
       status: "error",
+      msg: "loginFailed",
+      result: null,
       error: err.toString()
     });
   }
