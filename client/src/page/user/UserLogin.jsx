@@ -124,6 +124,7 @@ export const UserLogin = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!validate(userId, userPw)) {
+      setLOADING(false);
       return;
     }
     await axios.post(`${URL_OBJECT}/login`, {
