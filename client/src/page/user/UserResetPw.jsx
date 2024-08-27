@@ -1,19 +1,18 @@
 // UserResetPw.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useRef, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Div, Br10, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button } from "../../import/ImportMuis.jsx";
+import { Empty, Div, Br10, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, Card, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, URL_OBJECT, translate,
-  } = useCommon();
+  const { navigate, URL_OBJECT, translate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [clientCode, setClientCode] = useState("");
@@ -155,7 +154,7 @@ export const UserResetPw = () => {
       setLOADING(false);
       return;
     }
-    await axios.post (`${URL_OBJECT}/email/send`, {
+    axios.post (`${URL_OBJECT}/email/send`, {
       user_id: OBJECT.user_id,
       type: "resetPw"
     })
@@ -193,7 +192,7 @@ export const UserResetPw = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
-    await axios.post (`${URL_OBJECT}/email/verify`, {
+    axios.post (`${URL_OBJECT}/email/verify`, {
       user_id: OBJECT.user_id,
       verify_code: clientCode
     })
@@ -228,7 +227,7 @@ export const UserResetPw = () => {
       setLOADING(false);
       return;
     }
-    await axios.post (`${URL_OBJECT}/resetPw`, {
+    axios.post (`${URL_OBJECT}/resetPw`, {
       user_id: OBJECT.user_id,
       OBJECT: OBJECT
     })
@@ -262,18 +261,18 @@ export const UserResetPw = () => {
     });
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. userResetPw --------------------------------------------------------------------------------
+  const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
         {translate("resetPw")}
       </Div>
     );
-    // 7-2. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}>
+    // 7-2. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"d-column"} key={i}>
           {/** section 1 **/}
           <Div className={"d-center w-86vw"}>
             <TextField
@@ -368,10 +367,10 @@ export const UserResetPw = () => {
               }))
             )}
           />
-        </Div>
+        </Card>
       );
       return (
-        tableFragment(0)
+        cardFragment(0)
       );
     };
     // 7-3. button
@@ -416,18 +415,20 @@ export const UserResetPw = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min94vh"}>
-          {titleSection()}
-          <Hr40 />
-          {tableSection()}
-          <Hr40 />
-          {buttonSection()}
-          <Hr40 />
-          {toLoginSection()}
-          <Br10 />
-          {toSignupSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min94vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {titleSection()}
+            <Hr40 />
+            {cardSection()}
+            <Hr40 />
+            {buttonSection()}
+            <Hr40 />
+            {toLoginSection()}
+            <Br10 />
+            {toSignupSection()}
+          </Grid>
+        </Grid>
       </Paper>
       </>
     );
@@ -436,7 +437,7 @@ export const UserResetPw = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userResetPwNode()}
     </>
   );
 };

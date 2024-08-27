@@ -1,4 +1,5 @@
 // AuthPrivacy.jsx
+// Node -> Section -> Fragment
 
 import {React} from "../../import/ImportReacts.jsx";
 

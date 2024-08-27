@@ -1,4 +1,5 @@
 // Loading.jsx
+// Node -> Section -> Fragment
 
 import { React } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
@@ -8,10 +9,9 @@ import { Div } from "../../import/ImportComponents.jsx";
 export const Loading = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    PATH,
-  } = useCommon();
+  const {PATH} = useCommon();
 
+  // 5. needWrapper --------------------------------------------------------------------------------
   const needWrapper = () => {
     if (
       PATH.includes("/user/signup") ||

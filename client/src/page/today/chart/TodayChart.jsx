@@ -1,4 +1,5 @@
 // TodayChart.jsx
+// Node -> Section -> Fragment
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { TodayChartExercise } from "./TodayChartExercise.jsx";

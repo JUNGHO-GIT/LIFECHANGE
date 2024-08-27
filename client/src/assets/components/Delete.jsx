@@ -1,7 +1,7 @@
 // Delete.jsx
 
 import { React } from "../../import/ImportReacts.jsx";
-import { Div, Icons } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Icons } from "../../import/ImportComponents.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = ({

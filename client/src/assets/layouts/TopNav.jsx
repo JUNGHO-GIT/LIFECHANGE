@@ -1,4 +1,5 @@
 // TopNav.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
@@ -108,7 +109,7 @@ export const TopNav = () => {
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 메인 스마일 이미지
-  useEffect(() => {(async () => {
+  useEffect(() => {
     if (firstStr === "calendar") {
       setMainSmileImage(smileImage.total);
     }
@@ -130,7 +131,7 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-  })()}, [location, selectedTab]);
+  }, [location, selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 퍼센트, 자산, 체중 설정
@@ -238,399 +239,392 @@ export const TopNav = () => {
     });
   };
 
-  // 4. smileNode ----------------------------------------------------------------------------------
-  const smileNode = () => (
-    <PopUp
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => (
-        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`smile`}>
-          <Grid container>
-            <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-2rem fw-600"}>
-                {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
-              </Div>
+  // 7. topNav -------------------------------------------------------------------------------------
+  const topNavNode = () => {
+    // 1. smile
+    const smileSection = () => (
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
+            <Grid container className={"w-100p"}>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-1-2rem fw-600"}>
+                  {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
+                </Div>
+              </Grid>
+              <Hr40 />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center"}>
+                  <Img src={smileImage.total} className={"w-max25 h-max25"} />
+                </Div>
+                <Div className={"fs-1-1rem me-3vw"}>
+                  {translate("total")}
+                </Div>
+                <Div className={"fs-0-8rem"}>
+                  {smileScore.total}
+                </Div>
+              </Grid>
             </Grid>
-            <Hr40 />
-            <Grid item xs={12} className={"d-center"}>
+            <Br20 />
+            <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
-                <Img src={smileImage.total} className={"w-max25 h-max25"} />
+                <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
               </Div>
               <Div className={"fs-1-1rem me-3vw"}>
-                {translate("total")}
+                {translate("exercise")}
               </Div>
               <Div className={"fs-0-8rem"}>
-                {smileScore.total}
+                {smileScore.exercise}
               </Div>
             </Grid>
-          </Grid>
-          <Br20 />
-          <Grid item xs={12} className={"d-center"}>
-            <Div className={"d-center"}>
-              <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
-            </Div>
-            <Div className={"fs-1-1rem me-3vw"}>
-              {translate("exercise")}
-            </Div>
-            <Div className={"fs-0-8rem"}>
-              {smileScore.exercise}
-            </Div>
-          </Grid>
-          <Br20 />
-          <Grid item xs={12} className={"d-center"}>
-            <Div className={"d-center"}>
-              <Img src={smileImage.food} className={"w-max25 h-max25"} />
-            </Div>
-            <Div className={"fs-1-1rem me-3vw"}>
-              {translate("food")}
-            </Div>
-            <Div className={"fs-0-8rem"}>
-              {smileScore.food}
-            </Div>
-          </Grid>
-          <Br20 />
-          <Grid item xs={12} className={"d-center"}>
-            <Div className={"d-center"}>
-              <Img src={smileImage.money} className={"w-max25 h-max25"} />
-            </Div>
-            <Div className={"fs-1-1rem me-3vw"}>
-              {translate("money")}
-            </Div>
-            <Div className={"fs-0-8rem"}>
-              {smileScore.money}
-            </Div>
-          </Grid>
-          <Br20 />
-          <Grid item xs={12} className={"d-center"}>
-            <Div className={"d-center"}>
-              <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
-            </Div>
-            <Div className={"fs-1-1rem me-3vw"}>
-              {translate("sleep")}
-            </Div>
-            <Div className={"fs-0-8rem"}>
-              {smileScore.sleep}
-            </Div>
-          </Grid>
-          <Hr40 />
-          <Grid item xs={12} className={"d-center"}>
-            <Div className={"fs-0-8rem"}>
-              {translate("score")}
-            </Div>
-          </Grid>
-        </Card>
-      )}>
-      {(popTrigger={}) => (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-          const event = new Event('storageChange');
-          window.dispatchEvent(event);
-        }}>
-          <Img src={mainSmileImage} className={"w-max25 h-max25"} />
-        </Div>
-      )}
-    </PopUp>
-  );
-
-  // 5. property -----------------------------------------------------------------------------------
-  const propertyNode = () => (
-    <PopUp
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => (
-        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`property`}>
-          <Grid container>
-            <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {translate("property")}
-              </Div>
-            </Grid>
-            <Br10 />
-            <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-0-9rem fw-500 dark"}>
-                {`(${property?.dateStart} ~ ${property?.dateEnd})`}
-              </Div>
-            </Grid>
-            <Hr40 />
-            <Grid item xs={12} className={"d-center"}>
+            <Br20 />
+            <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
-                <Img src={money2} className={"w-16 h-16"} />
-                <Div className={"fs-1-4rem fw-600"}>
-                  {numeral(property.curProperty).format("0,0")}
-                </Div>
+                <Img src={smileImage.food} className={"w-max25 h-max25"} />
               </Div>
-            </Grid>
-            <Hr40 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("initProperty")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={numeral(property.initProperty).format("0,0")}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                  )
-                }}
-              />
+              <Div className={"fs-1-1rem me-3vw"}>
+                {translate("food")}
+              </Div>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.food}
+              </Div>
             </Grid>
             <Br20 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("sumIncome")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={numeral(property.totalIncome).format("0,0")}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                  )
-                }}
-              />
-            </Grid>
-            <Br20 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("sumExpense")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={numeral(property.totalExpense).format("0,0")}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={money2} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("currency")}
-                    </Div>
-                  )
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Card>
-      )}>
-      {(popTrigger={}) => (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-          const event = new Event('storageChange');
-          window.dispatchEvent(event);
-        }}>
-          <Img src={money4} className={"w-max25 h-max25"} />
-        </Div>
-      )}
-    </PopUp>
-  );
-
-  // 6. scaleNode ----------------------------------------------------------------------------------
-  const scaleNode = () => (
-    <PopUp
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => (
-        <Card className={"w-max60vw h-max65vh border radius shadow-none p-20"} key={`scale`}>
-          <Grid container>
-            <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-1-3rem fw-600"}>
-                {translate("weight")}
-              </Div>
-            </Grid>
-            <Br10 />
-            <Grid item xs={12} className={"d-center"}>
-              <Div className={"fs-0-9rem fw-500 dark"}>
-                {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
-              </Div>
-            </Grid>
-            <Hr40 />
-            <Grid item xs={12} className={"d-center"}>
+            <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
-                <Img src={exercise5} className={"w-16 h-16"} />
-                <Div className={"fs-1-4rem fw-600"}>
-                  {scale.curScale}
-                </Div>
+                <Img src={smileImage.money} className={"w-max25 h-max25"} />
+              </Div>
+              <Div className={"fs-1-1rem me-3vw"}>
+                {translate("money")}
+              </Div>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.money}
+              </Div>
+            </Grid>
+            <Br20 />
+            <Grid size={12} className={"d-center"}>
+              <Div className={"d-center"}>
+                <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
+              </Div>
+              <Div className={"fs-1-1rem me-3vw"}>
+                {translate("sleep")}
+              </Div>
+              <Div className={"fs-0-8rem"}>
+                {smileScore.sleep}
               </Div>
             </Grid>
             <Hr40 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("initScale")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={scale.initScale}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={exercise5} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
-                  )
-                }}
-              />
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-0-8rem"}>
+                {translate("score")}
+              </Div>
             </Grid>
-            <Br20 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("minScale")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={scale.minScale}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={exercise5} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
-                  )
-                }}
-              />
-            </Grid>
-            <Br20 />
-            <Grid item xs={12} className={"d-center"}>
-              <TextField
-                select={false}
-                label={translate("maxScale")}
-                size={"small"}
-                variant={"outlined"}
-                className={"w-50vw"}
-                value={scale.maxScale}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: (
-                    <Img src={exercise5} className={"w-16 h-16"} />
-                  ),
-                  endAdornment: (
-                    <Div className={"fs-0-6rem"}>
-                      {translate("k")}
-                    </Div>
-                  )
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Card>
-      )}>
-      {(popTrigger={}) => (
-        <Div className={"d-center pointer"} onClick={(e) => {
-          popTrigger.openPopup(e.currentTarget)
-          const event = new Event('storageChange');
-          window.dispatchEvent(event);
-        }}>
-          <Img src={exercise6} className={"w-max25 h-max25"} />
-        </Div>
-      )}
-    </PopUp>
-  );
-
-  // 6. tabs ---------------------------------------------------------------------------------------
-  const tabsNode = () => (
-   (firstStr === "calendar") ? (
-      <Tabs
-        value={selectedTab}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .${tabsClasses.scrollButtons}`]: {
-            '&.Mui-disabled': { opacity: 0.3 },
-          },
-        }}>
-        <Tab
-          label={translate("schedule")}
-          value={"schedule"}
-          onClick={() => handleClickTobNav("schedule")}
-        />
-      </Tabs>
-    ) : (
-      <Tabs
-        value={selectedTab}
-        variant={"scrollable"}
-        selectionFollowsFocus={true}
-        scrollButtons={false}
-        sx={{
-          [`& .MuiTabs-scrollButtons`]: {
-            "&.Mui-disabled": { opacity: 0.3 },
-          },
-        }}
-      >
-        <Tab
-          label={translate("chart")}
-          value={"chart"}
-          onClick={() => handleClickTobNav("chart")}
-        />
-        <Tab
-          label={translate("goal")}
-          value={"goal"}
-          onClick={() => handleClickTobNav("goal")}
-        />
-        <Tab
-          label={translate("real")}
-          value={"real"}
-          onClick={() => handleClickTobNav("real")}
-        />
-        {firstStr === "food" && (
-          <Tab
-            label={translate("find")}
-            value={"find"}
-            onClick={() => handleClickTobNav("find")}
-          />
+          </Card>
+        )}>
+        {(popTrigger={}) => (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+            const event = new Event('storageChange');
+            window.dispatchEvent(event);
+          }}>
+            <Img src={mainSmileImage} className={"w-max25 h-max25"} />
+          </Div>
         )}
-      </Tabs>
-    )
-  );
-
-  // 7. topNav -------------------------------------------------------------------------------------
-  const topNavNode = () => (
-    <Paper className={"flex-wrapper p-sticky top-8vh radius border shadow-none"}>
-      <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-        <Grid container>
-          <Grid item xs={1} className={"d-center ms-2vw"}>
-            {smileNode()}
+      </PopUp>
+    );
+    // 2. property
+    const propertySection = () => (
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
+            <Grid container className={"w-100p"}>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {translate("property")}
+                </Div>
+              </Grid>
+              <Br10 />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-0-9rem fw-500 dark"}>
+                  {`(${property?.dateStart} ~ ${property?.dateEnd})`}
+                </Div>
+              </Grid>
+              <Hr40 />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center"}>
+                  <Img src={money2} className={"w-16 h-16"} />
+                  <Div className={"fs-1-4rem fw-600"}>
+                    {numeral(property.curProperty).format("0,0")}
+                  </Div>
+                </Div>
+              </Grid>
+              <Hr40 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("initProperty")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={numeral(property.initProperty).format("0,0")}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={money2} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("currency")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+              <Br20 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("sumIncome")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={numeral(property.totalIncome).format("0,0")}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={money2} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("currency")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+              <Br20 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("sumExpense")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={numeral(property.totalExpense).format("0,0")}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={money2} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("currency")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+        )}>
+        {(popTrigger={}) => (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+            const event = new Event('storageChange');
+            window.dispatchEvent(event);
+          }}>
+            <Img src={money4} className={"w-max25 h-max25"} />
+          </Div>
+        )}
+      </PopUp>
+    );
+    // 3. scale
+    const scaleSection = () => (
+      <PopUp
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
+            <Grid container className={"w-100p"}>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-1-3rem fw-600"}>
+                  {translate("weight")}
+                </Div>
+              </Grid>
+              <Br10 />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-0-9rem fw-500 dark"}>
+                  {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
+                </Div>
+              </Grid>
+              <Hr40 />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center"}>
+                  <Img src={exercise5} className={"w-16 h-16"} />
+                  <Div className={"fs-1-4rem fw-600"}>
+                    {scale.curScale}
+                  </Div>
+                </Div>
+              </Grid>
+              <Hr40 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("initScale")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={scale.initScale}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={exercise5} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("k")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+              <Br20 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("minScale")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={scale.minScale}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={exercise5} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("k")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+              <Br20 />
+              <Grid size={12} className={"d-center"}>
+                <TextField
+                  select={false}
+                  label={translate("maxScale")}
+                  size={"small"}
+                  variant={"outlined"}
+                  className={"w-50vw"}
+                  value={scale.maxScale}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <Img src={exercise5} className={"w-16 h-16"} />
+                    ),
+                    endAdornment: (
+                      <Div className={"fs-0-6rem"}>
+                        {translate("k")}
+                      </Div>
+                    )
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+        )}>
+        {(popTrigger={}) => (
+          <Div className={"d-center pointer"} onClick={(e) => {
+            popTrigger.openPopup(e.currentTarget)
+            const event = new Event('storageChange');
+            window.dispatchEvent(event);
+          }}>
+            <Img src={exercise6} className={"w-max25 h-max25"} />
+          </Div>
+        )}
+      </PopUp>
+    );
+    // 4. tabs
+    const tabsSection = () => (
+      (firstStr === "calendar") ? (
+        <Tabs
+          value={selectedTab}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .${tabsClasses.scrollButtons}`]: {
+              '&.Mui-disabled': { opacity: 0.3 },
+            },
+          }}>
+          <Tab
+            label={translate("schedule")}
+            value={"schedule"}
+            onClick={() => handleClickTobNav("schedule")}
+          />
+        </Tabs>
+      ) : (
+        <Tabs
+          value={selectedTab}
+          variant={"scrollable"}
+          selectionFollowsFocus={true}
+          scrollButtons={false}
+          sx={{
+            [`& .MuiTabs-scrollButtons`]: {
+              "&.Mui-disabled": { opacity: 0.3 },
+            },
+          }}
+        >
+          <Tab
+            label={translate("chart")}
+            value={"chart"}
+            onClick={() => handleClickTobNav("chart")}
+          />
+          <Tab
+            label={translate("goal")}
+            value={"goal"}
+            onClick={() => handleClickTobNav("goal")}
+          />
+          <Tab
+            label={translate("real")}
+            value={"real"}
+            onClick={() => handleClickTobNav("real")}
+          />
+          {firstStr === "food" && (
+            <Tab
+              label={translate("find")}
+              value={"find"}
+              onClick={() => handleClickTobNav("find")}
+            />
+          )}
+        </Tabs>
+      )
+    );
+    // 5. return
+    return (
+      <Paper className={"layout-wrapper p-sticky top-9vh h-9vh radius border"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={4} className={"d-center"}>
+            {smileSection()}
+            {propertySection()}
+            {scaleSection()}
           </Grid>
-          <Grid item xs={1} className={"d-center ms-2vw"}>
-            {propertyNode()}
-          </Grid>
-          <Grid item xs={1} className={"d-center ms-2vw"}>
-            {scaleNode()}
-          </Grid>
-          <Grid item xs={8} className={"d-center"}>
-            {tabsNode()}
+          <Grid size={8} className={"d-center"}>
+            {tabsSection()}
           </Grid>
         </Grid>
-      </Card>
-    </Paper>
-  );
+      </Paper>
+    );
+  };
 
   // 10. return ------------------------------------------------------------------------------------
   return (

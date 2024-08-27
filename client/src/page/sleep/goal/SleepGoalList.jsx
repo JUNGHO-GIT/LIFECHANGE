@@ -1,10 +1,11 @@
 // SleepGoalList.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../../import/ImportHooks.jsx";
 import { axios, moment } from "../../../import/ImportLibs.jsx";
-import { Loading, Footer, Empty } from "../../../import/ImportLayouts.jsx";
-import { Div, Img, Hr30, Br10, Icons } from "../../../import/ImportComponents.jsx";
+import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
+import { Empty, Div, Img, Hr30, Br10, Icons } from "../../../import/ImportComponents.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../../import/ImportMuis.jsx";
 import { Paper, Card, Grid } from "../../../import/ImportMuis.jsx";
 import { sleep2, sleep3, sleep4 } from "../../../import/ImportImages.jsx";
@@ -84,9 +85,9 @@ export const SleepGoalList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/goal/list`, {
+    axios.get(`${URL_OBJECT}/goal/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
@@ -111,12 +112,12 @@ export const SleepGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-3. table
-    const tableSection = () => {
+  // 7. list ---------------------------------------------------------------------------------------
+  const listNode = () => {
+    // 1. cardSection
+    const cardSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -126,7 +127,7 @@ export const SleepGoalList = () => {
           extra={"sleep"}
         />
       );
-      const tableFragment = (i) => (
+      const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -141,7 +142,7 @@ export const SleepGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container
+                <Grid container className={"w-100p"}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -155,14 +156,14 @@ export const SleepGoalList = () => {
                     });
                   }}
                 >
-                  <Grid item xs={2} className={"d-center"}>
+                  <Grid size={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-left"}>
+                  <Grid size={10} className={"d-left"}>
                     {item.sleep_goal_dateStart === item.sleep_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -196,16 +197,16 @@ export const SleepGoalList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("bedTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -218,7 +219,7 @@ export const SleepGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_bedTime}
                     </Div>
@@ -231,7 +232,7 @@ export const SleepGoalList = () => {
                       {item.sleep_diff_bedTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -247,16 +248,16 @@ export const SleepGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -269,7 +270,7 @@ export const SleepGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_wakeTime}
                     </Div>
@@ -282,7 +283,7 @@ export const SleepGoalList = () => {
                       {item.sleep_diff_wakeTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -298,16 +299,16 @@ export const SleepGoalList = () => {
                 </Grid>
                 {/** row 3 **/}
                 <Hr30 />
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -320,7 +321,7 @@ export const SleepGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_sleepTime}
                     </Div>
@@ -333,7 +334,7 @@ export const SleepGoalList = () => {
                       {item.sleep_diff_sleepTime}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -354,16 +355,18 @@ export const SleepGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -371,18 +374,13 @@ export const SleepGoalList = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, PAGING, COUNT
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setPAGING, setCOUNT
       }}
-      handlers={{
+      flow={{
         navigate
       }}
     />
@@ -391,7 +389,7 @@ export const SleepGoalList = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {listNode()}
       {footerNode()}
     </>
   );

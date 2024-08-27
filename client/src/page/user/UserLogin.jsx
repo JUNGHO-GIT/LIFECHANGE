@@ -1,21 +1,20 @@
 // UserLogin.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect, createRef, useRef } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils";
-import { Div, Br10, Br20, Img, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button, Checkbox } from "../../import/ImportMuis.jsx";
+import { Empty, Div, Br10, Br20, Img, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, Checkbox, Card, Grid } from "../../import/ImportMuis.jsx";
 import { user1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate,
-  } = useCommon();
+  const { navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -127,7 +126,7 @@ export const UserLogin = () => {
       setLOADING(false);
       return;
     }
-    await axios.post(`${URL_OBJECT}/login`, {
+    axios.post(`${URL_OBJECT}/login`, {
       user_id: userId,
       user_pw: userPw,
     })
@@ -169,7 +168,7 @@ export const UserLogin = () => {
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowGoogle = async () => {
-    await axios.get(`${URL_GOOGLE}/login`)
+    axios.get(`${URL_GOOGLE}/login`)
     .then((res) => {
       if (res.data.status === "success") {
         window.location.href = res.data.url;
@@ -183,8 +182,8 @@ export const UserLogin = () => {
     });
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. userLogin ----------------------------------------------------------------------------------
+  const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}
@@ -203,10 +202,10 @@ export const UserLogin = () => {
         {translate("login")}
       </Div>
     );
-    // 7-2. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}>
+    // 7-2. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"d-column"} key={i}>
           <TextField
             select={false}
             type={"text"}
@@ -265,10 +264,10 @@ export const UserLogin = () => {
               }}
             />
           </Div>
-        </Div>
+        </Card>
       );
       return (
-        tableFragment(0)
+        cardFragment(0)
       );
     };
     // 7-3. button
@@ -335,20 +334,22 @@ export const UserLogin = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min94vh"}>
-          {titleSection()}
-          <Hr40 />
-          {tableSection()}
-          <Hr40 />
-          {buttonSection()}
-          <Br10 />
-          {googleSection()}
-          <Hr40 />
-          {toSignupSection()}
-          <Br10 />
-          {toResetPwSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min97vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {titleSection()}
+            <Hr40 />
+            {cardSection()}
+            <Hr40 />
+            {buttonSection()}
+            <Br10 />
+            {googleSection()}
+            <Hr40 />
+            {toSignupSection()}
+            <Br10 />
+            {toResetPwSection()}
+          </Grid>
+        </Grid>
       </Paper>
       </>
     );
@@ -357,7 +358,7 @@ export const UserLogin = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userLoginNode()}
     </>
   );
 };

@@ -11,49 +11,39 @@
   justify-content: center;
   align-items: center;
 }
-.flex-wrapper {
+.layout-wrapper {
   width: 100%;
   height: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  padding: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: none !important;
+  border-radius: 0px !important;
   overflow-x: hidden;
   overflow-y: hidden;
-  z-index: 100;
+  box-shadow: none !important;
+  z-index: 500;
 }
 .content-wrapper {
   width: 100%;
   height: 100%;
   margin: 0px 0px 0px 0px;
-  padding: 15px 10px 15px 10px;
+  padding: 20px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: none;
+  justify-content: flex-start;
+  border: none !important;
+  border-radius: 0px !important;
   overflow-x: hidden;
   overflow-y: hidden;
-}
-.block-wrapper {
-  width: 100%;
-  height: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 10px 10px 10px 10px;
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  box-shadow: none !important;
+  z-index: 100;
   animation: fadeIn 0.4s ease-in-out;
 }
-
-/** 7. keyframes **/
 @keyframes fadeIn {
   0% {
     opacity: 0;

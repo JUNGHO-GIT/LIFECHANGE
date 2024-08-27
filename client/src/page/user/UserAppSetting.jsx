@@ -1,228 +1,163 @@
 // UserAppSetting.jsx
+// Node -> Section -> Fragment
 
-import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
-import { useNavigate, useLocation } from "../../import/ImportReacts.jsx";
-import { useTranslate, useStorage } from "../../import/ImportHooks.jsx";
-import { PopUp, Div, Icons, Br20, Img } from "../../import/ImportComponents.jsx";
-import { Card, Paper } from "../../import/ImportMuis.jsx";
-import { TableContainer, Table } from "../../import/ImportMuis.jsx";
-import { TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
-import { flag1, flag2 } from "../../import/ImportImages.jsx";
+import { React, useState } from "../../import/ImportReacts.jsx";
+import { useCommon } from "../../import/ImportHooks.jsx";
+import { Loading } from "../../import/ImportLayouts.jsx";
+import { Icons, Hr20, Br10 } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {translate} = useTranslate();
+  const { navigate, translate } = useCommon();
 
   // 2-1. useState ---------------------------------------------------------------------------------
-  const [lang, setLang] = useState(sessionStorage.getItem("LANG"));
+  const [LOADING, setLOADING] = useState(false);
   const [admin, setIsAdmin] = useState(sessionStorage.getItem("ADMIN"));
 
-  // 6. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-1. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Card className={"border radius shadow-none p-0"} key={i}>
-          <TableContainer>
-            <Table>
-              <TableBody className={"table-tbody"}>
-                {/** detail **/}
-                <TableRow
-                  className={"pointer"}
-                  onClick={() => {
-                    navigate("/user/detail")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("dataDetail")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-                {/** category **/}
-                <TableRow
-                  className={"pointer"}
-                  onClick={() => {
-                    navigate("/user/category")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("category")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-                {/** list **/}
-                <TableRow
-                  className={`${admin !== "true" ? "d-none" : ""} pointer`}
-                  onClick={() => {
-                    navigate("/user/dummy")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("dataList")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-                {/** language **/}
-                <PopUp
-                  type={"innerCenter"}
-                  position={"bottom"}
-                  direction={"center"}
-                  contents={({closePopup}) => (
-                  <Div className={"d-column"}>
-                    <Div
-                      className={"d-center"}
-                      onClick={() => {
-                        setLang("ko")
-                        sessionStorage.setItem("LANG", "ko")
-                        navigate(0)
-                      }}
-                    >
-                      <Img className={"w-24 h-24"} src={flag1} />
-                      <Div className={`${lang === "ko" ? "fw-700" : ""}`}>
-                        한국어
-                      </Div>
-                      <Icons
-                        name={"TbCheck"}
-                        className={`w-16 h-16 black ${lang === "ko" ? "" : "d-none"}`}
-                        onClick={() => {}}
-                      />
-                    </Div>
-                    <Br20 />
-                    <Div
-                      className={"d-center"}
-                      onClick={() => {
-                        setLang("en")
-                        sessionStorage.setItem("LANG", "en")
-                        navigate(0)
-                      }}
-                    >
-                      <Img src={flag2} className={"w-24 h-24"} />
-                      <Div className={`${lang === "en" ? "fw-700" : ""}`}>
-                        English
-                      </Div>
-                      <Icons
-                        name={"TbCheck"}
-                        className={`w-16 h-16 black ${lang === "en" ? "" : "d-none"}`}
-                        onClick={() => {}}
-                      />
-                    </Div>
-                  </Div>
-                  )}>
-                  {(popTrigger={}) => (
-                    <TableRow
-                      className={"pointer"}
-                      onClick={(e) => {
-                        popTrigger.openPopup(e.currentTarget)
-                      }}
-                    >
-                      <TableCell className={"w-90vw p-15"}>
-                        {translate("language")}
-                      </TableCell>
-                      <TableCell className={"w-10vw p-15"}>
-                        <Icons
-                          name={"TbChevronRight"}
-                          className={"w-16 h-16 black"}
-                          onClick={() => {}}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </PopUp>
-                {/** app info **/}
-                <TableRow
-                  className={"pointer"}
-                  onClick={() => {
-                    navigate("/user/app/info")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("appInfo")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-                {/** logout **/}
-                <TableRow
-                  className={"pointer"}
-                  onClick={() => {
-                    localStorage.setItem("autoLogin", "false")
-                    localStorage.setItem("autoLoginId", "")
-                    localStorage.setItem("autoLoginPw", "")
-                    sessionStorage.clear()
-                    navigate("/")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15"}>
-                    {translate("logout")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-                {/** deletes **/}
-                <TableRow
-                  className={"pointer"}
-                  onClick={() => {
-                    navigate("/user/deletes")
-                  }}
-                >
-                  <TableCell className={"w-90vw p-15 red"}>
-                    {translate("userDeletes")}
-                  </TableCell>
-                  <TableCell className={"w-10vw p-15"}>
-                    <Icons
-                      name={"TbChevronRight"}
-                      className={"w-16 h-16 black"}
-                      onClick={() => {}}
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+  // 7. userAppSetting ----------------------------------------------------------------------------
+  const userAppSettingNode = () => {
+    // 7-1. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"d-column border radius p-0"} key={i}>
+          <Grid container className={"w-100p fs-0-8rem"}>
+            <Br10 />
+            <Grid
+              size={12}
+              className={"d-between pointer p-10"}
+              onClick={() => {
+                navigate("/user/detail")
+              }}
+            >
+              <Grid size={6} className={"d-left"}>
+                {translate("dataDetail")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Hr20 />
+            <Grid
+              size={12}
+              className={"d-between pointer p-10"}
+              onClick={() => {
+                navigate("/user/category")
+              }}
+            >
+              <Grid size={6} className={"d-left"}>
+                {translate("category")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Hr20 />
+            <Grid
+              size={12}
+              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-10`}
+              onClick={() => {
+                navigate("/user/dummy")
+              }}
+            >
+              <Grid size={6} className={"d-left"}>
+                {translate("dataList")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Hr20 />
+            <Grid
+              size={12}
+              className={"d-between pointer p-10"}
+              onClick={() => {
+                navigate("/user/app/info")
+              }}
+            >
+              <Grid size={6} className={"d-left"}>
+                {translate("appInfo")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Hr20 />
+            <Grid
+              size={12}
+              className={"d-between pointer p-10"}
+              onClick={() => {
+                localStorage.setItem("autoLogin", "false")
+                localStorage.setItem("autoLoginId", "")
+                localStorage.setItem("autoLoginPw", "")
+                sessionStorage.clear()
+                navigate("/")
+              }}
+            >
+              <Grid size={6} className={"d-left"}>
+                {translate("logout")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Hr20 />
+            <Grid
+              size={12}
+              className={"d-between pointer p-10"}
+              onClick={() => {
+                navigate("/user/deletes")
+              }}
+            >
+              <Grid size={6} className={"d-left red"}>
+                {translate("userDeletes")}
+              </Grid>
+              <Grid size={6} className={"d-right"}>
+                <Icons
+                  name={"TbChevronRight"}
+                  className={"w-16 h-16 black"}
+                  onClick={() => {}}
+                />
+              </Grid>
+            </Grid>
+            <Br10 />
+          </Grid>
         </Card>
       );
       return (
-        tableFragment(0)
+        LOADING ? <Loading /> : cardFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-row h-min80vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min80vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -230,7 +165,7 @@ export const UserAppSetting = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userAppSettingNode()}
     </>
   );
 };

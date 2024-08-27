@@ -1,4 +1,5 @@
 // MoneyChart.jsx
+// Node -> Section -> Fragment
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { MoneyChartBar } from "./MoneyChartBar.jsx";

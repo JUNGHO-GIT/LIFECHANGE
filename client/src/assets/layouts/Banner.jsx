@@ -1,19 +1,34 @@
 // Banner.jsx
+// Node -> Section -> Fragment
 
 import { React}from "../../import/ImportReacts.jsx";
 import { Div } from "../../import/ImportComponents.jsx";
-import { Paper, Card } from "../../import/ImportMuis.jsx";
+import { Paper, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Banner = () => {
 
+  // 7. bannerNode ---------------------------------------------------------------------------------
+  const bannerNode = () => {
+    const bannerSection = (
+      <Div className={"d-center"}>
+      </Div>
+    );
+    return (
+      <Paper className={"layout-wrapper p-sticky bottom-0vh radius border h-60"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {bannerSection}
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  };
+
   // 10. return ------------------------------------------------------------------------------------
   return (
-    <Paper className={"flex-wrapper p-sticky bottom-0vh radius border shadow-none"}>
-      <Card className={"block-wrapper d-row h-60 w-100p shadow-none"}>
-        <Div className={"d-center"}>
-        </Div>
-      </Card>
-    </Paper>
+    <>
+      {bannerNode()}
+    </>
   );
 };

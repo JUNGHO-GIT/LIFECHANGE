@@ -1,4 +1,5 @@
 // FoodChart.jsx
+// Node -> Section -> Fragment
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { FoodChartBar } from "./FoodChartBar.jsx";

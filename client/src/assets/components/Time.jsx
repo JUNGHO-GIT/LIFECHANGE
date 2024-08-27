@@ -133,16 +133,18 @@ export const Time = ({
           value={OBJECT?.[`${extra}`]}
           inputRef={REFS?.current?.[`${extra}`]}
           error={ERRORS?.[`${extra}`]}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={image} className={"w-16 h-16"} />
-            ),
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("hm")}
-              </Div>
-            )
+          slotProps={{
+            input: {
+              readOnly: true,
+              startAdornment: (
+                <Img src={image} className={"w-16 h-16"} />
+              ),
+              endAdornment: (
+                <Div className={"fs-0-6rem"}>
+                  {translate("hm")}
+                </Div>
+              )
+            }
           }}
           onClick={(e) => {
             extra !== "sleep_sleepTime" && (

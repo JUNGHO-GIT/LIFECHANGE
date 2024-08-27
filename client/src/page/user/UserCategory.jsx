@@ -1,11 +1,12 @@
 // UserCategory.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
 import { PopUp, Div, Icons } from "../../import/ImportComponents.jsx";
-import { Card, Paper, TextField } from "../../import/ImportMuis.jsx";
+import { Card, Paper, TextField, Grid } from "../../import/ImportMuis.jsx";
 import { TableContainer, Table, TableFooter } from "../../import/ImportMuis.jsx";
 import { TableHead, TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
 
@@ -14,8 +15,7 @@ export const UserCategory = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd,
-    PATH, firstStr, secondStr, thirdStr, dataCategoryArray,
+    navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
     URL_OBJECT, sessionId, translate, koreanDate
   } = useCommon();
 
@@ -99,9 +99,9 @@ export const UserCategory = () => {
   }, [isEditable]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/category/list`, {
+    axios.get(`${URL_OBJECT}/category/list`, {
       params: {
         user_id: sessionId
       }
@@ -126,11 +126,11 @@ export const UserCategory = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId]);
+  }, [sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    await axios.post(`${URL_OBJECT}/category/save`, {
+    axios.post(`${URL_OBJECT}/category/save`, {
       user_id: sessionId,
       OBJECT: OBJECT
     })
@@ -256,8 +256,8 @@ export const UserCategory = () => {
     }
   };
 
-  // 6. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. userCategory -------------------------------------------------------------------------------
+  const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i, closePopup) => (
       <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-0"}>
@@ -453,10 +453,10 @@ export const UserCategory = () => {
         )}
       </Card>
     );
-    // 7-2. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Card className={"border radius shadow-none p-0"} key={i}>
+    // 7-2. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"border radius p-0"} key={i}>
           <TableContainer>
             <Table>
               <TableHead className={"table-thead"}>
@@ -514,15 +514,17 @@ export const UserCategory = () => {
         </Card>
       );
       return (
-        LOADING ? <Loading /> : tableFragment(0)
+        LOADING ? <Loading /> : cardFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -530,18 +532,13 @@ export const UserCategory = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND
       }}
-      functions={{
+      setState={{
         setDATE, setSEND
       }}
-      handlers={{
+      flow={{
         navigate, flowSave
       }}
     />
@@ -550,7 +547,7 @@ export const UserCategory = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userCategoryNode()}
       {footerNode()}
     </>
   );

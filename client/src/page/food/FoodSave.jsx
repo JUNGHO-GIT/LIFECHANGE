@@ -1,24 +1,22 @@
 // FoodSave.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Br20 } from "../../import/ImportComponents.jsx";
 import { Img, Picker, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, MenuItem, TextField } from "../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, MenuItem, TextField, Grid } from "../../import/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd,
-    firstStr, secondStr, thirdStr, foodArray, koreanDate,
-    URL_OBJECT, sessionId, translate
-  } = useCommon();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd, foodArray, koreanDate,
+    URL_OBJECT, sessionId, translate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -90,9 +88,9 @@ export const FoodSave = () => {
   })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -112,12 +110,12 @@ export const FoodSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/detail`, {
+    axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
         _id: "",
@@ -186,7 +184,7 @@ export const FoodSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -332,9 +330,10 @@ export const FoodSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     if (!validate(OBJECT)) {
+      setLOADING(false);
       return;
     }
-    await axios.post(`${URL_OBJECT}/save`, {
+    axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -367,7 +366,7 @@ export const FoodSave = () => {
       alert(translate("noData"));
       return;
     }
-    await axios.post(`${URL_OBJECT}/deletes`, {
+    axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
       _id: OBJECT?._id,
       DATE: DATE,
@@ -427,11 +426,11 @@ export const FoodSave = () => {
     }));
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. save ---------------------------------------------------------------------------------------
+  const saveNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border radius shadow-none p-20"}>
+      <Card className={"border radius p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -448,7 +447,7 @@ export const FoodSave = () => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Card className={"border radius shadow-none p-20"}>
+      <Card className={"border radius p-20"}>
         <Div className={"d-center"}>
           <TextField
             select={false}
@@ -532,10 +531,10 @@ export const FoodSave = () => {
         </Div>
       </Card>
     );
-    // 7-3. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+    // 7-3. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"border radius p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -926,18 +925,20 @@ export const FoodSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.food_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.food_section?.map((_, i) => (cardFragment(i)))
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {dateCountSection()}
-          {totalSection()}
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {dateCountSection()}
+            {totalSection()}
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -945,18 +946,13 @@ export const FoodSave = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, COUNT, EXIST
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setCOUNT, setEXIST
       }}
-      handlers={{
+      flow={{
         navigate, flowSave, flowDeletes
       }}
     />
@@ -965,7 +961,7 @@ export const FoodSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {saveNode()}
       {footerNode()}
     </>
   );

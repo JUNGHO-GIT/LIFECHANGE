@@ -10011,8 +10011,27 @@
 .bottom-199 {bottom: 199px !important;}
 .bottom-200 {bottom: 200px !important;}
 
+.bottom-0vh60 {bottom: calc(60px + 0vh) !important}
+.bottom-1vh60 {bottom: calc(60px + 1vh) !important}
+.bottom-2vh60 {bottom: calc(60px + 2vh) !important}
+.bottom-3vh60 {bottom: calc(60px + 3vh) !important}
+.bottom-4vh60 {bottom: calc(60px + 4vh) !important}
+.bottom-5vh60 {bottom: calc(60px + 5vh) !important}
+.bottom-6vh60 {bottom: calc(60px + 6vh) !important}
+.bottom-7vh60 {bottom: calc(60px + 7vh) !important}
 .bottom-8vh60 {bottom: calc(60px + 8vh) !important}
+.bottom-9vh60 {bottom: calc(60px + 9vh) !important}
+.bottom-10vh60 {bottom: calc(60px + 10vh) !important}
+.bottom-11vh60 {bottom: calc(60px + 11vh) !important}
+.bottom-12vh60 {bottom: calc(60px + 12vh) !important}
+.bottom-13vh60 {bottom: calc(60px + 13vh) !important}
+.bottom-14vh60 {bottom: calc(60px + 14vh) !important}
+.bottom-15vh60 {bottom: calc(60px + 15vh) !important}
 .bottom-16vh60 {bottom: calc(60px + 16vh) !important}
+.bottom-17vh60 {bottom: calc(60px + 17vh) !important}
+.bottom-18vh60 {bottom: calc(60px + 18vh) !important}
+.bottom-19vh60 {bottom: calc(60px + 19vh) !important}
+.bottom-20vh60 {bottom: calc(60px + 20vh) !important}
 
 /** 7-1. font (px) ********************************************************************************/
 .fs-0 {font-size: 0px !important;}
@@ -10337,12 +10356,28 @@
 }
 .d-left {
   display: flex !important;
+  flex-direction: row !important;
   justify-content: flex-start !important;
   align-items: center !important;
   text-align: center !important;
 }
 .d-right {
   display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.d-top {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.d-bottom {
+  display: flex !important;
+  flex-direction: column !important;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: center !important;
@@ -10812,14 +10847,20 @@
 /** 100. etc **************************************************************************************/
 .pointer {
   cursor: pointer !important;
-  caret-color: transparent;
+  caret-color: transparent !important;
 }
 .drag {
   cursor: grab !important;
-  caret-color: transparent;
+  caret-color: transparent !important;
 }
 .resize-none {
   resize: none !important;
+}
+.readonly {
+  caret-color: transparent !important;
+}
+.upper {
+  text-transform: uppercase !important;
 }
 .animation {
   animation-duration: 1s !important;

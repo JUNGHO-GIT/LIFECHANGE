@@ -1,9 +1,10 @@
 // BottomNav.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { Img } from "../../import/ImportComponents.jsx";
-import { BottomNavigation, BottomNavigationAction, Paper, Card } from "../../import/ImportMuis.jsx";
+import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "../../import/ImportMuis.jsx";
 import { calendar1, today1, exercise1, food1, money1, sleep1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -91,64 +92,70 @@ export const BottomNav = () => {
     });
   };
 
-  // 6. default ------------------------------------------------------------------------------------
-  const defaultNode = () => (
-    <BottomNavigation
-      showLabels={true}
-      value={selectedTab}
-    >
-      <BottomNavigationAction
-        label={translate("exercise")}
-        value={"exercise"}
-        icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("exercise")}
-      />
-      <BottomNavigationAction
-        label={translate("food")}
-        value={"food"}
-        icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("food")}
-      />
-      <BottomNavigationAction
-        label={translate("today")}
-        value={"today"}
-        icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("today")}
-      />
-      <BottomNavigationAction
-        label={translate("calendar")}
-        value={"calendar"}
-        icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("calendar")}
-      />
-      <BottomNavigationAction
-        label={translate("money")}
-        value={"money"}
-        icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("money")}
-      />
-      <BottomNavigationAction
-        label={translate("sleep")}
-        value={"sleep"}
-        icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
-        onClick={() => handleClickBottomNav("sleep")}
-      />
-    </BottomNavigation>
-  );
+  // 7. bottomNav ----------------------------------------------------------------------------------
+  const bottomNavNode = () => {
 
-  // 7. navigation ---------------------------------------------------------------------------------
-  const navigationNode = () => (
-    <Paper className={"flex-wrapper p-sticky bottom-60 radius border shadow-none"}>
-      <Card className={"block-wrapper d-row h-8vh w-100p shadow-none"}>
-        {defaultNode()}
-      </Card>
-    </Paper>
-  );
+    // 1. tabsSection
+    const tabsSection = () => (
+      <BottomNavigation
+        showLabels={true}
+        value={selectedTab}
+      >
+        <BottomNavigationAction
+          label={translate("exercise")}
+          value={"exercise"}
+          icon={<Img src={exercise1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("exercise")}
+        />
+        <BottomNavigationAction
+          label={translate("food")}
+          value={"food"}
+          icon={<Img src={food1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("food")}
+        />
+        <BottomNavigationAction
+          label={translate("today")}
+          value={"today"}
+          icon={<Img src={today1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("today")}
+        />
+        <BottomNavigationAction
+          label={translate("calendar")}
+          value={"calendar"}
+          icon={<Img src={calendar1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("calendar")}
+        />
+        <BottomNavigationAction
+          label={translate("money")}
+          value={"money"}
+          icon={<Img src={money1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("money")}
+        />
+        <BottomNavigationAction
+          label={translate("sleep")}
+          value={"sleep"}
+          icon={<Img src={sleep1} className={"w-16 h-16 m-0"} />}
+          onClick={() => handleClickBottomNav("sleep")}
+        />
+      </BottomNavigation>
+    );
+
+    // 2. return
+    return (
+      <Paper className={"layout-wrapper p-sticky bottom-60 h-9vh radius border"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12} className={"d-center"}>
+            {tabsSection()}
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  };
 
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {navigationNode()}
+      {bottomNavNode()}
     </>
   );
 };

@@ -1,10 +1,11 @@
 // FoodFind.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { axios, numeral } from "../../import/ImportLibs.jsx";
-import { Loading, Footer, Empty } from "../../import/ImportLayouts.jsx";
-import { Div, Hr30, Br10, Img, Icons } from "../../import/ImportComponents.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Empty, Div, Hr30, Br10, Img, Icons } from "../../import/ImportComponents.jsx";
 import { Paper, Card, Checkbox, Grid } from "../../import/ImportMuis.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../import/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
@@ -13,11 +14,7 @@ import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
 export const FoodFind = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateStart, location_dateEnd,
-    PATH, firstStr, secondStr, thirdStr,
-    URL_OBJECT, sessionId, translate, koreanDate,
-  } = useCommon();
+  const { navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, translate, koreanDate } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
@@ -165,7 +162,7 @@ export const FoodFind = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowFind = async () => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/find`, {
+    axios.get(`${URL_OBJECT}/find`, {
       params: {
         PAGING: PAGING,
         lang: lang,
@@ -201,10 +198,9 @@ export const FoodFind = () => {
     });
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-3. table
-    const tableSection = () => {
+  // 7. find ---------------------------------------------------------------------------------------
+  const findNode = () => {
+    const cardSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -214,7 +210,7 @@ export const FoodFind = () => {
           extra={"food"}
         />
       );
-      const tableFragment = (i) => (
+      const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -229,13 +225,13 @@ export const FoodFind = () => {
                   )}}
                 />
               }>
-                <Grid container
+                <Grid container className={"w-100p"}
                   // 체크박스 체크
                   onClick={(e) => {
                     handlerCheckboxChange(index);
                   }}
                 >
-                  <Grid item xs={2} className={"d-center"}>
+                  <Grid size={2} className={"d-center"}>
                     <Checkbox
                       key={`check-${index}`}
                       color={"primary"}
@@ -251,7 +247,7 @@ export const FoodFind = () => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={6} className={"d-left"}>
+                  <Grid size={6} className={"d-left"}>
                     {/** 1 ~ 5 글자 **/}
                     {item.food_name.length >= 1 && item.food_name.length < 6 && (
                       <Div className={"fs-1-0rem fw-600 dark"}>
@@ -271,28 +267,28 @@ export const FoodFind = () => {
                       </Div>
                     )}
                   </Grid>
-                  <Grid item xs={4} className={"d-left"}>
+                  <Grid size={4} className={"d-left"}>
                     {item.food_brand}
                   </Grid>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_kcal_color}`}>
                       {numeral(item.food_kcal).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("kc")}
                     </Div>
@@ -300,21 +296,21 @@ export const FoodFind = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_carb_color}`}>
                       {numeral(item.food_carb).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -322,21 +318,21 @@ export const FoodFind = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_protein_color}`}>
                       {numeral(item.food_protein).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -344,21 +340,21 @@ export const FoodFind = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.food_fat_color}`}>
                       {numeral(item.food_fat).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -371,16 +367,18 @@ export const FoodFind = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -388,18 +386,13 @@ export const FoodFind = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, PAGING, SEND, COUNT
       }}
-      functions={{
+      setState={{
         setDATE, setPAGING, setSEND, setCOUNT
       }}
-      handlers={{
+      flow={{
         navigate, flowFind
       }}
     />
@@ -408,7 +401,7 @@ export const FoodFind = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {findNode()}
       {footerNode()}
     </>
   );

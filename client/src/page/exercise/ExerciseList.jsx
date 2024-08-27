@@ -1,10 +1,11 @@
 // ExerciseList.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { axios, numeral, moment } from "../../import/ImportLibs.jsx";
-import { Loading, Footer, Empty } from "../../import/ImportLayouts.jsx";
-import { Div, Hr30, Img, Icons } from "../../import/ImportComponents.jsx";
+import { Loading, Footer } from "../../import/ImportLayouts.jsx";
+import { Empty, Div, Hr30, Img, Icons } from "../../import/ImportComponents.jsx";
 import { Br10 } from "../../import/ImportComponents.jsx";
 import { Paper, Card, Grid } from "../../import/ImportMuis.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../import/ImportMuis.jsx";
@@ -81,9 +82,9 @@ export const ExerciseList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/list`, {
+    axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
@@ -108,12 +109,11 @@ export const ExerciseList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-3. table
-    const tableSection = () => {
+  // 7. list ---------------------------------------------------------------------------------------
+  const listNode = () => {
+    const cardSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -123,7 +123,7 @@ export const ExerciseList = () => {
           extra={"exercise"}
         />
       );
-      const tableFragment = (i) => (
+      const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -138,7 +138,7 @@ export const ExerciseList = () => {
                   )}}
                 />
               }>
-                <Grid container
+                <Grid container className={"w-100p"}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -152,14 +152,14 @@ export const ExerciseList = () => {
                     });
                   }}
                 >
-                  <Grid item xs={2} className={"d-center"}>
+                  <Grid size={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-left"}>
+                  <Grid size={10} className={"d-left"}>
                     {item.exercise_dateStart === item.exercise_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -193,21 +193,21 @@ export const ExerciseList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={2} className={"d-left"}>
+                  <Grid size={2} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid item xs={7} className={"d-right"}>
+                  <Grid size={7} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("vol")}
                     </Div>
@@ -215,21 +215,21 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("cardio")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_total_cardio_color}`}>
                       {item.exercise_total_cardio}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
@@ -237,21 +237,21 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("weight")}
                     </Div>
                   </Grid>
-                  <Grid item xs={6} className={"d-right"}>
+                  <Grid size={6} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_total_weight_color}`}>
                       {item.exercise_total_weight}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-right lh-2-4"}>
+                  <Grid size={1} className={"d-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("k")}
                     </Div>
@@ -264,16 +264,18 @@ export const ExerciseList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -281,18 +283,13 @@ export const ExerciseList = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, PAGING, COUNT
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setPAGING, setCOUNT
       }}
-      handlers={{
+      flow={{
         navigate
       }}
     />
@@ -301,8 +298,8 @@ export const ExerciseList = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-    {tableNode()}
-    {footerNode()}
+      {listNode()}
+      {footerNode()}
     </>
   );
 };

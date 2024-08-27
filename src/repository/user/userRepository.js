@@ -273,6 +273,47 @@ export const category = {
 // 4-1. dummy --------------------------------------------------------------------------------------
 export const dummy = {
 
+  // 0. all
+  deletesAll: async (
+    user_id_param
+  ) => {
+    const finalResult =
+    await ExerciseGoal.deleteMany({
+      user_id: user_id_param,
+      exercise_goal_dummy: "Y"
+    })
+    await Exercise.deleteMany({
+      user_id: user_id_param,
+      exercise_dummy: "Y"
+    })
+    await FoodGoal.deleteMany({
+      user_id: user_id_param,
+      food_goal_dummy: "Y"
+    })
+    await Food.deleteMany({
+      user_id: user_id_param,
+      food_dummy: "Y"
+    })
+    await MoneyGoal.deleteMany({
+      user_id: user_id_param,
+      money_goal_dummy: "Y"
+    })
+    await Money.deleteMany({
+      user_id: user_id_param,
+      money_dummy: "Y"
+    })
+    await SleepGoal.deleteMany({
+      user_id: user_id_param,
+      sleep_goal_dummy: "Y"
+    })
+    await Sleep.deleteMany({
+      user_id: user_id_param,
+      sleep_dummy: "Y"
+    })
+
+    return finalResult;
+  },
+
   // 1. exerciseGoal
   countExerciseGoal: async (
     user_id_param
@@ -295,7 +336,7 @@ export const dummy = {
     return finalResult;
   },
   saveExerciseGoal: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await ExerciseGoal.insertMany(OBJECT_param);
 
@@ -303,7 +344,7 @@ export const dummy = {
     return insertResult;
   },
   deletesExerciseGoal: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await ExerciseGoal.deleteMany({
       user_id: user_id_param,
@@ -336,7 +377,7 @@ export const dummy = {
     return finalResult;
   },
   saveExercise: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await Exercise.insertMany(OBJECT_param);
 
@@ -344,7 +385,7 @@ export const dummy = {
     return insertResult;
   },
   deletesExercise: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await Exercise.deleteMany({
       user_id: user_id_param,
@@ -377,7 +418,7 @@ export const dummy = {
     return finalResult;
   },
   saveFoodGoal: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await FoodGoal.insertMany(OBJECT_param);
 
@@ -385,7 +426,7 @@ export const dummy = {
     return insertResult;
   },
   deletesFoodGoal: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await FoodGoal.deleteMany({
       user_id: user_id_param,
@@ -418,7 +459,7 @@ export const dummy = {
     return finalResult;
   },
   saveFood: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await Food.insertMany(OBJECT_param);
 
@@ -426,7 +467,7 @@ export const dummy = {
     return insertResult;
   },
   deletesFood: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await Food.deleteMany({
       user_id: user_id_param,
@@ -459,7 +500,7 @@ export const dummy = {
     return finalResult;
   },
   saveMoneyGoal: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await MoneyGoal.insertMany(OBJECT_param);
 
@@ -467,7 +508,7 @@ export const dummy = {
     return insertResult;
   },
   deletesMoneyGoal: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await MoneyGoal.deleteMany({
       user_id: user_id_param,
@@ -500,7 +541,7 @@ export const dummy = {
     return finalResult;
   },
   saveMoney: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await Money.insertMany(OBJECT_param);
 
@@ -508,7 +549,7 @@ export const dummy = {
     return insertResult;
   },
   deletesMoney: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await Money.deleteMany({
       user_id: user_id_param,
@@ -541,7 +582,7 @@ export const dummy = {
     return finalResult;
   },
   saveSleepGoal: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await SleepGoal.insertMany(OBJECT_param);
 
@@ -549,7 +590,7 @@ export const dummy = {
     return insertResult;
   },
   deletesSleepGoal: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await SleepGoal.deleteMany({
       user_id: user_id_param,
@@ -582,7 +623,7 @@ export const dummy = {
     return finalResult;
   },
   saveSleep: async (
-    user_id_param, OBJECT_param
+    OBJECT_param
   ) => {
     const insertResult = await Sleep.insertMany(OBJECT_param);
 
@@ -590,7 +631,7 @@ export const dummy = {
     return insertResult;
   },
   deletesSleep: async (
-    user_id_param, OBJECT_param
+    user_id_param,
   ) => {
     const deleteResult = await Sleep.deleteMany({
       user_id: user_id_param,

@@ -1,11 +1,12 @@
 // UserDeletes.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Div, Br20, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button, TextArea } from "../../import/ImportMuis.jsx";
+import { Empty, Div, Br20, Hr40 } from "../../import/ImportComponents.jsx";
+import { Paper, TextField, Button, TextArea, Grid, Card } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDeletes = () => {
@@ -37,7 +38,7 @@ export const UserDeletes = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -53,12 +54,12 @@ export const UserDeletes = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId]);
+  }, [sessionId]);
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
-    await axios.delete(`${URL_OBJECT}/deletes`,{
+    axios.delete(`${URL_OBJECT}/deletes`,{
       data: {
         user_id: sessionId,
       },
@@ -81,18 +82,18 @@ export const UserDeletes = () => {
     });
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. userDeletes --------------------------------------------------------------------------------
+  const userDeletesNode = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
         {translate("deletes")}
       </Div>
     );
-    // 7-2. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}>
+    // 7-2. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"d-column"} key={i}>
           <TextField
             select={false}
             type={"text"}
@@ -119,13 +120,13 @@ export const UserDeletes = () => {
           <Br20 />
           <TextArea
             readOnly={false}
-            className={"w-86vw h-10vh border shadow-none p-10 pointer"}
+            className={"w-86vw h-9vh border p-10 pointer"}
             value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
           />
-        </Div>
+        </Card>
       );
       return (
-        tableFragment(0)
+        cardFragment(0)
       );
     };
     // 7-3. button
@@ -144,19 +145,20 @@ export const UserDeletes = () => {
         </Button>
       </Div>
     );
-
     // 7-10. return
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min84vh"}>
-          {titleSection()}
-          <Hr40 />
-          {tableSection()}
-          <Hr40 />
-          {buttonSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min84vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {titleSection()}
+            <Hr40 />
+            {cardSection()}
+            <Hr40 />
+            {buttonSection()}
+          </Grid>
+        </Grid>
       </Paper>
       </>
     );
@@ -165,7 +167,7 @@ export const UserDeletes = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userDeletesNode()}
     </>
   );
 };

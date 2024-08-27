@@ -1,11 +1,12 @@
 // CalendarList.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { moment, axios, Calendar } from "../../import/ImportLibs.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
 import { Icons, Div } from "../../import/ImportComponents.jsx";
-import { Paper } from "../../import/ImportMuis.jsx";
+import { Paper, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {
@@ -60,9 +61,9 @@ export const CalendarList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/list`, {
+    axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: sessionId,
         DATE: DATE,
@@ -77,7 +78,7 @@ export const CalendarList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
@@ -126,9 +127,8 @@ export const CalendarList = () => {
         ))
       )
     );
-    // 7-3. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
+    const cardSection = () => {
+      const cardFragment = (i) => (
         <Calendar
           key={`${i}`}
           locale={"ko"}
@@ -202,15 +202,17 @@ export const CalendarList = () => {
         />
       );
       return (
-        LOADING ? <Loading /> : tableFragment(0)
+        LOADING ? <Loading /> : cardFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none pt-30"}>
-        <Div className={"block-wrapper h-min60vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min60vh pt-30"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -218,18 +220,13 @@ export const CalendarList = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND
       }}
-      functions={{
+      setState={{
         setDATE, setSEND
       }}
-      handlers={{
+      flow={{
         navigate
       }}
     />

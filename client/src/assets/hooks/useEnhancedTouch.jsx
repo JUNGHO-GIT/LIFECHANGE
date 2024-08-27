@@ -1,4 +1,4 @@
-// useDeveloperMode.jsx
+// useEnhancedTouch.jsx
 
 import { useEffect } from "../../import/ImportReacts.jsx";
 

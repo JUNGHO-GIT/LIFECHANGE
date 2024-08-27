@@ -1,4 +1,5 @@
 // ExerciseGoalSave.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect, useRef, createRef } from "../../../import/ImportReacts.jsx";
 import { useTime, useCommon } from "../../../import/ImportHooks.jsx";
@@ -7,18 +8,15 @@ import { sync } from "../../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
 import { Div, Br20 } from "../../../import/ImportComponents.jsx";
 import { Img, Picker, Time, Count, Delete } from "../../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, TextField } from "../../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, TextField, Grid } from "../../../import/ImportMuis.jsx";
 import { exercise2, exercise3_1, exercise5 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location_dateType, location_dateStart, location_dateEnd,
-    PATH, firstStr, secondStr, thirdStr, koreanDate,
-    URL_OBJECT, sessionId, translate
-  } = useCommon();
+  const { navigate, location_dateType, location_dateStart, location_dateEnd, PATH, koreanDate,
+  URL_OBJECT, sessionId, translate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -72,9 +70,9 @@ export const ExerciseGoalSave = () => {
   useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -94,12 +92,12 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/goal/detail`, {
+    axios.get(`${URL_OBJECT}/goal/detail`, {
       params: {
         user_id: sessionId,
         _id: "",
@@ -121,7 +119,7 @@ export const ExerciseGoalSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT) => {
@@ -172,9 +170,10 @@ export const ExerciseGoalSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     if (!validate(OBJECT)) {
+      setLOADING(false);
       return;
     }
-    await axios.post(`${URL_OBJECT}/goal/save`, {
+    axios.post(`${URL_OBJECT}/goal/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -207,7 +206,7 @@ export const ExerciseGoalSave = () => {
       alert(translate("noData"));
       return;
     }
-    await axios.post(`${URL_OBJECT}/goal/deletes`, {
+    axios.post(`${URL_OBJECT}/goal/deletes`, {
       user_id: sessionId,
       _id: OBJECT?._id,
       DATE: DATE,
@@ -249,11 +248,11 @@ export const ExerciseGoalSave = () => {
     }));
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. save ---------------------------------------------------------------------------------------
+  const saveNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border radius shadow-none p-20"}>
+      <Card className={"border radius p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -268,10 +267,9 @@ export const ExerciseGoalSave = () => {
         />
       </Card>
     );
-    // 7-3. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"border radius p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -441,17 +439,18 @@ export const ExerciseGoalSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : tableFragment(0)
+          LOADING ? <Loading /> : cardFragment(0)
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min60vh"}>
-          {dateCountSection()}
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min60vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -459,18 +458,13 @@ export const ExerciseGoalSave = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, COUNT, EXIST
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setCOUNT, setEXIST
       }}
-      handlers={{
+      flow={{
         navigate, flowSave, flowDeletes
       }}
     />
@@ -479,7 +473,7 @@ export const ExerciseGoalSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {saveNode()}
       {footerNode()}
     </>
   );

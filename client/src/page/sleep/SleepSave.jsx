@@ -1,13 +1,14 @@
 // SleepSave.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon, useTime } from "../../import/ImportHooks.jsx";
 import { moment, axios } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Br20 } from "../../import/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge } from "../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepSave = () => {
@@ -70,9 +71,9 @@ export const SleepSave = () => {
   useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/exist`, {
+    axios.get(`${URL_OBJECT}/exist`, {
       params: {
         user_id: sessionId,
         DATE: {
@@ -92,12 +93,12 @@ export const SleepSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/detail`, {
+    axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId,
         _id: "",
@@ -140,7 +141,7 @@ export const SleepSave = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -212,9 +213,10 @@ export const SleepSave = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     if (!validate(OBJECT)) {
+      setLOADING(false);
       return;
     }
-    await axios.post(`${URL_OBJECT}/save`, {
+    axios.post(`${URL_OBJECT}/save`, {
       user_id: sessionId,
       OBJECT: OBJECT,
       DATE: DATE,
@@ -247,7 +249,7 @@ export const SleepSave = () => {
       alert(translate("noData"));
       return;
     }
-    await axios.post(`${URL_OBJECT}/deletes`, {
+    axios.post(`${URL_OBJECT}/deletes`, {
       user_id: sessionId,
       _id: OBJECT?._id,
       DATE: DATE,
@@ -286,11 +288,11 @@ export const SleepSave = () => {
     }));
   };
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
+  // 7. save --------------------------------------------------------------------------------------
+  const saveNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Card className={"border radius shadow-none p-20"}>
+      <Card className={"border radius p-20"}>
         <Picker
           DATE={DATE}
           setDATE={setDATE}
@@ -305,10 +307,10 @@ export const SleepSave = () => {
         />
       </Card>
     );
-    // 7-3. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+    // 7-3. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"border radius p-20"} key={i}>
           <Div className={"d-between"}>
             <Badge
               badgeContent={i + 1}
@@ -367,17 +369,19 @@ export const SleepSave = () => {
       );
       return (
         COUNT?.newSectionCnt > 0 && (
-          LOADING ? <Loading /> : OBJECT?.sleep_section?.map((_, i) => (tableFragment(i)))
+          LOADING ? <Loading /> : OBJECT?.sleep_section?.map((_, i) => (cardFragment(i)))
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {dateCountSection()}
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {dateCountSection()}
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -385,18 +389,13 @@ export const SleepSave = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, COUNT, EXIST
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setCOUNT, setEXIST
       }}
-      handlers={{
+      flow={{
         navigate, flowSave, flowDeletes
       }}
     />
@@ -405,7 +404,7 @@ export const SleepSave = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {saveNode()}
       {footerNode()}
     </>
   );

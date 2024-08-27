@@ -1,4 +1,5 @@
 // ExerciseChartLine.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
@@ -471,14 +472,14 @@ export const ExerciseChartLine = () => {
         </PopUp>
       );
       return (
-        <Grid container>
-          <Grid item xs={3} className={"d-left"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={3} className={"d-left"}>
             {selectSection1()}
           </Grid>
-          <Grid item xs={6} className={"d-center"}>
+          <Grid size={6} className={"d-center"}>
             {titleSection()}
           </Grid>
-          <Grid item xs={3} className={"d-right"}>
+          <Grid size={3} className={"d-right"}>
             {selectSection2()}
           </Grid>
         </Grid>
@@ -487,22 +488,22 @@ export const ExerciseChartLine = () => {
     // 7-2. chart
     const chartSection = () => {
       const chartFragment1 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+        <Card className={"border radius p-20"} key={i}>
           {chartVolumeWeek()}
         </Card>
       );
       const chartFragment2 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+        <Card className={"border radius p-20"} key={i}>
           {chartVolumeMonth()}
         </Card>
       );
       const chartFragment3 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+        <Card className={"border radius p-20"} key={i}>
           {chartCardioWeek()}
         </Card>
       );
       const chartFragment4 = (i) => (
-        <Card className={"border radius shadow-none p-20"} key={i}>
+        <Card className={"border radius p-20"} key={i}>
           {chartCardioMonth()}
         </Card>
       );
@@ -521,12 +522,14 @@ export const ExerciseChartLine = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min40vh"}>
-          {headSection()}
-          <Br20 />
-          {chartSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min40vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12} className={"d-center"}>
+            {headSection()}
+            <Br20 />
+            {chartSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };

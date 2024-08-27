@@ -273,14 +273,14 @@ router.post("/update", async (req, res) => {
     if (result) {
       res.json({
         status: "success",
-        msg: "UpdateSuccessful",
+        msg: "updateSuccessful",
         result: result,
       });
     }
     else {
       res.json({
         status: "fail",
-        msg: "UpdateFailed",
+        msg: "updateFailed",
         result: null,
       });
     }

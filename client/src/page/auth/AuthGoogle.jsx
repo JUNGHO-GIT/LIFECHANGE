@@ -1,23 +1,21 @@
 // AuthGoogle.jsx
+// Node -> Section -> Fragment
 
-import { React, useEffect, useNavigate } from "../../import/ImportReacts.jsx";
+import { React, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
-import { Div } from "../../import/ImportComponents.jsx";
 import { Paper } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    URL_GOOGLE, navigate
-  } = useCommon();
+  const { URL_GOOGLE, navigate } = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
-    await axios.get(`${URL_GOOGLE}/afterCallback`)
+  useEffect(() => {
+    axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res) => {
       if (res.data.status === "success") {
         localStorage.setItem("autoLogin", "true");
@@ -41,25 +39,18 @@ export const AuthGoogle = () => {
     .catch((err) => {
       console.error(err);
     })
-  })()}, []);
+  }, []);
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-2. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}></Div>
-      );
-      return (
-        tableFragment(0)
-      );
-    };
+  // 7. authGoogle ---------------------------------------------------------------------------------
+  const authGoogleNode = () => {
+    // 1. empty
+    const empty = () => (
+      null
+    );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper d-column h-min85vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min85vh"}>
+        {empty()}
       </Paper>
     );
   };
@@ -67,7 +58,7 @@ export const AuthGoogle = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {authGoogleNode()}
     </>
   );
 };

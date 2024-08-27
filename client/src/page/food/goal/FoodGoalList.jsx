@@ -1,10 +1,11 @@
 // FoodGoalList.jsx
+// Node -> Section -> Fragment
 
 import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../../import/ImportHooks.jsx";
 import { axios, numeral, moment } from "../../../import/ImportLibs.jsx";
-import { Loading, Footer, Empty } from "../../../import/ImportLayouts.jsx";
-import { Div, Img, Hr30, Br10, Icons } from "../../../import/ImportComponents.jsx";
+import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
+import { Empty, Div, Img, Hr30, Br10, Icons } from "../../../import/ImportComponents.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../../import/ImportMuis.jsx";
 import { Paper, Card, Grid } from "../../../import/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../../import/ImportImages.jsx";
@@ -90,9 +91,9 @@ export const FoodGoalList = () => {
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/goal/list`, {
+    axios.get(`${URL_OBJECT}/goal/list`, {
       params: {
         user_id: sessionId,
         PAGING: PAGING,
@@ -117,12 +118,11 @@ export const FoodGoalList = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
+  }, [sessionId, PAGING.sort, PAGING.page, DATE.dateStart, DATE.dateEnd]);
 
-  // 7. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-3. table
-    const tableSection = () => {
+  // 7. list ---------------------------------------------------------------------------------------
+  const listNode = () => {
+    const cardSection = () => {
       const emptyFragment = () => (
         <Empty
           DATE={DATE}
@@ -132,7 +132,7 @@ export const FoodGoalList = () => {
           extra={"food"}
         />
       );
-      const tableFragment = (i) => (
+      const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
           <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
@@ -147,7 +147,7 @@ export const FoodGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container
+                <Grid container className={"w-100p"}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -161,14 +161,14 @@ export const FoodGoalList = () => {
                     });
                   }}
                 >
-                  <Grid item xs={2} className={"d-center"}>
+                  <Grid size={2} className={"d-center"}>
                     <Icons
                       name={"TbSearch"}
                       className={"w-18 h-18 black"}
                       onClick={() => {}}
                     />
                   </Grid>
-                  <Grid item xs={10} className={"d-left"}>
+                  <Grid size={10} className={"d-left"}>
                     {item.food_goal_dateStart === item.food_goal_dateEnd ? (
                       <>
                         <Div className={"fs-1-2rem fw-600"}>
@@ -202,16 +202,16 @@ export const FoodGoalList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("kcal")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -224,7 +224,7 @@ export const FoodGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_kcal).format("0,0")}
                     </Div>
@@ -237,7 +237,7 @@ export const FoodGoalList = () => {
                       {numeral(item.food_diff_kcal).format("+0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("kc")}
                     </Div>
@@ -253,16 +253,16 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("carb")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -275,7 +275,7 @@ export const FoodGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_carb).format("0,0")}
                     </Div>
@@ -288,7 +288,7 @@ export const FoodGoalList = () => {
                       {numeral(item.food_diff_carb).format("+0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -304,16 +304,16 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("protein")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -326,7 +326,7 @@ export const FoodGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_protein).format("0,0")}
                     </Div>
@@ -339,7 +339,7 @@ export const FoodGoalList = () => {
                       {numeral(item.food_diff_protein).format("+0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -355,16 +355,16 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container>
-                  <Grid item xs={2} className={"d-center"}>
+                <Grid container className={"w-100p"}>
+                  <Grid size={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid item xs={3} className={"d-left"}>
+                  <Grid size={3} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("fat")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right lh-1-8"}>
+                  <Grid size={3} className={"d-column align-right lh-1-8"}>
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
@@ -377,7 +377,7 @@ export const FoodGoalList = () => {
                       {translate("diff")}
                     </Div>
                   </Grid>
-                  <Grid item xs={3} className={"d-column align-right"}>
+                  <Grid size={3} className={"d-column align-right"}>
                     <Div className={"fs-1-0rem fw-600"}>
                       {numeral(item.food_goal_fat).format("0,0")}
                     </Div>
@@ -390,7 +390,7 @@ export const FoodGoalList = () => {
                       {numeral(item.food_diff_fat).format("+0,0")}
                     </Div>
                   </Grid>
-                  <Grid item xs={1} className={"d-column align-right lh-2-4"}>
+                  <Grid size={1} className={"d-column align-right lh-2-4"}>
                     <Div className={"fs-0-6rem"}>
                       {translate("g")}
                     </Div>
@@ -411,16 +411,18 @@ export const FoodGoalList = () => {
       );
       return (
         LOADING ? <Loading /> : (
-          COUNT.totalCnt === 0 ? emptyFragment() : tableFragment(0)
+          COUNT.totalCnt === 0 ? emptyFragment() : cardFragment(0)
         )
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -428,18 +430,13 @@ export const FoodGoalList = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         DATE, SEND, PAGING, COUNT
       }}
-      functions={{
+      setState={{
         setDATE, setSEND, setPAGING, setCOUNT
       }}
-      handlers={{
+      flow={{
         navigate
       }}
     />
@@ -448,7 +445,7 @@ export const FoodGoalList = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {listNode()}
       {footerNode()}
     </>
   );

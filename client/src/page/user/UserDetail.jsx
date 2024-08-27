@@ -1,20 +1,19 @@
 // UserDetail.jsx
+// Node -> Section -> Fragment
+// Fragment 는 반복요소
 
 import { React, useState, useEffect, useRef, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios, numeral } from "../../import/ImportLibs.jsx";
 import { Footer, Loading } from "../../import/ImportLayouts.jsx";
-import { Div, Br30, Br20, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Avatar, MenuItem } from "../../import/ImportMuis.jsx";
+import { Br30, Br20, Hr60, Input, Select, Div } from "../../import/ImportComponents.jsx";
+import { Paper, Avatar, MenuItem, Card, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, firstStr, secondStr, thirdStr, curProperty,
-    URL_OBJECT, sessionId, translate
-  } = useCommon();
+  const { navigate, curProperty, URL_OBJECT, sessionId, translate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState(false);
@@ -61,9 +60,9 @@ export const UserDetail = () => {
   });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {(async () => {
+  useEffect(() => {
     setLOADING(true);
-    await axios.get(`${URL_OBJECT}/detail`, {
+    axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: sessionId
       },
@@ -88,7 +87,7 @@ export const UserDetail = () => {
     .finally(() => {
       setLOADING(false);
     });
-  })()}, [sessionId]);
+  }, [sessionId]);
 
   // 2-4. validate ---------------------------------------------------------------------------------
   const validate = (OBJECT, extra) => {
@@ -150,9 +149,10 @@ export const UserDetail = () => {
   const flowSave = async () => {
     setLOADING(true);
     if (!validate(OBJECT)) {
+      setLOADING(false);
       return;
     }
-    await axios.post(`${URL_OBJECT}/update`, {
+    axios.post(`${URL_OBJECT}/update`, {
       user_id: sessionId,
       OBJECT: OBJECT,
     })
@@ -173,248 +173,175 @@ export const UserDetail = () => {
     });
   };
 
-  // 6. table --------------------------------------------------------------------------------------
-  const tableNode = () => {
-    // 7-1. table
-    const tableSection = () => {
-      const tableFragment = (i) => (
-        <Div className={"d-column"} key={i}>
-          <Avatar
-            alt={"user_image"}
-            src={OBJECT?.user_image}
-            className={"m-auto w-150 h-150"}
-          />
-          <Hr40 />
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("id")}
-            value={OBJECT?.user_id}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <Br20 />
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("regDt")}
-            value={OBJECT?.user_regDt.split("T")[0]}
-            className={"w-86vw"}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <Br30 />
-          {/** 성별 (N, M, F) **/}
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("gender")}
-            value={OBJECT.user_gender}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_gender}
-            error={ERRORS.user_gender}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_gender: e.target.value
-              }))
-            )}
-          >
-            {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
-              <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Br20 />
-          {/** 나이 (1세 ~ 100세) **/}
-          <TextField
-            select={true}
-            type={"text"}
-            size={"small"}
-            label={translate("age")}
-            value={OBJECT.user_age}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_age}
-            error={ERRORS.user_age}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_age: e.target.value
-              }))
-            )}
-          >
-            {Array.from({length: 100}, (v, i) => i + 1).map((item, i) => (
-              <MenuItem key={i} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Br20 />
-          {/** 신장 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("height")}
-            value={OBJECT.user_height}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_height}
-            error={ERRORS.user_height}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
+  // 6. userDetail ---------------------------------------------------------------------------------
+  const userDetailNode = () => {
+    // 7-1. image
+    const imageSection = () => (
+      <Div className={"d-center"}>
+        <Avatar
+          src={OBJECT?.user_image}
+          alt={"user_image"}
+          className={"w-150 h-150"}
+        />
+      </Div>
+    );
+    // 7-2. card
+    const cardSection = () => {
+      const cardFragment = (i) => (
+        <Card className={"d-column p-10"} key={i}>
+          <Grid container className={"w-100p"}>
+            <Grid size={12}>
+              {/** 아이디 **/}
+              <Input
+                label={translate("id")}
+                value={OBJECT?.user_id}
+                readOnly={true}
+              />
+              <Br20 />
+              {/** 등록일 **/}
+              <Input
+                label={translate("regDt")}
+                value={OBJECT?.user_regDt.split("T")[0]}
+                readOnly={true}
+              />
+            </Grid>
+            <Br30 />
+            <Grid size={12}>
+              {/** 성별 (N, M, F) **/}
+              <Select
+                label={translate("gender")}
+                value={OBJECT.user_gender}
+                inputRef={REFS.current.user_gender}
+                error={ERRORS.user_gender}
+                onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
-                    user_height: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
+                    user_gender: e.target.value
+                  }))
+                )}
+              >
+                {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
+                  <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Br20 />
+              {/** 나이 (1세 ~ 100세) **/}
+              <Select
+                label={translate("age")}
+                value={OBJECT.user_age}
+                inputRef={REFS.current.user_age}
+                error={ERRORS.user_age}
+                onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
-                    user_height: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("cm")}
-                </Div>
-              )
-            }}
-          />
-          <Br30 />
-          {/** 최초 몸무게 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("initScale")}
-            value={OBJECT.user_initScale}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_initScale}
-            error={ERRORS.user_initScale}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
+                    user_age: e.target.value
+                  }))
+                )}
+              >
+                {Array.from({length: 100}, (v, i) => i + 1).map((item, i) => (
+                  <MenuItem key={i} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+              <Br20 />
+              {/** 신장 **/}
+              <Input
+                label={translate("height")}
+                value={OBJECT.user_height}
+                inputRef={REFS.current.user_height}
+                error={ERRORS.user_height}
+                endAdornment={translate("cm")}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/^0+/, '');
+                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                    const newValue = parseFloat(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_height: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_height: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br30 />
+            <Grid size={12}>
+              {/** 최초 몸무게 **/}
+              <Input
+                label={translate("initScale")}
+                value={OBJECT.user_initScale}
+                inputRef={REFS.current.user_initScale}
+                error={ERRORS.user_initScale}
+                endAdornment={translate("k")}
+                onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
-                    user_initScale: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
+                    user_initScale: e.target.value
+                  }))
+                )}
+              />
+              <Br20 />
+              {/** 현재 몸무게 **/}
+              <Input
+                label={translate("curScale")}
+                value={OBJECT.user_curScale}
+                endAdornment={translate("k")}
+                readOnly={true}
+              />
+            </Grid>
+            <Br30 />
+            <Grid size={12}>
+              {/** 초기 자산 **/}
+              <Input
+                label={translate("initProperty")}
+                value={numeral(OBJECT.user_initProperty).format("0,0")}
+                inputRef={REFS.current.user_initProperty}
+                error={ERRORS.user_initProperty}
+                endAdornment={translate("currency")}
+                onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
-                    user_initScale: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-          />
-          <Br20 />
-          {/** 현재 몸무게 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("curScale")}
-            value={OBJECT.user_curScale}
-            className={"w-86vw text-left"}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-          />
-          <Br30 />
-          {/** 초기 자산 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("initProperty")}
-            value={numeral(OBJECT.user_initProperty).format("0,0")}
-            className={"w-86vw text-left"}
-            inputRef={REFS.current.user_initProperty}
-            error={ERRORS.user_initProperty}
-            onChange={(e) => {
-              const value = e.target.value.replace(/,/g, '');
-              if (/^\d*$/.test(value) || value === "") {
-                const newValue = Number(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 9999999999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: value,
-                  }));
-                }
-              }
-            }}
-            InputProps={{
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-          />
-          <Br20 />
-          {/** 현재 자산 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
-            label={translate("curProperty")}
-            value={numeral(curProperty).format("0,0")}
-            className={"w-86vw text-left"}
-            InputProps={{
-              readOnly: true,
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
+                    user_initProperty: e.target.value
+                  }))
+                )}
+              />
+              <Br20 />
+              {/** 현재 자산 **/}
+              <Input
+                label={translate("curProperty")}
+                value={numeral(curProperty).format("0,0")}
+                endAdornment={translate("currency")}
+                readOnly={true}
+              />
+            </Grid>
+          </Grid>
+        </Card>
       );
       return (
-        LOADING ? <Loading /> : tableFragment(0)
+        LOADING ? <Loading /> : cardFragment(0)
       );
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border shadow-none"}>
-        <Div className={"block-wrapper h-min75vh"}>
-          {tableSection()}
-        </Div>
+      <Paper className={"content-wrapper radius border h-min75vh"}>
+        <Grid container className={"w-100p"}>
+          <Grid size={12}>
+            <Br20 />
+            {imageSection()}
+            <Hr60 />
+            {cardSection()}
+          </Grid>
+        </Grid>
       </Paper>
     );
   };
@@ -422,18 +349,13 @@ export const UserDetail = () => {
   // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
-      strings={{
-        first: firstStr,
-        second: secondStr,
-        third: thirdStr,
-      }}
-      objects={{
+      state={{
         SEND
       }}
-      functions={{
+      setState={{
         setSEND
       }}
-      handlers={{
+      flow={{
         navigate, flowSave
       }}
     />
@@ -442,7 +364,7 @@ export const UserDetail = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {tableNode()}
+      {userDetailNode()}
       {footerNode()}
     </>
   );

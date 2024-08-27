@@ -1,8 +1,9 @@
 // AuthError.jsx
+// Node -> Section -> Fragment
 
 import { React } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
-import { Div, Br10, Br50 } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Br10, Br50 } from "../../import/ImportComponents.jsx";
 import { Button } from "../../import/ImportMuis.jsx";
 import { Grid } from "../../import/ImportMuis.jsx";
 
@@ -15,8 +16,8 @@ export const AuthError = () => {
   // 2. return -------------------------------------------------------------------------------------
   return (
     <Div className={"error_body"}>
-      <Grid container>
-        <Grid item xs={6}>
+      <Grid container className={"w-100p"}>
+        <Grid size={6}>
           <svg
             className="error_paper__main"
             viewBox="0 0 300 300"
@@ -107,7 +108,7 @@ export const AuthError = () => {
             </g>
           </svg>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Div className={"fs-50 fw-700"}>
             404
           </Div>
