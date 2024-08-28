@@ -8,16 +8,18 @@ export const Img = (props) => {
   if (srcProps) {
     const fileName = srcProps.split("/").pop().split(".")[0];
     return (
-      <img
-        alt={fileName}
+      <div
         style={{
-          margin: "0px 10px 0px 0px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
-        {...props}
-      />
+      >
+        <img
+          {...props}
+          alt={fileName}
+        />
+      </div>
     );
   }
   return null

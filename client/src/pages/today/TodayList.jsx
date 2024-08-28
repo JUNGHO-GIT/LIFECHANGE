@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { axios, numeral, moment } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Hr30, Br30, Br10, Img, Icons } from "../../imports/ImportComponents.jsx";
+import { Div, Hr, Br, Img, Icons } from "../../imports/ImportComponents.jsx";
 import { Empty } from "../../imports/ImportContainers.jsx";
 import { Paper, Card, Grid } from "../../imports/ImportMuis.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../imports/ImportMuis.jsx";
@@ -253,7 +253,7 @@ export const TodayList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_EXERCISE?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -319,7 +319,7 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -341,7 +341,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -363,7 +363,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 4 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -409,7 +409,7 @@ export const TodayList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_FOOD?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -475,7 +475,7 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -497,7 +497,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -519,7 +519,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 3 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -541,7 +541,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 4 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -587,7 +587,7 @@ export const TodayList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_MONEY?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -653,7 +653,7 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -675,7 +675,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -721,7 +721,7 @@ export const TodayList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_SLEEP?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -787,7 +787,7 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -809,7 +809,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -831,7 +831,7 @@ export const TodayList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 3 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -870,11 +870,11 @@ export const TodayList = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {exerciseSection()}
-            <Br30 />
+            <Br px={30} />
             {foodSection()}
-            <Br30 />
+            <Br px={30} />
             {moneySection()}
-            <Br30 />
+            <Br px={30} />
             {sleepSection()}
           </Grid>
         </Grid>

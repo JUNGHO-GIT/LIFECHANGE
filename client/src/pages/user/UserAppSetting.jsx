@@ -4,7 +4,7 @@
 import { useState } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Icons, Hr20, Br10 } from "../../imports/ImportComponents.jsx";
+import { Icons, Hr, Br } from "../../imports/ImportComponents.jsx";
 import { Card, Paper, Grid } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ export const UserAppSetting = () => {
       const cardFragment = (i) => (
         <Card className={"d-column border radius p-0"} key={i}>
           <Grid container columnSpacing={2} className={"fs-0-8rem"}>
-            <Br10 />
+            <Br px={10} />
             <Grid
               size={12}
               className={"d-between pointer p-5"}
@@ -43,7 +43,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid
               size={12}
               className={"d-between pointer p-5"}
@@ -62,7 +62,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid
               size={12}
               className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-5`}
@@ -81,7 +81,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid
               size={12}
               className={"d-between pointer p-5"}
@@ -100,7 +100,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid
               size={12}
               className={"d-between pointer p-5"}
@@ -123,7 +123,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid
               size={12}
               className={"d-between pointer p-5"}
@@ -142,7 +142,7 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Br10 />
+            <Br px={10} />
           </Grid>
         </Card>
       );

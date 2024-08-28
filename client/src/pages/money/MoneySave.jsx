@@ -6,7 +6,7 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br20, Select, Input, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Select, Input, Img } from "../../imports/ImportComponents.jsx";
 import { Picker, Memo, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { money2 } from "../../imports/ImportImages.jsx";
@@ -340,7 +340,7 @@ export const MoneySave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -355,13 +355,12 @@ export const MoneySave = () => {
           <Input
             label={translate("totalIncome")}
             value={numeral(OBJECT?.money_total_income).format("0,0")}
-            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={money2} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}
                 </Div>
@@ -371,13 +370,12 @@ export const MoneySave = () => {
           <Input
             label={translate("totalExpense")}
             value={numeral(OBJECT?.money_total_expense).format("0,0")}
-            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={money2} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}
                 </Div>
@@ -415,16 +413,13 @@ export const MoneySave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId={OBJECT?.money_section[i]?._id}
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Select
-              className={"w-40vw me-3vw"}
               label={translate("part")}
               value={OBJECT?.money_section[i]?.money_part_idx}
               inputRef={REFS?.current[i]?.money_part_idx}
@@ -455,7 +450,6 @@ export const MoneySave = () => {
             </Select>
             <Select
               label={translate("title")}
-              className={"w-40vw ms-3vw"}
               value={OBJECT?.money_section[i]?.money_title_idx}
               inputRef={REFS?.current[i]?.money_title_idx}
               error={ERRORS[i]?.money_title_idx}
@@ -485,19 +479,18 @@ export const MoneySave = () => {
               ))}
             </Select>
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={translate("amount")}
-              className={"w-86vw"}
               value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
               inputRef={REFS?.current[i]?.money_amount}
               error={ERRORS[i]?.money_amount}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("currency")}
                   </Div>
@@ -533,7 +526,7 @@ export const MoneySave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Memo
               OBJECT={OBJECT}

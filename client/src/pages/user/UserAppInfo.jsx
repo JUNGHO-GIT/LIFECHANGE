@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios } from "../../imports/ImportLibs.jsx"
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Div, Img, Br30, Br20, Hr20, Br10 } from "../../imports/ImportComponents.jsx";
+import { Div, Img, Br, Hr } from "../../imports/ImportComponents.jsx";
 import { Card, Paper, Grid } from "../../imports/ImportMuis.jsx";
 import { logo1 } from "../../imports/ImportImages.jsx";
 
@@ -59,7 +59,7 @@ export const UserAppInfo = () => {
       const cardFragment = (i) => (
         <Card className={"d-column border radius p-0"} key={i}>
           <Grid container columnSpacing={2} className={"fs-0-8rem"}>
-            <Br10 />
+            <Br px={10} />
             <Grid size={12} className={"d-between p-20"}>
               <Grid size={3} className={"d-left upper fw-600"}>
                 version
@@ -68,7 +68,7 @@ export const UserAppInfo = () => {
                 {OBJECT.version}
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid size={12} className={"d-between p-20"}>
               <Grid size={3} className={"d-left upper fw-600"}>
                 date
@@ -77,7 +77,7 @@ export const UserAppInfo = () => {
                 {OBJECT.date}
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid size={12} className={"d-between p-20"}>
               <Grid size={3} className={"d-left upper fw-600"}>
                 github
@@ -86,7 +86,7 @@ export const UserAppInfo = () => {
                 {OBJECT.git}
               </Grid>
             </Grid>
-            <Hr20 />
+            <Hr px={20} />
             <Grid size={12} className={"d-between p-20"}>
               <Grid size={3} className={"d-left upper fw-600"}>
                 license
@@ -95,7 +95,7 @@ export const UserAppInfo = () => {
                 {OBJECT.license}
               </Grid>
             </Grid>
-            <Br10 />
+            <Br px={10} />
           </Grid>
         </Card>
       );
@@ -108,11 +108,11 @@ export const UserAppInfo = () => {
       <Paper className={"content-wrapper d-center radius border h-min80vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
-            <Br20 />
+            <Br px={20} />
             {imageSection()}
-            <Br30 />
+            <Br px={30} />
             {cardSection()}
-            <Br30 />
+            <Br px={30} />
           </Grid>
         </Grid>
       </Paper>

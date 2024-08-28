@@ -1,11 +1,11 @@
 // UserResetPw.jsx
 // Node -> Section -> Fragment
 
-import { React, useState, useRef, createRef } from "../../imports/ImportReacts.jsx";
+import { useState, useRef, createRef } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios } from "../../imports/ImportLibs.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Div, Br10, Hr40, Btn, Input } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Hr, Btn, Input } from "../../imports/ImportComponents.jsx";
 import { Paper, Card, Grid } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -297,7 +297,7 @@ export const UserResetPw = () => {
               {translate("send")}
             </Btn>
           </Div>
-          <Br10 />
+          <Br px={10} />
           <Div className={"d-center"}>
             <Input
               label={translate("verify")}
@@ -319,7 +319,7 @@ export const UserResetPw = () => {
               {translate("verify")}
             </Btn>
           </Div>
-          <Br10 />
+          <Br px={10} />
           <Input
             type={"password"}
             label={translate("newPw")}
@@ -334,7 +334,7 @@ export const UserResetPw = () => {
               }))
             )}
           />
-          <Br10 />
+          <Br px={10} />
           <Input
             type={"password"}
             label={translate("newPwVerified")}
@@ -397,13 +397,13 @@ export const UserResetPw = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {cardSection()}
-            <Hr40 />
+            <Hr px={40} />
             {buttonSection()}
-            <Hr40 />
+            <Hr px={40} />
             {toLoginSection()}
-            <Br10 />
+            <Br px={10} />
             {toSignupSection()}
           </Grid>
         </Grid>

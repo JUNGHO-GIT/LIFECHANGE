@@ -5,7 +5,7 @@ import { useState, useRef, createRef } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios } from "../../imports/ImportLibs.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Input, Div, Br10, Img, Hr40, Select, Btn } from "../../imports/ImportComponents.jsx";
+import { Input, Div, Br, Img, Hr, Select, Btn } from "../../imports/ImportComponents.jsx";
 import { Paper, MenuItem, Grid, Card } from "../../imports/ImportMuis.jsx";
 import { user1 } from "../../imports/ImportImages.jsx";
 
@@ -373,7 +373,7 @@ export const UserSignup = () => {
               </Btn>
             </Grid>
           </Grid>
-          <Br10 />
+          <Br px={10} />
           <Div className={"d-center"}>
             <Input
               label={translate("verify")}
@@ -395,7 +395,7 @@ export const UserSignup = () => {
               {translate("verify")}
             </Btn>
           </Div>
-          <Br10 />
+          <Br px={10} />
           <Input
             type={"password"}
             label={translate("pw")}
@@ -410,7 +410,7 @@ export const UserSignup = () => {
               }))
             )}
           />
-          <Br10 />
+          <Br px={10} />
           <Input
             type={"password"}
             label={translate("pwVerified")}
@@ -425,12 +425,11 @@ export const UserSignup = () => {
               }))
             )}
           />
-          <Hr40 />
+          <Hr px={40} />
           {/** 성별 (N, M, F) **/}
           <Select
             label={translate("gender")}
             value={OBJECT.user_gender || "N"}
-            className={"w-86vw text-left"}
             disabled={OBJECT.user_id_verified === false}
             onChange={(e) => (
               setOBJECT((prev) => ({
@@ -445,12 +444,11 @@ export const UserSignup = () => {
               </MenuItem>
             ))}
           </Select>
-          <Br10 />
+          <Br px={10} />
           {/** 나이 (1세 ~ 100세) **/}
           <Input
             label={translate("age")}
             value={OBJECT.user_age}
-            className={"w-86vw text-left"}
             inputRef={REFS.current.user_age}
             error={ERRORS.user_age}
             disabled={OBJECT.user_id_verified === false}
@@ -473,19 +471,18 @@ export const UserSignup = () => {
               }
             }}
             InputProps={{
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("age")}
                 </Div>
               )
             }}
           />
-          <Br10 />
+          <Br px={10} />
           {/** 신장 **/}
           <Input
             label={translate("height")}
             value={OBJECT.user_height}
-            className={"w-86vw text-left"}
             inputRef={REFS.current.user_height}
             error={ERRORS.user_height}
             disabled={OBJECT.user_id_verified === false}
@@ -508,19 +505,18 @@ export const UserSignup = () => {
               }
             }}
             InputProps={{
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("cm")}
                 </Div>
               )
             }}
           />
-          <Br10 />
+          <Br px={10} />
           {/** 초기 체중 **/}
           <Input
             label={translate("scale")}
             value={OBJECT.user_initScale}
-            className={"w-86vw text-left"}
             inputRef={REFS.current.user_initScale}
             error={ERRORS.user_initScale}
             disabled={OBJECT.user_id_verified === false}
@@ -543,19 +539,18 @@ export const UserSignup = () => {
               }
             }}
             InputProps={{
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("k")}
                 </Div>
               )
             }}
           />
-          <Br10 />
+          <Br px={10} />
           {/** 초기 자산 **/}
           <Input
             label={translate("property")}
             value={OBJECT.user_initProperty}
-            className={"w-86vw text-left"}
             inputRef={REFS.current.user_initProperty}
             error={ERRORS.user_initProperty}
             disabled={OBJECT.user_id_verified === false}
@@ -578,7 +573,7 @@ export const UserSignup = () => {
               }
             }}
             InputProps={{
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("currency")}
                 </Div>
@@ -611,7 +606,7 @@ export const UserSignup = () => {
           className={"w-100p bg-white"}
           InputProps={{
             readOnly: true,
-            startAdornment: (
+            startadornment: (
               <Img src={user1} className={"w-15 h-15"} />
             ),
           }}
@@ -651,15 +646,15 @@ export const UserSignup = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {cardSection()}
-            <Hr40 />
+            <Hr px={40} />
             {buttonSection()}
-            <Br10 />
+            <Br px={10} />
             {googleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {toLoginSection()}
-            <Br10 />
+            <Br px={10} />
             {toResetPwSection()}
           </Grid>
         </Grid>

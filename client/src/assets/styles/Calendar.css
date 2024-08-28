@@ -75,12 +75,6 @@
   align-items: center;
   width: 100%;
 }
-.calendar-tile {
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px;
-}
 .calendar-tile-loading {
   position: relative;
   flex-direction: column;

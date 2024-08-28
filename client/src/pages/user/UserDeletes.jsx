@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../imports/ImportLibs.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Div, Br20, Hr40, Input, Btn } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Hr, Input, Btn } from "../../imports/ImportComponents.jsx";
 import { Paper, TextArea, Grid, Card } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ export const UserDeletes = () => {
               readOnly: true,
             }}
           />
-          <Br20 />
+          <Br px={20} />
           <Input
             label={translate("signupDate")}
             value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
@@ -107,10 +107,10 @@ export const UserDeletes = () => {
               readOnly: true,
             }}
           />
-          <Br20 />
+          <Br px={20} />
           <TextArea
             readOnly={false}
-            className={"w-86vw h-9vh border p-10 pointer"}
+            className={" h-9vh border p-10 pointer"}
             value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
           />
         </Card>
@@ -126,7 +126,7 @@ export const UserDeletes = () => {
           color={"primary"}
           className={"w-100p fs-1-0rem"}
           onClick={() => {
-            navigate("/user/detail");
+            flowSave();
           }}
         >
           {translate("cancel")}
@@ -141,9 +141,9 @@ export const UserDeletes = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {cardSection()}
-            <Hr40 />
+            <Hr px={40} />
             {buttonSection()}
           </Grid>
         </Grid>

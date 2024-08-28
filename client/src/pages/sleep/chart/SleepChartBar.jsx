@@ -6,7 +6,7 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { axios } from "../../../imports/ImportLibs.jsx";
 import { handlerY } from "../../../imports/ImportUtils.jsx";
 import { Loading } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br20, Img, Select, Input } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Img, Select, Input } from "../../../imports/ImportComponents.jsx";
 import { Paper, Card, Grid } from "../../../imports/ImportMuis.jsx";
 import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -206,7 +206,7 @@ export const SleepChartBar = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-column"}>
             {headSection()}
-            <Br20 />
+            <Br px={20} />
             {chartSection()}
           </Grid>
         </Grid>

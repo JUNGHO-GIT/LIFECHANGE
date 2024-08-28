@@ -2,8 +2,8 @@
 // Node -> Section -> Fragment
 
 import { useCommon } from "../../imports/ImportHooks.jsx";
-import { Div, Br10, Br50, Btn } from "../../imports/ImportComponents.jsx";
-import { Grid } from "../../imports/ImportMuis.jsx";
+import { Div, Br, Btn } from "../../imports/ImportComponents.jsx";
+import { Grid, Paper } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const AuthError = () => {
@@ -11,11 +11,11 @@ export const AuthError = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {navigate} = useCommon();
 
-  // 2. return -------------------------------------------------------------------------------------
-  return (
-    <Div className={"error_body"}>
-      <Grid container columnSpacing={1}>
-        <Grid size={6}>
+  // 7. errorNode ----------------------------------------------------------------------------------
+  const errorNode = () => {
+    const imageSection = () => (
+      <Grid container>
+        <Grid size={12}>
           <svg
             className="error_paper__main"
             viewBox="0 0 300 300"
@@ -106,15 +106,19 @@ export const AuthError = () => {
             </g>
           </svg>
         </Grid>
-        <Grid size={6}>
+      </Grid>
+    );
+    const textSection = () => (
+      <Grid container>
+        <Grid size={12}>
           <Div className={"fs-50 fw-700"}>
             404
           </Div>
-          <Br10 />
+          <Br px={10} />
           <Div className={"fs-20 fw-500"}>
             Page not found
           </Div>
-          <Br50 />
+          <Br px={50} />
           <Btn
             size={"large"}
             color={"error"}
@@ -126,6 +130,25 @@ export const AuthError = () => {
           </Btn>
         </Grid>
       </Grid>
-    </Div>
+    );
+    return (
+      <Paper className={"content-wrapper radius border h-100vh d-center"}>
+        <Grid container columnSpacing={1}>
+          <Grid size={6}>
+            {imageSection()}
+          </Grid>
+          <Grid size={6}>
+            {textSection()}
+          </Grid>
+        </Grid>
+      </Paper>
+    );
+  };
+
+  // 10. return ------------------------------------------------------------------------------------
+  return (
+    <>
+      {errorNode()}
+    </>
   );
 };

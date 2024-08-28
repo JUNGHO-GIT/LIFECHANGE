@@ -15,31 +15,28 @@ export const Input = ({
       type={props.type || "text"}
       size={props.size || "small"}
       fullWidth={props.fullWidth || true}
-      style={{
-        fontSize: "1.0rem",
-      }}
       slotProps={{
         ...props.slotProps,
         input: {
           ...props.slotProps?.input,
           className: (
-            props.inputClassName || ""
+            props.inputclass || "fs-1-0rem"
           ),
           readOnly: (
             props.readOnly || false
           ),
           startAdornment: (
-            typeof props.startAdornment === "string" ? (
-              <div className={"w-16 h-16"}>{props.startAdornment}</div>
+            typeof props.startadornment === "string" ? (
+              <div className={"fs-0-6rem me-10"}>{props.startadornment}</div>
             ) : (
-              props.startAdornment
+              <div className={"me-10"}>{props.startadornment}</div>
             )
           ),
           endAdornment: (
-            typeof props.endAdornment === "string" ? (
-              <div className={"fs-0-6rem"}>{props.endAdornment}</div>
+            typeof props.endadornment === "string" ? (
+              <div className={"fs-0-6rem ms-10"}>{props.endadornment}</div>
             ) : (
-              props.endAdornment
+              <div className={"ms-10"}>{props.endadornment}</div>
             )
           ),
         },

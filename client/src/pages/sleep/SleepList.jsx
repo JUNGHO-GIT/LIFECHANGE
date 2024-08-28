@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { axios, moment } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Hr30, Br10, Img, Icons } from "../../imports/ImportComponents.jsx";
+import { Div, Hr, Br, Img, Icons } from "../../imports/ImportComponents.jsx";
 import { Empty } from "../../imports/ImportContainers.jsx";
 import { Paper, Card, Grid } from "../../imports/ImportMuis.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../imports/ImportMuis.jsx";
@@ -112,7 +112,7 @@ export const SleepList = () => {
       );
       const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -178,7 +178,7 @@ export const SleepList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -200,7 +200,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -222,7 +222,7 @@ export const SleepList = () => {
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 3 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>

@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, createRef } from "../../imports/ImportReac
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br20, Input, Select, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Select, Img } from "../../imports/ImportComponents.jsx";
 import { Picker, Memo, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { calendar2 } from "../../imports/ImportImages.jsx";
@@ -298,7 +298,7 @@ export const CalendarSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -336,20 +336,18 @@ export const CalendarSave = () => {
             </Grid>
             <Grid size={6} className={"d-right"}>
               <Delete
-                id={OBJECT?._id}
-                sectionId={OBJECT?.calendar_section[i]?._id}
                 index={i}
                 handlerDelete={handlerDelete}
               />
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={6}>
               <Select
                 label={translate("part")}
                 value={OBJECT?.calendar_section[i]?.calendar_part_idx}
                 inputRef={REFS?.current[i]?.calendar_part_idx}
                 error={ERRORS[i]?.calendar_part_idx}
-                inputClassName={"fs-0-8rem"}
+                inputclass={"fs-0-8rem"}
                 onChange={(e) => {
                   const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
@@ -377,7 +375,7 @@ export const CalendarSave = () => {
                 value={OBJECT?.calendar_section[i]?.calendar_color}
                 inputRef={REFS?.current[i]?.calendar_color}
                 error={ERRORS[i]?.calendar_color}
-                inputClassName={"fs-0-8rem"}
+                inputclass={"fs-0-8rem"}
                 onChange={(e) => {
                   const newColor = e.target.value;
                   setOBJECT((prev) => ({
@@ -399,14 +397,14 @@ export const CalendarSave = () => {
                 ))}
               </Select>
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12}>
               <Input
                 label={translate("calendarTitle")}
                 value={OBJECT?.calendar_section[i]?.calendar_title}
                 inputRef={REFS?.current[i]?.calendar_title}
                 error={ERRORS[i]?.calendar_title}
-                startAdornment={
+                startadornment={
                   <Img src={calendar2} className={"w-16 h-16"} />
                 }
                 onChange={(e) => {
@@ -423,7 +421,7 @@ export const CalendarSave = () => {
                 }}
               />
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12}>
               <Memo
                 OBJECT={OBJECT}

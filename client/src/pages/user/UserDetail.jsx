@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, createRef } from "../../imports/ImportReac
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios, numeral } from "../../imports/ImportLibs.jsx";
 import { Footer, Loading } from "../../imports/ImportLayouts.jsx";
-import { Br30, Br20, Hr60, Input, Select, Div } from "../../imports/ImportComponents.jsx";
+import { Br, Input, Select, Div, Hr } from "../../imports/ImportComponents.jsx";
 import { Paper, Avatar, MenuItem, Card, Grid } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ export const UserDetail = () => {
                 value={OBJECT?.user_id}
                 readOnly={true}
               />
-              <Br20 />
+              <Br px={20} />
               {/** 등록일 **/}
               <Input
                 label={translate("regDt")}
@@ -204,7 +204,7 @@ export const UserDetail = () => {
                 readOnly={true}
               />
             </Grid>
-            <Br30 />
+            <Br px={30} />
             <Grid size={12}>
               {/** 성별 (N, M, F) **/}
               <Select
@@ -225,7 +225,7 @@ export const UserDetail = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <Br20 />
+              <Br px={20} />
               {/** 나이 (1세 ~ 100세) **/}
               <Select
                 label={translate("age")}
@@ -245,14 +245,14 @@ export const UserDetail = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <Br20 />
+              <Br px={20} />
               {/** 신장 **/}
               <Input
                 label={translate("height")}
                 value={OBJECT.user_height}
                 inputRef={REFS.current.user_height}
                 error={ERRORS.user_height}
-                endAdornment={translate("cm")}
+                endadornment={translate("cm")}
                 onChange={(e) => {
                   const value = e.target.value.replace(/^0+/, '');
                   if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
@@ -273,7 +273,7 @@ export const UserDetail = () => {
                 }}
               />
             </Grid>
-            <Br30 />
+            <Br px={30} />
             <Grid size={12}>
               {/** 최초 몸무게 **/}
               <Input
@@ -281,7 +281,7 @@ export const UserDetail = () => {
                 value={OBJECT.user_initScale}
                 inputRef={REFS.current.user_initScale}
                 error={ERRORS.user_initScale}
-                endAdornment={translate("k")}
+                endadornment={translate("k")}
                 onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
@@ -289,16 +289,16 @@ export const UserDetail = () => {
                   }))
                 )}
               />
-              <Br20 />
+              <Br px={20} />
               {/** 현재 몸무게 **/}
               <Input
                 label={translate("curScale")}
                 value={OBJECT.user_curScale}
-                endAdornment={translate("k")}
+                endadornment={translate("k")}
                 readOnly={true}
               />
             </Grid>
-            <Br30 />
+            <Br px={30} />
             <Grid size={12}>
               {/** 초기 자산 **/}
               <Input
@@ -306,7 +306,7 @@ export const UserDetail = () => {
                 value={numeral(OBJECT.user_initProperty).format("0,0")}
                 inputRef={REFS.current.user_initProperty}
                 error={ERRORS.user_initProperty}
-                endAdornment={translate("currency")}
+                endadornment={translate("currency")}
                 onChange={(e) => (
                   setOBJECT((prev) => ({
                     ...prev,
@@ -314,12 +314,12 @@ export const UserDetail = () => {
                   }))
                 )}
               />
-              <Br20 />
+              <Br px={20} />
               {/** 현재 자산 **/}
               <Input
                 label={translate("curProperty")}
                 value={numeral(curProperty).format("0,0")}
-                endAdornment={translate("currency")}
+                endadornment={translate("currency")}
                 readOnly={true}
               />
             </Grid>
@@ -335,9 +335,9 @@ export const UserDetail = () => {
       <Paper className={"content-wrapper radius border h-min75vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
-            <Br20 />
+            <Br px={20} />
             {imageSection()}
-            <Hr60 />
+            <Hr px={60} />
             {cardSection()}
           </Grid>
         </Grid>

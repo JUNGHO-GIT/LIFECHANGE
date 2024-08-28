@@ -15,7 +15,6 @@ export const Btn = ({
       variant={props?.variant || "contained"}
       style={{
         ...props?.style,
-        lineHeight: props?.style?.lineHeight || "1.4",
         padding: props?.style?.padding || "4px 10px",
         textTransform: props?.style?.textTransform || "none",
         whiteSpace: props?.style?.whiteSpace || "nowrap",

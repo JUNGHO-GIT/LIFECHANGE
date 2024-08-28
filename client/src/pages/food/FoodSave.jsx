@@ -6,7 +6,7 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br20, Input, Select, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Select, Img } from "../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, MenuItem,  Grid } from "../../imports/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../imports/ImportImages.jsx";
@@ -437,7 +437,7 @@ export const FoodSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -452,13 +452,12 @@ export const FoodSave = () => {
           <Input
             label={translate("totalKcal")}
             value={numeral(OBJECT?.food_total_kcal).format('0,0')}
-            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={food2} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("kc")}
                 </Div>
@@ -468,13 +467,12 @@ export const FoodSave = () => {
           <Input
             label={translate("totalCarb")}
             value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
-            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={food3} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
@@ -482,18 +480,17 @@ export const FoodSave = () => {
             }}
           />
         </Div>
-        <Br20 />
+        <Br px={20} />
         <Div className={"d-center"}>
           <Input
             label={translate("totalProtein")}
             value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
-            className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={food4} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
@@ -503,13 +500,12 @@ export const FoodSave = () => {
           <Input
             label={translate("totalFat")}
             value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
-            className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
-              startAdornment: (
+              startadornment: (
                 <Img src={food5} className={"w-16 h-16"} />
               ),
-              endAdornment: (
+              endadornment: (
                 <Div className={"fs-0-6rem"}>
                   {translate("g")}
                 </Div>
@@ -547,17 +543,14 @@ export const FoodSave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId={OBJECT?.food_section[i]?._id}
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Select
               label={translate("part")}
-              className={"w-40vw me-3vw"}
               value={OBJECT?.food_section[i]?.food_part_idx}
               inputRef={REFS?.current[i]?.food_part_idx}
               error={ERRORS[i]?.food_part_idx}
@@ -656,10 +649,9 @@ export const FoodSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
-              className={"w-40vw me-3vw"}
               label={translate("foodName")}
               value={OBJECT?.food_section[i]?.food_name}
               inputRef={REFS?.current[i]?.food_name}
@@ -678,7 +670,6 @@ export const FoodSave = () => {
               }}
             />
             <Input
-              className={"w-40vw ms-3vw"}
               label={translate("brand")}
               value={OBJECT?.food_section[i]?.food_brand}
               onChange={(e) => {
@@ -695,19 +686,18 @@ export const FoodSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={translate("kcal")}
-              className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
               inputRef={REFS?.current[i]?.food_kcal}
               error={ERRORS[i]?.food_kcal}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("kc")}
                   </Div>
@@ -744,15 +734,14 @@ export const FoodSave = () => {
             />
             <Input
               label={translate("carb")}
-              className={"w-40vw ms-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
               inputRef={REFS?.current[i]?.food_carb}
               error={ERRORS[i]?.food_carb}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food3} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
@@ -788,19 +777,18 @@ export const FoodSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={translate("protein")}
-              className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
               inputRef={REFS?.current[i]?.food_protein}
               error={ERRORS[i]?.food_protein}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food4} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
@@ -837,15 +825,14 @@ export const FoodSave = () => {
             />
             <Input
               label={translate("fat")}
-              className={"w-40vw ms-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
               inputRef={REFS?.current[i]?.food_fat}
               error={ERRORS[i]?.food_fat}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food5} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>

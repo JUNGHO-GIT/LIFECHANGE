@@ -4,7 +4,7 @@ import { Icons } from "../../imports/ImportComponents.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Delete = ({
-  id, sectionId, index, handlerDelete
+  index, handlerDelete
 }) => {
 
   // 2. deleteNode --------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ export const Delete = ({
     <Icons
       name={"TbX"}
       onClick={() => handlerDelete(index)}
-      className={"w-20 h-20 black"}
+      className={"w-20 h-20 mt-n10 me-n20 black"}
     />
   );
 

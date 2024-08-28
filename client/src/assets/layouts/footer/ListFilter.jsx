@@ -21,7 +21,7 @@ export const ListFilter = ({
       <Select
         label={translate("sort")}
         value={state?.PAGING?.sort || "asc"}
-        inputClassName={"h-min0 h-4vh"}
+        inputclass={"h-min0 h-4vh"}
         onChange={(e) => (
           setState?.setPAGING((prev) => ({
             ...prev,

@@ -23,10 +23,10 @@ export const Empty = ({
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border radius shadow-none"} key={`empty-${extra}`}>
+      <Card className={"border radius p-10"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
-            <Grid container className={"w-95p"}>
+            <Grid container columnSpacing={1}>
               <Grid size={2} className={"d-center"}>
                 <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate("search")}
@@ -44,10 +44,10 @@ export const Empty = ({
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border radius shadow-none"} key={`empty-${extra}`}>
+      <Card className={"border radius p-10"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
-            <Grid container className={"w-95p"}
+            <Grid container columnSpacing={1}
               onClick={(e) => {
                 e.stopPropagation();
                 Object.assign(SEND, {
@@ -67,12 +67,12 @@ export const Empty = ({
                   onClick={() => {}}
                 />
               </Grid>
-              <Grid size={3} className={"d-left"}>
+              <Grid size={2} className={"d-left"}>
                 <Div className={"fs-0-9rem fw-600 dark"}>
                   {translate(`${extra}`)}
                 </Div>
               </Grid>
-              <Grid size={7} className={"d-left"}>
+              <Grid size={8} className={"d-left"}>
                 <Div className={"fs-1-0rem fw-500 black"}>
                   {translate("empty")}
                 </Div>

@@ -6,7 +6,7 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br20, Input, Img } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Img } from "../../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
 import { money2 } from "../../../imports/ImportImages.jsx";
@@ -242,7 +242,7 @@ export const MoneyGoalSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -266,13 +266,11 @@ export const MoneyGoalSave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId={""}
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -282,15 +280,14 @@ export const MoneyGoalSave = () => {
                   `${translate("goalIncome")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
               inputRef={REFS?.current?.money_goal_income}
               error={ERRORS?.money_goal_income}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("currency")}
                   </Div>
@@ -316,7 +313,7 @@ export const MoneyGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -326,15 +323,14 @@ export const MoneyGoalSave = () => {
                   `${translate("goalExpense")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
               inputRef={REFS?.current?.money_goal_expense}
               error={ERRORS?.money_goal_expense}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={money2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("currency")}
                   </Div>

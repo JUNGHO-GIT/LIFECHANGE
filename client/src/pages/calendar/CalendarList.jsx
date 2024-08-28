@@ -5,15 +5,15 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { moment, axios, Calendar } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Icons, Div } from "../../imports/ImportComponents.jsx";
-import { Paper, Grid } from "../../imports/ImportMuis.jsx";
+import { Icons, Div, Br } from "../../imports/ImportComponents.jsx";
+import { Paper, Grid, Card } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { navigate, PATH, firstStr, secondStr, thirdStr, curMonthStart, curMonthEnd,
-    URL_OBJECT, sessionId, translate } = useCommon();
+  const { navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId,
+  translate } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -49,9 +49,9 @@ export const CalendarList = () => {
     calendar_section: [{
       _id: "",
       calendar_part_idx: 0,
-      calendar_part_val: "일정",
-      calendar_title : "",
+      calendar_part_val: "all",
       calendar_color: "#000000",
+      calendar_title : "",
       calendar_content: ""
     }]
   }];
@@ -79,20 +79,24 @@ export const CalendarList = () => {
 
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
-    const formatDate = (date) => (
-      moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-    );
-    const dateInRange = (date, dateStart, dateEnd) => {
-      const currDate = formatDate(date);
-      return currDate >= dateStart && currDate <= dateEnd;
+
+    const dateInRange = (date=new Date, dateStart="0000-00-00", dateEnd="0000-00-00") => {
+      const currDate = moment(date).tz("Asia/Seoul").startOf('day');
+      const startDate = moment(dateStart).tz("Asia/Seoul").startOf('day');
+      const endDate = moment(dateEnd).tz("Asia/Seoul").endOf('day');
+
+      return currDate.isSameOrAfter(startDate) && currDate.isSameOrBefore(endDate);
     };
+
     const activeLine = (calendarForDates) => (
       calendarForDates?.map((calendar) =>
         calendar.calendar_section?.map((section) => (
           <Div
-            key={`${calendar?._id}`}
+            key={`filled-${calendar._id}-${section._id}`}
             className={"calendar-filled"}
-            style={{ backgroundColor: section.calendar_color }}
+            style={{
+              backgroundColor: section.calendar_color
+            }}
             onClick={(e) => {
               e.stopPropagation();
               Object.assign(SEND, {
@@ -107,7 +111,9 @@ export const CalendarList = () => {
               });
             }}
           >
-            <span className={"calendar-category"}>{section.calendar_title}</span>
+            <span className={"calendar-category"}>
+              {section.calendar_title}
+            </span>
           </Div>
         ))
       )
@@ -116,87 +122,92 @@ export const CalendarList = () => {
       calendarForDates?.map((calendar) =>
         calendar.calendar_section.map((section) => (
           <Div
-            key={calendar._id}
+            key={`unfilled-${calendar._id}-${section._id}`}
             className={"calendar-unfilled"}
           >
-            <span className={"calendar-category"}>{section.calendar_title}</span>
+            <span className={"calendar-category"}>
+              {section.calendar_title}
+            </span>
           </Div>
         ))
       )
     );
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Calendar
-          key={`${i}`}
-          locale={"ko"}
-          view={"month"}
-          value={new Date(DATE.dateStart)}
-          onClickDay={(value) => {
-            Object.assign(SEND, {
-              id: "",
-              section_id: "",
-              dateType: "day",
-              dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-              dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-            });
-            navigate(SEND.toSave, {
-              state: SEND
-            });
-          }}
-          showNavigation={true}
-          showNeighboringMonth={true}
-          showDoubleView={false}
-          prev2Label={null}
-          next2Label={null}
-          prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
-          nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
-          formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
-          formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
-          formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
-          formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
-          formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
-          formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
-          formatShortWeekday={(locale, date) => {
-            const day = moment(date).tz("Asia/Seoul").format("d");
-            const week = [
-              translate("sun"), translate("mon"), translate("tue"), translate("wed"),
-              translate("thu"), translate("fri"), translate("sat")
-            ];
-            return week[day];
-          }}
-          onActiveStartDateChange={({ activeStartDate, value, view }) => {
-            setDATE((prev) => ({
-              ...prev,
-              dateStart: moment(activeStartDate).startOf("month").format("YYYY-MM-DD"),
-              dateEnd: moment(activeStartDate).endOf("month").format("YYYY-MM-DD"),
-            }));
-          }}
-          tileClassName={({ date, view }) => {
-            const calendarForDates = OBJECT.filter((calendar) => (
-              dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-            ));
-            const isToday = moment(date).isSame(new Date(), 'day');
-            let className
-              = calendarForDates.length >= 3
-              ? "calendar-tile over-y-auto"
-              : "calendar-tile";
+        <Card key={`${i}-card`} className={"calendar-card"}>
+          <Br px={20} />
+          <Calendar
+            key={`${i}-calendar`}
+            locale={"ko"}
+            view={"month"}
+            value={new Date(DATE.dateStart)}
+            showNavigation={true}
+            showNeighboringMonth={true}
+            showDoubleView={false}
+            prev2Label={null}
+            next2Label={null}
+            prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
+            nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
+            formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
+            formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
+            formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
+            formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
+            formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
+            formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
+            formatShortWeekday={(locale, date) => {
+              const day = moment(date).tz("Asia/Seoul").format("d");
+              const week = [
+                translate("sun"), translate("mon"), translate("tue"), translate("wed"),
+                translate("thu"), translate("fri"), translate("sat")
+              ];
+              return week[day];
+            }}
+            onClickDay={(value) => {
+              Object.assign(SEND, {
+                id: "",
+                section_id: "",
+                dateType: "",
+                dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              });
+              navigate(SEND.toSave, {
+                state: SEND
+              });
+            }}
+            tileClassName={({ date, view }) => {
+              let className = "calendar-tile";
+              let isToday = moment(date).isSame(new Date(), 'day');
 
-            if (isToday) {
-              className += " calendar-today";
-            }
-            return className;
-          }}
-          tileContent={({ date, view }) => {
-            const calendarForDates = OBJECT.filter((calendar) => (
-              dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-            ));
-            const content
-              = calendarForDates.length > 0
-              ? activeLine(calendarForDates)
-              : unActiveLine(calendarForDates);
-            return content;
-          }}
-        />
+              const calendarForDates = OBJECT.filter((calendar) => (
+                dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+              ));
+              if (calendarForDates.length > 0) {
+                const hasManySections = calendarForDates.some((calendar) => (
+                  calendar.calendar_section.length > 2
+                ));
+                if (hasManySections) {
+                  className += " over-y-auto";
+                }
+              }
+              if (isToday) {
+                className += " calendar-today";
+              }
+
+              return className;
+            }}
+            tileContent={({ date, view }) => {
+              const calendarForDates = OBJECT.filter((calendar) => (
+                dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+              ));
+              const content
+                = calendarForDates.length > 0
+                ? activeLine(calendarForDates)
+                : unActiveLine(calendarForDates);
+              return content;
+            }}
+          />
+          <Br px={20} />
+        </Card>
       );
       return (
         LOADING ? <Loading /> : cardFragment(0)
@@ -204,7 +215,7 @@ export const CalendarList = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min60vh pt-30"}>
+      <Paper className={"content-wrapper radius border h-min60vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}

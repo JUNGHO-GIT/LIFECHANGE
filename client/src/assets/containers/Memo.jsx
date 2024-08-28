@@ -2,7 +2,7 @@
 
 import { useState } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
-import { Img, Div, Br20, Input, Btn } from "../../imports/ImportComponents.jsx";
+import { Img, Div, Br, Input, Btn } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
 import { TextArea, Grid, Card } from "../../imports/ImportMuis.jsx";
 import { calendar3 } from "../../imports/ImportImages.jsx";
@@ -46,7 +46,7 @@ export const Memo = ({
                 }}
               />
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={6} className={"d-right"}>
               <Btn
                 color={"primary"}
@@ -86,7 +86,7 @@ export const Memo = ({
           className={"pointer"}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           readOnly={true}
-          startAdornment={
+          startadornment={
             <Img src={calendar3} className={"w-16 h-16"} />
           }
           onClick={(e) => {

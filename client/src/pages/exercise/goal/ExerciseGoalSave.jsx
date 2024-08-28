@@ -6,7 +6,7 @@ import { useTime, useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br20, Input, Img } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Img } from "../../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
 import { exercise2, exercise3_1, exercise5 } from "../../../imports/ImportImages.jsx";
@@ -259,7 +259,7 @@ export const ExerciseGoalSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -283,13 +283,11 @@ export const ExerciseGoalSave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId=""
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -299,15 +297,14 @@ export const ExerciseGoalSave = () => {
                   `${translate("goalCount")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
               inputRef={REFS?.current?.exercise_goal_count}
               error={ERRORS?.exercise_goal_count}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={exercise2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("c")}
                   </Div>
@@ -333,7 +330,7 @@ export const ExerciseGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -343,15 +340,14 @@ export const ExerciseGoalSave = () => {
                   `${translate("goalVolume")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
               inputRef={REFS?.current?.exercise_goal_volume}
               error={ERRORS?.exercise_goal_volume}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={exercise3_1} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("vol")}
                   </Div>
@@ -377,7 +373,7 @@ export const ExerciseGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -389,19 +385,18 @@ export const ExerciseGoalSave = () => {
               i={i}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={translate("goalWeight")}
-              className={"w-86vw"}
               value={OBJECT?.exercise_goal_weight}
               inputRef={REFS?.current?.exercise_goal_weight}
               error={ERRORS?.exercise_goal_weight}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={exercise5} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("k")}
                   </Div>

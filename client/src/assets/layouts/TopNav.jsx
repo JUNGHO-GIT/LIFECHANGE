@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, numeral } from "../../imports/ImportLibs.jsx";
 import { Tabs, Tab, tabsClasses, Paper, Grid, Card } from "../../imports/ImportMuis.jsx";
-import { Div, Img, Hr40, Br20, Br10, Input } from "../../imports/ImportComponents.jsx";
+import { Div, Img, Hr, Br, Input } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
 import { smile1, smile2, smile3, smile4, smile5 } from "../../imports/ImportImages.jsx";
 import { money2, money4 } from "../../imports/ImportImages.jsx";
@@ -254,7 +254,7 @@ export const TopNav = () => {
                   {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
                 </Div>
               </Grid>
-              <Hr40 />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center"}>
                   <Img src={smileImage.total} className={"w-max25 h-max25"} />
@@ -267,7 +267,7 @@ export const TopNav = () => {
                 </Div>
               </Grid>
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
                 <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
@@ -279,7 +279,7 @@ export const TopNav = () => {
                 {smileScore.exercise}
               </Div>
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
                 <Img src={smileImage.food} className={"w-max25 h-max25"} />
@@ -291,7 +291,7 @@ export const TopNav = () => {
                 {smileScore.food}
               </Div>
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
                 <Img src={smileImage.money} className={"w-max25 h-max25"} />
@@ -303,7 +303,7 @@ export const TopNav = () => {
                 {smileScore.money}
               </Div>
             </Grid>
-            <Br20 />
+            <Br px={20} />
             <Grid size={12} className={"d-center"}>
               <Div className={"d-center"}>
                 <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
@@ -315,7 +315,7 @@ export const TopNav = () => {
                 {smileScore.sleep}
               </Div>
             </Grid>
-            <Hr40 />
+            <Hr px={40} />
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-0-8rem"}>
                 {translate("score")}
@@ -348,13 +348,13 @@ export const TopNav = () => {
                   {translate("property")}
                 </Div>
               </Grid>
-              <Br10 />
+              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${property?.dateStart} ~ ${property?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr40 />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center"}>
                   <Img src={money2} className={"w-16 h-16"} />
@@ -363,44 +363,44 @@ export const TopNav = () => {
                   </Div>
                 </Div>
               </Grid>
-              <Hr40 />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initProperty")}
                   value={numeral(property.initProperty).format("0,0")}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={money2} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("currency")
                   }
                 />
               </Grid>
-              <Br20 />
+              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumIncome")}
                   value={numeral(property.totalIncome).format("0,0")}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={money2} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("currency")
                   }
                 />
               </Grid>
-              <Br20 />
+              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumExpense")}
                   value={numeral(property.totalExpense).format("0,0")}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={money2} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("currency")
                   }
                 />
@@ -433,13 +433,13 @@ export const TopNav = () => {
                   {translate("weight")}
                 </Div>
               </Grid>
-              <Br10 />
+              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr40 />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center"}>
                   <Img src={exercise5} className={"w-16 h-16"} />
@@ -448,44 +448,44 @@ export const TopNav = () => {
                   </Div>
                 </Div>
               </Grid>
-              <Hr40 />
+              <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initScale")}
                   value={scale.initScale}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={exercise5} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("k")
                   }
                 />
               </Grid>
-              <Br20 />
+              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("minScale")}
                   value={scale.minScale}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={exercise5} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("k")
                   }
                 />
               </Grid>
-              <Br20 />
+              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("maxScale")}
                   value={scale.maxScale}
                   readOnly={true}
-                  startAdornment={
+                  startadornment={
                     <Img src={exercise5} className={"w-16 h-16"} />
                   }
-                  endAdornment={
+                  endadornment={
                     translate("k")
                   }
                 />

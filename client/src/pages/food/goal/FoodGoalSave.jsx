@@ -6,7 +6,7 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br20, Img, Input } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Img, Input } from "../../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../../imports/ImportImages.jsx";
@@ -266,7 +266,7 @@ export const FoodGoalSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -290,13 +290,11 @@ export const FoodGoalSave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId={""}
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -306,15 +304,14 @@ export const FoodGoalSave = () => {
                   `${translate("goalKcal")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
               inputRef={REFS?.current?.food_goal_kcal}
               error={ERRORS?.food_goal_kcal}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food2} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("kc")}
                   </Div>
@@ -340,7 +337,7 @@ export const FoodGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -350,15 +347,14 @@ export const FoodGoalSave = () => {
                   `${translate("goalCarb")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
               inputRef={REFS?.current?.food_goal_carb}
               error={ERRORS?.food_goal_carb}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food3} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
@@ -384,7 +380,7 @@ export const FoodGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -394,15 +390,14 @@ export const FoodGoalSave = () => {
                   `${translate("goalProtein")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
               inputRef={REFS?.current?.food_goal_protein}
               error={ERRORS?.food_goal_protein}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food4} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>
@@ -428,7 +423,7 @@ export const FoodGoalSave = () => {
               }}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Input
               label={
@@ -438,15 +433,14 @@ export const FoodGoalSave = () => {
                   `${translate("goalFat")} (${translate("total")})`
                 )
               }
-              className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
               inputRef={REFS?.current?.food_goal_fat}
               error={ERRORS?.food_goal_fat}
               InputProps={{
-                startAdornment: (
+                startadornment: (
                   <Img src={food5} className={"w-16 h-16"} />
                 ),
-                endAdornment: (
+                endadornment: (
                   <Div className={"fs-0-6rem"}>
                     {translate("g")}
                   </Div>

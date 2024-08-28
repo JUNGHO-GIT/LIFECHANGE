@@ -6,7 +6,7 @@ import { useCommon, useTime } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br20, Img, Input, Select } from "../../imports/ImportComponents.jsx";
+import { Bg, Br, Img, Input, Select } from "../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "../../imports/ImportImages.jsx";
@@ -385,7 +385,7 @@ export const ExerciseSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -396,324 +396,295 @@ export const ExerciseSave = () => {
     // 7-2. total
     const totalSection = () => (
       <Card className={"border radius p-20"}>
-        <Div className={"d-center"}>
-          <Input
-            label={translate("totalVolume")}
-            value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
-            className={"w-40vw me-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
+        <Grid container columnSpacing={1}>
+          <Grid size={6}>
+            <Input
+              label={translate("totalVolume")}
+              value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
+              readOnly={true}
+              startadornment={
                 <Img src={exercise3_1} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("vol")}
-                </Div>
-              )
-            }}
-          />
-          <Input
-            label={translate("totalCardio")}
-            value={OBJECT?.exercise_total_cardio}
-            className={"w-40vw ms-3vw"}
-            InputProps={{
-              readOnly: true,
-              startAdornment: (
-                <Img src={exercise4} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("hm")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
-        <Br20 />
-        <Div className={"d-center"}>
-          <Input
-            label={translate("weight")}
-            value={OBJECT?.exercise_total_weight}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_total_weight: "0"
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_total_weight: value
-                  }));
-                }
               }
-            }}
-            InputProps={{
-              startAdornment: (
+              endadornment={
+                translate("vol")
+              }
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("totalCardio")}
+              value={OBJECT?.exercise_total_cardio}
+              readOnly={true}
+              startadornment={
+                <Img src={exercise4} className={"w-16 h-16"} />
+              }
+              endadornment={
+                translate("hm")
+              }
+            />
+          </Grid>
+          <Br px={20} />
+          <Grid size={12}>
+            <Input
+              label={translate("weight")}
+              value={OBJECT?.exercise_total_weight}
+              startadornment={
                 <Img src={exercise5} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
+              }
+              endadornment={
+                translate("k")
+              }
+              onChange={(e) => {
+                const value = e.target.value.replace(/^0+/, '');
+                if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                  const newValue = parseFloat(value);
+                  if (value === "") {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_total_weight: "0"
+                    }));
+                  }
+                  else if (!isNaN(newValue) && newValue <= 999) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_total_weight: value
+                    }));
+                  }
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
       </Card>
     );
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor:
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 0 ? '#1976d2' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 1 ? '#4CAF50' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 2 ? '#FFC107' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 3 ? '#FF5722' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 4 ? '#673AB7' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 5 ? '#3F51B5' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 6 ? '#2196F3' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 7 ? '#009688' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 8 ? '#CDDC39' :
-                    OBJECT?.exercise_section[i]?.exercise_part_idx === 9 ? '#FFEB3B' :
-                    '#9E9E9E',
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 0 ? '#1976d2' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 1 ? '#4CAF50' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 2 ? '#FFC107' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 3 ? '#FF5722' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 4 ? '#673AB7' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 5 ? '#3F51B5' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 6 ? '#2196F3' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 7 ? '#009688' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 8 ? '#CDDC39' :
+                  OBJECT?.exercise_section[i]?.exercise_part_idx === 9 ? '#FFEB3B' :
+                  '#9E9E9E'
                 }
-              }}
-            />
-            <Delete
-              id={OBJECT?._id}
-              sectionId={OBJECT?.exercise_section[i]?._id}
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Select
-              label={translate("part")}
-              className={"w-40vw me-3vw"}
-              value={OBJECT?.exercise_section[i]?.exercise_part_idx}
-              inputRef={REFS.current[i]?.exercise_part_idx}
-              error={ERRORS[i]?.exercise_part_idx}
-              onChange={(e) => {
-                const newIndex = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  exercise_section: prev.exercise_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      exercise_part_idx: newIndex,
-                      exercise_part_val: exerciseArray[newIndex]?.exercise_part,
-                      exercise_title_idx: 0,
-                      exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {exerciseArray?.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
-                    {translate(item.exercise_part)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              label={translate("title")}
-              className={"w-40vw ms-3vw"}
-              value={OBJECT?.exercise_section[i]?.exercise_title_idx}
-              inputRef={REFS.current[i]?.exercise_title_idx}
-              error={ERRORS[i]?.exercise_title_idx}
-              onChange={(e) => {
-                const newTitleIdx = Number(e.target.value);
-                const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
-                if (newTitleIdx >= 0 && newTitleVal) {
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Select
+                label={translate("part")}
+                value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+                inputRef={REFS.current[i]?.exercise_part_idx}
+                error={ERRORS[i]?.exercise_part_idx}
+                onChange={(e) => {
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
                     exercise_section: prev.exercise_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        exercise_title_idx: newTitleIdx,
-                        exercise_title_val: newTitleVal,
+                        exercise_part_idx: newIndex,
+                        exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                        exercise_title_idx: 0,
+                        exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
                       } : item
                     ))
                   }));
-                }
-              }}
-            >
-              {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
+                }}
+              >
+                {exerciseArray?.map((item, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                    {translate(item.exercise_part)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={6}>
+              <Select
+                label={translate("title")}
+                value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+                inputRef={REFS.current[i]?.exercise_title_idx}
+                error={ERRORS[i]?.exercise_title_idx}
+                onChange={(e) => {
+                  const newTitleIdx = Number(e.target.value);
+                  const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
+                  if (newTitleIdx >= 0 && newTitleVal) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_title_idx: newTitleIdx,
+                          exercise_title_val: newTitleVal,
+                        } : item
+                      ))
+                    }));
+                  }
+                }}
+              >
+                {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(title)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("set")}
-              className={"w-40vw me-3vw"}
-              value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
-              inputRef={REFS.current[i]?.exercise_set}
-              error={ERRORS[i]?.exercise_set}
-              InputProps={{
-                startAdornment: (
-                  <Img src={exercise1} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("s")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_set: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_set: value
-                        } : item
-                      ))
-                    }));
-                  }
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Input
+                label={translate("set")}
+                value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
+                inputRef={REFS.current[i]?.exercise_set}
+                error={ERRORS[i]?.exercise_set}
+                startadornment={
+                  <Img src={exercise3_1} className={"w-16 h-16"} />
                 }
-              }}
-            />
-            <Input
-              label={translate("rep")}
-              className={"w-40vw ms-3vw"}
-              value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
-              inputRef={REFS.current[i]?.exercise_rep}
-              error={ERRORS[i]?.exercise_rep}
-              InputProps={{
-                startAdornment: (
+                endadornment={
+                  translate("s")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_set: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_set: value
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                label={translate("rep")}
+                value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
+                inputRef={REFS.current[i]?.exercise_rep}
+                error={ERRORS[i]?.exercise_rep}
+                startadornment={
                   <Img src={exercise3_2} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("r")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rep: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rep: value
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("kg")}
-              className={"w-40vw me-3vw"}
-              value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
-              inputRef={REFS.current[i]?.exercise_kg}
-              error={ERRORS[i]?.exercise_kg}
-              InputProps={{
-                startAdornment: (
+                endadornment={
+                  translate("r")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_rep: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_rep: value
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Input
+                label={translate("kg")}
+                value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
+                inputRef={REFS.current[i]?.exercise_kg}
+                error={ERRORS[i]?.exercise_kg}
+                startadornment={
                   <Img src={exercise3_3} className={"w-16 h-16"} />
-                ),
-                endAdornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("k")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_kg: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_kg: value
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              extra={"exercise_cardio"}
-              i={i}
-            />
-          </Div>
+                endadornment={
+                  translate("k")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_kg: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_kg: value
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                extra={"exercise_cardio"}
+                i={i}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (

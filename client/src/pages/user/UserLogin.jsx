@@ -6,7 +6,7 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
 import { axios } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
-import { Input, Div, Br10, Btn, Img, Hr40 } from "../../imports/ImportComponents.jsx";
+import { Input, Div, Br, Btn, Img, Hr } from "../../imports/ImportComponents.jsx";
 import { Paper, Checkbox, Card, Grid } from "../../imports/ImportMuis.jsx";
 import { user1 } from "../../imports/ImportImages.jsx";
 
@@ -217,7 +217,7 @@ export const UserLogin = () => {
               setUserId(e.target.value);
             }}
           />
-          <Br10 />
+          <Br px={10} />
           <Input
             type={"password"}
             label={translate("pw")}
@@ -228,7 +228,7 @@ export const UserLogin = () => {
               setUserPw(e.target.value);
             }}
           />
-          <Br10 />
+          <Br px={10} />
           <Div className={"d-center mb-n20"}>
             <Div className={"fs-0-8rem"}>
               {translate("autoLogin")}
@@ -277,7 +277,7 @@ export const UserLogin = () => {
       <Input
         value={translate("googleLogin")}
         className={"bg-white pointer"}
-        startAdornment={user1 && <Img src={user1} className={"w-15 h-15"} />}
+        startadornment={user1 && <Img src={user1} className={"w-15 h-15"} />}
         onClick={() => {
           flowGoogle();
         }}
@@ -313,15 +313,15 @@ export const UserLogin = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {cardSection()}
-            <Hr40 />
+            <Hr px={40} />
             {buttonSection()}
-            <Br10 />
+            <Br px={10} />
             {googleSection()}
-            <Hr40 />
+            <Hr px={40} />
             {toSignupSection()}
-            <Br10 />
+            <Br px={10} />
             {toResetPwSection()}
           </Grid>
         </Grid>

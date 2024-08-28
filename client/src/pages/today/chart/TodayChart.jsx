@@ -1,12 +1,10 @@
 // TodayChart.jsx
 // Node -> Section -> Fragment
 
-import { React } from "../../../imports/ImportReacts.jsx";
 import { TodayChartExercise } from "./TodayChartExercise.jsx";
 import { TodayChartFood } from "./TodayChartFood.jsx";
 import { TodayChartMoney } from "./TodayChartMoney.jsx";
 import { TodayChartSleep } from "./TodayChartSleep.jsx";
-import { Br40 } from "../../../imports/ImportContainers.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const TodayChart = () => {

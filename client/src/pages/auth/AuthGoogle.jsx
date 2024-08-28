@@ -49,7 +49,7 @@ export const AuthGoogle = () => {
     );
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min85vh"}>
+      <Paper className={"content-wrapper radius border h-min95vh"}>
         {empty()}
       </Paper>
     );

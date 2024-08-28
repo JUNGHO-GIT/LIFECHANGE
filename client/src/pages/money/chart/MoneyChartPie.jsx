@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../../imports/ImportReacts.jsx";
 import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { axios } from "../../../imports/ImportLibs.jsx";
 import { Loading } from "../../../imports/ImportLayouts.jsx";
-import { Div, Img, Br20, Select} from "../../../imports/ImportComponents.jsx";
+import { Div, Img, Br, Select} from "../../../imports/ImportComponents.jsx";
 import { PopUp } from "../../../imports/ImportContainers.jsx";
 import { Paper, Card, MenuItem, Grid } from "../../../imports/ImportMuis.jsx";
 import { FormGroup, FormControlLabel, Switch } from "../../../imports/ImportMuis.jsx";
@@ -635,7 +635,7 @@ export const MoneyChartPie = () => {
         <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-column"}>
             {headSection()}
-            <Br20 />
+            <Br px={20} />
             {chartSection()}
           </Grid>
         </Grid>

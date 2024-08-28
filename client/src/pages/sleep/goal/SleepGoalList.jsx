@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../../imports/ImportHooks.jsx";
 import { axios, moment } from "../../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Img, Br10, Hr30, Icons } from "../../../imports/ImportComponents.jsx";
+import { Div, Img, Br, Hr, Icons } from "../../../imports/ImportComponents.jsx";
 import { Empty } from "../../../imports/ImportContainers.jsx";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../../imports/ImportMuis.jsx";
 import { Paper, Card, Grid } from "../../../imports/ImportMuis.jsx";
@@ -126,7 +126,7 @@ export const SleepGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border radius shadow-none"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -192,7 +192,7 @@ export const SleepGoalList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br10 />
+              <AccordionDetails><Br px={10} />
                 {/** row 1 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -207,11 +207,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("real")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("diff")}
                     </Div>
@@ -220,11 +220,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_bedTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_bedTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_bedTime_color}`}>
                       {item.sleep_diff_bedTime}
                     </Div>
@@ -233,17 +233,17 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
                   </Grid>
                 </Grid>
-                <Hr30 />
+                <Hr px={30} />
                 {/** row 2 **/}
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
@@ -258,11 +258,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("real")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("diff")}
                     </Div>
@@ -271,11 +271,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_wakeTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_wakeTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
                       {item.sleep_diff_wakeTime}
                     </Div>
@@ -284,18 +284,18 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
                   </Grid>
                 </Grid>
                 {/** row 3 **/}
-                <Hr30 />
+                <Hr px={30} />
                 <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
@@ -309,11 +309,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("goal")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("real")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-8rem fw-500 dark me-10"}>
                       {translate("diff")}
                     </Div>
@@ -322,11 +322,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_goal_sleepTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-1-0rem fw-600"}>
                       {item.sleep_sleepTime}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
                       {item.sleep_diff_sleepTime}
                     </Div>
@@ -335,11 +335,11 @@ export const SleepGoalList = () => {
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>
-                    <Br10 />
+                    <Br px={10} />
                     <Div className={"fs-0-6rem"}>
                       {translate("hm")}
                     </Div>

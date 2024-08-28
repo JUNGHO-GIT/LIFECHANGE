@@ -3,7 +3,7 @@
 import { useEffect, useState } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { moment } from "../../imports/ImportLibs.jsx";
-import { Btn, Input, Img, Div, Br20, Select } from "../../imports/ImportComponents.jsx";
+import { Btn, Input, Img, Div, Br, Select } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
 import { Badge,  MenuItem, PickersDay, Grid, Card } from "../../imports/ImportMuis.jsx";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "../../imports/ImportMuis.jsx";
@@ -152,97 +152,102 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-      <Div className={"d-column"}>
-        <Div className={"d-center fs-1-2rem fw-600"}>
-          {translate("viewDay")}
-        </Div>
-        <Br20 />
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-          <DateCalendar
-            timezone={"Asia/Seoul"}
-            views={["day"]}
-            readOnly={false}
-            value={moment(DATE.dateStart)}
-            className={"radius border"}
-            slots={{
-              day: (props) => {
-                const {outsideCurrentMonth, day, ...other} = props;
-                const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
-                const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
-                return (
-                  <Badge
-                    key={props.day.toString()}
-                    badgeContent={""}
-                    slotProps={{
-                      badge: {style: {
-                        width: 3, height: 3, padding: 0, top: 8, left: 30,
-                        backgroundColor: isBadged ? "#1976d2" : undefined,
-                      }}
-                    }}
-                  >
-                    <PickersDay
-                      {...other}
-                      day={day}
-                      selected={isSelected}
-                      outsideCurrentMonth={outsideCurrentMonth}
-                      onDaySelect={(day) => {
-                        setDATE((prev) => ({
-                          ...prev,
-                          dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                          dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
-                        }));
-                        Object.keys(sessionStorage).forEach((key) => {
-                          if (key.includes("foodSection")) {
-                            sessionStorage.removeItem(key);
-                          }
-                        });
-                      }}
-                    />
-                  </Badge>
-                )
-              },
-              previousIconButton: (props) => (
-                <Btn
-                  {...props}
-                  className={"fs-1-4rem"}
-                  onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).subtract(1, "month");
-                      const newDateEnd = newDateStart.clone().endOf('month');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
+        <Card className={"p-0"}>
+          <Grid container rowSpacing={3} className={"d-center"}>
+            <Grid size={12}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("viewDay")}
+              </Div>
+            </Grid>
+            <Grid size={12}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
+                      const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
+                      return (
+                        <Badge
+                          key={props.day.toString()}
+                          badgeContent={""}
+                          slotProps={{
+                            badge: {style: {
+                              width: 3, height: 3, padding: 0, top: 8, left: 30,
+                              backgroundColor: isBadged ? "#1976d2" : undefined,
+                            }}
+                          }}
+                        >
+                          <PickersDay
+                            {...other}
+                            day={day}
+                            selected={isSelected}
+                            outsideCurrentMonth={outsideCurrentMonth}
+                            onDaySelect={(day) => {
+                              setDATE((prev) => ({
+                                ...prev,
+                                dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                                dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                              }));
+                              Object.keys(sessionStorage).forEach((key) => {
+                                if (key.includes("foodSection")) {
+                                  sessionStorage.removeItem(key);
+                                }
+                              });
+                            }}
+                          />
+                        </Badge>
+                      )
+                    },
+                    previousIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                          setDATE((prev = {}) => {
+                            const newDateStart = moment(prev.dateStart).subtract(1, "month");
+                            const newDateEnd = newDateStart.clone().endOf('month');
+                            return {
+                              ...prev,
+                              dateStart: newDateStart.format("YYYY-MM-DD"),
+                              dateEnd: newDateEnd.format("YYYY-MM-DD")
+                            };
+                          });
+                        }}
+                      >
+                        {props.children}
+                      </Btn>
+                    ),
+                    nextIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                          setDATE((prev = {}) => {
+                            const newDateStart = moment(prev.dateStart).add(1, "month");
+                            const newDateEnd = newDateStart.clone().endOf('month');
+                            return {
+                              ...prev,
+                              dateStart: newDateStart.format("YYYY-MM-DD"),
+                              dateEnd: newDateEnd.format("YYYY-MM-DD")
+                            };
+                          });
+                        }}
+                      >
+                        {props.children}
+                      </Btn>
+                    )
                   }}
-                >
-                  {props.children}
-                </Btn>
-              ),
-              nextIconButton: (props) => (
-                <Btn
-                  {...props}
-                  className={"fs-1-4rem"}
-                  onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).add(1, "month");
-                      const newDateEnd = newDateStart.clone().endOf('month');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
-                  }}
-                >
-                  {props.children}
-                </Btn>
-              )
-            }}
-          />
-        </LocalizationProvider>
-      </Div>
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input
@@ -250,8 +255,8 @@ export const Picker = ({
           value={`${DATE.dateStart}`}
           className={widthStr}
           readOnly={true}
-          inputClassName={innerStr}
-          startAdornment={
+          inputclass={innerStr}
+          startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
           onClick={(e) => {
@@ -275,7 +280,7 @@ export const Picker = ({
           <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewWeek")}
           </Div>
-          <Br20 />
+          <Br px={20} />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -370,9 +375,9 @@ export const Picker = ({
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          inputClassName={innerStr}
+          inputclass={innerStr}
           readOnly={true}
-          startAdornment={
+          startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
           onClick={(e) => {
@@ -396,7 +401,7 @@ export const Picker = ({
           <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewMonth")}
           </Div>
-          <Br20 />
+          <Br px={20} />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -464,9 +469,9 @@ export const Picker = ({
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          inputClassName={innerStr}
+          inputclass={innerStr}
           readOnly={true}
-          startAdornment={
+          startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
           onClick={(e) => {
@@ -490,7 +495,7 @@ export const Picker = ({
           <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewYear")}
           </Div>
-          <Br20 />
+          <Br px={20} />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -558,9 +563,9 @@ export const Picker = ({
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          inputClassName={innerStr}
+          inputclass={innerStr}
           readOnly={true}
-          startAdornment={
+          startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
           onClick={(e) => {
@@ -584,7 +589,7 @@ export const Picker = ({
           <Div className={"d-center fs-1-2rem fw-600"}>
             {translate("viewSelect")}
           </Div>
-          <Br20 />
+          <Br px={20} />
           <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
             <DateCalendar
               timezone={"Asia/Seoul"}
@@ -663,8 +668,8 @@ export const Picker = ({
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
           readOnly={true}
-          inputClassName={innerStr}
-          startAdornment={
+          inputclass={innerStr}
+          startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
           onClick={(e) => {
@@ -780,65 +785,59 @@ export const Picker = ({
 
   // 7. type ---------------------------------------------------------------------------------------
   const saveTypeSection = () => (
-    (firstStr === "calendar" && secondStr !== "goal") ||
-    (firstStr !== "calendar" && secondStr === "goal") ? (
-      <Select
-        label={translate("dateType")}
-        value={DATE.dateType || ""}
-        className={"w-26vw me-3vw"}
-        inputClassName={typeStr}
-        onChange={(e) => {
-          if (e.target.value === "day") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "day",
-              dateStart: koreanDate,
-              dateEnd: koreanDate
-            }));
-          }
-          else if (e.target.value === "week") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "week",
-              dateStart: curWeekStart,
-              dateEnd: curWeekEnd
-            }));
-          }
-          else if (e.target.value === "month") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "month",
-              dateStart: curMonthStart,
-              dateEnd: curMonthEnd
-            }));
-          }
-          else if (e.target.value === "year") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "year",
-              dateStart: curYearStart,
-              dateEnd: curYearEnd
-            }));
-          }
-          else if (e.target.value === "select") {
-            setDATE((prev) => ({
-              ...prev,
-              dateType: "select",
-              dateStart: koreanDate,
-              dateEnd: koreanDate,
-            }));
-          }
-        }}
-      >
-        {["day", "week", "month", "year", "select"]?.map((item) => (
-          <MenuItem key={item} value={item} selected={item === DATE.dateType}>
-            {translate(item)}
-          </MenuItem>
-        ))}
-      </Select>
-    ) : (
-      null
-    )
+    <Select
+      label={translate("dateType")}
+      value={DATE.dateType || ""}
+      inputclass={typeStr}
+      onChange={(e) => {
+        if (e.target.value === "day") {
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "day",
+            dateStart: koreanDate,
+            dateEnd: koreanDate
+          }));
+        }
+        else if (e.target.value === "week") {
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "week",
+            dateStart: curWeekStart,
+            dateEnd: curWeekEnd
+          }));
+        }
+        else if (e.target.value === "month") {
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "month",
+            dateStart: curMonthStart,
+            dateEnd: curMonthEnd
+          }));
+        }
+        else if (e.target.value === "year") {
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "year",
+            dateStart: curYearStart,
+            dateEnd: curYearEnd
+          }));
+        }
+        else if (e.target.value === "select") {
+          setDATE((prev) => ({
+            ...prev,
+            dateType: "select",
+            dateStart: koreanDate,
+            dateEnd: koreanDate,
+          }));
+        }
+      }}
+    >
+      {["day", "week", "month", "year", "select"]?.map((item) => (
+        <MenuItem key={item} value={item} selected={item === DATE.dateType}>
+          {translate(item)}
+        </MenuItem>
+      ))}
+    </Select>
   );
 
   // 6. list ---------------------------------------------------------------------------------------

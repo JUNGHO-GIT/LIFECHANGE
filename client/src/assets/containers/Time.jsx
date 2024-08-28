@@ -126,27 +126,18 @@ export const Time = ({
       {(popTrigger={}) => (
         <Input
           label={translateStr}
-          className={"w-86vw"}
           value={OBJECT?.[`${extra}`]}
           inputRef={REFS?.current?.[`${extra}`]}
           error={ERRORS?.[`${extra}`]}
-          slotProps={{
-            input: {
-              readOnly: true,
-              startAdornment: (
-                <Img src={image} className={"w-16 h-16"} />
-              ),
-              endAdornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("hm")}
-                </Div>
-              )
-            }
-          }}
+          readOnly={true}
+          startadornment={
+            <Img src={image} className={"w-16 h-16"} />
+          }
+          endadornment={
+            translate("hm")
+          }
           onClick={(e) => {
-            extra !== "sleep_sleepTime" && (
-              popTrigger.openPopup(e.currentTarget)
-            )
+            popTrigger.openPopup(e.currentTarget)
           }}
         />
       )}
@@ -186,15 +177,14 @@ export const Time = ({
       {(popTrigger={}) => (
         <Input
           label={translate(translateStr)}
-          className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           inputRef={REFS?.current?.[i]?.[`${extra}`]}
           error={ERRORS?.[i]?.[`${extra}`]}
           readOnly={true}
-          startAdornment={
+          startadornment={
             <Img src={image} className={"w-16 h-16"} />
           }
-          endAdornment={
+          endadornment={
             translate("hm")
           }
           onClick={(e) => {

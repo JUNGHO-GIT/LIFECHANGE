@@ -21,7 +21,7 @@ export const Dummy = ({
       <Select
         value={state?.PART}
         defaultValue={"exerciseGoal"}
-        inputClassName={"h-min0 h-30 fs-0-7rem"}
+        inputclass={"h-min0 h-30 fs-0-7rem"}
         onChange={(e) => {
           const newPartVal = e.target.value;
           setState?.setPART(newPartVal);
@@ -61,7 +61,7 @@ export const Dummy = ({
     const countSection = () => (
       <Input
         value={numeral(state?.COUNT?.inputCnt).format("0")}
-        inputClassName={"h-min0 h-30 fs-0-8rem"}
+        inputclass={"h-min0 h-30 fs-0-8rem"}
         onChange={(e) => {
           const value = e.target.value.replace(/,/g, '');
           if (/^\d*$/.test(value) || value === "") {

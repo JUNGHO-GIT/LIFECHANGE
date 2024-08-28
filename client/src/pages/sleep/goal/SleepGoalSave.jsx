@@ -6,7 +6,7 @@ import { useCommon, useTime } from "../../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br20 } from "../../../imports/ImportComponents.jsx";
+import { Div, Br } from "../../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
 
@@ -246,7 +246,7 @@ export const SleepGoalSave = () => {
           EXIST={EXIST}
           setEXIST={setEXIST}
         />
-        <Br20 />
+        <Br px={20} />
         <Count
           COUNT={COUNT}
           setCOUNT={setCOUNT}
@@ -270,13 +270,11 @@ export const SleepGoalSave = () => {
               }}
             />
             <Delete
-              id={OBJECT?._id}
-              sectionId={""}
               index={i}
               handlerDelete={handlerDelete}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -288,7 +286,7 @@ export const SleepGoalSave = () => {
               i={i}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
@@ -300,7 +298,7 @@ export const SleepGoalSave = () => {
               i={i}
             />
           </Div>
-          <Br20 />
+          <Br px={20} />
           <Div className={"d-center"}>
             <Time
               OBJECT={OBJECT}
