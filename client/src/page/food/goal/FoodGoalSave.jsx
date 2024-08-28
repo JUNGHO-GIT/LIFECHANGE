@@ -6,9 +6,9 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../import/ImportLibs.jsx";
 import { sync } from "../../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20 } from "../../../import/ImportComponents.jsx";
+import { Empty, Div, Br20, Select, Input } from "../../../import/ImportComponents.jsx";
 import { Img, Picker, Count, Delete } from "../../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, Grid } from "../../../import/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -297,10 +297,7 @@ export const FoodGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalKcal")}`
@@ -345,10 +342,7 @@ export const FoodGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalCarb")}`
@@ -393,10 +387,7 @@ export const FoodGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalProtein")}`
@@ -441,10 +432,7 @@ export const FoodGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalFat")}`

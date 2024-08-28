@@ -2,8 +2,7 @@
 
 import { React } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
-import { PopUp, Img, Div, Icons } from "../../import/ImportComponents.jsx";
-import { TextField } from "../../import/ImportMuis.jsx";
+import { PopUp, Img, Div, Icons, Input } from "../../import/ImportComponents.jsx";
 import { common2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -28,8 +27,7 @@ export const Count = ({
           </Div>
         )}>
         {(popTrigger={}) => (
-          <TextField
-            type={"text"}
+          <Input
             label={translate("item")}
             variant={"outlined"}
             size={"small"}

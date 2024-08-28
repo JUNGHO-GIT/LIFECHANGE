@@ -4,8 +4,8 @@
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, numeral } from "../../import/ImportLibs.jsx";
-import { TextField, Tabs, Tab, tabsClasses, Paper, Grid, Card } from "../../import/ImportMuis.jsx";
-import { PopUp, Div, Img, Hr40, Br20, Br10 } from "../../import/ImportComponents.jsx";
+import {  Tabs, Tab, tabsClasses, Paper, Grid, Card } from "../../import/ImportMuis.jsx";
+import { PopUp, Div, Img, Hr40, Br20, Br10, Input } from "../../import/ImportComponents.jsx";
 import { smile1, smile2, smile3, smile4, smile5 } from "../../import/ImportImages.jsx";
 import { money2, money4 } from "../../import/ImportImages.jsx";
 import { exercise5, exercise6 } from "../../import/ImportImages.jsx";
@@ -366,8 +366,7 @@ export const TopNav = () => {
               </Grid>
               <Hr40 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("initProperty")}
                   size={"small"}
                   variant={"outlined"}
@@ -388,8 +387,7 @@ export const TopNav = () => {
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("sumIncome")}
                   size={"small"}
                   variant={"outlined"}
@@ -410,8 +408,7 @@ export const TopNav = () => {
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("sumExpense")}
                   size={"small"}
                   variant={"outlined"}
@@ -475,8 +472,7 @@ export const TopNav = () => {
               </Grid>
               <Hr40 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("initScale")}
                   size={"small"}
                   variant={"outlined"}
@@ -497,8 +493,7 @@ export const TopNav = () => {
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("minScale")}
                   size={"small"}
                   variant={"outlined"}
@@ -519,8 +514,7 @@ export const TopNav = () => {
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
-                <TextField
-                  select={false}
+                <Input
                   label={translate("maxScale")}
                   size={"small"}
                   variant={"outlined"}

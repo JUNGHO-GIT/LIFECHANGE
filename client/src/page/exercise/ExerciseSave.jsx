@@ -6,8 +6,8 @@ import { useCommon, useTime } from "../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Div, Br20, Img, Picker, Time, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, MenuItem, TextField, Grid } from "../../import/ImportMuis.jsx";
+import { Div, Br20, Img, Picker, Time, Count, Delete, Input, Select } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Badge, MenuItem, Grid } from "../../import/ImportMuis.jsx";
 import { exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -396,8 +396,7 @@ export const ExerciseSave = () => {
     const totalSection = () => (
       <Card className={"border radius p-20"}>
         <Div className={"d-center"}>
-          <TextField
-            select={false}
+          <Input
             label={translate("totalVolume")}
             size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
@@ -415,8 +414,7 @@ export const ExerciseSave = () => {
               )
             }}
           />
-          <TextField
-            select={false}
+          <Input
             label={translate("totalCardio")}
             size={"small"}
             value={OBJECT?.exercise_total_cardio}
@@ -437,8 +435,7 @@ export const ExerciseSave = () => {
         </Div>
         <Br20 />
         <Div className={"d-center"}>
-          <TextField
-            select={false}
+          <Input
             label={translate("weight")}
             type={"text"}
             size={"small"}
@@ -510,8 +507,7 @@ export const ExerciseSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={true}
+            <Select
               type={"text"}
               size={"small"}
               label={translate("part")}
@@ -543,9 +539,8 @@ export const ExerciseSave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
-            <TextField
-              select={true}
+            </Select>
+            <Select
               type={"text"}
               size={"small"}
               label={translate("title")}
@@ -578,12 +573,11 @@ export const ExerciseSave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
+            <Input
               type={"text"}
               label={translate("set")}
               size={"small"}
@@ -631,8 +625,7 @@ export const ExerciseSave = () => {
                 }
               }}
             />
-            <TextField
-              select={false}
+            <Input
               label={translate("rep")}
               size={"small"}
               variant={"outlined"}
@@ -682,8 +675,7 @@ export const ExerciseSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
+            <Input
               label={translate("kg")}
               size={"small"}
               variant={"outlined"}

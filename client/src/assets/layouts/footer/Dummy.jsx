@@ -3,8 +3,8 @@
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
-import { Div } from "../../../import/ImportComponents.jsx";
-import { Card, Button, TextField, MenuItem } from "../../../import/ImportMuis.jsx";
+import { Div, Input, Select } from "../../../import/ImportComponents.jsx";
+import { Card, Button,  MenuItem } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Dummy = ({
@@ -18,8 +18,7 @@ export const Dummy = ({
   const dummyNode = () => {
     // 1. part
     const partSection = () => (
-      <TextField
-        select={true}
+      <Select
         type={"text"}
         size={"small"}
         className={"me-2vw"}
@@ -63,14 +62,11 @@ export const Dummy = ({
         <MenuItem value={"sleep"}>
           <Div className={"fs-0-7rem"}>{translate("sleep")}</Div>
         </MenuItem>
-      </TextField>
+      </Select>
     );
     // 2. count
     const countSection = () => (
-      <TextField
-        select={false}
-        type={"text"}
-        size={"small"}
+      <Input
         className={"me-2vw"}
         variant={"outlined"}
         value={Math.min(state?.COUNT?.inputCnt, 100)}

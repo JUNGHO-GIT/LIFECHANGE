@@ -6,9 +6,9 @@ import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Br20, Select, Input } from "../../import/ImportComponents.jsx";
 import { Img, Picker, Memo, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, MenuItem, TextField, Grid } from "../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, MenuItem, Grid } from "../../import/ImportMuis.jsx";
 import { money2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -352,8 +352,7 @@ export const MoneySave = () => {
     const totalSection = () => (
       <Card className={"border radius p-20"}>
         <Div className={"d-center"}>
-          <TextField
-            select={false}
+          <Input
             label={translate("totalIncome")}
             size={"small"}
             value={numeral(OBJECT?.money_total_income).format("0,0")}
@@ -371,8 +370,7 @@ export const MoneySave = () => {
               )
             }}
           />
-          <TextField
-            select={false}
+          <Input
             label={translate("totalExpense")}
             size={"small"}
             value={numeral(OBJECT?.money_total_expense).format("0,0")}
@@ -428,8 +426,7 @@ export const MoneySave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={true}
+            <Select
               type={"text"}
               size={"small"}
               variant={"outlined"}
@@ -461,9 +458,8 @@ export const MoneySave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
-            <TextField
-              select={true}
+            </Select>
+            <Select
               type={"text"}
               size={"small"}
               label={translate("title")}
@@ -496,12 +492,11 @@ export const MoneySave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
+            <Input
               label={translate("amount")}
               size={"small"}
               variant={"outlined"}

@@ -2,8 +2,8 @@
 
 import { React, useState, useLocation } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
-import { PopUp, Img, Div, Br20 } from "../../import/ImportComponents.jsx";
-import { TextField, Button, TextArea } from "../../import/ImportMuis.jsx";
+import { PopUp, Img, Div, Br20, Input } from "../../import/ImportComponents.jsx";
+import {  Button, TextArea } from "../../import/ImportMuis.jsx";
 import { calendar3 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -98,8 +98,7 @@ export const Memo = ({
         </Div>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          select={false}
+        <Input
           label={translate("memo")}
           size={"small"}
           variant={"outlined"}

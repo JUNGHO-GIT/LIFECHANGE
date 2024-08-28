@@ -5,8 +5,8 @@ import { React, useState, useRef, createRef } from "../../import/ImportReacts.js
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Empty, Div, Br10, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button, Card, Grid } from "../../import/ImportMuis.jsx";
+import { Empty, Div, Br10, Hr40, Select, Input } from "../../import/ImportComponents.jsx";
+import { Paper,  Button, Card, Grid } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = () => {
@@ -275,10 +275,7 @@ export const UserResetPw = () => {
         <Card className={"d-column"} key={i}>
           {/** section 1 **/}
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={`${translate("id")} (email)`}
               value={OBJECT.user_id}
               className={"w-66vw me-10"}
@@ -305,10 +302,7 @@ export const UserResetPw = () => {
           </Div>
           <Br10 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={translate("verify")}
               value={clientCode}
               className={"w-66vw me-10"}
@@ -332,8 +326,7 @@ export const UserResetPw = () => {
             </Button>
           </Div>
           <Br10 />
-          <TextField
-            select={false}
+          <Input
             type={"password"}
             size={"small"}
             label={translate("newPw")}
@@ -349,8 +342,7 @@ export const UserResetPw = () => {
             )}
           />
           <Br10 />
-          <TextField
-            select={false}
+          <Input
             type={"password"}
             size={"small"}
             label={translate("newPwVerified")}

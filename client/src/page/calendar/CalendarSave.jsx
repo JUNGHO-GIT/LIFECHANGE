@@ -5,9 +5,9 @@ import { React, useState, useEffect, useRef, createRef } from "../../import/Impo
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios } from "../../import/ImportLibs.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Div, Br20, Input, Select } from "../../import/ImportComponents.jsx";
 import { Img, Picker, Memo, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, MenuItem, TextField, Grid } from "../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, MenuItem, Grid } from "../../import/ImportMuis.jsx";
 import { calendar2 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -340,8 +340,7 @@ export const CalendarSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={true}
+            <Select
               type={"text"}
               size={"small"}
               variant={"outlined"}
@@ -371,9 +370,8 @@ export const CalendarSave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
-            <TextField
-              select={true}
+            </Select>
+            <Select
               type={"text"}
               size={"small"}
               label={translate("color")}
@@ -401,14 +399,11 @@ export const CalendarSave = () => {
                   <span className={"ms-10"}>{item}</span>
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               variant={"outlined"}
               className={"w-86vw"}
               label={translate("calendarTitle")}

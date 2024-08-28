@@ -10862,6 +10862,9 @@
 .upper {
   text-transform: uppercase !important;
 }
+.animation-none {
+  animation: none !important;
+}
 .animation {
   animation-duration: 1s !important;
   animation-fill-mode: forwards !important;

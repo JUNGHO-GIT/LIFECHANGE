@@ -5,8 +5,8 @@ import { React, useState, useRef, createRef } from "../../import/ImportReacts.js
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Input, Div, Br10, Img, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button, MenuItem, Grid, Card } from "../../import/ImportMuis.jsx";
+import { Input, Div, Br10, Img, Hr40, Select } from "../../import/ImportComponents.jsx";
+import { Paper,  Button, MenuItem, Grid, Card } from "../../import/ImportMuis.jsx";
 import { user1 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -377,10 +377,7 @@ export const UserSignup = () => {
           </Grid>
           <Br10 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={translate("verify")}
               value={clientCode}
               className={"w-66vw me-10"}
@@ -404,8 +401,7 @@ export const UserSignup = () => {
             </Button>
           </Div>
           <Br10 />
-          <TextField
-            select={false}
+          <Input
             type={"password"}
             size={"small"}
             label={translate("pw")}
@@ -421,8 +417,7 @@ export const UserSignup = () => {
             )}
           />
           <Br10 />
-          <TextField
-            select={false}
+          <Input
             type={"password"}
             size={"small"}
             label={translate("pwVerified")}
@@ -439,8 +434,7 @@ export const UserSignup = () => {
           />
           <Hr40 />
           {/** 성별 (N, M, F) **/}
-          <TextField
-            select={true}
+          <Select
             type={"text"}
             size={"small"}
             label={translate("gender")}
@@ -459,13 +453,10 @@ export const UserSignup = () => {
                 {item}
               </MenuItem>
             ))}
-          </TextField>
+          </Select>
           <Br10 />
           {/** 나이 (1세 ~ 100세) **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("age")}
             value={OBJECT.user_age}
             className={"w-86vw text-left"}
@@ -500,10 +491,7 @@ export const UserSignup = () => {
           />
           <Br10 />
           {/** 신장 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("height")}
             value={OBJECT.user_height}
             className={"w-86vw text-left"}
@@ -538,10 +526,7 @@ export const UserSignup = () => {
           />
           <Br10 />
           {/** 초기 체중 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("scale")}
             value={OBJECT.user_initScale}
             className={"w-86vw text-left"}
@@ -576,10 +561,7 @@ export const UserSignup = () => {
           />
           <Br10 />
           {/** 초기 자산 **/}
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("property")}
             value={OBJECT.user_initProperty}
             className={"w-86vw text-left"}
@@ -637,10 +619,7 @@ export const UserSignup = () => {
     // 7-4. google
     const googleSection = () => (
       <Div className={"d-center"}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
+        <Input
           value={translate("googleLogin")}
           className={"w-100p bg-white"}
           InputProps={{

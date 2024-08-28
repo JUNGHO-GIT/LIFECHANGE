@@ -5,8 +5,8 @@ import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20, Hr40 } from "../../import/ImportComponents.jsx";
-import { Paper, TextField, Button, TextArea, Grid, Card } from "../../import/ImportMuis.jsx";
+import { Empty, Div, Br20, Hr40, Select, Input } from "../../import/ImportComponents.jsx";
+import { Paper,  Button, TextArea, Grid, Card } from "../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDeletes = () => {
@@ -94,10 +94,7 @@ export const UserDeletes = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"d-column"} key={i}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("id")}
             value={OBJECT.user_id}
             InputProps={{
@@ -105,10 +102,7 @@ export const UserDeletes = () => {
             }}
           />
           <Br20 />
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+          <Input
             label={translate("signupDate")}
             value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
             InputProps={{

@@ -6,9 +6,9 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../import/ImportLibs.jsx";
 import { sync } from "../../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20, Br40 } from "../../../import/ImportComponents.jsx";
+import { Empty, Div, Br20, Br40, Select, Input } from "../../../import/ImportComponents.jsx";
 import { Img, Picker, Count, Delete } from "../../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, Grid } from "../../../import/ImportMuis.jsx";
 import { money2 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -273,10 +273,7 @@ export const MoneyGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalIncome")}`
@@ -321,10 +318,7 @@ export const MoneyGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalExpense")}`

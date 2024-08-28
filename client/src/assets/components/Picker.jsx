@@ -3,8 +3,8 @@
 import { React, useEffect, useState } from "../../import/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { moment } from "../../import/ImportLibs.jsx";
-import { PopUp, Div, Img, Br20, Br10 } from "../../import/ImportComponents.jsx";
-import { Badge, TextField, MenuItem, PickersDay, Button } from "../../import/ImportMuis.jsx";
+import { PopUp, Div, Img, Br20, Br10, Input, Select } from "../../import/ImportComponents.jsx";
+import { Badge,  MenuItem, PickersDay, Button } from "../../import/ImportMuis.jsx";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "../../import/ImportMuis.jsx";
 import { common1 } from "../../import/ImportImages.jsx";
 
@@ -245,9 +245,7 @@ export const Picker = ({
       </Div>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          type={"text"}
-          size={"small"}
+        <Input
           label={translate("date")}
           variant={"outlined"}
           value={`${DATE.dateStart}`}
@@ -371,9 +369,7 @@ export const Picker = ({
         </Div>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          type={"text"}
-          size={"small"}
+        <Input
           label={translate("duration")}
           variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -470,9 +466,7 @@ export const Picker = ({
         </Div>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          type={"text"}
-          size={"small"}
+        <Input
           label={translate("duration")}
           variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -569,9 +563,7 @@ export const Picker = ({
         </Div>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          type={"text"}
-          size={"small"}
+        <Input
           label={translate("duration")}
           variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -678,9 +670,7 @@ export const Picker = ({
         </Div>
       )}>
       {(popTrigger = {}) => (
-        <TextField
-          type={"text"}
-          size={"small"}
+        <Input
           label={translate("duration")}
           variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -846,8 +836,7 @@ export const Picker = ({
   const saveTypeSection = () => (
     (firstStr === "calendar" && secondStr !== "goal") ||
     (firstStr !== "calendar" && secondStr === "goal") ? (
-      <TextField
-        select={true}
+      <Select
         label={translate("dateType")}
         size={"small"}
         value={DATE.dateType || ""}
@@ -905,7 +894,7 @@ export const Picker = ({
             {translate(item)}
           </MenuItem>
         ))}
-      </TextField>
+      </Select>
     ) : (
       null
     )

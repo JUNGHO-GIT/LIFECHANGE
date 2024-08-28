@@ -3,8 +3,8 @@
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
-import { Icons } from "../../../import/ImportComponents.jsx";
-import { Button, TextField, TablePagination } from "../../../import/ImportMuis.jsx";
+import { Icons, Input } from "../../../import/ImportComponents.jsx";
+import { Button,  TablePagination } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const FindFilter = ({
@@ -18,9 +18,7 @@ export const FindFilter = ({
   const findFilterNode = () => {
     // 1. query
     const querySection = () => (
-      <TextField
-        select={false}
-        size={"small"}
+      <Input
         variant={"outlined"}
         className={"w-30vw me-2vw"}
         value={state?.PAGING?.query}

@@ -6,8 +6,8 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { axios } from "../../../import/ImportLibs.jsx";
 import { handlerY } from "../../../import/ImportUtils.jsx";
 import { Loading } from "../../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20, Img } from "../../../import/ImportComponents.jsx";
-import { Paper, Card, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Empty, Div, Br20, Img, Select, Input} from "../../../import/ImportComponents.jsx";
+import { Paper, Card, Grid } from "../../../import/ImportMuis.jsx";
 import { Bar, ComposedChart, ReferenceLine, Line } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { common3_2 } from "../../../import/ImportImages.jsx";
@@ -160,10 +160,7 @@ export const TodayChartExercise = () => {
         </Div>
       );
       const selectFragment1 = () => (
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
+        <Input
           variant={"outlined"}
           value={translate(SECTION)}
           InputProps={{

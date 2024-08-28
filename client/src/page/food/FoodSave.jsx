@@ -6,9 +6,9 @@ import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20 } from "../../import/ImportComponents.jsx";
+import { Empty, Div, Br20, Input, Select } from "../../import/ImportComponents.jsx";
 import { Img, Picker, Count, Delete } from "../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, MenuItem, TextField, Grid } from "../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, MenuItem,  Grid } from "../../import/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -449,8 +449,7 @@ export const FoodSave = () => {
     const totalSection = () => (
       <Card className={"border radius p-20"}>
         <Div className={"d-center"}>
-          <TextField
-            select={false}
+          <Input
             label={translate("totalKcal")}
             size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0')}
@@ -468,8 +467,7 @@ export const FoodSave = () => {
               )
             }}
           />
-          <TextField
-            select={false}
+          <Input
             label={translate("totalCarb")}
             size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
@@ -490,8 +488,7 @@ export const FoodSave = () => {
         </Div>
         <Br20 />
         <Div className={"d-center"}>
-          <TextField
-            select={false}
+          <Input
             label={translate("totalProtein")}
             size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
@@ -509,8 +506,7 @@ export const FoodSave = () => {
               )
             }}
           />
-          <TextField
-            select={false}
+          <Input
             label={translate("totalFat")}
             size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
@@ -566,8 +562,7 @@ export const FoodSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={true}
+            <Select
               type={"text"}
               size={"small"}
               label={translate("part")}
@@ -597,9 +592,8 @@ export const FoodSave = () => {
                   </Div>
                 </MenuItem>
               ))}
-            </TextField>
-            <TextField
-              select={true}
+            </Select>
+            <Select
               label={translate("foodCount")}
               size={"small"}
               type={"text"}
@@ -640,9 +634,8 @@ export const FoodSave = () => {
                   {index + 1}
                 </MenuItem>
               ))}
-            </TextField>
-            <TextField
-              select={false}
+            </Select>
+            <Input
               label={translate("gram")}
               size={"small"}
               variant={"outlined"}
@@ -680,9 +673,7 @@ export const FoodSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              size={"small"}
+            <Input
               variant={"outlined"}
               className={"w-40vw me-3vw"}
               label={translate("foodName")}
@@ -702,9 +693,7 @@ export const FoodSave = () => {
                 }));
               }}
             />
-            <TextField
-              select={false}
-              size={"small"}
+            <Input
               variant={"outlined"}
               className={"w-40vw ms-3vw"}
               label={translate("brand")}
@@ -725,8 +714,7 @@ export const FoodSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
+            <Input
               label={translate("kcal")}
               size={"small"}
               variant={"outlined"}
@@ -773,8 +761,7 @@ export const FoodSave = () => {
                 }
               }}
             />
-            <TextField
-              select={false}
+            <Input
               label={translate("carb")}
               size={"small"}
               variant={"outlined"}
@@ -824,8 +811,7 @@ export const FoodSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
+            <Input
               label={translate("protein")}
               size={"small"}
               variant={"outlined"}
@@ -872,8 +858,7 @@ export const FoodSave = () => {
                 }
               }}
             />
-            <TextField
-              select={false}
+            <Input
               label={translate("fat")}
               size={"small"}
               variant={"outlined"}

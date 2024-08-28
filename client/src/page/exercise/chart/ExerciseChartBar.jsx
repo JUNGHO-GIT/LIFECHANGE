@@ -6,8 +6,8 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { axios } from "../../../import/ImportLibs.jsx";
 import { handlerY } from "../../../import/ImportUtils.jsx";
 import { Loading } from "../../../import/ImportLayouts.jsx";
-import { Empty, Div, Br20, Img } from "../../../import/ImportComponents.jsx";
-import { Paper, Card, MenuItem, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Empty, Div, Br20, Img, Select} from "../../../import/ImportComponents.jsx";
+import { Paper, Card, MenuItem, Grid } from "../../../import/ImportMuis.jsx";
 import { Bar, Scatter, ComposedChart, ReferenceLine, Line } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { common3_2 } from "../../../import/ImportImages.jsx";
@@ -359,8 +359,7 @@ export const ExerciseChartBar = () => {
       );
       const selectFragment1 = () => (
         <Div className={"d-center"}>
-          <TextField
-            select={true}
+          <Select
             type={"text"}
             size={"small"}
             variant={"outlined"}
@@ -372,7 +371,7 @@ export const ExerciseChartBar = () => {
           <MenuItem value={"today"}>{translate("today")}</MenuItem>
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
-        </TextField>
+        </Select>
         </Div>
       );
       const selectFragment2 = () => (

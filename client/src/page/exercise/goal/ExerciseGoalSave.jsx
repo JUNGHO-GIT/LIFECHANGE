@@ -6,9 +6,9 @@ import { useTime, useCommon } from "../../../import/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../import/ImportLibs.jsx";
 import { sync } from "../../../import/ImportUtils.jsx";
 import { Loading, Footer } from "../../../import/ImportLayouts.jsx";
-import { Div, Br20 } from "../../../import/ImportComponents.jsx";
+import { Div, Br20, Input } from "../../../import/ImportComponents.jsx";
 import { Img, Picker, Time, Count, Delete } from "../../../import/ImportComponents.jsx";
-import { Card, Paper, Badge, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Card, Paper, Badge, Grid } from "../../../import/ImportMuis.jsx";
 import { exercise2, exercise3_1, exercise5 } from "../../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -290,10 +290,7 @@ export const ExerciseGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalCount")}`
@@ -337,10 +334,7 @@ export const ExerciseGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalVolume")}`
@@ -396,10 +390,7 @@ export const ExerciseGoalSave = () => {
           </Div>
           <Br20 />
           <Div className={"d-center"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
+            <Input
               label={translate("goalWeight")}
               className={"w-86vw"}
               value={OBJECT?.exercise_goal_weight}

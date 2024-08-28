@@ -5,8 +5,8 @@ import { React, useState, useEffect } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
 import { axios } from "../../../import/ImportLibs.jsx";
 import { Loading } from "../../../import/ImportLayouts.jsx";
-import { Empty, Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
-import { Paper, Card, MenuItem, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { Empty, Div, Img, Br20, Select, Input } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, MenuItem, Grid } from "../../../import/ImportMuis.jsx";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import { common3_2 } from "../../../import/ImportImages.jsx";
 
@@ -325,8 +325,7 @@ export const SleepChartPie = () => {
       );
       const selectFragment1 = () => (
         <Div className={"d-center"}>
-          <TextField
-          select={true}
+          <Select
           type={"text"}
           size={"small"}
           variant={"outlined"}
@@ -338,7 +337,7 @@ export const SleepChartPie = () => {
           <MenuItem value={"today"}>{translate("today")}</MenuItem>
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>
-        </TextField>
+        </Select>
         </Div>
       );
       const selectFragment2 = () => (

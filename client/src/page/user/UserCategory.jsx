@@ -5,8 +5,8 @@ import { React, useState, useEffect, useRef, createRef } from "../../import/Impo
 import { useCommon, useStorage } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading, Footer } from "../../import/ImportLayouts.jsx";
-import { PopUp, Div, Icons } from "../../import/ImportComponents.jsx";
-import { Card, Paper, TextField, Grid } from "../../import/ImportMuis.jsx";
+import { PopUp, Div, Icons, Select, Input } from "../../import/ImportComponents.jsx";
+import { Card, Paper, Grid } from "../../import/ImportMuis.jsx";
 import { TableContainer, Table, TableFooter } from "../../import/ImportMuis.jsx";
 import { TableHead, TableBody, TableRow, TableCell } from "../../import/ImportMuis.jsx";
 
@@ -287,7 +287,7 @@ export const UserCategory = () => {
                       }));
                     }}>
                       <Div className={"fs-0-9rem ms-auto"}>
-                        <TextField
+                        <Select
                           variant={"standard"}
                           size={"small"}
                           value={translate(item[`${dataType}_part`])}
@@ -380,7 +380,7 @@ export const UserCategory = () => {
                         }));
                       }}>
                         <Div className={"fs-0-9rem ms-auto"}>
-                          <TextField
+                          <Select
                             variant={"standard"}
                             size={"small"}
                             value={translate(item)}

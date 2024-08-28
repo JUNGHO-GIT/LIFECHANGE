@@ -6,8 +6,8 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { axios } from "../../../import/ImportLibs.jsx";
 import { handlerY } from "../../../import/ImportUtils.jsx";
 import { Loading } from "../../../import/ImportLayouts.jsx";
-import { PopUp, Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
-import { Paper, Card, TextField, Grid } from "../../../import/ImportMuis.jsx";
+import { PopUp, Div, Img, Br20, Select, Input } from "../../../import/ImportComponents.jsx";
+import { Paper, Card, Grid } from "../../../import/ImportMuis.jsx";
 import { FormGroup, FormControlLabel, Switch } from "../../../import/ImportMuis.jsx";
 import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -266,10 +266,7 @@ export const FoodChartBar = () => {
         </Div>
       );
       const selectSection1 = () => (
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
+        <Input
           variant={"outlined"}
           value={translate(SECTION)}
           InputProps={{

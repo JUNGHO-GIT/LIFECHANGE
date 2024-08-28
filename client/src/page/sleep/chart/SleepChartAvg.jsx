@@ -5,7 +5,7 @@ import { useCommon } from "../../../import/ImportHooks.jsx";
 import { axios } from "../../../import/ImportLibs.jsx";
 import { handlerY } from "../../../import/ImportUtils.jsx";
 import { Loading } from "../../../import/ImportLayouts.jsx";
-import { PopUp, Div, Img, Br20 } from "../../../import/ImportComponents.jsx";
+import { PopUp, Div, Img, Br20, Select } from "../../../import/ImportComponents.jsx";
 import { Paper, Card, Grid } from "../../../import/ImportMuis.jsx";
 import { MenuItem, TextField } from "../../../import/ImportMuis.jsx";
 import { FormGroup, FormControlLabel, Switch } from "../../../import/ImportMuis.jsx";
@@ -266,8 +266,7 @@ export const SleepChartAvg = () => {
       );
       const selectFragment1 = () => (
         <Div className={"d-center"}>
-          <TextField
-            select={true}
+          <Select
             type={"text"}
             size={"small"}
             variant={"outlined"}
@@ -278,7 +277,7 @@ export const SleepChartAvg = () => {
           >
             <MenuItem value={"week"}>{translate("week")}</MenuItem>
             <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          </TextField>
+          </Select>
         </Div>
       );
       const selectFragment2 = () => (

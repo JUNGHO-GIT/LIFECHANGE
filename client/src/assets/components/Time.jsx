@@ -3,7 +3,7 @@
 import { React, useEffect, createRef } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { moment } from "../../import/ImportLibs.jsx";
-import { PopUp, Img, Div } from "../../import/ImportComponents.jsx";
+import { PopUp, Img, Div, Input } from "../../import/ImportComponents.jsx";
 import { TextField } from "../../import/ImportMuis.jsx";
 import { DigitalClock, AdapterMoment, LocalizationProvider } from "../../import/ImportMuis.jsx";
 import { sleep2, sleep3, sleep4, exercise4 } from "../../import/ImportImages.jsx";
@@ -124,8 +124,7 @@ export const Time = ({
       </LocalizationProvider>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          select={false}
+        <Input
           label={translateStr}
           size={"small"}
           variant={"outlined"}
@@ -187,8 +186,7 @@ export const Time = ({
       </LocalizationProvider>
       )}>
       {(popTrigger={}) => (
-        <TextField
-          select={false}
+        <Input
           label={translate(translateStr)}
           size={"small"}
           variant={"outlined"}

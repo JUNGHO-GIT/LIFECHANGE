@@ -3,8 +3,8 @@
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
-import { Picker, Div } from "../../../import/ImportComponents.jsx";
-import { TextField, MenuItem, Card, Grid } from "../../../import/ImportMuis.jsx";
+import { Picker, Div, Select } from "../../../import/ImportComponents.jsx";
+import {  MenuItem, Card, Grid } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const ListFilter = ({
@@ -18,8 +18,7 @@ export const ListFilter = ({
   const listFilterNode = () => {
     // 1. sort
     const sortSection = () => (
-      <TextField
-        select={true}
+      <Select
         type={"text"}
         size={"small"}
         label={translate("sort")}
@@ -43,7 +42,7 @@ export const ListFilter = ({
             </Div>
           </MenuItem>
         ))}
-      </TextField>
+      </Select>
     );
     // 2. picker
     const pickerSection = () => (
