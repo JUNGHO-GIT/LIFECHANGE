@@ -415,7 +415,7 @@ export const UserResetPw = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper radius border h-min94vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min94vh"}>
         <Grid container className={"w-100p"}>
           <Grid size={12}>
             {titleSection()}

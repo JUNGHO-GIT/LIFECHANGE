@@ -259,12 +259,12 @@ export const SleepChartAvg = () => {
   const chartNode = () => {
     // 7-1. head
     const headSection = () => {
-      const titleSection = () => (
+      const titleFragment = () => (
         <Div className={"d-center fs-0-9rem"}>
           {translate("chartAvg")}
         </Div>
       );
-      const selectSection1 = () => (
+      const selectFragment1 = () => (
         <Div className={"d-center"}>
           <TextField
             select={true}
@@ -281,7 +281,7 @@ export const SleepChartAvg = () => {
           </TextField>
         </Div>
       );
-      const selectSection2 = () => (
+      const selectFragment2 = () => (
         <Div className={"d-center"}>
           <PopUp
             type={"chart"}
@@ -316,17 +316,19 @@ export const SleepChartAvg = () => {
         </Div>
       );
       return (
-        <Grid container className={"w-100p"}>
-          <Grid size={3} className={"d-left"}>
-            {selectSection1()}
+        <Card className={"p-0"}>
+          <Grid container className={"w-100p"}>
+            <Grid size={3} className={"d-left"}>
+              {selectFragment1()}
+            </Grid>
+            <Grid size={6} className={"d-center"}>
+              {titleFragment()}
+            </Grid>
+            <Grid size={3} className={"d-right"}>
+              {selectFragment2()}
+            </Grid>
           </Grid>
-          <Grid size={6} className={"d-center"}>
-            {titleSection()}
-          </Grid>
-          <Grid size={3} className={"d-right"}>
-            {selectSection2()}
-          </Grid>
-        </Grid>
+        </Card>
       );
     };
     // 7-2. chart
@@ -352,7 +354,7 @@ export const SleepChartAvg = () => {
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
         <Grid container className={"w-100p"}>
-          <Grid size={12} className={"d-center"}>
+          <Grid size={12} className={"d-column"}>
             {headSection()}
             <Br20 />
             {chartSection()}

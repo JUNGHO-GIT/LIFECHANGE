@@ -105,7 +105,7 @@ export const UserAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min80vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
         <Grid container className={"w-100p"}>
           <Grid size={12}>
             <Br20 />

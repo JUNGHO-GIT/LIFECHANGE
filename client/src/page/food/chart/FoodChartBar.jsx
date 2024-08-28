@@ -309,17 +309,19 @@ export const FoodChartBar = () => {
         </PopUp>
       );
       return (
-        <Grid container className={"w-100p"}>
-          <Grid size={3} className={"d-left"}>
-            {selectSection1()}
+        <Card className={"p-0"}>
+          <Grid container className={"w-100p"}>
+            <Grid size={3} className={"d-left"}>
+              {selectSection1()}
+            </Grid>
+            <Grid size={6} className={"d-center"}>
+              {titleSection()}
+            </Grid>
+            <Grid size={3} className={"d-right"}>
+              {selectSection2()}
+            </Grid>
           </Grid>
-          <Grid size={6} className={"d-center"}>
-            {titleSection()}
-          </Grid>
-          <Grid size={3} className={"d-right"}>
-            {selectSection2()}
-          </Grid>
-        </Grid>
+        </Card>
       );
     };
     // 7-2. chart
@@ -345,7 +347,7 @@ export const FoodChartBar = () => {
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
         <Grid container className={"w-100p"}>
-          <Grid size={12} className={"d-center"}>
+          <Grid size={12} className={"d-column"}>
             {headSection()}
             <Br20 />
             {chartSection()}

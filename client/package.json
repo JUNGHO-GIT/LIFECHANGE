@@ -35,6 +35,8 @@
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.14.0",
     "@react-hooks-library/core": "^0.6.2",
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
     "axios": "^1.7.5",
     "date-fns": "^3.6.0",
     "material-ui-popup-state": "^5.1.2",

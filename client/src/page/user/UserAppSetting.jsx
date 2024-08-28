@@ -27,7 +27,7 @@ export const UserAppSetting = () => {
             <Br10 />
             <Grid
               size={12}
-              className={"d-between pointer p-10"}
+              className={"d-between pointer p-15"}
               onClick={() => {
                 navigate("/user/detail")
               }}
@@ -46,7 +46,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-10"}
+              className={"d-between pointer p-15"}
               onClick={() => {
                 navigate("/user/category")
               }}
@@ -65,7 +65,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-10`}
+              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-15`}
               onClick={() => {
                 navigate("/user/dummy")
               }}
@@ -84,7 +84,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-10"}
+              className={"d-between pointer p-15"}
               onClick={() => {
                 navigate("/user/app/info")
               }}
@@ -103,7 +103,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-10"}
+              className={"d-between pointer p-15"}
               onClick={() => {
                 localStorage.setItem("autoLogin", "false")
                 localStorage.setItem("autoLoginId", "")
@@ -126,7 +126,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-10"}
+              className={"d-between pointer p-15"}
               onClick={() => {
                 navigate("/user/deletes")
               }}
@@ -152,7 +152,7 @@ export const UserAppSetting = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper radius border h-min80vh"}>
+      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
         <Grid container className={"w-100p"}>
           <Grid size={12}>
             {cardSection()}
