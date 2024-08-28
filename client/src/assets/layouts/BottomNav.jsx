@@ -1,19 +1,18 @@
 // BottomNav.jsx
 // Node -> Section -> Fragment
 
-import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
-import { useCommon } from "../../import/ImportHooks.jsx";
-import { Img } from "../../import/ImportComponents.jsx";
-import { BottomNavigation, BottomNavigationAction, Paper, Grid } from "../../import/ImportMuis.jsx";
-import { calendar1, today1, exercise1, food1, money1, sleep1 } from "../../import/ImportImages.jsx";
+import { useState, useEffect } from "../../imports/ImportReacts.jsx";
+import { useCommon } from "../../imports/ImportHooks.jsx";
+import { Img } from "../../imports/ImportComponents.jsx";
+import { BottomNavigation, BottomNavigationAction } from "../../imports/ImportMuis.jsx";
+import { Paper, Grid } from "../../imports/ImportMuis.jsx";
+import { calendar1, today1, exercise1, food1, money1, sleep1 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, translate, firstStr, koreanDate,
-  } = useCommon();
+  const { navigate, translate, firstStr, koreanDate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [selectedTab, setSelectedTab] = useState("today");

@@ -1,8 +1,8 @@
 // useCommon.jsx
 
-import { useLocation, useNavigate } from "../../import/ImportReacts.jsx";
-import { useTranslate } from "../../import/ImportHooks.jsx";
-import { moment } from "../../import/ImportLibs.jsx";
+import { useLocation, useNavigate } from "../../imports/ImportReacts.jsx";
+import { useTranslate } from "../../imports/ImportHooks.jsx";
+import { moment } from "../../imports/ImportLibs.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useCommon = () => {

@@ -1,9 +1,8 @@
 // Banner.jsx
 // Node -> Section -> Fragment
 
-import { React}from "../../import/ImportReacts.jsx";
-import { Div } from "../../import/ImportComponents.jsx";
-import { Paper, Grid } from "../../import/ImportMuis.jsx";
+import { Div } from "../../imports/ImportComponents.jsx";
+import { Paper, Grid } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Banner = () => {
@@ -16,7 +15,7 @@ export const Banner = () => {
     );
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh radius border h-60"}>
-        <Grid container columnSpacing={1}>
+        <Grid container>
           <Grid size={12}>
             {bannerSection}
           </Grid>

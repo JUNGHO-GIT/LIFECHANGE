@@ -1,6 +1,6 @@
 // useEnhancedTouch.jsx
 
-import { useEffect } from "../../import/ImportReacts.jsx";
+import { useEffect } from "../../imports/ImportReacts.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useEnhancedTouch = () => {

@@ -1,9 +1,9 @@
 // Footer.jsx
 // Node -> Section -> Fragment
 
-import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
-import { useCommon } from "../../import/ImportHooks.jsx";
-import { Paper, Grid } from "../../import/ImportMuis.jsx";
+import { useState, useEffect } from "../../imports/ImportReacts.jsx";
+import { useCommon } from "../../imports/ImportHooks.jsx";
+import { Paper, Grid } from "../../imports/ImportMuis.jsx";
 import { Buttons } from "./footer/Buttons.jsx";
 import { Dummy } from "./footer/Dummy.jsx";
 import { ListFilter } from "./footer/ListFilter.jsx";

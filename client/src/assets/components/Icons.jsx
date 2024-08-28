@@ -1,6 +1,6 @@
 // Icons.jsx
 
-import { React } from "../../import/ImportReacts.jsx";
+import { React } from "../../imports/ImportReacts.jsx";
 import { IconButton } from "@mui/material";
 
 // -------------------------------------------------------------------------------------------------

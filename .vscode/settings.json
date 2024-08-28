@@ -24,6 +24,4 @@
     "**/**build/**": true,
     "build.tar.gz": true
   },
-  "explorerExclude.backup": {},
-  "typescript.tsdk": "node_modules\\typescript\\lib",
 }

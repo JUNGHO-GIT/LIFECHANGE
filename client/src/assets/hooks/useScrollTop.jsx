@@ -1,7 +1,7 @@
 // useScrollTop.jsx
 
-import { useEffect } from "../../import/ImportReacts.jsx";
-import { useCommon } from "../../import/ImportHooks.jsx";
+import { useEffect } from "../../imports/ImportReacts.jsx";
+import { useCommon } from "../../imports/ImportHooks.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const useScrollTop = () => {

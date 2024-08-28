@@ -1,11 +1,10 @@
 // Dummy.jsx
 // Node -> Section -> Fragment
 
-import { React } from "../../../import/ImportReacts.jsx";
-import { useCommon } from "../../../import/ImportHooks.jsx";
-import { numeral } from "../../../import/ImportLibs.jsx";
-import { Input, Select, Btn } from "../../../import/ImportComponents.jsx";
-import { MenuItem, Grid } from "../../../import/ImportMuis.jsx";
+import { useCommon } from "../../../imports/ImportHooks.jsx";
+import { numeral } from "../../../imports/ImportLibs.jsx";
+import { Input, Select, Btn } from "../../../imports/ImportComponents.jsx";
+import { MenuItem, Grid } from "../../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Dummy = ({

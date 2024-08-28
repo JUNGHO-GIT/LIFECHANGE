@@ -12,8 +12,6 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment",
     "importHelpers": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,

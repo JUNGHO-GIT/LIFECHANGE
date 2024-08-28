@@ -1,7 +1,6 @@
 // Input.jsx
 
-import { React } from "../../import/ImportReacts.jsx";
-import { TextField } from "../../import/ImportMuis.jsx";
+import { TextField } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Input = ({

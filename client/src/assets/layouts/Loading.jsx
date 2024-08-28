@@ -1,15 +1,14 @@
 // Loading.jsx
 // Node -> Section -> Fragment
 
-import { React } from "../../import/ImportReacts.jsx";
-import { useCommon } from "../../import/ImportHooks.jsx";
-import { Div } from "../../import/ImportComponents.jsx";
+import { useCommon } from "../../imports/ImportHooks.jsx";
+import { Div } from "../../imports/ImportComponents.jsx";
 
 // 14. loading -------------------------------------------------------------------------------------
 export const Loading = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {PATH} = useCommon();
+  const { PATH } = useCommon();
 
   // 5. needWrapper --------------------------------------------------------------------------------
   const needWrapper = () => {

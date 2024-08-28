@@ -1,11 +1,10 @@
 // Header.jsx
 // Node -> Section -> Fragment
 
-import { React } from "../../import/ImportReacts.jsx";
-import { useCommon } from "../../import/ImportHooks.jsx";
-import { Div, Img, Icons } from "../../import/ImportComponents.jsx";
-import { Paper, Grid } from "../../import/ImportMuis.jsx";
-import { logo2, logo3 } from "../../import/ImportImages.jsx";
+import { useCommon } from "../../imports/ImportHooks.jsx";
+import { Div, Img, Icons } from "../../imports/ImportComponents.jsx";
+import { Paper, Grid } from "../../imports/ImportMuis.jsx";
+import { logo2, logo3 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Header = () => {
