@@ -444,7 +444,6 @@ export const ExerciseSave = () => {
             size={"small"}
             value={OBJECT?.exercise_total_weight}
             variant={"outlined"}
-            className={"w-86vw"}
             onChange={(e) => {
               const value = e.target.value.replace(/^0+/, '');
               if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {

@@ -21,39 +21,33 @@ export const Input = ({
     input: {
       ...slotProps?.input,
       readOnly: (
-        readOnly || slotProps?.input?.readOnly
+        ( slotProps?.input?.readOnly && readOnly ) ||
+        ( readOnly )
       ),
       startAdornment: (
-        <div className={"fs-0-6rem"}>
-          {startAdornment || slotProps?.input?.startAdornment}
-        </div>
+        ( startAdornment ) &&
+        ( <div className={"fs-0-6rem"}>{startAdornment}</div> )
       ),
       endAdornment: (
-        <div className={"fs-0-6rem"}>
-          {endAdornment || slotProps?.input?.endAdornment}
-        </div>
+        ( endAdornment ) &&
+        ( <div className={"fs-0-6rem"}>{endAdornment}</div> )
       ),
     },
-
-    // shrink는 항상 true
     inputLabel: {
       ...slotProps?.inputLabel,
-      shrink: true,
+      shrink: false,
     },
   });
 
   return (
     <TextField
       {...props}
-      select={false}
-      variant={"outlined"}
-      type={"text"}
-      size={"small"}
-      fullWidth={true}
-      style={{
-        textAlign: "left",
-      }}
-      slotProps={modifySlotProps(slotProps)}
+      select={false || props.select}
+      variant={"outlined" || props.variant}
+      type={"text" || props.type}
+      size={"small" || props.size}
+      fullWidth={true || props.fullWidth}
+      slotProps={modifySlotProps(slotProps) || props.slotProps}
     />
   );
 };

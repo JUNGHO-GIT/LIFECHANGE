@@ -6,7 +6,7 @@ import { useCommon } from "../../import/ImportHooks.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { sync } from "../../import/ImportUtils";
-import { Empty, Div, Br10, Br20, Img, Hr40 } from "../../import/ImportComponents.jsx";
+import { Input, Div, Br10, Br20, Img, Hr40 } from "../../import/ImportComponents.jsx";
 import { Paper, TextField, Button, Checkbox, Card, Grid } from "../../import/ImportMuis.jsx";
 import { user1 } from "../../import/ImportImages.jsx";
 
@@ -186,8 +186,9 @@ export const UserLogin = () => {
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Div className={"d-center fs-2-0rem"}
-        onClick={(e) => {
+      <Card
+        className={"d-center fs-2-0rem p-0"}
+        onClick={() => {
           setClickCount((prevCount) => {
             const newCount = prevCount + 1;
             if (newCount === 5) {
@@ -198,48 +199,37 @@ export const UserLogin = () => {
             }
             return newCount;
           });
-        }}>
+        }}
+      >
         {translate("login")}
-      </Div>
+      </Card>
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column"} key={i}>
-          <TextField
-            select={false}
-            type={"text"}
-            size={"small"}
+        <Card className={"d-column p-10"} key={i}>
+          <Input
             label={translate("id")}
-            className={"w-86vw"}
             value={userId}
             inputRef={REFS.current.user_id}
             error={ERRORS.user_id}
-            InputProps={{
-              readOnly: false
-            }}
             onChange={(e) => {
               setUserId(e.target.value);
             }}
           />
-          <Br10 />
-          <TextField
-            select={false}
+          <Br20 />
+          <Input
             type={"password"}
-            size={"small"}
             label={translate("pw")}
             value={userPw}
-            className={"w-86vw"}
             inputRef={REFS.current.user_pw}
             error={ERRORS.user_pw}
-            InputProps={{
-            }}
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
           />
-          <Br20 />
-          <Div className={"d-center"}>
+          <Br10 />
+          <Div className={"d-center mb-n20"}>
             <Div className={"fs-0-8rem"}>
               {translate("autoLogin")}
             </Div>
@@ -272,45 +262,32 @@ export const UserLogin = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-86vw"}>
-        <Button
-          size={"small"}
-          color={"primary"}
-          className={"w-100p fs-1-0rem"}
-          variant={"contained"}
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          {translate("login")}
-        </Button>
-      </Div>
+      <Button
+        size={"small"}
+        color={"primary"}
+        className={"w-100p fs-1-0rem"}
+        variant={"contained"}
+        onClick={() => {
+          flowSave();
+        }}
+      >
+        {translate("login")}
+      </Button>
     );
     // 7-4. google
     const googleSection = () => (
-      <Div className={"d-center w-86vw"}>
-        <TextField
-          select={false}
-          type={"text"}
-          size={"small"}
-          value={translate("googleLogin")}
-          className={"w-100p bg-white pointer"}
-          InputProps={{
-            readOnly: true,
-            className: "pointer",
-            startAdornment: (
-              <Img src={user1} className={"w-15 h-15"} />
-            ),
-          }}
-          onClick={() => {
-            flowGoogle();
-          }}
-        />
-      </Div>
+      <Input
+        value={translate("googleLogin")}
+        className={"bg-white pointer"}
+        startAdornment={user1 && <Img src={user1} className={"w-15 h-15"} />}
+        onClick={() => {
+          flowGoogle();
+        }}
+      />
     );
     // 7-5. toSignup
     const toSignupSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");
@@ -321,7 +298,7 @@ export const UserLogin = () => {
     );
     // 7-6. toResetPw
     const toResetPwSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("forgotPw")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/resetPw");

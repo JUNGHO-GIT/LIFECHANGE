@@ -338,7 +338,6 @@ export const UserResetPw = () => {
             size={"small"}
             label={translate("newPw")}
             value={OBJECT.user_pw}
-            className={"w-86vw"}
             inputRef={REFS.current.user_pw}
             error={ERRORS.user_pw}
             disabled={OBJECT.user_id_verified === false}
@@ -356,7 +355,6 @@ export const UserResetPw = () => {
             size={"small"}
             label={translate("newPwVerified")}
             value={OBJECT.user_pw_verified}
-            className={"w-86vw"}
             inputRef={REFS.current.user_pw_verified}
             error={ERRORS.user_pw_verified}
             disabled={OBJECT.user_id_verified === false}

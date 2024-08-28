@@ -411,7 +411,6 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("pw")}
             value={OBJECT.user_pw}
-            className={"w-86vw"}
             inputRef={REFS.current.user_pw}
             error={ERRORS.user_pw}
             disabled={OBJECT.user_id_verified === false}
@@ -429,7 +428,6 @@ export const UserSignup = () => {
             size={"small"}
             label={translate("pwVerified")}
             value={OBJECT.user_pw_verified}
-            className={"w-86vw"}
             inputRef={REFS.current.user_pw_verified}
             error={ERRORS.user_pw_verified}
             disabled={OBJECT.user_id_verified === false}

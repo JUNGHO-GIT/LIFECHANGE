@@ -100,7 +100,6 @@ export const UserDeletes = () => {
             size={"small"}
             label={translate("id")}
             value={OBJECT.user_id}
-            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
@@ -112,7 +111,6 @@ export const UserDeletes = () => {
             size={"small"}
             label={translate("signupDate")}
             value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
-            className={"w-86vw"}
             InputProps={{
               readOnly: true,
             }}
