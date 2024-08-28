@@ -40,14 +40,6 @@
 .MuiAccordionSummary-root.Mui-expanded {
   min-height: 0px !important;
 }
-.MuiGrid2-item {
-  margin: 0px 0px 0px 0px !important;
-  padding: 0px 0px 0px 0px !important;
-}
-.MuiGrid2-root {
-  margin: 0px 0px 0px 0px !important;
-  padding: 0px 0px 0px 0px !important;
-}
 .MuiInput-root::before {
   content: none !important;
 }
@@ -59,6 +51,24 @@
 }
 .MuiTabs-scroller {
   margin: 0px 0px 5px 0px !important;
+}
+.MuiGrid2-container {
+  margin: 0px 0px 0px 0px !important;
+  padding: 0px 0px 0px 0px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-content: center !important;
+}
+.MuiGrid2-item {
+  margin: 0px 0px 0px 0px !important;
+  padding: 0px 0px 0px 0px !important;
+}
+.MuiGrid2-root {
+  margin: 0px 0px 0px 0px !important;
+  padding: 0px 0px 0px 0px !important;
 }
 
 /** top *******************************************************************************************/

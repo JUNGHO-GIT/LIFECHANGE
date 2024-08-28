@@ -5,7 +5,7 @@ import { React, useState, useRef, createRef } from "../../import/ImportReacts.js
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { axios } from "../../import/ImportLibs.jsx";
 import { Loading } from "../../import/ImportLayouts.jsx";
-import { Empty, Div, Br10, Img, Hr40 } from "../../import/ImportComponents.jsx";
+import { Input, Div, Br10, Img, Hr40 } from "../../import/ImportComponents.jsx";
 import { Paper, TextField, Button, MenuItem, Grid, Card } from "../../import/ImportMuis.jsx";
 import { user1 } from "../../import/ImportImages.jsx";
 
@@ -338,46 +338,45 @@ export const UserSignup = () => {
   const userSignupNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Div className={"d-center fs-2-0rem"}>
+      <Card className={"d-center fs-2-0rem p-0"}>
         {translate("signup")}
-      </Div>
+      </Card>
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column"} key={i}>
+        <Card className={"d-column p-10"} key={i}>
           {/** section 1 **/}
-          <Div className={"d-center w-86vw"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              label={`${translate("id")} (email)`}
-              value={OBJECT.user_id}
-              className={"w-66vw me-10"}
-              inputRef={REFS.current.user_id}
-              error={ERRORS.user_id}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  user_id: e.target.value
-                }))
-              )}
-            />
-            <Button
-              size={"small"}
-              color={"primary"}
-              className={"w-20vw"}
-              variant={"contained"}
-              onClick={() => {
-                flowSendEmail();
-              }}
-            >
-              {translate("send")}
-            </Button>
-          </Div>
+          <Grid container className={"w-100p"}>
+            <Grid size={9}>
+              <Input
+                label={`${translate("id")} (email)`}
+                value={OBJECT.user_id}
+                inputRef={REFS.current.user_id}
+                error={ERRORS.user_id}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_id: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Grid size={3}>
+              <Button
+                size={"small"}
+                color={"primary"}
+                variant={"contained"}
+                onClick={() => {
+                  flowSendEmail();
+                }}
+              >
+                {translate("send")}
+              </Button>
+            </Grid>
+          </Grid>
           <Br10 />
-          <Div className={"d-center w-86vw"}>
+          <Div className={"d-center"}>
             <TextField
               select={false}
               type={"text"}
@@ -621,7 +620,7 @@ export const UserSignup = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -637,7 +636,7 @@ export const UserSignup = () => {
     );
     // 7-4. google
     const googleSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center"}>
         <TextField
           select={false}
           type={"text"}
@@ -658,7 +657,7 @@ export const UserSignup = () => {
     );
     // 7-5. toLogin
     const toLoginSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/login");
@@ -669,7 +668,7 @@ export const UserSignup = () => {
     );
     // 7-6. toResetPw
     const toResetPwSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("forgotPw")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/resetPw");

@@ -274,7 +274,7 @@ export const UserResetPw = () => {
       const cardFragment = (i) => (
         <Card className={"d-column"} key={i}>
           {/** section 1 **/}
-          <Div className={"d-center w-86vw"}>
+          <Div className={"d-center"}>
             <TextField
               select={false}
               type={"text"}
@@ -304,7 +304,7 @@ export const UserResetPw = () => {
             </Button>
           </Div>
           <Br10 />
-          <Div className={"d-center w-86vw"}>
+          <Div className={"d-center"}>
             <TextField
               select={false}
               type={"text"}
@@ -373,7 +373,7 @@ export const UserResetPw = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center"}>
         <Button
           size={"small"}
           color={"primary"}
@@ -389,7 +389,7 @@ export const UserResetPw = () => {
     );
     // 7-5. toLogin
     const toLoginSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("alreadyId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/login");
@@ -400,7 +400,7 @@ export const UserResetPw = () => {
     );
     // 7-5. toSignup
     const toSignupSection = () => (
-      <Div className={"d-center w-86vw fs-0-8rem"}>
+      <Div className={"d-center fs-0-8rem"}>
         {translate("notId")}
         <Div className={"d-center blue pointer ms-10"} onClick={() => {
           navigate("/user/signup");

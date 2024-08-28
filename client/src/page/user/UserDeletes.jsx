@@ -129,7 +129,7 @@ export const UserDeletes = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center w-86vw"}>
+      <Div className={"d-center"}>
         <Button
           size={"small"}
           color={"error"}

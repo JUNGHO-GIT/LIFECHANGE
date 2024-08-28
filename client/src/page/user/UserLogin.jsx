@@ -217,7 +217,7 @@ export const UserLogin = () => {
               setUserId(e.target.value);
             }}
           />
-          <Br20 />
+          <Br10 />
           <Input
             type={"password"}
             label={translate("pw")}

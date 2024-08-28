@@ -1,7 +1,5 @@
 // Input.jsx
 
-// Input.jsx
-
 import { React } from "../../import/ImportReacts.jsx";
 import { TextField } from "../../import/ImportMuis.jsx";
 import PropTypes from "prop-types";
@@ -11,33 +9,8 @@ export const Input = ({
   readOnly = false,
   startAdornment = null,
   endAdornment = null,
-  slotProps = {},
   ...props
 }) => {
-
-  // slotProps 수정
-  const modifySlotProps = (slotProps) => ({
-    ...slotProps,
-    input: {
-      ...slotProps?.input,
-      readOnly: (
-        ( slotProps?.input?.readOnly && readOnly ) ||
-        ( readOnly )
-      ),
-      startAdornment: (
-        ( startAdornment ) &&
-        ( <div className={"fs-0-6rem"}>{startAdornment}</div> )
-      ),
-      endAdornment: (
-        ( endAdornment ) &&
-        ( <div className={"fs-0-6rem"}>{endAdornment}</div> )
-      ),
-    },
-    inputLabel: {
-      ...slotProps?.inputLabel,
-      shrink: false,
-    },
-  });
 
   return (
     <TextField
@@ -47,7 +20,27 @@ export const Input = ({
       type={"text" || props.type}
       size={"small" || props.size}
       fullWidth={true || props.fullWidth}
-      slotProps={modifySlotProps(slotProps) || props.slotProps}
+      slotProps={{
+        ...props.slotProps,
+        input: {
+          ...props.slotProps?.input,
+          readOnly: (
+            readOnly || props.slotProps?.input?.readOnly
+          ),
+          startAdornment: (
+            <div className={"fs-0-6rem"}>{startAdornment}</div> ||
+            props.slotProps?.input?.startAdornment
+          ),
+          endAdornment: (
+            <div className={"fs-0-6rem"}>{endAdornment}</div> ||
+            props.slotProps?.input?.endAdornment
+          ),
+        },
+        inputLabel: {
+          ...props.slotProps?.inputLabel,
+          shrink: false || props.slotProps?.inputLabel?.shrink,
+        },
+      }}
     />
   );
 };
@@ -57,7 +50,6 @@ Input.propTypes = {
   readOnly: PropTypes.bool,
   startAdornment: PropTypes.node,
   endAdornment: PropTypes.node,
-  slotProps: PropTypes.object,
 };
 
 

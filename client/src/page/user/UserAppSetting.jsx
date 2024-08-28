@@ -27,15 +27,15 @@ export const UserAppSetting = () => {
             <Br10 />
             <Grid
               size={12}
-              className={"d-between pointer p-15"}
+              className={"d-between pointer p-5"}
               onClick={() => {
                 navigate("/user/detail")
               }}
             >
-              <Grid size={6} className={"d-left"}>
+              <Grid size={6} className={"d-left ms-10"}>
                 {translate("dataDetail")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -46,15 +46,15 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-15"}
+              className={"d-between pointer p-5"}
               onClick={() => {
                 navigate("/user/category")
               }}
             >
-              <Grid size={6} className={"d-left"}>
+              <Grid size={6} className={"d-left ms-10"}>
                 {translate("category")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -65,15 +65,15 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-15`}
+              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-5`}
               onClick={() => {
                 navigate("/user/dummy")
               }}
             >
-              <Grid size={6} className={"d-left"}>
+              <Grid size={6} className={"d-left ms-10"}>
                 {translate("dataList")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -84,15 +84,15 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-15"}
+              className={"d-between pointer p-5"}
               onClick={() => {
                 navigate("/user/app/info")
               }}
             >
-              <Grid size={6} className={"d-left"}>
+              <Grid size={6} className={"d-left ms-10"}>
                 {translate("appInfo")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -103,7 +103,7 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-15"}
+              className={"d-between pointer p-5"}
               onClick={() => {
                 localStorage.setItem("autoLogin", "false")
                 localStorage.setItem("autoLoginId", "")
@@ -112,10 +112,10 @@ export const UserAppSetting = () => {
                 navigate("/")
               }}
             >
-              <Grid size={6} className={"d-left"}>
+              <Grid size={6} className={"d-left ms-10"}>
                 {translate("logout")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -126,15 +126,15 @@ export const UserAppSetting = () => {
             <Hr20 />
             <Grid
               size={12}
-              className={"d-between pointer p-15"}
+              className={"d-between pointer p-5"}
               onClick={() => {
                 navigate("/user/deletes")
               }}
             >
-              <Grid size={6} className={"d-left red"}>
+              <Grid size={6} className={"d-left red ms-10"}>
                 {translate("userDeletes")}
               </Grid>
-              <Grid size={6} className={"d-right"}>
+              <Grid size={5} className={"d-right"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
