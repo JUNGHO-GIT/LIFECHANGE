@@ -16,7 +16,7 @@ export const Banner = () => {
     );
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh radius border h-60"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {bannerSection}
           </Grid>

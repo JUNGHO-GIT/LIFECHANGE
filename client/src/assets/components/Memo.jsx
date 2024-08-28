@@ -1,9 +1,9 @@
 // Memo.jsx
 
-import { React, useState, useLocation } from "../../import/ImportReacts.jsx";
+import { React, useState } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
-import { PopUp, Img, Div, Br20, Input } from "../../import/ImportComponents.jsx";
-import {  Button, TextArea } from "../../import/ImportMuis.jsx";
+import { PopUp, Img, Div, Br20, Input, Btn } from "../../import/ImportComponents.jsx";
+import { TextArea, Grid, Card } from "../../import/ImportMuis.jsx";
 import { calendar3 } from "../../import/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -25,91 +25,69 @@ export const Memo = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center"}>
-            <TextArea
-              readOnly={false}
-              className={"w-86vw h-55vh border p-10"}
-              value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-              onChange={(e) => {
-                const newContent = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      [`${extra}`]: newContent
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Button
-              size={"small"}
-              color={"primary"}
-              variant={"contained"}
-              style={{
-                padding: "4px 10px",
-                textTransform: "none",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                marginRight: "2vw",
-                fontSize: "0.8rem"
-              }}
-              onClick={() => {
-                closePopup();
-              }}
-            >
-              {translate("confirm")}
-            </Button>
-            <Button
-              size={"small"}
-              color={"error"}
-              variant={"contained"}
-              style={{
-                padding: "4px 10px",
-                textTransform: "none",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                fontSize: "0.8rem"
-              }}
-              onClick={() => {
-                // 이전 상태로 복원
-                setOBJECT((prev) => ({
-                  ...prev,
-                  [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      [`${extra}`]: prevContent
-                    } : item
-                  ))
-                }));
-                closePopup();
-              }}
-            >
-              {translate("close")}
-            </Button>
-          </Div>
-        </Div>
+        <Card className={"w-max60vw h-max65vh p-0"}>
+          <Grid container columnSpacing={1}>
+            <Grid size={12} className={"d-center"}>
+              <TextArea
+                className={"w-86vw h-55vh border p-10"}
+                value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+                onChange={(e) => {
+                  const newContent = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        [`${extra}`]: newContent
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid size={6} className={"d-right"}>
+              <Btn
+                color={"primary"}
+                onClick={() => {
+                  closePopup();
+                }}
+              >
+                {translate("confirm")}
+              </Btn>
+            </Grid>
+            <Grid size={6} className={"d-left"}>
+              <Btn
+                color={"error"}
+                onClick={() => {
+                  // 이전 상태로 복원
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        [`${extra}`]: prevContent
+                      } : item
+                    ))
+                  }));
+                  closePopup();
+                }}
+              >
+                {translate("close")}
+              </Btn>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input
           label={translate("memo")}
-          size={"small"}
-          variant={"outlined"}
-          className={"w-86vw pointer"}
+          className={"pointer"}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={calendar3} className={"w-16 h-16"} />
-            ),
-          }}
+          readOnly={true}
+          startAdornment={
+            <Img src={calendar3} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             // 팝업 열릴 때 현재 상태를 저장
             setPrevContent(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]);

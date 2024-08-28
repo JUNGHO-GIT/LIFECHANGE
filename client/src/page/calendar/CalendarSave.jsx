@@ -309,135 +309,130 @@ export const CalendarSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  color: '#ffffff',
-                  backgroundColor:
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
-                    OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
-                    '#9E9E9E',
-                }
-              }}
-            />
-            <Delete
-              id={OBJECT?._id}
-              sectionId={OBJECT?.calendar_section[i]?._id}
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Select
-              type={"text"}
-              size={"small"}
-              variant={"outlined"}
-              className={"w-40vw me-3vw"}
-              label={translate("part")}
-              value={OBJECT?.calendar_section[i]?.calendar_part_idx}
-              inputRef={REFS?.current[i]?.calendar_part_idx}
-              error={ERRORS[i]?.calendar_part_idx}
-              onChange={(e) => {
-                const newIndex = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_part_idx: newIndex,
-                      calendar_part_val: calendarArray[newIndex]?.calendar_part
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {calendarArray?.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Badge
+                badgeContent={i + 1}
+                showZero={true}
+                sx={{
+                  '& .MuiBadge-badge': {
+                    marginTop: "-10px",
+                    color: '#ffffff',
+                    backgroundColor:
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
+                      OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
+                      '#9E9E9E',
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                id={OBJECT?._id}
+                sectionId={OBJECT?.calendar_section[i]?._id}
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br20 />
+            <Grid size={6}>
+              <Select
+                label={translate("part")}
+                value={OBJECT?.calendar_section[i]?.calendar_part_idx}
+                inputRef={REFS?.current[i]?.calendar_part_idx}
+                error={ERRORS[i]?.calendar_part_idx}
+                inputClassName={"fs-0-8rem"}
+                onChange={(e) => {
+                  const newIndex = Number(e.target.value);
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    calendar_section: prev.calendar_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        calendar_part_idx: newIndex,
+                        calendar_part_val: calendarArray[newIndex]?.calendar_part
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {calendarArray?.map((item, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(item.calendar_part)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              type={"text"}
-              size={"small"}
-              label={translate("color")}
-              variant={"outlined"}
-              className={"w-40vw ms-3vw"}
-              value={OBJECT?.calendar_section[i]?.calendar_color}
-              inputRef={REFS?.current[i]?.calendar_color}
-              error={ERRORS[i]?.calendar_color}
-              onChange={(e) => {
-                const newColor = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_color: newColor
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {colors.map((item, idx) => (
-                <MenuItem key={idx} value={item}>
-                  <span className={`${item}`}>●</span>
-                  <span className={"ms-10"}>{item}</span>
-                </MenuItem>
-              ))}
-            </Select>
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Input
-              variant={"outlined"}
-              className={"w-86vw"}
-              label={translate("calendarTitle")}
-              value={OBJECT?.calendar_section[i]?.calendar_title}
-              inputRef={REFS?.current[i]?.calendar_title}
-              error={ERRORS[i]?.calendar_title}
-              InputProps={{
-                startAdornment: (
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={6}>
+              <Select
+                label={translate("color")}
+                value={OBJECT?.calendar_section[i]?.calendar_color}
+                inputRef={REFS?.current[i]?.calendar_color}
+                error={ERRORS[i]?.calendar_color}
+                inputClassName={"fs-0-8rem"}
+                onChange={(e) => {
+                  const newColor = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    calendar_section: prev.calendar_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        calendar_color: newColor
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {colors.map((item, idx) => (
+                  <MenuItem key={idx} value={item} className={"fs-0-8rem"}>
+                    <span className={`${item}`}>●</span>
+                    <span className={"ms-10"}>{item}</span>
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Br20 />
+            <Grid size={12}>
+              <Input
+                label={translate("calendarTitle")}
+                value={OBJECT?.calendar_section[i]?.calendar_title}
+                inputRef={REFS?.current[i]?.calendar_title}
+                error={ERRORS[i]?.calendar_title}
+                startAdornment={
                   <Img src={calendar2} className={"w-16 h-16"} />
-                ),
-              }}
-              onChange={(e) => {
-                const newTitle = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  calendar_section: prev.calendar_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      calendar_title: newTitle
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Div>
-          <Br20 />
-          <Div className={"d-center"}>
-            <Memo
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              extra={"calendar_content"}
-              i={i}
-            />
-          </Div>
+                }
+                onChange={(e) => {
+                  const newTitle = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    calendar_section: prev.calendar_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        calendar_title: newTitle
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Br20 />
+            <Grid size={12}>
+              <Memo
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                extra={"calendar_content"}
+                i={i}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -449,7 +444,7 @@ export const CalendarSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

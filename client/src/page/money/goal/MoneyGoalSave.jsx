@@ -259,6 +259,7 @@ export const MoneyGoalSave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor: "#1976d2",
                 }
@@ -281,7 +282,6 @@ export const MoneyGoalSave = () => {
                   `${translate("goalIncome")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_income).format("0,0")}
               inputRef={REFS?.current?.money_goal_income}
@@ -326,7 +326,6 @@ export const MoneyGoalSave = () => {
                   `${translate("goalExpense")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_goal_expense).format("0,0")}
               inputRef={REFS?.current?.money_goal_expense}
@@ -372,7 +371,7 @@ export const MoneyGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

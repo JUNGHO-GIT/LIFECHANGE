@@ -3,8 +3,9 @@
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
-import { Div, Input, Select } from "../../../import/ImportComponents.jsx";
-import { Card, Button,  MenuItem } from "../../../import/ImportMuis.jsx";
+import { numeral } from "../../../import/ImportLibs.jsx";
+import { Input, Select, Btn } from "../../../import/ImportComponents.jsx";
+import { MenuItem, Grid } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Dummy = ({
@@ -19,16 +20,9 @@ export const Dummy = ({
     // 1. part
     const partSection = () => (
       <Select
-        type={"text"}
-        size={"small"}
-        className={"me-2vw"}
-        variant={"outlined"}
         value={state?.PART}
         defaultValue={"exerciseGoal"}
-        InputProps={{
-          readOnly: false,
-          className: "h-min0 h-30 fs-0-8rem",
-        }}
+        inputClassName={"h-min0 h-30 fs-0-7rem"}
         onChange={(e) => {
           const newPartVal = e.target.value;
           setState?.setPART(newPartVal);
@@ -38,129 +32,112 @@ export const Dummy = ({
           }));
         }}
       >
-        <MenuItem value={"exerciseGoal"}>
-          <Div className={"fs-0-7rem"}>{`${translate("exercise")}(${translate("goal")})`}</Div>
+        <MenuItem value={"exerciseGoal"} className={"fs-0-7rem"}>
+          {`${translate("exercise")}(${translate("goal")})`}
         </MenuItem>
-        <MenuItem value={"exercise"}>
-          <Div className={"fs-0-7rem"}>{translate("exercise")}</Div>
+        <MenuItem value={"exercise"} className={"fs-0-7rem"}>
+          {translate("exercise")}
         </MenuItem>
-        <MenuItem value={"foodGoal"}>
-          <Div className={"fs-0-7rem"}>{`${translate("food")}(${translate("goal")})`}</Div>
+        <MenuItem value={"foodGoal"} className={"fs-0-7rem"}>
+          {`${translate("food")}(${translate("goal")})`}
         </MenuItem>
-        <MenuItem value={"food"}>
-          <Div className={"fs-0-7rem"}>{translate("food")}</Div>
+        <MenuItem value={"food"} className={"fs-0-7rem"}>
+          {translate("food")}
         </MenuItem>
-        <MenuItem value={"moneyGoal"}>
-          <Div className={"fs-0-7rem"}>{`${translate("money")}(${translate("goal")})`}</Div>
+        <MenuItem value={"moneyGoal"} className={"fs-0-7rem"}>
+          {`${translate("money")}(${translate("goal")})`}
         </MenuItem>
-        <MenuItem value={"money"}>
-          <Div className={"fs-0-7rem"}>{translate("money")}</Div>
+        <MenuItem value={"money"} className={"fs-0-7rem"}>
+          {translate("money")}
         </MenuItem>
-        <MenuItem value={"sleepGoal"}>
-          <Div className={"fs-0-7rem"}>{`${translate("sleep")}(${translate("goal")})`}</Div>
+        <MenuItem value={"sleepGoal"} className={"fs-0-7rem"}>
+          {`${translate("sleep")}(${translate("goal")})`}
         </MenuItem>
-        <MenuItem value={"sleep"}>
-          <Div className={"fs-0-7rem"}>{translate("sleep")}</Div>
+        <MenuItem value={"sleep"} className={"fs-0-7rem"}>
+          {translate("sleep")}
         </MenuItem>
       </Select>
     );
     // 2. count
     const countSection = () => (
       <Input
-        className={"me-2vw"}
-        variant={"outlined"}
-        value={Math.min(state?.COUNT?.inputCnt, 100)}
-        InputProps={{
-          readOnly: false,
-          className: "h-min0 h-30 fs-0-8rem",
-        }}
+        value={numeral(state?.COUNT?.inputCnt).format("0")}
+        inputClassName={"h-min0 h-30 fs-0-8rem"}
         onChange={(e) => {
-          const limitedValue = Math.min(Number(e.target.value), 100);
-          setState?.setCOUNT((prev) => ({
-            ...prev,
-            inputCnt: limitedValue
-          }));
+          const value = e.target.value.replace(/,/g, '');
+          if (/^\d*$/.test(value) || value === "") {
+            const newValue = Number(value);
+            if (value === "") {
+              setState?.setCOUNT((prev) => ({
+                ...prev,
+                inputCnt: "0",
+              }));
+            }
+            else if (!isNaN(newValue) && newValue <= 999) {
+              setState?.setCOUNT((prev) => ({
+                ...prev,
+                inputCnt: value,
+              }));
+            }
+          }
         }}
       />
     );
     // 3. save
     const saveSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"primary"}
-        variant={"contained"}
-        style={{
-          lineHeight: "1.4",
-          padding: "3px 9px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.7rem"
-        }}
+        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
           flow.flowDummySave();
         }}
       >
         {translate("save")}
-      </Button>
+      </Btn>
     );
     // 4. deletes
     const deletesSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"error"}
-        variant={"contained"}
-        style={{
-          lineHeight: "1.4",
-          padding: "3px 9px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.7rem"
-        }}
+        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
           flow.flowDummyDeletes();
         }}
       >
         {translate("deletes")}
-      </Button>
+      </Btn>
     );
     // 5. deletesAll
     const deletesAllSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"warning"}
-        variant={"contained"}
-        style={{
-          lineHeight: "1.4",
-          padding: "3px 9px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.7rem"
-        }}
+        className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem"}
         onClick={() => {
           flow.flowDummyDeletes("all");
         }}
       >
         {translate("deletesAll")}
-      </Button>
+      </Btn>
     );
     // 6. return
     return (
-      <>
-        {partSection()}
-        {countSection()}
-        {saveSection()}
-        {deletesSection()}
-        {deletesAllSection()}
-      </>
+      <Grid container columnSpacing={1}>
+        <Grid size={3} className={"d-center"}>
+          {partSection()}
+        </Grid>
+        <Grid size={3} className={"d-center"}>
+          {countSection()}
+        </Grid>
+        <Grid size={2} className={"d-right"}>
+          {saveSection()}
+        </Grid>
+        <Grid size={2} className={"d-center"}>
+          {deletesSection()}
+        </Grid>
+        <Grid size={2} className={"d-left"}>
+          {deletesAllSection()}
+        </Grid>
+      </Grid>
     );
   };
 

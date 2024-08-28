@@ -142,7 +142,7 @@ export const UserDeletes = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper radius border h-min84vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
             <Hr40 />

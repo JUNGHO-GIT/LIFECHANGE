@@ -267,7 +267,6 @@ export const FoodChartBar = () => {
       );
       const selectSection1 = () => (
         <Input
-          variant={"outlined"}
           value={translate(SECTION)}
           InputProps={{
             readOnly: true,
@@ -307,7 +306,7 @@ export const FoodChartBar = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container className={"w-100p"}>
+          <Grid container columnSpacing={1}>
             <Grid size={3} className={"d-left"}>
               {selectSection1()}
             </Grid>
@@ -343,7 +342,7 @@ export const FoodChartBar = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-column"}>
             {headSection()}
             <Br20 />

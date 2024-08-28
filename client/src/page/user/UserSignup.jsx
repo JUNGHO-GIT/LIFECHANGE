@@ -347,7 +347,7 @@ export const UserSignup = () => {
       const cardFragment = (i) => (
         <Card className={"d-column p-10"} key={i}>
           {/** section 1 **/}
-          <Grid container className={"w-100p"}>
+          <Grid container columnSpacing={1}>
             <Grid size={9}>
               <Input
                 label={`${translate("id")} (email)`}
@@ -403,7 +403,6 @@ export const UserSignup = () => {
           <Br10 />
           <Input
             type={"password"}
-            size={"small"}
             label={translate("pw")}
             value={OBJECT.user_pw}
             inputRef={REFS.current.user_pw}
@@ -419,7 +418,6 @@ export const UserSignup = () => {
           <Br10 />
           <Input
             type={"password"}
-            size={"small"}
             label={translate("pwVerified")}
             value={OBJECT.user_pw_verified}
             inputRef={REFS.current.user_pw_verified}
@@ -435,8 +433,6 @@ export const UserSignup = () => {
           <Hr40 />
           {/** 성별 (N, M, F) **/}
           <Select
-            type={"text"}
-            size={"small"}
             label={translate("gender")}
             value={OBJECT.user_gender || "N"}
             className={"w-86vw text-left"}
@@ -661,7 +657,7 @@ export const UserSignup = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center radius border h-min94vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
             <Hr40 />

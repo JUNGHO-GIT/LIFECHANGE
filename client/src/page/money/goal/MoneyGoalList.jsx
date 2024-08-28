@@ -131,7 +131,7 @@ export const MoneyGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container className={"w-100p"}
+                <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -186,7 +186,7 @@ export const MoneyGoalList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -237,7 +237,7 @@ export const MoneyGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -300,7 +300,7 @@ export const MoneyGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

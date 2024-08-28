@@ -14,10 +14,8 @@ export const Picker = ({
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    translate, PATH, firstStr, secondStr, thirdStr, koreanDate, curWeekStart, curWeekEnd,
-    curMonthStart, curMonthEnd, curYearStart, curYearEnd,
-  } = useCommon();
+  const { translate, PATH, firstStr, secondStr, thirdStr, koreanDate, curWeekStart, curWeekEnd,
+  curMonthStart, curMonthEnd, curYearStart, curYearEnd } = useCommon();
 
   const isToday = firstStr === "today";
   const isGoalList = secondStr === "goal" && thirdStr === "list";
@@ -247,16 +245,13 @@ export const Picker = ({
       {(popTrigger={}) => (
         <Input
           label={translate("date")}
-          variant={"outlined"}
           value={`${DATE.dateStart}`}
           className={widthStr}
-          InputProps={{
-            readOnly: true,
-            className: innerStr,
-            startAdornment: (
-              <Img src={common1} className={"w-16 h-16"} />
-            ),
-          }}
+          readOnly={true}
+          inputClassName={innerStr}
+          startAdornment={
+            <Img src={common1} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             if (!isToday) {
               popTrigger.openPopup(e.currentTarget);
@@ -371,16 +366,13 @@ export const Picker = ({
       {(popTrigger={}) => (
         <Input
           label={translate("duration")}
-          variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          InputProps={{
-            readOnly: true,
-            className: innerStr,
-            startAdornment: (
-              <Img src={common1} className={"w-16 h-16"} />
-            ),
-          }}
+          inputClassName={innerStr}
+          readOnly={true}
+          startAdornment={
+            <Img src={common1} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             if (!isToday) {
               popTrigger.openPopup(e.currentTarget);
@@ -468,16 +460,13 @@ export const Picker = ({
       {(popTrigger={}) => (
         <Input
           label={translate("duration")}
-          variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          InputProps={{
-            readOnly: true,
-            className: innerStr,
-            startAdornment: (
-              <Img src={common1} className={"w-16 h-16"} />
-            ),
-          }}
+          inputClassName={innerStr}
+          readOnly={true}
+          startAdornment={
+            <Img src={common1} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             if (!isToday) {
               popTrigger.openPopup(e.currentTarget);
@@ -565,16 +554,13 @@ export const Picker = ({
       {(popTrigger={}) => (
         <Input
           label={translate("duration")}
-          variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          InputProps={{
-            readOnly: true,
-            className: innerStr,
-            startAdornment: (
-              <Img src={common1} className={"w-16 h-16"} />
-            ),
-          }}
+          inputClassName={innerStr}
+          readOnly={true}
+          startAdornment={
+            <Img src={common1} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             if (!isToday) {
               popTrigger.openPopup(e.currentTarget);
@@ -672,16 +658,13 @@ export const Picker = ({
       {(popTrigger = {}) => (
         <Input
           label={translate("duration")}
-          variant={"outlined"}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           className={widthStr}
-          InputProps={{
-            readOnly: true,
-            className: innerStr,
-            startAdornment: (
-              <Img src={common1} className={"w-16 h-16"} />
-            ),
-          }}
+          readOnly={true}
+          inputClassName={innerStr}
+          startAdornment={
+            <Img src={common1} className={"w-16 h-16"} />
+          }
           onClick={(e) => {
             if (!isToday) {
               popTrigger.openPopup(e.currentTarget);
@@ -701,7 +684,6 @@ export const Picker = ({
       contents={({closePopup}) => (
         <Div className={"d-column p-10"}>
           <Button
-            size={"small"}
             variant={"contained"}
             style={{
               lineHeight: "1.4",
@@ -722,7 +704,6 @@ export const Picker = ({
           </Button>
           <Br10/>
           <Button
-            size={"small"}
             variant={"contained"}
             style={{
               lineHeight: "1.4",
@@ -743,7 +724,6 @@ export const Picker = ({
           </Button>
           <Br10/>
           <Button
-            size={"small"}
             variant={"contained"}
             style={{
               lineHeight: "1.4",
@@ -764,7 +744,6 @@ export const Picker = ({
           </Button>
           <Br10/>
           <Button
-            size={"small"}
             variant={"contained"}
             style={{
               lineHeight: "1.4",
@@ -785,7 +764,6 @@ export const Picker = ({
           </Button>
           <Br10/>
           <Button
-            size={"small"}
             variant={"contained"}
             style={{
               lineHeight: "1.4",
@@ -838,14 +816,9 @@ export const Picker = ({
     (firstStr !== "calendar" && secondStr === "goal") ? (
       <Select
         label={translate("dateType")}
-        size={"small"}
         value={DATE.dateType || ""}
-        variant={"outlined"}
         className={"w-26vw me-3vw"}
-        InputProps={{
-          readOnly: false,
-          className: typeStr
-        }}
+        inputClassName={typeStr}
         onChange={(e) => {
           if (e.target.value === "day") {
             setDATE((prev) => ({

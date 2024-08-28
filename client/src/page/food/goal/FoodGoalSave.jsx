@@ -283,6 +283,7 @@ export const FoodGoalSave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor: "#1976d2",
                 }
@@ -305,7 +306,6 @@ export const FoodGoalSave = () => {
                   `${translate("goalKcal")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
               inputRef={REFS?.current?.food_goal_kcal}
@@ -350,7 +350,6 @@ export const FoodGoalSave = () => {
                   `${translate("goalCarb")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_carb).format("0,0")}
               inputRef={REFS?.current?.food_goal_carb}
@@ -395,7 +394,6 @@ export const FoodGoalSave = () => {
                   `${translate("goalProtein")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_protein).format("0,0")}
               inputRef={REFS?.current?.food_goal_protein}
@@ -440,7 +438,6 @@ export const FoodGoalSave = () => {
                   `${translate("goalFat")} (${translate("total")})`
                 )
               }
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.food_goal_fat).format("0,0")}
               inputRef={REFS?.current?.food_goal_fat}
@@ -486,7 +483,7 @@ export const FoodGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

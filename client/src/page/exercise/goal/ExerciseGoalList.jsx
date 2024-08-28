@@ -147,7 +147,7 @@ export const ExerciseGoalList = () => {
                   )}}
                 />
               }>
-                <Grid container className={"w-100p"}
+                <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -202,7 +202,7 @@ export const ExerciseGoalList = () => {
               </AccordionSummary>
               <AccordionDetails><Br10 />
                 {/** row 1 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise2} className={"w-15 h-15"} />
                   </Grid>
@@ -253,7 +253,7 @@ export const ExerciseGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 2 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
@@ -304,7 +304,7 @@ export const ExerciseGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 3 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -355,7 +355,7 @@ export const ExerciseGoalList = () => {
                 </Grid>
                 <Hr30 />
                 {/** row 4 **/}
-                <Grid container className={"w-100p"}>
+                <Grid container columnSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
@@ -418,7 +418,7 @@ export const ExerciseGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

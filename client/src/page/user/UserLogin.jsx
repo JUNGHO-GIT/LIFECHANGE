@@ -263,7 +263,6 @@ export const UserLogin = () => {
     // 7-3. button
     const buttonSection = () => (
       <Button
-        size={"small"}
         color={"primary"}
         className={"w-100p fs-1-0rem"}
         variant={"contained"}
@@ -312,7 +311,7 @@ export const UserLogin = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center radius border h-min97vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
             <Hr40 />

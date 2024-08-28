@@ -260,7 +260,7 @@ export const UserCategory = () => {
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = (i, closePopup) => (
-      <Card key={i} variant={"outlined"} className={"w-85vw h-60vh d-row border radius p-0"}>
+      <Card key={i} className={"w-85vw h-60vh d-row border radius p-0"}>
         <TableContainer className={"border-right over-x-hidden"}>
           <Table>
             <TableHead className={"table-thead"}>
@@ -289,7 +289,6 @@ export const UserCategory = () => {
                       <Div className={"fs-0-9rem ms-auto"}>
                         <Select
                           variant={"standard"}
-                          size={"small"}
                           value={translate(item[`${dataType}_part`])}
                           sx={{
                             ".MuiInput-root::after": {
@@ -382,7 +381,6 @@ export const UserCategory = () => {
                         <Div className={"fs-0-9rem ms-auto"}>
                           <Select
                             variant={"standard"}
-                            size={"small"}
                             value={translate(item)}
                             sx={{
                               ".MuiInput-root::after": {
@@ -520,7 +518,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

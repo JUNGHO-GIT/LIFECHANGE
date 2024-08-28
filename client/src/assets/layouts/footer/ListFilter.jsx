@@ -19,15 +19,9 @@ export const ListFilter = ({
     // 1. sort
     const sortSection = () => (
       <Select
-        type={"text"}
-        size={"small"}
         label={translate("sort")}
-        variant={"outlined"}
         value={state?.PAGING?.sort || "asc"}
-        className={"w-23vw me-3vw"}
-        InputProps={{
-          className: "h-min0 h-4vh"
-        }}
+        inputClassName={"h-min0 h-4vh"}
         onChange={(e) => (
           setState?.setPAGING((prev) => ({
             ...prev,
@@ -55,10 +49,14 @@ export const ListFilter = ({
     );
     // 3. return
     return (
-      <>
-        {sortSection()}
-        {pickerSection()}
-      </>
+      <Grid container columnSpacing={1}>
+        <Grid size={4}>
+          {sortSection()}
+        </Grid>
+        <Grid size={8}>
+          {pickerSection()}
+        </Grid>
+      </Grid>
     );
   };
 

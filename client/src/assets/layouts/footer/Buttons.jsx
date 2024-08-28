@@ -1,13 +1,13 @@
-// Btn.jsx
+// Buttons.jsx
 // Node -> Section -> Fragment
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
-import { Div } from "../../../import/ImportComponents.jsx";
-import { Button } from "../../../import/ImportMuis.jsx";
+import { Btn } from "../../../import/ImportComponents.jsx";
+import { Grid } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const Btn = ({
+export const Buttons = ({
   state, setState, flow,
 }) => {
 
@@ -18,19 +18,8 @@ export const Btn = ({
   const btnNode = () => {
     // 1. goToFind
     const gotoFindSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"success"}
-        variant={"contained"}
-        style={{
-          padding: "4px 10px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.8rem"
-        }}
         onClick={() => {
           Object.assign(state?.SEND, {
             dateType: state?.DATE.dateType,
@@ -43,24 +32,13 @@ export const Btn = ({
         }}
       >
         {translate("find")}
-      </Button>
+      </Btn>
     );
 
     // 2. save
     const saveSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"primary"}
-        variant={"contained"}
-        style={{
-          padding: "4px 10px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.8rem"
-        }}
         onClick={() => {
           flow.flowSave();
           Object.keys(sessionStorage).forEach((key) => {
@@ -71,48 +49,50 @@ export const Btn = ({
         }}
       >
         {translate("save")}
-      </Button>
+      </Btn>
     );
 
     // 3. deletes
     const deletesSection = () => (
-      <Button
-        size={"small"}
+      <Btn
         color={"error"}
-        variant={"contained"}
-        style={{
-          padding: "4px 10px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          fontSize: "0.8rem"
-        }}
         onClick={() => {
           flow.flowDeletes();
         }}
       >
         {translate("delete")}
-      </Button>
+      </Btn>
     );
 
     // 4. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <>
-          {saveSection()}
-        </>
+        <Grid container columnSpacing={1}>
+          <Grid size={12} className={"d-center"}>
+            {saveSection()}
+          </Grid>
+        </Grid>
       ) : PATH.includes("/food/save") ? (
-        <>
-          {gotoFindSection()}
-          {saveSection()}
-          {deletesSection()}
-        </>
+        <Grid container columnSpacing={1}>
+          <Grid size={4} className={"d-right"}>
+            {gotoFindSection()}
+          </Grid>
+          <Grid size={4} className={"d-center"}>
+            {saveSection()}
+          </Grid>
+          <Grid size={4} className={"d-left"}>
+            {deletesSection()}
+          </Grid>
+        </Grid>
       ) : (
-        <>
-          {saveSection()}
-          {deletesSection()}
-        </>
+        <Grid container columnSpacing={1}>
+          <Grid size={6} className={"d-right"}>
+            {saveSection()}
+          </Grid>
+          <Grid size={6} className={"d-left"}>
+            {deletesSection()}
+          </Grid>
+        </Grid>
       )
     );
   };

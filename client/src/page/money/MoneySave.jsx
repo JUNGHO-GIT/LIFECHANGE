@@ -354,9 +354,7 @@ export const MoneySave = () => {
         <Div className={"d-center"}>
           <Input
             label={translate("totalIncome")}
-            size={"small"}
             value={numeral(OBJECT?.money_total_income).format("0,0")}
-            variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
@@ -372,9 +370,7 @@ export const MoneySave = () => {
           />
           <Input
             label={translate("totalExpense")}
-            size={"small"}
             value={numeral(OBJECT?.money_total_expense).format("0,0")}
-            variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
@@ -401,6 +397,7 @@ export const MoneySave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor:
                     OBJECT?.money_section[i]?.money_part_idx === 0 ? '#1976d2' :
@@ -427,9 +424,6 @@ export const MoneySave = () => {
           <Br20 />
           <Div className={"d-center"}>
             <Select
-              type={"text"}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               label={translate("part")}
               value={OBJECT?.money_section[i]?.money_part_idx}
@@ -460,10 +454,7 @@ export const MoneySave = () => {
               ))}
             </Select>
             <Select
-              type={"text"}
-              size={"small"}
               label={translate("title")}
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.money_section[i]?.money_title_idx}
               inputRef={REFS?.current[i]?.money_title_idx}
@@ -498,8 +489,6 @@ export const MoneySave = () => {
           <Div className={"d-center"}>
             <Input
               label={translate("amount")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-86vw"}
               value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
               inputRef={REFS?.current[i]?.money_amount}
@@ -564,7 +553,7 @@ export const MoneySave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {totalSection()}

@@ -16,7 +16,7 @@ export const AuthError = () => {
   // 2. return -------------------------------------------------------------------------------------
   return (
     <Div className={"error_body"}>
-      <Grid container className={"w-100p"}>
+      <Grid container columnSpacing={1}>
         <Grid size={6}>
           <svg
             className="error_paper__main"

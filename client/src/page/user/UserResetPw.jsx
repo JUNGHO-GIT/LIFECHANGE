@@ -328,7 +328,6 @@ export const UserResetPw = () => {
           <Br10 />
           <Input
             type={"password"}
-            size={"small"}
             label={translate("newPw")}
             value={OBJECT.user_pw}
             inputRef={REFS.current.user_pw}
@@ -344,7 +343,6 @@ export const UserResetPw = () => {
           <Br10 />
           <Input
             type={"password"}
-            size={"small"}
             label={translate("newPwVerified")}
             value={OBJECT.user_pw_verified}
             inputRef={REFS.current.user_pw_verified}
@@ -406,7 +404,7 @@ export const UserResetPw = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center radius border h-min94vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {titleSection()}
             <Hr40 />

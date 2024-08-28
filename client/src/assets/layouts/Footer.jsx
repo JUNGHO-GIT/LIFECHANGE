@@ -4,10 +4,11 @@
 import { React, useState, useEffect } from "../../import/ImportReacts.jsx";
 import { useCommon } from "../../import/ImportHooks.jsx";
 import { Paper, Grid } from "../../import/ImportMuis.jsx";
+import { Buttons } from "./footer/Buttons.jsx";
 import { Dummy } from "./footer/Dummy.jsx";
-import { FindFilter } from "./footer/FindFilter.jsx";
-import { Btn } from "./footer/Btn.jsx";
 import { ListFilter } from "./footer/ListFilter.jsx";
+import { FindListFilter } from "./footer/FindListFilter.jsx";
+import { FindSaveFilter } from "./footer/FindSaveFilter.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const Footer = ({
@@ -43,7 +44,13 @@ export const Footer = ({
     else if (
       PATH.includes("/food/find")
     ) {
-      setTypeName("findFood");
+      setTypeName("findList");
+      setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-9vh radius border");
+    }
+    else if (
+      PATH.includes("/food/save")
+    ) {
+      setTypeName("findSave");
       setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-9vh radius border");
     }
     else if (
@@ -68,7 +75,23 @@ export const Footer = ({
 
   // 7. footer -------------------------------------------------------------------------------------
   const footerNode = () => {
-    // 1. listFilter
+    // 1. btn
+    const btnSection = () => (
+      <Buttons
+        state={state}
+        setState={setState}
+        flow={flow}
+      />
+    );
+    // 2. dummy
+    const dummySection = () => (
+      <Dummy
+        state={state}
+        setState={setState}
+        flow={flow}
+      />
+    );
+    // 3. listFilter
     const listFilterSection = () => (
       <ListFilter
         state={state}
@@ -76,25 +99,17 @@ export const Footer = ({
         flow={flow}
       />
     );
-    // 2. btn
-    const btnSection = () => (
-      <Btn
+    // 4. findList
+    const findListSection = () => (
+      <FindListFilter
         state={state}
         setState={setState}
         flow={flow}
       />
     );
-    // 3. findFood
-    const findFoodSection = () => (
-      <FindFilter
-        state={state}
-        setState={setState}
-        flow={flow}
-      />
-    );
-    // 4. dummy
-    const dummySection = () => (
-      <Dummy
+    // 5. findSave
+    const findSaveSection = () => (
+      <FindSaveFilter
         state={state}
         setState={setState}
         flow={flow}
@@ -103,12 +118,13 @@ export const Footer = ({
     // 5. return
     return (
       <Paper className={styleClass}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-center"}>
-            {typeName === "listFilter" && listFilterSection()}
             {typeName === "btn" && btnSection()}
-            {typeName === "findFood" && findFoodSection()}
             {typeName === "dummy" && dummySection()}
+            {typeName === "listFilter" && listFilterSection()}
+            {typeName === "findList" && findListSection()}
+            {typeName === "findSave" && findSaveSection()}
           </Grid>
         </Grid>
       </Paper>

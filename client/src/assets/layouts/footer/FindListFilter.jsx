@@ -1,31 +1,27 @@
-// FindFilter.jsx
+// FindListFilter.jsx
 // Node -> Section -> Fragment
 
 import { React } from "../../../import/ImportReacts.jsx";
 import { useCommon } from "../../../import/ImportHooks.jsx";
 import { Icons, Input } from "../../../import/ImportComponents.jsx";
-import { Button,  TablePagination } from "../../../import/ImportMuis.jsx";
+import { TablePagination, Grid } from "../../../import/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
-export const FindFilter = ({
+export const FindListFilter = ({
   state, setState, flow,
 }) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {translate, firstStr, secondStr, thirdStr} = useCommon();
+  const { translate } = useCommon();
 
   // 7. find ---------------------------------------------------------------------------------------
   const findFilterNode = () => {
     // 1. query
     const querySection = () => (
       <Input
-        variant={"outlined"}
-        className={"w-30vw me-2vw"}
+        label={translate("query")}
         value={state?.PAGING?.query}
-        InputProps={{
-          readOnly: false,
-          className: "h-min0 h-30",
-        }}
+        inputClassName={"h-min0 h-30"}
         onChange={(e) => {
           setState?.setPAGING((prev) => ({
             ...prev,
@@ -108,76 +104,19 @@ export const FindFilter = ({
         }}
       />
     );
-    // 5. save
-    const saveSection = () => (
-      <Button
-        size={"small"}
-        color={"primary"}
-        variant={"contained"}
-        style={{
-          padding: "4px 10px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.8rem"
-        }}
-        onClick={() => {
-          flow.flowSave();
-          Object.keys(sessionStorage).forEach((key) => {
-            if (key.includes("foodSection") || key.includes("PAGING")) {
-              sessionStorage.removeItem(key);
-            }
-          });
-        }}
-      >
-        {translate("save")}
-      </Button>
-    );
-    // 6. more
-    const moreSection = () => (
-      <Button
-        size={"small"}
-        color={"success"}
-        variant={"contained"}
-        style={{
-          padding: "4px 10px",
-          textTransform: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          marginRight: "2vw",
-          fontSize: "0.8rem"
-        }}
-        onClick={() => {
-          Object.assign(state?.SEND, {
-            dateType: state?.DATE.dateType,
-            dateStart: state?.DATE.dateStart,
-            dateEnd: state?.DATE.dateEnd
-          });
-          flow.navigate(state?.SEND.toFind, {
-            state: state?.SEND,
-          });
-        }}
-      >
-        {translate("find")}
-      </Button>
-    );
     return (
-      firstStr === "food" && secondStr === "find" && thirdStr === "save" ? (
-        <>
-          {moreSection()}
-          {saveSection()}
-        </>
-      ) : (
-        <>
+      <Grid container columnSpacing={1}>
+        <Grid size={4} className={"d-center"}>
           {querySection()}
+        </Grid>
+        <Grid size={2} className={"d-center"}>
           {findSection()}
           {doneSection()}
+        </Grid>
+        <Grid size={6} className={"d-center"}>
           {paginationSection()}
-        </>
-      )
+        </Grid>
+      </Grid>
     );
   };
 

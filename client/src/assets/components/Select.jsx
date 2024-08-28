@@ -2,52 +2,49 @@
 
 import { React } from "../../import/ImportReacts.jsx";
 import { TextField } from "../../import/ImportMuis.jsx";
-import PropTypes from "prop-types";
 
 // -------------------------------------------------------------------------------------------------
 export const Select = ({
-  readOnly = false,
-  startAdornment = null,
-  endAdornment = null,
   ...props
 }) => {
 
   return (
     <TextField
       {...props}
-      select={true || props.select}
-      variant={"outlined" || props.variant}
-      type={"text" || props.type}
-      size={"small" || props.size}
-      fullWidth={true || props.fullWidth}
+      select={props?.select || true}
+      variant={props?.variant || "outlined"}
+      type={props?.type || "text"}
+      size={props?.size || "small"}
+      fullWidth={props?.fullWidth || true}
+      style={{
+        fontSize: "0.8rem",
+      }}
       slotProps={{
-        ...props.slotProps,
+        ...props?.slotProps,
         input: {
-          ...props.slotProps?.input,
+          ...props?.slotProps?.input,
+          className: (
+            props?.inputClassName || ""
+          ),
           readOnly: (
-            readOnly || props.slotProps?.input?.readOnly
+            props?.readOnly || false
           ),
           startAdornment: (
-            <div className={"fs-0-6rem"}>{startAdornment}</div> ||
-            props.slotProps?.input?.startAdornment
+            typeof props?.startAdornment === "string" ? (
+              <div className={"w-16 h-16"}>{props?.startAdornment}</div>
+            ) : (
+              props?.startAdornment
+            )
           ),
           endAdornment: (
-            <div className={"fs-0-6rem"}>{endAdornment}</div> ||
-            props.slotProps?.input?.endAdornment
+            typeof props?.endAdornment === "string" ? (
+              <div className={"fs-0-6rem"}>{props?.endAdornment}</div>
+            ) : (
+              props?.endAdornment
+            )
           ),
-        },
-        inputLabel: {
-          ...props.slotProps?.inputLabel,
-          shrink: false || props.slotProps?.inputLabel?.shrink,
         },
       }}
     />
   );
-};
-
-// -------------------------------------------------------------------------------------------------
-Select.propTypes = {
-  readOnly: PropTypes.bool,
-  startAdornment: PropTypes.node,
-  endAdornment: PropTypes.node,
 };

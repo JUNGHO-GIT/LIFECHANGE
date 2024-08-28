@@ -317,6 +317,7 @@ export const SleepSave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor: "#1976d2",
                 }
@@ -376,7 +377,7 @@ export const SleepSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

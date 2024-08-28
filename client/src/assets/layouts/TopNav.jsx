@@ -14,9 +14,7 @@ import { exercise5, exercise6 } from "../../import/ImportImages.jsx";
 export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate,
-  } = useCommon();
+  const { navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState({
@@ -249,7 +247,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
-            <Grid container className={"w-100p"}>
+            <Grid container columnSpacing={1}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
@@ -343,7 +341,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
-            <Grid container className={"w-100p"}>
+            <Grid container columnSpacing={1}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
@@ -368,63 +366,42 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initProperty")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={numeral(property.initProperty).format("0,0")}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={money2} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("currency")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={money2} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("currency")
+                  }
                 />
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumIncome")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={numeral(property.totalIncome).format("0,0")}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={money2} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("currency")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={money2} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("currency")
+                  }
                 />
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumExpense")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={numeral(property.totalExpense).format("0,0")}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={money2} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("currency")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={money2} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("currency")
+                  }
                 />
               </Grid>
             </Grid>
@@ -449,7 +426,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
-            <Grid container className={"w-100p"}>
+            <Grid container columnSpacing={1}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
@@ -474,63 +451,42 @@ export const TopNav = () => {
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initScale")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={scale.initScale}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={exercise5} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("k")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("k")
+                  }
                 />
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("minScale")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={scale.minScale}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={exercise5} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("k")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("k")
+                  }
                 />
               </Grid>
               <Br20 />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("maxScale")}
-                  size={"small"}
-                  variant={"outlined"}
-                  className={"w-50vw"}
                   value={scale.maxScale}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <Img src={exercise5} className={"w-16 h-16"} />
-                    ),
-                    endAdornment: (
-                      <Div className={"fs-0-6rem"}>
-                        {translate("k")}
-                      </Div>
-                    )
-                  }}
+                  readOnly={true}
+                  startAdornment={
+                    <Img src={exercise5} className={"w-16 h-16"} />
+                  }
+                  endAdornment={
+                    translate("k")
+                  }
                 />
               </Grid>
             </Grid>
@@ -606,7 +562,7 @@ export const TopNav = () => {
     // 5. return
     return (
       <Paper className={"layout-wrapper p-sticky top-9vh h-9vh radius border"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={4} className={"d-center"}>
             {smileSection()}
             {propertySection()}

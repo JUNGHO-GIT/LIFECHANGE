@@ -431,9 +431,6 @@ export const ExerciseChartLine = () => {
       const selectFragment1 = () => (
         <Div className={"d-center"}>
           <Select
-            type={"text"}
-            size={"small"}
-            variant={"outlined"}
             value={SECTION}
             onChange={(e) => (
               setSECTION(e.target.value)
@@ -472,7 +469,7 @@ export const ExerciseChartLine = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container className={"w-100p"}>
+          <Grid container columnSpacing={1}>
             <Grid size={3} className={"d-left"}>
               {selectFragment1()}
             </Grid>
@@ -524,7 +521,7 @@ export const ExerciseChartLine = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-column"}>
             {headSection()}
             <Br20 />

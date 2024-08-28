@@ -451,9 +451,7 @@ export const FoodSave = () => {
         <Div className={"d-center"}>
           <Input
             label={translate("totalKcal")}
-            size={"small"}
             value={numeral(OBJECT?.food_total_kcal).format('0,0')}
-            variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
@@ -469,9 +467,7 @@ export const FoodSave = () => {
           />
           <Input
             label={translate("totalCarb")}
-            size={"small"}
             value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
-            variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
@@ -490,9 +486,7 @@ export const FoodSave = () => {
         <Div className={"d-center"}>
           <Input
             label={translate("totalProtein")}
-            size={"small"}
             value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
-            variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
@@ -508,9 +502,7 @@ export const FoodSave = () => {
           />
           <Input
             label={translate("totalFat")}
-            size={"small"}
             value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
-            variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
@@ -537,6 +529,7 @@ export const FoodSave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor:
                     OBJECT?.food_section[i]?.food_part_idx === 0 ? '#1976d2' :
@@ -563,10 +556,7 @@ export const FoodSave = () => {
           <Br20 />
           <Div className={"d-center"}>
             <Select
-              type={"text"}
-              size={"small"}
               label={translate("part")}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.food_section[i]?.food_part_idx}
               inputRef={REFS?.current[i]?.food_part_idx}
@@ -595,9 +585,6 @@ export const FoodSave = () => {
             </Select>
             <Select
               label={translate("foodCount")}
-              size={"small"}
-              type={"text"}
-              variant={"outlined"}
               className={"w-20vw ms-3vw"}
               value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100)}
               onChange={(e) => {
@@ -637,8 +624,6 @@ export const FoodSave = () => {
             </Select>
             <Input
               label={translate("gram")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-20vw ms-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
               onChange={(e) => {
@@ -674,7 +659,6 @@ export const FoodSave = () => {
           <Br20 />
           <Div className={"d-center"}>
             <Input
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               label={translate("foodName")}
               value={OBJECT?.food_section[i]?.food_name}
@@ -694,7 +678,6 @@ export const FoodSave = () => {
               }}
             />
             <Input
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               label={translate("brand")}
               value={OBJECT?.food_section[i]?.food_brand}
@@ -716,8 +699,6 @@ export const FoodSave = () => {
           <Div className={"d-center"}>
             <Input
               label={translate("kcal")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
               inputRef={REFS?.current[i]?.food_kcal}
@@ -763,8 +744,6 @@ export const FoodSave = () => {
             />
             <Input
               label={translate("carb")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
               inputRef={REFS?.current[i]?.food_carb}
@@ -813,8 +792,6 @@ export const FoodSave = () => {
           <Div className={"d-center"}>
             <Input
               label={translate("protein")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
               inputRef={REFS?.current[i]?.food_protein}
@@ -860,8 +837,6 @@ export const FoodSave = () => {
             />
             <Input
               label={translate("fat")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
               inputRef={REFS?.current[i]?.food_fat}
@@ -917,7 +892,7 @@ export const FoodSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {totalSection()}

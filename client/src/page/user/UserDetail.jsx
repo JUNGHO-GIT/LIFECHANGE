@@ -189,7 +189,7 @@ export const UserDetail = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"d-column p-10"} key={i}>
-          <Grid container className={"w-100p"}>
+          <Grid container columnSpacing={1}>
             <Grid size={12}>
               {/** 아이디 **/}
               <Input
@@ -334,7 +334,7 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             <Br20 />
             {imageSection()}

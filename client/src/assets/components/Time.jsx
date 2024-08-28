@@ -126,8 +126,6 @@ export const Time = ({
       {(popTrigger={}) => (
         <Input
           label={translateStr}
-          size={"small"}
-          variant={"outlined"}
           className={"w-86vw"}
           value={OBJECT?.[`${extra}`]}
           inputRef={REFS?.current?.[`${extra}`]}
@@ -188,23 +186,17 @@ export const Time = ({
       {(popTrigger={}) => (
         <Input
           label={translate(translateStr)}
-          size={"small"}
-          variant={"outlined"}
           className={`${firstStr === "sleep" ? "w-86vw" : "w-40vw ms-3vw"}`}
           value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
           inputRef={REFS?.current?.[i]?.[`${extra}`]}
           error={ERRORS?.[i]?.[`${extra}`]}
-          InputProps={{
-            readOnly: true,
-            startAdornment: (
-              <Img src={image} className={"w-16 h-16"} />
-            ),
-            endAdornment: (
-              <Div className={"fs-0-6rem"}>
-                {translate("hm")}
-              </Div>
-            )
-          }}
+          readOnly={true}
+          startAdornment={
+            <Img src={image} className={"w-16 h-16"} />
+          }
+          endAdornment={
+            translate("hm")
+          }
           onClick={(e) => {
             extra !== "sleep_sleepTime" && (
               popTrigger.openPopup(e.currentTarget)

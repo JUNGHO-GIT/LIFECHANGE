@@ -12,11 +12,8 @@ import { Paper, Grid } from "../../import/ImportMuis.jsx";
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {
-    navigate, PATH, firstStr, secondStr, thirdStr,
-    curMonthStart, curMonthEnd,
-    URL_OBJECT, sessionId, translate
-  } = useCommon();
+  const { navigate, PATH, firstStr, secondStr, thirdStr, curMonthStart, curMonthEnd,
+    URL_OBJECT, sessionId, translate } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -208,7 +205,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh pt-30"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

@@ -17,6 +17,7 @@ import { Memo } from "../assets/components/Memo.jsx";
 import { Empty } from "../assets/components/Empty.jsx";
 import { Input } from "../assets/components/Input.jsx";
 import { Select } from "../assets/components/Select.jsx";
+import { Btn } from "../assets/components/Btn.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export {
@@ -28,5 +29,5 @@ export {
   Hr45, Hr50, Hr55, Hr60, Hr65, Hr70, Hr75, Hr80,
   Hr85, Hr90, Hr95, Hr100,
   Icons, PopUp, Picker, Time, Count, Delete, Memo, Empty,
-  Input, Select
+  Input, Select, Btn
 };

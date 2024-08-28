@@ -398,9 +398,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <Input
             label={translate("totalVolume")}
-            size={"small"}
             value={numeral(OBJECT?.exercise_total_volume).format("0,0")}
-            variant={"outlined"}
             className={"w-40vw me-3vw"}
             InputProps={{
               readOnly: true,
@@ -416,9 +414,7 @@ export const ExerciseSave = () => {
           />
           <Input
             label={translate("totalCardio")}
-            size={"small"}
             value={OBJECT?.exercise_total_cardio}
-            variant={"outlined"}
             className={"w-40vw ms-3vw"}
             InputProps={{
               readOnly: true,
@@ -437,10 +433,7 @@ export const ExerciseSave = () => {
         <Div className={"d-center"}>
           <Input
             label={translate("weight")}
-            type={"text"}
-            size={"small"}
             value={OBJECT?.exercise_total_weight}
-            variant={"outlined"}
             onChange={(e) => {
               const value = e.target.value.replace(/^0+/, '');
               if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
@@ -482,6 +475,7 @@ export const ExerciseSave = () => {
               showZero={true}
               sx={{
                 '& .MuiBadge-badge': {
+                  marginTop: "-10px",
                   color: '#ffffff',
                   backgroundColor:
                     OBJECT?.exercise_section[i]?.exercise_part_idx === 0 ? '#1976d2' :
@@ -508,10 +502,7 @@ export const ExerciseSave = () => {
           <Br20 />
           <Div className={"d-center"}>
             <Select
-              type={"text"}
-              size={"small"}
               label={translate("part")}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_part_idx}
               inputRef={REFS.current[i]?.exercise_part_idx}
@@ -541,10 +532,7 @@ export const ExerciseSave = () => {
               ))}
             </Select>
             <Select
-              type={"text"}
-              size={"small"}
               label={translate("title")}
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={OBJECT?.exercise_section[i]?.exercise_title_idx}
               inputRef={REFS.current[i]?.exercise_title_idx}
@@ -578,10 +566,7 @@ export const ExerciseSave = () => {
           <Br20 />
           <Div className={"d-center"}>
             <Input
-              type={"text"}
               label={translate("set")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.exercise_section[i]?.exercise_set).format("0,0")}
               inputRef={REFS.current[i]?.exercise_set}
@@ -627,8 +612,6 @@ export const ExerciseSave = () => {
             />
             <Input
               label={translate("rep")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw ms-3vw"}
               value={numeral(OBJECT?.exercise_section[i]?.exercise_rep).format("0,0")}
               inputRef={REFS.current[i]?.exercise_rep}
@@ -677,8 +660,6 @@ export const ExerciseSave = () => {
           <Div className={"d-center"}>
             <Input
               label={translate("kg")}
-              size={"small"}
-              variant={"outlined"}
               className={"w-40vw me-3vw"}
               value={numeral(OBJECT?.exercise_section[i]?.exercise_kg).format("0,0")}
               inputRef={REFS.current[i]?.exercise_kg}
@@ -743,7 +724,7 @@ export const ExerciseSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container className={"w-100p"}>
+        <Grid container columnSpacing={1}>
           <Grid size={12}>
             {dateCountSection()}
             {totalSection()}
