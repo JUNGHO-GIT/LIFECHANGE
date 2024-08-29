@@ -119,7 +119,7 @@ export const Footer = ({
     return (
       <Paper className={styleClass}>
         <Grid container columnSpacing={1}>
-          <Grid size={12} className={"d-center"}>
+          <Grid size={12} className={"d-center fadeIn"}>
             {typeName === "btn" && btnSection()}
             {typeName === "dummy" && dummySection()}
             {typeName === "listFilter" && listFilterSection()}

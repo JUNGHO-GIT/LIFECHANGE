@@ -46,13 +46,11 @@ export const UserAppInfo = () => {
   const userAppInfoNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Div className={"d-center"}>
-        <Img
-          src={logo1}
-          alt={"logo1"}
-          className={"w-240 h-200"}
-        />
-      </Div>
+      <Img
+        src={logo1}
+        alt={"logo1"}
+        className={"w-240 h-200"}
+      />
     );
     // 7-2. card
     const cardSection = () => {

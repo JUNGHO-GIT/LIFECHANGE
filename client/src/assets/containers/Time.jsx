@@ -127,7 +127,7 @@ export const Time = ({
             </LocalizationProvider>
           </Card>
         )}>
-        {(popTrigger={}) => (
+        {(popTrigger) => (
           <Input
             label={translateStr}
             value={OBJECT?.[`${extra}`]}
@@ -178,7 +178,7 @@ export const Time = ({
             </LocalizationProvider>
           </Card>
         )}>
-        {(popTrigger={}) => (
+        {(popTrigger) => (
           <Input
             label={translate(translateStr)}
             value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}

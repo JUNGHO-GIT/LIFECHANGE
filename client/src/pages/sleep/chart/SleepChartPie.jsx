@@ -322,16 +322,16 @@ export const SleepChartPie = () => {
         </Div>
       );
       const selectFragment1 = () => (
-          <Select
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"today"}>{translate("today")}</MenuItem>
-            <MenuItem value={"week"}>{translate("week")}</MenuItem>
-            <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          </Select>
+        <Select
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"today"}>{translate("today")}</MenuItem>
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
+        </Select>
       );
       const selectFragment2 = () => (
         <Img src={common3_2} className={"w-24 h-24"} />

@@ -323,7 +323,7 @@ export const TopNav = () => {
             </Grid>
           </Card>
         )}>
-        {(popTrigger={}) => (
+        {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
             const event = new Event('storageChange');
@@ -406,7 +406,7 @@ export const TopNav = () => {
             </Grid>
           </Card>
         )}>
-        {(popTrigger={}) => (
+        {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
             const event = new Event('storageChange');
@@ -489,7 +489,7 @@ export const TopNav = () => {
             </Grid>
           </Card>
         )}>
-        {(popTrigger={}) => (
+        {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
             const event = new Event('storageChange');

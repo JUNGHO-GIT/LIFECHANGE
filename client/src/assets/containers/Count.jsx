@@ -26,7 +26,7 @@ export const Count = ({
           {`${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`}
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("item")}
           value={COUNT.newSectionCnt}

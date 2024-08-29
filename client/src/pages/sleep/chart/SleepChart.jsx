@@ -12,7 +12,7 @@ export const SleepChart = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {SleepChartBar()}
+      {/* {SleepChartBar()} */}
       {SleepChartPie()}
       {SleepChartLine()}
       {SleepChartAvg()}

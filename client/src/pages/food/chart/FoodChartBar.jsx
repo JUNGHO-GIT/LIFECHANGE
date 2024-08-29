@@ -6,7 +6,7 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { axios } from "../../../imports/ImportLibs.jsx";
 import { handlerY } from "../../../imports/ImportUtils.jsx";
 import { Loading } from "../../../imports/ImportLayouts.jsx";
-import { Div, Img, Br, Select, Input } from "../../../imports/ImportComponents.jsx";
+import { Div, Img, Br, Input } from "../../../imports/ImportComponents.jsx";
 import { PopUp } from "../../../imports/ImportContainers.jsx";
 import { Paper, Card, Grid } from "../../../imports/ImportMuis.jsx";
 import { FormGroup, FormControlLabel, Switch } from "../../../imports/ImportMuis.jsx";
@@ -265,9 +265,8 @@ export const FoodChartBar = () => {
         </Div>
       );
       const selectSection1 = () => (
-        <Select
+        <Input
           value={translate(SECTION)}
-          readOnly={true}
           readOnly={true}
           inputclass={"fs-0-9rem grey"}
         />
@@ -278,23 +277,37 @@ export const FoodChartBar = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["kcal", "nut"]?.map((key, index) => (
-            <FormGroup key={index}>
-              <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                  if (LINE === key) {
-                    return;
+            ["kcal", "nut"]?.map((key, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  label={translate(key)}
+                  labelPlacement={"start"}
+                  control={
+                    <Switch
+                      checked={LINE === key}
+                      onChange={() => {
+                        if (LINE === key) {
+                          return;
+                        }
+                        else {
+                          setLINE(key);
+                        }
+                      }}
+                    />
                   }
-                  else {
-                    setLINE(key);
-                  }
-              }}/>} label={translate(key)} labelPlacement={"start"}>
-              </FormControlLabel>
-            </FormGroup>
-          )))}>
-          {(popTrigger={}) => (
-            <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}/>
+                />
+              </FormGroup>
+            ))
+          )}
+        >
+          {(popTrigger) => (
+            <Img
+              src={common3_1}
+              className={"w-24 h-24 pointer"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
           )}
         </PopUp>
       );

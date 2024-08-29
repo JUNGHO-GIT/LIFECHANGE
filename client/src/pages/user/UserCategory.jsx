@@ -485,7 +485,7 @@ export const UserCategory = () => {
                           contents={({closePopup}) => (
                             popupSection(i, closePopup)
                           )}>
-                          {(popTrigger={}) => (
+                          {(popTrigger) => (
                             <Icons name={"TbPencil"} className={"w-18 h-18 navy ms-auto"}
                               onClick={(e={}) => {
                                 setDataType(item);

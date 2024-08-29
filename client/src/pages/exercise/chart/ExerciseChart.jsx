@@ -12,7 +12,7 @@ export const ExerciseChart = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {ExerciseChartBar()}
+      {/* {ExerciseChartBar()} */}
       {ExerciseChartPie()}
       {ExerciseChartLine()}
       {ExerciseChartAvg()}

@@ -268,15 +268,15 @@ export const MoneyChartLine = () => {
         </Div>
       );
       const selectFragment1 = () => (
-          <Select
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"week"}>{translate("week")}</MenuItem>
-            <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          </Select>
+        <Select
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
+        </Select>
       );
       const selectFragment2 = () => (
         <PopUp
@@ -284,31 +284,42 @@ export const MoneyChartLine = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["income", "expense"]?.map((key, index) => (
-            <FormGroup key={index}>
-              <FormControlLabel
-                control={<Switch checked={LINE.includes(key)}
-                onChange={() => {
-                  if (LINE.includes(key)) {
-                    if(LINE.length > 1) {
-                      setLINE(LINE?.filter((item) => (item !== key)));
-                    }
-                    else {
-                      return;
-                    }
+            ["income", "expense"]?.map((key, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  label={translate(key)}
+                  labelPlacement={"start"}
+                  control={
+                    <Switch
+                      checked={LINE.includes(key)}
+                      onChange={() => {
+                        if (LINE.includes(key)) {
+                          if(LINE.length > 1) {
+                            setLINE(LINE?.filter((item) => (item !== key)));
+                          }
+                          else {
+                            return;
+                          }
+                        }
+                        else {
+                          setLINE([...LINE, key]);
+                        }
+                      }}
+                    />
                   }
-                  else {
-                    setLINE([...LINE, key]);
-                  }
-                }}/>} label={translate(key)} labelPlacement={"start"}>
-              </FormControlLabel>
-            </FormGroup>
-          ))
-        )}>
-          {(popTrigger={}) => (
-            <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}/>
+                />
+              </FormGroup>
+            ))
+          )}
+        >
+          {(popTrigger) => (
+            <Img
+              src={common3_1}
+              className={"w-24 h-24 pointer"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
           )}
         </PopUp>
       );

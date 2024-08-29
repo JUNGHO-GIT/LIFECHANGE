@@ -356,12 +356,12 @@ export const ExerciseChartBar = () => {
         </Div>
       );
       const selectFragment1 = () => (
-          <Select
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
+        <Select
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
           <MenuItem value={"today"}>{translate("today")}</MenuItem>
           <MenuItem value={"week"}>{translate("week")}</MenuItem>
           <MenuItem value={"month"}>{translate("month")}</MenuItem>

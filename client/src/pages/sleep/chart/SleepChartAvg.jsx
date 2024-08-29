@@ -263,47 +263,60 @@ export const SleepChartAvg = () => {
         </Div>
       );
       const selectFragment1 = () => (
-          <Select
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"week"}>{translate("week")}</MenuItem>
-            <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          </Select>
+        <Select
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
+        </Select>
       );
       const selectFragment2 = () => (
-          <PopUp
-            type={"chart"}
-            position={"bottom"}
-            direction={"center"}
-            contents={({closePopup}) => (
+        <PopUp
+          type={"chart"}
+          position={"bottom"}
+          direction={"center"}
+          contents={({closePopup}) => (
             ["bedTime", "wakeTime", "sleepTime"]?.map((key, index) => (
               <FormGroup key={index}>
                 <FormControlLabel
-                  control={<Switch checked={PART.includes(key)} onChange={() => {
-                    if (PART.includes(key)) {
-                      if(PART.length > 1) {
-                        setPART(PART?.filter((item) => (item !== key)));
-                      }
-                      else {
-                        return;
-                      }
-                    }
-                    else {
-                      setPART([...PART, key]);
-                    }
-                }}/>} label={translate(key)} labelPlacement={"start"}>
-                </FormControlLabel>
+                  label={translate(key)}
+                  labelPlacement={"start"}
+                  control={
+                    <Switch
+                      checked={PART.includes(key)}
+                      onChange={() => {
+                        if (PART.includes(key)) {
+                          if (PART.length > 1) {
+                            setPART(PART?.filter((item) => (item !== key)));
+                          }
+                          else {
+                            return;
+                          }
+                        }
+                        else {
+                          setPART([...PART, key]);
+                        }
+                      }}
+                    />
+                  }
+                />
               </FormGroup>
-            )))}>
-            {(popTrigger={}) => (
-              <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
+            ))
+          )}
+        >
+          {(popTrigger) => (
+            <Img
+              src={common3_1}
+              className={"w-24 h-24 pointer"}
+              onClick={(e) => {
                 popTrigger.openPopup(e.currentTarget)
-              }}/>
-            )}
-          </PopUp>
+              }}
+            />
+          )}
+        </PopUp>
       );
       return (
         <Card className={"p-0"}>

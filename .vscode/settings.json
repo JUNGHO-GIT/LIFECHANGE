@@ -24,4 +24,7 @@
     "**/**build/**": true,
     "build.tar.gz": true
   },
+  "typescript.tsserver.web.typeAcquisition.enabled": true,
+  "typescript.disableAutomaticTypeAcquisition": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
 }

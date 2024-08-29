@@ -12,7 +12,7 @@ export const MoneyChart = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {MoneyChartBar()}
+      {/* {MoneyChartBar()} */}
       {MoneyChartPie()}
       {MoneyChartLine()}
       {MoneyChartAvg()}

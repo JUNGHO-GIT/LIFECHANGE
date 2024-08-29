@@ -12,7 +12,7 @@ export const FoodChart = () => {
   // 10. return ------------------------------------------------------------------------------------
   return (
     <>
-      {FoodChartBar()}
+      {/* {FoodChartBar()} */}
       {FoodChartPie()}
       {FoodChartLine()}
       {FoodChartAvg()}

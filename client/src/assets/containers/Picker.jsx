@@ -141,7 +141,7 @@ export const Picker = ({
       }
     }
   }, [DATE]);
-  
+
   const pickerNode = () => {
   // 1. day ----------------------------------------------------------------------------------------
   const daySection = () => (
@@ -247,7 +247,7 @@ export const Picker = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("date")}
           value={`${DATE.dateStart}`}
@@ -372,7 +372,7 @@ export const Picker = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -470,7 +470,7 @@ export const Picker = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -568,7 +568,7 @@ export const Picker = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
@@ -681,7 +681,7 @@ export const Picker = ({
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
           readOnly={true}
-          // inputclass={innerStr}
+          inputclass={`${innerStr}`}
           startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
@@ -854,7 +854,7 @@ export const Picker = ({
       ))}
     </Select>
   );
-  
+
   // 7. return
   return (
     isGoalList || isList ? (
@@ -884,7 +884,7 @@ export const Picker = ({
     )
   )
   };
-  
+
   return (
     <>
       {pickerNode()}

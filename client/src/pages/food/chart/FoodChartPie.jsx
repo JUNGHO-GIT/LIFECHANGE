@@ -541,16 +541,16 @@ export const FoodChartPie = () => {
         </Div>
       );
       const selectFragment1 = () => (
-          <Select
-            value={SECTION}
-            onChange={(e) => (
-              setSECTION(e.target.value)
-            )}
-          >
-            <MenuItem value={"today"}>{translate("today")}</MenuItem>
-            <MenuItem value={"week"}>{translate("week")}</MenuItem>
-            <MenuItem value={"month"}>{translate("month")}</MenuItem>
-          </Select>
+        <Select
+          value={SECTION}
+          onChange={(e) => (
+            setSECTION(e.target.value)
+          )}
+        >
+          <MenuItem value={"today"}>{translate("today")}</MenuItem>
+          <MenuItem value={"week"}>{translate("week")}</MenuItem>
+          <MenuItem value={"month"}>{translate("month")}</MenuItem>
+        </Select>
       );
       const selectFragment2 = () => (
         <PopUp
@@ -558,23 +558,37 @@ export const FoodChartPie = () => {
           position={"bottom"}
           direction={"center"}
           contents={({closePopup}) => (
-          ["kcal", "nut"]?.map((key, index) => (
-            <FormGroup key={index}>
-              <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
-                if (LINE === key) {
-                  return;
-                }
-                else {
-                  setLINE(key);
-                }
-              }}/>} label={translate(key)} labelPlacement={"start"}>
-              </FormControlLabel>
-            </FormGroup>
-          )))}>
-          {(popTrigger={}) => (
-            <Img src={common3_1} className={"w-24 h-24 pointer"} onClick={(e) => {
-              popTrigger.openPopup(e.currentTarget)
-            }}/>
+            ["kcal", "nut"]?.map((key, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  label={translate(key)}
+                  labelPlacement={"start"}
+                  control={
+                    <Switch
+                      checked={LINE === key}
+                      onChange={() => {
+                        if (LINE === key) {
+                          return;
+                        }
+                        else {
+                          setLINE(key);
+                        }
+                      }}
+                    />
+                  }
+                />
+              </FormGroup>
+            ))
+          )}
+        >
+          {(popTrigger) => (
+            <Img
+              src={common3_1}
+              className={"w-24 h-24 pointer"}
+              onClick={(e) => {
+                popTrigger.openPopup(e.currentTarget)
+              }}
+            />
           )}
         </PopUp>
       );

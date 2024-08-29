@@ -25,18 +25,26 @@ export const Select = ({
           readOnly: (
             props?.readOnly || false
           ),
-          startadornment: (
-            typeof props?.startadornment === "string" ? (
-              <div className={"w-16 h-16"}>{props?.startadornment}</div>
+          startAdornment: (
+            props?.startadornment ? (
+              typeof props?.startadornment === "string" ? (
+                <div className={"fs-0-6rem"}>{props?.startadornment}</div>
+              ) : (
+                <div className={"me-2vw"}>{props?.startadornment}</div>
+              )
             ) : (
-              props?.startadornment
+              null
             )
           ),
-          endadornment: (
-            typeof props?.endadornment === "string" ? (
-              <div className={"fs-0-6rem"}>{props?.endadornment}</div>
+          endAdornment: (
+            props?.endadornment ? (
+              typeof props?.endadornment === "string" ? (
+                <div className={"fs-0-6rem"}>{props?.endadornment}</div>
+              ) : (
+                <div className={"ms-2vw"}>{props?.endadornment}</div>
+              )
             ) : (
-              props?.endadornment
+              null
             )
           ),
         },

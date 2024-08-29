@@ -158,7 +158,7 @@ export const SleepChartBar = () => {
         </Div>
       );
       const selectFragment1 = () => (
-        <Select
+        <Input
           value={translate(SECTION)}
           readOnly={true}
           inputclass={"fs-0-9rem grey"}

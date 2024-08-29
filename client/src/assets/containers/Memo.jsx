@@ -79,7 +79,7 @@ export const Memo = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Input
           label={translate("memo")}
           className={"pointer"}
