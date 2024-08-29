@@ -85,30 +85,35 @@ export const UserDeletes = () => {
     // 7-1. title
     const titleSection = () => (
       <Div className={"d-center fs-2-0rem"}>
-        {translate("deletes")}
+        {translate("userDeletes")}
       </Div>
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column"} key={i}>
-          <Input
-            label={translate("id")}
-            value={OBJECT.user_id}
-            readOnly={true}
-          />
-          <Br px={20} />
-          <Input
-            label={translate("signupDate")}
-            value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
-            readOnly={true}
-          />
-          <Br px={20} />
-          <TextArea
-            readOnly={false}
-            className={" h-8vh border p-10 pointer"}
-            value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
-          />
+        <Card className={"p-10"} key={i}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid size={12}>
+              <Input
+                label={translate("id")}
+                value={OBJECT.user_id}
+                readOnly={true}
+              />
+            </Grid>
+            <Grid size={12}>
+              <Input
+                label={translate("signupDate")}
+                value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
+                readOnly={true}
+              />
+            </Grid>
+            <Grid size={12}>
+              <TextArea
+                className={"border radius resize-none cursor-none w-100p p-10"}
+                value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -117,24 +122,22 @@ export const UserDeletes = () => {
     };
     // 7-3. button
     const buttonSection = () => (
-      <Div className={"d-center"}>
-        <Btn
-          color={"primary"}
-          className={"w-100p fs-1-0rem"}
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          {translate("cancel")}
-        </Btn>
-      </Div>
+      <Btn
+        color={"error"}
+        className={"w-100p fs-1-0rem"}
+        onClick={() => {
+          flowSave();
+        }}
+      >
+        {translate("userDeletes")}
+      </Btn>
     );
     // 7-10. return
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper radius border h-min84vh"}>
-        <Grid container columnSpacing={1}>
+      <Paper className={"content-wrapper d-center radius border h-min84vh"}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {titleSection()}
             <Hr px={40} />

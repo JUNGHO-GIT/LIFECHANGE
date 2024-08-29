@@ -240,24 +240,29 @@ export const SleepGoalSave = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
-        <Picker
-          DATE={DATE}
-          setDATE={setDATE}
-          EXIST={EXIST}
-          setEXIST={setEXIST}
-        />
-        <Br px={20} />
-        <Count
-          COUNT={COUNT}
-          setCOUNT={setCOUNT}
-          limit={1}
-        />
+        <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid size={12}>
+            <Picker
+              DATE={DATE}
+              setDATE={setDATE}
+              EXIST={EXIST}
+              setEXIST={setEXIST}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Count
+              COUNT={COUNT}
+              setCOUNT={setCOUNT}
+              limit={1}
+            />
+          </Grid>
+        </Grid>
       </Card>
     );
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Grid container columnSpacing={1}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -270,7 +275,6 @@ export const SleepGoalSave = () => {
                 handlerDelete={handlerDelete}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Time
                 OBJECT={OBJECT}
@@ -282,7 +286,6 @@ export const SleepGoalSave = () => {
                 i={i}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Time
                 OBJECT={OBJECT}
@@ -294,7 +297,6 @@ export const SleepGoalSave = () => {
                 i={i}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Time
                 OBJECT={OBJECT}
@@ -318,7 +320,7 @@ export const SleepGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

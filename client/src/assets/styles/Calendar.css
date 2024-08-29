@@ -139,7 +139,8 @@
   text-align: center;
   justify-content: center;
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 .react-calendar button {
   max-height: 6.0rem;

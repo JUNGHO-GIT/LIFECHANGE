@@ -253,24 +253,29 @@ export const ExerciseGoalSave = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
-        <Picker
-          DATE={DATE}
-          setDATE={setDATE}
-          EXIST={EXIST}
-          setEXIST={setEXIST}
-        />
-        <Br px={20} />
-        <Count
-          COUNT={COUNT}
-          setCOUNT={setCOUNT}
-          limit={1}
-        />
+        <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid size={12}>
+            <Picker
+              DATE={DATE}
+              setDATE={setDATE}
+              EXIST={EXIST}
+              setEXIST={setEXIST}
+            />
+          </Grid>
+          <Grid size={12}>
+            <Count
+              COUNT={COUNT}
+              setCOUNT={setCOUNT}
+              limit={1}
+            />
+          </Grid>
+        </Grid>
       </Card>
     );
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Grid container columnSpacing={1}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -283,7 +288,6 @@ export const ExerciseGoalSave = () => {
                 handlerDelete={handlerDelete}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
@@ -322,7 +326,6 @@ export const ExerciseGoalSave = () => {
                 }}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
@@ -361,7 +364,6 @@ export const ExerciseGoalSave = () => {
                 }}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={12}>
               <Time
                 OBJECT={OBJECT}
@@ -373,7 +375,6 @@ export const ExerciseGoalSave = () => {
                 i={i}
               />
             </Grid>
-            <Br px={20} />
             <Input
               label={translate("goalWeight")}
               value={OBJECT?.exercise_goal_weight}
@@ -416,7 +417,7 @@ export const ExerciseGoalSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

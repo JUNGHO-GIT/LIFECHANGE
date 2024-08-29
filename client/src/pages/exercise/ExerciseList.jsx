@@ -123,17 +123,20 @@ export const ExerciseList = () => {
         OBJECT?.map((item, index) => (
           <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpanded(isExpanded.includes(index)
+                      ? isExpanded.filter((el) => el !== index)
+                      : [...isExpanded, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -187,9 +190,9 @@ export const ExerciseList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
@@ -211,7 +214,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -233,7 +236,7 @@ export const ExerciseList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
@@ -267,7 +270,7 @@ export const ExerciseList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

@@ -22,15 +22,17 @@ export const UserAppSetting = () => {
     // 7-1. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column border radius p-0"} key={i}>
-          <Grid container columnSpacing={2} className={"fs-0-8rem"}>
-            <Br px={10} />
+        <Card className={"border radius p-0"} key={i}>
+          <Grid container columnSpacing={2} rowSpacing={1} className={"fs-0-8rem"}>
             <Grid
               size={12}
-              className={"d-between pointer p-5"}
+              className={"d-between pointer mt-5 p-10"}
               onClick={() => {
                 navigate("/user/detail")
               }}
+              borderBottom={
+                "1px solid #ddd"
+              }
             >
               <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("dataDetail")}
@@ -43,13 +45,15 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr px={20} />
             <Grid
               size={12}
-              className={"d-between pointer p-5"}
+              className={"d-between pointer p-10"}
               onClick={() => {
                 navigate("/user/category")
               }}
+              borderBottom={
+                "1px solid #ddd"
+              }
             >
               <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("category")}
@@ -62,13 +66,15 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr px={20} />
             <Grid
               size={12}
-              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-5`}
+              className={`${admin !== "true" ? "d-none" : ""} d-between pointer p-10`}
               onClick={() => {
                 navigate("/user/dummy")
               }}
+              borderBottom={
+                "1px solid #ddd"
+              }
             >
               <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("dataList")}
@@ -81,13 +87,15 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr px={20} />
             <Grid
               size={12}
-              className={"d-between pointer p-5"}
+              className={"d-between pointer p-10"}
               onClick={() => {
                 navigate("/user/app/info")
               }}
+              borderBottom={
+                "1px solid #ddd"
+              }
             >
               <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("appInfo")}
@@ -100,10 +108,9 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr px={20} />
             <Grid
               size={12}
-              className={"d-between pointer p-5"}
+              className={"d-between pointer p-10"}
               onClick={() => {
                 localStorage.setItem("autoLogin", "false")
                 localStorage.setItem("autoLoginId", "")
@@ -111,6 +118,9 @@ export const UserAppSetting = () => {
                 sessionStorage.clear()
                 navigate("/")
               }}
+              borderBottom={
+                "1px solid #ddd"
+              }
             >
               <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("logout")}
@@ -123,10 +133,9 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Hr px={20} />
             <Grid
               size={12}
-              className={"d-between pointer p-5"}
+              className={"d-between pointer mb-5 p-10"}
               onClick={() => {
                 navigate("/user/deletes")
               }}
@@ -142,7 +151,6 @@ export const UserAppSetting = () => {
                 />
               </Grid>
             </Grid>
-            <Br px={10} />
           </Grid>
         </Card>
       );
@@ -153,7 +161,7 @@ export const UserAppSetting = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center radius border h-min80vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

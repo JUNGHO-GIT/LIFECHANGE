@@ -283,9 +283,7 @@ export const UserDummy = () => {
     const exerciseGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -346,9 +344,7 @@ export const UserDummy = () => {
     const exerciseSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -405,9 +401,7 @@ export const UserDummy = () => {
     const foodGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -468,9 +462,7 @@ export const UserDummy = () => {
     const foodSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -531,9 +523,7 @@ export const UserDummy = () => {
     const moneyGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -586,9 +576,7 @@ export const UserDummy = () => {
     const moneySection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -641,9 +629,7 @@ export const UserDummy = () => {
     const sleepGoalSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -700,9 +686,7 @@ export const UserDummy = () => {
     const sleepSection = () => {
       const emptyFragment = () => (
         <Card className={"border radius p-10"} key={"empty"}>
-          <Div className={"d-center"}>
-            {translate("empty")}
-          </Div>
+          {translate("empty")}
         </Card>
       );
       const cardFragment = (i) => (
@@ -758,7 +742,7 @@ export const UserDummy = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12} >
             {PART === "exerciseGoal" && exerciseGoalSection()}
             {PART === "exercise" && exerciseSection()}

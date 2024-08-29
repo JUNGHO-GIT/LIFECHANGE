@@ -248,13 +248,13 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
-            <Grid container columnSpacing={1}>
+            <Grid container columnSpacing={1} rowSpacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"d-center me-2vw"}>
                   <Img src={smileImage.total} className={"w-max25 h-max25"} />
@@ -266,63 +266,60 @@ export const TopNav = () => {
                   {smileScore.total}
                 </Div>
               </Grid>
-            </Grid>
-            <Br px={20} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"d-center me-2vw"}>
-                <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
-              </Div>
-              <Div className={"fs-1-1rem me-2vw"}>
-                {translate("exercise")}
-              </Div>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.exercise}
-              </Div>
-            </Grid>
-            <Br px={20} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"d-center me-2vw"}>
-                <Img src={smileImage.food} className={"w-max25 h-max25"} />
-              </Div>
-              <Div className={"fs-1-1rem me-2vw"}>
-                {translate("food")}
-              </Div>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.food}
-              </Div>
-            </Grid>
-            <Br px={20} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"d-center me-2vw"}>
-                <Img src={smileImage.money} className={"w-max25 h-max25"} />
-              </Div>
-              <Div className={"fs-1-1rem me-2vw"}>
-                {translate("money")}
-              </Div>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.money}
-              </Div>
-            </Grid>
-            <Br px={20} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"d-center me-2vw"}>
-                <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
-              </Div>
-              <Div className={"fs-1-1rem me-2vw"}>
-                {translate("sleep")}
-              </Div>
-              <Div className={"fs-0-8rem"}>
-                {smileScore.sleep}
-              </Div>
-            </Grid>
-            <Hr px={40} />
-            <Grid size={12} className={"d-center"}>
-              <Div className={"fs-0-8rem"}>
-                {translate("score")}
-              </Div>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center me-2vw"}>
+                  <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
+                </Div>
+                <Div className={"fs-1-1rem me-2vw"}>
+                  {translate("exercise")}
+                </Div>
+                <Div className={"fs-0-8rem"}>
+                  {smileScore.exercise}
+                </Div>
+              </Grid>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center me-2vw"}>
+                  <Img src={smileImage.food} className={"w-max25 h-max25"} />
+                </Div>
+                <Div className={"fs-1-1rem me-2vw"}>
+                  {translate("food")}
+                </Div>
+                <Div className={"fs-0-8rem"}>
+                  {smileScore.food}
+                </Div>
+              </Grid>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center me-2vw"}>
+                  <Img src={smileImage.money} className={"w-max25 h-max25"} />
+                </Div>
+                <Div className={"fs-1-1rem me-2vw"}>
+                  {translate("money")}
+                </Div>
+                <Div className={"fs-0-8rem"}>
+                  {smileScore.money}
+                </Div>
+              </Grid>
+              <Grid size={12} className={"d-center"}>
+                <Div className={"d-center me-2vw"}>
+                  <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
+                </Div>
+                <Div className={"fs-1-1rem me-2vw"}>
+                  {translate("sleep")}
+                </Div>
+                <Div className={"fs-0-8rem"}>
+                  {smileScore.sleep}
+                </Div>
+              </Grid>
+              <Hr px={20} />
+              <Grid size={12} className={"d-center"}>
+                <Div className={"fs-0-8rem"}>
+                  {translate("score")}
+                </Div>
+              </Grid>
             </Grid>
           </Card>
-        )}>
+        )}
+      >
         {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
@@ -342,26 +339,25 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
-            <Grid container columnSpacing={1}>
+            <Grid container columnSpacing={1} rowSpacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
                 </Div>
               </Grid>
-              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${property?.dateStart} ~ ${property?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Img src={money2} className={"w-16 h-16"} />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {numeral(property.curProperty).format("0,0")}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initProperty")}
@@ -375,7 +371,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumIncome")}
@@ -389,7 +384,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("sumExpense")}
@@ -405,7 +399,8 @@ export const TopNav = () => {
               </Grid>
             </Grid>
           </Card>
-        )}>
+        )}
+      >
         {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)
@@ -425,26 +420,25 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
-            <Grid container columnSpacing={1}>
+            <Grid container columnSpacing={1} rowSpacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
                 </Div>
               </Grid>
-              <Br px={10} />
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-0-9rem fw-500 dark"}>
                   {`(${scale?.dateStart} ~ ${scale?.dateEnd})`}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Img src={exercise5} className={"w-16 h-16"} />
                 <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {scale.curScale}
                 </Div>
               </Grid>
-              <Hr px={40} />
+              <Hr px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("initScale")}
@@ -458,7 +452,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("minScale")}
@@ -472,7 +465,6 @@ export const TopNav = () => {
                   }
                 />
               </Grid>
-              <Br px={20} />
               <Grid size={12} className={"d-center"}>
                 <Input
                   label={translate("maxScale")}
@@ -488,7 +480,8 @@ export const TopNav = () => {
               </Grid>
             </Grid>
           </Card>
-        )}>
+        )}
+      >
         {(popTrigger) => (
           <Div className={"d-center pointer"} onClick={(e) => {
             popTrigger.openPopup(e.currentTarget)

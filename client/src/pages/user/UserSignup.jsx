@@ -338,17 +338,17 @@ export const UserSignup = () => {
   const userSignupNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Card className={"d-center fs-2-0rem p-0"}>
+      <Div className={"d-center fs-2-0rem p-0"}>
         {translate("signup")}
-      </Card>
+      </Div>
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column p-10"} key={i}>
+        <Card className={"p-10"} key={i}>
           {/** section 1 **/}
-          <Grid container columnSpacing={1}>
-            <Grid size={9}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid size={10}>
               <Input
                 label={`${translate("id")} (email)`}
                 value={OBJECT.user_id}
@@ -362,7 +362,7 @@ export const UserSignup = () => {
                 )}
               />
             </Grid>
-            <Grid size={3}>
+            <Grid size={2}>
               <Btn
                 color={"primary"}
                 onClick={() => {
@@ -372,198 +372,172 @@ export const UserSignup = () => {
                 {translate("send")}
               </Btn>
             </Grid>
+            <Grid size={10}>
+              <Input
+                label={translate("verify")}
+                value={clientCode}
+                inputRef={REFS.current.user_id_verified}
+                error={ERRORS.user_id_verified}
+                onChange={(e) => (
+                  setClientCode(e.target.value)
+                )}
+              />
+            </Grid>
+            <Grid size={2}>
+              <Btn
+                color={"primary"}
+                disabled={!OBJECT.user_id_sended}
+                onClick={() => {
+                  flowVerifyEmail();
+                }}
+              >
+                {translate("verify")}
+              </Btn>
+            </Grid>
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("pw")}
+                value={OBJECT.user_pw}
+                inputRef={REFS.current.user_pw}
+                error={ERRORS.user_pw}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_pw: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("pwVerified")}
+                value={OBJECT.user_pw_verified}
+                inputRef={REFS.current.user_pw_verified}
+                error={ERRORS.user_pw_verified}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_pw_verified: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Hr px={10} />
+            <Grid size={12}>
+              {/** 성별 (N, M, F) **/}
+              <Select
+                label={translate("gender")}
+                value={OBJECT.user_gender || "N"}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_gender: e.target.value || "N"
+                  }))
+                )}
+              >
+                {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
+                  <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={12}>
+              {/** 나이 (1세 ~ 100세) **/}
+              <Input
+                label={translate("age")}
+                value={OBJECT.user_age}
+                inputRef={REFS.current.user_age}
+                error={ERRORS.user_age}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/^0+/, '');
+                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                    const newValue = parseFloat(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_age: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 200) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_age: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={12}>
+              {/** 초기 체중 **/}
+              <Input
+                label={translate("scale")}
+                value={OBJECT.user_initScale}
+                inputRef={REFS.current.user_initScale}
+                error={ERRORS.user_initScale}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/^0+/, '');
+                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                    const newValue = parseFloat(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_initScale: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_initScale: value,
+                      }));
+                    }
+                  }
+                }}
+                endadornment={
+                  translate("cm")
+                }
+              />
+            </Grid>
+            <Grid size={12}>
+              {/** 초기 자산 **/}
+              <Input
+                label={translate("property")}
+                value={OBJECT.user_initProperty}
+                inputRef={REFS.current.user_initProperty}
+                error={ERRORS.user_initProperty}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_initProperty: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        user_initProperty: value,
+                      }));
+                    }
+                  }
+                }}
+                endadornment={
+                  translate("currency")
+                }
+              />
+            </Grid>
           </Grid>
-          <Br px={10} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("verify")}
-              value={clientCode}
-              className={"w-66vw me-10"}
-              inputRef={REFS.current.user_id_verified}
-              error={ERRORS.user_id_verified}
-              onChange={(e) => (
-                setClientCode(e.target.value)
-              )}
-            />
-            <Btn
-              color={"primary"}
-              disabled={!OBJECT.user_id_sended}
-              onClick={() => {
-                flowVerifyEmail();
-              }}
-            >
-              {translate("verify")}
-            </Btn>
-          </Div>
-          <Br px={10} />
-          <Input
-            type={"password"}
-            label={translate("pw")}
-            value={OBJECT.user_pw}
-            inputRef={REFS.current.user_pw}
-            error={ERRORS.user_pw}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_pw: e.target.value
-              }))
-            )}
-          />
-          <Br px={10} />
-          <Input
-            type={"password"}
-            label={translate("pwVerified")}
-            value={OBJECT.user_pw_verified}
-            inputRef={REFS.current.user_pw_verified}
-            error={ERRORS.user_pw_verified}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_pw_verified: e.target.value
-              }))
-            )}
-          />
-          <Hr px={40} />
-          {/** 성별 (N, M, F) **/}
-          <Select
-            label={translate("gender")}
-            value={OBJECT.user_gender || "N"}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_gender: e.target.value || "N"
-              }))
-            )}
-          >
-            {[translate("N"), translate("M"), translate("F")]?.map((item, i) => (
-              <MenuItem key={i} value={i === 0 ? "N" : i === 1 ? "M" : "F"}>
-                {item}
-              </MenuItem>
-            ))}
-          </Select>
-          <Br px={10} />
-          {/** 나이 (1세 ~ 100세) **/}
-          <Input
-            label={translate("age")}
-            value={OBJECT.user_age}
-            inputRef={REFS.current.user_age}
-            error={ERRORS.user_age}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_age: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 200) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_age: value,
-                  }));
-                }
-              }
-            }}
-            endadornment={
-              translate("age")
-            }
-          />
-          <Br px={10} />
-          {/** 신장 **/}
-          <Input
-            label={translate("height")}
-            value={OBJECT.user_height}
-            inputRef={REFS.current.user_height}
-            error={ERRORS.user_height}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_height: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_height: value,
-                  }));
-                }
-              }
-            }}
-            endadornment={
-              translate("cm")
-            }
-          />
-          <Br px={10} />
-          {/** 초기 체중 **/}
-          <Input
-            label={translate("scale")}
-            value={OBJECT.user_initScale}
-            inputRef={REFS.current.user_initScale}
-            error={ERRORS.user_initScale}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/^0+/, '');
-              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                const newValue = parseFloat(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initScale: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initScale: value,
-                  }));
-                }
-              }
-            }}
-            endadornment={
-              translate("cm")
-            }
-          />
-          <Br px={10} />
-          {/** 초기 자산 **/}
-          <Input
-            label={translate("property")}
-            value={OBJECT.user_initProperty}
-            inputRef={REFS.current.user_initProperty}
-            error={ERRORS.user_initProperty}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => {
-              const value = e.target.value.replace(/,/g, '');
-              if (/^\d*$/.test(value) || value === "") {
-                const newValue = Number(value);
-                if (value === "") {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: "0",
-                  }));
-                }
-                else if (!isNaN(newValue) && newValue <= 9999999999) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_initProperty: value,
-                  }));
-                }
-              }
-            }}
-            endadornment={
-              translate("currency")
-            }
-          />
         </Card>
       );
       return (
@@ -584,19 +558,17 @@ export const UserSignup = () => {
     );
     // 7-4. google
     const googleSection = () => (
-      <Div className={"d-center"}>
-        <Input
-          value={translate("googleLogin")}
-          className={"w-100p bg-white"}
-          readOnly={true}
-          startadornment={
-            <Img src={user1} className={"w-15 h-15"} />
-          }
-          onClick={() => {
-            flowGoogle();
-          }}
-        />
-      </Div>
+      <Input
+        value={translate("googleLogin")}
+        className={"bg-white pointer"}
+        readOnly={true}
+        startadornment={
+          <Img src={user1} className={"w-15 h-15"} />
+        }
+        onClick={() => {
+          flowGoogle();
+        }}
+      />
     );
     // 7-5. toLogin
     const toLoginSection = () => (
@@ -625,18 +597,26 @@ export const UserSignup = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center radius border h-min94vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {titleSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {cardSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {buttonSection()}
-            <Br px={10} />
+          </Grid>
+          <Grid size={12}>
             {googleSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {toLoginSection()}
-            <Br px={10} />
+          </Grid>
+          <Grid size={12}>
             {toResetPwSection()}
           </Grid>
         </Grid>

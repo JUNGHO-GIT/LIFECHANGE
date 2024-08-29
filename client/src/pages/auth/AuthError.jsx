@@ -14,7 +14,7 @@ export const AuthError = () => {
   // 7. errorNode ----------------------------------------------------------------------------------
   const errorNode = () => {
     const imageSection = () => (
-      <Grid container>
+      <Grid container columnSpacing={1} rowSpacing={2}>
         <Grid size={12}>
           <svg
             className="error_paper__main"
@@ -109,16 +109,16 @@ export const AuthError = () => {
       </Grid>
     );
     const textSection = () => (
-      <Grid container>
+      <Grid container columnSpacing={1} rowSpacing={2}>
         <Grid size={12}>
           <Div className={"fs-50 fw-700"}>
             404
           </Div>
-          <Br px={10} />
           <Div className={"fs-20 fw-500"}>
             Page not found
           </Div>
-          <Br px={50} />
+        </Grid>
+        <Grid size={12}>
           <Btn
             size={"large"}
             color={"error"}
@@ -132,8 +132,8 @@ export const AuthError = () => {
       </Grid>
     );
     return (
-      <Paper className={"content-wrapper radius border h-100vh d-center"}>
-        <Grid container columnSpacing={1}>
+      <Paper className={"content-wrapper d-center radius border h-98vh"}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={6}>
             {imageSection()}
           </Grid>

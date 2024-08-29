@@ -372,7 +372,7 @@ export const ExerciseChartBar = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container columnSpacing={1}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
             <Grid size={3} className={"d-left"}>
               {selectFragment1()}
             </Grid>
@@ -416,10 +416,11 @@ export const ExerciseChartBar = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
-        <Grid container columnSpacing={1}>
-          <Grid size={12} className={"d-column"}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid size={12}>
             {headSection()}
-            <Br px={20} />
+          </Grid>
+          <Grid size={12}>
             {chartSection()}
           </Grid>
         </Grid>

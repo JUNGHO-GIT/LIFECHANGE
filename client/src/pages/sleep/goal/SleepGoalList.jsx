@@ -128,17 +128,20 @@ export const SleepGoalList = () => {
         OBJECT?.map((item, index) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpanded(isExpanded.includes(index)
-                    ? isExpanded.filter((el) => el !== index)
-                    : [...isExpanded, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpanded(isExpanded.includes(index)
+                      ? isExpanded.filter((el) => el !== index)
+                      : [...isExpanded, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -192,9 +195,9 @@ export const SleepGoalList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -203,49 +206,62 @@ export const SleepGoalList = () => {
                       {translate("bedTime")}
                     </Div>
                   </Grid>
-                  <Grid size={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid size={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_goal_bedTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_bedTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_bedTime_color}`}>
-                      {item.sleep_diff_bedTime}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                      {/** goal **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_bedTime_color}`}>
+                          {item.sleep_goal_bedTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_bedTime_color}`}>
+                          {item.sleep_bedTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_bedTime_color}`}>
+                          {item.sleep_diff_bedTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
-                <Hr px={30} />
+                <Hr px={20} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -254,49 +270,62 @@ export const SleepGoalList = () => {
                       {translate("wakeTime")}
                     </Div>
                   </Grid>
-                  <Grid size={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid size={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_goal_wakeTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_wakeTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
-                      {item.sleep_diff_wakeTime}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                      {/** goal **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_wakeTime_color}`}>
+                          {item.sleep_goal_wakeTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_wakeTime_color}`}>
+                          {item.sleep_wakeTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_wakeTime_color}`}>
+                          {item.sleep_diff_wakeTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
+                <Hr px={20} />
                 {/** row 3 **/}
-                <Hr px={30} />
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
@@ -305,44 +334,57 @@ export const SleepGoalList = () => {
                       {translate("sleepTime")}
                     </Div>
                   </Grid>
-                  <Grid size={3} className={"d-column align-right lh-1-8"}>
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("goal")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("real")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-8rem fw-500 dark me-10"}>
-                      {translate("diff")}
-                    </Div>
-                  </Grid>
-                  <Grid size={3} className={"d-column align-right"}>
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_goal_sleepTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-1-0rem fw-600"}>
-                      {item.sleep_sleepTime}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
-                      {item.sleep_diff_sleepTime}
-                    </Div>
-                  </Grid>
-                  <Grid size={1} className={"d-column align-right lh-2-4"}>
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
-                    <Br px={10} />
-                    <Div className={"fs-0-6rem"}>
-                      {translate("hm")}
-                    </Div>
+                  <Grid size={7}>
+                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                      {/** goal **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("goal")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_goal_sleepTime_color}`}>
+                          {item.sleep_goal_sleepTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** real **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("real")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_sleepTime_color}`}>
+                          {item.sleep_sleepTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                      {/** diff **/}
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={"fs-0-8rem fw-500 dark"}>
+                          {translate("diff")}
+                        </Div>
+                      </Grid>
+                      <Grid size={5} className={"d-right"}>
+                        <Div className={`fs-1-0rem fw-600 ${item.sleep_diff_sleepTime_color}`}>
+                          {item.sleep_diff_sleepTime}
+                        </Div>
+                      </Grid>
+                      <Grid size={2} className={"d-right"}>
+                        <Div className={"fs-0-6rem"}>
+                          {translate("hm")}
+                        </Div>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -359,7 +401,7 @@ export const SleepGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

@@ -134,79 +134,79 @@ export const CalendarList = () => {
     );
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card key={`${i}-card`} className={"calendar-card"}>
-          <Br px={20} />
-          <Calendar
-            key={`${i}-calendar`}
-            locale={"ko"}
-            view={"month"}
-            value={new Date(DATE.dateStart)}
-            showNavigation={true}
-            showNeighboringMonth={true}
-            showDoubleView={false}
-            prev2Label={null}
-            next2Label={null}
-            prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
-            nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
-            formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
-            formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
-            formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
-            formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
-            formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
-            formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
-            formatShortWeekday={(locale, date) => {
-              const day = moment(date).tz("Asia/Seoul").format("d");
-              const week = [
-                translate("sun"), translate("mon"), translate("tue"), translate("wed"),
-                translate("thu"), translate("fri"), translate("sat")
-              ];
-              return week[day];
-            }}
-            onClickDay={(value) => {
-              Object.assign(SEND, {
-                id: "",
-                section_id: "",
-                dateType: "",
-                dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-              });
-              navigate(SEND.toSave, {
-                state: SEND
-              });
-            }}
-            tileClassName={({ date, view }) => {
-              let className = "calendar-tile";
-              let isToday = moment(date).isSame(new Date(), 'day');
+        <Card className={"pt-20 pb-20"} key={`${i}-card`}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            <Calendar
+              key={`${i}-calendar`}
+              locale={"ko"}
+              view={"month"}
+              value={new Date(DATE.dateStart)}
+              showNavigation={true}
+              showNeighboringMonth={true}
+              showDoubleView={false}
+              prev2Label={null}
+              next2Label={null}
+              prevLabel={<Icons name={"TbArrowLeft"} className={"w-24 h-24"} onClick={() => {}} />}
+              nextLabel={<Icons name={"TbArrowRight"} className={"w-24 h-24"} onClick={() => {}} />}
+              formatDay={(locale, date) => moment(date).tz("Asia/Seoul").format("D")}
+              formatWeekday={(locale, date) => moment(date).tz("Asia/Seoul").format("d")}
+              formatMonth={(locale, date) => moment(date).tz("Asia/Seoul").format("MM")}
+              formatYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY")}
+              formatLongDate={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")}
+              formatMonthYear={(locale, date) => moment(date).tz("Asia/Seoul").format("YYYY-MM")}
+              formatShortWeekday={(locale, date) => {
+                const day = moment(date).tz("Asia/Seoul").format("d");
+                const week = [
+                  translate("sun"), translate("mon"), translate("tue"), translate("wed"),
+                  translate("thu"), translate("fri"), translate("sat")
+                ];
+                return week[day];
+              }}
+              onClickDay={(value) => {
+                Object.assign(SEND, {
+                  id: "",
+                  section_id: "",
+                  dateType: "",
+                  dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                  dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                });
+                navigate(SEND.toSave, {
+                  state: SEND
+                });
+              }}
+              tileClassName={({ date, view }) => {
+                let className = "calendar-tile";
+                let isToday = moment(date).isSame(new Date(), 'day');
 
-              const calendarForDates = OBJECT.filter((calendar) => (
-                dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-              ));
-              if (calendarForDates.length > 0) {
-                const hasManySections = calendarForDates.some((calendar) => (
-                  calendar.calendar_section.length > 2
+                const calendarForDates = OBJECT.filter((calendar) => (
+                  dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-                if (hasManySections) {
-                  className += " over-y-auto";
+                if (calendarForDates.length > 0) {
+                  const hasManySections = calendarForDates.some((calendar) => (
+                    calendar.calendar_section.length > 2
+                  ));
+                  if (hasManySections) {
+                    className += " over-y-auto";
+                  }
                 }
-              }
-              if (isToday) {
-                className += " calendar-today";
-              }
+                if (isToday) {
+                  className += " calendar-today";
+                }
 
-              return className;
-            }}
-            tileContent={({ date, view }) => {
-              const calendarForDates = OBJECT.filter((calendar) => (
-                dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
-              ));
-              const content
-                = calendarForDates.length > 0
-                ? activeLine(calendarForDates)
-                : unActiveLine(calendarForDates);
-              return content;
-            }}
-          />
-          <Br px={20} />
+                return className;
+              }}
+              tileContent={({ date, view }) => {
+                const calendarForDates = OBJECT.filter((calendar) => (
+                  dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+                ));
+                const content
+                  = calendarForDates.length > 0
+                  ? activeLine(calendarForDates)
+                  : unActiveLine(calendarForDates);
+                return content;
+              }}
+            />
+          </Grid>
         </Card>
       );
       return (
@@ -216,7 +216,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

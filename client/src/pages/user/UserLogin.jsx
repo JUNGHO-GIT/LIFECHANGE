@@ -186,7 +186,7 @@ export const UserLogin = () => {
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
-      <Card
+      <Div
         className={"d-center fs-2-0rem p-0"}
         onClick={() => {
           setClickCount((prevCount) => {
@@ -194,6 +194,8 @@ export const UserLogin = () => {
             if (newCount === 5) {
               setUserId(ADMIN_ID);
               setUserPw(ADMIN_PW);
+              setCheckedSaveId(true);
+              setCheckedAutoLogin(true);
               setLoginTrigger(true);
               setClickCount(0);
             }
@@ -202,58 +204,63 @@ export const UserLogin = () => {
         }}
       >
         {translate("login")}
-      </Card>
+      </Div>
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column p-10"} key={i}>
-          <Input
-            label={translate("id")}
-            value={userId}
-            inputRef={REFS.current.user_id}
-            error={ERRORS.user_id}
-            onChange={(e) => {
-              setUserId(e.target.value);
-            }}
-          />
-          <Br px={10} />
-          <Input
-            type={"password"}
-            label={translate("pw")}
-            value={userPw}
-            inputRef={REFS.current.user_pw}
-            error={ERRORS.user_pw}
-            onChange={(e) => {
-              setUserPw(e.target.value);
-            }}
-          />
-          <Br px={10} />
-          <Div className={"d-center mb-n20"}>
-            <Div className={"fs-0-8rem"}>
-              {translate("autoLogin")}
-            </Div>
-            <Checkbox
-              color={"primary"}
-              size={"small"}
-              checked={checkedAutoLogin}
-              onChange={(e) => {
-                setCheckedAutoLogin(e.target.checked);
-              }}
-            />
-            <Div className={"w-20"} />
-            <Div className={"fs-0-8rem"}>
-              {translate("saveId")}
-            </Div>
-            <Checkbox
-              color={"primary"}
-              size={"small"}
-              checked={checkedSaveId}
-              onChange={(e) => {
-                setCheckedSaveId(e.target.checked);
-              }}
-            />
-          </Div>
+        <Card className={"p-10 mb-n20"} key={i}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid size={12}>
+              <Input
+                label={translate("id")}
+                value={userId}
+                inputRef={REFS.current.user_id}
+                error={ERRORS.user_id}
+                onChange={(e) => {
+                  setUserId(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("pw")}
+                value={userPw}
+                inputRef={REFS.current.user_pw}
+                error={ERRORS.user_pw}
+                onChange={(e) => {
+                  setUserPw(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Div className={"d-center fs-0-8rem"}>
+                {translate("autoLogin")}
+                <Checkbox
+                  color={"primary"}
+                  size={"small"}
+                  checked={checkedAutoLogin}
+                  onChange={(e) => {
+                    setCheckedAutoLogin(e.target.checked);
+                  }}
+                />
+              </Div>
+            </Grid>
+            <Grid size={6} className={"d-left"}>
+              <Div className={"fs-0-8rem"}>
+                {translate("saveId")}
+                <Checkbox
+                  color={"primary"}
+                  size={"small"}
+                  checked={checkedSaveId}
+                  onChange={(e) => {
+                    setCheckedSaveId(e.target.checked);
+                  }}
+                />
+              </Div>
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -277,7 +284,9 @@ export const UserLogin = () => {
       <Input
         value={translate("googleLogin")}
         className={"bg-white pointer"}
-        startadornment={user1 && <Img src={user1} className={"w-15 h-15"} />}
+        startadornment={
+          <Img src={user1} className={"w-15 h-15"} />
+        }
         onClick={() => {
           flowGoogle();
         }}
@@ -309,19 +318,27 @@ export const UserLogin = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center radius border h-min97vh"}>
-        <Grid container columnSpacing={1}>
+      <Paper className={"content-wrapper d-center radius border h-min98vh"}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {titleSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {cardSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {buttonSection()}
-            <Br px={10} />
+          </Grid>
+          <Grid size={12}>
             {googleSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {toSignupSection()}
-            <Br px={10} />
+          </Grid>
+          <Grid size={12}>
             {toResetPwSection()}
           </Grid>
         </Grid>

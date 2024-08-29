@@ -177,37 +177,36 @@ export const UserDetail = () => {
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
-      <Div className={"d-center"}>
-        <Avatar
-          src={OBJECT?.user_image}
-          alt={"user_image"}
-          className={"w-150 h-150"}
-        />
-      </Div>
+      <Avatar
+        src={OBJECT?.user_image}
+        alt={"user_image"}
+        className={"w-150 h-150"}
+      />
     );
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column p-10"} key={i}>
-          <Grid container columnSpacing={1}>
+        <Card className={"p-10"} key={i}>
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            {/** 아이디 **/}
             <Grid size={12}>
-              {/** 아이디 **/}
               <Input
                 label={translate("id")}
                 value={OBJECT?.user_id}
                 readOnly={true}
               />
-              <Br px={20} />
-              {/** 등록일 **/}
+            </Grid>
+            {/** 등록일 **/}
+            <Grid size={12}>
               <Input
                 label={translate("regDt")}
                 value={OBJECT?.user_regDt.split("T")[0]}
                 readOnly={true}
               />
             </Grid>
-            <Br px={30} />
+            <Hr px={10} />
+            {/** 성별 (N, M, F) **/}
             <Grid size={12}>
-              {/** 성별 (N, M, F) **/}
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender}
@@ -226,8 +225,9 @@ export const UserDetail = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <Br px={20} />
-              {/** 나이 (1세 ~ 100세) **/}
+            </Grid>
+            {/** 나이 (1세 ~ 100세) **/}
+            <Grid size={12}>
               <Select
                 label={translate("age")}
                 value={OBJECT.user_age}
@@ -246,37 +246,10 @@ export const UserDetail = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <Br px={20} />
-              {/** 신장 **/}
-              <Input
-                label={translate("height")}
-                value={OBJECT.user_height}
-                inputRef={REFS.current.user_height}
-                error={ERRORS.user_height}
-                endadornment={translate("cm")}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/^0+/, '');
-                  if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
-                    const newValue = parseFloat(value);
-                    if (value === "") {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        user_height: "0",
-                      }));
-                    }
-                    else if (!isNaN(newValue) && newValue <= 999) {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        user_height: value,
-                      }));
-                    }
-                  }
-                }}
-              />
             </Grid>
-            <Br px={30} />
+            <Hr px={10} />
+            {/** 최초 몸무게 **/}
             <Grid size={12}>
-              {/** 최초 몸무게 **/}
               <Input
                 label={translate("initScale")}
                 value={OBJECT.user_initScale}
@@ -293,8 +266,9 @@ export const UserDetail = () => {
                   }))
                 )}
               />
-              <Br px={20} />
-              {/** 현재 몸무게 **/}
+            </Grid>
+            {/** 현재 몸무게 **/}
+            <Grid size={12}>
               <Input
                 label={translate("curScale")}
                 value={OBJECT.user_curScale}
@@ -305,9 +279,9 @@ export const UserDetail = () => {
                 readOnly={true}
               />
             </Grid>
-            <Br px={30} />
+            <Hr px={10} />
+            {/** 초기 자산 **/}
             <Grid size={12}>
-              {/** 초기 자산 **/}
               <Input
                 label={translate("initProperty")}
                 value={numeral(OBJECT.user_initProperty).format("0,0")}
@@ -324,8 +298,9 @@ export const UserDetail = () => {
                   }))
                 )}
               />
-              <Br px={20} />
-              {/** 현재 자산 **/}
+            </Grid>
+            {/** 현재 자산 **/}
+            <Grid size={12}>
               <Input
                 label={translate("curProperty")}
                 value={numeral(curProperty).format("0,0")}
@@ -346,11 +321,12 @@ export const UserDetail = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1}>
-          <Grid size={12}>
-            <Br px={20} />
+        <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid size={12} className={"d-center"}>
             {imageSection()}
-            <Hr px={60} />
+          </Grid>
+          <Hr px={20} />
+          <Grid size={12}>
             {cardSection()}
           </Grid>
         </Grid>

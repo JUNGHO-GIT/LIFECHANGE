@@ -118,7 +118,7 @@ export const Footer = ({
     // 5. return
     return (
       <Paper className={styleClass}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12} className={"d-center fadeIn"}>
             {typeName === "btn" && btnSection()}
             {typeName === "dummy" && dummySection()}

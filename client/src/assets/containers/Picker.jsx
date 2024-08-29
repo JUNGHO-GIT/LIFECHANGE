@@ -858,7 +858,7 @@ export const Picker = ({
   // 7. return
   return (
     isGoalList || isList ? (
-      <Grid container columnSpacing={1}>
+      <Grid container columnSpacing={1} rowSpacing={2}>
         <Grid size={9} className={"d-center"}>
           {selectSection()}
         </Grid>
@@ -867,7 +867,7 @@ export const Picker = ({
         </Grid>
       </Grid>
     ) : isGoalSave || isSave || isFind ? (
-      <Grid container columnSpacing={1}>
+      <Grid container columnSpacing={1} rowSpacing={2}>
         <Grid size={3} className={"d-center"}>
           {saveTypeSection()}
         </Grid>

@@ -272,83 +272,88 @@ export const UserResetPw = () => {
     // 7-2. card
     const cardSection = () => {
       const cardFragment = (i) => (
-        <Card className={"d-column"} key={i}>
+        <Card className={"p-10"} key={i}>
           {/** section 1 **/}
-          <Div className={"d-center"}>
-            <Input
-              label={`${translate("id")} (email)`}
-              value={OBJECT.user_id}
-              className={"w-66vw me-10"}
-              inputRef={REFS.current.user_id}
-              error={ERRORS.user_id}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  user_id: e.target.value
-                }))
-              )}
-            />
-            <Btn
-              color={"primary"}
-              onClick={() => {
-                flowSendEmail();
-              }}
-            >
-              {translate("send")}
-            </Btn>
-          </Div>
-          <Br px={10} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("verify")}
-              value={clientCode}
-              className={"w-66vw me-10"}
-              inputRef={REFS.current.user_id_verified}
-              error={ERRORS.user_id_verified}
-              onChange={(e) => (
-                setClientCode(e.target.value)
-              )}
-            />
-            <Btn
-              color={"primary"}
-              disabled={!OBJECT.user_id_sended}
-              onClick={() => {
-                flowVerifyEmail();
-              }}
-            >
-              {translate("verify")}
-            </Btn>
-          </Div>
-          <Br px={10} />
-          <Input
-            type={"password"}
-            label={translate("newPw")}
-            value={OBJECT.user_pw}
-            inputRef={REFS.current.user_pw}
-            error={ERRORS.user_pw}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_pw: e.target.value
-              }))
-            )}
-          />
-          <Br px={10} />
-          <Input
-            type={"password"}
-            label={translate("newPwVerified")}
-            value={OBJECT.user_pw_verified}
-            inputRef={REFS.current.user_pw_verified}
-            error={ERRORS.user_pw_verified}
-            disabled={OBJECT.user_id_verified === false}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                user_pw_verified: e.target.value
-              }))
-            )}
-          />
+          <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid size={10}>
+              <Input
+                label={`${translate("id")} (email)`}
+                value={OBJECT.user_id}
+                inputRef={REFS.current.user_id}
+                error={ERRORS.user_id}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_id: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Grid size={2}>
+              <Btn
+                color={"primary"}
+                onClick={() => {
+                  flowSendEmail();
+                }}
+              >
+                {translate("send")}
+              </Btn>
+            </Grid>
+            <Grid size={10}>
+              <Input
+                label={translate("verify")}
+                value={clientCode}
+                inputRef={REFS.current.user_id_verified}
+                error={ERRORS.user_id_verified}
+                onChange={(e) => (
+                  setClientCode(e.target.value)
+                )}
+              />
+            </Grid>
+            <Grid size={2}>
+              <Btn
+                color={"primary"}
+                disabled={!OBJECT.user_id_sended}
+                onClick={() => {
+                  flowVerifyEmail();
+                }}
+              >
+                {translate("verify")}
+              </Btn>
+            </Grid>
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("newPw")}
+                value={OBJECT.user_pw}
+                inputRef={REFS.current.user_pw}
+                error={ERRORS.user_pw}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_pw: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("newPwVerified")}
+                value={OBJECT.user_pw_verified}
+                inputRef={REFS.current.user_pw_verified}
+                error={ERRORS.user_pw_verified}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    user_pw_verified: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -393,17 +398,24 @@ export const UserResetPw = () => {
     return (
       <>
       {LOADING && <Loading />}
-      <Paper className={"content-wrapper d-center radius border h-min94vh"}>
-        <Grid container columnSpacing={1}>
+      <Paper className={"content-wrapper d-center radius border h-min98vh"}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {titleSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {cardSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {buttonSection()}
-            <Hr px={40} />
+          </Grid>
+          <Hr px={10} />
+          <Grid size={12}>
             {toLoginSection()}
-            <Br px={10} />
+          </Grid>
+          <Grid size={12}>
             {toSignupSection()}
           </Grid>
         </Grid>

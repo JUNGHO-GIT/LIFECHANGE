@@ -1,24 +1,26 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "noLib": false,
     "target": "ESNext",
-    "allowImportingTsExtensions": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "checkJs": true,
-    "pretty": true,
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"]
-    },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "importHelpers": true,
     "experimentalDecorators": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM"],
+    "types": ["react", "react-dom"],
+    "baseUrl": "./",
+    "paths": {
+      "@imports/*": ["src/imports/*"],
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"]
+    }
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
-    "node_modules",
-    "**/node_modules/*"
+    "node_modules"
   ]
 }

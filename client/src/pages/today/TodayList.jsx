@@ -253,25 +253,28 @@ export const TodayList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_EXERCISE?.map((item, index) => (
-          <Card className={"border radius"} key={`${index}-${i}`}>
+          <Card className={"border radius p-10"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpandedExercise(isExpandedExercise.includes(index)
-                    ? isExpandedExercise.filter((el) => el !== index)
-                    : [...isExpandedExercise, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpandedExercise(isExpandedExercise.includes(index)
+                      ? isExpandedExercise.filter((el) => el !== index)
+                      : [...isExpandedExercise, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
                       id: item._id,
-                      dateType: item.exercise_dateType || "day",
+                      dateType: item.exercise_dateType,
                       dateStart: item.exercise_dateStart,
                       dateEnd: item.exercise_dateEnd,
                     });
@@ -319,18 +322,18 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
-                  <Grid size={3} className={"d-left"}>
+                  <Grid size={2} className={"d-left"}>
                     <Div className={"fs-1-0rem fw-600 dark"}>
                       {translate("volume")}
                     </Div>
                   </Grid>
-                  <Grid size={6} className={"d-right"}>
+                  <Grid size={7} className={"d-right"}>
                     <Div className={`fs-1-0rem fw-600 ${item.exercise_total_volume_color}`}>
                       {numeral(item.exercise_total_volume).format("0,0")}
                     </Div>
@@ -343,7 +346,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -364,8 +367,8 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
                 <Hr px={30} />
-                {/** row 4 **/}
-                <Grid container columnSpacing={1}>
+                {/** row 3 **/}
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
@@ -411,23 +414,26 @@ export const TodayList = () => {
         OBJECT_FOOD?.map((item, index) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpandedFood(isExpandedFood.includes(index)
-                    ? isExpandedFood.filter((el) => el !== index)
-                    : [...isExpandedFood, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpandedFood(isExpandedFood.includes(index)
+                      ? isExpandedFood.filter((el) => el !== index)
+                      : [...isExpandedFood, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
                       id: item._id,
-                      dateType: item.food_dateType || "day",
+                      dateType: item.food_dateType,
                       dateStart: item.food_dateStart,
                       dateEnd: item.food_dateEnd,
                     });
@@ -475,9 +481,9 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
@@ -499,7 +505,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
@@ -521,7 +527,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
@@ -543,7 +549,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 4 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
@@ -589,23 +595,26 @@ export const TodayList = () => {
         OBJECT_MONEY?.map((item, index) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpandedMoney(isExpandedMoney.includes(index)
-                    ? isExpandedMoney.filter((el) => el !== index)
-                    : [...isExpandedMoney, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpandedMoney(isExpandedMoney.includes(index)
+                      ? isExpandedMoney.filter((el) => el !== index)
+                      : [...isExpandedMoney, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
                       id: item._id,
-                      dateType: item.money_dateType || "day",
+                      dateType: item.money_dateType,
                       dateStart: item.money_dateStart,
                       dateEnd: item.money_dateEnd,
                     });
@@ -653,9 +662,9 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -677,7 +686,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -723,23 +732,26 @@ export const TodayList = () => {
         OBJECT_SLEEP?.map((item, index) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
-              <AccordionSummary expandIcon={
-                <Icons
-                  name={"TbChevronDown"}
-                  className={"w-18 h-18 black"}
-                  onClick={(e) => {
-                    setIsExpandedSleep(isExpandedSleep.includes(index)
-                    ? isExpandedSleep.filter((el) => el !== index)
-                    : [...isExpandedSleep, index]
-                  )}}
-                />
-              }>
+              <AccordionSummary
+                className={"pb-10"}
+                expandIcon={
+                  <Icons
+                    name={"TbChevronDown"}
+                    className={"w-18 h-18 black"}
+                    onClick={(e) => {
+                      setIsExpandedSleep(isExpandedSleep.includes(index)
+                      ? isExpandedSleep.filter((el) => el !== index)
+                      : [...isExpandedSleep, index]
+                    )}}
+                  />
+                }
+              >
                 <Grid container columnSpacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
                       id: item._id,
-                      dateType: item.sleep_dateType || "day",
+                      dateType: item.sleep_dateType,
                       dateStart: item.sleep_dateStart,
                       dateEnd: item.sleep_dateEnd,
                     });
@@ -787,9 +799,9 @@ export const TodayList = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              <AccordionDetails><Br px={10} />
+              <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -811,7 +823,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -833,7 +845,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1}>
+                <Grid container columnSpacing={1} rowSpacing={2}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
@@ -867,14 +879,17 @@ export const TodayList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1}>
+        <Grid container columnSpacing={1} rowSpacing={2}>
           <Grid size={12}>
             {exerciseSection()}
-            <Br px={30} />
+          </Grid>
+          <Grid size={12}>
             {foodSection()}
-            <Br px={30} />
+          </Grid>
+          <Grid size={12}>
             {moneySection()}
-            <Br px={30} />
+          </Grid>
+          <Grid size={12}>
             {sleepSection()}
           </Grid>
         </Grid>

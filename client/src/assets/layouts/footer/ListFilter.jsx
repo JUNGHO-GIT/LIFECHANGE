@@ -49,7 +49,7 @@ export const ListFilter = ({
     );
     // 3. return
     return (
-      <Grid container columnSpacing={1}>
+      <Grid container columnSpacing={1} rowSpacing={2}>
         <Grid size={3}>
           {sortSection()}
         </Grid>

@@ -10852,6 +10852,10 @@
   cursor: pointer !important;
   caret-color: transparent !important;
 }
+.cursor-none {
+  cursor: none !important;
+  caret-color: transparent !important;
+}
 .drag {
   cursor: grab !important;
   caret-color: transparent !important;

@@ -12,6 +12,12 @@
 ----------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------
+@@@=== CRON ===@@@
+1. cron 설정
+	= crontab -e
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
 @@@=== INSTANCE ===@@@
 0. 로컬에서 접속
 	= ssh -i C:\\Users\\jungh\\.ssh\\JKEY junghomun00@34.23.233.23
@@ -167,7 +173,7 @@
 	= npm install pm2@latest -g
 
 2. 실행
-	= pm2 start index.js
+	= pm2 start index.js --name JPAGE
 
 3. 부팅시 자동실행
 	= pm2 startup
@@ -329,26 +335,37 @@
 	= mongorestore --drop --host 34.23.233.23 --username eric4757 --password M7m7m7m7m7m7! --authenticationDatabase admin --nsFrom 'LIFECHANGE.*' --nsTo 'LIFECHANGE_TEST.*' /backup/mongo_backup_2024-08-04-09-21
 
 17. 몽고쉘 접속 (mongod 아님 주의 !!!!!!!!!!!!!)
-	= mongosh
+	= mongosh -u admin -p M7m7m7m7m7m7! --authenticationDatabase "admin"
+
 
 18. 디비 생성
   = use LIFECHANGE
 
-19. 유저 생성
+19. 유저 생성 (전체 DB 권한)
 	= use admin
 	= db.createUser({
     user: "eric4757",
     pwd: "M7m7m7m7m7m7!",
-    roles: [{ role: "userAdminAnyDatabase", db: "admin" }]
+    roles: [
+    { role: "userAdminAnyDatabase", db: "admin" },
+    { role: "readWriteAnyDatabase", db: "admin" },
+    { role: "dbAdminAnyDatabase", db: "admin" },
+    { role: "root", db: "admin" }
+  ]
   })
 
-20. 유저 생성
+20. 유저 생성 (특정 DB 권한)
 	= use LIFECHANGE
-	= db.createUser ({
+	= db.createUser({
     user: "eric4757",
     pwd: "M7m7m7m7m7m7!",
-    roles: [{ role: "readWrite", db: "LIFECHANGE" }]
+    roles: [
+    { role: "userAdmin", db: "LIFECHANGE" },
+    { role: "readWrite", db: "LIFECHANGE" },
+    { role: "dbAdmin", db: "LIFECHANGE" }
+  ]
   })
+
 
 21. 패키지 삭제
 	= sudo yum remove mongodb-org*
