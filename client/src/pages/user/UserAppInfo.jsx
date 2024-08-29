@@ -60,8 +60,8 @@ export const UserAppInfo = () => {
         <Card className={"d-column border radius p-0"} key={i}>
           <Grid container columnSpacing={2} className={"fs-0-8rem"}>
             <Br px={10} />
-            <Grid size={12} className={"d-between p-20"}>
-              <Grid size={3} className={"d-left upper fw-600"}>
+            <Grid size={12} className={"d-between p-10"}>
+              <Grid size={3} className={"d-left fw-600 ms-20"}>
                 version
               </Grid>
               <Grid size={9} className={"d-right"}>
@@ -69,8 +69,8 @@ export const UserAppInfo = () => {
               </Grid>
             </Grid>
             <Hr px={20} />
-            <Grid size={12} className={"d-between p-20"}>
-              <Grid size={3} className={"d-left upper fw-600"}>
+            <Grid size={12} className={"d-between p-10"}>
+              <Grid size={3} className={"d-left fw-600 ms-20"}>
                 date
               </Grid>
               <Grid size={9} className={"d-right"}>
@@ -78,17 +78,17 @@ export const UserAppInfo = () => {
               </Grid>
             </Grid>
             <Hr px={20} />
-            <Grid size={12} className={"d-between p-20"}>
-              <Grid size={3} className={"d-left upper fw-600"}>
+            <Grid size={12} className={"d-between p-10"}>
+              <Grid size={3} className={"d-left fw-600 ms-20"}>
                 github
               </Grid>
-              <Grid size={9} className={"d-right"}>
+              <Grid size={9} className={"d-right fs-0-6rem"}>
                 {OBJECT.git}
               </Grid>
             </Grid>
             <Hr px={20} />
-            <Grid size={12} className={"d-between p-20"}>
-              <Grid size={3} className={"d-left upper fw-600"}>
+            <Grid size={12} className={"d-between p-10"}>
+              <Grid size={3} className={"d-left fw-600 ms-20"}>
                 license
               </Grid>
               <Grid size={9} className={"d-right"}>

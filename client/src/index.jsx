@@ -1,7 +1,7 @@
 // index.jsx
 // Node -> Section -> Fragment
 
-import { React, useLocation } from "./imports/ImportReacts.jsx";
+import { useLocation } from "./imports/ImportReacts.jsx";
 import { ReactDOM, BrowserRouter, Routes, Route } from "./imports/ImportReacts.jsx";
 import { CssBaseline, createTheme, ThemeProvider } from "./imports/ImportMuis.jsx";
 import { useScrollTop, useEnhancedTouch } from "./imports/ImportHooks.jsx";

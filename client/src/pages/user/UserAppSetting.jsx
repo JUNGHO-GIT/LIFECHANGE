@@ -32,7 +32,7 @@ export const UserAppSetting = () => {
                 navigate("/user/detail")
               }}
             >
-              <Grid size={6} className={"d-left ms-10"}>
+              <Grid size={6} className={"d-left ms-20"}>
                 {translate("dataDetail")}
               </Grid>
               <Grid size={5} className={"d-right"}>
@@ -51,7 +51,7 @@ export const UserAppSetting = () => {
                 navigate("/user/category")
               }}
             >
-              <Grid size={6} className={"d-left ms-10"}>
+              <Grid size={6} className={"d-left ms-20"}>
                 {translate("category")}
               </Grid>
               <Grid size={5} className={"d-right"}>
@@ -70,7 +70,7 @@ export const UserAppSetting = () => {
                 navigate("/user/dummy")
               }}
             >
-              <Grid size={6} className={"d-left ms-10"}>
+              <Grid size={6} className={"d-left ms-20"}>
                 {translate("dataList")}
               </Grid>
               <Grid size={5} className={"d-right"}>
@@ -89,7 +89,7 @@ export const UserAppSetting = () => {
                 navigate("/user/app/info")
               }}
             >
-              <Grid size={6} className={"d-left ms-10"}>
+              <Grid size={6} className={"d-left ms-20"}>
                 {translate("appInfo")}
               </Grid>
               <Grid size={5} className={"d-right"}>
@@ -112,7 +112,7 @@ export const UserAppSetting = () => {
                 navigate("/")
               }}
             >
-              <Grid size={6} className={"d-left ms-10"}>
+              <Grid size={6} className={"d-left ms-20"}>
                 {translate("logout")}
               </Grid>
               <Grid size={5} className={"d-right"}>
@@ -131,7 +131,7 @@ export const UserAppSetting = () => {
                 navigate("/user/deletes")
               }}
             >
-              <Grid size={6} className={"d-left red ms-10"}>
+              <Grid size={6} className={"d-left red ms-20"}>
                 {translate("userDeletes")}
               </Grid>
               <Grid size={5} className={"d-right"}>

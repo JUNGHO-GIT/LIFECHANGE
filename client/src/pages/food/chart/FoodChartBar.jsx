@@ -267,6 +267,7 @@ export const FoodChartBar = () => {
       const selectSection1 = () => (
         <Select
           value={translate(SECTION)}
+          readOnly={true}
           InputProps={{
             readOnly: true,
             style: {

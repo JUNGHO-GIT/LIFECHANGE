@@ -357,7 +357,7 @@ export const TopNav = () => {
               <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Img src={money2} className={"w-16 h-16"} />
-                <Div className={"fs-1-4rem fw-600 ms-10"}>
+                <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {numeral(property.curProperty).format("0,0")}
                 </Div>
               </Grid>
@@ -440,7 +440,7 @@ export const TopNav = () => {
               <Hr px={40} />
               <Grid size={12} className={"d-center"}>
                 <Img src={exercise5} className={"w-16 h-16"} />
-                <Div className={"fs-1-4rem fw-600 ms-10"}>
+                <Div className={"fs-1-4rem fw-600 ms-2vw"}>
                   {scale.curScale}
                 </Div>
               </Grid>

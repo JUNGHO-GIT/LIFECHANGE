@@ -15,7 +15,7 @@ export const Header = () => {
   // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
     const iconSection = () => (
-      <Div className={"d-center ms-10"}>
+      <Div className={"d-center"}>
         <Img
           src={logo2}
           className={"pointer h-max30"}
