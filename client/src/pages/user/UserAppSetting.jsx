@@ -32,10 +32,10 @@ export const UserAppSetting = () => {
                 navigate("/user/detail")
               }}
             >
-              <Grid size={6} className={"d-left ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("dataDetail")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -51,10 +51,10 @@ export const UserAppSetting = () => {
                 navigate("/user/category")
               }}
             >
-              <Grid size={6} className={"d-left ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("category")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -70,10 +70,10 @@ export const UserAppSetting = () => {
                 navigate("/user/dummy")
               }}
             >
-              <Grid size={6} className={"d-left ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("dataList")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -89,10 +89,10 @@ export const UserAppSetting = () => {
                 navigate("/user/app/info")
               }}
             >
-              <Grid size={6} className={"d-left ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("appInfo")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -112,10 +112,10 @@ export const UserAppSetting = () => {
                 navigate("/")
               }}
             >
-              <Grid size={6} className={"d-left ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw"}>
                 {translate("logout")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}
@@ -131,10 +131,10 @@ export const UserAppSetting = () => {
                 navigate("/user/deletes")
               }}
             >
-              <Grid size={6} className={"d-left red ms-20"}>
+              <Grid size={6} className={"d-left ms-2vw red"}>
                 {translate("userDeletes")}
               </Grid>
-              <Grid size={5} className={"d-right"}>
+              <Grid size={5} className={"d-right me-2vw"}>
                 <Icons
                   name={"TbChevronRight"}
                   className={"w-16 h-16 black"}

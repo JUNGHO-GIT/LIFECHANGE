@@ -62,19 +62,16 @@ export const Picker = ({
     }
   };
   const [typeStr, setTypeStr] = useState("");
-  const [widthStr, setWidthStr] = useState("");
   const [innerStr, setInnerStr] = useState("");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isGoalList || isList) {
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
-      setWidthStr("w-46vw");
       setInnerStr("h-min0 h-4vh fs-0-6rem pointer");
     }
     else if (isGoalSave || isSave || isFind) {
       setTypeStr("h-min40 fs-0-8rem pointer");
-      setWidthStr("w-86vw");
       setInnerStr("h-min40 fs-0-8rem pointer");
     }
   }, [PATH]);
@@ -144,7 +141,8 @@ export const Picker = ({
       }
     }
   }, [DATE]);
-
+  
+  const pickerNode = () => {
   // 1. day ----------------------------------------------------------------------------------------
   const daySection = () => (
     <PopUp
@@ -253,7 +251,6 @@ export const Picker = ({
         <Input
           label={translate("date")}
           value={`${DATE.dateStart}`}
-          className={widthStr}
           readOnly={true}
           inputclass={innerStr}
           startadornment={
@@ -379,7 +376,6 @@ export const Picker = ({
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-          className={widthStr}
           inputclass={innerStr}
           readOnly={true}
           startadornment={
@@ -478,7 +474,6 @@ export const Picker = ({
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-          className={widthStr}
           inputclass={innerStr}
           readOnly={true}
           startadornment={
@@ -577,7 +572,6 @@ export const Picker = ({
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-          className={widthStr}
           inputclass={innerStr}
           readOnly={true}
           startadornment={
@@ -686,9 +680,8 @@ export const Picker = ({
         <Input
           label={translate("duration")}
           value={`${DATE.dateStart} ~ ${DATE.dateEnd}`}
-          className={widthStr}
           readOnly={true}
-          inputclass={innerStr}
+          // inputclass={innerStr}
           startadornment={
             <Img src={common1} className={"w-16 h-16"} />
           }
@@ -789,14 +782,16 @@ export const Picker = ({
           </Grid>
         </Card>
       )}>
-      {(popTrigger={}) => (
+      {(popTrigger) => (
         <Btn
           color={"primary"}
           className={"pt-1 pb-1 ps-9 pe-9 fs-0-7rem ms-n2vw"}
           onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget);
-          }
-        }>
+            if (!isToday) {
+              popTrigger.openPopup(e.currentTarget);
+            }
+          }}
+        >
           {translate(clickedType)}
         </Btn>
       )}
@@ -808,7 +803,7 @@ export const Picker = ({
     <Select
       label={translate("dateType")}
       value={DATE.dateType || ""}
-      inputclass={typeStr}
+      nputclass={typeStr}
       onChange={(e) => {
         if (e.target.value === "day") {
           setDATE((prev) => ({
@@ -859,10 +854,10 @@ export const Picker = ({
       ))}
     </Select>
   );
-
-  // 6. list ---------------------------------------------------------------------------------------
-  const listNode = () => (
-    !isToday ? (
+  
+  // 7. return
+  return (
+    isGoalList || isList ? (
       <Grid container columnSpacing={1}>
         <Grid size={9} className={"d-center"}>
           {selectSection()}
@@ -871,36 +866,28 @@ export const Picker = ({
           {listClickNode()}
         </Grid>
       </Grid>
-    ) : (
+    ) : isGoalSave || isSave || isFind ? (
       <Grid container columnSpacing={1}>
-        <Grid size={12} className={"d-center"}>
-          {selectSection()}
+        <Grid size={3} className={"d-center"}>
+          {saveTypeSection()}
+        </Grid>
+        <Grid size={9} className={"d-center"}>
+          {DATE.dateType === "day" && daySection()}
+          {DATE.dateType === "week" && weekSection()}
+          {DATE.dateType === "month" && monthSection()}
+          {DATE.dateType === "year" && yearSection()}
+          {DATE.dateType === "select" && selectSection()}
         </Grid>
       </Grid>
+    ) : (
+      null
     )
-  );
-
-  // 6. save ---------------------------------------------------------------------------------------
-  const saveNode = () => (
-    <Grid container columnSpacing={1}>
-      <Grid size={3} className={"d-center"}>
-        {saveTypeSection()}
-      </Grid>
-      <Grid size={9} className={"d-center"}>
-        {DATE.dateType === "day" && daySection()}
-        {DATE.dateType === "week" && weekSection()}
-        {DATE.dateType === "month" && monthSection()}
-        {DATE.dateType === "year" && yearSection()}
-        {DATE.dateType === "select" && selectSection()}
-      </Grid>
-    </Grid>
-  );
-
-  // 10. return ------------------------------------------------------------------------------------
+  )
+  };
+  
   return (
     <>
-      {(isGoalList || isList) && listNode()}
-      {(isGoalSave || isSave || isFind) && saveNode()}
+      {pickerNode()}
     </>
   );
 };

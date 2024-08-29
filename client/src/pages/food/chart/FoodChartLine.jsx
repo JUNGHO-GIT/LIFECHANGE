@@ -459,7 +459,6 @@ export const FoodChartLine = () => {
         </Div>
       );
       const selectFragment1 = () => (
-        <Div className={"d-center"}>
           <Select
             value={SECTION}
             onChange={(e) => (
@@ -469,7 +468,6 @@ export const FoodChartLine = () => {
             <MenuItem value={"week"}>{translate("week")}</MenuItem>
             <MenuItem value={"month"}>{translate("month")}</MenuItem>
           </Select>
-        </Div>
       );
       const selectFragment2 = () => (
         <PopUp

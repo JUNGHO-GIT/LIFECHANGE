@@ -95,17 +95,13 @@ export const UserDeletes = () => {
           <Input
             label={translate("id")}
             value={OBJECT.user_id}
-            InputProps={{
-              readOnly: true,
-            }}
+            readOnly={true}
           />
           <Br px={20} />
           <Input
             label={translate("signupDate")}
             value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
-            InputProps={{
-              readOnly: true,
-            }}
+            readOnly={true}
           />
           <Br px={20} />
           <TextArea

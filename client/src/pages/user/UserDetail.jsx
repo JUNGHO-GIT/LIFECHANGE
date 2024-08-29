@@ -5,8 +5,9 @@ import { useState, useEffect, useRef, createRef } from "../../imports/ImportReac
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios, numeral } from "../../imports/ImportLibs.jsx";
 import { Footer, Loading } from "../../imports/ImportLayouts.jsx";
-import { Br, Input, Select, Div, Hr } from "../../imports/ImportComponents.jsx";
+import { Br, Input, Select, Div, Hr, Img } from "../../imports/ImportComponents.jsx";
 import { Paper, Avatar, MenuItem, Card, Grid } from "../../imports/ImportMuis.jsx";
+import { money2, exercise5 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const UserDetail = () => {
@@ -281,6 +282,9 @@ export const UserDetail = () => {
                 value={OBJECT.user_initScale}
                 inputRef={REFS.current.user_initScale}
                 error={ERRORS.user_initScale}
+                startadornment={
+                  <Img src={exercise5} className={"w-16 h-16"} />
+                }
                 endadornment={translate("k")}
                 onChange={(e) => (
                   setOBJECT((prev) => ({
@@ -294,6 +298,9 @@ export const UserDetail = () => {
               <Input
                 label={translate("curScale")}
                 value={OBJECT.user_curScale}
+                startadornment={
+                  <Img src={exercise5} className={"w-16 h-16"} />
+                }
                 endadornment={translate("k")}
                 readOnly={true}
               />
@@ -306,6 +313,9 @@ export const UserDetail = () => {
                 value={numeral(OBJECT.user_initProperty).format("0,0")}
                 inputRef={REFS.current.user_initProperty}
                 error={ERRORS.user_initProperty}
+                startadornment={
+                  <Img src={money2} className={"w-16 h-16"} />
+                }
                 endadornment={translate("currency")}
                 onChange={(e) => (
                   setOBJECT((prev) => ({
@@ -319,6 +329,9 @@ export const UserDetail = () => {
               <Input
                 label={translate("curProperty")}
                 value={numeral(curProperty).format("0,0")}
+                startadornment={
+                  <Img src={money2} className={"w-16 h-16"} />
+                }
                 endadornment={translate("currency")}
                 readOnly={true}
               />

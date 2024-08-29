@@ -470,13 +470,9 @@ export const UserSignup = () => {
                 }
               }
             }}
-            InputProps={{
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("age")}
-                </Div>
-              )
-            }}
+            endadornment={
+              translate("age")
+            }
           />
           <Br px={10} />
           {/** 신장 **/}
@@ -504,13 +500,9 @@ export const UserSignup = () => {
                 }
               }
             }}
-            InputProps={{
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("cm")}
-                </Div>
-              )
-            }}
+            endadornment={
+              translate("cm")
+            }
           />
           <Br px={10} />
           {/** 초기 체중 **/}
@@ -538,13 +530,9 @@ export const UserSignup = () => {
                 }
               }
             }}
-            InputProps={{
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("k")}
-                </Div>
-              )
-            }}
+            endadornment={
+              translate("cm")
+            }
           />
           <Br px={10} />
           {/** 초기 자산 **/}
@@ -572,13 +560,9 @@ export const UserSignup = () => {
                 }
               }
             }}
-            InputProps={{
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
+            endadornment={
+              translate("currency")
+            }
           />
         </Card>
       );
@@ -604,12 +588,10 @@ export const UserSignup = () => {
         <Input
           value={translate("googleLogin")}
           className={"w-100p bg-white"}
-          InputProps={{
-            readOnly: true,
-            startadornment: (
-              <Img src={user1} className={"w-15 h-15"} />
-            ),
-          }}
+          readOnly={true}
+          startadornment={
+            <Img src={user1} className={"w-15 h-15"} />
+          }
           onClick={() => {
             flowGoogle();
           }}

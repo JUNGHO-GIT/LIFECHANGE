@@ -18,6 +18,7 @@ export const Img = (props) => {
         <img
           {...props}
           alt={fileName}
+          loading={"eager"}
         />
       </div>
     );

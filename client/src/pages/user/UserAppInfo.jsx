@@ -61,37 +61,37 @@ export const UserAppInfo = () => {
           <Grid container columnSpacing={2} className={"fs-0-8rem"}>
             <Br px={10} />
             <Grid size={12} className={"d-between p-10"}>
-              <Grid size={3} className={"d-left fw-600 ms-20"}>
+              <Grid size={3} className={"d-left fw-600 ms-2vw"}>
                 version
               </Grid>
-              <Grid size={9} className={"d-right"}>
+              <Grid size={9} className={"d-right me-2vw"}>
                 {OBJECT.version}
               </Grid>
             </Grid>
             <Hr px={20} />
             <Grid size={12} className={"d-between p-10"}>
-              <Grid size={3} className={"d-left fw-600 ms-20"}>
+              <Grid size={3} className={"d-left fw-600 ms-2vw"}>
                 date
               </Grid>
-              <Grid size={9} className={"d-right"}>
+              <Grid size={9} className={"d-right me-2vw"}>
                 {OBJECT.date}
               </Grid>
             </Grid>
             <Hr px={20} />
             <Grid size={12} className={"d-between p-10"}>
-              <Grid size={3} className={"d-left fw-600 ms-20"}>
+              <Grid size={3} className={"d-left fw-600 ms-2vw"}>
                 github
               </Grid>
-              <Grid size={9} className={"d-right fs-0-6rem"}>
+              <Grid size={9} className={"d-right fs-0-6rem me-2vw"}>
                 {OBJECT.git}
               </Grid>
             </Grid>
             <Hr px={20} />
             <Grid size={12} className={"d-between p-10"}>
-              <Grid size={3} className={"d-left fw-600 ms-20"}>
+              <Grid size={3} className={"d-left fw-600 ms-2vw"}>
                 license
               </Grid>
-              <Grid size={9} className={"d-right"}>
+              <Grid size={9} className={"d-right me-2vw"}>
                 {OBJECT.license}
               </Grid>
             </Grid>
@@ -105,12 +105,12 @@ export const UserAppInfo = () => {
     };
     // 7-10. return
     return (
-      <Paper className={"content-wrapper d-center radius border h-min80vh"}>
+      <Paper className={"content-wrapper radius border h-min80vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
             <Br px={20} />
             {imageSection()}
-            <Br px={30} />
+            <Br px={70} />
             {cardSection()}
             <Br px={30} />
           </Grid>

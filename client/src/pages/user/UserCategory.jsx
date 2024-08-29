@@ -288,7 +288,7 @@ export const UserCategory = () => {
                       }));
                     }}>
                       <Div className={"fs-0-9rem ms-auto"}>
-                        <Select
+                        <Input
                           variant={"standard"}
                           value={translate(item[`${dataType}_part`])}
                           sx={{
@@ -298,10 +298,10 @@ export const UserCategory = () => {
                               : "2px solid #000000"
                             }
                           }}
-                          InputProps={{
-                            readOnly: isEditable !== `${dataType}_part_${index}`,
-                            className: "fs-0-9rem",
-                          }}
+                          readOnly={
+                            isEditable !== `${dataType}_part_${index}`
+                          }
+                          inputclass={"fs-0-9rem"}
                           inputRef={(el) => {
                             if (isEditable === `${dataType}_part_${index}`) {
                               REFS.current.category2 = el;
@@ -328,7 +328,10 @@ export const UserCategory = () => {
                         />
                       </Div>
                       <Div className={"fs-0-9rem ms-auto d-row"}>
-                        <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
+                        <Icons
+                          name={"TbPencil"}
+                          className={"w-14 h-14 navy"}
+                          onClick={() => {
                           handlerRename("part", index);
                         }} />
                         <Icons name={"TbTrash"} className={"w-14 h-14 red"} onClick={() => {
@@ -380,7 +383,7 @@ export const UserCategory = () => {
                         }));
                       }}>
                         <Div className={"fs-0-9rem ms-auto"}>
-                          <Select
+                          <Input
                             variant={"standard"}
                             value={translate(item)}
                             sx={{
@@ -390,10 +393,10 @@ export const UserCategory = () => {
                                 : "2px solid #000000"
                               }
                             }}
-                            InputProps={{
-                              readOnly: isEditable !== `${dataType}_title_${index}`,
-                              className: "fs-0-9rem",
-                            }}
+                            readonly={
+                              isEditable !== `${dataType}_title_${index}`
+                            }
+                            inputclass={"fs-0-9rem"}
                             inputRef={(el) => {
                               if (isEditable === `${dataType}_title_${index}`) {
                                 REFS.current.category3 = el;

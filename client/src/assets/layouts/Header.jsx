@@ -15,19 +15,21 @@ export const Header = () => {
   // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
     const iconSection = () => (
-      <Div className={"d-center"}>
+      <Div
+        className={"d-center pointer"}
+        onClick={() => {
+          navigate("/today/list", {
+            state: {
+              dateType: "day",
+              dateStart: koreanDate,
+              dateEnd: koreanDate,
+            }
+          });
+        }}
+      >
         <Img
           src={logo2}
-          className={"pointer h-max30"}
-          onClick={() => {
-            navigate("/today/list", {
-              state: {
-                dateType: "day",
-                dateStart: koreanDate,
-                dateEnd: koreanDate,
-              }
-            });
-          }}
+          className={"h-max30 me-2vw"}
         />
         <Img
           src={logo3}

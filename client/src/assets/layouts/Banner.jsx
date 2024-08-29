@@ -10,8 +10,7 @@ export const Banner = () => {
   // 7. bannerNode ---------------------------------------------------------------------------------
   const bannerNode = () => {
     const bannerSection = (
-      <Div className={"d-center"}>
-      </Div>
+      null
     );
     return (
       <Paper className={"layout-wrapper p-sticky bottom-0vh radius border h-60"}>
