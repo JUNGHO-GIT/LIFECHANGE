@@ -3,9 +3,9 @@
 import { useEffect, useState } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { moment } from "../../imports/ImportLibs.jsx";
-import { Btn, Input, Img, Div, Br, Select } from "../../imports/ImportComponents.jsx";
+import { Btn, Input, Img, Div, Br, Select, Bg } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
-import { Badge,  MenuItem, PickersDay, Grid, Card } from "../../imports/ImportMuis.jsx";
+import { MenuItem, PickersDay, Grid, Card } from "../../imports/ImportMuis.jsx";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "../../imports/ImportMuis.jsx";
 import { common1 } from "../../imports/ImportImages.jsx";
 
@@ -173,7 +173,7 @@ export const Picker = ({
                       const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
                       const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
                       return (
-                        <Badge
+                        <Bg
                           key={props.day.toString()}
                           badgeContent={""}
                           slotProps={{
@@ -201,7 +201,7 @@ export const Picker = ({
                               });
                             }}
                           />
-                        </Badge>
+                        </Bg>
                       )
                     },
                     previousIconButton: (props) => (

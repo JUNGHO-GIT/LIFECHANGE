@@ -6,9 +6,9 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br, Img, Input } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Img, Input, Bg  } from "../../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
+import { Card, Paper, Grid } from "../../../imports/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -277,195 +277,176 @@ export const FoodGoalSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor: "#1976d2",
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
+                inputRef={REFS?.current?.food_goal_kcal}
+                error={ERRORS?.food_goal_kcal}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalKcal")}`
+                  ) : (
+                    `${translate("goalKcal")} (${translate("total")})`
+                  )
                 }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalKcal")}`
-                ) : (
-                  `${translate("goalKcal")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-              inputRef={REFS?.current?.food_goal_kcal}
-              error={ERRORS?.food_goal_kcal}
-              InputProps={{
-                startadornment: (
+                startadornment={
                   <Img src={food2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("kc")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_kcal: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_kcal: value,
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalCarb")}`
-                ) : (
-                  `${translate("goalCarb")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-              inputRef={REFS?.current?.food_goal_carb}
-              error={ERRORS?.food_goal_carb}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("kc")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_kcal: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_kcal: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.food_goal_carb).format("0,0")}
+                inputRef={REFS?.current?.food_goal_carb}
+                error={ERRORS?.food_goal_carb}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalCarb")}`
+                  ) : (
+                    `${translate("goalCarb")} (${translate("total")})`
+                  )
+                }
+                startadornment={
                   <Img src={food3} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_carb: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_carb: value,
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalProtein")}`
-                ) : (
-                  `${translate("goalProtein")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-              inputRef={REFS?.current?.food_goal_protein}
-              error={ERRORS?.food_goal_protein}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_carb: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_carb: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.food_goal_protein).format("0,0")}
+                inputRef={REFS?.current?.food_goal_protein}
+                error={ERRORS?.food_goal_protein}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalProtein")}`
+                  ) : (
+                    `${translate("goalProtein")} (${translate("total")})`
+                  )
+                }
+                startadornment={
                   <Img src={food4} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_protein: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_protein: value,
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalFat")}`
-                ) : (
-                  `${translate("goalFat")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-              inputRef={REFS?.current?.food_goal_fat}
-              error={ERRORS?.food_goal_fat}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_protein: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_protein: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.food_goal_fat).format("0,0")}
+                inputRef={REFS?.current?.food_goal_fat}
+                error={ERRORS?.food_goal_fat}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalFat")}`
+                  ) : (
+                    `${translate("goalFat")} (${translate("total")})`
+                  )
+                }
+                startadornment={
                   <Img src={food5} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_fat: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_goal_fat: value,
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_fat: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_goal_fat: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (
@@ -479,6 +460,7 @@ export const FoodGoalSave = () => {
       <Paper className={"content-wrapper radius border h-min60vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
+            {dateCountSection()}
             {cardSection()}
           </Grid>
         </Grid>

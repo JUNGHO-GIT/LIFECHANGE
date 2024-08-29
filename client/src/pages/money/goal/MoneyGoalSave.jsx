@@ -6,9 +6,9 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br, Input, Img } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Img, Bg } from "../../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
+import { Card, Paper, Grid } from "../../../imports/ImportMuis.jsx";
 import { money2 } from "../../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -253,26 +253,26 @@ export const MoneyGoalSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor: "#1976d2",
-                }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+          </Grid>
           <Br px={20} />
-          <Div className={"d-center"}>
+          <Grid size={12}>
             <Input
+              value={numeral(OBJECT?.money_goal_income).format("0,0")}
+              inputRef={REFS?.current?.money_goal_income}
+              error={ERRORS?.money_goal_income}
               label={
                 DATE.dateType === "day" ? (
                   `${translate("goalIncome")}`
@@ -280,19 +280,12 @@ export const MoneyGoalSave = () => {
                   `${translate("goalIncome")} (${translate("total")})`
                 )
               }
-              value={numeral(OBJECT?.money_goal_income).format("0,0")}
-              inputRef={REFS?.current?.money_goal_income}
-              error={ERRORS?.money_goal_income}
-              InputProps={{
-                startadornment: (
-                  <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
+              startadornment={
+                <Img src={money2} className={"w-16 h-16"} />
+              }
+              endadornment={
+                translate("currency")
+              }
               onChange={(e) => {
                 const value = e.target.value.replace(/,/g, '');
                 if (/^\d*$/.test(value) || value === "") {
@@ -312,50 +305,46 @@ export const MoneyGoalSave = () => {
                 }
               }}
             />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalExpense")}`
-                ) : (
-                  `${translate("goalExpense")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-              inputRef={REFS?.current?.money_goal_expense}
-              error={ERRORS?.money_goal_expense}
-              InputProps={{
-                startadornment: (
-                  <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_goal_expense: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_goal_expense: value,
-                    }));
-                  }
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.money_goal_expense).format("0,0")}
+                inputRef={REFS?.current?.money_goal_expense}
+                error={ERRORS?.money_goal_expense}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalExpense")}`
+                  ) : (
+                    `${translate("goalExpense")} (${translate("total")})`
+                  )
                 }
-              }}
-            />
-          </Div>
+                startadornment={
+                  <Img src={money2} className={"w-16 h-16"} />
+                }
+                endadornment={
+                  translate("currency")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_goal_expense: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_goal_expense: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (

@@ -5,9 +5,9 @@ import { useState, useEffect, useRef, createRef } from "../../imports/ImportReac
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br, Input, Select, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Select, Img, Bg } from "../../imports/ImportComponents.jsx";
 import { Picker, Memo, Count, Delete } from "../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
+import { Card, Paper, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { calendar2 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -311,27 +311,21 @@ export const CalendarSave = () => {
         <Card className={"border radius p-20"} key={i}>
           <Grid container columnSpacing={1}>
             <Grid size={6} className={"d-left"}>
-              <Badge
+              <Bg
                 badgeContent={i + 1}
-                showZero={true}
-                sx={{
-                  '& .MuiBadge-badge': {
-                    marginTop: "-10px",
-                    color: '#ffffff',
-                    backgroundColor:
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
-                      OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
-                      '#9E9E9E',
-                  }
-                }}
+                bgcolor={
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 0 ? '#1976d2' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 1 ? '#4CAF50' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 2 ? '#FFC107' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 3 ? '#FF5722' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 4 ? '#673AB7' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 5 ? '#3F51B5' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 6 ? '#2196F3' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 7 ? '#009688' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 8 ? '#CDDC39' :
+                  OBJECT?.calendar_section[i]?.calendar_part_idx === 9 ? '#FFEB3B' :
+                  '#9E9E9E'
+                }
               />
             </Grid>
             <Grid size={6} className={"d-right"}>

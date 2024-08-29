@@ -6,9 +6,9 @@ import { useTime, useCommon } from "../../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br, Input, Img } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Img, Bg } from "../../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
+import { Card, Paper, Grid } from "../../../imports/ImportMuis.jsx";
 import { exercise2, exercise3_1, exercise5 } from "../../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -270,138 +270,121 @@ export const ExerciseGoalSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor: "#1976d2",
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
+                inputRef={REFS?.current?.exercise_goal_count}
+                error={ERRORS?.exercise_goal_count}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalCount")}`
+                  ) : (
+                    `${translate("goalCount")} (${translate("total")})`
+                  )
                 }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalCount")}`
-                ) : (
-                  `${translate("goalCount")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
-              inputRef={REFS?.current?.exercise_goal_count}
-              error={ERRORS?.exercise_goal_count}
-              InputProps={{
-                startadornment: (
+                startadornment={
                   <Img src={exercise2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("c")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_goal_count: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_goal_count: value
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalVolume")}`
-                ) : (
-                  `${translate("goalVolume")} (${translate("total")})`
-                )
-              }
-              value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-              inputRef={REFS?.current?.exercise_goal_volume}
-              error={ERRORS?.exercise_goal_volume}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("c")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_goal_count: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_goal_count: value
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
+                inputRef={REFS?.current?.exercise_goal_volume}
+                error={ERRORS?.exercise_goal_volume}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalVolume")}`
+                  ) : (
+                    `${translate("goalVolume")} (${translate("total")})`
+                  )
+                }
+                startadornment={
                   <Img src={exercise3_1} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("vol")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_goal_volume: "0"
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_goal_volume: value
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              extra={"exercise_goal_cardio"}
-              i={i}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
+                endadornment={
+                  translate("vol")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_goal_volume: "0"
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_goal_volume: value
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                extra={"exercise_goal_cardio"}
+                i={i}
+              />
+            </Grid>
+            <Br px={20} />
             <Input
               label={translate("goalWeight")}
               value={OBJECT?.exercise_goal_weight}
               inputRef={REFS?.current?.exercise_goal_weight}
               error={ERRORS?.exercise_goal_weight}
-              InputProps={{
-                startadornment: (
-                  <Img src={exercise5} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("k")}
-                  </Div>
-                )
-              }}
+              startadornment={
+                <Img src={exercise5} className={"w-16 h-16"} />
+              }
+              endadornment={
+                translate("k")
+              }
               onChange={(e) => {
                 const value = e.target.value.replace(/^0+/, '');
                 if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
@@ -421,7 +404,7 @@ export const ExerciseGoalSave = () => {
                 }
               }}
             />
-          </Div>
+          </Grid>
         </Card>
       );
       return (
@@ -435,6 +418,7 @@ export const ExerciseGoalSave = () => {
       <Paper className={"content-wrapper radius border h-min60vh"}>
         <Grid container columnSpacing={1}>
           <Grid size={12}>
+            {dateCountSection()}
             {cardSection()}
           </Grid>
         </Grid>

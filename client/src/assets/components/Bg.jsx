@@ -11,13 +11,12 @@ export const Bg = ({
     <Badge
       {...props}
       showZero={props?.showZero || true}
-      color={props?.color || "primary"}
-      className={props?.className || "mt-n10 me-n5"}
+      className={props?.className || "mt-n10 me-n10"}
       sx={{
         ...props?.sx,
         '& .MuiBadge-badge': {
           color: props?.sx?.color || "white",
-          backgroundColor: props?.bgcolor || "black",
+          backgroundColor: props?.bgcolor || "#1976d2",
         },
       }}
     />

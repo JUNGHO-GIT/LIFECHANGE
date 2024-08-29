@@ -7,7 +7,7 @@ import {
   Accordion, AccordionActions, AccordionDetails, AccordionSummary,
 
   // b
-  Backdrop, Badge, BottomNavigation, BottomNavigationAction, Button,
+  Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge,
 
   // c
   Card, Checkbox, Collapse, CssBaseline,
@@ -80,7 +80,7 @@ export {
   Accordion, AccordionActions, AccordionDetails, AccordionSummary,
 
   // b
-  Backdrop, Badge, BottomNavigation, BottomNavigationAction, Button,
+  Backdrop, BottomNavigation, BottomNavigationAction, Button, Badge,
 
   // c
   Card, Checkbox, Collapse, CssBaseline,

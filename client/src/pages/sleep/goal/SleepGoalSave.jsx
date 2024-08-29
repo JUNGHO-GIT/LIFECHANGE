@@ -6,9 +6,9 @@ import { useCommon, useTime } from "../../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../../imports/ImportLibs.jsx";
 import { sync } from "../../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../../imports/ImportLayouts.jsx";
-import { Div, Br } from "../../../imports/ImportComponents.jsx";
+import { Div, Br, Bg } from "../../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, Grid } from "../../../imports/ImportMuis.jsx";
+import { Card, Paper, Grid } from "../../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepGoalSave = () => {
@@ -257,59 +257,56 @@ export const SleepGoalSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor: "#1976d2",
-                }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              extra={"sleep_goal_bedTime"}
-              i={i}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              extra={"sleep_goal_wakeTime"}
-              i={i}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Time
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              REFS={REFS}
-              ERRORS={ERRORS}
-              DATE={DATE}
-              extra={"sleep_goal_sleepTime"}
-              i={i}
-            />
-          </Div>
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={"#1976d2"}
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                extra={"sleep_goal_bedTime"}
+                i={i}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                extra={"sleep_goal_wakeTime"}
+                i={i}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Time
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                REFS={REFS}
+                ERRORS={ERRORS}
+                DATE={DATE}
+                extra={"sleep_goal_sleepTime"}
+                i={i}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (

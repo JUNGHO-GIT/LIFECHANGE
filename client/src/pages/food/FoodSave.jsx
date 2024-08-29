@@ -6,9 +6,9 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br, Input, Select, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Input, Select, Img, Bg } from "../../imports/ImportComponents.jsx";
 import { Picker, Count, Delete } from "../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, MenuItem,  Grid } from "../../imports/ImportMuis.jsx";
+import { Card, Paper, MenuItem,  Grid } from "../../imports/ImportMuis.jsx";
 import { food2, food3, food4, food5 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -448,426 +448,404 @@ export const FoodSave = () => {
     // 7-2. total
     const totalSection = () => (
       <Card className={"border radius p-20"}>
-        <Div className={"d-center"}>
-          <Input
-            label={translate("totalKcal")}
-            value={numeral(OBJECT?.food_total_kcal).format('0,0')}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+        <Grid container columnSpacing={1}>
+          <Grid size={6}>
+            <Input
+              label={translate("totalKcal")}
+              value={numeral(OBJECT?.food_total_kcal).format('0,0')}
+              readOnly={true}
+              startadornment={
                 <Img src={food2} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("kc")}
-                </Div>
-              )
-            }}
-          />
-          <Input
-            label={translate("totalCarb")}
-            value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+              }
+              endadornment={
+                translate("kc")
+              }
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("totalCarb")}
+              value={numeral(OBJECT?.food_total_carb).format('0,0.0')}
+              readOnly={true}
+              startadornment={
                 <Img src={food3} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
-        <Br px={20} />
-        <Div className={"d-center"}>
-          <Input
-            label={translate("totalProtein")}
-            value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+              }
+              endadornment={
+                translate("g")
+              }
+            />
+          </Grid>
+          <Br px={20} />
+          <Grid size={6}>
+            <Input
+              label={translate("totalProtein")}
+              value={numeral(OBJECT?.food_total_protein).format('0,0.0')}
+              readOnly={true}
+              startadornment={
                 <Img src={food4} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-          <Input
-            label={translate("totalFat")}
-            value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+              }
+              endadornment={
+                translate("g")
+              }
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("totalFat")}
+              value={numeral(OBJECT?.food_total_fat).format('0,0.0')}
+              readOnly={true}
+              startadornment={
                 <Img src={food5} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("g")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
+              }
+              endadornment={
+                translate("g")
+              }
+            />
+          </Grid>
+        </Grid>
       </Card>
     );
     // 7-3. card
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor:
-                    OBJECT?.food_section[i]?.food_part_idx === 0 ? '#1976d2' :
-                    OBJECT?.food_section[i]?.food_part_idx === 1 ? '#4CAF50' :
-                    OBJECT?.food_section[i]?.food_part_idx === 2 ? '#FFC107' :
-                    OBJECT?.food_section[i]?.food_part_idx === 3 ? '#FF5722' :
-                    OBJECT?.food_section[i]?.food_part_idx === 4 ? '#673AB7' :
-                    OBJECT?.food_section[i]?.food_part_idx === 5 ? '#3F51B5' :
-                    OBJECT?.food_section[i]?.food_part_idx === 6 ? '#2196F3' :
-                    OBJECT?.food_section[i]?.food_part_idx === 7 ? '#009688' :
-                    OBJECT?.food_section[i]?.food_part_idx === 8 ? '#CDDC39' :
-                    OBJECT?.food_section[i]?.food_part_idx === 9 ? '#FFEB3B' :
-                    '#9E9E9E',
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={
+                  OBJECT?.food_section[i]?.food_part_idx === 0 ? '#1976d2' :
+                  OBJECT?.food_section[i]?.food_part_idx === 1 ? '#4CAF50' :
+                  OBJECT?.food_section[i]?.food_part_idx === 2 ? '#FFC107' :
+                  OBJECT?.food_section[i]?.food_part_idx === 3 ? '#FF5722' :
+                  OBJECT?.food_section[i]?.food_part_idx === 4 ? '#673AB7' :
+                  OBJECT?.food_section[i]?.food_part_idx === 5 ? '#3F51B5' :
+                  OBJECT?.food_section[i]?.food_part_idx === 6 ? '#2196F3' :
+                  OBJECT?.food_section[i]?.food_part_idx === 7 ? '#009688' :
+                  OBJECT?.food_section[i]?.food_part_idx === 8 ? '#CDDC39' :
+                  OBJECT?.food_section[i]?.food_part_idx === 9 ? '#FFEB3B' :
+                  '#9E9E9E'
                 }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Select
-              label={translate("part")}
-              value={OBJECT?.food_section[i]?.food_part_idx}
-              inputRef={REFS?.current[i]?.food_part_idx}
-              error={ERRORS[i]?.food_part_idx}
-              onChange={(e) => {
-                const newPart = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_part_idx: newPart,
-                      food_part_val: foodArray[newPart]?.food_part,
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {foodArray?.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Select
+                label={translate("part")}
+                value={OBJECT?.food_section[i]?.food_part_idx}
+                inputRef={REFS?.current[i]?.food_part_idx}
+                error={ERRORS[i]?.food_part_idx}
+                onChange={(e) => {
+                  const newPart = Number(e.target.value);
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev?.food_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_part_idx: newPart,
+                        food_part_val: foodArray[newPart]?.food_part,
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {foodArray?.map((item, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(item.food_part)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              label={translate("foodCount")}
-              className={"w-20vw ms-3vw"}
-              value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100)}
-              onChange={(e) => {
-                const newCount = Number(e.target.value);
-                if (newCount > 100) {
-                  return;
-                }
-                else if (isNaN(newCount) || newCount <= 0) {
-                  return;
-                }
-                const newVal = (value) => {
-                  return (
-                    Number(((newCount * value) /
-                    Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
-                  );
-                }
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_count: newCount.toString(),
-                      food_kcal: newVal(item.food_kcal),
-                      food_fat: newVal(item.food_fat),
-                      food_carb: newVal(item.food_carb),
-                      food_protein: newVal(item.food_protein),
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {Array.from({ length: 100 }, (_, index) => (
-                <MenuItem key={index + 1} value={index + 1}>
-                  {index + 1}
-                </MenuItem>
-              ))}
-            </Select>
-            <Input
-              label={translate("gram")}
-              className={"w-20vw ms-3vw"}
-              value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_gram: "0"
-                        } : item
-                      ))
-                    }));
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={3}>
+              <Select
+                label={translate("foodCount")}
+                value={Math.min(Number(OBJECT?.food_section[i]?.food_count), 100)}
+                onChange={(e) => {
+                  const newCount = Number(e.target.value);
+                  if (newCount > 100) {
+                    return;
                   }
-                  else if (!isNaN(newValue) && newValue <= 999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_gram: value,
-                        } : item
-                      ))
-                    }));
+                  else if (isNaN(newCount) || newCount <= 0) {
+                    return;
                   }
-                }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("foodName")}
-              value={OBJECT?.food_section[i]?.food_name}
-              inputRef={REFS?.current[i]?.food_name}
-              error={ERRORS[i]?.food_name}
-              onChange={(e) => {
-                const newVal = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_name: newVal,
-                    } : item
-                  ))
-                }));
-              }}
-            />
-            <Input
-              label={translate("brand")}
-              value={OBJECT?.food_section[i]?.food_brand}
-              onChange={(e) => {
-                const newVal = e.target.value;
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_section: prev?.food_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      food_brand: newVal,
-                    } : item
-                  ))
-                }));
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("kcal")}
-              value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
-              inputRef={REFS?.current[i]?.food_kcal}
-              error={ERRORS[i]?.food_kcal}
-              InputProps={{
-                startadornment: (
+                  const newVal = (value) => {
+                    return (
+                      Number(((newCount * value) /
+                      Number(OBJECT?.food_section[i]?.food_count)).toFixed(2)).toString()
+                    );
+                  }
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev?.food_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_count: newCount.toString(),
+                        food_kcal: newVal(item.food_kcal),
+                        food_fat: newVal(item.food_fat),
+                        food_carb: newVal(item.food_carb),
+                        food_protein: newVal(item.food_protein),
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {Array.from({ length: 100 }, (_, index) => (
+                  <MenuItem key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={3}>
+              <Input
+                label={translate("gram")}
+                value={numeral(OBJECT?.food_section[i]?.food_gram).format("0,0")}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_gram: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_gram: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Input
+                label={translate("foodName")}
+                value={OBJECT?.food_section[i]?.food_name}
+                inputRef={REFS?.current[i]?.food_name}
+                error={ERRORS[i]?.food_name}
+                onChange={(e) => {
+                  const newVal = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev?.food_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_name: newVal,
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                label={translate("brand")}
+                value={OBJECT?.food_section[i]?.food_brand}
+                onChange={(e) => {
+                  const newVal = e.target.value;
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_section: prev?.food_section?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        food_brand: newVal,
+                      } : item
+                    ))
+                  }));
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Input
+                label={translate("kcal")}
+                value={numeral(OBJECT?.food_section[i]?.food_kcal).format("0,0")}
+                inputRef={REFS?.current[i]?.food_kcal}
+                error={ERRORS[i]?.food_kcal}
+                startadornment={
                   <Img src={food2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("kc")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_kcal: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_kcal: value,
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-            <Input
-              label={translate("carb")}
-              value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
-              inputRef={REFS?.current[i]?.food_carb}
-              error={ERRORS[i]?.food_carb}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("kc")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_kcal: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_kcal: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                label={translate("carb")}
+                value={numeral(OBJECT?.food_section[i]?.food_carb).format("0,0")}
+                inputRef={REFS?.current[i]?.food_carb}
+                error={ERRORS[i]?.food_carb}
+                startadornment={
                   <Img src={food3} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_carb: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_carb: value,
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("protein")}
-              value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
-              inputRef={REFS?.current[i]?.food_protein}
-              error={ERRORS[i]?.food_protein}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_carb: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_carb: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Input
+                label={translate("protein")}
+                value={numeral(OBJECT?.food_section[i]?.food_protein).format("0,0")}
+                inputRef={REFS?.current[i]?.food_protein}
+                error={ERRORS[i]?.food_protein}
+                startadornment={
                   <Img src={food4} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_protein: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_protein: value,
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-            <Input
-              label={translate("fat")}
-              value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
-              inputRef={REFS?.current[i]?.food_fat}
-              error={ERRORS[i]?.food_fat}
-              InputProps={{
-                startadornment: (
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_protein: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_protein: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                label={translate("fat")}
+                value={numeral(OBJECT?.food_section[i]?.food_fat).format("0,0")}
+                inputRef={REFS?.current[i]?.food_fat}
+                error={ERRORS[i]?.food_fat}
+                startadornment={
                   <Img src={food5} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("g")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_fat: "0"
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 99999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          food_fat: value,
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
+                endadornment={
+                  translate("g")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_fat: "0"
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 99999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            food_fat: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (

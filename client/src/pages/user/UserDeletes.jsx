@@ -110,7 +110,7 @@ export const UserDeletes = () => {
           <Br px={20} />
           <TextArea
             readOnly={false}
-            className={" h-9vh border p-10 pointer"}
+            className={" h-8vh border p-10 pointer"}
             value={`탈퇴 후에는 복구가 불가능합니다.\n정말로 탈퇴하시겠습니까?`}
           />
         </Card>

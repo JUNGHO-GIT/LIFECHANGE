@@ -99,6 +99,7 @@ export const BottomNav = () => {
       <BottomNavigation
         showLabels={true}
         value={selectedTab}
+        className={"w-100p"}
       >
         <BottomNavigationAction
           label={translate("exercise")}
@@ -141,7 +142,7 @@ export const BottomNav = () => {
 
     // 2. return
     return (
-      <Paper className={"layout-wrapper p-sticky bottom-60 h-9vh radius border"}>
+      <Paper className={"layout-wrapper p-sticky bottom-60 h-8vh radius border"}>
         <Grid container columnSpacing={1}>
           <Grid size={12} className={"d-center"}>
             {tabsSection()}

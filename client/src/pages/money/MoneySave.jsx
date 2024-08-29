@@ -6,9 +6,9 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br, Select, Input, Img } from "../../imports/ImportComponents.jsx";
+import { Div, Br, Select, Input, Img, Bg } from "../../imports/ImportComponents.jsx";
 import { Picker, Memo, Count, Delete } from "../../imports/ImportContainers.jsx";
-import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
+import { Card, Paper, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { money2 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -351,190 +351,178 @@ export const MoneySave = () => {
     // 7-2. total
     const totalSection = () => (
       <Card className={"border radius p-20"}>
-        <Div className={"d-center"}>
-          <Input
-            label={translate("totalIncome")}
-            value={numeral(OBJECT?.money_total_income).format("0,0")}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+        <Grid container columnSpacing={1}>
+          <Grid size={6}>
+            <Input
+              label={translate("totalIncome")}
+              value={numeral(OBJECT?.money_total_income).format("0,0")}
+              readOnly={true}
+              startadornment={
                 <Img src={money2} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-          />
-          <Input
-            label={translate("totalExpense")}
-            value={numeral(OBJECT?.money_total_expense).format("0,0")}
-            InputProps={{
-              readOnly: true,
-              startadornment: (
+              }
+              endadornment={
+                translate("currency")
+              }
+            />
+          </Grid>
+          <Grid size={6}>
+            <Input
+              label={translate("totalExpense")}
+              value={numeral(OBJECT?.money_total_expense).format("0,0")}
+              readOnly={true}
+              startadornment={
                 <Img src={money2} className={"w-16 h-16"} />
-              ),
-              endadornment: (
-                <Div className={"fs-0-6rem"}>
-                  {translate("currency")}
-                </Div>
-              )
-            }}
-          />
-        </Div>
+              }
+              endadornment={
+                translate("currency")
+              }
+            />
+          </Grid>
+        </Grid>
       </Card>
     );
     // 7-3. card
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Div className={"d-between"}>
-            <Badge
-              badgeContent={i + 1}
-              showZero={true}
-              sx={{
-                '& .MuiBadge-badge': {
-                  marginTop: "-10px",
-                  color: '#ffffff',
-                  backgroundColor:
-                    OBJECT?.money_section[i]?.money_part_idx === 0 ? '#1976d2' :
-                    OBJECT?.money_section[i]?.money_part_idx === 1 ? '#4CAF50' :
-                    OBJECT?.money_section[i]?.money_part_idx === 2 ? '#FFC107' :
-                    OBJECT?.money_section[i]?.money_part_idx === 3 ? '#FF5722' :
-                    OBJECT?.money_section[i]?.money_part_idx === 4 ? '#673AB7' :
-                    OBJECT?.money_section[i]?.money_part_idx === 5 ? '#3F51B5' :
-                    OBJECT?.money_section[i]?.money_part_idx === 6 ? '#2196F3' :
-                    OBJECT?.money_section[i]?.money_part_idx === 7 ? '#009688' :
-                    OBJECT?.money_section[i]?.money_part_idx === 8 ? '#CDDC39' :
-                    OBJECT?.money_section[i]?.money_part_idx === 9 ? '#FFEB3B' :
-                    '#9E9E9E',
+          <Grid container columnSpacing={1}>
+            <Grid size={6} className={"d-left"}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={
+                  OBJECT?.money_section[i]?.money_part_idx === 0 ? '#1976d2' :
+                  OBJECT?.money_section[i]?.money_part_idx === 1 ? '#4CAF50' :
+                  OBJECT?.money_section[i]?.money_part_idx === 2 ? '#FFC107' :
+                  OBJECT?.money_section[i]?.money_part_idx === 3 ? '#FF5722' :
+                  OBJECT?.money_section[i]?.money_part_idx === 4 ? '#673AB7' :
+                  OBJECT?.money_section[i]?.money_part_idx === 5 ? '#3F51B5' :
+                  OBJECT?.money_section[i]?.money_part_idx === 6 ? '#2196F3' :
+                  OBJECT?.money_section[i]?.money_part_idx === 7 ? '#009688' :
+                  OBJECT?.money_section[i]?.money_part_idx === 8 ? '#CDDC39' :
+                  OBJECT?.money_section[i]?.money_part_idx === 9 ? '#FFEB3B' :
+                  '#9E9E9E'
                 }
-              }}
-            />
-            <Delete
-              index={i}
-              handlerDelete={handlerDelete}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Select
-              label={translate("part")}
-              value={OBJECT?.money_section[i]?.money_part_idx}
-              inputRef={REFS?.current[i]?.money_part_idx}
-              error={ERRORS[i]?.money_part_idx}
-              onChange={(e) => {
-                const newIndex = Number(e.target.value);
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_section: prev.money_section?.map((item, idx) => (
-                    idx === i ? {
-                      ...item,
-                      money_part_idx: newIndex,
-                      money_part_val: moneyArray[newIndex]?.money_part,
-                      money_title_idx: 0,
-                      money_title_val: moneyArray[newIndex]?.money_title[0],
-                    } : item
-                  ))
-                }));
-              }}
-            >
-              {moneyArray?.map((item, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
-                    {translate(item.money_part)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              label={translate("title")}
-              value={OBJECT?.money_section[i]?.money_title_idx}
-              inputRef={REFS?.current[i]?.money_title_idx}
-              error={ERRORS[i]?.money_title_idx}
-              onChange={(e) => {
-                const newTitleIdx = Number(e.target.value);
-                const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
-                if (newTitleIdx >= 0 && newTitleVal) {
+              />
+            </Grid>
+            <Grid size={6} className={"d-right"}>
+              <Delete
+                index={i}
+                handlerDelete={handlerDelete}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={6}>
+              <Select
+                label={translate("part")}
+                value={OBJECT?.money_section[i]?.money_part_idx}
+                inputRef={REFS?.current[i]?.money_part_idx}
+                error={ERRORS[i]?.money_part_idx}
+                onChange={(e) => {
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
                     money_section: prev.money_section?.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        money_title_idx: newTitleIdx,
-                        money_title_val: newTitleVal,
+                        money_part_idx: newIndex,
+                        money_part_val: moneyArray[newIndex]?.money_part,
+                        money_title_idx: 0,
+                        money_title_val: moneyArray[newIndex]?.money_title[0],
                       } : item
                     ))
                   }));
-                }
-              }}
-            >
-              {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
-                <MenuItem key={idx} value={idx}>
-                  <Div className={"fs-0-8rem"}>
+                }}
+              >
+                {moneyArray?.map((item, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
+                    {translate(item.money_part)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={6}>
+              <Select
+                label={translate("title")}
+                value={OBJECT?.money_section[i]?.money_title_idx}
+                inputRef={REFS?.current[i]?.money_title_idx}
+                error={ERRORS[i]?.money_title_idx}
+                onChange={(e) => {
+                  const newTitleIdx = Number(e.target.value);
+                  const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                  if (newTitleIdx >= 0 && newTitleVal) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_title_idx: newTitleIdx,
+                          money_title_val: newTitleVal,
+                        } : item
+                      ))
+                    }));
+                  }
+                }}
+              >
+                {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+                  <MenuItem key={idx} value={idx} className={"fs-0-8rem"}>
                     {translate(title)}
-                  </Div>
-                </MenuItem>
-              ))}
-            </Select>
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Input
-              label={translate("amount")}
-              value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
-              inputRef={REFS?.current[i]?.money_amount}
-              error={ERRORS[i]?.money_amount}
-              InputProps={{
-                startadornment: (
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Input
+                label={translate("amount")}
+                value={numeral(OBJECT?.money_section[i]?.money_amount).format("0,0")}
+                inputRef={REFS?.current[i]?.money_amount}
+                error={ERRORS[i]?.money_amount}
+                startadornment={
                   <Img src={money2} className={"w-16 h-16"} />
-                ),
-                endadornment: (
-                  <Div className={"fs-0-6rem"}>
-                    {translate("currency")}
-                  </Div>
-                )
-              }}
-              onChange={(e) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_amount: "0",
-                        } : item
-                      ))
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section?.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_amount: value,
-                        } : item
-                      ))
-                    }));
-                  }
                 }
-              }}
-            />
-          </Div>
-          <Br px={20} />
-          <Div className={"d-center"}>
-            <Memo
-              OBJECT={OBJECT}
-              setOBJECT={setOBJECT}
-              extra={"money_content"}
-              i={i}
-            />
-          </Div>
+                endadornment={
+                  translate("currency")
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_section: prev.money_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            money_amount: "0",
+                          } : item
+                        ))
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999999) {
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_section: prev.money_section?.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            money_amount: value,
+                          } : item
+                        ))
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
+            <Br px={20} />
+            <Grid size={12}>
+              <Memo
+                OBJECT={OBJECT}
+                setOBJECT={setOBJECT}
+                extra={"money_content"}
+                i={i}
+              />
+            </Grid>
+          </Grid>
         </Card>
       );
       return (

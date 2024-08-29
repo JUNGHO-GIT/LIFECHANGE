@@ -562,11 +562,15 @@ export const TopNav = () => {
     );
     // 5. return
     return (
-      <Paper className={"layout-wrapper p-sticky top-9vh h-9vh radius border"}>
+      <Paper className={"layout-wrapper p-sticky top-9vh h-8vh radius border"}>
         <Grid container columnSpacing={1}>
-          <Grid size={4} className={"d-center"}>
+          <Grid size={1}>
             {smileSection()}
+          </Grid>
+          <Grid size={1}>
             {propertySection()}
+          </Grid>
+          <Grid size={1}>
             {scaleSection()}
           </Grid>
           <Grid size={8} className={"d-center"}>

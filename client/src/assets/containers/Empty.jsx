@@ -23,7 +23,7 @@ export const Empty = ({
   const emptyNode = () => {
     // 1. isFindSection
     const isFindSection = () => (
-      <Card className={"border radius p-10"} key={`empty-${extra}`}>
+      <Card className={"border radius"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
             <Grid container columnSpacing={1}>
@@ -44,7 +44,7 @@ export const Empty = ({
     );
     // 2. nonFindSection
     const nonFindSection = () => (
-      <Card className={"border radius p-10"} key={`empty-${extra}`}>
+      <Card className={"border radius"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
             <Grid container columnSpacing={1}

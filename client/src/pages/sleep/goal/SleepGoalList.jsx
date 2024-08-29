@@ -126,7 +126,7 @@ export const SleepGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT?.map((item, index) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons

@@ -282,7 +282,7 @@ export const TodayGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_EXERCISE?.map((item, index) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedExercise.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -576,7 +576,7 @@ export const TodayGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_FOOD?.map((item, index) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedFood.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -870,7 +870,7 @@ export const TodayGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_MONEY?.map((item, index) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedMoney.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
@@ -1062,7 +1062,7 @@ export const TodayGoalList = () => {
       );
       const cardFragment = (i) => (
         OBJECT_SLEEP?.map((item, index) => (
-          <Card className={"border radius p-10"} key={`${index}-${i}`}>
+          <Card className={"border radius"} key={`${index}-${i}`}>
             <Accordion className={"shadow-none"} expanded={isExpandedSleep.includes(index)}>
               <AccordionSummary expandIcon={
                 <Icons
