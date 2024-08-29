@@ -33,7 +33,7 @@ export const Footer = ({
       PATH.includes("/list")
     ) {
       setTypeName("listFilter");
-      setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh60 h-8vh radius border");
     }
     else if (
       PATH.includes("/user/dummy")
@@ -45,20 +45,20 @@ export const Footer = ({
       PATH.includes("/food/find")
     ) {
       setTypeName("findList");
-      setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh60 h-8vh radius border");
     }
     else if (
       PATH.includes("/food/save")
     ) {
       setTypeName("findSave");
-      setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh60 h-8vh radius border");
     }
     else if (
       PATH.includes("/goal/save") ||
       PATH.includes("/save")
     ) {
       setTypeName("btn");
-      setStyleClass("layout-wrapper p-sticky bottom-9vh60 h-8vh radius border");
+      setStyleClass("layout-wrapper p-sticky bottom-8vh60 h-8vh radius border");
     }
     else if (
       PATH.includes("/user/category") ||

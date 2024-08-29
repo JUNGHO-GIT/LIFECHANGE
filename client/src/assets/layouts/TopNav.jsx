@@ -256,10 +256,10 @@ export const TopNav = () => {
               </Grid>
               <Hr px={40} />
               <Grid size={12} className={"d-center"}>
-                <Div className={"d-center"}>
+                <Div className={"d-center me-2vw"}>
                   <Img src={smileImage.total} className={"w-max25 h-max25"} />
                 </Div>
-                <Div className={"fs-1-1rem me-3vw"}>
+                <Div className={"fs-1-1rem me-2vw"}>
                   {translate("total")}
                 </Div>
                 <Div className={"fs-0-8rem"}>
@@ -269,10 +269,10 @@ export const TopNav = () => {
             </Grid>
             <Br px={20} />
             <Grid size={12} className={"d-center"}>
-              <Div className={"d-center"}>
+              <Div className={"d-center me-2vw"}>
                 <Img src={smileImage.exercise} className={"w-max25 h-max25"} />
               </Div>
-              <Div className={"fs-1-1rem me-3vw"}>
+              <Div className={"fs-1-1rem me-2vw"}>
                 {translate("exercise")}
               </Div>
               <Div className={"fs-0-8rem"}>
@@ -281,10 +281,10 @@ export const TopNav = () => {
             </Grid>
             <Br px={20} />
             <Grid size={12} className={"d-center"}>
-              <Div className={"d-center"}>
+              <Div className={"d-center me-2vw"}>
                 <Img src={smileImage.food} className={"w-max25 h-max25"} />
               </Div>
-              <Div className={"fs-1-1rem me-3vw"}>
+              <Div className={"fs-1-1rem me-2vw"}>
                 {translate("food")}
               </Div>
               <Div className={"fs-0-8rem"}>
@@ -293,10 +293,10 @@ export const TopNav = () => {
             </Grid>
             <Br px={20} />
             <Grid size={12} className={"d-center"}>
-              <Div className={"d-center"}>
+              <Div className={"d-center me-2vw"}>
                 <Img src={smileImage.money} className={"w-max25 h-max25"} />
               </Div>
-              <Div className={"fs-1-1rem me-3vw"}>
+              <Div className={"fs-1-1rem me-2vw"}>
                 {translate("money")}
               </Div>
               <Div className={"fs-0-8rem"}>
@@ -305,10 +305,10 @@ export const TopNav = () => {
             </Grid>
             <Br px={20} />
             <Grid size={12} className={"d-center"}>
-              <Div className={"d-center"}>
+              <Div className={"d-center me-2vw"}>
                 <Img src={smileImage.sleep} className={"w-max25 h-max25"} />
               </Div>
-              <Div className={"fs-1-1rem me-3vw"}>
+              <Div className={"fs-1-1rem me-2vw"}>
                 {translate("sleep")}
               </Div>
               <Div className={"fs-0-8rem"}>
@@ -356,11 +356,9 @@ export const TopNav = () => {
               </Grid>
               <Hr px={40} />
               <Grid size={12} className={"d-center"}>
-                <Div className={"d-center"}>
-                  <Img src={money2} className={"w-16 h-16"} />
-                  <Div className={"fs-1-4rem fw-600"}>
-                    {numeral(property.curProperty).format("0,0")}
-                  </Div>
+                <Img src={money2} className={"w-16 h-16"} />
+                <Div className={"fs-1-4rem fw-600 ms-10"}>
+                  {numeral(property.curProperty).format("0,0")}
                 </Div>
               </Grid>
               <Hr px={40} />
@@ -441,11 +439,9 @@ export const TopNav = () => {
               </Grid>
               <Hr px={40} />
               <Grid size={12} className={"d-center"}>
-                <Div className={"d-center"}>
-                  <Img src={exercise5} className={"w-16 h-16"} />
-                  <Div className={"fs-1-4rem fw-600"}>
-                    {scale.curScale}
-                  </Div>
+                <Img src={exercise5} className={"w-16 h-16"} />
+                <Div className={"fs-1-4rem fw-600 ms-10"}>
+                  {scale.curScale}
                 </Div>
               </Grid>
               <Hr px={40} />
@@ -562,18 +558,18 @@ export const TopNav = () => {
     );
     // 5. return
     return (
-      <Paper className={"layout-wrapper p-sticky top-9vh h-8vh radius border"}>
-        <Grid container columnSpacing={1}>
-          <Grid size={1}>
+      <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius border"}>
+        <Grid container columnSpacing={2} columns={25}>
+          <Grid size={3}>
             {smileSection()}
           </Grid>
-          <Grid size={1}>
+          <Grid size={3}>
             {propertySection()}
           </Grid>
-          <Grid size={1}>
+          <Grid size={3}>
             {scaleSection()}
           </Grid>
-          <Grid size={8} className={"d-center"}>
+          <Grid size={16} className={"d-center"}>
             {tabsSection()}
           </Grid>
         </Grid>

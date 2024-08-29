@@ -3,6 +3,7 @@
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
 import { Img, Div, Icons, Input } from "../../imports/ImportComponents.jsx";
+import { Card } from "../../imports/ImportMuis.jsx";
 import { common2 } from "../../imports/ImportImages.jsx";
 
 // -------------------------------------------------------------------------------------------------
@@ -21,9 +22,9 @@ export const Count = ({
       position={"bottom"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-center"}>
+        <Card className={"d-center"}>
           {`${COUNT.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`}
-        </Div>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input

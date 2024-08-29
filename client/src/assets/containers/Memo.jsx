@@ -26,8 +26,8 @@ export const Memo = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"w-max60vw h-max65vh p-0"}>
-          <Grid container columnSpacing={1}>
+        <Card className={"w-max70vw p-0"}>
+          <Grid container columnSpacing={1} rowSpacing={4}>
             <Grid size={12} className={"d-center"}>
               <TextArea
                 className={"w-86vw h-55vh border p-10"}
@@ -46,7 +46,6 @@ export const Memo = ({
                 }}
               />
             </Grid>
-            <Br px={20} />
             <Grid size={6} className={"d-right"}>
               <Btn
                 color={"primary"}

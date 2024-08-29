@@ -50,10 +50,10 @@ export const ListFilter = ({
     // 3. return
     return (
       <Grid container columnSpacing={1}>
-        <Grid size={4}>
+        <Grid size={3}>
           {sortSection()}
         </Grid>
-        <Grid size={8}>
+        <Grid size={9}>
           {pickerSection()}
         </Grid>
       </Grid>

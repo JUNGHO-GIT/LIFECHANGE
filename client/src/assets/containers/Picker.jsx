@@ -3,9 +3,9 @@
 import { useEffect, useState } from "../../imports/ImportReacts.jsx";
 import { useCommon, useStorage } from "../../imports/ImportHooks.jsx";
 import { moment } from "../../imports/ImportLibs.jsx";
-import { Btn, Input, Img, Div, Br, Select, Bg } from "../../imports/ImportComponents.jsx";
+import { Btn, Input, Img, Div, Br, Select } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
-import { MenuItem, PickersDay, Grid, Card } from "../../imports/ImportMuis.jsx";
+import { MenuItem, PickersDay, Grid, Card, Badge } from "../../imports/ImportMuis.jsx";
 import { DateCalendar, AdapterMoment, LocalizationProvider } from "../../imports/ImportMuis.jsx";
 import { common1 } from "../../imports/ImportImages.jsx";
 
@@ -70,7 +70,7 @@ export const Picker = ({
     if (isGoalList || isList) {
       setTypeStr("h-min0 h-4vh fs-0-7rem pointer");
       setWidthStr("w-46vw");
-      setInnerStr("h-min0 h-4vh fs-0-7rem pointer");
+      setInnerStr("h-min0 h-4vh fs-0-6rem pointer");
     }
     else if (isGoalSave || isSave || isFind) {
       setTypeStr("h-min40 fs-0-8rem pointer");
@@ -152,14 +152,14 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Card className={"p-0"}>
-          <Grid container rowSpacing={3} className={"d-center"}>
-            <Grid size={12}>
+        <Card className={"w-max70vw p-0"}>
+          <Grid container rowSpacing={3}>
+            <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewDay")}
               </Div>
             </Grid>
-            <Grid size={12}>
+            <Grid size={12} className={"d-center"}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DateCalendar
                   timezone={"Asia/Seoul"}
@@ -173,7 +173,7 @@ export const Picker = ({
                       const isBadged = EXIST.includes(moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"));
                       const isSelected = DATE.dateStart === moment(day).tz("Asia/Seoul").format("YYYY-MM-DD");
                       return (
-                        <Bg
+                        <Badge
                           key={props.day.toString()}
                           badgeContent={""}
                           slotProps={{
@@ -201,7 +201,7 @@ export const Picker = ({
                               });
                             }}
                           />
-                        </Bg>
+                        </Badge>
                       )
                     },
                     previousIconButton: (props) => (
@@ -276,99 +276,104 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-600"}>
-            {translate("viewWeek")}
-          </Div>
-          <Br px={20} />
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
-              className={"radius border"}
-              slots={{
-                // 일주일에 해당하는 날짜를 선택
-                day: (props) => {
-                  const {outsideCurrentMonth, day, ...other} = props;
-                  const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
-                  const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
-                  const isSelected =
-                  DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
-                  DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  let borderRadius = "";
-                  if (isSelected) {
-                    if (isFirst) {
-                      borderRadius = "50% 0 0 50%";
-                    }
-                    else if (isLast) {
-                      borderRadius = "0 50% 50% 0";
-                    }
-                    else {
-                      borderRadius = "0";
-                    }
-                  }
-                  return (
-                     <PickersDay
-                      {...other}
-                      day={day}
-                      selected={isSelected}
-                      outsideCurrentMonth={outsideCurrentMonth}
-                      style={{
-                        borderRadius: borderRadius,
-                        boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
-                      }}
-                      onDaySelect={(day) => {
-                        setDATE((prev) => ({
-                          ...prev,
-                          dateStart: moment(day).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
-                          dateEnd: moment(day).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
-                        }));
-                      }}
-                    />
-                  )
-                },
-                previousIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).subtract(1, "week").startOf("isoWeek");
-                      const newDateEnd = newDateStart.clone().endOf("isoWeek");
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD"),
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                ),
-                nextIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).add(1, "week").startOf("isoWeek");
-                      const newDateEnd = newDateStart.clone().endOf("isoWeek");
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD"),
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                ),
-              }}
-            />
-          </LocalizationProvider>
-        </Div>
+        <Card className={"w-max70vw p-0"}>
+          <Grid container rowSpacing={3}>
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("viewWeek")}
+              </Div>
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    // 일주일에 해당하는 날짜를 선택
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
+                      const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
+                      const isSelected =
+                      DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
+                      DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                      let borderRadius = "";
+                      if (isSelected) {
+                        if (isFirst) {
+                          borderRadius = "50% 0 0 50%";
+                        }
+                        else if (isLast) {
+                          borderRadius = "0 50% 50% 0";
+                        }
+                        else {
+                          borderRadius = "0";
+                        }
+                      }
+                      return (
+                        <PickersDay
+                          {...other}
+                          day={day}
+                          selected={isSelected}
+                          outsideCurrentMonth={outsideCurrentMonth}
+                          style={{
+                            borderRadius: borderRadius,
+                            boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                          }}
+                          onDaySelect={(day) => {
+                            setDATE((prev) => ({
+                              ...prev,
+                              dateStart: moment(day).tz("Asia/Seoul").startOf("isoWeek").format("YYYY-MM-DD"),
+                              dateEnd: moment(day).tz("Asia/Seoul").endOf("isoWeek").format("YYYY-MM-DD")
+                            }));
+                          }}
+                        />
+                      )
+                    },
+                    previousIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).subtract(1, "week").startOf("isoWeek");
+                          const newDateEnd = newDateStart.clone().endOf("isoWeek");
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD"),
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    ),
+                    nextIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).add(1, "week").startOf("isoWeek");
+                          const newDateEnd = newDateStart.clone().endOf("isoWeek");
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD"),
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    ),
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input
@@ -397,72 +402,77 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-600"}>
-            {translate("viewMonth")}
-          </Div>
-          <Br px={20} />
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
-              className={"radius border"}
-              slots={{
-                // 월의 첫번째 날을 선택
-                day: (props) => {
-                  const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = moment(day).tz("Asia/Seoul").date() === 1;
-                  return (
-                    <PickersDay
-                      {...other}
-                      day={day}
-                      selected={isSelected}
-                      outsideCurrentMonth={outsideCurrentMonth}
-                    />
-                  )
-                },
-                previousIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).subtract(1, "month");
-                      const newDateEnd = newDateStart.clone().endOf('month');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                ),
-                nextIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).add(1, "month");
-                      const newDateEnd = newDateStart.clone().endOf('month');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                )
-              }}
-            />
-          </LocalizationProvider>
-        </Div>
+        <Card className={"w-max70vw p-0"}>
+          <Grid container rowSpacing={3}>
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("viewMonth")}
+              </Div>
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    // 월의 첫번째 날을 선택
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isSelected = moment(day).tz("Asia/Seoul").date() === 1;
+                      return (
+                        <PickersDay
+                          {...other}
+                          day={day}
+                          selected={isSelected}
+                          outsideCurrentMonth={outsideCurrentMonth}
+                        />
+                      )
+                    },
+                    previousIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).subtract(1, "month");
+                          const newDateEnd = newDateStart.clone().endOf('month');
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD")
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    ),
+                    nextIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).add(1, "month");
+                          const newDateEnd = newDateStart.clone().endOf('month');
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD")
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    )
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input
@@ -491,72 +501,77 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({closePopup}) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-600"}>
-            {translate("viewYear")}
-          </Div>
-          <Br px={20} />
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
-              className={"radius border"}
-              slots={{
-                // 매년 1월 1일 선택
-                day: (props) => {
-                  const {outsideCurrentMonth, day, ...other} = props;
-                  const isSelected = moment(day).tz("Asia/Seoul").month() === 0 && moment(day).tz("Asia/Seoul").date() === 1;
-                  return (
-                     <PickersDay
-                      {...other}
-                      day={day}
-                      selected={isSelected}
-                      outsideCurrentMonth={outsideCurrentMonth}
-                    />
-                  )
-                },
-                previousIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).subtract(1, "year");
-                      const newDateEnd = newDateStart.clone().endOf('year');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                ),
-                nextIconButton: (props) => (
-                  <Btn
-                    {...props}
-                    className={"fs-1-4rem"}
-                    onClick={() => {
-                    setDATE((prev = {}) => {
-                      const newDateStart = moment(prev.dateStart).add(1, "year");
-                      const newDateEnd = newDateStart.clone().endOf('year');
-                      return {
-                        ...prev,
-                        dateStart: newDateStart.format("YYYY-MM-DD"),
-                        dateEnd: newDateEnd.format("YYYY-MM-DD")
-                      };
-                    });
-                  }}>
-                    {props.children}
-                  </Btn>
-                )
-              }}
-            />
-          </LocalizationProvider>
-        </Div>
+        <Card className={"w-max70vw p-0"}>
+          <Grid container rowSpacing={3}>
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("viewYear")}
+              </Div>
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    // 매년 1월 1일 선택
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isSelected = moment(day).tz("Asia/Seoul").month() === 0 && moment(day).tz("Asia/Seoul").date() === 1;
+                      return (
+                        <PickersDay
+                          {...other}
+                          day={day}
+                          selected={isSelected}
+                          outsideCurrentMonth={outsideCurrentMonth}
+                        />
+                      )
+                    },
+                    previousIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).subtract(1, "year");
+                          const newDateEnd = newDateStart.clone().endOf('year');
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD")
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    ),
+                    nextIconButton: (props) => (
+                      <Btn
+                        {...props}
+                        className={"fs-1-4rem"}
+                        onClick={() => {
+                        setDATE((prev = {}) => {
+                          const newDateStart = moment(prev.dateStart).add(1, "year");
+                          const newDateEnd = newDateStart.clone().endOf('year');
+                          return {
+                            ...prev,
+                            dateStart: newDateStart.format("YYYY-MM-DD"),
+                            dateEnd: newDateEnd.format("YYYY-MM-DD")
+                          };
+                        });
+                      }}>
+                        {props.children}
+                      </Btn>
+                    )
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger={}) => (
         <Input
@@ -585,82 +600,87 @@ export const Picker = ({
       position={"center"}
       direction={"center"}
       contents={({ closePopup }) => (
-        <Div className={"d-column"}>
-          <Div className={"d-center fs-1-2rem fw-600"}>
-            {translate("viewSelect")}
-          </Div>
-          <Br px={20} />
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-            <DateCalendar
-              timezone={"Asia/Seoul"}
-              views={["day"]}
-              readOnly={false}
-              value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
-              className={"radius border"}
-              slots={{
-                day: (props) => {
-                  const {outsideCurrentMonth, day, ...other} = props;
-                  const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
-                  const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
-                  const isSelected = DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
-                  DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  let borderRadius = "";
-                  let backgroundColor = "";
-                  if (isSelected) {
-                    if (isFirst && isLast) {
-                      borderRadius = "50%";
-                      backgroundColor = "#1976d2";
-                    }
-                    else if (isFirst) {
-                      borderRadius = "50% 0 0 50%";
-                      backgroundColor = "#1976d2";
-                    }
-                    else if (isLast) {
-                      borderRadius = "0 50% 50% 0";
-                      backgroundColor = "#1976d2";
-                    }
-                    else {
-                      borderRadius = "0";
-                    }
-                  }
-                  return (
-                     <PickersDay
-                      {...other}
-                      day={day}
-                      selected={isSelected}
-                      outsideCurrentMonth={outsideCurrentMonth}
-                      style={{
-                        borderRadius: borderRadius,
-                        backgroundColor: backgroundColor,
-                        boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
-                      }}
-                      onDaySelect={(day) => {
-                        if (
-                          !DATE.dateStart ||
-                          DATE.dateEnd ||
-                          moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
-                        ) {
-                          setDATE((prev) => ({
-                            ...prev,
-                            dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                            dateEnd: ""
-                          }));
+        <Card className={"w-max70vw p-0"}>
+          <Grid container rowSpacing={3}>
+            <Grid size={12} className={"d-center"}>
+              <Div className={"fs-1-2rem fw-600"}>
+                {translate("viewSelect")}
+              </Div>
+            </Grid>
+            <Grid size={12} className={"d-center"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DateCalendar
+                  timezone={"Asia/Seoul"}
+                  views={["day"]}
+                  readOnly={false}
+                  value={moment(DATE.dateEnd) || moment(DATE.dateStart)}
+                  className={"radius border"}
+                  slots={{
+                    day: (props) => {
+                      const {outsideCurrentMonth, day, ...other} = props;
+                      const isFirst = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateStart;
+                      const isLast = moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") === DATE.dateEnd;
+                      const isSelected = DATE.dateStart <= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD") &&
+                      DATE.dateEnd >= moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                      let borderRadius = "";
+                      let backgroundColor = "";
+                      if (isSelected) {
+                        if (isFirst && isLast) {
+                          borderRadius = "50%";
+                          backgroundColor = "#1976d2";
+                        }
+                        else if (isFirst) {
+                          borderRadius = "50% 0 0 50%";
+                          backgroundColor = "#1976d2";
+                        }
+                        else if (isLast) {
+                          borderRadius = "0 50% 50% 0";
+                          backgroundColor = "#1976d2";
                         }
                         else {
-                          setDATE((prev) => ({
-                            ...prev,
-                            dateStart: prev.dateStart,
-                            dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
-                          }));
+                          borderRadius = "0";
                         }
-                      }}
-                    />
-                  )
-                }
-              }}
-            />
-          </LocalizationProvider>
-        </Div>
+                      }
+                      return (
+                        <PickersDay
+                          {...other}
+                          day={day}
+                          selected={isSelected}
+                          outsideCurrentMonth={outsideCurrentMonth}
+                          style={{
+                            borderRadius: borderRadius,
+                            backgroundColor: backgroundColor,
+                            boxShadow: isSelected ? "0 0 0 3px #1976d2" : "none",
+                          }}
+                          onDaySelect={(day) => {
+                            if (
+                              !DATE.dateStart ||
+                              DATE.dateEnd ||
+                              moment(day).tz("Asia/Seoul").isBefore(DATE.dateStart)
+                            ) {
+                              setDATE((prev) => ({
+                                ...prev,
+                                dateStart: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                                dateEnd: ""
+                              }));
+                            }
+                            else {
+                              setDATE((prev) => ({
+                                ...prev,
+                                dateStart: prev.dateStart,
+                                dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
+                              }));
+                            }
+                          }}
+                        />
+                      )
+                    }
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+        </Card>
       )}>
       {(popTrigger = {}) => (
         <Input
@@ -690,11 +710,11 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max18vw h-max30vh p-0 d-fit"}>
-          <Grid container rowSpacing={1} className={"d-center"}>
-            <Grid size={12}>
+          <Grid container rowSpacing={1}>
+            <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
-                  padding: "3px 9px",
+                  padding: "1px 9px",
                   fontSize: "0.7rem",
                   backgroundColor: clickedType === "thisToday" ? "#1976d2" : "#F9FAFB",
                   color: clickedType === "thisToday" ? "#ffffff" : "#1976d2",
@@ -706,10 +726,10 @@ export const Picker = ({
                 {translate("thisToday")}
               </Btn>
             </Grid>
-            <Grid size={12}>
+            <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
-                  padding: "3px 9px",
+                  padding: "1px 9px",
                   fontSize: "0.7rem",
                   backgroundColor: clickedType === "thisWeek" ? "#1976d2" :"#F9FAFB",
                   color: clickedType === "thisWeek" ? "#ffffff" : "#1976d2",
@@ -721,10 +741,10 @@ export const Picker = ({
                 {translate("thisWeek")}
               </Btn>
             </Grid>
-            <Grid size={12}>
+            <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
-                  padding: "3px 9px",
+                  padding: "1px 1px",
                   fontSize: "0.7rem",
                   backgroundColor: clickedType === "thisMonth" ? "#1976d2" :"#F9FAFB",
                   color: clickedType === "thisMonth" ? "#ffffff" : "#1976d2",
@@ -736,10 +756,10 @@ export const Picker = ({
                 {translate("thisMonth")}
               </Btn>
             </Grid>
-            <Grid size={12}>
+            <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
-                  padding: "3px 9px",
+                  padding: "1px 9px",
                   fontSize: "0.7rem",
                   backgroundColor: clickedType === "thisYear" ? "#1976d2" :"#F9FAFB",
                   color: clickedType === "thisYear" ? "#ffffff" : "#1976d2",
@@ -751,10 +771,10 @@ export const Picker = ({
                 {translate("thisYear")}
               </Btn>
             </Grid>
-            <Grid size={12}>
+            <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
-                  padding: "3px 9px",
+                  padding: "1px 9px",
                   fontSize: "0.7rem",
                   backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
                   color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
@@ -772,7 +792,7 @@ export const Picker = ({
       {(popTrigger={}) => (
         <Btn
           color={"primary"}
-          className={"pt-3 pb-3 ps-9 pe-9 fs-0-7rem ms-n2vw"}
+          className={"pt-1 pb-1 ps-9 pe-9 fs-0-7rem ms-n2vw"}
           onClick={(e) => {
             popTrigger.openPopup(e.currentTarget);
           }

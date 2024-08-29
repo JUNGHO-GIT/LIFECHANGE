@@ -5,6 +5,7 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment } from "../../imports/ImportLibs.jsx";
 import { Img, Div, Input } from "../../imports/ImportComponents.jsx";
 import { PopUp } from "../../imports/ImportContainers.jsx";
+import { Card } from "../../imports/ImportMuis.jsx";
 import { DigitalClock, AdapterMoment, LocalizationProvider } from "../../imports/ImportMuis.jsx";
 import { sleep2, sleep3, sleep4, exercise4 } from "../../imports/ImportImages.jsx";
 
@@ -98,109 +99,116 @@ export const Time = ({
     }
   }, [OBJECT]);
 
-  // 2. goalNode -----------------------------------------------------------------------------------
-  const goalNode = () => (
-    <PopUp
-      key={`${i}`}
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DigitalClock
-          timeStep={20}
-          ampm={false}
-          timezone={"Asia/Seoul"}
-          value={moment(OBJECT?.[`${extra}`], "HH:mm")}
-          sx={{width: "40vw", height: "40vh"}}
-          onChange={(e) => {
-            setOBJECT((prev) => ({
-              ...prev,
-              [`${extra}`]: moment(e).format("HH:mm")
-            }));
-            closePopup();
-          }}
-        />
-      </LocalizationProvider>
-      )}>
-      {(popTrigger={}) => (
-        <Input
-          label={translateStr}
-          value={OBJECT?.[`${extra}`]}
-          inputRef={REFS?.current?.[`${extra}`]}
-          error={ERRORS?.[`${extra}`]}
-          readOnly={true}
-          startadornment={
-            <Img src={image} className={"w-16 h-16"} />
-          }
-          endadornment={
-            translate("hm")
-          }
-          onClick={(e) => {
-            popTrigger.openPopup(e.currentTarget)
-          }}
-        />
-      )}
-    </PopUp>
-  );
-
-  // 3. realNode -----------------------------------------------------------------------------------
-  const realNode = () => (
-    <PopUp
-      key={`${i}`}
-      type={"innerCenter"}
-      position={"center"}
-      direction={"center"}
-      contents={({closePopup}) => (
-      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-        <DigitalClock
-          timeStep={20}
-          ampm={false}
-          timezone={"Asia/Seoul"}
-          value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
-          sx={{width: "40vw", height: "40vh"}}
-          onChange={(e) => {
-            setOBJECT((prev) => ({
-              ...prev,
-              [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
-                idx === i ? {
-                  ...item,
-                  [`${extra}`]: moment(e).format("HH:mm")
-                } : item
-              ))
-            }));
-            closePopup();
-          }}
-        />
-      </LocalizationProvider>
-      )}>
-      {(popTrigger={}) => (
-        <Input
-          label={translate(translateStr)}
-          value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
-          inputRef={REFS?.current?.[i]?.[`${extra}`]}
-          error={ERRORS?.[i]?.[`${extra}`]}
-          readOnly={true}
-          startadornment={
-            <Img src={image} className={"w-16 h-16"} />
-          }
-          endadornment={
-            translate("hm")
-          }
-          onClick={(e) => {
-            extra !== "sleep_sleepTime" && (
+  // 7. time ---------------------------------------------------------------------------------------
+  const timeNode = () => {
+    const goalSection = () => (
+      <PopUp
+        key={`${i}`}
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Card className={"w-max40vw h-max40vh"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DigitalClock
+                timeStep={10}
+                ampm={false}
+                timezone={"Asia/Seoul"}
+                value={moment(OBJECT?.[`${extra}`], "HH:mm")}
+                sx={{width: "40vw", height: "40vh"}}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    [`${extra}`]: moment(e).format("HH:mm")
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          </Card>
+        )}>
+        {(popTrigger={}) => (
+          <Input
+            label={translateStr}
+            value={OBJECT?.[`${extra}`]}
+            inputRef={REFS?.current?.[`${extra}`]}
+            error={ERRORS?.[`${extra}`]}
+            readOnly={true}
+            startadornment={
+              <Img src={image} className={"w-16 h-16"} />
+            }
+            endadornment={
+              translate("hm")
+            }
+            onClick={(e) => {
               popTrigger.openPopup(e.currentTarget)
-            )
-          }}
-        />
-      )}
-    </PopUp>
-  );
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    const realSection = () => (
+      <PopUp
+        key={`${i}`}
+        type={"innerCenter"}
+        position={"center"}
+        direction={"center"}
+        contents={({closePopup}) => (
+          <Card className={"w-max40vw h-max40vh"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DigitalClock
+                timeStep={10}
+                ampm={false}
+                timezone={"Asia/Seoul"}
+                value={moment(OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`], "HH:mm")}
+                sx={{width: "40vw", height: "40vh"}}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    [`${firstStr}_section`]: prev[`${firstStr}_section`]?.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        [`${extra}`]: moment(e).format("HH:mm")
+                      } : item
+                    ))
+                  }));
+                  closePopup();
+                }}
+              />
+            </LocalizationProvider>
+          </Card>
+        )}>
+        {(popTrigger={}) => (
+          <Input
+            label={translate(translateStr)}
+            value={OBJECT?.[`${firstStr}_section`][i]?.[`${extra}`]}
+            inputRef={REFS?.current?.[i]?.[`${extra}`]}
+            error={ERRORS?.[i]?.[`${extra}`]}
+            readOnly={true}
+            startadornment={
+              <Img src={image} className={"w-16 h-16"} />
+            }
+            endadornment={
+              translate("hm")
+            }
+            onClick={(e) => {
+              extra !== "sleep_sleepTime" && (
+                popTrigger.openPopup(e.currentTarget)
+              )
+            }}
+          />
+        )}
+      </PopUp>
+    );
+    return (
+      secondStr === "goal" ? goalSection() : realSection()
+    );
+  };
 
   // 15. return ------------------------------------------------------------------------------------
   return (
     <>
-      {secondStr === "goal" ? goalNode() : realNode()}
+      {timeNode()}
     </>
   );
 };
