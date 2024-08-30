@@ -12,8 +12,7 @@ import { Paper, Grid, Card } from "../../imports/ImportMuis.jsx";
 export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId,
-  translate } = useCommon();
+  const { navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId, translate } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -135,7 +134,7 @@ export const CalendarList = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"pt-20 pb-20"} key={`${i}-card`}>
-          <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid container spacing={2}>
             <Calendar
               key={`${i}-calendar`}
               locale={"ko"}
@@ -166,8 +165,7 @@ export const CalendarList = () => {
                 const calendarForDate = OBJECT.filter((calendar) =>
                   dateInRange(value, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 );
-                
-                // 항목이 없는 경우에만 클릭 이벤트를 발생시킴
+                // 항목이 없는 경우에만 클릭 가능
                 if (calendarForDate.length === 0) {
                   Object.assign(SEND, {
                     id: "",
@@ -199,7 +197,6 @@ export const CalendarList = () => {
                 if (isToday) {
                   className += " calendar-today";
                 }
-
                 return className;
               }}
               tileContent={({ date, view }) => {
@@ -223,7 +220,7 @@ export const CalendarList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min60vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

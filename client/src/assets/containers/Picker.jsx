@@ -151,7 +151,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max70vw p-0"}>
-          <Grid container rowSpacing={3}>
+          <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewDay")}
@@ -274,7 +274,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max70vw p-0"}>
-          <Grid container rowSpacing={3}>
+          <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewWeek")}
@@ -399,7 +399,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max70vw p-0"}>
-          <Grid container rowSpacing={3}>
+          <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewMonth")}
@@ -497,7 +497,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max70vw p-0"}>
-          <Grid container rowSpacing={3}>
+          <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewYear")}
@@ -595,7 +595,7 @@ export const Picker = ({
       direction={"center"}
       contents={({ closePopup }) => (
         <Card className={"w-max70vw p-0"}>
-          <Grid container rowSpacing={3}>
+          <Grid container spacing={3}>
             <Grid size={12} className={"d-center"}>
               <Div className={"fs-1-2rem fw-600"}>
                 {translate("viewSelect")}
@@ -703,7 +703,7 @@ export const Picker = ({
       direction={"center"}
       contents={({closePopup}) => (
         <Card className={"w-max18vw h-max30vh p-0 d-fit"}>
-          <Grid container rowSpacing={1}>
+          <Grid container spacing={1}>
             <Grid size={12} className={"d-center"}>
               <Btn
                 style={{
@@ -858,7 +858,7 @@ export const Picker = ({
   // 7. return
   return (
     isGoalList || isList ? (
-      <Grid container columnSpacing={1} rowSpacing={2}>
+      <Grid container spacing={2}>
         <Grid size={9} className={"d-center"}>
           {selectSection()}
         </Grid>
@@ -867,7 +867,7 @@ export const Picker = ({
         </Grid>
       </Grid>
     ) : isGoalSave || isSave || isFind ? (
-      <Grid container columnSpacing={1} rowSpacing={2}>
+      <Grid container spacing={2}>
         <Grid size={3} className={"d-center"}>
           {saveTypeSection()}
         </Grid>

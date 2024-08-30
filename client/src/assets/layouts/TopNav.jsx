@@ -248,7 +248,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`smile`}>
-            <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-2rem fw-600"}>
                   {moment().tz("Asia/Seoul").format("YYYY-MM-DD (ddd)")}
@@ -339,7 +339,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`property`}>
-            <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("property")}
@@ -420,7 +420,7 @@ export const TopNav = () => {
         direction={"center"}
         contents={({closePopup}) => (
           <Card className={"w-max60vw h-max65vh border radius p-20"} key={`scale`}>
-            <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid container spacing={2}>
               <Grid size={12} className={"d-center"}>
                 <Div className={"fs-1-3rem fw-600"}>
                   {translate("weight")}
@@ -552,7 +552,7 @@ export const TopNav = () => {
     // 5. return
     return (
       <Paper className={"layout-wrapper p-sticky top-8vh h-8vh radius border"}>
-        <Grid container columnSpacing={2} columns={25}>
+        <Grid container spacing={2} columns={25}>
           <Grid size={3}>
             {smileSection()}
           </Grid>

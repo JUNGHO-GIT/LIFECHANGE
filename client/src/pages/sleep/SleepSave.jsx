@@ -290,7 +290,7 @@ export const SleepSave = () => {
     // 7-1. date + count
     const dateCountSection = () => (
       <Card className={"border radius p-20"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             <Picker
               DATE={DATE}
@@ -313,7 +313,7 @@ export const SleepSave = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-20"} key={i}>
-          <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid container spacing={2}>
             <Grid size={6} className={"d-left"}>
               <Bg
                 badgeContent={i + 1}
@@ -371,7 +371,7 @@ export const SleepSave = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {dateCountSection()}
             {cardSection()}

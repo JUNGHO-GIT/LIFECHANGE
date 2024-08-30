@@ -92,7 +92,7 @@ export const UserDeletes = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"p-10"} key={i}>
-          <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid container spacing={2}>
             <Grid size={12}>
               <Input
                 label={translate("id")}
@@ -137,7 +137,7 @@ export const UserDeletes = () => {
       <>
       {LOADING && <Loading />}
       <Paper className={"content-wrapper d-center radius border h-min84vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {titleSection()}
             <Hr px={40} />

@@ -269,7 +269,7 @@ export const TodayList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -324,7 +324,7 @@ export const TodayList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise3_1} className={"w-15 h-15"} />
                   </Grid>
@@ -346,7 +346,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise4} className={"w-15 h-15"} />
                   </Grid>
@@ -368,7 +368,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={exercise5} className={"w-15 h-15"} />
                   </Grid>
@@ -428,7 +428,7 @@ export const TodayList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -483,7 +483,7 @@ export const TodayList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
@@ -505,7 +505,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
@@ -527,7 +527,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
@@ -549,7 +549,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 4 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
@@ -609,7 +609,7 @@ export const TodayList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -664,7 +664,7 @@ export const TodayList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -686,7 +686,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={money2} className={"w-15 h-15"} />
                   </Grid>
@@ -746,7 +746,7 @@ export const TodayList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -801,7 +801,7 @@ export const TodayList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -823,7 +823,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -845,7 +845,7 @@ export const TodayList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
@@ -879,7 +879,7 @@ export const TodayList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {exerciseSection()}
           </Grid>

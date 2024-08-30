@@ -475,7 +475,7 @@ export const ExerciseChartAvg = () => {
       );
       return (
         <Card className={"p-0"}>
-          <Grid container columnSpacing={1} rowSpacing={2}>
+          <Grid container spacing={2}>
             <Grid size={3} className={"d-left"}>
               {selectFragment1()}
             </Grid>
@@ -527,7 +527,7 @@ export const ExerciseChartAvg = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min40vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {headSection()}
           </Grid>

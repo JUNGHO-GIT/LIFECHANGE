@@ -1,7 +1,6 @@
 // Banner.jsx
 // Node -> Section -> Fragment
 
-import { Div } from "../../imports/ImportComponents.jsx";
 import { Paper, Grid } from "../../imports/ImportMuis.jsx";
 
 // -------------------------------------------------------------------------------------------------

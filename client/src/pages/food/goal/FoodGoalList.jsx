@@ -147,7 +147,7 @@ export const FoodGoalList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -202,7 +202,7 @@ export const FoodGoalList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food2} className={"w-15 h-15"} />
                   </Grid>
@@ -212,7 +212,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -266,7 +266,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food3} className={"w-15 h-15"} />
                   </Grid>
@@ -276,7 +276,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -330,7 +330,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food4} className={"w-15 h-15"} />
                   </Grid>
@@ -340,7 +340,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -394,7 +394,7 @@ export const FoodGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 4 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={food5} className={"w-15 h-15"} />
                   </Grid>
@@ -404,7 +404,7 @@ export const FoodGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -470,7 +470,7 @@ export const FoodGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

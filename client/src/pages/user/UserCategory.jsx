@@ -522,7 +522,7 @@ export const UserCategory = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

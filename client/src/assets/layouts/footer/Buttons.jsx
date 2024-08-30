@@ -66,13 +66,13 @@ export const Buttons = ({
     // 4. return
     return (
       PATH.includes("/user/category") || PATH.includes("/user/detail") ? (
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12} className={"d-center"}>
             {saveSection()}
           </Grid>
         </Grid>
       ) : PATH.includes("/food/save") ? (
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={4} className={"d-right"}>
             {gotoFindSection()}
           </Grid>
@@ -84,7 +84,7 @@ export const Buttons = ({
           </Grid>
         </Grid>
       ) : (
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={6} className={"d-right"}>
             {saveSection()}
           </Grid>

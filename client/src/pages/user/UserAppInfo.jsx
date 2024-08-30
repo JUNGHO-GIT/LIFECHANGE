@@ -56,7 +56,7 @@ export const UserAppInfo = () => {
     const cardSection = () => {
       const cardFragment = (i) => (
         <Card className={"border radius p-0"} key={i}>
-          <Grid container columnSpacing={2} rowSpacing={1} className={"fs-0-8rem"}>
+          <Grid container spacing={2} className={"fs-0-8rem"}>
             <Grid
               size={12}
               className={"d-between mt-5 p-10"}
@@ -120,7 +120,7 @@ export const UserAppInfo = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper d-center radius border h-min80vh"}>
-        <Grid container columnSpacing={1} rowSpacing={3}>
+        <Grid container spacing={3}>
           <Grid size={12}>
             {imageSection()}
           </Grid>

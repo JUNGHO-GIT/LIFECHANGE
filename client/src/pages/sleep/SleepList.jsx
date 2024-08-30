@@ -128,7 +128,7 @@ export const SleepList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -183,7 +183,7 @@ export const SleepList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -205,7 +205,7 @@ export const SleepList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -227,7 +227,7 @@ export const SleepList = () => {
                 </Grid>
                 <Hr px={30} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={2}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
@@ -261,7 +261,7 @@ export const SleepList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>

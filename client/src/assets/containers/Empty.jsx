@@ -26,7 +26,7 @@ export const Empty = ({
       <Card className={"border radius"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
-            <Grid container columnSpacing={1} rowSpacing={2}>
+            <Grid container spacing={2}>
               <Grid size={2} className={"d-center"}>
                 <Div className={"fs-1-0rem fw-600 dark"}>
                   {translate("search")}
@@ -47,7 +47,7 @@ export const Empty = ({
       <Card className={"border radius"} key={`empty-${extra}`}>
         <Accordion className={"shadow-none"} expanded={false}>
           <AccordionSummary>
-            <Grid container columnSpacing={1}
+            <Grid container spacing={1}
               onClick={(e) => {
                 e.stopPropagation();
                 Object.assign(SEND, {

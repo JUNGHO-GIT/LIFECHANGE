@@ -142,7 +142,7 @@ export const SleepGoalList = () => {
                   />
                 }
               >
-                <Grid container columnSpacing={2}
+                <Grid container spacing={2}
                   onClick={(e) => {
                     e.stopPropagation();
                     Object.assign(SEND, {
@@ -197,7 +197,7 @@ export const SleepGoalList = () => {
               </AccordionSummary>
               <AccordionDetails>
                 {/** row 1 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep2} className={"w-15 h-15"} />
                   </Grid>
@@ -207,7 +207,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -261,7 +261,7 @@ export const SleepGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 2 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep3} className={"w-15 h-15"} />
                   </Grid>
@@ -271,7 +271,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -325,7 +325,7 @@ export const SleepGoalList = () => {
                 </Grid>
                 <Hr px={20} />
                 {/** row 3 **/}
-                <Grid container columnSpacing={1} rowSpacing={1}>
+                <Grid container spacing={1}>
                   <Grid size={2} className={"d-center"}>
                     <Img src={sleep4} className={"w-15 h-15"} />
                   </Grid>
@@ -335,7 +335,7 @@ export const SleepGoalList = () => {
                     </Div>
                   </Grid>
                   <Grid size={7}>
-                    <Grid container columns={12} columnSpacing={0} rowSpacing={1}>
+                    <Grid container columns={12} spacing={1}>
                       {/** goal **/}
                       <Grid size={5} className={"d-right"}>
                         <Div className={"fs-0-8rem fw-500 dark"}>
@@ -401,7 +401,7 @@ export const SleepGoalList = () => {
     // 7-10. return
     return (
       <Paper className={"content-wrapper radius border h-min75vh"}>
-        <Grid container columnSpacing={1} rowSpacing={2}>
+        <Grid container spacing={2}>
           <Grid size={12}>
             {cardSection()}
           </Grid>
