@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, createRef } from "../../imports/ImportReac
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { moment, axios } from "../../imports/ImportLibs.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Div, Br, Input, Select, Img, Bg } from "../../imports/ImportComponents.jsx";
+import { Div, Input, Select, Img, Bg } from "../../imports/ImportComponents.jsx";
 import { Picker, Memo, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { calendar2 } from "../../imports/ImportImages.jsx";
@@ -33,7 +33,7 @@ export const CalendarSave = () => {
     newSectionCnt: 0
   });
   const [DATE, setDATE] = useState({
-    dateType: location_dateType,
+    dateType: location_dateType || "",
     dateStart: location_dateStart || koreanDate,
     dateEnd: location_dateEnd || koreanDate,
   });

@@ -163,16 +163,23 @@ export const CalendarList = () => {
                 return week[day];
               }}
               onClickDay={(value) => {
-                Object.assign(SEND, {
-                  id: "",
-                  section_id: "",
-                  dateType: "",
-                  dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                  dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                });
-                navigate(SEND.toSave, {
-                  state: SEND
-                });
+                const calendarForDate = OBJECT.filter((calendar) =>
+                  dateInRange(value, calendar.calendar_dateStart, calendar.calendar_dateEnd)
+                );
+                
+                // 항목이 없는 경우에만 클릭 이벤트를 발생시킴
+                if (calendarForDate.length === 0) {
+                  Object.assign(SEND, {
+                    id: "",
+                    section_id: "",
+                    dateType: "day",
+                    dateStart: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                    dateEnd: moment(value).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                  });
+                  navigate(SEND.toSave, {
+                    state: SEND
+                  });
+                }
               }}
               tileClassName={({ date, view }) => {
                 let className = "calendar-tile";

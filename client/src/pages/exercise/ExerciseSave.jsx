@@ -6,7 +6,7 @@ import { useCommon, useTime } from "../../imports/ImportHooks.jsx";
 import { moment, axios, numeral } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
 import { Loading, Footer } from "../../imports/ImportLayouts.jsx";
-import { Bg, Br, Img, Input, Select } from "../../imports/ImportComponents.jsx";
+import { Bg, Img, Input, Select } from "../../imports/ImportComponents.jsx";
 import { Picker, Time, Count, Delete } from "../../imports/ImportContainers.jsx";
 import { Card, Paper, Badge, MenuItem, Grid } from "../../imports/ImportMuis.jsx";
 import { exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "../../imports/ImportImages.jsx";

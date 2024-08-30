@@ -6,7 +6,7 @@ import { useCommon } from "../../imports/ImportHooks.jsx";
 import { Loading } from "../../imports/ImportLayouts.jsx";
 import { axios } from "../../imports/ImportLibs.jsx";
 import { sync } from "../../imports/ImportUtils.jsx";
-import { Input, Div, Br, Btn, Img, Hr } from "../../imports/ImportComponents.jsx";
+import { Input, Div, Btn, Img, Hr } from "../../imports/ImportComponents.jsx";
 import { Paper, Checkbox, Card, Grid } from "../../imports/ImportMuis.jsx";
 import { user1 } from "../../imports/ImportImages.jsx";
 

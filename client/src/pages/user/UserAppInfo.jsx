@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../imports/ImportReacts.jsx";
 import { useCommon } from "../../imports/ImportHooks.jsx";
 import { axios } from "../../imports/ImportLibs.jsx"
 import { Loading } from "../../imports/ImportLayouts.jsx";
-import { Div, Img, Br, Hr } from "../../imports/ImportComponents.jsx";
+import { Div, Img } from "../../imports/ImportComponents.jsx";
 import { Card, Paper, Grid } from "../../imports/ImportMuis.jsx";
 import { logo1 } from "../../imports/ImportImages.jsx";
 

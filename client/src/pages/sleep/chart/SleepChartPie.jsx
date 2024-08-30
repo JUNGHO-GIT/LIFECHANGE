@@ -5,7 +5,7 @@ import { useState, useEffect } from "../../../imports/ImportReacts.jsx";
 import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { axios } from "../../../imports/ImportLibs.jsx";
 import { Loading } from "../../../imports/ImportLayouts.jsx";
-import { Div, Img, Br, Select } from "../../../imports/ImportComponents.jsx";
+import { Div, Img, Select } from "../../../imports/ImportComponents.jsx";
 import { Paper, Card, MenuItem, Grid } from "../../../imports/ImportMuis.jsx";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import { common3_2 } from "../../../imports/ImportImages.jsx";

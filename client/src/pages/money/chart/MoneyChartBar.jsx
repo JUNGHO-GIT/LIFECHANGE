@@ -6,7 +6,7 @@ import { useCommon } from "../../../imports/ImportHooks.jsx";
 import { axios } from "../../../imports/ImportLibs.jsx";
 import { handlerY } from "../../../imports/ImportUtils.jsx";
 import { Loading } from "../../../imports/ImportLayouts.jsx";
-import { Div, Img, Br, Select, Input } from "../../../imports/ImportComponents.jsx";
+import { Div, Img, Select, Input } from "../../../imports/ImportComponents.jsx";
 import { Paper, Card, Grid } from "../../../imports/ImportMuis.jsx";
 import { Bar, Line, ComposedChart, ReferenceLine } from "recharts";
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
