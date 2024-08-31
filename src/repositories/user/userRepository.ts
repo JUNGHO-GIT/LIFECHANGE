@@ -117,6 +117,7 @@ export const user = {
       },
     }, {
       new: true,
+      upsert: true,
     });
 
     return finalResult;
@@ -165,6 +166,7 @@ export const user = {
       },
     }, {
       new: true,
+      upsert: true,
     });
 
     return finalResult;

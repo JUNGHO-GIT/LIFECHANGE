@@ -317,6 +317,7 @@ export const property = {
       },
     }, {
       new: true,
+      upsert: true,
     });
 
     return finalResult;
@@ -424,6 +425,7 @@ export const scale = {
       },
     }, {
       new: true,
+      upsert: true,
     });
 
     return finalResult;

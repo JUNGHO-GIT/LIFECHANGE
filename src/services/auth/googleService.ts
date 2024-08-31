@@ -3,6 +3,7 @@
 import * as repository from "@repositories/auth/googleRepository";
 import { OAuth2Client } from 'google-auth-library';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import session from "express-session";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -73,35 +74,45 @@ export const afterCallback = async () => {
     return null;
   }
 
-  let finalResult = null;
-  let adminResult = null;
+  let findResult: any = null;
+  let finalResult: any = null;
+  let adminResult: any = null;
 
   const googleId = session.googleId;
   const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(`${googleId}_google`, saltRounds);
+  const token = crypto.randomBytes(20).toString('hex');
+  const combinedPw = `${googleId}_${token}`;
+  const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
 
-  const findResult = await repository.findUser(googleId);
-  if (!findResult) {
-    finalResult = await repository.createUser(googleId, hashedPassword);
-  }
-  else {
-    if (findResult.user_pw) {
-      const isPasswordMatch = await bcrypt.compare(`${googleId}_google`, findResult.user_pw);
-      if (isPasswordMatch) {
-        finalResult = findResult;
-      }
-      else {
-        return {
-          status: "fail",
-          message: "Google login password mismatch"
-        };
-      }
+  findResult = await repository.findUser(googleId);
+
+  // 아이디 있는경우
+  if (findResult && findResult.user_pw && findResult.user_token) {
+    const ownToken = findResult.user_token;
+    const isPasswordMatch = await bcrypt.compare(`${googleId}_${ownToken}`, findResult.user_pw);
+
+    if (isPasswordMatch) {
+      finalResult = findResult;
+    }
+    else {
+      return {
+        status: "fail",
+        message: "Google login password mismatch"
+      };
     }
   }
 
+  // 아이디 없는경우
+  else if (!findResult) {
+    finalResult = await repository.createUser(googleId, hashedPassword, token);
+  }
+
+  // 관리자인 경우
   if (googleId === process.env.ADMIN_ID) {
     adminResult = "admin";
   }
+
+  // 사용자인 경우
   else {
     adminResult = "user";
   }

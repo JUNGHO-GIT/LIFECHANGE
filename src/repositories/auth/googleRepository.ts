@@ -10,7 +10,7 @@ export const findUser = async (
 ) => {
   const findResult = await User.findOne({
     user_id: user_id_param,
-    user_google: "Y"
+    user_google: "Y",
   })
   .lean();
 
@@ -21,12 +21,14 @@ export const findUser = async (
 export const createUser = async (
   user_id_param: string,
   user_pw_param: string,
+  token_param: string,
 ) => {
   const finalResult = await User.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    user_pw: user_pw_param,
     user_google: "Y",
+    user_token: token_param,
+    user_pw: user_pw_param,
     user_age: "",
     user_gender: "N",
     user_initScale: "",

@@ -176,12 +176,20 @@ export const userResetPw = async (
   if (!findResult) {
     finalResult = "notExist";
   }
-  else if (findResult) {
+  else {
     const saltRounds = 10;
     const token = crypto.randomBytes(20).toString('hex');
-    const combinedPw = `${OBJECT_param.user_pw}_${token}`;
+    let combinedPw: string = "";
+
+    if (findResult.user_google === "Y") {
+      combinedPw = `${user_id_param}_${token}`;
+    }
+    else {
+      combinedPw = `${OBJECT_param.user_pw}_${token}`;
+    }
 
     const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
+    OBJECT_param.user_token = token
     OBJECT_param.user_pw = hashedPassword;
 
     finalResult = await repository.user.resetPw(
@@ -207,14 +215,19 @@ export const userLogin = async (
     user_id_param
   );
 
-  if (findResult !== null && findResult.user_pw) {
+  if (!findResult) {
+    finalResult = "fail";
+  }
+  else {
+    let combinedPw: string = "";
 
-    const combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    if (findResult.user_google === "Y") {
+      combinedPw = `${user_id_param}_${findResult.user_token}`;
+    }
+    else {
+      combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    }
     const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
-
-    console.log("user_pw_param : ", user_pw_param);
-    console.log("findResult.user_pw : ", findResult.user_pw);
-    console.log("combinedPw : ", combinedPw);
 
     if (isPasswordMatch) {
       finalResult = findResult;
@@ -222,9 +235,6 @@ export const userLogin = async (
     else {
       finalResult = "fail";
     }
-  }
-  else {
-    finalResult = "fail";
   }
 
   if (user_id_param === process.env.ADMIN_ID) {
