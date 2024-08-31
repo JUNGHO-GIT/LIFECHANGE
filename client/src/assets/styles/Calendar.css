@@ -82,12 +82,6 @@
   padding: 5px;
   border: none !important;
 }
-.calendar-tile abbr {
-  text-decoration: none;
-  color: #000000;
-  font-weight: 500;
-  font-size: 0.6rem;
-}
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
   justify-content: center !important;
   text-align: center !important;
@@ -139,8 +133,8 @@
   text-align: center;
   justify-content: center;
   display: flex;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 .react-calendar button {
   max-height: 6.0rem;
@@ -182,7 +176,20 @@ abbr[title] {
   cursor: pointer;
   font-size: 0.8rem;
 }
+.calendar-tile abbr {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 0.6rem;
+}
+.calendar-outside abbr {
+  text-decoration: none;
+  color: #9c9c9c9c;
+  font-weight: 500;
+  font-size: 0.6rem;
+}
 .calendar-today abbr {
+  text-decoration: none;
   color: #006ab3;
   font-weight: 800;
   font-size: 1.0rem;

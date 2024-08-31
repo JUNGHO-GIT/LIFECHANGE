@@ -1,0 +1,76 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+
+    /** 기본 설정 *********************************************************************************/
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": false,
+    "composite": true,
+    "incremental": true,
+
+    /** 타입 체크 *********************************************************************************/
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /** 추가 설정 *********************************************************************************/
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "noLib": false,
+    "preserveValueImports": false,
+
+    /** 모듈 해석 *********************************************************************************/
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /** 소스 코드 관리 ****************************************************************************/
+    "allowUmdGlobalAccess": false,
+    "preserveSymlinks": true,
+    "isolatedModules": false,
+
+    /** 컴파일러 경고 제어 ************************************************************************/
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /** 고급 설정 *********************************************************************************/
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "removeComments": false,
+    "noEmit": true,
+    "noEmitOnError": true,
+    "disableSizeLimit": false,
+    "plugins": [],
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "src/**/*",
+    "./index.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.jsx",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+  ],
+}

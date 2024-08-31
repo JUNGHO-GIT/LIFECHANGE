@@ -2,7 +2,7 @@
   "name": "JPAGE-client",
   "version": "1.0.0",
   "homepage": "/JPAGE",
-  "main": "index.jsx",
+  "main": "index.tsx",
   "type": "module",
   "license": "MIT",
   "private": true,
@@ -25,8 +25,9 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "gcloud": "node gcloud.cjs"
   },
   "dependencies": {
@@ -51,11 +52,14 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
     "@testing-library/react": "^16.0.0",
     "@types/numeral": "^2.0.5",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "cra-bundle-analyzer": "^0.1.1",
+    "react-app-alias": "^2.2.2",
+    "tslib": "^2.7.0",
     "typescript": "^5.5.4"
   }
 }

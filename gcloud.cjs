@@ -1,4 +1,4 @@
-// gcloud.js (server)
+// gcloud.ts (server)
 
 const dotenv = require('dotenv');
 const { execSync } = require('child_process');

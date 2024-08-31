@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/assets/components/*"],
+      "@containers/*": ["src/assets/containers/*"],
+      "@hooks/*": ["src/assets/hooks/*"],
+      "@images/*": ["src/assets/images/*"],
+      "@layouts/*": ["src/assets/layouts/*"],
+      "@scripts/*": ["src/assets/scripts/*"],
+      "@styles/*": ["src/assets/styles/*"],
+      "@pages/*": ["src/pages/*"],
+      "@imports/*": ["src/imports/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/assets/types"
+    ],
+    "types": [
+      "node",
+      "alias",
+      "extension"
+    ]
+  }
+}
