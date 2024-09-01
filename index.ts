@@ -37,8 +37,12 @@ const port = process.env.DB_PORT || '27017';
 const db = process.env.DB_NAME;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
-.then(() => console.log('MongoDB 연결 성공'))
-.catch((err: any) => console.error(err));
+  .then(() => {
+    console.log('MongoDB 연결 성공');
+  })
+  .catch((error) => {
+    console.error(`MongoDB 연결 실패: ${error}`);
+  });
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
@@ -80,9 +84,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// 에러인 경우만 로그를 출력 (커스텀 형식으로 출력) ----------------------------------------------
+// 에러인 경우만 로그를 출력 -----------------------------------------------------------------------
 app.use(morgan('dev', {
-  skip: function (req, res) {
+  skip: (req, res) => {
     return res.statusCode < 400;
   }
 }));

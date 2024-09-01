@@ -31,7 +31,7 @@ export const FindSaveFilter = (
         onClick={() => {
           flow.flowSave();
           Object.keys(sessionStorage).forEach((key) => {
-            if (key.includes("foodSection") || key.includes("PAGING")) {
+            if (key.includes("foodSection") || key.includes("paging")) {
               sessionStorage.removeItem(key);
             }
           });

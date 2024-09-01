@@ -1,5 +1,4 @@
 // Loading.tsx
-// Node -> Section -> Fragment
 
 import { useCommon } from "@imports/ImportHooks";
 import { Div } from "@imports/ImportComponents";
@@ -12,32 +11,29 @@ export const Loading = () => {
     PATH
   } = useCommon();
 
-  // 5. needWrapper --------------------------------------------------------------------------------
-  const needWrapper = () => {
-    if (
-      PATH.includes("/user/signup") ||
-      PATH.includes("/user/login") ||
-      PATH.includes("/user/deletes") ||
-      PATH.includes("/user/resetPw")
-    ) {
-      return true;
-    };
-    return false;
-  };
-
-  // 6. loading ------------------------------------------------------------------------------------
-  const loadingNode = () => (
-    needWrapper() ? (
+  // 7.loading -------------------------------------------------------------------------------------
+  const loadingNode = () => {
+    const wrapperSection = () => (
       <Div className={"loader-wrapper d-center"}>
         <Div className={"loader"} />
       </Div>
-    )
-    : (
+    );
+    const nonWrapperSection = () => (
       <Div className={`h-min60vh d-center`}>
         <Div className={"loader"} />
       </Div>
-    )
-  );
+    );
+    return (
+      PATH.includes("/user/signup") ||
+      PATH.includes("/user/login") ||
+      PATH.includes("/user/deletes") ||
+      PATH.includes("/user/resetPw") ? (
+        wrapperSection()
+      ) : (
+        nonWrapperSection()
+      )
+    );
+  };
 
   // 10. return ------------------------------------------------------------------------------------
   return (

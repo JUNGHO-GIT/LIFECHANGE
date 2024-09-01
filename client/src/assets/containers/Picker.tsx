@@ -25,7 +25,7 @@ export const Picker = (
   // 1. common -------------------------------------------------------------------------------------
   const {
     translate, PATH, firstStr, secondStr, thirdStr, koreanDate, curWeekStart, curWeekEnd,
-    curMonthStart, curMonthEnd, curYearStart, curYearEnd
+    curMonthStart, curMonthEnd, curYearStart, curYearEnd, TITLE,
   } = useCommon();
 
   const isToday = firstStr === "today";
@@ -42,7 +42,7 @@ export const Picker = (
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   const [clickedType, setClickedType] = useStorage(
-    `CLICKED(${PATH})`, "thisToday"
+    `${TITLE}_clickedType_(${PATH})`, "thisToday"
   );
   const clickedDate = {
     todayDate: {
@@ -204,7 +204,7 @@ export const Picker = (
                                 dateEnd: moment(day).tz("Asia/Seoul").format("YYYY-MM-DD")
                               }));
                               Object.keys(sessionStorage).forEach((key) => {
-                                if (key.includes("foodSection")) {
+                                if (key.includes(`foodSection`)) {
                                   sessionStorage.removeItem(key);
                                 }
                               });

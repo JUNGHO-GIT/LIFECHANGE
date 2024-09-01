@@ -4,12 +4,16 @@ import { useState, useEffect, useCallback } from "@imports/ImportReacts";
 import { createContext, useContext } from "@imports/ImportReacts";
 
 // -------------------------------------------------------------------------------------------------
+const TITLE = process.env.REACT_APP_TITLE || "";
+
+// -------------------------------------------------------------------------------------------------
 // @ts-ignore
 const LanguageContext = createContext();
 
 // -------------------------------------------------------------------------------------------------
 export const LanguageProvider = ({ children }: any) => {
-  const [lang, setLang] = useState<string>(sessionStorage.getItem("LANG") || "ko");
+
+  const [lang, setLang] = useState(sessionStorage.getItem(`${TITLE}_lang`) || "ko");
 
   if (lang === "ko") {
     // @ts-ignore
@@ -17,7 +21,7 @@ export const LanguageProvider = ({ children }: any) => {
   }
 
   useEffect(() => {
-    sessionStorage.setItem("LANG", lang);
+    sessionStorage.setItem(`${TITLE}_lang`, lang);
     console.log("LanguageProvider", lang);
   }, [lang]);
 
@@ -795,6 +799,10 @@ export const useTranslate = () => {
     },
     // ---------------------------------------------------------------------------------------------
     // q
+    query: {
+      ko: "검색어",
+      en: "Query"
+    },
     quantity: {
       ko: "수량",
       en: "Quantity"
@@ -1739,5 +1747,5 @@ export const useTranslate = () => {
     return result[lang];
   }, [lang]);
 
-  return {translate};
+  return { translate };
 };

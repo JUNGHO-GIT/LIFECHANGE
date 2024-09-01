@@ -33,7 +33,7 @@ router.get("/percent", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -63,7 +63,7 @@ router.get("/property", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -93,7 +93,7 @@ router.get("/scale", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });

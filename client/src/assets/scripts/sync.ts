@@ -6,16 +6,17 @@ import { moment, axios } from "@imports/ImportLibs";
 export const sync = async () => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const URL = process.env.REACT_APP_URL || "";
+  const URL = process.env.REACT_APP_SERVER_URL || "";
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL + SUBFIX;
-  const sessionId = sessionStorage.getItem("ID_SESSION");
+  const TITLE = process.env.REACT_APP_TITLE || "";
+  const sessionId = sessionStorage.getItem(`${TITLE}_sessionId`) || "";
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const OBJECT = {
-    percent: [],
-    property: [],
-    scale: [],
+    percent: [] as any[],
+    property: [] as any[],
+    scale: [] as any[],
   };
   const DATE = {
     dateType: "day",
@@ -46,11 +47,11 @@ export const sync = async () => {
       scale: resScale.data.result,
     });
 
-    sessionStorage.setItem("PERCENT", JSON.stringify(resPercent.data.result));
-    sessionStorage.setItem("PROPERTY", JSON.stringify(resProperty.data.result));
-    sessionStorage.setItem("SCALE", JSON.stringify(resScale.data.result));
+    sessionStorage.setItem(`${TITLE}_percent`, JSON.stringify(resPercent.data.result));
+    sessionStorage.setItem(`${TITLE}_property`, JSON.stringify(resProperty.data.result));
+    sessionStorage.setItem(`${TITLE}_scale`, JSON.stringify(resScale.data.result));
   }
   catch (error) {
-    console.error(`percent error: ${error}`);
+    console.error(`sync error: ${error}`);
   }
 }

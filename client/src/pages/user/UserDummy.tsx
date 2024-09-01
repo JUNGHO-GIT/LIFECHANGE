@@ -14,14 +14,14 @@ export const UserDummy = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, PATH, URL_OBJECT, sessionId, translate
+    navigate, PATH, URL_OBJECT, sessionId, translate, TITLE,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [PART, setPART] = useState("exerciseGoal");
   const [PAGING, setPAGING] = useStorage(
-    `PAGING(${PATH})`, {
+    `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
     }

@@ -16,20 +16,20 @@ export const FoodList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, translate, koreanDate
+    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, sessionId, translate, koreanDate, TITLE,
   } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
-    `DATE(${PATH})`, {
+    `${TITLE}_date_(${PATH})`, {
       dateType: "",
       dateStart: location_dateStart || koreanDate,
       dateEnd: location_dateEnd || koreanDate,
     }
   );
   const [PAGING, setPAGING] = useStorage(
-    `PAGING(${PATH})`, {
+    `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
     }
@@ -128,8 +128,7 @@ export const FoodList = () => {
       const cardFragment = (i: number) => (
         OBJECT?.map((item: any, index: number) => (
           <Card className={"border radius"} key={`${index}-${i}`}>
-            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}
-    >
+            <Accordion className={"shadow-none"} expanded={isExpanded.includes(index)}>
               <AccordionSummary
                 className={"pb-10"}
                 expandIcon={

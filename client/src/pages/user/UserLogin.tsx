@@ -15,17 +15,17 @@ export const UserLogin = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate
+    navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate, TITLE,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
   const [loginTrigger, setLoginTrigger] = useState<boolean>(false);
-  const [clickCount, setClickCount] = useState(0);
+  const [clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
-  const [userId, setUserId] = useState("");
-  const [userPw, setUserPw] = useState("");
+  const [userId, setUserId] = useState<string>("");
+  const [userPw, setUserPw] = useState<string>("");
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ERRORS, setERRORS] = useState({
@@ -50,9 +50,9 @@ export const UserLogin = () => {
   // 자동로그인 활성화된 경우
   useEffect(() => {
     if (checkedAutoLogin) {
-      localStorage.setItem("autoLogin", "true");
-      localStorage.setItem("autoLoginId", userId);
-      localStorage.setItem("autoLoginPw", userPw);
+      localStorage.setItem(`${TITLE}_autoLogin`, "true");
+      localStorage.setItem(`${TITLE}_autoLoginId`, userId);
+      localStorage.setItem(`${TITLE}_autoLoginPw`, userPw);
     }
   }, [checkedAutoLogin, userId, userPw]);
 
@@ -60,19 +60,19 @@ export const UserLogin = () => {
   // 아이디 저장 활성화된 경우
   useEffect(() => {
     if (checkedSaveId) {
-      localStorage.setItem("saveId", "true");
-      localStorage.setItem("ID_SAVED", userId);
+      localStorage.setItem(`${TITLE}_isLocalSaved`, "true");
+      localStorage.setItem(`${TITLE}_localId`, userId);
     }
   }, [checkedSaveId, userId]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
   useEffect(() => {
-    const autoLogin = localStorage.getItem("autoLogin");
-    const autoLoginId = localStorage.getItem("autoLoginId");
-    const autoLoginPw = localStorage.getItem("autoLoginPw");
-    const saveId = localStorage.getItem("saveId");
-    const ID_SAVED = localStorage.getItem("ID_SAVED");
+    const autoLogin = localStorage.getItem(`${TITLE}_autoLogin`);
+    const autoLoginId = localStorage.getItem(`${TITLE}_autoLoginId`);
+    const autoLoginPw = localStorage.getItem(`${TITLE}_autoLoginPw`);
+    const isLocalSaved = localStorage.getItem(`${TITLE}_isLocalSaved`);
+    const localId = localStorage.getItem(`${TITLE}_localId`);
 
     if (autoLogin === "true") {
       setCheckedAutoLogin(true);
@@ -82,10 +82,10 @@ export const UserLogin = () => {
       }
       setLoginTrigger(true);
     }
-    if (saveId === "true") {
+    if (isLocalSaved === "true") {
       setCheckedSaveId(true);
-      if (ID_SAVED) {
-        setUserId(ID_SAVED);
+      if (localId) {
+        setUserId(localId);
       }
     }
   }, []);
@@ -136,28 +136,26 @@ export const UserLogin = () => {
       if (res.data.status === "success") {
         // localStorage
         if (checkedSaveId) {
-          localStorage.setItem("ID_SAVED", res.data.result.user_id);
+          localStorage.setItem(`${TITLE}_localId`, userId);
         }
-        localStorage.setItem("GOOGLE", "false");
+        localStorage.setItem(`${TITLE}_isGoogle`, "false");
 
         // sessionStorage
         if (res.data.admin === "admin") {
-          sessionStorage.setItem("ADMIN", "true");
+          sessionStorage.setItem(`${TITLE}_admin`, "true");
         }
         else {
-          sessionStorage.setItem("ADMIN", "false");
+          sessionStorage.setItem(`${TITLE}_admin`, "false");
         }
-
-        sessionStorage.setItem("ID_SESSION", res.data.result.user_id);
-        sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem("LANG", "ko");
-
+        sessionStorage.setItem(`${TITLE}_sessionId`, res.data.result.user_id);
+        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem(`${TITLE}_lang`, "ko");
         sync();
         navigate("/today/list");
       }
       else {
         alert(translate(res.data.msg));
-        sessionStorage.setItem("ID_SESSION", "");
+        sessionStorage.setItem(`${TITLE}_sessionId`, "");
       }
     })
     .catch((err: any) => {

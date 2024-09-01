@@ -27,7 +27,7 @@ router.get("/app/info", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -78,7 +78,7 @@ router.post("/email/send", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -115,7 +115,7 @@ router.post("/email/verify", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -152,7 +152,7 @@ router.post("/signup", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -182,7 +182,7 @@ router.post("/resetPw", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -222,7 +222,7 @@ router.post("/login", async (req: Request, res: Response) => {
       status: "error",
       msg: "loginFailed",
       result: null,
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -251,7 +251,7 @@ router.get("/detail", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -281,7 +281,7 @@ router.post("/update", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -310,7 +310,7 @@ router.delete("/deletes", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -339,7 +339,7 @@ router.get("/category/list", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -370,7 +370,7 @@ router.post("/category/save", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -403,7 +403,7 @@ router.get("/dummyList", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -434,7 +434,7 @@ router.post("/dummySave", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -464,7 +464,7 @@ router.delete("/dummyDeletes", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });

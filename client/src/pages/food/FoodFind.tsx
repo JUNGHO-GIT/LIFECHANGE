@@ -16,13 +16,14 @@ export const FoodFind = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, translate, koreanDate
+    navigate, location_dateStart, location_dateEnd, PATH, URL_OBJECT, translate, koreanDate,
+    TITLE,
   } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용 (find 사용금지)
   const [PAGING, setPAGING] = useStorage(
-    `PAGING(${PATH})`, {
+    `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       query: "",
       page: 0,
@@ -30,7 +31,6 @@ export const FoodFind = () => {
   );
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [lang, setLang] = useState<string | null>(sessionStorage.getItem("LANG"));
   const [checkedQueries, setCheckedQueries] = useState<any>({});
   const [isExpanded, setIsExpanded] = useState<number[]>([0]);
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -87,7 +87,7 @@ export const FoodFind = () => {
   // 페이지 로드 시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray = [];
-    let section = sessionStorage.getItem("foodSection");
+    let section = sessionStorage.getItem(`${TITLE}_foodSection`);
 
     // sectionArray 초기화
     if (section) {
@@ -117,7 +117,7 @@ export const FoodFind = () => {
   // 체크박스 상태 변경 시 sessionStorage에 저장
   useEffect(() => {
     let sectionArray: any[] = [];
-    let section: any = sessionStorage.getItem("foodSection");
+    let section: any = sessionStorage.getItem(`${TITLE}_foodSection`);
 
     // sectionArray 초기화
     if (section) {
@@ -158,7 +158,7 @@ export const FoodFind = () => {
     });
 
     // sessionStorage에 저장
-    sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
+    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
 
   }, [checkedQueries, PAGING.page, OBJECT]);
 
@@ -168,7 +168,6 @@ export const FoodFind = () => {
     axios.get(`${URL_OBJECT}/find`, {
       params: {
         PAGING: PAGING,
-        lang: lang,
       },
     })
     .then((res: any) => {

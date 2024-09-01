@@ -17,14 +17,13 @@ export const UserCategory = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
-    URL_OBJECT, sessionId, translate, koreanDate
-
+    URL_OBJECT, sessionId, translate, koreanDate, TITLE,
   } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
-    `DATE(${PATH})`, {
+    `${TITLE}_date_(${PATH})`, {
       dateType: "day",
       dateStart: location_dateStart || koreanDate,
       dateEnd: location_dateEnd || koreanDate,
@@ -139,7 +138,7 @@ export const UserCategory = () => {
     .then((res: any) => {
       if (res.data.status === "success") {
         alert(translate(res.data.msg));
-        sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
       }
       else {
         alert(translate(res.data.msg));
@@ -431,12 +430,20 @@ export const UserCategory = () => {
                           />
                         </Div>
                         <Div className={"fs-0-9rem ms-auto d-row"}>
-                          <Icons name={"TbPencil"} className={"w-14 h-14 navy"} onClick={() => {
-                            handlerRename("title", index);
-                          }} />
-                          <Icons name={"TbTrash"} className={"w-14 h-14 red"} onClick={() => {
-                            handlerRemove("title", index);
-                          }} />
+                          <Icons
+                            name={"TbPencil"}
+                            className={"w-14 h-14 navy"}
+                            onClick={() => {
+                              handlerRename("title", index);
+                            }}
+                          />
+                          <Icons
+                            name={"TbTrash"}
+                            className={"w-14 h-14 red"}
+                            onClick={() => {
+                              handlerRemove("title", index);
+                            }}
+                          />
                         </Div>
                       </Div>
                     </TableCell>

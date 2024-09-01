@@ -16,16 +16,17 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate
+    navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate, TITLE,
+    sessionPercent, sessionProperty, sessionScale, PATH,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [percent, setPercent] = useState({
-    total: {} as Record<string, any>,
-    exercise : {} as Record<string, any>,
-    food : {} as Record<string, any>,
-    money : {} as Record<string, any>,
-    sleep : {} as Record<string, any>,
+    total: {} as any,
+    exercise : {} as any,
+    food : {} as any,
+    money : {} as any,
+    sleep : {} as any,
   });
   const [smileScore, setSmileScore] = useState({
     total: "0",
@@ -138,18 +139,14 @@ export const TopNav = () => {
   // 퍼센트, 자산, 체중 설정
   useEffect(() => {
     const handleStorageChange = () => {
-      const storedPercent = sessionStorage.getItem("PERCENT");
-      const storedProperty = sessionStorage.getItem("PROPERTY");
-      const storedScale = sessionStorage.getItem("SCALE");
-
-      if (storedPercent) {
-        setPercent(JSON.parse(storedPercent));
+      if (sessionPercent) {
+        setPercent(JSON.parse(sessionPercent));
       }
-      if (storedProperty) {
-        setProperty(JSON.parse(storedProperty));
+      if (sessionProperty) {
+        setProperty(JSON.parse(sessionProperty));
       }
-      if (storedScale) {
-        setScale(JSON.parse(storedScale));
+      if (sessionScale) {
+        setScale(JSON.parse(sessionScale));
       }
     };
 
@@ -217,8 +214,8 @@ export const TopNav = () => {
   const handleClickTobNav = (value: string) => {
     setSelectedTab(value);
 
-    // ex. selectedTab(food), selectedTab(exercise) 형식으로 저장
-    sessionStorage.setItem(`TABS(${firstStr})`, JSON.stringify(value));
+    // ex. title_tabs_calendar
+    sessionStorage.setItem(`${TITLE}_tabs_(${firstStr})`, JSON.stringify(value));
 
     let url = "";
     if (value === "real" || value === "schedule") {

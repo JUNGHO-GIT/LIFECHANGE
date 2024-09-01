@@ -37,7 +37,8 @@ const runRemoteScript = () => {
   const cmdRestart = 'sudo systemctl restart nginx';
 
   const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"`;
+    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGs} && ${cmdTar} && ${cmdRm} && ${cmdRestart}\'"
+  `;
 
   execSync(sshCommand, { stdio: 'inherit' });
 };

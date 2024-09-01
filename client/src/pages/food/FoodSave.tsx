@@ -17,7 +17,7 @@ export const FoodSave = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, foodArray, koreanDate,
-    URL_OBJECT, sessionId, translate
+    URL_OBJECT, sessionId, translate, TITLE,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ export const FoodSave = () => {
 
       // 스토리지 데이터 가져오기
       let sectionArray = [];
-      let section = sessionStorage.getItem("foodSection");
+      let section = sessionStorage.getItem(`${TITLE}_foodSection`);
 
       // sectionArray 설정
       if (section) {
@@ -399,7 +399,7 @@ export const FoodSave = () => {
   const handlerDelete = (index: number) => {
     // 스토리지 데이터 가져오기
     let sectionArray = [];
-    let section = sessionStorage.getItem("foodSection");
+    let section = sessionStorage.getItem(`${TITLE}_foodSection`);
 
     // sectionArray 초기화
     if (section) {
@@ -413,7 +413,7 @@ export const FoodSave = () => {
     sectionArray.splice(index, 1);
 
     // 스토리지 데이터 설정
-    sessionStorage.setItem("foodSection", JSON.stringify(sectionArray));
+    sessionStorage.setItem(`${TITLE}_foodSection`, JSON.stringify(sectionArray));
 
     // OBJECT 설정
     setOBJECT((prev: any) => ({

@@ -24,4 +24,5 @@
     "**/**build/**": true,
     "build.tar.gz": true
   },
+  "explorerExclude.backup": {},
 }

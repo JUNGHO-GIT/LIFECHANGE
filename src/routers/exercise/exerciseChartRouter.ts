@@ -30,7 +30,7 @@ router.get("/bar/today", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -60,7 +60,7 @@ router.get("/bar/week", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -90,7 +90,7 @@ router.get("/bar/month", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -120,7 +120,7 @@ router.get("/pie/week", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -150,7 +150,7 @@ router.get("/pie/month", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -180,7 +180,7 @@ router.get("/line/week", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -210,7 +210,7 @@ router.get("/line/month", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -240,7 +240,7 @@ router.get("/avg/week", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -270,7 +270,7 @@ router.get("/avg/month", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });

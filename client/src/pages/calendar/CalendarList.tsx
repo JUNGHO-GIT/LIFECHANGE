@@ -13,13 +13,13 @@ export const CalendarList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId, translate
+    navigate, PATH, curMonthStart, curMonthEnd, URL_OBJECT, sessionId, translate, TITLE,
   } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
-    `DATE(${PATH})`, {
+    `${TITLE}_date_(${PATH})`, {
       dateType: "",
       dateStart: curMonthStart,
       dateEnd: curMonthEnd,

@@ -13,7 +13,7 @@ export const BottomNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, translate, firstStr, koreanDate
+    navigate, translate, firstStr, koreanDate, TITLE,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -45,9 +45,9 @@ export const BottomNav = () => {
   const handleClickBottomNav = (value: string) => {
     setSelectedTab(value);
 
-    // ex. TABS(food), TABS(exercise) ...
+    // ex. TITLE_tabs_(food), TITLE_tabs_(exercise) ..
     let sessionStorageData = null;
-    const pattern = new RegExp(`^TABS\\(${value}\\)$`);
+    const pattern = new RegExp(`^${TITLE}_tabs_\\(${value}\\)$`);
 
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i) || "";

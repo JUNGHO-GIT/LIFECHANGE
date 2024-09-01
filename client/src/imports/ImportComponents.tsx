@@ -1,4 +1,4 @@
-// ImportElements.tsx
+// ImportComponents.tsx
 
 import { Div } from "@components/Div";
 import { Img } from "@components/Img";

@@ -19,20 +19,20 @@ export const TodayList = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, translate, sessionId, koreanDate
+    navigate, location_dateStart, location_dateEnd, PATH, URL_EXERCISE, URL_FOOD, URL_MONEY, URL_SLEEP, translate, sessionId, koreanDate, TITLE,
   } = useCommon();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
   const [DATE, setDATE] = useStorage(
-    `DATE(${PATH})`, {
+    `${TITLE}_date_(${PATH})`, {
       dateType: "day",
       dateStart:location_dateStart || koreanDate,
       dateEnd: location_dateEnd || koreanDate,
     }
   );
   const [PAGING, setPAGING] = useStorage(
-    `PAGING(${PATH})`, {
+    `${TITLE}_paging_(${PATH})`, {
       sort: "asc",
       page: 1,
     }

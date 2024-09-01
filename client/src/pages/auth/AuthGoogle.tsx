@@ -12,7 +12,7 @@ export const AuthGoogle = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    URL_GOOGLE, navigate
+    URL_GOOGLE, navigate, TITLE,
   } = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -20,19 +20,20 @@ export const AuthGoogle = () => {
     axios.get(`${URL_GOOGLE}/afterCallback`)
     .then((res: any) => {
       if (res.data.status === "success") {
-        localStorage.setItem("autoLogin", "true");
-        localStorage.setItem("autoLoginId", res.data.googleId);
-        localStorage.setItem("autoLoginPw", res.data.googlePw);
-        localStorage.setItem("GOOGLE", "true");
-        sessionStorage.setItem("ID_SESSION", res.data.googleId);
-        sessionStorage.setItem("CATEGORY", JSON.stringify(res.data.result.dataCategory));
-        sessionStorage.setItem("LANG", "ko");
+        localStorage.setItem(`${TITLE}_autoLogin`, "true");
+        localStorage.setItem(`${TITLE}_autoLoginId`, res.data.googleId);
+        localStorage.setItem(`${TITLE}_autoLoginPw`, res.data.googlePw);
+        localStorage.setItem(`${TITLE}_isGoogle`, "true");
+
+        sessionStorage.setItem(`${TITLE}_sessionId`, res.data.googleId);
+        sessionStorage.setItem(`${TITLE}_category`, JSON.stringify(res.data.result.dataCategory));
+        sessionStorage.setItem(`${TITLE}_lang`, "ko");
 
         if (res.data.admin === "admin") {
-          sessionStorage.setItem("ADMIN", "true");
+          sessionStorage.setItem(`${TITLE}_admin`, "true");
         }
         else {
-          sessionStorage.setItem("ADMIN", "false");
+          sessionStorage.setItem(`${TITLE}_admin`, "false");
         }
         sync();
         navigate("/today/list");

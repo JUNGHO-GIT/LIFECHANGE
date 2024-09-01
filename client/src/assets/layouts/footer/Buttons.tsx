@@ -19,7 +19,7 @@ export const Buttons = (
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    translate, PATH
+    translate, PATH,
   } = useCommon();
 
   // 7. btn ----------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ export const Buttons = (
         onClick={() => {
           flow.flowSave();
           Object.keys(sessionStorage).forEach((key) => {
-            if (key.includes("foodSection") || key.includes("PAGING")) {
+            if (key.includes("foodSection") || key.includes("paging")) {
               sessionStorage.removeItem(key);
             }
           });

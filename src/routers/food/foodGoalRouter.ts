@@ -31,7 +31,7 @@ router.get("/exist", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -65,7 +65,7 @@ router.get("/list", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -98,7 +98,7 @@ router.get("/detail", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -129,7 +129,7 @@ router.post("/save", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });
@@ -160,7 +160,7 @@ router.post("/deletes", async (req: Request, res: Response) => {
   catch (err: any) {
     res.status(500).json({
       status: "error",
-      error: err.toString()
+      error: err
     });
   }
 });

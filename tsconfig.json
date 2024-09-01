@@ -61,8 +61,8 @@
     "allowImportingTsExtensions": true
   },
   "include": [
+    "index.ts",
     "src/**/*",
-    "./index.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.d.ts",

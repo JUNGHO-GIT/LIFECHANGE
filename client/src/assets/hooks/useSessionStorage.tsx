@@ -8,8 +8,7 @@ export const useSessionStorage = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    sessionId, navigate, location,
-
+    sessionId, navigate, location, TITLE,
   } = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
@@ -20,9 +19,9 @@ export const useSessionStorage = () => {
       location.pathname.indexOf("/food/find") === -1 &&
       location.pathname.indexOf("/food/save") === -1
     ) {
-      const section = sessionStorage.getItem("foodSection");
+      const section = sessionStorage.getItem(`${TITLE}_foodSection`);
       if (section !== null || section !== undefined || section !== "") {
-        sessionStorage.removeItem("foodSection");
+        sessionStorage.removeItem(`${TITLE}_foodSection`);
       }
     }
   }, [location, navigate, sessionId]);

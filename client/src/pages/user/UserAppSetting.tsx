@@ -7,8 +7,7 @@ import { Loading } from "@imports/ImportLayouts";
 import { Icons, Img, Div } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
-import { TableContainer, Table, TableFooter } from "@imports/ImportMuis";
-import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 import { flag1, flag2 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
@@ -16,13 +15,12 @@ export const UserAppSetting = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, translate
+    navigate, translate, isAdmin, sessionLang, TITLE,
   } = useCommon();
 
   // 2-1. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
-  const [admin, setIsAdmin] = useState<string | null>(sessionStorage.getItem("admin"));
-  const [lang, setLang] = useState<string>(sessionStorage.getItem("LANG") || "ko");
+  const [lang, setLang] = useState<string>(sessionLang);
 
   // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
@@ -69,7 +67,7 @@ export const UserAppSetting = () => {
                 </TableRow>
                 {/** list **/}
                 <TableRow
-                  className={`${admin !== "true" ? "d-none" : ""} pointer`}
+                  className={`${isAdmin !== "true" ? "d-none" : ""} pointer`}
                   onClick={() => {
                     navigate("/user/dummy")
                   }}
@@ -95,7 +93,7 @@ export const UserAppSetting = () => {
                         className={"d-center mb-20"}
                         onClick={() => {
                           setLang("ko")
-                          sessionStorage.setItem("LANG", "ko")
+                          sessionStorage.setItem(`${TITLE}_lang`, "ko")
                           navigate(0)
                         }}
                       >
@@ -116,7 +114,7 @@ export const UserAppSetting = () => {
                         className={"d-center"}
                         onClick={() => {
                           setLang("en")
-                          sessionStorage.setItem("LANG", "en")
+                          sessionStorage.setItem(`${TITLE}_lang`, "en")
                           navigate(0)
                         }}
                       >
@@ -175,9 +173,9 @@ export const UserAppSetting = () => {
                 <TableRow
                   className={"pointer"}
                   onClick={() => {
-                    localStorage.setItem("autoLogin", "false")
-                    localStorage.setItem("autoLoginId", "")
-                    localStorage.setItem("autoLoginPw", "")
+                    localStorage.setItem(`${TITLE}_autoLogin`, "false")
+                    localStorage.setItem(`${TITLE}_autoLoginId`, "")
+                    localStorage.setItem(`${TITLE}_autoLoginPw`, "")
                     sessionStorage.clear()
                     navigate("/")
                   }}

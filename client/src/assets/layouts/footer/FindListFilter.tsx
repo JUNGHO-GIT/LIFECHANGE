@@ -29,7 +29,6 @@ export const FindListFilter = (
       <Input
         label={translate("query")}
         value={state?.PAGING?.query}
-        inputclass={"h-min0 h-30"}
         onChange={(e: any) => {
           setState?.setPAGING((prev: any) => ({
             ...prev,

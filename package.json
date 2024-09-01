@@ -35,8 +35,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "request": "^2.88.2",
-    "request-promise": "^4.2.6",
-    "tsx": "^4.19.0"
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -50,6 +49,7 @@
     "@types/passport-google-oauth20": "^2.0.16",
     "jsdom": "^25.0.0",
     "tslib": "^2.7.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.5.4"
   }
 }
