@@ -79,7 +79,7 @@ export const list = async (
   });
 
   return {
-    totalCnt: findResult,
+    totalCnt: totalCnt,
     result: finalResult
   };
 };

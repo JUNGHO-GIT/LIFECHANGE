@@ -797,9 +797,6 @@ export const Picker = (
                   backgroundColor: clickedType === "selectDate" ? "#1976d2" :"#F9FAFB",
                   color: clickedType === "selectDate" ? "#ffffff" : "#1976d2",
                 }}
-                onClick={() => {
-                  setClickedType("selectDate");
-                }}
               >
                 {translate("selectDate")}
               </Btn>
