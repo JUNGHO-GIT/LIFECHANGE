@@ -14,6 +14,7 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_CALLBACK_URL;
 const oAuth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+const customSession: any = session;
 
 // 1. login ----------------------------------------------------------------------------------------
 export const login = async () => {
@@ -42,8 +43,8 @@ export const callback = async (
     oAuth2Client.setCredentials(tokens);
 
     const userInfo = await oAuth2Client.verifyIdToken({
-      idToken: tokens.id_token,
-      audience: CLIENT_ID
+      idToken: tokens.id_token as string,
+      audience: CLIENT_ID as string,
     });
 
     const payload = userInfo.getPayload();
@@ -51,8 +52,8 @@ export const callback = async (
 
     // 세션에 정보 저장
     if (payload) {
-      session.status = "authenticated";
-      session.googleId = payload.email;
+      customSession.status = "authenticated";
+      customSession.googleId = payload.email;
     }
 
     return {
@@ -70,7 +71,7 @@ export const callback = async (
 // 3. afterCallback --------------------------------------------------------------------------------
 export const afterCallback = async () => {
 
-  if (session.status !== "authenticated") {
+  if (customSession.status !== "authenticated") {
     return null;
   }
 
@@ -78,7 +79,7 @@ export const afterCallback = async () => {
   let finalResult: any = null;
   let adminResult: any = null;
 
-  const googleId = session.googleId;
+  const googleId = customSession.googleId;
   const saltRounds = 10;
   const token = crypto.randomBytes(20).toString('hex');
   const combinedPw = `${googleId}_${token}`;
@@ -122,6 +123,6 @@ export const afterCallback = async () => {
     result: finalResult,
     admin: adminResult,
     googleId: googleId,
-    googlePw: `${googleId}_google`
+    googlePw: hashedPassword,
   };
 }

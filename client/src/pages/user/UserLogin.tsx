@@ -126,6 +126,10 @@ export const UserLogin = () => {
         sync();
         navigate("/today/list");
       }
+      else if (res.data.status === "isGoogleUser") {
+        alert(translate(res.data.msg));
+        sessionStorage.setItem(`${TITLE}_sessionId`, "");
+      }
       else {
         alert(translate(res.data.msg));
         sessionStorage.setItem(`${TITLE}_sessionId`, "");

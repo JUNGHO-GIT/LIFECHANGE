@@ -25,9 +25,10 @@ router.get("/app/info", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -39,17 +40,17 @@ router.post("/email/send", async (req: Request, res: Response) => {
       req.body.user_id as string,
       req.body.type as string,
     );
-    if (result.result === "success") {
-      res.json({
-        status: "success",
-        msg: "emailSendSuccessful",
-        result: result,
-      });
-    }
-    else if (result.result === "duplicate") {
+    if (result.result === "duplicate") {
       res.json({
         status: "duplicate",
         msg: "duplicatedEmail",
+        result: null,
+      });
+    }
+    else if (result.result === "isGoogle") {
+      res.json({
+        status: "isGoogle",
+        msg: "isGoogleUserResetPw",
         result: null,
       });
     }
@@ -69,16 +70,17 @@ router.post("/email/send", async (req: Request, res: Response) => {
     }
     else {
       res.json({
-        status: "fail",
-        msg: "emailSendFailed",
-        result: null,
+        status: "success",
+        msg: "emailSendSuccessful",
+        result: result.result,
       });
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -113,9 +115,10 @@ router.post("/email/verify", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -150,9 +153,10 @@ router.post("/signup", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -164,25 +168,33 @@ router.post("/resetPw", async (req: Request, res: Response) => {
       req.body.user_id as string,
       req.body.OBJECT as Record<string, any>,
     );
-    if (result) {
+    if (result.result === "isGoogle") {
       res.json({
-        status: "success",
-        msg: "pwResetSuccessful",
-        result: result,
+        status: "isGoogle",
+        msg: "isGoogleUserLogin",
+        result: result.result,
+      });
+    }
+    else if (result.result === "notExist") {
+      res.json({
+        status: "notExist",
+        msg: "emailNotExist",
+        result: null,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "pwResetFailed",
-        result: null,
+        status: "success",
+        msg: "resetPwSuccessful",
+        result: result.result,
       });
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -194,12 +206,12 @@ router.post("/login", async (req: Request, res: Response) => {
       req.body.user_id as string,
       req.body.user_pw as string,
     );
-    if (result.result && result.result !== "fail") {
+    if (result.result === "isGoogle") {
       res.json({
-        status: "success",
-        msg: "loginSuccessful",
-        admin: result.admin,
+        status: "isGoogle",
+        msg: "isGoogleUserLogin",
         result: result.result,
+        admin: result.admin,
       });
     }
     else if (result.result === "fail") {
@@ -207,13 +219,15 @@ router.post("/login", async (req: Request, res: Response) => {
         status: "fail",
         msg: "theIdOrPwIsIncorrect",
         result: null,
+        admin: null,
       });
     }
     else {
       res.json({
-        status: "fail",
-        msg: "loginFailed",
-        result: null,
+        status: "success",
+        msg: "loginSuccessful",
+        result: result.result,
+        admin: result.admin,
       });
     }
   }
@@ -249,9 +263,10 @@ router.get("/detail", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -279,9 +294,10 @@ router.post("/update", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -308,9 +324,10 @@ router.delete("/deletes", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -337,9 +354,10 @@ router.get("/category/list", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -368,9 +386,10 @@ router.post("/category/save", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -401,9 +420,10 @@ router.get("/dummyList", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -432,9 +452,10 @@ router.post("/dummySave", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -462,9 +483,10 @@ router.delete("/dummyDeletes", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });

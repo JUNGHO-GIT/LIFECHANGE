@@ -25,9 +25,12 @@ export const UserDeletes = () => {
   // 2-2. useState ---------------------------------------------------------------------------------
   const OBJECT_DEF: any = {
     _id: "",
+    user_number: 0,
     user_id: "",
     user_google: "N",
-    user_number: 0,
+    user_id_verified: false,
+    user_pw: "",
+    user_pw_verified: "",
     user_gender: "",
     user_age: "",
     user_initScale: "",
@@ -113,43 +116,6 @@ export const UserDeletes = () => {
                 label={translate("signupDate")}
                 value={moment(OBJECT.user_regDt).format("YYYY-MM-DD HH:mm:ss")}
                 readOnly={true}
-              />
-            </Grid>
-            <Hr px={20} />
-            {/** 비밀번호 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pw")}
-                helperText={`* ${translate("helperPw")}`}
-                value={OBJECT.user_pw}
-                inputRef={REFS.current[i]?.user_pw}
-                error={ERRORS[i]?.user_pw}
-                disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => (
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw: e.target.value
-                  }))
-                )}
-              />
-            </Grid>
-            {/** 비밀번호 확인 **/}
-            <Grid size={12}>
-              <Input
-                type={"password"}
-                label={translate("pwVerified")}
-                helperText={`* ${translate("helperPwVerified")}`}
-                value={OBJECT.user_pw_verified}
-                inputRef={REFS.current[i]?.user_pw_verified}
-                error={ERRORS[i]?.user_pw_verified}
-                disabled={OBJECT.user_id_verified === false}
-                onChange={(e: any) => (
-                  setOBJECT((prev: any) => ({
-                    ...prev,
-                    user_pw_verified: e.target.value
-                  }))
-                )}
               />
             </Grid>
             <Hr px={20} />

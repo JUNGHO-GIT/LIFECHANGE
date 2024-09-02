@@ -28,9 +28,10 @@ router.get("/bar/today", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -58,9 +59,10 @@ router.get("/bar/week", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -88,9 +90,10 @@ router.get("/bar/month", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -118,9 +121,10 @@ router.get("/pie/week", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -148,9 +152,10 @@ router.get("/pie/month", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -178,9 +183,10 @@ router.get("/line/week", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -208,9 +214,10 @@ router.get("/line/month", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -238,9 +245,10 @@ router.get("/avg/week", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -268,9 +276,10 @@ router.get("/avg/month", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });

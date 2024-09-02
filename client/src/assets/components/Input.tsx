@@ -17,7 +17,7 @@ export const Input = (props: any) => {
         input: {
           ...props?.slotProps?.input,
           className: (
-            props?.inputclass || "fs-0-8rem d-left"
+            props?.inputclass || "fs-1-0rem text-left"
           ),
           readOnly: (
             props?.readOnly || false

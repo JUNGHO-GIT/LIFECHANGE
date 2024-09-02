@@ -31,9 +31,10 @@ router.get("/percent", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -61,9 +62,10 @@ router.get("/property", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -91,9 +93,10 @@ router.get("/scale", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });

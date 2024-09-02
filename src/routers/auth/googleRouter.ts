@@ -28,9 +28,10 @@ router.get("/login", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -52,9 +53,10 @@ router.get("/callback", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -82,9 +84,10 @@ router.get("/afterCallback", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });

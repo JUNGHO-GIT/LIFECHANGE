@@ -55,18 +55,25 @@ export const UserSignup = () => {
       type: "signup"
     })
     .then((res: any) => {
-      if (res.data.status === "duplicate") {
+      if (res.data.status === "success") {
+        alert(translate(res.data.msg));
+        setOBJECT((prev: any) => ({
+          ...prev,
+          user_id_sended: true
+        }));
+      }
+      else if (res.data.status === "duplicate") {
         alert(translate(res.data.msg));
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: false
         }));
       }
-      else if (res.data.status === "success") {
+      else if (res.data.status === "fail") {
         alert(translate(res.data.msg));
         setOBJECT((prev: any) => ({
           ...prev,
-          user_id_sended: true
+          user_id_sended: false
         }));
       }
       else {

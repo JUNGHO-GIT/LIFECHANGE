@@ -29,9 +29,10 @@ router.get("/exist", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -63,9 +64,10 @@ router.get("/list", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -96,9 +98,10 @@ router.get("/detail", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -128,9 +131,10 @@ router.post("/save", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });
@@ -160,9 +164,10 @@ router.post("/deletes", async (req: Request, res: Response) => {
     }
   }
   catch (err: any) {
+    console.error(err);
     res.status(500).json({
       status: "error",
-      error: err
+      error: err.toString()
     });
   }
 });

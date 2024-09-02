@@ -73,7 +73,7 @@ export const user = {
     user_id_param: string
   ) => {
     const finalResult = await User.findOne({
-      user_id: user_id_param
+      user_id: user_id_param,
     })
     .lean();
     return finalResult;
@@ -83,7 +83,6 @@ export const user = {
     user_id_param: string,
     OBJECT_param: Record<string, any>,
   ) => {
-
     const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
@@ -107,7 +106,6 @@ export const user = {
     user_id_param: string,
     OBJECT_param: Record<string, any>,
   ) => {
-
     const finalResult = await User.findOneAndUpdate({
       user_id: user_id_param,
     }, {

@@ -55,8 +55,8 @@
 .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
   border-color: #d32f2f !important;
 }
-.MuiFormLabel-root-MuiInputLabel-root {
-  font-size: 0.8rem !important;
+.MuiInputLabel-root {
+  font-size: 0.9rem !important;
 }
 
 /** grid ******************************************************************************************/

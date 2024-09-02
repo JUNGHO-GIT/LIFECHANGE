@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import morgan from "morgan";
 
 import { router as calendarRouter } from "@routers/calendar/calendarRouter";
 import { router as exerciseChartRouter } from "@routers/exercise/exerciseChartRouter";
@@ -37,12 +36,12 @@ const port = process.env.DB_PORT || '27017';
 const db = process.env.DB_NAME;
 
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`)
-  .then(() => {
-    console.log('MongoDB 연결 성공');
-  })
-  .catch((error) => {
-    console.error(`MongoDB 연결 실패: ${error}`);
-  });
+.then(() => {
+  console.log('MongoDB 연결 성공');
+})
+.catch((error) => {
+  console.error(`MongoDB 연결 실패: ${error}`);
+});
 
 // 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort = Number(process.env.HTTP_PORT) || 4000;
@@ -83,13 +82,6 @@ app.use((req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
 });
-
-// 에러인 경우만 로그를 출력 -----------------------------------------------------------------------
-app.use(morgan('dev', {
-  skip: (req, res) => {
-    return res.statusCode < 400;
-  }
-}));
 
 // 라우터 설정 -------------------------------------------------------------------------------------
 app.use(`${preFix}/calendar`, calendarRouter);

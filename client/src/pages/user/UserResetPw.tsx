@@ -47,21 +47,28 @@ export const UserResetPw = () => {
       type: "resetPw"
     })
     .then((res: any) => {
-      if (res.data.status === "notExist") {
-        alert(translate(res.data.msg));
-        setOBJECT((prev: any) => ({
-          ...prev,
-          user_id_sended: false
-        }));
-      }
-      else if (res.data.status === "success") {
+      if (res.data.status === "success") {
         alert(translate(res.data.msg));
         setOBJECT((prev: any) => ({
           ...prev,
           user_id_sended: true
         }));
       }
-      else {
+      else if (res.data.status === "notExist") {
+        alert(translate(res.data.msg));
+        setOBJECT((prev: any) => ({
+          ...prev,
+          user_id_sended: false
+        }));
+      }
+      else if (res.data.status === "isGoogle") {
+        alert(translate(res.data.msg));
+        setOBJECT((prev: any) => ({
+          ...prev,
+          user_id_sended: false
+        }));
+      }
+      else if (res.data.status === "fail") {
         alert(translate(res.data.msg));
         setOBJECT((prev: any) => ({
           ...prev,

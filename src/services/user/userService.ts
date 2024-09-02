@@ -69,6 +69,7 @@ export const sendEmail = async (
     user_id_param
   );
 
+
   if (type_param === "signup") {
     if (findResult) {
       return {
@@ -77,7 +78,14 @@ export const sendEmail = async (
     }
   }
   else if (type_param === "resetPw") {
-    if (!findResult) {
+    if (findResult) {
+      if (findResult.user_google === "Y") {
+        return {
+          result: "isGoogle",
+        };
+      }
+    }
+    else {
       return {
         result: "notExist",
       };
@@ -168,26 +176,28 @@ export const userResetPw = async (
   // findResult, finalResult 변수 선언
   let findResult: any = null;
   let finalResult: any = null;
+  let saltRounds: number = 10;
+  let token: string = crypto.randomBytes(20).toString('hex');
+  let combinedPw: string = "";
 
   findResult = await repository.user.checkId(
     user_id_param
   );
 
+  // ID가 존재하지 않으면 바로 종료
   if (!findResult) {
     finalResult = "notExist";
   }
+
+  // Google 사용자인 경우
+  if (findResult.user_google === "Y") {
+    finalResult = "isGoogle";
+  }
+
   else {
-    const saltRounds = 10;
-    const token = crypto.randomBytes(20).toString('hex');
-    let combinedPw: string = "";
+    combinedPw = `${OBJECT_param.user_pw}_${token}`;
 
-    if (findResult.user_google === "Y") {
-      combinedPw = `${user_id_param}_${token}`;
-    }
-    else {
-      combinedPw = `${OBJECT_param.user_pw}_${token}`;
-    }
-
+    // 해쉬 비밀번호
     const hashedPassword = await bcrypt.hash(combinedPw, saltRounds);
     OBJECT_param.user_token = token
     OBJECT_param.user_pw = hashedPassword;
@@ -208,45 +218,51 @@ export const userLogin = async (
 
   // findResult, finalResult 변수 선언
   let findResult: any = null;
-  let finalResult: any = null;
-  let adminResult: any = null;
+  let finalResult: any = "fail";
+  let adminResult: any = "user";
+  let combinedPw: string = "";
 
-  findResult = await repository.user.checkId(
-    user_id_param
-  );
+  // ID 체크
+  findResult = await repository.user.checkId(user_id_param);
 
+  // ID가 존재하지 않으면 바로 종료
   if (!findResult) {
+    return {
+      result: "fail",
+      admin: "user",
+    };
+  }
+
+  // Google 사용자인 경우
+  if (findResult.user_google === "Y") {
+    return {
+      result: "isGoogle",
+      admin: "user",
+    };
+  }
+  // 일반 사용자인 경우
+  else {
+    combinedPw = `${user_pw_param}_${findResult.user_token}`;
+  }
+
+  // 비밀번호 비교
+  const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
+
+  if (isPasswordMatch) {
+    finalResult = findResult;
+  }
+  else {
     finalResult = "fail";
   }
-  else {
-    let combinedPw: string = "";
 
-    if (findResult.user_google === "Y") {
-      combinedPw = `${user_id_param}_${findResult.user_token}`;
-    }
-    else {
-      combinedPw = `${user_pw_param}_${findResult.user_token}`;
-    }
-    const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
-
-    if (isPasswordMatch) {
-      finalResult = findResult;
-    }
-    else {
-      finalResult = "fail";
-    }
-  }
-
+  // 관리자 확인
   if (user_id_param === process.env.ADMIN_ID) {
     adminResult = "admin";
-  }
-  else {
-    adminResult = "user";
   }
 
   return {
     result: finalResult,
-    admin: adminResult
+    admin: adminResult,
   };
 };
 

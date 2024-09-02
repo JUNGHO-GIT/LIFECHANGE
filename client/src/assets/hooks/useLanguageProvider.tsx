@@ -1503,11 +1503,11 @@ export const useTranslate = () => {
       ko: "아이디 또는 비밀번호가 일치하지 않습니다",
       en: "The ID or Password is incorrect"
     },
-    pwResetSuccessful: {
+    resetPwSuccessful: {
       ko: "비밀번호 변경 성공",
       en: "Password Reset Successful"
     },
-    pwResetFailed: {
+    resetPwFailed: {
       ko: "비밀번호 변경 실패",
       en: "Password Reset Failed"
     },
@@ -1558,6 +1558,14 @@ export const useTranslate = () => {
     cantBeDeletedLastItem: {
       ko: "마지막 항목은 삭제할 수 없습니다",
       en: "The last item cannot be deleted"
+    },
+    isGoogleUserLogin: {
+      ko: "구글 사용자입니다. 구글 로그인을 이용해주세요",
+      en: "This is a Google user. Please use Google Login"
+    },
+    isGoogleUserResetPw: {
+      ko: "구글 사용자입니다. 비밀번호 변경을 이용할 수 없습니다",
+      en: "This is a Google user. You cannot use password reset"
     },
     // ---------------------------------------------------------------------------------------------
     // error
