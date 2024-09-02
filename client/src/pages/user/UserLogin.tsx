@@ -86,10 +86,6 @@ export const UserLogin = () => {
     if (isLocalSaved === "true") {
       setCheckedSaveId(true);
       if (localId) {
-        setOBJECT({
-          user_id: localId,
-          user_pw: "",
-        });
         setOBJECT((prev: any) => ({
           ...prev,
           user_id: localId,
