@@ -267,16 +267,16 @@ export const UserLogin = () => {
     );
     // 7-4. google
     const googleSection = () => (
-      <Input
-        value={translate("googleLogin")}
-        className={"bg-white pointer"}
-        startadornment={
-          <Img src={user1} className={"w-15 h-15"} />
-        }
+      <Btn
+        color={"primary"}
+        className={"w-100p fs-1-0rem bg-white black"}
         onClick={() => {
           flowGoogle();
         }}
-      />
+      >
+        <Img src={user1} className={"w-15 h-15 me-10"} />
+        {translate("googleLogin")}
+      </Btn>
     );
     // 7-5. toSignup
     const toSignupSection = () => (
