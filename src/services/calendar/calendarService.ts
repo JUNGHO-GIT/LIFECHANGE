@@ -37,23 +37,28 @@ export const list = async (
 
   // findResult, finalResult 변수 선언
   let findResult: any = null;
-  let finalResult: any = null;
+  let finalResult: any = null
+  let totalCnt: number = 0;
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
   const dateStart = DATE_param.dateStart;
   const dateEnd = DATE_param.dateEnd;
 
-  findResult = await repository.list.cnt(
+  totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
   );
 
-  finalResult = await repository.list.listReal(
+  findResult = await repository.list.listReal(
     user_id_param, dateType, dateStart, dateEnd
   );
-
+  
+  if (findResult) {
+    finalResult = findResult;
+  }
+  
   return {
-    totalCnt: findResult,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };

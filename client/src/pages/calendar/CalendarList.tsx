@@ -81,7 +81,7 @@ export const CalendarList = () => {
   // 7. calendar -----------------------------------------------------------------------------------
   const calendarNode = () => {
 
-    const dateInRange = (date=new Date, dateStart="0000-00-00", dateEnd="0000-00-00") => {
+    const dateInRange = (date: any, dateStart: any, dateEnd: any) => {
       const currDate = moment(date).tz("Asia/Seoul").startOf('day');
       const startDate = moment(dateStart).tz("Asia/Seoul").startOf('day');
       const endDate = moment(dateEnd).tz("Asia/Seoul").endOf('day');
@@ -166,11 +166,11 @@ export const CalendarList = () => {
               }}
               onActiveStartDateChange={({ activeStartDate, view }) => {
                 const newDate = moment(activeStartDate).tz("Asia/Seoul").format("YYYY-MM-DD");
-                setDATE({
-                  ...DATE,
-                  dateStart: newDate,
-                  dateEnd: newDate
-                });
+                setDATE((prev: any) => ({
+                  ...prev,
+                  dateStart: moment(activeStartDate).tz("Asia/Seoul").startOf("month").format("YYYY-MM-DD"),
+                  dateEnd: moment(activeStartDate).tz("Asia/Seoul").endOf("month").format("YYYY-MM-DD")
+                }));
               }}
               onClickDay={(value: Date) => {
                 const calendarForDate = OBJECT.filter((calendar) =>
@@ -192,13 +192,15 @@ export const CalendarList = () => {
               }}
               tileClassName={({ date, view }) => {
                 let className = "calendar-tile";
+                let isSat = moment(date).day() === 6; // 토요일 확인
+                let isSun = moment(date).day() === 0; // 일요일 확인
                 let isToday = moment(date).isSame(new Date(), 'day');
                 let isCurrentMonth = moment(date).isSame(moment(DATE.dateStart), 'month');
-
+              
                 const calendarForDates = OBJECT.filter((calendar) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-
+              
                 if (calendarForDates.length > 0) {
                   const hasManySections = calendarForDates.some((calendar) => (
                     calendar.calendar_section.length > 2
@@ -207,17 +209,22 @@ export const CalendarList = () => {
                     className += " over-y-auto";
                   }
                 }
-
+                // 토요일 색상 변경
+                if (isSat) {
+                  className += " calendar-sat";
+                }
+                // 일요일 색상 변경
+                if (isSun) {
+                  className += " calendar-sun";
+                }
                 // 오늘 날짜
                 if (isToday) {
                   className += " calendar-today";
                 }
-
                 // 이전달 or 다음달
                 if (!isCurrentMonth) {
                   className += " calendar-outside";
                 }
-
                 return className;
               }}
               tileContent={({ date, view }) => {

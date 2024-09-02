@@ -182,6 +182,15 @@ abbr[title] {
   font-weight: 500;
   font-size: 0.6rem;
 }
+
+.calendar-sat abbr {
+  text-decoration: none;
+  color: blue;
+}
+.calendar-sun abbr {
+  text-decoration: none;
+  color: red;
+}
 .calendar-outside abbr {
   text-decoration: none;
   color: #9c9c9c9c;
