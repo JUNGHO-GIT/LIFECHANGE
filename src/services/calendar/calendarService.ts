@@ -1,6 +1,7 @@
 // calendarService.ts
 
 import * as repository from "@repositories/calendar/calendarRepository";
+import moment from "moment-timezone";
 
 // 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
@@ -42,8 +43,10 @@ export const list = async (
 
   // date 변수 선언
   const dateType = DATE_param.dateType;
-  const dateStart = DATE_param.dateStart;
-  const dateEnd = DATE_param.dateEnd;
+
+  // 플러스 마이너스 1개월
+  const dateStart = moment(DATE_param.dateStart).subtract(1, "months").format("YYYY-MM-DD");
+  const dateEnd = moment(DATE_param.dateEnd).add(1, "months").format("YYYY-MM-DD");
 
   totalCnt = await repository.list.cnt(
     user_id_param, dateType, dateStart, dateEnd
@@ -52,11 +55,11 @@ export const list = async (
   findResult = await repository.list.listReal(
     user_id_param, dateType, dateStart, dateEnd
   );
-  
+
   if (findResult) {
     finalResult = findResult;
   }
-  
+
   return {
     totalCnt: totalCnt,
     result: finalResult,

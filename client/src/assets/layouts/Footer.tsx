@@ -23,7 +23,11 @@ export const Footer = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {PATH} = useCommon();
+  const {
+    PATH
+  } = useCommon();
+
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [typeName, setTypeName] = useState("");
   const [styleClass, setStyleClass] = useState("");
 

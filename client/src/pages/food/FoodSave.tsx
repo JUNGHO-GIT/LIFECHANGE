@@ -1,8 +1,8 @@
 // FoodSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateFood } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -19,6 +19,9 @@ export const FoodSave = () => {
     navigate, location_dateType, location_dateStart, location_dateEnd, foodArray, koreanDate,
     URL_OBJECT, sessionId, translate, TITLE,
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateFood();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -70,24 +73,6 @@ export const FoodSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState -------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.food_section?.map(() => ({
-    food_part_idx: false,
-    food_name: false,
-    food_kcal: false,
-    food_carb: false,
-    food_protein: false,
-    food_fat: false,
-  })));
-  const REFS: any = useRef(OBJECT?.food_section?.map(() => ({
-    food_part_idx: createRef(),
-    food_name: createRef(),
-    food_kcal: createRef(),
-    food_carb: createRef(),
-    food_protein: createRef(),
-    food_fat: createRef(),
-  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -238,100 +223,9 @@ export const FoodSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    REFS.current = OBJECT?.food_section?.map((item: any, idx: number) => ({
-      food_part_idx: REFS?.current[idx]?.food_part_idx || createRef(),
-      food_name: REFS?.current[idx]?.food_name || createRef(),
-      food_kcal: REFS?.current[idx]?.food_kcal || createRef(),
-      food_carb: REFS?.current[idx]?.food_carb || createRef(),
-      food_protein: REFS?.current[idx]?.food_protein || createRef(),
-      food_fat: REFS?.current[idx]?.food_fat || createRef(),
-    }));
-  }, [OBJECT?.food_section.length]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = OBJECT?.food_section?.map(() => ({
-      food_part_idx: false,
-      food_name: false,
-      food_kcal: false,
-      food_carb: false,
-      food_protein: false,
-      food_fat: false,
-    }));
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    for (let idx = 0; idx < OBJECT?.food_section.length; idx++) {
-      const section = OBJECT?.food_section[idx];
-      const refsCurrentIdx = REFS?.current[idx];
-      if (!refsCurrentIdx) {
-        console.warn('Ref is undefined, skipping validation for index:', idx);
-        continue;
-      }
-      else if (!section.food_part_idx || section.food_part_idx === 0) {
-        alert(translate("errorFoodPart"));
-        refsCurrentIdx.food_part_idx.current &&
-        refsCurrentIdx.food_part_idx?.current?.focus();
-        initialErrors[idx].food_part_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.food_name || section.food_name === "" || section.food_name === " ") {
-        alert(translate("errorFoodName"));
-        refsCurrentIdx.food_name.current &&
-        refsCurrentIdx.food_name?.current?.focus();
-        initialErrors[idx].food_name = true;
-        foundError = true;
-        break;
-      }
-      else if (section.food_kcal === undefined || section.food_kcal === null) {
-        alert(translate("errorFoodKcal"));
-        refsCurrentIdx.food_kcal.current &&
-        refsCurrentIdx.food_kcal?.current?.focus();
-        initialErrors[idx].food_kcal = true;
-        foundError = true;
-        break;
-      }
-      else if (section.food_carb === undefined || section.food_carb === null) {
-        alert(translate("errorFoodCarb"));
-        refsCurrentIdx.food_carb.current &&
-        refsCurrentIdx.food_carb?.current?.focus();
-        initialErrors[idx].food_carb = true;
-        foundError = true;
-        break;
-      }
-      else if (section.food_protein === undefined || section.food_protein === null) {
-        alert(translate("errorFoodProtein"));
-        refsCurrentIdx.food_protein.current &&
-        refsCurrentIdx.food_protein?.current?.focus();
-        initialErrors[idx].food_protein = true;
-        foundError = true;
-        break;
-      }
-      else if (section.food_fat === undefined || section.food_fat === null) {
-        alert(translate("errorFoodFat"));
-        refsCurrentIdx.food_fat.current &&
-        refsCurrentIdx.food_fat?.current?.focus();
-        initialErrors[idx].food_fat = true;
-        foundError = true;
-        break;
-      }
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

@@ -63,7 +63,7 @@ export const emailSending = async (email: string, code: string) => {
             >
               <div
                 style="
-                  text-align: center;
+                  text-align: left;
                   margin-bottom: 20px;
                 "
               >

@@ -4,7 +4,7 @@
 import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommon } from "@imports/ImportHooks";
 import { moment, numeral } from "@imports/ImportLibs";
-import { Tabs, Tab, tabsClasses, Paper, Grid, Card } from "@imports/ImportMuis";
+import { Tabs, Tab, Paper, Grid, Card } from "@imports/ImportMuis";
 import { Div, Img, Hr, Input } from "@imports/ImportComponents";
 import { PopUp } from "@imports/ImportContainers";
 import { smile1, smile2, smile3, smile4, smile5 } from "@imports/ImportImages";
@@ -16,33 +16,33 @@ export const TopNav = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location, translate, firstStr, secondStr, thirdStr, koreanDate, TITLE,
+    navigate, location, translate, firstStr, secondStr, koreanDate, TITLE,
     sessionPercent, sessionProperty, sessionScale, PATH,
   } = useCommon();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [percent, setPercent] = useState({
-    total: {} as any,
-    exercise : {} as any,
-    food : {} as any,
-    money : {} as any,
-    sleep : {} as any,
+  const [percent, setPercent] = useState<any>({
+    total: {},
+    exercise : {},
+    food : {},
+    money : {},
+    sleep : {},
   });
-  const [smileScore, setSmileScore] = useState({
+  const [smileScore, setSmileScore] = useState<any>({
     total: "0",
     exercise: "0",
     food: "0",
     money: "0",
     sleep: "0",
   });
-  const [smileImage, setSmileImage] = useState({
+  const [smileImage, setSmileImage] = useState<any>({
     total: smile3,
     exercise: smile3,
     food: smile3,
     money: smile3,
     sleep: smile3,
   });
-  const [property, setProperty] = useState({
+  const [property, setProperty] = useState<any>({
     dateStart: "",
     dateEnd: "",
     initProperty: "0",
@@ -50,7 +50,7 @@ export const TopNav = () => {
     totalIncome: "0",
     totalExpense: "0",
   });
-  const [scale, setScale] = useState({
+  const [scale, setScale] = useState<any>({
     dateStart: "",
     dateEnd: "",
     initScale: "0",
@@ -58,8 +58,8 @@ export const TopNav = () => {
     minScale: "0",
     maxScale: "0",
   });
-  const [mainSmileImage, setMainSmileImage] = useState(smile3);
-  const [selectedTab, setSelectedTab] = useState("chart");
+  const [mainSmileImage, setMainSmileImage] = useState<any>(smile3);
+  const [selectedTab, setSelectedTab] = useState<string>("chart");
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 스마일 지수 계산
@@ -133,7 +133,7 @@ export const TopNav = () => {
     else {
       setMainSmileImage(smileImage.total);
     }
-  }, [location, selectedTab]);
+  }, [sessionPercent, sessionProperty, sessionScale, PATH, selectedTab]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 퍼센트, 자산, 체중 설정
@@ -150,13 +150,13 @@ export const TopNav = () => {
       }
     };
 
-    window.addEventListener('storageChange', handleStorageChange);
+    window.addEventListener('storage', handleStorageChange);
     handleStorageChange();
 
     return () => {
-      window.removeEventListener('storageChange', handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);
+  }, [sessionPercent, sessionProperty, sessionScale]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 페이지 변경시 초기화
@@ -195,9 +195,7 @@ export const TopNav = () => {
       }
     }
     // 3. exercise, money, sleep
-    else if (
-      firstStr === "exercise" || firstStr === "money" || firstStr === "sleep"
-    ) {
+    else if (firstStr === "exercise" || firstStr === "money" || firstStr === "sleep") {
       if (secondStr === "chart") {
         setSelectedTab("chart");
       }
@@ -208,7 +206,7 @@ export const TopNav = () => {
         setSelectedTab("real");
       }
     }
-  }, [firstStr, secondStr, thirdStr]);
+  }, [PATH]);
 
   // 4. handler ------------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
@@ -322,7 +320,7 @@ export const TopNav = () => {
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {
             popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storageChange');
+            const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
             <Img src={mainSmileImage} className={"w-max25 h-max25"} />
@@ -403,7 +401,7 @@ export const TopNav = () => {
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {
             popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storageChange');
+            const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
             <Img src={money4} className={"w-max25 h-max25"} />
@@ -484,7 +482,7 @@ export const TopNav = () => {
         {(popTrigger: any) => (
           <Div className={"d-center pointer"} onClick={(e: any) => {
             popTrigger.openPopup(e.currentTarget)
-            const event = new Event('storageChange');
+            const event = new Event('storage');
             window.dispatchEvent(event);
           }}>
             <Img src={exercise6} className={"w-max25 h-max25"} />
@@ -494,59 +492,48 @@ export const TopNav = () => {
     );
     // 4. tabs
     const tabsSection = () => (
-      (firstStr === "calendar") ? (
-        <Tabs
-          value={selectedTab}
-          variant={"scrollable"}
-          selectionFollowsFocus={true}
-          scrollButtons={false}
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              '&.Mui-disabled': { opacity: 0.3 },
-            },
-          }}>
-          <Tab
-            label={translate("schedule")}
-            value={"schedule"}
-            onClick={() => handleClickTobNav("schedule")}
-          />
-        </Tabs>
-      ) : (
-        <Tabs
-          value={selectedTab}
-          variant={"scrollable"}
-          selectionFollowsFocus={true}
-          scrollButtons={false}
-          sx={{
-            [`& .MuiTabs-scrollButtons`]: {
-              "&.Mui-disabled": { opacity: 0.3 },
-            },
-          }}
-        >
-          <Tab
-            label={translate("chart")}
-            value={"chart"}
-            onClick={() => handleClickTobNav("chart")}
-          />
-          <Tab
-            label={translate("goal")}
-            value={"goal"}
-            onClick={() => handleClickTobNav("goal")}
-          />
-          <Tab
-            label={translate("real")}
-            value={"real"}
-            onClick={() => handleClickTobNav("real")}
-          />
-          {firstStr === "food" && (
-            <Tab
-              label={translate("find")}
-              value={"find"}
-              onClick={() => handleClickTobNav("find")}
-            />
-          )}
-        </Tabs>
-      )
+      <Tabs
+        value={selectedTab}
+        variant={"scrollable"}
+        selectionFollowsFocus={true}
+        scrollButtons={false}
+        sx={{
+          [`& .MuiTabs-scrollButtons`]: {
+            "&.Mui-disabled": { opacity: 0.3 },
+          },
+        }}
+      >
+        <Tab
+          label={translate("chart")}
+          value={"chart"}
+          className={firstStr !== "calendar" ? "" : "d-none"}
+          onClick={() => handleClickTobNav("chart")}
+        />
+        <Tab
+          label={translate("goal")}
+          value={"goal"}
+          className={firstStr !== "calendar" ? "" : "d-none"}
+          onClick={() => handleClickTobNav("goal")}
+        />
+        <Tab
+          label={translate("real")}
+          value={"real"}
+          className={firstStr !== "calendar" ? "" : "d-none"}
+          onClick={() => handleClickTobNav("real")}
+        />
+        <Tab
+          label={translate("schedule")}
+          value={"schedule"}
+          className={firstStr === "calendar" ? "" : "d-none"}
+          onClick={() => handleClickTobNav("schedule")}
+        />
+        <Tab
+          label={translate("find")}
+          value={"find"}
+          className={firstStr === "food" ? "" : "d-none"}
+          onClick={() => handleClickTobNav("find")}
+        />
+      </Tabs>
     );
     // 5. return
     return (

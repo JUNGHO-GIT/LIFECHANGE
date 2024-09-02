@@ -7,8 +7,7 @@ import { axios } from "@imports/ImportLibs"
 import { Loading } from "@imports/ImportLayouts";
 import { Img, Hr } from "@imports/ImportComponents";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
-import { TableContainer, Table, TableFooter } from "@imports/ImportMuis";
-import { TableHead, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
+import { TableContainer, Table, TableBody, TableRow, TableCell } from "@imports/ImportMuis";
 import { logo1 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 // UserCategory.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon, useStorage } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useStorage, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Div, Icons, Input } from "@imports/ImportComponents";
@@ -19,6 +19,9 @@ export const UserCategory = () => {
     navigate, location_dateStart, location_dateEnd, PATH, dataCategoryArray,
     URL_OBJECT, sessionId, translate, koreanDate, TITLE,
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateUser();
 
   // 2-2. useStorage -------------------------------------------------------------------------------
   // 리스트에서만 사용
@@ -80,21 +83,12 @@ export const UserCategory = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const REFS: any = useRef({
-    category1: createRef(),
-    category2: createRef(),
-    category3: createRef(),
-  });
-
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
     if (isEditable.startsWith(`${dataType}_part_`)) {
-      // @ts-ignore
       REFS.current.category2?.focus();
     }
     else if (isEditable.startsWith(`${dataType}_title_`)) {
-      // @ts-ignore
       REFS.current.category3?.focus();
     }
   }, [isEditable]);
@@ -396,7 +390,7 @@ export const UserCategory = () => {
                                 : "2px solid #000000"
                               }
                             }}
-                            readonly={
+                            readOnly={
                               isEditable !== `${dataType}_title_${index}`
                             }
                             inputclass={"fs-0-9rem"}

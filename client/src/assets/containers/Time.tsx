@@ -143,8 +143,8 @@ export const Time = (
           <Input
             label={translateStr}
             value={OBJECT?.[`${extra}`]}
-            inputRef={REFS?.current?.[`${extra}`]}
-            error={ERRORS?.[`${extra}`]}
+            inputRef={REFS?.current?.[i]?.[`${extra}`]}
+            error={ERRORS?.[i]?.[`${extra}`]}
             readOnly={true}
             startadornment={
               <Img src={image} className={"w-16 h-16"} />

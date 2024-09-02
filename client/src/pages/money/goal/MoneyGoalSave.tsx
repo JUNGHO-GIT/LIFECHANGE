@@ -1,8 +1,8 @@
 // MoneyGoalSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateMoney } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -17,8 +17,11 @@ export const MoneyGoalSave = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, koreanDate,
-  URL_OBJECT, sessionId, translate
+    URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -53,16 +56,6 @@ export const MoneyGoalSave = () => {
     money_goal_expense: "0"
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    money_goal_income: false,
-    money_goal_expense: false,
-  });
-  const REFS: any = useRef({
-    money_goal_income: createRef(),
-    money_goal_expense: createRef(),
-  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -116,47 +109,9 @@ export const MoneyGoalSave = () => {
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = {
-      money_goal_income: false,
-      money_goal_expense: false,
-    };
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    const refsCurrent = REFS?.current;
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-    else if (!OBJECT.money_goal_income || OBJECT.money_goal_income === "0") {
-      alert(translate("errorMoneyGoalIncome"));
-      refsCurrent.money_goal_income.current &&
-      refsCurrent.money_goal_income.current?.focus();
-      initialErrors.money_goal_income = true;
-      foundError = true;
-    }
-    else if (!OBJECT.money_goal_expense || OBJECT.money_goal_expense === "0") {
-      alert(translate("errorMoneyGoalExpense"));
-      refsCurrent.money_goal_expense.current &&
-      refsCurrent.money_goal_expense.current?.focus();
-      initialErrors.money_goal_expense = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
@@ -273,49 +228,49 @@ export const MoneyGoalSave = () => {
                 handlerDelete={handlerDelete}
               />
             </Grid>
-          </Grid>
-          <Grid size={12}>
-            <Input
-              value={numeral(OBJECT?.money_goal_income).format("0,0")}
-              inputRef={REFS?.current?.money_goal_income}
-              error={ERRORS?.money_goal_income}
-              label={
-                DATE.dateType === "day" ? (
-                  `${translate("goalIncome")}`
-                ) : (
-                  `${translate("goalIncome")} (${translate("total")})`
-                )
-              }
-              startadornment={
-                <Img src={money2} className={"w-16 h-16"} />
-              }
-              endadornment={
-                translate("currency")
-              }
-              onChange={(e: any) => {
-                const value = e.target.value.replace(/,/g, '');
-                if (/^\d*$/.test(value) || value === "") {
-                  const newValue = Number(value);
-                  if (value === "") {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_income: "0",
-                    }));
-                  }
-                  else if (!isNaN(newValue) && newValue <= 9999999999) {
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      money_goal_income: value,
-                    }));
-                  }
+            <Grid size={12}>
+              <Input
+                value={numeral(OBJECT?.money_goal_income).format("0,0")}
+                inputRef={REFS.current[i]?.emoney_goal_income}
+                error={ERRORS[i]?.money_goal_income}
+                label={
+                  DATE.dateType === "day" ? (
+                    `${translate("goalIncome")}`
+                  ) : (
+                    `${translate("goalIncome")} (${translate("total")})`
+                  )
                 }
-              }}
-            />
+                startadornment={
+                  <Img src={money2} className={"w-16 h-16"} />
+                }
+                endadornment={
+                  translate("currency")
+                }
+                onChange={(e: any) => {
+                  const value = e.target.value.replace(/,/g, '');
+                  if (/^\d*$/.test(value) || value === "") {
+                    const newValue = Number(value);
+                    if (value === "") {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        money_goal_income: "0",
+                      }));
+                    }
+                    else if (!isNaN(newValue) && newValue <= 9999999999) {
+                      setOBJECT((prev: any) => ({
+                        ...prev,
+                        money_goal_income: value,
+                      }));
+                    }
+                  }
+                }}
+              />
+            </Grid>
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.money_goal_expense).format("0,0")}
-                inputRef={REFS?.current?.money_goal_expense}
-                error={ERRORS?.money_goal_expense}
+                inputRef={REFS.current[i]?.emoney_goal_expense}
+                error={ERRORS[i]?.money_goal_expense}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalExpense")}`

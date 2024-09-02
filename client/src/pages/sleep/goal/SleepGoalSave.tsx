@@ -1,12 +1,12 @@
 // SleepGoalSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon, useTime } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useTime, useValidateSleep } from "@imports/ImportHooks";
 import { moment, axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Bg } from "@imports/ImportComponents";
+import { Bg } from "@imports/ImportComponents";
 import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 
@@ -15,9 +15,11 @@ export const SleepGoalSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_dateType, location_dateStart, location_dateEnd,
-  PATH, koreanDate, URL_OBJECT, sessionId, translate
+    navigate, location_dateType, location_dateStart, location_dateEnd, PATH, koreanDate, URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -53,16 +55,6 @@ export const SleepGoalSave = () => {
     sleep_goal_sleepTime: "00:00",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    sleep_goal_bedTime: false,
-    sleep_goal_wakeTime: false,
-  });
-  const REFS: any = useRef({
-    sleep_goal_bedTime: createRef(),
-    sleep_goal_wakeTime: createRef(),
-  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "goal");
@@ -119,47 +111,9 @@ export const SleepGoalSave = () => {
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = {
-      sleep_goal_bedTime: false,
-      sleep_goal_wakeTime: false,
-    };
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    const refsCurrent = REFS?.current;
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-    else if (OBJECT.sleep_goal_bedTime === "00:00") {
-      alert(translate("errorSleepGoalBedTime"));
-      refsCurrent.sleep_goal_bedTime.current &&
-      refsCurrent.sleep_goal_bedTime.current?.focus();
-      initialErrors.sleep_goal_bedTime = true;
-      foundError = true;
-    }
-    else if (OBJECT.sleep_goal_wakeTime === "00:00") {
-      alert(translate("errorSleepGoalWakeTime"));
-      refsCurrent.sleep_goal_wakeTime.current &&
-      refsCurrent.sleep_goal_wakeTime.current?.focus();
-      initialErrors.sleep_goal_wakeTime = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

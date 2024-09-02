@@ -1,8 +1,8 @@
 // Count.tsx
 
 import { useCommon } from "@imports/ImportHooks";
-import { PopUp } from "@imports/ImportContainers";
 import { Img, Div, Icons, Input } from "@imports/ImportComponents";
+import { PopUp } from "@imports/ImportContainers";
 import { Card } from "@imports/ImportMuis";
 import { common2 } from "@imports/ImportImages";
 
@@ -19,7 +19,9 @@ export const Count = (
 ) => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const {translate, secondStr} = useCommon();
+  const {
+    translate, secondStr
+  } = useCommon();
   const isFind = secondStr === "find";
 
   // 2. countNode ----------------------------------------------------------------------------------
@@ -39,6 +41,7 @@ export const Count = (
           label={translate("item")}
           value={COUNT.newSectionCnt}
           readOnly={true}
+          error={COUNT.newSectionCnt <= 0}
           startadornment={
             <Img src={common2} className={"w-16 h-16"} />
           }

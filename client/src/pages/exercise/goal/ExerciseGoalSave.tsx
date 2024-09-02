@@ -1,12 +1,12 @@
 // ExerciseGoalSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useTime, useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useTime, useCommon, useValidateExercise } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Input, Img, Bg } from "@imports/ImportComponents";
+import { Input, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { exercise2, exercise3_1, exercise5 } from "@imports/ImportImages";
@@ -17,8 +17,11 @@ export const ExerciseGoalSave = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, PATH, koreanDate,
-  URL_OBJECT, sessionId, translate
+    URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -55,18 +58,6 @@ export const ExerciseGoalSave = () => {
     exercise_goal_weight: "0",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    exercise_goal_count: false,
-    exercise_goal_volume: false,
-    exercise_goal_weight: false,
-  });
-  const REFS: any = useRef({
-    exercise_goal_count: createRef(),
-    exercise_goal_volume: createRef(),
-    exercise_goal_weight: createRef(),
-  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -123,55 +114,9 @@ export const ExerciseGoalSave = () => {
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = {
-      exercise_goal_count: false,
-      exercise_goal_volume: false,
-      exercise_goal_weight: false,
-    };
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    const refsCurrent = REFS?.current;
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-    else if (!OBJECT.exercise_goal_count || OBJECT.exercise_goal_count === "0") {
-      alert(translate("errorExerciseGoalCount"));
-      refsCurrent.exercise_goal_count.current &&
-      refsCurrent.exercise_goal_count.current?.focus();
-      initialErrors.exercise_goal_count = true;
-      foundError = true;
-    }
-    else if (!OBJECT.exercise_goal_volume || OBJECT.exercise_goal_volume === "0") {
-      alert(translate("errorExerciseGoalVolume"));
-      refsCurrent.exercise_goal_volume.current &&
-      refsCurrent.exercise_goal_volume.current?.focus();
-      initialErrors.exercise_goal_volume = true;
-      foundError = true;
-    }
-    else if (!OBJECT.exercise_goal_weight || OBJECT.exercise_goal_weight === "0") {
-      alert(translate("errorExerciseGoalWeight"));
-      refsCurrent.exercise_goal_weight.current &&
-      refsCurrent.exercise_goal_weight.current?.focus();
-      initialErrors.exercise_goal_weight = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
@@ -293,8 +238,8 @@ export const ExerciseGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_count).format("0,0")}
-                inputRef={REFS?.current?.exercise_goal_count}
-                error={ERRORS?.exercise_goal_count}
+                inputRef={REFS.current[i]?.exercise_goal_count}
+                error={ERRORS[i]?.exercise_goal_count}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalCount")}`
@@ -331,8 +276,8 @@ export const ExerciseGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.exercise_goal_volume).format("0,0")}
-                inputRef={REFS?.current?.exercise_goal_volume}
-                error={ERRORS?.exercise_goal_volume}
+                inputRef={REFS.current[i]?.exercise_goal_volume}
+                error={ERRORS[i]?.exercise_goal_volume}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalVolume")}`
@@ -380,8 +325,8 @@ export const ExerciseGoalSave = () => {
             <Input
               label={translate("goalWeight")}
               value={OBJECT?.exercise_goal_weight}
-              inputRef={REFS?.current?.exercise_goal_weight}
-              error={ERRORS?.exercise_goal_weight}
+              inputRef={REFS.current[i]?.exercise_goal_weight}
+              error={ERRORS[i]?.exercise_goal_weight}
               startadornment={
                 <Img src={exercise5} className={"w-16 h-16"} />
               }

@@ -1,8 +1,8 @@
 // SleepSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon, useTime } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useTime, useValidateSleep } from "@imports/ImportHooks";
 import { moment, axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -18,6 +18,9 @@ export const SleepSave = () => {
     navigate, location_dateType, location_dateStart, location_dateEnd, PATH, koreanDate,
     URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateSleep();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -55,16 +58,6 @@ export const SleepSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.sleep_section?.map(() => ({
-    sleep_bedTime: false,
-    sleep_wakeTime: false,
-  })));
-  const REFS: any = useRef(OBJECT?.sleep_section?.map(() => ({
-    sleep_bedTime: createRef(),
-    sleep_wakeTime: createRef(),
-  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -159,59 +152,9 @@ export const SleepSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    REFS.current = OBJECT?.sleep_section?.map((item: any, idx: number) => ({
-      sleep_bedTime: REFS?.current[idx]?.sleep_bedTime || createRef(),
-      sleep_wakeTime: REFS?.current[idx]?.sleep_wakeTime || createRef(),
-    }));
-  }, [OBJECT?.sleep_section.length]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = OBJECT?.sleep_section?.map(() => ({
-      sleep_bedTime: false,
-      sleep_wakeTime: false,
-    }));
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    for (let idx = 0; idx < OBJECT?.sleep_section.length; idx++) {
-      const section = OBJECT?.sleep_section[idx];
-      const refsCurrentIdx = REFS?.current[idx];
-      if (!refsCurrentIdx) {
-        console.warn('Ref is undefined, skipping validation for index:', idx);
-        continue;
-      }
-      else if (!section.sleep_bedTime || section.sleep_bedTime === "00:00") {
-        alert(translate("errorSleepBedTime"));
-        REFS?.current[idx]?.sleep_bedTime?.current &&
-        REFS?.current[idx]?.sleep_bedTime?.current?.focus();
-        initialErrors[idx].sleep_bedTime = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.sleep_wakeTime || section.sleep_wakeTime === "00:00") {
-        alert(translate("errorSleepWakeTime"));
-        REFS?.current[idx]?.sleep_wakeTime?.current &&
-        REFS?.current[idx]?.sleep_wakeTime?.current?.focus();
-        initialErrors[idx].sleep_wakeTime = true;
-        foundError = true;
-        break;
-      }
-    }
-    setERRORS(initialErrors);
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

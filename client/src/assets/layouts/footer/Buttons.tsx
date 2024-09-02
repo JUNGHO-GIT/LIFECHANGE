@@ -68,7 +68,7 @@ export const Buttons = (
           flow.flowDeletes();
         }}
       >
-        {translate("delete")}
+        {translate("deletes")}
       </Btn>
     );
 

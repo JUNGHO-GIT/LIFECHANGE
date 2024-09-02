@@ -1,8 +1,8 @@
 // UserDetail.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateUser } from "@imports/ImportHooks";
 import { axios, numeral } from "@imports/ImportLibs";
 import { Footer, Loading } from "@imports/ImportLayouts";
 import { Input, Select, Hr, Img } from "@imports/ImportComponents";
@@ -16,6 +16,9 @@ export const UserDetail = () => {
   const {
     navigate, curProperty, URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -43,20 +46,6 @@ export const UserDetail = () => {
     user_regDt: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    user_age: false,
-    user_gender: false,
-    user_initScale: false,
-    user_initProperty: false,
-  });
-  const REFS: any = useRef({
-    user_age: createRef(),
-    user_gender: createRef(),
-    user_initScale: createRef(),
-    user_initProperty: createRef(),
-  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -87,54 +76,6 @@ export const UserDetail = () => {
       setLOADING(false);
     });
   }, [sessionId]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = {
-      user_age: false,
-      user_gender: false,
-      user_initScale: false,
-      user_initProperty: false,
-    };
-    const refsCurrent = REFS?.current;
-
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-    else if (OBJECT.user_age === "" || !OBJECT.user_age) {
-      alert(translate("errorUserAge"));
-      refsCurrent.user_age.current &&
-      refsCurrent.user_age.current?.focus();
-      initialErrors.user_age = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_gender === "" || !OBJECT.user_gender) {
-      alert(translate("errorUserGender"));
-      refsCurrent.user_gender.current &&
-      refsCurrent.user_gender.current?.focus();
-      initialErrors.user_gender = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_initScale === "" || !OBJECT.user_initScale) {
-      alert(translate("errorUserInitScale"));
-      refsCurrent.user_initScale.current &&
-      refsCurrent.user_initScale.current?.focus();
-      initialErrors.user_initScale = true;
-      foundError = true;
-    }
-    else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
-      alert(translate("errorUserInitProperty"));
-      refsCurrent.user_initProperty.current &&
-      refsCurrent.user_initProperty.current?.focus();
-      initialErrors.user_initProperty = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
@@ -201,8 +142,8 @@ export const UserDetail = () => {
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender}
-                inputRef={REFS.current.user_gender}
-                error={ERRORS.user_gender}
+                inputRef={REFS.current[i]?.user_gender}
+                error={ERRORS[i]?.user_gender}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -222,8 +163,8 @@ export const UserDetail = () => {
               <Input
                 label={translate("age")}
                 value={OBJECT.user_age}
-                inputRef={REFS.current.user_age}
-                error={ERRORS.user_age}
+                inputRef={REFS.current[i]?.user_age}
+                error={ERRORS[i]?.user_age}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/^0+/, '');
@@ -251,8 +192,8 @@ export const UserDetail = () => {
               <Input
                 label={translate("initScale")}
                 value={OBJECT.user_initScale}
-                inputRef={REFS.current.user_initScale}
-                error={ERRORS.user_initScale}
+                inputRef={REFS.current[i]?.user_initScale}
+                error={ERRORS[i]?.user_initScale}
                 startadornment={
                   <Img src={exercise5} className={"w-16 h-16"} />
                 }
@@ -283,8 +224,8 @@ export const UserDetail = () => {
               <Input
                 label={translate("initProperty")}
                 value={numeral(OBJECT.user_initProperty).format("0,0")}
-                inputRef={REFS.current.user_initProperty}
-                error={ERRORS.user_initProperty}
+                inputRef={REFS.current[i]?.user_initProperty}
+                error={ERRORS[i]?.user_initProperty}
                 startadornment={
                   <Img src={money2} className={"w-16 h-16"} />
                 }

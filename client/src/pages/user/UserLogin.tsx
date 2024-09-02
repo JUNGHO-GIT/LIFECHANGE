@@ -1,11 +1,11 @@
 // UserLogin.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, createRef, useRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
-import { Loading } from "@imports/ImportLayouts";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
+import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Btn, Img, Hr } from "@imports/ImportComponents";
 import { Paper, Checkbox, Card, Grid } from "@imports/ImportMuis";
 import { user1 } from "@imports/ImportImages";
@@ -17,6 +17,9 @@ export const UserLogin = () => {
   const {
     navigate, URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, translate, TITLE,
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -24,18 +27,13 @@ export const UserLogin = () => {
   const [clickCount, setClickCount] = useState<number>(0);
   const [checkedSaveId, setCheckedSaveId] = useState<boolean>(false);
   const [checkedAutoLogin, setCheckedAutoLogin] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string>("");
-  const [userPw, setUserPw] = useState<string>("");
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    user_id: false,
-    user_pw: false,
-  });
-  const REFS: any = useRef({
-    user_id: createRef(),
-    user_pw: createRef(),
-  });
+  const OBJECT_DEF: any = {
+    user_id: "",
+    user_pw: "",
+  };
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 트리거가 활성화된 경우
@@ -51,19 +49,19 @@ export const UserLogin = () => {
   useEffect(() => {
     if (checkedAutoLogin) {
       localStorage.setItem(`${TITLE}_autoLogin`, "true");
-      localStorage.setItem(`${TITLE}_autoLoginId`, userId);
-      localStorage.setItem(`${TITLE}_autoLoginPw`, userPw);
+      localStorage.setItem(`${TITLE}_autoLoginId`, OBJECT.user_id);
+      localStorage.setItem(`${TITLE}_autoLoginPw`, OBJECT.user_pw);
     }
-  }, [checkedAutoLogin, userId, userPw]);
+  }, [checkedAutoLogin, OBJECT.user_id, OBJECT.user_pw]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 아이디 저장 활성화된 경우
   useEffect(() => {
     if (checkedSaveId) {
       localStorage.setItem(`${TITLE}_isLocalSaved`, "true");
-      localStorage.setItem(`${TITLE}_localId`, userId);
+      localStorage.setItem(`${TITLE}_localId`, OBJECT.user_id);
     }
-  }, [checkedSaveId, userId]);
+  }, [checkedSaveId, OBJECT.user_id]);
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   // 초기 로드 시 로컬 저장소에서 사용자 정보 가져오기
@@ -77,66 +75,45 @@ export const UserLogin = () => {
     if (autoLogin === "true") {
       setCheckedAutoLogin(true);
       if (autoLoginId && autoLoginPw) {
-        setUserId(autoLoginId);
-        setUserPw(autoLoginPw);
+        setOBJECT((prev: any) => ({
+          ...prev,
+          user_id: autoLoginId,
+          user_pw: autoLoginPw,
+        }));
       }
       setLoginTrigger(true);
     }
     if (isLocalSaved === "true") {
       setCheckedSaveId(true);
       if (localId) {
-        setUserId(localId);
+        setOBJECT({
+          user_id: localId,
+          user_pw: "",
+        });
+        setOBJECT((prev: any) => ({
+          ...prev,
+          user_id: localId,
+        }));
       }
     }
   }, []);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (user_id: string, user_pw: string) => {
-    let foundError = false;
-    const initialErrors = {
-      user_id: false,
-      user_pw: false,
-    };
-    const refsCurrent = REFS?.current;
-
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return false;
-    }
-
-    if (user_id === "" || !user_id) {
-      alert(translate("errorUserId"));
-      refsCurrent.user_id.current?.focus();
-      initialErrors.user_id = true;
-      foundError = true;
-    }
-    else if (user_pw === "" || !user_pw) {
-      alert(translate("errorUserPw"));
-      refsCurrent.user_pw.current?.focus();
-      initialErrors.user_pw = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
-    if (!validate(userId, userPw)) {
+    if (!validate(OBJECT)) {
       setLOADING(false);
       return;
     }
     axios.post(`${URL_OBJECT}/login`, {
-      user_id: userId,
-      user_pw: userPw,
+      user_id: OBJECT.user_id,
+      user_pw: OBJECT.user_pw,
     })
     .then((res: any) => {
       if (res.data.status === "success") {
         // localStorage
         if (checkedSaveId) {
-          localStorage.setItem(`${TITLE}_localId`, userId);
+          localStorage.setItem(`${TITLE}_localId`, OBJECT.user_id);
         }
         localStorage.setItem(`${TITLE}_isGoogle`, "false");
 
@@ -192,8 +169,11 @@ export const UserLogin = () => {
           setClickCount((prevCount) => {
             const newCount = prevCount + 1;
             if (newCount === 5) {
-              setUserId(ADMIN_ID);
-              setUserPw(ADMIN_PW);
+              setOBJECT((prev: any) => ({
+                ...prev,
+                user_id: ADMIN_ID,
+                user_pw: ADMIN_PW,
+              }));
               setCheckedSaveId(true);
               setCheckedAutoLogin(true);
               setLoginTrigger(true);
@@ -214,11 +194,14 @@ export const UserLogin = () => {
             <Grid size={12}>
               <Input
                 label={translate("id")}
-                value={userId}
-                inputRef={REFS.current.user_id}
-                error={ERRORS.user_id}
+                value={OBJECT.user_id}
+                inputRef={REFS.current[i]?.user_id}
+                error={ERRORS[i]?.user_id}
                 onChange={(e: any) => {
-                  setUserId(e.target.value);
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_id: e.target.value,
+                  }));
                 }}
               />
             </Grid>
@@ -226,11 +209,14 @@ export const UserLogin = () => {
               <Input
                 type={"password"}
                 label={translate("pw")}
-                value={userPw}
-                inputRef={REFS.current.user_pw}
-                error={ERRORS.user_pw}
+                value={OBJECT.user_pw}
+                inputRef={REFS.current[i]?.user_pw}
+                error={ERRORS[i]?.user_pw}
                 onChange={(e: any) => {
-                  setUserPw(e.target.value);
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_pw: e.target.value,
+                  }));
                 }}
               />
             </Grid>

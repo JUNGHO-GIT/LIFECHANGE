@@ -19,7 +19,7 @@ import {
 } from "@imports/ImportMuis";
 
 import {
-  useRoot, useScrollTop, useEnhancedTouch, useSessionStorage, LanguageProvider
+  useRoot, useScrollTop, useSessionStorage, LanguageProvider
 } from "@imports/ImportHooks";
 
 import {
@@ -114,9 +114,8 @@ const Auth = () => (
 const App = () => {
 
   useRoot();
-  useSessionStorage();
   useScrollTop();
-  useEnhancedTouch();
+  useSessionStorage();
 
   const location = useLocation();
   const noneHeader = (

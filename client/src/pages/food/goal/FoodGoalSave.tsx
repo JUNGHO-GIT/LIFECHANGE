@@ -1,12 +1,12 @@
 // FoodGoalSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateFood } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Img, Input, Bg  } from "@imports/ImportComponents";
+import { Img, Input, Bg  } from "@imports/ImportComponents";
 import { Picker, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, Grid } from "@imports/ImportMuis";
 import { food2, food3, food4, food5 } from "@imports/ImportImages";
@@ -17,8 +17,11 @@ export const FoodGoalSave = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, koreanDate,
-  URL_OBJECT, sessionId, translate
+    URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateFood();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -55,20 +58,6 @@ export const FoodGoalSave = () => {
     food_goal_fat: "0",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    food_goal_kcal: false,
-    food_goal_carb: false,
-    food_goal_protein: false,
-    food_goal_fat: false,
-  });
-  const REFS: any = useRef({
-    food_goal_kcal: createRef(),
-    food_goal_carb: createRef(),
-    food_goal_protein: createRef(),
-    food_goal_fat: createRef(),
-  });
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -122,63 +111,9 @@ export const FoodGoalSave = () => {
     });
   }, [sessionId, DATE.dateStart, DATE.dateEnd]);
 
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = {
-      food_goal_kcal: false,
-      food_goal_carb: false,
-      food_goal_protein: false,
-      food_goal_fat: false,
-    };
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    const refsCurrent = REFS?.current;
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-    else if (!OBJECT.food_goal_kcal || OBJECT.food_goal_kcal === "0") {
-      alert(translate("errorFoodGoalKcal"));
-      refsCurrent.food_goal_kcal.current &&
-      refsCurrent.food_goal_kcal.current?.focus();
-      initialErrors.food_goal_kcal = true;
-      foundError = true;
-    }
-    else if (!OBJECT.food_goal_carb || OBJECT.food_goal_carb === "0") {
-      alert(translate("errorFoodGoalCarb"));
-      refsCurrent.food_goal_carb.current &&
-      refsCurrent.food_goal_carb.current?.focus();
-      initialErrors.food_goal_carb = true;
-      foundError = true;
-    }
-    else if (!OBJECT.food_goal_protein || OBJECT.food_goal_protein === "0") {
-      alert(translate("errorFoodGoalProtein"));
-      refsCurrent.food_goal_protein.current &&
-      refsCurrent.food_goal_protein.current?.focus();
-      initialErrors.food_goal_protein = true;
-      foundError = true;
-    }
-    else if (!OBJECT.food_goal_fat || OBJECT.food_goal_fat === "0") {
-      alert(translate("errorFoodGoalFat"));
-      refsCurrent.food_goal_fat.current &&
-      refsCurrent.food_goal_fat.current?.focus();
-      initialErrors.food_goal_fat = true;
-      foundError = true;
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }
@@ -300,8 +235,8 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_kcal).format("0,0")}
-                inputRef={REFS?.current?.food_goal_kcal}
-                error={ERRORS?.food_goal_kcal}
+                inputRef={REFS.current[i]?.efood_goal_kcal}
+                error={ERRORS[i]?.food_goal_kcal}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalKcal")}`
@@ -338,8 +273,8 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_carb).format("0,0")}
-                inputRef={REFS?.current?.food_goal_carb}
-                error={ERRORS?.food_goal_carb}
+                inputRef={REFS.current[i]?.efood_goal_carb}
+                error={ERRORS[i]?.food_goal_carb}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalCarb")}`
@@ -376,8 +311,8 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_protein).format("0,0")}
-                inputRef={REFS?.current?.food_goal_protein}
-                error={ERRORS?.food_goal_protein}
+                inputRef={REFS.current[i]?.efood_goal_protein}
+                error={ERRORS[i]?.food_goal_protein}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalProtein")}`
@@ -414,8 +349,8 @@ export const FoodGoalSave = () => {
             <Grid size={12}>
               <Input
                 value={numeral(OBJECT?.food_goal_fat).format("0,0")}
-                inputRef={REFS?.current?.food_goal_fat}
-                error={ERRORS?.food_goal_fat}
+                inputRef={REFS.current[i]?.efood_goal_fat}
+                error={ERRORS[i]?.food_goal_fat}
                 label={
                   DATE.dateType === "day" ? (
                     `${translate("goalFat")}`

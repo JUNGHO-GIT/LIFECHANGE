@@ -1,8 +1,8 @@
 // MoneySave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateMoney } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
@@ -17,8 +17,11 @@ export const MoneySave = () => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, moneyArray, koreanDate,
-  URL_OBJECT, sessionId, translate
+    URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateMoney();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -61,18 +64,6 @@ export const MoneySave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.money_section?.map(() => ({
-    money_part_idx: false,
-    money_title_idx: false,
-    money_amount: false
-  })));
-  const REFS: any = useRef(OBJECT?.money_section?.map(() => ({
-    money_part_idx: createRef(),
-    money_title_idx: createRef(),
-    money_amount: createRef(),
-  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -194,70 +185,9 @@ export const MoneySave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    REFS.current = OBJECT?.money_section?.map((item: any, idx: number) => ({
-      money_part_idx: REFS?.current[idx]?.money_part_idx || createRef(),
-      money_title_idx: REFS?.current[idx]?.money_title_idx || createRef(),
-      money_amount: REFS?.current[idx]?.money_amount || createRef(),
-    }));
-  }, [OBJECT?.money_section.length]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = OBJECT?.money_section?.map(() => ({
-      money_part_idx: false,
-      money_title_idx: false,
-      money_amount: false,
-    }));
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    for (let idx = 0; idx < OBJECT?.money_section.length; idx++) {
-      const section = OBJECT?.money_section[idx];
-      const refsCurrentIdx = REFS?.current[idx];
-      if (!refsCurrentIdx) {
-        console.warn('Ref is undefined, skipping validation for index:', idx);
-        continue;
-      }
-      else if (!section.money_part_idx || section.money_part_idx === 0) {
-        alert(translate("errorMoneyPart"));
-        refsCurrentIdx.money_part_idx.current &&
-        refsCurrentIdx.money_part_idx?.current?.focus();
-        initialErrors[idx].money_part_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.money_title_idx || section.money_title_idx === 0) {
-        alert(translate("errorMoneyTitle"));
-        refsCurrentIdx.money_title_idx.current &&
-        refsCurrentIdx.money_title_idx?.current?.focus();
-        initialErrors[idx].money_title_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.money_amount || section.money_amount === "0") {
-        alert(translate("errorMoneyAmount"));
-        refsCurrentIdx.money_amount.current &&
-        refsCurrentIdx.money_amount?.current?.focus();
-        initialErrors[idx].money_amount = true;
-        foundError = true;
-        break;
-      }
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

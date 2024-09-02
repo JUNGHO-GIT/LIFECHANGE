@@ -7,6 +7,7 @@ import { Div, Hr } from "@imports/ImportComponents";
 // -------------------------------------------------------------------------------------------------
 export const AuthPrivacy = () => {
 
+  // 7. authPrivacyNode ----------------------------------------------------------------------------
   const authPrivacyNode = () => {
     // 1. privacy
     const privacySection = () => (

@@ -549,6 +549,22 @@ export const useTranslate = () => {
       ko: "건강",
       en: "Health"
     },
+    helperId: {
+      ko: "이메일 형식으로 입력해주세요",
+      en: "Please enter your email address"
+    },
+    helperIdVerified: {
+      ko: "이메일 인증을 완료해주세요",
+      en: "Please verify your email address"
+    },
+    helperPw: {
+      ko: "영문, 숫자, 특수문자 포함 8자 이상 입력해주세요",
+      en: "Please enter 8 or more characters including letters, numbers, and special characters"
+    },
+    helperPwVerified: {
+      ko: "비밀번호 확인을 입력해주세요",
+      en: "Please enter your password confirmation"
+    },
     // ---------------------------------------------------------------------------------------------
     // i
     item: {
@@ -1511,7 +1527,7 @@ export const useTranslate = () => {
       ko: "이메일 전송 실패",
       en: "Email Send Failed"
     },
-    emailNotExists: {
+    emailNotExist: {
       ko: "존재하지 않는 이메일입니다",
       en: "Email does not exist"
     },
@@ -1697,6 +1713,10 @@ export const useTranslate = () => {
       ko: "아이디를 입력해주세요",
       en: "Please enter ID"
     },
+    errorUserVerifyCode: {
+      ko: "인증코드를 입력해주세요",
+      en: "Please enter Verification Code"
+    },
     errorUserIdVerified: {
       ko: "이메일 인증을 완료해주세요",
       en: "Please complete email verification"
@@ -1708,6 +1728,14 @@ export const useTranslate = () => {
     errorUserPw: {
       ko: "비밀번호를 입력해주세요",
       en: "Please enter PW"
+    },
+    errorUserPwRule: {
+      ko: "비밀번호는 8자 이상, 영문, 숫자, 특수문자를 포함해주세요",
+      en: "Password must be at least 8 characters long, including letters, numbers, and special characters"
+    },
+    errorUserPwVerified: {
+      ko: "비밀번호 확인을 입력해주세요",
+      en: "Please enter PW Confirm"
     },
     errorUserPwMatch: {
       ko: "비밀번호가 일치하지 않습니다",

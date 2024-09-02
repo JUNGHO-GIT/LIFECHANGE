@@ -1,8 +1,8 @@
 // UserSignup.tsx
 // Node -> Section -> Fragment
 
-import { useState, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState } from "@imports/ImportReacts";
+import { useCommon, useValidateUser } from "@imports/ImportHooks";
 import { axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Input, Div, Img, Hr, Select, Btn } from "@imports/ImportComponents";
@@ -16,9 +16,11 @@ export const UserSignup = () => {
   const {
     navigate, URL_OBJECT, URL_GOOGLE, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [clientCode, setClientCode] = useState("");
   const [LOADING, setLOADING] = useState<boolean>(false);
 
   // 2-2. useState ---------------------------------------------------------------------------------
@@ -27,6 +29,7 @@ export const UserSignup = () => {
     user_number: 0,
     user_id: "",
     user_id_sended: false,
+    user_verify_code: "",
     user_id_verified: false,
     user_pw: "",
     user_pw_verified: "",
@@ -39,153 +42,6 @@ export const UserSignup = () => {
     user_image: "",
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState({
-    user_id: false,
-    user_id_sended: false,
-    user_id_verified: false,
-    user_pw: false,
-    user_pw_verified: false,
-    user_age: false,
-    user_initScale: false,
-    user_initProperty: false,
-  });
-  const REFS: any = useRef({
-    user_id: createRef(),
-    user_id_sended: createRef(),
-    user_id_verified: createRef(),
-    user_pw: createRef(),
-    user_pw_verified: createRef(),
-    user_age: createRef(),
-    user_initScale: createRef(),
-    user_initProperty: createRef(),
-  });
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any, extra: string) => {
-    const validateEmail = (email: string) => {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return emailRegex.test(email);
-    };
-    let foundError = false;
-    const initialErrors = {
-      user_id: false,
-      user_id_sended: false,
-      user_id_verified: false,
-      user_pw: false,
-      user_pw_verified: false,
-      user_age: false,
-      user_initScale: false,
-      user_initProperty: false,
-    };
-    const refsCurrent = REFS?.current;
-
-    if (!refsCurrent) {
-      console.warn('Ref is undefined, skipping validation');
-      return;
-    }
-
-    if (extra === "send") {
-      if (OBJECT.user_id === "" || !OBJECT.user_id) {
-        alert(translate("errorUserId"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-      else if (validateEmail(OBJECT.user_id) === false) {
-        alert(translate("errorUserIdAt"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-    }
-    else if (extra === "save") {
-      if (OBJECT.user_id === "" || !OBJECT.user_id) {
-        alert(translate("errorUserId"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-      else if (validateEmail(OBJECT.user_id) === false) {
-        alert(translate("errorUserIdAt"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_id === "" || !OBJECT.user_id) {
-        alert(translate("errorUserId"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_id.indexOf("@") === -1) {
-        alert(translate("errorUserIdAt"));
-        refsCurrent.user_id.current &&
-        refsCurrent.user_id.current?.focus();
-        initialErrors.user_id = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_id_verified === false || !OBJECT.user_id_verified) {
-        alert(translate("errorUserIdVerified"));
-        refsCurrent.user_id_verified.current &&
-        refsCurrent.user_id_verified.current?.focus();
-        initialErrors.user_id_verified = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_pw === "" || !OBJECT.user_pw) {
-        alert(translate("errorUserPw"));
-        refsCurrent.user_pw.current &&
-        refsCurrent.user_pw.current?.focus();
-        initialErrors.user_pw = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_pw_verified === false || !OBJECT.user_pw_verified) {
-        alert(translate("errorUserPwVerified"));
-        refsCurrent.user_pw_verified.current &&
-        refsCurrent.user_pw_verified.current?.focus();
-        initialErrors.user_pw_verified = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_pw !== OBJECT.user_pw_verified) {
-        alert(translate("errorUserPwMatch"));
-        refsCurrent.user_pw_verified.current &&
-        refsCurrent.user_pw_verified.current?.focus();
-        initialErrors.user_pw_verified = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_age === "" || !OBJECT.user_age) {
-        alert(translate("errorUserAge"));
-        refsCurrent.user_age.current &&
-        refsCurrent.user_age.current?.focus();
-        initialErrors.user_age = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_initScale === "" || !OBJECT.user_initScale) {
-        alert(translate("errorUserInitScale"));
-        refsCurrent.user_initScale.current &&
-        refsCurrent.user_initScale.current?.focus();
-        initialErrors.user_initScale = true;
-        foundError = true;
-      }
-      else if (OBJECT.user_initProperty === "" || !OBJECT.user_initProperty) {
-        alert(translate("errorUserInitProperty"));
-        refsCurrent.user_initProperty.current &&
-        refsCurrent.user_initProperty.current?.focus();
-        initialErrors.user_initProperty = true;
-        foundError = true;
-      }
-    }
-
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
 
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
@@ -232,9 +88,13 @@ export const UserSignup = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
+    if (!validate(OBJECT, "verify")) {
+      setLOADING(false);
+      return;
+    }
     axios.post (`${URL_OBJECT}/email/verify`, {
       user_id: OBJECT.user_id,
-      verify_code: clientCode
+      verify_code: OBJECT.user_verify_code
     })
     .then((res: any) => {
       if (res.data.status === "success") {
@@ -272,17 +132,17 @@ export const UserSignup = () => {
       OBJECT: OBJECT
     })
     .then((res: any) => {
-      if (res.data.status === "alreadyExist") {
+      if (res.data.status === "success") {
+        alert(translate(res.data.msg));
+        navigate("/user/login");
+      }
+      else if (res.data.status === "alreadyExist") {
         alert(translate(res.data.msg));
         setOBJECT((prev: any) => ({
           ...prev,
           user_id: "",
           user_pw: "",
         }));
-      }
-      else if (res.data.status === "success") {
-        alert(translate(res.data.msg));
-        navigate("/user/login");
       }
       else if (res.data.status === "fail") {
         alert(translate(res.data.msg));
@@ -339,12 +199,15 @@ export const UserSignup = () => {
         <Card className={"p-10"} key={i}>
           {/** section 1 **/}
           <Grid container spacing={2}>
+            {/** 이메일 **/}
             <Grid size={10}>
               <Input
-                label={`${translate("id")} (email)`}
+                label={`${translate("id")}`}
+                helperText={`* ${translate("helperId")}`}
                 value={OBJECT.user_id}
-                inputRef={REFS.current.user_id}
-                error={ERRORS.user_id}
+                inputRef={REFS.current[i]?.user_id}
+                error={ERRORS[i]?.user_id}
+                disabled={OBJECT.user_id_verified === true}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
                     ...prev,
@@ -356,6 +219,8 @@ export const UserSignup = () => {
             <Grid size={2}>
               <Btn
                 color={"primary"}
+                className={"mb-25"}
+                disabled={OBJECT.user_id_verified === true}
                 onClick={() => {
                   flowSendEmail();
                 }}
@@ -363,21 +228,28 @@ export const UserSignup = () => {
                 {translate("send")}
               </Btn>
             </Grid>
+            {/** 이메일 인증 **/}
             <Grid size={10}>
               <Input
                 label={translate("verify")}
-                value={clientCode}
-                inputRef={REFS.current.user_id_verified}
-                error={ERRORS.user_id_verified}
+                helperText={`* ${translate("helperIdVerified")}`}
+                value={OBJECT.user_verify_code}
+                inputRef={REFS.current[i]?.user_id_verified}
+                error={ERRORS[i]?.user_id_verified}
+                disabled={OBJECT.user_id_verified === true}
                 onChange={(e: any) => (
-                  setClientCode(e.target.value)
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_verify_code: e.target.value
+                  }))
                 )}
               />
             </Grid>
             <Grid size={2}>
               <Btn
                 color={"primary"}
-                disabled={!OBJECT.user_id_sended}
+                className={"mb-25"}
+                disabled={!OBJECT.user_id_sended || OBJECT.user_id_verified === true}
                 onClick={() => {
                   flowVerifyEmail();
                 }}
@@ -385,13 +257,16 @@ export const UserSignup = () => {
                 {translate("verify")}
               </Btn>
             </Grid>
+            <Hr px={20} />
+            {/** 비밀번호 **/}
             <Grid size={12}>
               <Input
                 type={"password"}
                 label={translate("pw")}
+                helperText={`* ${translate("helperPw")}`}
                 value={OBJECT.user_pw}
-                inputRef={REFS.current.user_pw}
-                error={ERRORS.user_pw}
+                inputRef={REFS.current[i]?.user_pw}
+                error={ERRORS[i]?.user_pw}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
@@ -401,13 +276,15 @@ export const UserSignup = () => {
                 )}
               />
             </Grid>
+            {/** 비밀번호 확인 **/}
             <Grid size={12}>
               <Input
                 type={"password"}
                 label={translate("pwVerified")}
+                helperText={`* ${translate("helperPwVerified")}`}
                 value={OBJECT.user_pw_verified}
-                inputRef={REFS.current.user_pw_verified}
-                error={ERRORS.user_pw_verified}
+                inputRef={REFS.current[i]?.user_pw_verified}
+                error={ERRORS[i]?.user_pw_verified}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => (
                   setOBJECT((prev: any) => ({
@@ -417,9 +294,9 @@ export const UserSignup = () => {
                 )}
               />
             </Grid>
-            <Hr px={10} />
+            <Hr px={20} />
+            {/** 성별 (N, M, F) **/}
             <Grid size={12}>
-              {/** 성별 (N, M, F) **/}
               <Select
                 label={translate("gender")}
                 value={OBJECT.user_gender || "N"}
@@ -438,13 +315,13 @@ export const UserSignup = () => {
                 ))}
               </Select>
             </Grid>
+            {/** 나이 (1세 ~ 100세) **/}
             <Grid size={12}>
-              {/** 나이 (1세 ~ 100세) **/}
               <Input
                 label={translate("age")}
                 value={OBJECT.user_age}
-                inputRef={REFS.current.user_age}
-                error={ERRORS.user_age}
+                inputRef={REFS.current[i]?.user_age}
+                error={ERRORS[i]?.user_age}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/^0+/, '');
@@ -466,13 +343,13 @@ export const UserSignup = () => {
                 }}
               />
             </Grid>
+            {/** 초기 체중 **/}
             <Grid size={12}>
-              {/** 초기 체중 **/}
               <Input
                 label={translate("scale")}
                 value={OBJECT.user_initScale}
-                inputRef={REFS.current.user_initScale}
-                error={ERRORS.user_initScale}
+                inputRef={REFS.current[i]?.user_initScale}
+                error={ERRORS[i]?.user_initScale}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/^0+/, '');
@@ -497,13 +374,13 @@ export const UserSignup = () => {
                 }
               />
             </Grid>
+            {/** 초기 자산 **/}
             <Grid size={12}>
-              {/** 초기 자산 **/}
               <Input
                 label={translate("property")}
                 value={OBJECT.user_initProperty}
-                inputRef={REFS.current.user_initProperty}
-                error={ERRORS.user_initProperty}
+                inputRef={REFS.current[i]?.user_initProperty}
+                error={ERRORS[i]?.user_initProperty}
                 disabled={OBJECT.user_id_verified === false}
                 onChange={(e: any) => {
                   const value = e.target.value.replace(/,/g, '');

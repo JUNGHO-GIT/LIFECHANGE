@@ -1,11 +1,11 @@
 // CalendarSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useValidateCalendar } from "@imports/ImportHooks";
 import { moment, axios } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Div, Input, Select, Img, Bg } from "@imports/ImportComponents";
+import { Input, Select, Img, Bg } from "@imports/ImportComponents";
 import { Picker, Memo, Count, Delete } from "@imports/ImportContainers";
 import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
 import { calendar2 } from "@imports/ImportImages";
@@ -15,8 +15,11 @@ export const CalendarSave = () => {
 
   // 1. common -------------------------------------------------------------------------------------
   const {
-    navigate, location_id, location_category, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, translate, koreanDate }
-  = useCommon();
+    navigate, location_id, location_category, location_dateType, location_dateStart, location_dateEnd, calendarArray, colors, URL_OBJECT, sessionId, translate, koreanDate
+  } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateCalendar();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -56,18 +59,6 @@ export const CalendarSave = () => {
     }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.calendar_section?.map(() => ({
-    calendar_part_idx: false,
-    calendar_color: false,
-    calendar_title: false,
-  })));
-  const REFS: any = useRef(OBJECT?.calendar_section?.map(() => ({
-    calendar_part_idx: createRef(),
-    calendar_color: createRef(),
-    calendar_title: createRef(),
-  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {
@@ -151,70 +142,9 @@ export const CalendarSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    REFS.current = OBJECT?.calendar_section.map((item: any, idx: number) => ({
-      calendar_part_idx: REFS?.current[idx]?.calendar_part_idx || createRef(),
-      calendar_color: REFS?.current[idx]?.calendar_color || createRef(),
-      calendar_title: REFS?.current[idx]?.calendar_title || createRef(),
-    }));
-  }, [OBJECT?.calendar_section.length]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = OBJECT?.calendar_section?.map(() => ({
-      calendar_part_idx: false,
-      calendar_color: false,
-      calendar_title: false,
-    }));
-
-    if (COUNT.newSectionCnt === 0) {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    for (let idx = 0; idx < OBJECT?.calendar_section.length; idx++) {
-      const section = OBJECT?.calendar_section[idx];
-      const refsCurrentIdx = REFS?.current[idx];
-      if (!refsCurrentIdx) {
-        console.warn('Ref is undefined, skipping validation for index:', idx);
-        continue;
-      }
-      else if (!section.calendar_part_idx || section.calendar_part_idx === 0) {
-        alert(translate("errorCalendarPart"));
-        refsCurrentIdx.calendar_part_idx.current &&
-        refsCurrentIdx.calendar_part_idx?.current?.focus();
-        initialErrors[idx].calendar_part_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.calendar_title || section.calendar_title === "") {
-        alert(translate("errorCalendarTitle"));
-        refsCurrentIdx.calendar_title.current &&
-        refsCurrentIdx.calendar_title?.current?.focus();
-        initialErrors[idx].calendar_title = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.calendar_color || section.calendar_color === "") {
-        alert(translate("errorCalendarColor"));
-        refsCurrentIdx.calendar_color.current &&
-        refsCurrentIdx.calendar_color?.current?.focus();
-        initialErrors[idx].calendar_color = true;
-        foundError = true;
-        break;
-      }
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

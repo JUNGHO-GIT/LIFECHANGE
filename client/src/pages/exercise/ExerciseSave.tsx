@@ -1,15 +1,15 @@
 // ExerciseSave.tsx
 // Node -> Section -> Fragment
 
-import { useState, useEffect, useRef, createRef } from "@imports/ImportReacts";
-import { useCommon, useTime } from "@imports/ImportHooks";
+import { useState, useEffect } from "@imports/ImportReacts";
+import { useCommon, useTime, useValidateExercise } from "@imports/ImportHooks";
 import { moment, axios, numeral } from "@imports/ImportLibs";
 import { sync } from "@imports/ImportUtils";
 import { Loading, Footer } from "@imports/ImportLayouts";
 import { Bg, Img, Input, Select } from "@imports/ImportComponents";
 import { Picker, Time, Count, Delete } from "@imports/ImportContainers";
-import { Card, Paper, Badge, MenuItem, Grid } from "@imports/ImportMuis";
-import { exercise1, exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "@imports/ImportImages";
+import { Card, Paper, MenuItem, Grid } from "@imports/ImportMuis";
+import { exercise3_1, exercise3_2, exercise3_3, exercise4, exercise5 } from "@imports/ImportImages";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseSave = () => {
@@ -18,6 +18,9 @@ export const ExerciseSave = () => {
   const {
     navigate, location_dateType, location_dateStart, location_dateEnd, PATH, exerciseArray, koreanDate, URL_OBJECT, sessionId, translate
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateExercise();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -64,22 +67,6 @@ export const ExerciseSave = () => {
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
-
-  // 2-2. useState ---------------------------------------------------------------------------------
-  const [ERRORS, setERRORS] = useState(OBJECT?.exercise_section?.map(() => ({
-    exercise_part_idx: false,
-    exercise_title_idx: false,
-    exercise_set: false,
-    exercise_rep: false,
-    exercise_kg: false,
-  })));
-  const REFS: any = useRef(OBJECT?.exercise_section?.map(() => ({
-    exercise_part_idx: createRef(),
-    exercise_title_idx: createRef(),
-    exercise_set: createRef(),
-    exercise_rep: createRef(),
-    exercise_kg: createRef(),
-  })));
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, "real");
@@ -220,90 +207,9 @@ export const ExerciseSave = () => {
 
   },[COUNT?.newSectionCnt]);
 
-  // 2-3. useEffect --------------------------------------------------------------------------------
-  useEffect(() => {
-    REFS.current = OBJECT?.exercise_section?.map((item: any, idx: number) => ({
-      exercise_part_idx: REFS?.current[idx]?.exercise_part_idx || createRef(),
-      exercise_title_idx: REFS?.current[idx]?.exercise_title_idx || createRef(),
-      exercise_set: REFS?.current[idx]?.exercise_set || createRef(),
-      exercise_rep: REFS?.current[idx]?.exercise_rep || createRef(),
-      exercise_kg: REFS?.current[idx]?.exercise_kg || createRef(),
-    }));
-  }, [OBJECT?.exercise_section.length]);
-
-  // 2-4. validate ---------------------------------------------------------------------------------
-  const validate = (OBJECT: any) => {
-    let foundError = false;
-    const initialErrors = OBJECT?.exercise_section?.map(() => ({
-      exercise_part_idx: false,
-      exercise_title_idx: false,
-      exercise_set: false,
-      exercise_rep: false,
-      exercise_kg: false,
-    }));
-
-    if (COUNT.newSectionCnt === 0 && OBJECT?.exercise_total_weight === "0") {
-      alert(translate("errorCount"));
-      foundError = true;
-      return;
-    }
-
-    for (let idx = 0; idx < OBJECT?.exercise_section.length; idx++) {
-      const section = OBJECT?.exercise_section[idx];
-      const refsCurrentIdx = REFS?.current[idx];
-      if (!refsCurrentIdx) {
-        console.warn('Ref is undefined, skipping validation for index:', idx);
-        continue;
-      }
-      else if (!section.exercise_part_idx || section.exercise_part_idx === 0) {
-        alert(translate("errorExercisePart"));
-        refsCurrentIdx.exercise_part_idx.current &&
-        refsCurrentIdx.exercise_part_idx?.current?.focus();
-        initialErrors[idx].exercise_part_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.exercise_title_idx || section.exercise_title_idx === 0) {
-        alert(translate("errorExerciseTitle"));
-        refsCurrentIdx.exercise_title_idx.current &&
-        refsCurrentIdx.exercise_title_idx?.current?.focus();
-        initialErrors[idx].exercise_title_idx = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.exercise_set || section.exercise_set === "0") {
-        alert(translate("errorExerciseSet"));
-        refsCurrentIdx.exercise_set.current &&
-        refsCurrentIdx.exercise_set?.current?.focus();
-        initialErrors[idx].exercise_set = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.exercise_rep || section.exercise_rep === "0") {
-        alert(translate("errorExerciseRep"));
-        refsCurrentIdx.exercise_rep.current &&
-        refsCurrentIdx.exercise_rep?.current?.focus();
-        initialErrors[idx].exercise_rep = true;
-        foundError = true;
-        break;
-      }
-      else if (!section.exercise_kg || section.exercise_kg === "0") {
-        alert(translate("errorExerciseKg"));
-        refsCurrentIdx.exercise_kg.current &&
-        refsCurrentIdx.exercise_kg?.current?.focus();
-        initialErrors[idx].exercise_kg = true;
-        foundError = true;
-        break;
-      }
-    }
-    setERRORS(initialErrors);
-
-    return !foundError;
-  };
-
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
-    if (!validate(OBJECT)) {
+    if (!validate(OBJECT, COUNT)) {
       setLOADING(false);
       return;
     }

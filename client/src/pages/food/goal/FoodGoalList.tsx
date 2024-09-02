@@ -415,7 +415,7 @@ export const FoodGoalList = () => {
                       </Grid>
                       <Grid size={5} className={"d-right"}>
                         <Div className={`fs-1-0rem fw-600 ${item.food_goal_fat_color}`}>
-                          {numeral(item.food_goal_weight).format("0,0")}
+                          {numeral(item.food_goal_fat).format("0,0")}
                         </Div>
                       </Grid>
                       <Grid size={2} className={"d-right"}>

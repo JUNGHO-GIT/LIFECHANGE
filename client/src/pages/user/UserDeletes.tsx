@@ -2,7 +2,7 @@
 // Node -> Section -> Fragment
 
 import { useState, useEffect } from "@imports/ImportReacts";
-import { useCommon } from "@imports/ImportHooks";
+import { useCommon, useValidateUser } from "@imports/ImportHooks";
 import { moment, axios } from "@imports/ImportLibs";
 import { Loading } from "@imports/ImportLayouts";
 import { Div, Hr, Input, Btn } from "@imports/ImportComponents";
@@ -15,6 +15,9 @@ export const UserDeletes = () => {
   const {
     navigate, translate, sessionId, URL_OBJECT
   } = useCommon();
+  const {
+    ERRORS, REFS, validate
+  } = useValidateUser();
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [LOADING, setLOADING] = useState<boolean>(false);
@@ -58,6 +61,10 @@ export const UserDeletes = () => {
   // 3. flow ---------------------------------------------------------------------------------------
   const flowSave = async () => {
     setLOADING(true);
+    if (!validate(OBJECT)) {
+      setLOADING(false);
+      return;
+    }
     axios.delete(`${URL_OBJECT}/deletes`,{
       data: {
         user_id: sessionId,
@@ -108,6 +115,44 @@ export const UserDeletes = () => {
                 readOnly={true}
               />
             </Grid>
+            <Hr px={20} />
+            {/** 비밀번호 **/}
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("pw")}
+                helperText={`* ${translate("helperPw")}`}
+                value={OBJECT.user_pw}
+                inputRef={REFS.current[i]?.user_pw}
+                error={ERRORS[i]?.user_pw}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e: any) => (
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_pw: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            {/** 비밀번호 확인 **/}
+            <Grid size={12}>
+              <Input
+                type={"password"}
+                label={translate("pwVerified")}
+                helperText={`* ${translate("helperPwVerified")}`}
+                value={OBJECT.user_pw_verified}
+                inputRef={REFS.current[i]?.user_pw_verified}
+                error={ERRORS[i]?.user_pw_verified}
+                disabled={OBJECT.user_id_verified === false}
+                onChange={(e: any) => (
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    user_pw_verified: e.target.value
+                  }))
+                )}
+              />
+            </Grid>
+            <Hr px={20} />
             <Grid size={12}>
               <TextArea
                 className={"border radius resize-none cursor-none w-100p p-10"}

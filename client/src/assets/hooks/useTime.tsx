@@ -12,9 +12,12 @@ export const useTime = (
 ): void => {
 
   // 1. common -------------------------------------------------------------------------------------
+  const {
+    koreanDate
+  } = useCommon();
+
   const match = PATH.match(/\/([^/]+)\//);
   const strLow = match ? match[1] : null;
-  const {koreanDate} = useCommon();
 
   // 2-3. useEffect --------------------------------------------------------------------------------
   useEffect(() => {

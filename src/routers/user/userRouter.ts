@@ -49,7 +49,7 @@ router.post("/email/send", async (req: Request, res: Response) => {
     else if (result.result === "duplicate") {
       res.json({
         status: "duplicate",
-        msg: "duplicateEmail",
+        msg: "duplicatedEmail",
         result: null,
       });
     }

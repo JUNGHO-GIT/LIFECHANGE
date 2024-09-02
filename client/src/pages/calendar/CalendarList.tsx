@@ -5,7 +5,7 @@ import { useState, useEffect } from "@imports/ImportReacts";
 import { useCommon, useStorage } from "@imports/ImportHooks";
 import { moment, axios, Calendar } from "@imports/ImportLibs";
 import { Loading, Footer } from "@imports/ImportLayouts";
-import { Icons, Div, Br } from "@imports/ImportComponents";
+import { Icons, Div } from "@imports/ImportComponents";
 import { Paper, Grid, Card } from "@imports/ImportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -192,15 +192,19 @@ export const CalendarList = () => {
               }}
               tileClassName={({ date, view }) => {
                 let className = "calendar-tile";
-                let isSat = moment(date).day() === 6; // 토요일 확인
-                let isSun = moment(date).day() === 0; // 일요일 확인
+                // 토요일
+                let isSat = moment(date).day() === 6;
+                // 일요일
+                let isSun = moment(date).day() === 0;
+                // 오늘
                 let isToday = moment(date).isSame(new Date(), 'day');
+                // 이번달
                 let isCurrentMonth = moment(date).isSame(moment(DATE.dateStart), 'month');
-              
+
                 const calendarForDates = OBJECT.filter((calendar) => (
                   dateInRange(date, calendar.calendar_dateStart, calendar.calendar_dateEnd)
                 ));
-              
+
                 if (calendarForDates.length > 0) {
                   const hasManySections = calendarForDates.some((calendar) => (
                     calendar.calendar_section.length > 2
