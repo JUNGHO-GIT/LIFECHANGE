@@ -15,6 +15,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  user_number : {
+    type : Number,
+    default: 0,
+    unique : true
+  },
   user_google: {
     type: String,
     default: "N",
@@ -29,11 +34,6 @@ const schema = new mongoose.Schema({
     type : String,
     default: "",
     required : false
-  },
-  user_number : {
-    type : Number,
-    default: 0,
-    unique : true
   },
 
   user_image: {

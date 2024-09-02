@@ -10,15 +10,16 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
-  sleep_dummy: {
-    type: String,
-    default: "N",
-    required: false
-  },
+
   sleep_number: {
     type : Number,
     default : 0,
     unique : true
+  },
+  sleep_dummy: {
+    type: String,
+    default: "N",
+    required: false
   },
 
   sleep_dateType: {

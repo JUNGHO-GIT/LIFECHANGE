@@ -10,15 +10,15 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
-  money_dummy: {
-    type: String,
-    default: "N",
-    required: false
-  },
   money_number: {
     type : Number,
     default: 0,
     unique : true
+  },
+  money_dummy: {
+    type: String,
+    default: "N",
+    required: false
   },
 
   money_dateType: {
