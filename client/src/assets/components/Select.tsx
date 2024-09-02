@@ -12,12 +12,15 @@ export const Select = (props: any) => {
       type={props?.type || "text"}
       size={props?.size || "small"}
       fullWidth={props?.fullWidth || true}
+      className={props?.className || ""}
       slotProps={{
-        ...props?.slotProps,
         input: {
-          ...props?.slotProps?.input,
           className: (
-            `fs-1-0rem text-left ${props?.inputclass || ""}`
+            props?.inputclass?.includes("fs-") ? (
+              `text-left ${props?.inputclass || ""}`
+            ) : (
+              `fs-1-0rem text-left ${props?.inputclass || ""}`
+            )
           ),
           readOnly: (
             props?.readOnly || false
