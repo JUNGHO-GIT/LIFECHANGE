@@ -104,6 +104,7 @@ export const UserLogin = () => {
     axios.post(`${URL_OBJECT}/login`, {
       user_id: OBJECT.user_id,
       user_pw: OBJECT.user_pw,
+      isAutoLogin: checkedAutoLogin,
     })
     .then((res: any) => {
       if (res.data.status === "success") {

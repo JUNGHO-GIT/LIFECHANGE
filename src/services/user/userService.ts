@@ -186,12 +186,12 @@ export const userResetPw = async (
 
   // ID가 존재하지 않으면 바로 종료
   if (!findResult) {
-    finalResult = "notExist";
+    return "notExist";
   }
 
-  // Google 사용자인 경우
+  // google 사용자인 경우
   if (findResult.user_google === "Y") {
-    finalResult = "isGoogle";
+    return "isGoogle";
   }
 
   else {
@@ -214,6 +214,7 @@ export const userResetPw = async (
 export const userLogin = async (
   user_id_param: string,
   user_pw_param: string,
+  isAutoLogin_param: boolean,
 ) => {
 
   // findResult, finalResult 변수 선언
@@ -225,39 +226,45 @@ export const userLogin = async (
   // ID 체크
   findResult = await repository.user.checkId(user_id_param);
 
-  // ID가 존재하지 않으면 바로 종료
+  // 1. id가 존재하지 않는 경우
   if (!findResult) {
     return {
       result: "fail",
       admin: "user",
     };
   }
-
-  // Google 사용자인 경우
-  if (findResult.user_google === "Y") {
-    return {
-      result: "isGoogle",
-      admin: "user",
-    };
-  }
-  // 일반 사용자인 경우
+  // 2. id가 존재하는 경우
   else {
-    combinedPw = `${user_pw_param}_${findResult.user_token}`;
-  }
+    // google 사용자인 경우
+    if (findResult.user_google === "Y") {
+      // auto login이 아닌 경우
+      if (!isAutoLogin_param) {
+        return {
+          result: "isGoogle",
+          admin: "user",
+        };
+      }
+      combinedPw = `${user_id_param}_${findResult.user_token}`;
+    }
+    // 일반 사용자인 경우
+    else {
+      combinedPw = `${user_pw_param}_${findResult.user_token}`;
+    }
 
-  // 비밀번호 비교
-  const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
+    // 비밀번호 비교
+    const isPasswordMatch = await bcrypt.compare(combinedPw, findResult.user_pw);
 
-  if (isPasswordMatch) {
-    finalResult = findResult;
-  }
-  else {
-    finalResult = "fail";
-  }
+    if (isPasswordMatch) {
+      finalResult = findResult;
+    }
+    else {
+      finalResult = "fail";
+    }
 
-  // 관리자 확인
-  if (user_id_param === process.env.ADMIN_ID) {
-    adminResult = "admin";
+    // 관리자 확인
+    if (user_id_param === process.env.ADMIN_ID) {
+      adminResult = "admin";
+    }
   }
 
   return {

@@ -205,6 +205,7 @@ router.post("/login", async (req: Request, res: Response) => {
     let result = await service.userLogin (
       req.body.user_id as string,
       req.body.user_pw as string,
+      req.body.isAutoLogin as boolean,
     );
     if (result.result === "isGoogle") {
       res.json({
