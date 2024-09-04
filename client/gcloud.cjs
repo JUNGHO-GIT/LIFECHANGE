@@ -16,7 +16,7 @@ const compressBuild = () => {
 
 // gcloud에 업로드 ---------------------------------------------------------------------------------
 const uploadToGCS = () => {
-  const command = 'gsutil cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
+  const command = 'gcloud storage cp build.tar.gz gs://jungho-bucket/JPAGE/SERVER/build.tar.gz';
   execSync(command, { stdio: 'inherit' });
 };
 
@@ -31,7 +31,7 @@ const runRemoteScript = () => {
   const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
   const serverAddr = 'junghomun00@34.23.233.23';
   const cmdCd = 'cd /var/www/junghomun.com/JPAGE/client';
-  const cmdGs = 'sudo gsutil cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
+  const cmdGs = 'sudo gcloud storage cp gs://jungho-bucket/JPAGE/SERVER/build.tar.gz .';
   const cmdTar = 'sudo tar -zvxf build.tar.gz --strip-components=1';
   const cmdRm = 'sudo rm build.tar.gz';
   const cmdRestart = 'sudo systemctl restart nginx';
