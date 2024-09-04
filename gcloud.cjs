@@ -7,6 +7,9 @@ const moment = require('moment-timezone');
 const os = require('os');
 const fs = require('fs');
 
+const winOrLinux = os.platform() === 'win32' ? "win" : "linux";
+console.log(`Server gcloud.cjs is activate. Activated os is : "${winOrLinux}"`);
+
 // env 파일 수정 -----------------------------------------------------------------------------------
 const modifyEnv = () => {
   const envFile = readFileSync('.env', 'utf8');
@@ -65,8 +68,9 @@ const gitPush = () => {
 
 // 원격 서버에서 스크립트 실행 ---------------------------------------------------------------------
 const runRemoteScript = () => {
-  const privateKeyPath = 'C:\\Users\\jungh\\.ssh\\JKEY';
-  const serverAddr = 'junghomun00@34.23.233.23';
+  const keyPath = winOrLinux === "win" ? "C:\\Users\\jungh\\.ssh\\JKEY" : "~/ssh/JKEY";
+  const serviceId = winOrLinux === "win" ? 'junghomun00' : 'junghomun1234';
+  const ipAddr = "34.23.233.23";
   const cmdCd = 'cd /var/www/junghomun.com/JPAGE/server';
   const cmdGitFetch = 'sudo git fetch --all';
   const cmdGitReset = 'sudo git reset --hard origin/master';
@@ -75,11 +79,14 @@ const runRemoteScript = () => {
   const cmdRestart = 'sudo pm2 restart all';
   const cmdSave = 'sudo pm2 save';
 
-  const sshCommand =
-    `powershell -Command "ssh -i ${privateKeyPath} ${serverAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'"
+  const sshCommand = `
+    ssh -i ${keyPath} ${serviceId}@${ipAddr} \'${cmdCd} && ${cmdGitFetch} && ${cmdGitReset} && ${cmdRmClient} && ${cmdNpm} && ${cmdRestart} && ${cmdSave}\'
   `;
 
-  execSync(sshCommand, { stdio: 'inherit' });
+  const activateCommand
+    = winOrLinux === "win" ? `powershell -Command "${sshCommand}"` : `${sshCommand}`;
+
+  execSync(activateCommand, { stdio: 'inherit' });
 };
 
 // env 파일 복원 -----------------------------------------------------------------------------------
